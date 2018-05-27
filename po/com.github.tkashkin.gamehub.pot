@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.tkashkin.gamehub package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.tkashkin.gamehub\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-27 03:39+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:8
+#: data/com.github.tkashkin.gamehub.desktop.in:3
+#: data/com.github.tkashkin.gamehub.desktop.in:4
+msgid "GameHub"
+msgstr ""
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:9
+#: data/com.github.tkashkin.gamehub.desktop.in:5
+#: src/ui/views/WelcomeView.vala:16
+msgid "All your games in one place"
+msgstr ""
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:12
+msgid "Manage your Steam and GOG games in one place."
+msgstr ""
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:15
+msgid "tkashkin"
+msgstr ""
+
+#: data/com.github.tkashkin.gamehub.desktop.in:7
+msgid "Game;Hub;Steam;GOG;"
+msgstr ""
+
+#: data/com.github.tkashkin.gamehub.desktop.in:10
+msgid "com.github.tkashkin.gamehub"
+msgstr ""
+
+#: src/data/sources/steam/Steam.vala:13
+msgid "Your SteamID will be read from Steam configuration file"
+msgstr ""
+
+#: src/ui/views/WelcomeView.vala:16
+msgid "Let's get started"
+msgstr ""
+
+#: src/ui/views/WelcomeView.vala:24
+msgid "Skip"
+msgstr ""
+
+#: src/ui/views/WelcomeView.vala:60
+#, c-format
+msgid "%d games loaded"
+msgstr ""
+
+#: src/ui/views/WelcomeView.vala:65
+msgid "Authentication required"
+msgstr ""
+
+#: src/ui/views/WelcomeView.vala:70
+#, c-format
+msgid "Install %s"
+msgstr ""

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+	<id>com.github.tkashkin.gamehub.desktop</id>
+	
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>WTFPL</project_license>
+	
+	<name>GameHub</name>
+	<summary>All your games in one place</summary>
+	
+	<description>
+		<p>Manage your Steam and GOG games in one place.</p>
+	</description>
+	
+	<developer_name>tkashkin</developer_name>
+	<url type="homepage">https://github.com/tkashkin/GameHub</url>
+	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
+	
+	<provides>
+		<binary>com.github.tkashkin.gamehub</binary>
+	</provides>
+	<launchable type="desktop-id">com.github.tkashkin.gamehub.desktop</launchable>
+	
+	<custom>
+		<value key="x-appcenter-suggested-price">1</value>
+	</custom>
+	
+	<content_rating type="oars-1.1">
+		<content_attribute id="violence-cartoon">none</content_attribute>
+		<content_attribute id="violence-fantasy">none</content_attribute>
+		<content_attribute id="violence-realistic">none</content_attribute>
+		<content_attribute id="violence-bloodshed">none</content_attribute>
+		<content_attribute id="violence-sexual">none</content_attribute>
+		<content_attribute id="violence-desecration">none</content_attribute>
+		<content_attribute id="violence-slavery">none</content_attribute>
+		<content_attribute id="violence-worship">none</content_attribute>
+		<content_attribute id="drugs-alcohol">none</content_attribute>
+		<content_attribute id="drugs-narcotics">none</content_attribute>
+		<content_attribute id="drugs-tobacco">none</content_attribute>
+		<content_attribute id="sex-nudity">none</content_attribute>
+		<content_attribute id="sex-themes">none</content_attribute>
+		<content_attribute id="sex-homosexuality">none</content_attribute>
+		<content_attribute id="sex-prostitution">none</content_attribute>
+		<content_attribute id="sex-adultery">none</content_attribute>
+		<content_attribute id="sex-appearance">none</content_attribute>
+		<content_attribute id="language-profanity">none</content_attribute>
+		<content_attribute id="language-humor">none</content_attribute>
+		<content_attribute id="language-discrimination">none</content_attribute>
+		<content_attribute id="social-chat">none</content_attribute>
+		<content_attribute id="social-info">none</content_attribute>
+		<content_attribute id="social-audio">none</content_attribute>
+		<content_attribute id="social-location">none</content_attribute>
+		<content_attribute id="social-contacts">none</content_attribute>
+		<content_attribute id="money-purchasing">none</content_attribute>
+		<content_attribute id="money-gambling">none</content_attribute>
+	</content_rating>
+</component>

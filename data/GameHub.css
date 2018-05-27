@@ -1,0 +1,13 @@
+.gamecard
+{
+	border-radius: 2px;
+}
+
+.gamecard GtkLabel
+{
+	color: rgba(255, 255, 255, 0.9);
+	font-weight: bold;
+	font-size: 1.3em;
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+	background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+}
