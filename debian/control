@@ -12,7 +12,6 @@ Build-Depends: meson (>= 0.40),
                libjson-glib-dev,
                libgee-0.8-dev,
                libsoup2.4-dev
-               
 Standards-Version: 3.9.3
 
 Package: com.github.tkashkin.gamehub
