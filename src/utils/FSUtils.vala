@@ -19,8 +19,10 @@ namespace GameHub.Utils
 			public class Steam
 			{
 				public const string Home = "~/.steam";
-				public const string Config = FSUtils.Paths.Steam.Home + "/config";
+				public const string Config = FSUtils.Paths.Steam.Home + "/steam/config";
+				public const string ConfigOld = FSUtils.Paths.Steam.Home + "/config";
 				public const string LoginUsersVDF = FSUtils.Paths.Steam.Config + @"/loginusers.vdf";
+				public const string LoginUsersVDFOld = FSUtils.Paths.Steam.ConfigOld + @"/loginusers.vdf";
 			}
 		}
 		

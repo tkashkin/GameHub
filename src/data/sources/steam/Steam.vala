@@ -42,7 +42,20 @@ namespace GameHub.Data.Sources.Steam
 			
 			new Thread<void*>("steam-loginusers-thread", () => {
 				Json.Object config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDF);
-				var users = config.get_object_member("users");
+				var users = Parser.json_object(config, {"users"});
+				
+				if(users == null)
+				{
+					config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDFOld);
+					users = Parser.json_object(config, {"users"});
+				}
+				
+				if(users == null)
+				{
+					result = false;
+					Idle.add(authenticate.callback);
+					return null;
+				}
 				
 				foreach(var uid in users.get_members())
 				{
