@@ -27,5 +27,10 @@ namespace GameHub.UI.Views
 			titlebar.show_all();
 			window.set_titlebar(titlebar);
 		}
+		
+		public virtual void on_window_focus()
+		{
+			
+		}
 	}
 }

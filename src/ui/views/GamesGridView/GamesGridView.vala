@@ -88,11 +88,7 @@ namespace GameHub.UI.Views
 			show_all();
 			scrolled.show_all();
 			games_list.show_all();
-		}
-		
-		public override void attach_to_window(GameHub.UI.Windows.MainWindow wnd)
-		{
-			base.attach_to_window(wnd);
+			
 			load_games.begin();
 		}
 		

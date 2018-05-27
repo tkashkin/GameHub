@@ -35,10 +35,9 @@ namespace GameHub.UI.Views
 			update_entries.begin();
 		}
 		
-		public override void attach_to_window(GameHub.UI.Windows.MainWindow wnd)
+		public override void on_window_focus()
 		{
-			base.attach_to_window(wnd);
-			wnd.notify["has-toplevel-focus"].connect(() => update_entries.begin());
+			update_entries.begin();
 		}
 		
 		private void open_games_grid()

@@ -38,6 +38,10 @@ namespace GameHub.UI.Windows
 			vbox.add(stack);
 			
 			add(vbox);
+			
+			notify["has-toplevel-focus"].connect(() => {
+				current_view.on_window_focus();
+			});
 		}
 		
 		public void add_view(BaseView view, bool show=true)
@@ -50,7 +54,15 @@ namespace GameHub.UI.Windows
 		
 		private void stack_updated()
 		{
-			(stack.visible_child as BaseView).on_show();
+			current_view.on_show();
+		}
+		
+		public BaseView current_view
+		{
+			get
+			{
+				return stack.visible_child as BaseView;
+			}
 		}
 	}
 }
