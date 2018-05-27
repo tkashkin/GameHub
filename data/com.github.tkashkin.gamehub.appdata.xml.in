@@ -12,7 +12,7 @@
 		<p>Manage your Steam and GOG games in one place.</p>
 	</description>
 	
-	<developer_name>tkashkin</developer_name>
+	<developer_name>Anatoliy Kashkin</developer_name>
 	<url type="homepage">https://github.com/tkashkin/GameHub</url>
 	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
 	
@@ -20,6 +20,15 @@
 		<binary>com.github.tkashkin.gamehub</binary>
 	</provides>
 	<launchable type="desktop-id">com.github.tkashkin.gamehub.desktop</launchable>
+	
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/1_welcome.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_library.png</image>
+		</screenshot>
+    </screenshots>
 	
 	<custom>
 		<value key="x-appcenter-suggested-price">1</value>
