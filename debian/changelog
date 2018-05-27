@@ -1,5 +1,12 @@
-com.github.tkashkin.gamehub (0.1.0) loki; urgency=low
+com.github.tkashkin.gamehub (0.1.3) xenial; urgency=low
 
-  * Initial Release.
+  * Fix Steam config path
 
- -- tkashkin <tkashkin@gmail.com>  Thu, 24 May 2018 07:56:30 +0300
+ -- tkashkin <tkashkin@gmail.com>  Mon, 28 May 2018 02:28:30 +0300
+
+com.github.tkashkin.gamehub (0.1.2) xenial; urgency=low
+
+  * Initial release
+  * Steam and GOG linux-compatible games fetching
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 28 May 2018 00:15:21 +0300
