@@ -11,4 +11,4 @@ Standards-Version: 3.9.3
 Package: com.github.tkashkin.gamehub
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: Have all your games in one place
+Description: All your games in one place
