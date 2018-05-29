@@ -1,6 +1,7 @@
 .gamecard
 {
-	border-radius: 2px;
+	border-radius: 4px;
+	background: #333;
 }
 
 .gamecard label
