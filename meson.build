@@ -34,6 +34,8 @@ executable(
 	'src/ui/views/GamesGridView/GamesGridView.vala',
 	'src/ui/views/GamesGridView/GameCard.vala',
 	
+	'src/ui/widgets/AutoSizeImage.vala',
+	
 	'src/utils/Utils.vala',
 	'src/utils/FSUtils.vala',
 	'src/utils/Parser.vala',

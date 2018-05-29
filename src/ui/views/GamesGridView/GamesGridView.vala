@@ -73,8 +73,7 @@ namespace GameHub.UI.Views
                 if(f > 0) src = sources[f - 1];
                 
                 var games = src == null ? games_list.get_children().length() : src.games_count;
-                titlebar.title = "GameHub" + (src == null ? "" : ": " + src.name);
-                titlebar.subtitle = @"$(games) games";
+                titlebar.title = "GameHub" + (src == null ? "" : "/" + src.name) + @": $(games) games";
                 
                 return (src == null || item == null || src == item.game.source) && (item == null || search.text.casefold() in item.game.name.casefold());
 			});

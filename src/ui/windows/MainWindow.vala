@@ -21,6 +21,7 @@ namespace GameHub.UI.Windows
 			titlebar = new HeaderBar();
 			titlebar.title = title;
 			titlebar.show_close_button = true;
+			titlebar.has_subtitle = false;
 
 			set_titlebar(titlebar);
 
