@@ -1,7 +1,9 @@
 using Gtk;
+using Gdk;
 using Granite;
 using GameHub.Data;
 using GameHub.Utils;
+using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Views
 {
@@ -10,31 +12,29 @@ namespace GameHub.UI.Views
 		public Game game;
 		
 		private Overlay content;
-		private AsyncImage image;
+		private AutoSizeImage image;
 		private Image src_icon;
 		private Label label;
 		
+		private const int CARD_WIDTH_MIN = 160;
+		private const int CARD_WIDTH_MAX = 320;
+		
 		construct
-		{
-			var wrapper = new Box(Orientation.HORIZONTAL, 0);
-			wrapper.halign = Align.CENTER;
-			wrapper.valign = Align.CENTER;
-			
-			var card = new Box(Orientation.VERTICAL, 0);
+		{			
+			var card = new Frame(null);
 			card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
 			card.get_style_context().add_class("gamecard");
 			
 			card.margin = 4;
-			card.halign = Align.CENTER;
-			card.valign = Align.CENTER;
+			card.vexpand = true;
+			card.hexpand = true;
 			
-			wrapper.add(card);
-			
-			child = wrapper;
+			child = card;
 			
 			content = new Overlay();
 			
-			image = new AsyncImage();
+			image = new AutoSizeImage();
+			image.set_width(CARD_WIDTH_MIN, CARD_WIDTH_MAX);
 			
 			src_icon = new Image();
 			src_icon.valign = Align.START;
@@ -80,18 +80,13 @@ namespace GameHub.UI.Views
 			{
 				if(!cached.query_exists())
 				{
-					image.set_from_file_async.begin(remote, 306, 143, false);
-					remote.copy_async.begin(cached, FileCopyFlags.NONE);
+					yield remote.copy_async(cached, FileCopyFlags.NONE);
 				}
-				else
-				{
-					image.set_from_file_async.begin(cached, 306, 143, false);
-				}
+				image.set_source(new Pixbuf.from_file(cached.get_path()));
 			}
 			catch(Error e)
 			{
 				error(e.message);
-				image.set_from_file_async.begin(remote, -1, -1, true);
 			}
 		}
 	}

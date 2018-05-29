@@ -8,11 +8,12 @@ namespace GameHub.Utils
 	{
 		private static string load_file(string path, string file="")
 		{
-			var full_path = FSUtils.expand(path, file);
+			var f = FSUtils.file(path, file);
+			if(!f.query_exists()) return "";
 			string data;
 			try
 			{
-				FileUtils.get_contents(full_path, out data);
+				FileUtils.get_contents(f.get_path(), out data);
 			}
 			catch(Error e)
 			{
