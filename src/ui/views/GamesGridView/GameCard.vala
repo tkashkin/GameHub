@@ -16,25 +16,26 @@ namespace GameHub.UI.Views
 		private Image src_icon;
 		private Label label;
 		
-		private const int CARD_WIDTH_MIN = 160;
-		private const int CARD_WIDTH_MAX = 320;
+		private const int CARD_WIDTH_MIN = 320;
+		private const int CARD_WIDTH_MAX = 680;
+		private const float CARD_RATIO = 0.467f; // 460x215
 		
 		construct
-		{			
+		{
 			var card = new Frame(null);
 			card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
 			card.get_style_context().add_class("gamecard");
 			
 			card.margin = 4;
-			card.vexpand = true;
-			card.hexpand = true;
 			
 			child = card;
 			
 			content = new Overlay();
+			content.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
+			content.get_style_context().add_class("gamecard");
 			
 			image = new AutoSizeImage();
-			image.set_width(CARD_WIDTH_MIN, CARD_WIDTH_MAX);
+			image.set_constraint(CARD_WIDTH_MIN, CARD_WIDTH_MAX, CARD_RATIO);
 			
 			src_icon = new Image();
 			src_icon.valign = Align.START;

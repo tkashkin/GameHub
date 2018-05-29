@@ -3,23 +3,32 @@ using Gdk;
 
 namespace GameHub.UI.Widgets
 {
-	public class AutoSizeImage: Image
+	public class AutoSizeImage: DrawingArea
 	{
 		private Pixbuf? src;
 		
-		private int wmin = 0;
-		private int wmax = 0;
+		private int cmin = 0;
+		private int cmax = 0;
+		private float ratio = 1;
+		private Orientation constraint = Orientation.HORIZONTAL;
 		
-		construct
+		public void set_constraint(int min, int max, float ratio = 1, Orientation orientation = Orientation.HORIZONTAL)
 		{
-			size_allocate.connect(on_size_allocate);
-		}
-		
-		public void set_width(int min, int max)
-		{
-			wmin = min;
-			wmax = max;
-			set_size_request(wmin, -1);
+			this.constraint = orientation;
+			this.ratio = ratio;
+			this.cmin = min;
+			this.cmax = max;
+			
+			switch(constraint)
+			{
+				case Orientation.HORIZONTAL:
+					set_size_request(cmin, -1);
+					break;
+
+				case Orientation.VERTICAL:
+					set_size_request(-1, cmin);
+					break;
+			}
 		}
 		
 		public void set_source(Pixbuf? buf)
@@ -27,25 +36,48 @@ namespace GameHub.UI.Widgets
 			src = buf;
 		}
 		
-		private void on_size_allocate(Allocation rect)
+		public override bool draw(Cairo.Context ctx)
 		{
-			var base_pixbuf = get_pixbuf();
-			if(src == null) return;
+			if(src == null) return false;
+			
+			Allocation rect;
+			get_allocation(out rect);
 
 			int new_width = 0;
-			int new_height = 0;
+			int new_height = 0;		
+			
+			switch(constraint)
+			{
+				case Orientation.HORIZONTAL:
+		 			new_width = int.max(cmin, int.min(cmax, rect.width));
+		 			new_height = (int) (new_width * ratio);
+					break;
 
-			float ratio = (float) src.height / (float) src.width;
+				case Orientation.VERTICAL:
+					new_height = int.max(cmin, int.min(cmax, rect.height));
+		 			new_width = (int) (new_height * ratio);
+					break;
+			}
 
-			new_width = int.max(wmin, int.min(wmax, rect.width));
-			new_height = (int) (new_width * ratio);
+			var pixbuf = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
 
-			if(base_pixbuf.height == new_height && base_pixbuf.width == new_width) return;
+			Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, new_width, new_height, 4);
+			cairo_set_source_pixbuf(ctx, pixbuf, 0, 0);
+			ctx.clip();
+			ctx.paint();
+				   			
+			switch(constraint)
+			{
+				case Orientation.HORIZONTAL:
+					set_size_request(cmin, new_height);
+					break;
 
-			base_pixbuf = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
-
-			set_from_pixbuf(base_pixbuf);
-			set_size_request(-1, new_height);
+				case Orientation.VERTICAL:
+					set_size_request(new_width, cmin);
+					break;
+			}
+			
+			return false;
 		}
 	}
 }
