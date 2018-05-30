@@ -25,7 +25,6 @@ namespace GameHub.UI.Views
 			var card = new Frame(null);
 			card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
 			card.get_style_context().add_class("gamecard");
-			
 			card.margin = 4;
 			
 			child = card;

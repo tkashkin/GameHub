@@ -34,9 +34,8 @@ namespace GameHub.UI.Views
 			games_list.margin = 4;
 			
 			games_list.activate_on_single_click = false;
-			games_list.homogeneous = true;
+			games_list.homogeneous = false;
 			games_list.min_children_per_line = 3;
-			games_list.selection_mode = SelectionMode.NONE;
 			games_list.valign = Align.START;
 
 			var scrolled = new ScrolledWindow(null, null);

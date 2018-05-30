@@ -11,4 +11,5 @@
 	font-size: 1.3em;
 	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 	background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+	border-radius: 0 0 4px 4px;
 }
