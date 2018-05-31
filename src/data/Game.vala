@@ -15,8 +15,13 @@ namespace GameHub.Data
 		public string path { get; protected set; }
 		public string command { get; protected set; }
 		
-		public float playtime { get; protected set; default = 0; }
+		public string playtime { get; protected set; default = ""; }
 		
 		public virtual async bool is_for_linux(){ return true; }
+		
+		public virtual bool is_installed(){ return false; }
+		
+		public abstract async void install();
+		public abstract async void run();
 	}
 }

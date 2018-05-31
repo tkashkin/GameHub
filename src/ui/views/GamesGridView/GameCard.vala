@@ -11,10 +11,14 @@ namespace GameHub.UI.Views
 	{
 		public Game game;
 		
+		private Frame card;
 		private Overlay content;
 		private AutoSizeImage image;
 		private Image src_icon;
 		private Label label;
+		
+		private Box actions;
+		private Button run;
 		
 		private const int CARD_WIDTH_MIN = 320;
 		private const int CARD_WIDTH_MAX = 680;
@@ -22,7 +26,7 @@ namespace GameHub.UI.Views
 		
 		construct
 		{
-			var card = new Frame(null);
+			card = new Frame(null);
 			card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
 			card.get_style_context().add_class("gamecard");
 			card.margin = 4;
@@ -30,8 +34,6 @@ namespace GameHub.UI.Views
 			child = card;
 			
 			content = new Overlay();
-			content.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
-			content.get_style_context().add_class("gamecard");
 			
 			image = new AutoSizeImage();
 			image.set_constraint(CARD_WIDTH_MIN, CARD_WIDTH_MAX, CARD_RATIO);
@@ -41,6 +43,7 @@ namespace GameHub.UI.Views
 			src_icon.halign = Align.START;
 			src_icon.margin = 8;
 			src_icon.opacity = 0.5;
+			src_icon.set_events(0);
 			
 			label = new Label("");
 			label.xpad = 8;
@@ -51,11 +54,22 @@ namespace GameHub.UI.Views
 			label.lines = 3;
 			label.set_line_wrap(true);
 			
+			actions = new Box(Orientation.VERTICAL, 0);
+			actions.get_style_context().add_class("actions");
+			actions.hexpand = true;
+			actions.vexpand = true;
+			
 			content.add(image);
+			content.add_overlay(actions);
 			content.add_overlay(label);
 			content.add_overlay(src_icon);
 			
 			card.add(content);
+			
+			content.add_events(EventMask.ALL_EVENTS_MASK);
+			content.enter_notify_event.connect(e => { card.get_style_context().add_class("hover"); });
+			content.leave_notify_event.connect(e => { card.get_style_context().remove_class("hover"); });
+			content.button_release_event.connect(e => { if(game.is_installed()) game.run(); else game.install(); });
 			
 			show_all();
 		}
@@ -83,6 +97,8 @@ namespace GameHub.UI.Views
 					yield remote.copy_async(cached, FileCopyFlags.NONE);
 				}
 				image.set_source(new Pixbuf.from_file(cached.get_path()));
+				
+				if(game.is_installed()) card.get_style_context().add_class("installed");
 			}
 			catch(Error e)
 			{

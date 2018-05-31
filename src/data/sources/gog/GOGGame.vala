@@ -24,5 +24,9 @@ namespace GameHub.Data.Sources.GOG
 		{
 			return (!) _is_for_linux;
 		}
+		
+		public override async void install(){}
+		
+		public override async void run(){}
 	}
 }
