@@ -87,7 +87,7 @@ namespace GameHub.Data.Sources.Steam
 				return games;
 			}
 			
-			var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(Steam.API_KEY)&steamid=$(this.user_id)&format=json&include_appinfo=1";
+			var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(API_KEY)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
 			
 			var root = yield Parser.parse_remote_json_file_async(url);
 			var json_games = root.get_object_member("response").get_array_member("games");
@@ -107,6 +107,32 @@ namespace GameHub.Data.Sources.Steam
 			
 			
 			return games;
+		}
+		
+		public static ArrayList<string>? folders = null;
+		public static ArrayList<string> LibraryFolders
+		{
+			get
+			{
+				if(folders != null) return folders;
+				
+				folders = new ArrayList<string>();
+				folders.add(FSUtils.Paths.Steam.SteamApps);
+				
+				var root = Parser.parse_vdf_file(FSUtils.Paths.Steam.LibraryFoldersVDF);
+				var lf = Parser.json_object(root, {"LibraryFolders"});
+				
+				if(lf != null)
+				{
+					foreach(var key in lf.get_members())
+					{
+						var dir = lf.get_string_member(key) + "/steamapps";
+						if(FSUtils.file(dir).query_exists()) folders.add(dir);
+					}
+				}
+				
+				return folders;
+			}
 		}
 	}
 }

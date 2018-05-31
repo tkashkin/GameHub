@@ -1,7 +1,12 @@
 .gamecard
 {
 	border-radius: 4px;
-	background: #333;
+	transition: 100ms;
+}
+
+.gamecard.installed
+{
+	
 }
 
 .gamecard label
@@ -12,4 +17,26 @@
 	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 	background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
 	border-radius: 0 0 4px 4px;
+}
+
+.gamecard .actions
+{
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
+	transition: 100ms;
+}
+
+.gamecard.installed .actions
+{
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.gamecard.hover .actions
+{
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.gamecard.installed.hover .actions
+{
+	background-color: rgba(255, 255, 255, 0.2);
 }

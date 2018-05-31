@@ -18,12 +18,15 @@ namespace GameHub.Data.Sources.Steam
 			var icon_hash = json.get_string_member("img_icon_url");
 			var image_hash = json.get_string_member("img_logo_url");
 			
-			this.icon = @"https://media.steampowered.com/steamcommunity/public/images/apps/$(this.id)/$(icon_hash).jpg";
-			this.image = @"https://cdn.akamai.steamstatic.com/steam/apps/$(this.id)/header.jpg";
+			this.icon = @"https://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
+			this.image = @"https://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
 			
-			this.command = @"xdg-open steam://rungameid/$(this.id)";
+			this.command = @"xdg-open steam://rungameid/$(id)";
 			
-			this.playtime = ((float) json.get_int_member("playtime_forever")) / 60.0f;
+			int64 minutes = json.get_int_member("playtime_forever");
+			int64 hours = (int) (minutes / 60.0f);
+			
+			this.playtime = minutes > 60 ? @"$(hours) hours" : @"$(minutes) minutes";
 		}
 		
 		public override async bool is_for_linux()
@@ -34,7 +37,7 @@ namespace GameHub.Data.Sources.Steam
 			
 			print("[Steam app %s] Checking for linux compatibility [%d]...\n", this.id, metadata_tries);
 			
-			var url = @"https://store.steampowered.com/api/appdetails?appids=$(this.id)";
+			var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)";
 			var root = yield Parser.parse_remote_json_file_async(url);
 			var platforms = Parser.json_object(root, {this.id, "data", "platforms"});
 			
@@ -55,6 +58,30 @@ namespace GameHub.Data.Sources.Steam
 			_is_for_linux = platforms.get_boolean_member("linux");
 			
 			return _is_for_linux;
+		}
+		
+		public override bool is_installed()
+		{
+			foreach(var dir in Steam.LibraryFolders)
+			{
+				var acf = FSUtils.file(dir, @"appmanifest_$(id).acf");
+				if(acf.query_exists())
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		public override async void install()
+		{
+			yield run();
+		}
+		
+		public override async void run()
+		{
+			Utils.open_uri(@"steam://rungameid/$(id)");
 		}
 	}
 }
