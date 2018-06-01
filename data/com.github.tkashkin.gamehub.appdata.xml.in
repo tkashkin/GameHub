@@ -35,6 +35,12 @@
 	</custom>
 	
 	<releases>
+		<release version="0.2.1" date="2018-06-01">
+			<description>
+				<p>GOG games installation and running</p>
+				<p>Various improvements</p>
+			</description>
+		</release>
 		<release version="0.1.3" date="2018-05-28">
 			<description>
 				<p>Fix Steam config path</p>
