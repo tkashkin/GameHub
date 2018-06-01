@@ -76,7 +76,7 @@ namespace GameHub.Utils
 			}
 			catch(Error e)
 			{
-				error(e.message);
+				warning(e.message);
 			}
 			return null;
 		}
@@ -96,7 +96,7 @@ namespace GameHub.Utils
 			}
 			catch(Error e)
 			{
-				error(e.message);
+				warning(e.message);
 			}
 			return null;
 		}

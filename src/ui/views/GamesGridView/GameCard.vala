@@ -18,7 +18,6 @@ namespace GameHub.UI.Views
 		private Label label;
 		
 		private Box actions;
-		private Button run;
 		
 		private const int CARD_WIDTH_MIN = 320;
 		private const int CARD_WIDTH_MAX = 680;
@@ -138,7 +137,7 @@ namespace GameHub.UI.Views
 			}
 			catch(Error e)
 			{
-				error(e.message);
+				warning(e.message);
 			}
 		}
 	}

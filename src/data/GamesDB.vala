@@ -20,7 +20,7 @@ namespace GameHub.Data
 			
 			if(Database.open(path, out db) != Sqlite.OK)
 			{
-				error("Can't open games database: " + db.errmsg());
+				warning("Can't open games database: " + db.errmsg());
 				db = null;
 				return;
 			}

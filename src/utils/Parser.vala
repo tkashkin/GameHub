@@ -17,7 +17,7 @@ namespace GameHub.Utils
 			}
 			catch(Error e)
 			{
-				error(e.message);
+				warning(e.message);
 			}
 			return data;
 		}
@@ -67,7 +67,7 @@ namespace GameHub.Utils
 			}
 			catch(GLib.Error e)
 			{
-				error(e.message);
+				warning(e.message);
 			}
 			return new Json.Object();
 		}
@@ -136,7 +136,7 @@ namespace GameHub.Utils
 			}
 			catch(Error e)
 			{
-				error(e.message);
+				warning(e.message);
 			}
 			
 			return "{" + json + "}";

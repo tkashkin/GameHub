@@ -15,7 +15,7 @@ namespace GameHub.Utils
 		}
 		catch(Error e)
 		{
-			error(e.message);
+			warning(e.message);
 		}
 	}
 	
@@ -28,12 +28,12 @@ namespace GameHub.Utils
 		}
 		catch (Error e)
 		{
-			error(e.message);
+			warning(e.message);
 		}
 		return stdout;
 	}
 	
-	public static async void run_async(string cmd)
+	public static void run_async(string cmd)
 	{
 		try
 		{
@@ -41,7 +41,7 @@ namespace GameHub.Utils
 		}
 		catch (Error e)
 		{
-			error(e.message);
+			warning(e.message);
 		}
 	}
 	

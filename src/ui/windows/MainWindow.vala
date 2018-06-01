@@ -48,9 +48,6 @@ namespace GameHub.UI.Windows
 			
 			saved_state = SavedState.get_instance();
 			
-			Unix.signal_add(Posix.Signal.INT, quit_source_func, Priority.HIGH);
-			Unix.signal_add(Posix.Signal.TERM, quit_source_func, Priority.HIGH);
-			
 			delete_event.connect(() => { quit(); return false; });
 			
 			restore_saved_state();
@@ -116,12 +113,6 @@ namespace GameHub.UI.Windows
 			get_position(out x, out y);
 			saved_state.window_x = x;
 			saved_state.window_y = y;
-		}
-		
-		public bool quit_source_func()
-		{
-			quit();
-			return false;
 		}
 
 		private void quit()

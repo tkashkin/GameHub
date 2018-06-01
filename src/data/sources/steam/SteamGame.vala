@@ -14,7 +14,6 @@ namespace GameHub.Data.Sources.Steam
 			id = json.get_int_member("appid").to_string();
 			name = json.get_string_member("name");
 			var icon_hash = json.get_string_member("img_icon_url");
-			var image_hash = json.get_string_member("img_logo_url");
 			icon = @"https://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
 			image = @"https://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
 			int64 minutes = json.get_int_member("playtime_forever");
