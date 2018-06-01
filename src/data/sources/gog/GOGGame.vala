@@ -73,14 +73,19 @@ namespace GameHub.Data.Sources.GOG
 				var local = FSUtils.expand(FSUtils.Paths.GOG.Installers, "gog_" + id + "_" + installer.id + ".sh");
 				
 				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, progress, null, (obj, res) => {
-					var file = Downloader.get_instance().download.end(res).get_path();
-					FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-					var install_dir = FSUtils.expand(FSUtils.Paths.GOG.Games, name.escape().replace(" ", "_").replace("'", "\\'"));
-					Utils.run(@"chmod +x '$(file)'");
-					Utils.run_async.begin(@"'$(file)' -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination \"$(install_dir)\"", (obj, res) => {
-						Utils.run_async.end(res);
+					try
+					{
+						var file = Downloader.get_instance().download.end(res).get_path();
+						FSUtils.mkdir(FSUtils.Paths.GOG.Games);
+						var install_dir = FSUtils.expand(FSUtils.Paths.GOG.Games, name.escape().replace(" ", "_").replace("'", "\\'"));
+						Utils.run(@"chmod +x '$(file)'");
+						Utils.run_async(@"'$(file)' -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination \"$(install_dir)\"");
 						Idle.add(install.callback);
-					});
+					}
+					catch(Error e)
+					{
+						warning(e.message);
+					}
 				});
 			});
 			

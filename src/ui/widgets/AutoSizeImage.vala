@@ -22,11 +22,11 @@ namespace GameHub.UI.Widgets
 			switch(constraint)
 			{
 				case Orientation.HORIZONTAL:
-					set_size_request(cmin, -1);
+					set_size_request(cmin, (int) (cmin * ratio));
 					break;
 
 				case Orientation.VERTICAL:
-					set_size_request(-1, cmin);
+					set_size_request((int) (cmin / ratio), cmin);
 					break;
 			}
 		}
@@ -55,7 +55,7 @@ namespace GameHub.UI.Widgets
 
 				case Orientation.VERTICAL:
 					new_height = int.max(cmin, int.min(cmax, rect.height));
-					new_width = (int) (new_height * ratio);
+					new_width = (int) (new_height / ratio);
 					break;
 			}
 

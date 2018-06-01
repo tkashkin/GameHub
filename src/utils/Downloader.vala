@@ -12,12 +12,12 @@ namespace GameHub.Utils
 		public File cached_file;
 		public DownloadProgress progress;
 
-		public Download(File remote_file, File cached_file, DownloadProgress progress)
+		public Download(File remote_file, File cached_file, owned DownloadProgress progress)
 		{
 			this.remote_file = remote_file;
 			this.uri = remote_file.get_uri();
 			this.cached_file = cached_file;
-			this.progress = progress;
+			this.progress = (owned) progress;
 		}
 	}
 
@@ -57,7 +57,7 @@ namespace GameHub.Utils
 			var cached_path = cached_paths[0];
 
 			if(download != null)
-				return yield await_download(download, cached_path, progress);
+				return yield await_download(download, cached_path, (d, t) => progress(d, t));
 
 			var cached_file = get_cached_file(remote_file, cached_paths);
 			if(cached_file != null)
@@ -66,7 +66,7 @@ namespace GameHub.Utils
 			var tmp_path = cached_path + "~";
 			var tmp_file = GLib.File.new_for_path(tmp_path);
 			debug("Downloading '%s'...", uri);
-			download = new Download(remote_file, tmp_file, progress);
+			download = new Download(remote_file, tmp_file, (d, t) => progress(d, t));
 			downloads.set(uri, download);
 
 			try
@@ -162,7 +162,7 @@ namespace GameHub.Utils
 			}
 		}
 
-		private async File? await_download(Download download, string cached_path, DownloadProgress progress) throws GLib.Error
+		private async File? await_download(Download download, string cached_path, owned DownloadProgress progress) throws GLib.Error
 		{
 			File downloaded_file = null;
 			GLib.Error download_error = null;
@@ -173,7 +173,7 @@ namespace GameHub.Utils
 					return;
 
 				downloaded_file = downloaded.cached_file;
-				callback ();
+				callback();
 			});
 			var downloaded_failed_id = download_failed.connect((downloader, failed_download, error) => {
 				if (failed_download.uri != download.uri)
