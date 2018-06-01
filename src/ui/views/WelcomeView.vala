@@ -11,6 +11,8 @@ namespace GameHub.UI.Views
 		
 		private Button skip_btn;
 		
+		private bool is_updating = false;
+		
 		construct
 		{
 			welcome = new Granite.Widgets.Welcome(_("All your games in one place"), _("Let's get started"));
@@ -32,6 +34,7 @@ namespace GameHub.UI.Views
 				var image = FSUtils.get_icon(src.icon);
 				welcome.append_with_pixbuf(image, src.name, "");
 			}
+			
 			update_entries.begin();
 		}
 		
@@ -47,6 +50,9 @@ namespace GameHub.UI.Views
 		
 		private async void update_entries()
 		{
+			if(is_updating) return;
+			is_updating = true;
+			
 			skip_btn.set_sensitive(false);
 			var all_authenticated = true;
 			
@@ -70,12 +76,21 @@ namespace GameHub.UI.Views
 					{
 						btn.description = _("Authentication required") + src.auth_description;
 						all_authenticated = false;
+						if(src.can_authenticate_automatically())
+						{
+							btn.description = _("Authenticating...");
+							welcome.set_item_sensitivity(index, false);
+							yield src.authenticate();
+							is_updating = false;
+							update_entries.begin();
+							return;
+						}
 					}
 				}
 				else
 				{
 					btn.title = _("Install %s").printf(src.name);
-					btn.description = "Return to GameHub after installing";
+					btn.description = _("Return to GameHub after installing");
 					all_authenticated = false;
 				}
 			}
@@ -86,6 +101,8 @@ namespace GameHub.UI.Views
 			}
 			
 			welcome.show_all();
+			
+			is_updating = false;
 		}
 		
 		private async void on_entry_clicked(int index)

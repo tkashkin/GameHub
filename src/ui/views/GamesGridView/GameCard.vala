@@ -24,6 +24,11 @@ namespace GameHub.UI.Views
 		private const int CARD_WIDTH_MAX = 680;
 		private const float CARD_RATIO = 0.467f; // 460x215
 		
+		private Frame progress_bar;
+		private GameDownloadProgressView progress_view;
+		public signal void installation_started(GameDownloadProgressView progress);
+		public signal void installation_finished(GameDownloadProgressView progress);
+		
 		construct
 		{
 			card = new Frame(null);
@@ -59,17 +64,46 @@ namespace GameHub.UI.Views
 			actions.hexpand = true;
 			actions.vexpand = true;
 			
+			progress_bar = new Frame(null);
+			progress_bar.halign = Align.START;
+			progress_bar.valign = Align.END;
+			progress_bar.opacity = 0;
+			progress_bar.get_style_context().add_class("progress");
+			
 			content.add(image);
 			content.add_overlay(actions);
 			content.add_overlay(label);
 			content.add_overlay(src_icon);
+			content.add_overlay(progress_bar);
 			
 			card.add(content);
 			
 			content.add_events(EventMask.ALL_EVENTS_MASK);
 			content.enter_notify_event.connect(e => { card.get_style_context().add_class("hover"); });
 			content.leave_notify_event.connect(e => { card.get_style_context().remove_class("hover"); });
-			content.button_release_event.connect(e => { if(game.is_installed()) game.run(); else game.install(); });
+			content.button_release_event.connect(e => {
+				if(game.is_installed())
+				{
+					game.run.begin();
+				}
+				else
+				{
+					game.install.begin((d, t) => {
+						var fraction = (double) d / t;
+						progress_view.set_progress(fraction);
+						Allocation alloc;
+						card.get_allocation(out alloc);
+						progress_bar.set_size_request((int) (fraction * alloc.width), 8);
+					}, (obj, res) => {
+						game.install.end(res);
+						if(game.is_installed()) card.get_style_context().add_class("installed");
+						installation_finished(progress_view);
+						progress_bar.opacity = 0;
+					});
+					installation_started(progress_view);
+					progress_bar.opacity = 1;
+				}
+			});
 			
 			show_all();
 		}
@@ -81,6 +115,10 @@ namespace GameHub.UI.Views
 			label.label = game.name;
 			
 			src_icon.pixbuf = FSUtils.get_icon(game.source.icon + "-white", 24);
+			
+			progress_view = new GameDownloadProgressView(game);
+			
+			if(game.is_installed()) card.get_style_context().add_class("installed");
 			
 			load_image.begin();
 		}
@@ -97,8 +135,6 @@ namespace GameHub.UI.Views
 					yield remote.copy_async(cached, FileCopyFlags.NONE);
 				}
 				image.set_source(new Pixbuf.from_file(cached.get_path()));
-				
-				if(game.is_installed()) card.get_style_context().add_class("installed");
 			}
 			catch(Error e)
 			{

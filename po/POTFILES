@@ -1,5 +1,6 @@
 data/com.github.tkashkin.gamehub.appdata.xml.in
 data/com.github.tkashkin.gamehub.desktop.in
+data/com.github.tkashkin.gamehub.gschema.xml
 
 src/app.vala
 
@@ -9,18 +10,26 @@ src/data/GameSource.vala
 src/data/sources/steam/Steam.vala
 src/data/sources/steam/SteamGame.vala
 
+src/data/GamesDB.vala
+
 src/data/sources/gog/GOG.vala
 src/data/sources/gog/GOGGame.vala
 
 src/ui/windows/MainWindow.vala
 src/ui/windows/WebAuthWindow.vala
+src/ui/windows/GOGGameInstallWindow.vala
 
 src/ui/views/BaseView.vala
 src/ui/views/WelcomeView.vala
 
 src/ui/views/GamesGridView/GamesGridView.vala
 src/ui/views/GamesGridView/GameCard.vala
+src/ui/views/GamesGridView/GameDownloadProgressView.vala
+
+src/ui/widgets/AutoSizeImage.vala
 
 src/utils/Utils.vala
 src/utils/FSUtils.vala
 src/utils/Parser.vala
+src/utils/Settings.vala
+src/utils/Downloader.vala

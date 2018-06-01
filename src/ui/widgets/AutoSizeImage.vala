@@ -49,13 +49,13 @@ namespace GameHub.UI.Widgets
 			switch(constraint)
 			{
 				case Orientation.HORIZONTAL:
-		 			new_width = int.max(cmin, int.min(cmax, rect.width));
-		 			new_height = (int) (new_width * ratio);
+					new_width = int.max(cmin, int.min(cmax, rect.width));
+					new_height = (int) (new_width * ratio);
 					break;
 
 				case Orientation.VERTICAL:
 					new_height = int.max(cmin, int.min(cmax, rect.height));
-		 			new_width = (int) (new_height * ratio);
+					new_width = (int) (new_height * ratio);
 					break;
 			}
 
@@ -65,7 +65,7 @@ namespace GameHub.UI.Widgets
 			cairo_set_source_pixbuf(ctx, pixbuf, 0, 0);
 			ctx.clip();
 			ctx.paint();
-				   			
+							
 			switch(constraint)
 			{
 				case Orientation.HORIZONTAL:

@@ -1,12 +1,14 @@
 using Gtk;
 using GameHub.UI.Views;
+using GameHub.Settings;
 
 namespace GameHub.UI.Windows
 {
 	public class MainWindow: Gtk.ApplicationWindow
 	{
-		public HeaderBar titlebar;
+		private SavedState saved_state;
 		
+		public HeaderBar titlebar;
 		private Stack stack;
 		
 		public MainWindow(GameHub.Application app)
@@ -43,6 +45,15 @@ namespace GameHub.UI.Windows
 			notify["has-toplevel-focus"].connect(() => {
 				current_view.on_window_focus();
 			});
+			
+			saved_state = SavedState.get_instance();
+			
+			Unix.signal_add(Posix.Signal.INT, quit_source_func, Priority.HIGH);
+			Unix.signal_add(Posix.Signal.TERM, quit_source_func, Priority.HIGH);
+			
+			delete_event.connect(() => { quit(); return false; });
+			
+			restore_saved_state();
 		}
 		
 		public void add_view(BaseView view, bool show=true)
@@ -56,6 +67,66 @@ namespace GameHub.UI.Windows
 		private void stack_updated()
 		{
 			current_view.on_show();
+		}
+		
+		private void restore_saved_state()
+		{
+			if(saved_state.window_width > -1)
+				default_width = saved_state.window_width;
+			if(saved_state.window_height > -1)
+				default_height = saved_state.window_height;
+
+			switch(saved_state.window_state)
+			{
+				case Settings.WindowState.MAXIMIZED:
+					maximize();
+					break;
+				case Settings.WindowState.FULLSCREEN:
+					fullscreen();
+					break;
+				default:
+					if(saved_state.window_x > -1 && saved_state.window_y > -1)
+						move(saved_state.window_x, saved_state.window_y);
+					break;
+			}
+		}
+		
+		private void update_saved_state()
+		{
+			var state = get_window().get_state();
+			if(Gdk.WindowState.MAXIMIZED in state)
+			{
+				saved_state.window_state = Settings.WindowState.MAXIMIZED;
+			}
+			else if(Gdk.WindowState.FULLSCREEN in state)
+			{
+				saved_state.window_state = Settings.WindowState.FULLSCREEN;
+			}
+			else
+			{
+				saved_state.window_state = Settings.WindowState.NORMAL;
+				
+				int width, height;
+				get_size(out width, out height);
+				saved_state.window_width = width;
+				saved_state.window_height = height;
+			}
+			
+			int x, y;
+			get_position(out x, out y);
+			saved_state.window_x = x;
+			saved_state.window_y = y;
+		}
+		
+		public bool quit_source_func()
+		{
+			quit();
+			return false;
+		}
+
+		private void quit()
+		{
+			update_saved_state();
 		}
 		
 		public BaseView current_view

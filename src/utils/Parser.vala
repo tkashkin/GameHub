@@ -30,7 +30,6 @@ namespace GameHub.Utils
 			if(auth != null)
 			{
 				var h = @"Bearer $(auth)";
-				print("Authorization: %s\n", h);
 				message.request_headers.append("Authorization", h);
 			}
 			

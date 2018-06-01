@@ -7,15 +7,13 @@ using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Utils;
 
-[CCode(cname="GETTEXT_PACKAGE")] extern const string GETTEXT_PACKAGE;
-
 namespace GameHub
 {
 	public class Application: Granite.Application
 	{
 		construct
 		{
-			application_id = "com.github.tkashkin.gamehub";
+			application_id = ProjectConfig.PROJECT_NAME;
 			flags = ApplicationFlags.FLAGS_NONE;
 			program_name = "GameHub";
 		}
@@ -34,12 +32,14 @@ namespace GameHub
 
 		public static int main(string[] args)
 		{
-			//Ivy.Stacktrace.register_handlers();
+			Ivy.Stacktrace.register_handlers();
 			
 			Intl.setlocale(LocaleCategory.ALL, "");
-			Intl.textdomain(GETTEXT_PACKAGE);
+			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);
 			
 			FSUtils.make_dirs();
+			
+			GamesDB.init();
 			
 			GameSources = { new Steam(), new GOG() };
 			

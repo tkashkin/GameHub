@@ -33,6 +33,18 @@ namespace GameHub.Utils
 		return stdout;
 	}
 	
+	public static async void run_async(string cmd)
+	{
+		try
+		{
+			Process.spawn_command_line_async(cmd);
+		}
+		catch (Error e)
+		{
+			error(e.message);
+		}
+	}
+	
 	public static bool is_package_installed(string package)
 	{
 		var output = Utils.run("dpkg-query -W -f=${Status} " + package);
