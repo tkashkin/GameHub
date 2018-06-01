@@ -58,7 +58,7 @@ executable(
 		dependency('gee-0.8'),
 		dependency('libsoup-2.4'),
         dependency('sqlite3'),
-		dependency('ivy'),
+		#dependency('ivy'),
 		meson.get_compiler('vala').find_library('posix'),
 	],
 	install: true
