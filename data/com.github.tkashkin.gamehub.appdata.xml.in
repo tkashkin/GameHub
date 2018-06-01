@@ -35,7 +35,7 @@
 	</custom>
 	
 	<releases>
-		<release version="0.2.1" date="2018-06-01">
+		<release version="0.2.2" date="2018-06-01">
 			<description>
 				<p>GOG games installation and running</p>
 				<p>Various improvements</p>
