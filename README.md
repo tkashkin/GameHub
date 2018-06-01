@@ -11,10 +11,10 @@ __Currently supported sources:__
 ## Features
 __Implemented:__
 * Fetching linux-compatible games from Steam and GOG
+* Game installation
+* Game launching
 
 __Planned:__
-* Game launching
-* Game installation, uninstallation
 * Maybe more services
 
 ## Screenshots
