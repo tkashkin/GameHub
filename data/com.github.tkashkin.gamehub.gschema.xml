@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+	<enum id="com.github.tkashkin.gamehub.window-states">
+		<value nick="Normal" value="0" />
+		<value nick="Maximized" value="1" />
+		<value nick="Fullscreen" value="2" />
+	</enum>
+	<schema path="/com/github/tkashkin/gamehub/saved-state/" id="com.github.tkashkin.gamehub.saved-state" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="window-state" enum="com.github.tkashkin.gamehub.window-states">
+			<default>"Normal"</default>
+		</key>
+		<key name="window-width" type="i">
+			<default>-1</default>
+		</key>
+		<key name="window-height" type="i">
+			<default>-1</default>
+			<description></description>
+		</key>
+		<key name="window-x" type="i">
+			<default>-1</default>
+		</key>
+		<key name="window-y" type="i">
+			<default>-1</default>
+		</key>
+	</schema>
+	
+	<schema path="/com/github/tkashkin/gamehub/auth/steam/" id="com.github.tkashkin.gamehub.auth.steam" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="authenticated" type="b">
+			<default>false</default>
+		</key>
+	</schema>
+	
+	<schema path="/com/github/tkashkin/gamehub/auth/gog/" id="com.github.tkashkin.gamehub.auth.gog" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="authenticated" type="b">
+			<default>false</default>
+		</key>
+		<key name="access-token" type="s">
+			<default>''</default>
+		</key>
+		<key name="refresh-token" type="s">
+			<default>''</default>
+		</key>
+	</schema>
+	
+	<schema path="/com/github/tkashkin/gamehub/paths/" id="com.github.tkashkin.gamehub.paths" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="steam-home" type="s">
+			<default>'~/.steam'</default>
+		</key>
+		<key name="gog-games" type="s">
+			<default>'~/Games/GOG'</default>
+		</key>
+	</schema>
+</schemalist>

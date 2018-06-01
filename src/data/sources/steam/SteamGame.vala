@@ -10,23 +10,32 @@ namespace GameHub.Data.Sources.Steam
 		
 		public SteamGame(Steam src, Json.Object json)
 		{
-			this.source = src;
-			
-			this.id = json.get_int_member("appid").to_string();
-			this.name = json.get_string_member("name");
-			
+			source = src;
+			id = json.get_int_member("appid").to_string();
+			name = json.get_string_member("name");
 			var icon_hash = json.get_string_member("img_icon_url");
 			var image_hash = json.get_string_member("img_logo_url");
-			
-			this.icon = @"https://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
-			this.image = @"https://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
-			
-			this.command = @"xdg-open steam://rungameid/$(id)";
-			
+			icon = @"https://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
+			image = @"https://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
 			int64 minutes = json.get_int_member("playtime_forever");
 			int64 hours = (int) (minutes / 60.0f);
+			playtime = minutes > 60 ? @"$(hours) hours" : @"$(minutes) minutes";
 			
-			this.playtime = minutes > 60 ? @"$(hours) hours" : @"$(minutes) minutes";
+			if(GamesDB.get_instance().is_game_unsupported(src, id))
+			{
+				_is_for_linux = false;
+			}
+		}
+		
+		public SteamGame.from_db(Steam src, Sqlite.Statement stmt)
+		{
+			source = src;
+			id = stmt.column_text(1);
+			name = stmt.column_text(2);
+			icon = stmt.column_text(3);
+			image = stmt.column_text(4);
+			playtime = stmt.column_text(5);
+			_is_for_linux = true;
 		}
 		
 		public override async bool is_for_linux()
@@ -35,27 +44,30 @@ namespace GameHub.Data.Sources.Steam
 			
 			metadata_tries++;
 			
-			print("[Steam app %s] Checking for linux compatibility [%d]...\n", this.id, metadata_tries);
+			print("[Steam app %s] Checking for linux compatibility [%d]...\n", id, metadata_tries);
 			
 			var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)";
 			var root = yield Parser.parse_remote_json_file_async(url);
-			var platforms = Parser.json_object(root, {this.id, "data", "platforms"});
+			var platforms = Parser.json_object(root, {id, "data", "platforms"});
 			
 			if(platforms == null)
 			{
 				if(metadata_tries > 2)
 				{
-					print("[Steam app %s] No data, %d tries failed, assuming no linux support\n", this.id, metadata_tries);
+					print("[Steam app %s] No data, %d tries failed, assuming no linux support\n", id, metadata_tries);
 					_is_for_linux = false;
+					GamesDB.get_instance().add_unsupported_game(source, id);
 					return _is_for_linux;
 				}
 				
-				print("[Steam app %s] No data, sleeping for 2.5s\n", this.id);
+				print("[Steam app %s] No data, sleeping for 2.5s\n", id);
 				yield Utils.sleep_async(2500);
 				return yield is_for_linux();
 			}
 			
 			_is_for_linux = platforms.get_boolean_member("linux");
+			
+			if(_is_for_linux == false) GamesDB.get_instance().add_unsupported_game(source, id);
 			
 			return _is_for_linux;
 		}
@@ -74,7 +86,7 @@ namespace GameHub.Data.Sources.Steam
 			return false;
 		}
 		
-		public override async void install()
+		public override async void install(DownloadProgress progress = (d, t) => {})
 		{
 			yield run();
 		}

@@ -23,6 +23,10 @@ namespace GameHub.UI.Views
 		private Spinner spinner;
 		private int loading_sources = 0;
 		
+		private MenuButton downloads;
+		private Popover downloads_popover;
+		private ListBox downloads_list;
+		
 		construct
 		{
 			foreach(var src in GameSources)
@@ -50,32 +54,43 @@ namespace GameHub.UI.Views
 			foreach(var src in sources) filter.append_pixbuf(FSUtils.get_icon(src.icon, 16));
 			filter.set_active(sources.size > 1 ? 0 : 1);
 			
+			downloads = new MenuButton();
+			downloads.image = new Image.from_icon_name("folder-download", IconSize.SMALL_TOOLBAR);
+			downloads_popover = new Popover(downloads);
+			downloads_list = new ListBox();
+			downloads_popover.add(downloads_list);
+			downloads_popover.position = PositionType.BOTTOM;
+			downloads_popover.set_size_request(384, -1);
+			downloads.popover = downloads_popover;
+			titlebar.pack_end(downloads);
+			downloads.set_sensitive(false);
+			
 			search = new SearchEntry();
 			
 			if(sources.size > 1) titlebar.pack_start(filter);
 			titlebar.pack_end(search);
 			
 			games_list.set_sort_func((child1, child2) => {
-                var item1 = child1 as GameCard;
-                var item2 = child2 as GameCard;
-                if(item1 != null && item2 != null)
-                {
-                    return item1.game.name.collate(item2.game.name);
-                }
-                return 0;
-            });
-            
-            games_list.set_filter_func(child => {
-                var item = child as GameCard;
-                var f = filter.selected;
-                
-                GameSource? src = null;
-                if(f > 0) src = sources[f - 1];
-                
-                var games = src == null ? games_list.get_children().length() : src.games_count;
-                titlebar.title = "GameHub" + (src == null ? "" : "/" + src.name) + @": $(games) games";
-                
-                return (src == null || item == null || src == item.game.source) && (item == null || search.text.casefold() in item.game.name.casefold());
+				var item1 = child1 as GameCard;
+				var item2 = child2 as GameCard;
+				if(item1 != null && item2 != null)
+				{
+					return item1.game.name.collate(item2.game.name);
+				}
+				return 0;
+			});
+			
+			games_list.set_filter_func(child => {
+				var item = child as GameCard;
+				var f = filter.selected;
+				
+				GameSource? src = null;
+				if(f > 0) src = sources[f - 1];
+				
+				var games = src == null ? games_list.get_children().length() : src.games_count;
+				titlebar.title = "GameHub" + (src == null ? "" : "/" + src.name) + ": " + ngettext("%u game", "%u games", games).printf(games);
+				
+				return (src == null || item == null || src == item.game.source) && (item == null || search.text.casefold() in item.game.name.casefold());
 			});
 			
 			filter.mode_changed.connect(games_list.invalidate_filter);
@@ -98,7 +113,19 @@ namespace GameHub.UI.Views
 				loading_sources++;
 				spinner.active = loading_sources > 0;
 				src.load_games.begin(g => {
-					games_list.add(new GameCard(g));
+					var card = new GameCard(g);
+					card.installation_started.connect(p => {
+						downloads_list.add(p);
+						downloads_list.show_all();
+						downloads.set_sensitive(true);
+					});
+					card.installation_finished.connect(p => {
+						downloads_list.remove(p);
+						var has_downloads = downloads_list.get_children().length() > 0;
+						downloads.set_sensitive(has_downloads);
+						if(!has_downloads) downloads_popover.popdown();
+					});
+					games_list.add(card);
 					games_list.show_all();
 				}, (obj, res) => {
 					loading_sources--;

@@ -36,6 +36,8 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async bool authenticate()
 		{
+			Settings.Auth.Steam.get_instance().authenticated = true;
+			
 			if(is_authenticated()) return true;
 			
 			var result = false;
@@ -43,12 +45,6 @@ namespace GameHub.Data.Sources.Steam
 			new Thread<void*>("steam-loginusers-thread", () => {
 				Json.Object config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDF);
 				var users = Parser.json_object(config, {"users"});
-				
-				if(users == null)
-				{
-					config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDFOld);
-					users = Parser.json_object(config, {"users"});
-				}
 				
 				if(users == null)
 				{
@@ -78,8 +74,13 @@ namespace GameHub.Data.Sources.Steam
 		{
 			return user_id != null;
 		}
+		
+		public override bool can_authenticate_automatically()
+		{
+			return Settings.Auth.Steam.get_instance().authenticated;
+		}
 
-		private ArrayList<Game> games = new ArrayList<Game>();
+		private ArrayList<Game> games = new ArrayList<Game>(Game.is_equal);
 		public override async ArrayList<Game> load_games(FutureResult<Game>? game_loaded = null)
 		{
 			if(!is_authenticated() || games.size > 0)
@@ -87,24 +88,37 @@ namespace GameHub.Data.Sources.Steam
 				return games;
 			}
 			
+			games.clear();
+			
+			var cached = GamesDB.get_instance().get_games(this);
+			if(cached.size > 0)
+			{
+				games = cached;
+				if(game_loaded != null)
+				{
+					foreach(var g in cached)
+					{
+						game_loaded(g);
+					}
+				}
+			}
+			
 			var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(API_KEY)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
 			
 			var root = yield Parser.parse_remote_json_file_async(url);
 			var json_games = root.get_object_member("response").get_array_member("games");
 			
-			games.clear();
-			
 			foreach(var g in json_games.get_elements())
 			{
 				var game = new SteamGame(this, g.get_object());
-				if(yield game.is_for_linux())
+				if(!games.contains(game) && yield game.is_for_linux())
 				{
 					games.add(game);
-					games_count = games.size;
 					if(game_loaded != null) game_loaded(game);
+					GamesDB.get_instance().add_game(game);
 				}
+				games_count = games.size;
 			}
-			
 			
 			return games;
 		}

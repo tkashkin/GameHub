@@ -1,12 +1,13 @@
 .gamecard
 {
+	opacity: 0.8;
 	border-radius: 4px;
 	transition: 100ms;
 }
 
 .gamecard.installed
 {
-	
+	opacity: 1;
 }
 
 .gamecard label
@@ -39,4 +40,10 @@
 .gamecard.installed.hover .actions
 {
 	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.gamecard .progress
+{
+	background-color: rgba(255, 255, 255, 0.6);
+	border-radius: 4px;
 }

@@ -11,7 +11,8 @@ Build-Depends: meson (>= 0.40),
                libwebkit2gtk-4.0-dev,
                libjson-glib-dev,
                libgee-0.8-dev,
-               libsoup2.4-dev
+               libsoup2.4-dev,
+               libsqlite3-dev
 Standards-Version: 3.9.3
 
 Package: com.github.tkashkin.gamehub
