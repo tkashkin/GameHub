@@ -1,9 +1,9 @@
-com.github.tkashkin.gamehub (0.2.0) xenial; urgency=low
+com.github.tkashkin.gamehub (0.2.1) xenial; urgency=low
 
   * GOG games installation and running
   * Various improvements
 
- -- tkashkin <tkashkin@gmail.com>  Mon, 01 Jun 2018 04:12:18 +0300
+ -- tkashkin <tkashkin@gmail.com>  Fri, 01 Jun 2018 04:12:18 +0300
 
 com.github.tkashkin.gamehub (0.1.3) xenial; urgency=low
 
