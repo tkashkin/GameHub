@@ -1,0 +1,159 @@
+using Gtk;
+using Granite;
+using GameHub.Utils;
+
+namespace GameHub.UI.Dialogs
+{
+	public class SettingsDialog: Dialog
+	{
+		private Box box;
+		
+		public SettingsDialog()
+		{
+			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false);
+			
+			set_modal(true);
+			
+			var content = get_content_area();
+			content.set_size_request(480, -1);
+
+			box = new Box(Orientation.VERTICAL, 0);
+			box.margin_start = box.margin_end = 8;
+			
+			var ui = Settings.UI.get_instance();
+			var paths = FSUtils.Paths.Settings.get_instance();
+			var steam_auth = Settings.Auth.Steam.get_instance();
+			
+			add_switch(_("Use dark theme"), ui.dark_theme, e => { ui.dark_theme = e; });
+			add_separator();
+			
+			add_header("Steam");
+			add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "https://steamcommunity.com/dev/apikey");
+			add_entry(_("Steam API key"), steam_auth.api_key, v => { steam_auth.api_key = v; });
+			add_file_chooser(_("Steam installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; }, false);
+			add_separator();
+			
+			add_header("GOG");
+			add_file_chooser(_("GOG games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; });
+			
+			content.pack_start(box, false, false, 0);
+			
+			response.connect((source, response_id) => {
+				switch(response_id)
+				{
+					case ResponseType.CLOSE:
+						destroy();
+						break;
+				}
+			});
+
+			add_button(_("Close"), ResponseType.CLOSE).margin_end = 7;
+			show_all();
+		}
+		
+		private void add_switch(string text, bool enabled, owned SwitchAction action)
+		{
+			var sw = new Switch();
+			sw.active = enabled;
+			sw.halign = Align.END;
+			sw.notify["active"].connect(() => { action(sw.active); });
+			
+			var label = new Label(text);
+			label.halign = Align.START;
+			label.hexpand = true;
+			
+			var hbox = new Box(Orientation.HORIZONTAL, 12);
+			hbox.add(label);
+			hbox.add(sw);
+			add_widget(hbox);
+		}
+		
+		private void add_entry(string text, string val, owned EntryAction action)
+		{
+			var entry = new Entry();
+			entry.text = val;
+			entry.notify["text"].connect(() => { action(entry.text); });
+			entry.set_size_request(280, -1);
+			
+			var label = new Label(text);
+			label.halign = Align.START;
+			label.hexpand = true;
+			
+			var hbox = new Box(Orientation.HORIZONTAL, 12);
+			hbox.add(label);
+			hbox.add(entry);
+			add_widget(hbox);
+		}
+		
+		private void add_file_chooser(string text, FileChooserAction mode, string val, owned EntryAction action, bool create=true)
+		{
+			var chooser = new FileChooserButton(text, mode);
+			chooser.create_folders = create;
+			chooser.select_filename(FSUtils.expand(val));
+			chooser.file_set.connect(() => { action(chooser.get_filename()); });
+			chooser.set_size_request(280, -1);
+			
+			var label = new Label(text);
+			label.halign = Align.START;
+			label.hexpand = true;
+			
+			var hbox = new Box(Orientation.HORIZONTAL, 12);
+			hbox.add(label);
+			hbox.add(chooser);
+			add_widget(hbox);
+		}
+		
+		private void add_label(string text)
+		{
+			var label = new Label(text);
+			label.halign = Align.START;
+			label.hexpand = true;
+			add_widget(label);
+		}
+		
+		private void add_header(string text)
+		{
+			var label = new HeaderLabel(text);
+			label.xpad = 4;
+			label.halign = Align.START;
+			label.hexpand = true;
+			add_widget(label);
+		}
+		
+		private void add_link(string text, string uri)
+		{
+			var link = new LinkButton.with_label(uri, text);
+			link.halign = Align.START;
+			link.hexpand = true;
+			add_widget(link);
+		}
+		
+		private void add_labeled_link(string label_text, string text, string uri)
+		{
+			var label = new Label(label_text);
+			label.halign = Align.START;
+			
+			var link = new LinkButton.with_label(uri, text);
+			link.halign = Align.START;
+			
+			var hbox = new Box(Orientation.HORIZONTAL, 12);
+			hbox.add(label);
+			hbox.add(link);
+			add_widget(hbox);
+		}
+		
+		private void add_separator()
+		{
+			add_widget(new Separator(Orientation.HORIZONTAL));
+		}
+		
+		private void add_widget(Widget widget)
+		{
+			if(!(widget is HeaderLabel)) widget.margin = 4;
+			box.add(widget);
+		}
+		
+		private delegate void SwitchAction(bool active);
+		private delegate void EntryAction(string val);
+	}
+}

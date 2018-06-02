@@ -16,6 +16,8 @@ namespace GameHub.UI.Windows
 
 		public WebAuthWindow(string source, string url, string success_url_prefix)
 		{
+			Object(transient_for: Windows.MainWindow.instance);
+			
 			title = source;
 			var titlebar = new HeaderBar();
 			titlebar.title = title;

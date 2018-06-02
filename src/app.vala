@@ -16,6 +16,7 @@ namespace GameHub
 			application_id = ProjectConfig.PROJECT_NAME;
 			flags = ApplicationFlags.FLAGS_NONE;
 			program_name = "GameHub";
+			build_version = ProjectConfig.VERSION;
 		}
 
 		protected override void activate()

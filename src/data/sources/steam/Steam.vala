@@ -6,10 +6,10 @@ namespace GameHub.Data.Sources.Steam
 {
 	public class Steam: GameSource
 	{
-		private const string API_KEY = "8B10B604CAC6AC90F57AACE025DD904C";
+		private string api_key;
 		
 		public override string name { get { return "Steam"; } }
-		public override string icon { get { return "steam-symbolic"; } }
+		public override string icon { get { return "steam"; } }
 		public override string auth_description { owned get { return ".\n%s".printf(_("Your SteamID will be read from Steam configuration file")); } }
 		
 		public string? user_id { get; protected set; }
@@ -83,6 +83,8 @@ namespace GameHub.Data.Sources.Steam
 		private ArrayList<Game> games = new ArrayList<Game>(Game.is_equal);
 		public override async ArrayList<Game> load_games(FutureResult<Game>? game_loaded = null)
 		{
+			api_key = Settings.Auth.Steam.get_instance().api_key;
+			
 			if(!is_authenticated() || games.size > 0)
 			{
 				return games;
@@ -103,7 +105,7 @@ namespace GameHub.Data.Sources.Steam
 				}
 			}
 			
-			var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(API_KEY)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
+			var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(api_key)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
 			
 			var root = yield Parser.parse_remote_json_file_async(url);
 			var json_games = root.get_object_member("response").get_array_member("games");

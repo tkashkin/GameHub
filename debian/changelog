@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.2.4) xenial; urgency=low
+
+  * Settings dialog
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 01 Jun 2018 23:20:42 +0300
+
 com.github.tkashkin.gamehub (0.2.3) xenial; urgency=low
 
   * GOG games installation and running

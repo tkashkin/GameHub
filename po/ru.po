@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-01 04:08+0300\n"
+"POT-Creation-Date: 2018-06-02 05:53+0300\n"
 "PO-Revision-Date: 2018-05-27 03:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: data/com.github.tkashkin.gamehub.appdata.xml.in:9
 #: data/com.github.tkashkin.gamehub.desktop.in:5
-#: src/ui/views/WelcomeView.vala:18
+#: src/ui/views/WelcomeView.vala:32
 msgid "All your games in one place"
 msgstr "Все игры в одном месте"
 
@@ -34,59 +34,103 @@ msgstr "Все игры в одном месте"
 msgid "Manage your Steam and GOG games in one place."
 msgstr "Управляйте играми из Steam и GOG в одном месте"
 
-#: data/com.github.tkashkin.gamehub.appdata.xml.in:15
-msgid "Anatoliy Kashkin"
-msgstr ""
-
-#: data/com.github.tkashkin.gamehub.desktop.in:7
-msgid "Game;Hub;Steam;GOG;"
-msgstr ""
-
-#: data/com.github.tkashkin.gamehub.desktop.in:10
-msgid "com.github.tkashkin.gamehub"
-msgstr ""
-
 #: src/data/sources/steam/Steam.vala:13
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr "Ваш SteamID будет прочитан из файла конфигурации Steam"
 
-#: src/ui/windows/GOGGameInstallWindow.vala:22 src/ui/views/WelcomeView.vala:92
+#: src/ui/dialogs/SettingsDialog.vala:27
+msgid "Use dark theme"
+msgstr "Использовать тёмную тему"
+
+#: src/ui/dialogs/SettingsDialog.vala:31
+msgid "Steam API keys have limited number of uses per day"
+msgstr "API-ключи Steam имеют ограничение на количество использований в день"
+
+#: src/ui/dialogs/SettingsDialog.vala:31
+msgid "Generate key"
+msgstr "Сгенерировать ключ"
+
+#: src/ui/dialogs/SettingsDialog.vala:32
+msgid "Steam API key"
+msgstr "API-ключ Steam"
+
+#: src/ui/dialogs/SettingsDialog.vala:33
+msgid "Steam installation directory"
+msgstr "Папка установки Steam"
+
+#: src/ui/dialogs/SettingsDialog.vala:37
+msgid "GOG games directory"
+msgstr "Папка игр GOG"
+
+#: src/ui/dialogs/SettingsDialog.vala:50
+msgid "Close"
+msgstr "Закрыть"
+
+#: src/ui/dialogs/GOGGameInstallDialog.vala:47
+msgid "Select game language"
+msgstr "Выберите язык игры"
+
+#: src/ui/dialogs/GOGGameInstallDialog.vala:69
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/ui/dialogs/GOGGameInstallDialog.vala:70
+msgid "Install"
+msgstr "Установить"
+
+#: src/ui/views/WelcomeView.vala:32
+msgid "Let's get started"
+msgstr "Давайте начнём"
+
+#: src/ui/views/WelcomeView.vala:42
+msgid "Skip"
+msgstr "Пропустить"
+
+#: src/ui/views/WelcomeView.vala:49
+#: src/ui/views/GamesGridView/GamesGridView.vala:92
+msgid "Settings"
+msgstr "Настройки"
+
+#: src/ui/views/WelcomeView.vala:101
+msgid "Ready"
+msgstr "Готово"
+
+#: src/ui/views/WelcomeView.vala:107
+msgid "Authentication required"
+msgstr "Требуется авторизация"
+
+#: src/ui/views/WelcomeView.vala:112
+msgid "Authenticating..."
+msgstr "Авторизация..."
+
+#: src/ui/views/WelcomeView.vala:123
 #, c-format
 msgid "Install %s"
 msgstr "Установить %s"
 
-#: src/ui/windows/GOGGameInstallWindow.vala:48
-#, fuzzy
-msgid "Install"
-msgstr "Установить"
-
-#: src/ui/views/WelcomeView.vala:18
-msgid "Let's get started"
-msgstr "Давайте начнём"
-
-#: src/ui/views/WelcomeView.vala:26
-msgid "Skip"
-msgstr "Пропустить"
-
-#: src/ui/views/WelcomeView.vala:71
-msgid "Ready"
-msgstr "Готово"
-
-#: src/ui/views/WelcomeView.vala:77
-msgid "Authentication required"
-msgstr "Требуется авторизация"
-
-#: src/ui/views/WelcomeView.vala:81
-#, fuzzy
-msgid "Authenticating..."
-msgstr "Требуется авторизация"
-
-#: src/ui/views/WelcomeView.vala:93
+#: src/ui/views/WelcomeView.vala:124
 msgid "Return to GameHub after installing"
 msgstr "Вернитесь в GameHub после установки"
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:91
-#, fuzzy, c-format
+#: src/ui/views/GamesGridView/GamesGridView.vala:60
+msgid "All games"
+msgstr "Все игры"
+
+#: src/ui/views/GamesGridView/GamesGridView.vala:70
+#, c-format
+msgid "%s games"
+msgstr "Игры из %s"
+
+#: src/ui/views/GamesGridView/GamesGridView.vala:76
+msgid "Downloads"
+msgstr "Загрузки"
+
+#: src/ui/views/GamesGridView/GamesGridView.vala:87
+msgid "Search"
+msgstr "Поиск"
+
+#: src/ui/views/GamesGridView/GamesGridView.vala:118
+#, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u игра"

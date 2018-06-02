@@ -48,6 +48,8 @@ namespace GameHub.Utils
 		{
 			downloads = new GLib.HashTable<string, Download>(str_hash, str_equal);
 			session = new Soup.Session();
+			session.max_conns = 32;
+			session.max_conns_per_host = 16;
 		}
 		
 		public async File download(File remote_file, string[] cached_paths, DownloadProgress progress = (d, t) => {}, Cancellable? cancellable = null) throws GLib.Error

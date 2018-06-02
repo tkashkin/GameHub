@@ -33,16 +33,17 @@ namespace GameHub.Utils
 		return stdout;
 	}
 	
-	public static void run_async(string cmd)
+	public static async int run_async(string cmd)
 	{
-		try
-		{
-			Process.spawn_command_line_async(cmd);
-		}
-		catch (Error e)
-		{
-			warning(e.message);
-		}
+		int result = -1;
+		var c = new Granite.Services.SimpleCommand(Environment.get_home_dir(), cmd);
+		c.done.connect(code => {
+			result = code;
+			Idle.add(run_async.callback);
+		});
+		c.run();
+		yield;
+		return result;
 	}
 	
 	public static bool is_package_installed(string package)
