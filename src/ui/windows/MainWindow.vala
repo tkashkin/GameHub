@@ -6,6 +6,8 @@ namespace GameHub.UI.Windows
 {
 	public class MainWindow: Gtk.ApplicationWindow
 	{
+		public static MainWindow instance;
+		
 		private SavedState saved_state;
 		
 		public HeaderBar titlebar;
@@ -14,10 +16,17 @@ namespace GameHub.UI.Windows
 		public MainWindow(GameHub.Application app)
 		{
 			Object(application: app);
+			instance = this;
 		}
 		
 		construct
 		{
+			var ui_settings = Settings.UI.get_instance();
+			ui_settings.notify["dark-theme"].connect(() => {
+				Gtk.Settings.get_default().gtk_application_prefer_dark_theme = ui_settings.dark_theme;
+			});
+			ui_settings.notify["dark-theme"](((ObjectClass) typeof(Settings.UI).class_ref()).find_property("dark-theme"));
+			
 			title = "GameHub";
 
 			titlebar = new HeaderBar();

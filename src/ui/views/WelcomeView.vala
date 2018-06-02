@@ -6,33 +6,63 @@ using GameHub.Utils;
 namespace GameHub.UI.Views
 {
 	public class WelcomeView: BaseView
-	{	
+	{
+		private Stack stack;
 		private Granite.Widgets.Welcome welcome;
 		
 		private Button skip_btn;
+		private Button settings;
 		
 		private bool is_updating = false;
 		
 		construct
 		{
+			var ui_settings = Settings.UI.get_instance();
+			
+			stack = new Stack();
+			stack.transition_type = StackTransitionType.CROSSFADE;
+			
+			var spinner = new Spinner();
+			spinner.active = true;
+			spinner.set_size_request(36, 36);
+			spinner.halign = Align.CENTER;
+			spinner.valign = Align.CENTER;
+			stack.add(spinner);
+			
 			welcome = new Granite.Widgets.Welcome(_("All your games in one place"), _("Let's get started"));
 			
 			welcome.activated.connect(index => {
 				on_entry_clicked.begin(index);
 			});
 			
-			add(welcome);
+			stack.add(welcome);
+			
+			add(stack);
 			
 			skip_btn = new Button.with_label(_("Skip"));
 			skip_btn.clicked.connect(open_games_grid);
+			skip_btn.halign = Align.CENTER;
+			skip_btn.valign = Align.CENTER;
 			skip_btn.set_sensitive(false);
 			
+			settings = new Button();
+			settings.tooltip_text = _("Settings");
+			settings.image = new Image.from_icon_name("open-menu", IconSize.LARGE_TOOLBAR);
+			
+			settings.clicked.connect(() => new Dialogs.SettingsDialog().show_all());
+			
+			titlebar.pack_end(settings);
 			titlebar.pack_end(skip_btn);
 			
 			foreach(var src in GameSources)
-			{
-				var image = FSUtils.get_icon(src.icon);
-				welcome.append_with_pixbuf(image, src.name, "");
+			{				
+				var image = FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : ""));
+				
+				var i = welcome.append_with_pixbuf(image, src.name, "");
+				
+				ui_settings.notify["dark-theme"].connect(() => {
+					welcome.get_button_from_index(i).icon = new Image.from_pixbuf(FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : "")));
+				});
 			}
 			
 			update_entries.begin();
@@ -76,6 +106,7 @@ namespace GameHub.UI.Views
 					{
 						btn.description = _("Authentication required") + src.auth_description;
 						all_authenticated = false;
+						
 						if(src.can_authenticate_automatically())
 						{
 							btn.description = _("Authenticating...");
@@ -98,6 +129,10 @@ namespace GameHub.UI.Views
 			if(all_authenticated)
 			{
 				open_games_grid();
+			}
+			else
+			{
+				stack.set_visible_child(welcome);
 			}
 			
 			welcome.show_all();

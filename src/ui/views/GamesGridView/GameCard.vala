@@ -46,7 +46,7 @@ namespace GameHub.UI.Views
 			src_icon.valign = Align.START;
 			src_icon.halign = Align.START;
 			src_icon.margin = 8;
-			src_icon.opacity = 0.5;
+			src_icon.opacity = 0.6;
 			src_icon.set_events(0);
 			
 			label = new Label("");

@@ -63,7 +63,7 @@ namespace GameHub.Data.Sources.GOG
 				if(installer.os == "linux") installers.add(installer);
 			}
 			
-			var wnd = new GameHub.UI.Windows.GOGGameInstallWindow(this, installers);
+			var wnd = new GameHub.UI.Dialogs.GOGGameInstallDialog(this, installers);
 			
 			wnd.canceled.connect(() => Idle.add(install.callback));
 			
@@ -78,9 +78,11 @@ namespace GameHub.Data.Sources.GOG
 						var file = Downloader.get_instance().download.end(res).get_path();
 						FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 						var install_dir = FSUtils.expand(FSUtils.Paths.GOG.Games, name.escape().replace(" ", "_").replace("'", "\\'"));
-						Utils.run(@"chmod +x '$(file)'");
-						Utils.run_async(@"'$(file)' -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination \"$(install_dir)\"");
-						Idle.add(install.callback);
+						Utils.run(@"chmod +x \"$(file)\"");
+						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination \"$(install_dir)\"", (obj, res) => {
+							Utils.run_async.end(res);
+							Idle.add(install.callback);
+						});
 					}
 					catch(Error e)
 					{
@@ -100,7 +102,7 @@ namespace GameHub.Data.Sources.GOG
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				Utils.run_async(@"\"$(path)\"");
+				yield Utils.run_async(@"$(path)");
 			}
 		}
 		

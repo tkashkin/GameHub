@@ -86,6 +86,9 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Images);
 			mkdir(FSUtils.Paths.GOG.Installers);
+			
+			var cached_installers = FSUtils.expand(FSUtils.Paths.GOG.Installers, "{gog_*.sh~,.goutputstream-*}");
+			Utils.run(@"bash -c 'rm $(cached_installers)'");
 		}
 		
 		public static Pixbuf? get_icon(string name, int size=48)

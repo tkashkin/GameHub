@@ -1,6 +1,6 @@
 .gamecard
 {
-	opacity: 0.8;
+	opacity: 0.75;
 	border-radius: 4px;
 	transition: 100ms;
 }
@@ -8,6 +8,11 @@
 .gamecard.installed
 {
 	opacity: 1;
+}
+
+.gamecard.hover:not(.installed)
+{
+	opacity: 0.8;
 }
 
 .gamecard label

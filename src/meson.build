@@ -28,7 +28,9 @@ executable(
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
-	'ui/windows/GOGGameInstallWindow.vala',
+	
+	'ui/dialogs/SettingsDialog.vala',
+	'ui/dialogs/GOGGameInstallDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',

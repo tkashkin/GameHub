@@ -24,9 +24,18 @@
 		</key>
 	</schema>
 	
+	<schema path="/com/github/tkashkin/gamehub/ui/" id="com.github.tkashkin.gamehub.ui" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="dark-theme" type="b">
+			<default>false</default>
+		</key>
+	</schema>
+	
 	<schema path="/com/github/tkashkin/gamehub/auth/steam/" id="com.github.tkashkin.gamehub.auth.steam" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="authenticated" type="b">
 			<default>false</default>
+		</key>
+		<key name="api-key" type="s">
+			<default>'8B10B604CAC6AC90F57AACE025DD904C'</default>
 		</key>
 	</schema>
 	

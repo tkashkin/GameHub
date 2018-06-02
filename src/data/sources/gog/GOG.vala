@@ -65,7 +65,7 @@ namespace GameHub.Data.Sources.GOG
 		
 		public override bool can_authenticate_automatically()
 		{
-			return Settings.Auth.GOG.get_instance().authenticated;
+			return user_refresh_token != null && Settings.Auth.GOG.get_instance().authenticated;
 		}
 		
 		private async bool get_auth_code()

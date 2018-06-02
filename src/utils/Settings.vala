@@ -35,11 +35,32 @@ namespace GameHub.Settings
 		}
 	}
 	
+	public class UI: Granite.Services.Settings
+	{
+		public bool dark_theme { get; set; }
+
+		public UI()
+		{
+			base(ProjectConfig.PROJECT_NAME + ".ui");
+		}
+		
+		private static UI? instance;
+		public static unowned UI get_instance()
+		{
+			if(instance == null)
+			{
+				instance = new UI();
+			}
+			return instance;
+		}
+	}
+	
 	namespace Auth
 	{		
 		public class Steam: Granite.Services.Settings
 		{
 			public bool authenticated { get; set; }
+			public string api_key { get; set; }
 
 			public Steam()
 			{

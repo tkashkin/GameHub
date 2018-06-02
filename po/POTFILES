@@ -17,7 +17,9 @@ src/data/sources/gog/GOGGame.vala
 
 src/ui/windows/MainWindow.vala
 src/ui/windows/WebAuthWindow.vala
-src/ui/windows/GOGGameInstallWindow.vala
+
+src/ui/dialogs/SettingsDialog.vala
+src/ui/dialogs/GOGGameInstallDialog.vala
 
 src/ui/views/BaseView.vala
 src/ui/views/WelcomeView.vala

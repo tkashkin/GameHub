@@ -14,7 +14,6 @@ namespace GameHub.UI.Views
 			titlebar = new HeaderBar();
 			titlebar.title = "GameHub";
 			titlebar.show_close_button = true;
-			titlebar.has_subtitle = false;
 		}
 		
 		public virtual void attach_to_window(MainWindow wnd)
