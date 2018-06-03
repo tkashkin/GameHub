@@ -1,4 +1,4 @@
-# GameHub
+# GameHub [![Build Status](https://travis-ci.com/tkashkin/GameHub.svg?branch=master)](https://travis-ci.com/tkashkin/GameHub)
 Games manager/downloader/library written in Vala for elementary OS
 
 ## Game sources
