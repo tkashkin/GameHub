@@ -10,6 +10,14 @@ namespace GameHub.Data.Sources.GOG
 		
 		public File executable { get; private set; }
 		
+		private string installation_dir_name
+		{
+			owned get
+			{
+				return name.escape().replace(" ", "_").replace(":", "");
+			}
+		}
+		
 		public GOGGame(GOG src, Json.Object json)
 		{
 			source = src;
@@ -21,7 +29,7 @@ namespace GameHub.Data.Sources.GOG
 			
 			if(!_is_for_linux) GamesDB.get_instance().add_unsupported_game(source, id);
 			
-			executable = FSUtils.file(FSUtils.Paths.GOG.Games, name.replace(" ", "_") + "/start.sh");
+			executable = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name + "/start.sh");
 		}
 		
 		public GOGGame.from_db(GOG src, Sqlite.Statement stmt)
@@ -33,7 +41,7 @@ namespace GameHub.Data.Sources.GOG
 			image = stmt.column_text(4);
 			playtime = stmt.column_text(5);
 			_is_for_linux = true;
-			executable = FSUtils.file(FSUtils.Paths.GOG.Games, name.escape().replace(" ", "_") + "/start.sh");
+			executable = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name + "/start.sh");
 		}
 		
 		public override async bool is_for_linux()
@@ -72,12 +80,14 @@ namespace GameHub.Data.Sources.GOG
 				var link = root.get_string_member("downlink");
 				var local = FSUtils.expand(FSUtils.Paths.GOG.Installers, "gog_" + id + "_" + installer.id + ".sh");
 				
+				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
+				FSUtils.mkdir(FSUtils.Paths.GOG.Installers);
+				
 				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, progress, null, (obj, res) => {
 					try
 					{
 						var file = Downloader.get_instance().download.end(res).get_path();
-						FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-						var install_dir = FSUtils.expand(FSUtils.Paths.GOG.Games, name.escape().replace(" ", "_").replace("'", "\\'"));
+						var install_dir = FSUtils.expand(FSUtils.Paths.GOG.Games, installation_dir_name);
 						Utils.run(@"chmod +x \"$(file)\"");
 						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination \"$(install_dir)\"", (obj, res) => {
 							Utils.run_async.end(res);
