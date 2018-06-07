@@ -58,9 +58,14 @@ namespace GameHub.UI.Dialogs
 						break;
 						
 					case ResponseType.ACCEPT:
-						var row = languages_list.get_selected_row() as LangRow;
+						var installer = installers[0];
+						if(installers.size > 1)
+						{
+							var row = languages_list.get_selected_row() as LangRow;
+							installer = row.installer;
+						}
 						is_finished = true;
-						install(row.installer);
+						install(installer);
 						destroy();
 						break;
 				}
