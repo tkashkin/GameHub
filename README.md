@@ -18,5 +18,4 @@ __Planned:__
 * Maybe more services
 
 ## Screenshots
-![Welcome](data/screenshots/1_welcome.png?raw=true)
-![Library](data/screenshots/3_library.png?raw=true)
+<p align="center"><img src="data/screenshots/1.png?raw=true" /><img src="data/screenshots/2.png?raw=true" width="49%" /> <img src="data/screenshots/2_dark.png?raw=true" width="49%" /><img src="data/screenshots/3.png?raw=true" width="49%" /> <img src="data/screenshots/3_dark.png?raw=true" width="49%" /></p>

@@ -23,18 +23,28 @@
 	
 	<screenshots>
 		<screenshot type="default">
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/1_welcome.png</image>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/1.png</image>
 		</screenshot>
 		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_library.png</image>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/2.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/2_dark.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_dark.png</image>
 		</screenshot>
     </screenshots>
 	
-	<custom>
-		<value key="x-appcenter-suggested-price">1</value>
-	</custom>
-	
 	<releases>
+		<release version="0.2.5" date="2018-06-12">
+			<description>
+				<p>Bug fixes</p>
+			</description>
+		</release>
 		<release version="0.2.4" date="2018-06-01">
 			<description>
 				<p>Settings dialog</p>
