@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.2.5) xenial; urgency=low
+
+  * Bug fixes
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 12 Jun 2018 01:18:28 +0300
+
 com.github.tkashkin.gamehub (0.2.4) xenial; urgency=low
 
   * Settings dialog
