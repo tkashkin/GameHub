@@ -51,12 +51,24 @@
 		</key>
 	</schema>
 	
+	<schema path="/com/github/tkashkin/gamehub/auth/humble/" id="com.github.tkashkin.gamehub.auth.humble" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="authenticated" type="b">
+			<default>false</default>
+		</key>
+		<key name="access-token" type="s">
+			<default>''</default>
+		</key>
+	</schema>
+	
 	<schema path="/com/github/tkashkin/gamehub/paths/" id="com.github.tkashkin.gamehub.paths" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="steam-home" type="s">
 			<default>'~/.steam'</default>
 		</key>
 		<key name="gog-games" type="s">
 			<default>'~/Games/GOG'</default>
+		</key>
+		<key name="humble-games" type="s">
+			<default>'~/Games/HumbleBundle'</default>
 		</key>
 	</schema>
 </schemalist>

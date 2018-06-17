@@ -7,6 +7,7 @@ using GameHub.Utils;
 
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
+using GameHub.Data.Sources.Humble;
 
 namespace GameHub.Data
 {
@@ -28,14 +29,20 @@ namespace GameHub.Data
 		
 		public void create_tables() requires (db != null)
 		{
-			db.exec("CREATE TABLE IF NOT EXISTS `games`(`source` string not null, `id` string not null, `name` string not null, `icon` string, `image` string, `playtime` string, PRIMARY KEY(`source`, `id`))");
+			Statement stmt;
+			if(db.prepare_v2("SELECT `playtime` FROM `games`", -1, out stmt) == Sqlite.OK)	// migrate from v1
+			{
+				db.exec("DROP TABLE `games`");
+			}
+			
+			db.exec("CREATE TABLE IF NOT EXISTS `games`(`source` string not null, `id` string not null, `name` string not null, `icon` string, `image` string, `custom_info` string, PRIMARY KEY(`source`, `id`))");
 			db.exec("CREATE TABLE IF NOT EXISTS `unsupported_games`(`source` string not null, `id` string not null, PRIMARY KEY(`source`, `id`))");
 		}
 		
 		public bool add_game(Game game) requires (db != null)
 		{
 			Statement stmt;
-			int res = db.prepare_v2("INSERT OR REPLACE INTO `games`(`source`, `id`, `name`, `icon`, `image`, `playtime`) VALUES (?, ?, ?, ?, ?, ?)", -1, out stmt);
+			int res = db.prepare_v2("INSERT OR REPLACE INTO `games`(`source`, `id`, `name`, `icon`, `image`, `custom_info`) VALUES (?, ?, ?, ?, ?, ?)", -1, out stmt);
 			assert(res == Sqlite.OK);
 
 			stmt.bind_text(1, game.source.name);
@@ -43,7 +50,7 @@ namespace GameHub.Data
 			stmt.bind_text(3, game.name);
 			stmt.bind_text(4, game.icon);
 			stmt.bind_text(5, game.image);
-			stmt.bind_text(6, game.playtime);
+			stmt.bind_text(6, game.custom_info);
 
 			res = stmt.step();
 
@@ -94,6 +101,10 @@ namespace GameHub.Data
 				else if(s is GOG)
 				{
 					games.add(new GOGGame.from_db((GOG) s, stmt));
+				}
+				else if(s is Humble)
+				{
+					games.add(new HumbleGame.from_db((Humble) s, stmt));
 				}
 			}
 			

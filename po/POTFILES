@@ -10,16 +10,19 @@ src/data/GameSource.vala
 src/data/sources/steam/Steam.vala
 src/data/sources/steam/SteamGame.vala
 
-src/data/GamesDB.vala
-
 src/data/sources/gog/GOG.vala
 src/data/sources/gog/GOGGame.vala
+
+src/data/sources/humble/Humble.vala
+src/data/sources/humble/HumbleGame.vala
+
+src/data/GamesDB.vala
 
 src/ui/windows/MainWindow.vala
 src/ui/windows/WebAuthWindow.vala
 
 src/ui/dialogs/SettingsDialog.vala
-src/ui/dialogs/GOGGameInstallDialog.vala
+src/ui/dialogs/GameInstallDialog.vala
 
 src/ui/views/BaseView.vala
 src/ui/views/WelcomeView.vala

@@ -1,6 +1,7 @@
 using Gtk;
 using GLib;
 using WebKit;
+using Soup;
 using GameHub.Utils;
 
 namespace GameHub.UI.Windows
@@ -14,7 +15,7 @@ namespace GameHub.UI.Windows
 		public signal void finished(string url);
 		public signal void canceled();
 
-		public WebAuthWindow(string source, string url, string success_url_prefix)
+		public WebAuthWindow(string source, string url, string? success_url_prefix, string? success_cookie_name=null)
 		{
 			Object(transient_for: Windows.MainWindow.instance);
 			
@@ -30,8 +31,8 @@ namespace GameHub.UI.Windows
 			
 			webview = new WebView();
 			
-			var cookies = FSUtils.expand(FSUtils.Paths.Cache.Cookies);
-			webview.web_context.get_cookie_manager().set_persistent_storage(cookies, CookiePersistentStorage.TEXT);
+			var cookies_file = FSUtils.expand(FSUtils.Paths.Cache.Cookies);
+			webview.web_context.get_cookie_manager().set_persistent_storage(cookies_file, CookiePersistentStorage.TEXT);
 			
 			webview.get_settings().enable_mediasource = true;
 			webview.get_settings().enable_smooth_scrolling = true;
@@ -40,8 +41,26 @@ namespace GameHub.UI.Windows
 				var uri = webview.get_uri();
 				titlebar.title = webview.title;
 				titlebar.subtitle = uri.split("?")[0];
+				titlebar.tooltip_text = uri;
 				
-				if(uri.has_prefix(success_url_prefix))
+				if(!is_finished && success_cookie_name != null)
+				{
+					webview.web_context.get_cookie_manager().get_cookies.begin(uri, null, (obj, res) => {
+						var cookies = webview.web_context.get_cookie_manager().get_cookies.end(res);
+						foreach(var cookie in cookies)
+						{
+							if(!is_finished && cookie.name == success_cookie_name && !cookie.value.contains("\""))
+							{
+								is_finished = true;
+								finished(cookie.value);
+								destroy();
+								break;
+							}
+						}
+					});
+				}
+				
+				if(!is_finished && success_url_prefix != null && uri.has_prefix(success_url_prefix))
 				{
 					is_finished = true;
 					finished(uri.substring(success_url_prefix.length));

@@ -22,32 +22,41 @@ namespace GameHub.Utils
 			return data;
 		}
 		
-		private static string load_remote_file(string url, string method="GET", string? auth = null)
+		private static Message prepare_message(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
 		{
-			var session = new Session();
-			var message = new Message(method, url);
-			
-			if(auth != null)
-			{
-				var h = @"Bearer $(auth)";
-				message.request_headers.append("Authorization", h);
-			}
-			
-			var status = session.send_message(message);
-			if (status == 200) return (string) message.response_body.data;
-			return "";
-		}
-		
-		private static async string load_remote_file_async(string url, string method="GET", string? auth = null)
-		{
-			var result = "";
-			var session = new Session();
 			var message = new Message(method, url);
 			
 			if(auth != null)
 			{
 				message.request_headers.append("Authorization", "Bearer " + auth);
 			}
+			
+			if(headers != null)
+			{
+				foreach(var header in headers.entries)
+				{
+					message.request_headers.append(header.key, header.value);
+				}
+			}
+			
+			return message;
+		}
+		
+		private static string load_remote_file(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		{
+			var session = new Session();
+			var message = prepare_message(url, method, auth, headers);
+			
+			var status = session.send_message(message);
+			if (status == 200) return (string) message.response_body.data;
+			return "";
+		}
+		
+		private static async string load_remote_file_async(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		{
+			var result = "";
+			var session = new Session();
+			var message = prepare_message(url, method, auth, headers);
 			
 			session.queue_message(message, (s, m) => {
 				if(m.status_code == 200) result = (string) m.response_body.data;
@@ -57,59 +66,59 @@ namespace GameHub.Utils
 			return result;
 		}
 		
-		public static Json.Object parse_json(string json)
+		public static Json.Node parse_json(string json)
 		{
 			try
 			{
 				var parser = new Json.Parser();
 				parser.load_from_data(json);
-				return parser.get_root().get_object();
+				return parser.get_root();
 			}
 			catch(GLib.Error e)
 			{
 				warning(e.message);
 			}
-			return new Json.Object();
+			return new Json.Node(Json.NodeType.NULL);
 		}
 		
-		public static Json.Object parse_vdf(string vdf)
+		public static Json.Node parse_vdf(string vdf)
 		{
 			return parse_json(vdf_to_json(vdf));
 		}
 		
-		public static Json.Object parse_json_file(string path, string file="")
+		public static Json.Node parse_json_file(string path, string file="")
 		{
 			return parse_json(load_file(path, file));
 		}
 		
-		public static Json.Object parse_vdf_file(string path, string file="")
+		public static Json.Node parse_vdf_file(string path, string file="")
 		{
 			return parse_vdf(load_file(path, file));
 		}
 		
-		public static Json.Object parse_remote_json_file(string url, string method="GET", string? auth = null)
+		public static Json.Node parse_remote_json_file(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
 		{
-			return parse_json(load_remote_file(url, method, auth));
+			return parse_json(load_remote_file(url, method, auth, headers));
 		}
 		
-		public static Json.Object parse_remote_vdf_file(string url, string method="GET", string? auth = null)
+		public static Json.Node parse_remote_vdf_file(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
 		{
-			return parse_vdf(load_remote_file(url, method, auth));
+			return parse_vdf(load_remote_file(url, method, auth, headers));
 		}
 		
-		public static async Json.Object parse_remote_json_file_async(string url, string method="GET", string? auth = null)
+		public static async Json.Node parse_remote_json_file_async(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
 		{
-			return parse_json(yield load_remote_file_async(url, method, auth));
+			return parse_json(yield load_remote_file_async(url, method, auth, headers));
 		}
 		
-		public static async Json.Object parse_remote_vdf_file_async(string url, string method="GET", string? auth = null)
+		public static async Json.Node parse_remote_vdf_file_async(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
 		{
-			return parse_vdf(yield load_remote_file_async(url, method, auth));
+			return parse_vdf(yield load_remote_file_async(url, method, auth, headers));
 		}
 		
-		public static Json.Object? json_object(Json.Object root, string[] keys)
+		public static Json.Object? json_object(Json.Node root, string[] keys)
 		{
-			Json.Object? obj = root;
+			Json.Object? obj = root.get_object();
 			
 			foreach(var key in keys)
 			{

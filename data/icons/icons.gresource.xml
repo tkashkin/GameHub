@@ -3,8 +3,10 @@
 	<gresource prefix="/com/github/tkashkin/gamehub/icons">
 		<file alias="steam.svg" compressed="true" preprocess="xml-stripblanks">steam.svg</file>
 		<file alias="gog.svg" compressed="true" preprocess="xml-stripblanks">gog.svg</file>
+		<file alias="humble.svg" compressed="true" preprocess="xml-stripblanks">humble.svg</file>
 		
 		<file alias="steam-white.svg" compressed="true" preprocess="xml-stripblanks">steam-white.svg</file>
 		<file alias="gog-white.svg" compressed="true" preprocess="xml-stripblanks">gog-white.svg</file>
+		<file alias="humble-white.svg" compressed="true" preprocess="xml-stripblanks">humble-white.svg</file>
 	</gresource>
 </gresources>

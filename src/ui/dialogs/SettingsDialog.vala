@@ -35,6 +35,10 @@ namespace GameHub.UI.Dialogs
 			
 			add_header("GOG");
 			add_file_chooser(_("GOG games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; });
+			add_separator();
+			
+			add_header("Humble Bundle");
+			add_file_chooser(_("Humble Bundle games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; });
 			
 			content.pack_start(box, false, false, 0);
 			

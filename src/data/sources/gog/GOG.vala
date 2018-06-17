@@ -48,7 +48,7 @@ namespace GameHub.Data.Sources.GOG
 		
 		public override async bool authenticate()
 		{
-			Settings.Auth.GOG.get_instance().authenticated = true;
+			settings.authenticated = true;
 			
 			if(token_needs_refresh && user_refresh_token != null)
 			{
@@ -65,7 +65,7 @@ namespace GameHub.Data.Sources.GOG
 		
 		public override bool can_authenticate_automatically()
 		{
-			return user_refresh_token != null && Settings.Auth.GOG.get_instance().authenticated;
+			return user_refresh_token != null && settings.authenticated;
 		}
 		
 		private async bool get_auth_code()
@@ -102,7 +102,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 			
 			var url = @"https://auth.gog.com/token?client_id=$(CLIENT_ID)&client_secret=$(CLIENT_SECRET)&grant_type=authorization_code&redirect_uri=$(REDIRECT)&code=$(user_auth_code)";
-			var root = yield Parser.parse_remote_json_file_async(url);
+			var root = (yield Parser.parse_remote_json_file_async(url)).get_object();
 			user_token = root.get_string_member("access_token");
 			user_refresh_token = root.get_string_member("refresh_token");
 			user_id = root.get_string_member("user_id");
@@ -121,7 +121,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 			
 			var url = @"https://auth.gog.com/token?client_id=$(CLIENT_ID)&client_secret=$(CLIENT_SECRET)&grant_type=refresh_token&refresh_token=$(user_refresh_token)";
-			var root = yield Parser.parse_remote_json_file_async(url);
+			var root = (yield Parser.parse_remote_json_file_async(url)).get_object();
 			user_token = root.get_string_member("access_token");
 			user_refresh_token = root.get_string_member("refresh_token");
 			user_id = root.get_string_member("user_id");
@@ -156,9 +156,10 @@ namespace GameHub.Data.Sources.GOG
 					}
 				}
 			}
+			games_count = games.size;
 			
 			var url = @"https://embed.gog.com/account/getFilteredProducts?mediaType=1";
-			var root = yield Parser.parse_remote_json_file_async(url, "GET", user_token);
+			var root = (yield Parser.parse_remote_json_file_async(url, "GET", user_token)).get_object();
 			
 			var products = root.get_array_member("products");
 			
