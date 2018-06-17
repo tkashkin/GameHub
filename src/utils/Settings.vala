@@ -99,5 +99,26 @@ namespace GameHub.Settings
 				return instance;
 			}
 		}
+		
+		public class Humble: Granite.Services.Settings
+		{
+			public bool authenticated { get; set; }
+			public string access_token { get; set; }
+
+			public Humble()
+			{
+				base(ProjectConfig.PROJECT_NAME + ".auth.humble");
+			}
+		
+			private static Humble? instance;
+			public static unowned Humble get_instance()
+			{
+				if(instance == null)
+				{
+					instance = new Humble();
+				}
+				return instance;
+			}
+		}
 	}
 }

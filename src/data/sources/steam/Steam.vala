@@ -43,7 +43,7 @@ namespace GameHub.Data.Sources.Steam
 			var result = false;
 			
 			new Thread<void*>("steam-loginusers-thread", () => {
-				Json.Object config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDF);
+				var config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDF);
 				var users = Parser.json_object(config, {"users"});
 				
 				if(users == null)
@@ -104,11 +104,12 @@ namespace GameHub.Data.Sources.Steam
 					}
 				}
 			}
+			games_count = games.size;
 			
 			var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(api_key)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
 			
 			var root = yield Parser.parse_remote_json_file_async(url);
-			var json_games = root.get_object_member("response").get_array_member("games");
+			var json_games = Parser.json_object(root, {"response"}).get_array_member("games");
 			
 			foreach(var g in json_games.get_elements())
 			{

@@ -5,19 +5,20 @@ using GameHub.Utils;
 
 using GameHub.Data;
 using GameHub.Data.Sources.GOG;
+using GameHub.Data.Sources.Humble;
 
 namespace GameHub.UI.Dialogs
 {
-	public class GOGGameInstallDialog: Granite.MessageDialog
+	public class GameInstallDialog: Granite.MessageDialog
 	{
-		public signal void install(GOGGame.Installer installer);
+		public signal void install(Game.Installer installer);
 		public signal void canceled();
 		
-		private ListBox languages_list;
+		private ListBox installers_list;
 		
 		private bool is_finished = false;
 
-		public GOGGameInstallDialog(GOGGame game, ArrayList<GOGGame.Installer> installers)
+		public GameInstallDialog(Game game, ArrayList<Game.Installer> installers)
 		{
 			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false);
 			
@@ -27,25 +28,25 @@ namespace GameHub.UI.Dialogs
 			
 			primary_text = game.name;
 			
-			languages_list = new ListBox();
+			installers_list = new ListBox();
 			
 			var sys_langs = Intl.get_language_names();
 			
 			foreach(var installer in installers)
 			{
-				var row = new LangRow(installer);
-				languages_list.add(row);
+				var row = new InstallerRow(installer);
+				installers_list.add(row);
 				
-				if(installer.lang in sys_langs)
+				if(installer is GOGGame.Installer && (installer as GOGGame.Installer).lang in sys_langs)
 				{
-					languages_list.select_row(row);
+					installers_list.select_row(row);
 				}
 			}
 			
 			if(installers.size > 1)
 			{
-				secondary_text = _("Select game language");
-				custom_bin.child = languages_list;
+				secondary_text = _("Select game installer");
+				custom_bin.child = installers_list;
 			}
 			
 			destroy.connect(() => { if(!is_finished) canceled(); });
@@ -61,7 +62,7 @@ namespace GameHub.UI.Dialogs
 						var installer = installers[0];
 						if(installers.size > 1)
 						{
-							var row = languages_list.get_selected_row() as LangRow;
+							var row = installers_list.get_selected_row() as InstallerRow;
 							installer = row.installer;
 						}
 						is_finished = true;
@@ -79,15 +80,15 @@ namespace GameHub.UI.Dialogs
 			show_all();
 		}
 		
-		private class LangRow: ListBoxRow
+		private class InstallerRow: ListBoxRow
 		{
-			public GOGGame.Installer installer;
+			public Game.Installer installer;
 			
-			public LangRow(GOGGame.Installer installer)
+			public InstallerRow(Game.Installer installer)
 			{
 				this.installer = installer;
 				
-				var label = new Label(installer.lang_full);
+				var label = new Label(installer.name);
 				label.xpad = 16;
 				label.ypad = 4;
 				child = label;

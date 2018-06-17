@@ -23,6 +23,9 @@ executable(
 
 	'data/sources/gog/GOG.vala',
 	'data/sources/gog/GOGGame.vala',
+
+	'data/sources/humble/Humble.vala',
+	'data/sources/humble/HumbleGame.vala',
 	
 	'data/GamesDB.vala',
 
@@ -30,7 +33,7 @@ executable(
 	'ui/windows/WebAuthWindow.vala',
 	
 	'ui/dialogs/SettingsDialog.vala',
-	'ui/dialogs/GOGGameInstallDialog.vala',
+	'ui/dialogs/GameInstallDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',

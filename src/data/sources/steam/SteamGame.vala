@@ -16,9 +16,6 @@ namespace GameHub.Data.Sources.Steam
 			var icon_hash = json.get_string_member("img_icon_url");
 			icon = @"https://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
 			image = @"https://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
-			int64 minutes = json.get_int_member("playtime_forever");
-			int64 hours = (int) (minutes / 60.0f);
-			playtime = minutes > 60 ? @"$(hours) hours" : @"$(minutes) minutes";
 			
 			if(GamesDB.get_instance().is_game_unsupported(src, id))
 			{
@@ -33,7 +30,7 @@ namespace GameHub.Data.Sources.Steam
 			name = stmt.column_text(2);
 			icon = stmt.column_text(3);
 			image = stmt.column_text(4);
-			playtime = stmt.column_text(5);
+			custom_info = stmt.column_text(5);
 			_is_for_linux = true;
 		}
 		

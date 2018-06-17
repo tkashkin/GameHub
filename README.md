@@ -7,6 +7,7 @@ GameHub can support multiple game sources and services
 __Currently supported sources:__
 * Steam
 * GOG.com
+* Humble Bundle
 
 ## Features
 __Implemented:__

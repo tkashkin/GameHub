@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-02 05:53+0300\n"
+"POT-Creation-Date: 2018-06-17 04:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,6 +50,19 @@ msgstr ""
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr ""
 
+#: src/data/sources/humble/HumbleGame.vala:163
+msgid "Select main executable of the game"
+msgstr ""
+
+#: src/data/sources/humble/HumbleGame.vala:164
+#: src/ui/dialogs/GameInstallDialog.vala:75
+msgid "Cancel"
+msgstr ""
+
+#: src/data/sources/humble/HumbleGame.vala:164
+msgid "Select"
+msgstr ""
+
 #: src/ui/dialogs/SettingsDialog.vala:27
 msgid "Use dark theme"
 msgstr ""
@@ -74,19 +87,19 @@ msgstr ""
 msgid "GOG games directory"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:50
+#: src/ui/dialogs/SettingsDialog.vala:41
+msgid "Humble Bundle games directory"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog.vala:54
 msgid "Close"
 msgstr ""
 
-#: src/ui/dialogs/GOGGameInstallDialog.vala:47
-msgid "Select game language"
+#: src/ui/dialogs/GameInstallDialog.vala:48
+msgid "Select game installer"
 msgstr ""
 
-#: src/ui/dialogs/GOGGameInstallDialog.vala:69
-msgid "Cancel"
-msgstr ""
-
-#: src/ui/dialogs/GOGGameInstallDialog.vala:70
+#: src/ui/dialogs/GameInstallDialog.vala:76
 msgid "Install"
 msgstr ""
 

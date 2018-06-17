@@ -12,6 +12,7 @@ namespace GameHub.Utils
 			{
 				public string steam_home { get; set; }
 				public string gog_games { get; set; }
+				public string humble_games { get; set; }
 
 				public Settings()
 				{
@@ -54,6 +55,12 @@ namespace GameHub.Utils
 				public static string Games { get { return FSUtils.Paths.Settings.get_instance().gog_games; } }
 				public static string Installers { owned get { return FSUtils.Paths.GOG.Games + "/.installers"; } }
 			}
+			
+			public class Humble
+			{
+				public static string Games { get { return FSUtils.Paths.Settings.get_instance().humble_games; } }
+				public static string Installers { owned get { return FSUtils.Paths.Humble.Games + "/.installers"; } }
+			}
 		}
 		
 		public static string expand(string path, string file="")
@@ -86,8 +93,10 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Images);
 			
-			var cached_installers = FSUtils.expand(FSUtils.Paths.GOG.Installers, "{gog_*.sh~,.goutputstream-*}");
-			Utils.run(@"bash -c 'rm $(cached_installers)'");
+			var cache = FSUtils.expand(FSUtils.Paths.GOG.Installers, "{*~,.goutputstream-*}");
+			Utils.run(@"bash -c 'rm $(cache)'");
+			cache = FSUtils.expand(FSUtils.Paths.Humble.Installers, "{*~,.goutputstream-*}");
+			Utils.run(@"bash -c 'rm $(cache)'");
 		}
 		
 		public static Pixbuf? get_icon(string name, int size=48)

@@ -5,6 +5,7 @@ using Granite;
 using GameHub.Data;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
+using GameHub.Data.Sources.Humble;
 using GameHub.Utils;
 
 namespace GameHub
@@ -42,7 +43,7 @@ namespace GameHub
 			
 			GamesDB.init();
 			
-			GameSources = { new Steam(), new GOG() };
+			GameSources = { new Steam(), new GOG(), new Humble() };
 			
 			var app = new Application();
 			return app.run(args);

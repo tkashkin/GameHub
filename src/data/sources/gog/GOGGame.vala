@@ -27,7 +27,11 @@ namespace GameHub.Data.Sources.GOG
 			icon = image;
 			_is_for_linux = json.get_object_member("worksOn").get_boolean_member("Linux");
 			
-			if(!_is_for_linux) GamesDB.get_instance().add_unsupported_game(source, id);
+			if(!_is_for_linux)
+			{
+				GamesDB.get_instance().add_unsupported_game(source, id);
+				return;
+			}
 			
 			executable = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name + "/start.sh");
 		}
@@ -39,7 +43,7 @@ namespace GameHub.Data.Sources.GOG
 			name = stmt.column_text(2);
 			icon = stmt.column_text(3);
 			image = stmt.column_text(4);
-			playtime = stmt.column_text(5);
+			custom_info = stmt.column_text(5);
 			_is_for_linux = true;
 			executable = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name + "/start.sh");
 		}
@@ -57,13 +61,13 @@ namespace GameHub.Data.Sources.GOG
 		public override async void install(DownloadProgress progress = (d, t) => {})
 		{
 			var url = @"https://api.gog.com/products/$(id)?expand=downloads";
-			var root = yield Parser.parse_remote_json_file_async(url, "GET", ((GOG) source).user_token);
+			var root = (yield Parser.parse_remote_json_file_async(url, "GET", ((GOG) source).user_token)).get_object();
 			
 			icon = "https:" + root.get_object_member("images").get_string_member("icon");
 			
 			var installers_json = root.get_object_member("downloads").get_array_member("installers");
 			
-			var installers = new ArrayList<Installer>();
+			var installers = new ArrayList<Game.Installer>();
 			
 			foreach(var installer_json in installers_json.get_elements())
 			{
@@ -71,12 +75,12 @@ namespace GameHub.Data.Sources.GOG
 				if(installer.os == "linux") installers.add(installer);
 			}
 			
-			var wnd = new GameHub.UI.Dialogs.GOGGameInstallDialog(this, installers);
+			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
 			
 			wnd.canceled.connect(() => Idle.add(install.callback));
 			
 			wnd.install.connect(installer => {
-				root = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token);
+				root = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token).get_object();
 				var link = root.get_string_member("downlink");
 				var local = FSUtils.expand(FSUtils.Paths.GOG.Installers, "gog_" + id + "_" + installer.id + ".sh");
 				
@@ -89,7 +93,7 @@ namespace GameHub.Data.Sources.GOG
 						var file = Downloader.get_instance().download.end(res).get_path();
 						var install_dir = FSUtils.expand(FSUtils.Paths.GOG.Games, installation_dir_name);
 						Utils.run(@"chmod +x \"$(file)\"");
-						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination \"$(install_dir)\"", (obj, res) => {
+						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir)", (obj, res) => {
 							Utils.run_async.end(res);
 							Idle.add(install.callback);
 						});
@@ -116,13 +120,12 @@ namespace GameHub.Data.Sources.GOG
 			}
 		}
 		
-		public class Installer
+		public class Installer: Game.Installer
 		{
-			public string id;
-			public string os;
 			public string lang;
 			public string lang_full;
-			public string file;
+			
+			public override string name { get { return lang_full; } }
 			
 			public Installer(Json.Object json)
 			{

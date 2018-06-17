@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-02 05:53+0300\n"
+"POT-Creation-Date: 2018-06-17 04:53+0300\n"
 "PO-Revision-Date: 2018-05-27 03:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,12 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-#: data/com.github.tkashkin.gamehub.appdata.xml.in:8
-#: data/com.github.tkashkin.gamehub.desktop.in:3
-#: data/com.github.tkashkin.gamehub.desktop.in:4
-msgid "GameHub"
-msgstr ""
 
 #: data/com.github.tkashkin.gamehub.appdata.xml.in:9
 #: data/com.github.tkashkin.gamehub.desktop.in:5
@@ -37,6 +31,19 @@ msgstr "Управляйте играми из Steam и GOG в одном мес
 #: src/data/sources/steam/Steam.vala:13
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr "Ваш SteamID будет прочитан из файла конфигурации Steam"
+
+#: src/data/sources/humble/HumbleGame.vala:163
+msgid "Select main executable of the game"
+msgstr "Выберите исполняемый файл игры"
+
+#: src/data/sources/humble/HumbleGame.vala:164
+#: src/ui/dialogs/GameInstallDialog.vala:75
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/data/sources/humble/HumbleGame.vala:164
+msgid "Select"
+msgstr "Выбрать"
 
 #: src/ui/dialogs/SettingsDialog.vala:27
 msgid "Use dark theme"
@@ -62,19 +69,19 @@ msgstr "Папка установки Steam"
 msgid "GOG games directory"
 msgstr "Папка игр GOG"
 
-#: src/ui/dialogs/SettingsDialog.vala:50
+#: src/ui/dialogs/SettingsDialog.vala:41
+msgid "Humble Bundle games directory"
+msgstr "Папка игр Humble Bundle"
+
+#: src/ui/dialogs/SettingsDialog.vala:54
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/ui/dialogs/GOGGameInstallDialog.vala:47
-msgid "Select game language"
-msgstr "Выберите язык игры"
+#: src/ui/dialogs/GameInstallDialog.vala:48
+msgid "Select game installer"
+msgstr "Выберите установочный файл игры"
 
-#: src/ui/dialogs/GOGGameInstallDialog.vala:69
-msgid "Cancel"
-msgstr "Отмена"
-
-#: src/ui/dialogs/GOGGameInstallDialog.vala:70
+#: src/ui/dialogs/GameInstallDialog.vala:76
 msgid "Install"
 msgstr "Установить"
 

@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.3.0) xenial; urgency=low
+
+  * Humble Bundle support
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 17 Jun 2018 04:57:12 +0300
+
 com.github.tkashkin.gamehub (0.2.5) xenial; urgency=low
 
   * Bug fixes

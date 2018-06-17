@@ -40,6 +40,11 @@
     </screenshots>
 	
 	<releases>
+		<release version="0.3.0" date="2018-06-17">
+			<description>
+				<p>Humble Bundle support</p>
+			</description>
+		</release>
 		<release version="0.2.5" date="2018-06-12">
 			<description>
 				<p>Bug fixes</p>
