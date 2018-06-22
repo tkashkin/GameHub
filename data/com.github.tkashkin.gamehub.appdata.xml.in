@@ -40,6 +40,12 @@
     </screenshots>
 	
 	<releases>
+		<release version="0.3.1" date="2018-06-22">
+			<description>
+				<p>Humble Bundle authentication fix</p>
+				<p>Humble Bundle game icons fix</p>
+			</description>
+		</release>
 		<release version="0.3.0" date="2018-06-17">
 			<description>
 				<p>Humble Bundle support</p>

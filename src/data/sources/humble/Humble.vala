@@ -59,7 +59,7 @@ namespace GameHub.Data.Sources.Humble
 				return true;
 			}
 			
-			var wnd = new GameHub.UI.Windows.WebAuthWindow(this.name, @"https://www.humblebundle.com/login?goto=home", null, AUTH_COOKIE);
+			var wnd = new GameHub.UI.Windows.WebAuthWindow(this.name, "https://www.humblebundle.com/login?goto=home", "https://www.humblebundle.com/home/library", AUTH_COOKIE);
 			
 			wnd.finished.connect(token =>
 			{

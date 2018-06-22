@@ -36,6 +36,8 @@ namespace GameHub.UI.Windows
 			
 			webview.get_settings().enable_mediasource = true;
 			webview.get_settings().enable_smooth_scrolling = true;
+			
+			webview.user_content_manager.add_style_sheet(new UserStyleSheet(".account-bbm-wrapper{background:#333 !important}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
 
 			webview.load_changed.connect(e => {
 				var uri = webview.get_uri();
@@ -44,13 +46,13 @@ namespace GameHub.UI.Windows
 				titlebar.tooltip_text = uri;
 				
 				if(!is_finished && success_cookie_name != null)
-				{
+				{					
 					webview.web_context.get_cookie_manager().get_cookies.begin(uri, null, (obj, res) => {
 						var cookies = webview.web_context.get_cookie_manager().get_cookies.end(res);
 						foreach(var cookie in cookies)
 						{
-							if(!is_finished && cookie.name == success_cookie_name && !cookie.value.contains("\""))
-							{
+							if(!is_finished && cookie.name == success_cookie_name && !cookie.value.contains("\"") && (success_url_prefix == null || uri.has_prefix(success_url_prefix)))
+							{								
 								is_finished = true;
 								finished(cookie.value);
 								destroy();
@@ -59,8 +61,7 @@ namespace GameHub.UI.Windows
 						}
 					});
 				}
-				
-				if(!is_finished && success_url_prefix != null && uri.has_prefix(success_url_prefix))
+				else if(!is_finished && success_url_prefix != null && uri.has_prefix(success_url_prefix))
 				{
 					is_finished = true;
 					finished(uri.substring(success_url_prefix.length));

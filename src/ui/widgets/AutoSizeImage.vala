@@ -59,10 +59,15 @@ namespace GameHub.UI.Widgets
 					break;
 			}
 
-			var pixbuf = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
+			Pixbuf pixbuf = src;
+			
+			if(src.width != src.height)
+			{
+				pixbuf = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
+			}
 
 			Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, new_width, new_height, 4);
-			cairo_set_source_pixbuf(ctx, pixbuf, 0, 0);
+			cairo_set_source_pixbuf(ctx, pixbuf, (new_width - pixbuf.width) / 2, (new_height - pixbuf.height) / 2);
 			ctx.clip();
 			ctx.paint();
 							
