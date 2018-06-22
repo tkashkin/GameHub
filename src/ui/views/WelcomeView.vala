@@ -57,6 +57,9 @@ namespace GameHub.UI.Views
 			titlebar.pack_end(settings);
 			titlebar.pack_end(skip_btn);
 			
+			settings.opacity = 0;
+			skip_btn.opacity = 0;
+			
 			foreach(var src in GameSources)
 			{				
 				var image = FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : ""));
@@ -136,6 +139,8 @@ namespace GameHub.UI.Views
 			else
 			{
 				stack.set_visible_child(welcome);
+				settings.opacity = 1;
+				skip_btn.opacity = 1;
 			}
 			
 			welcome.show_all();
