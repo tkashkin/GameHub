@@ -39,6 +39,9 @@ namespace GameHub.UI.Views
 			
 			add(stack);
 			
+			titlebar.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			welcome.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+			
 			skip_btn = new Button.with_label(_("Skip"));
 			skip_btn.clicked.connect(open_games_grid);
 			skip_btn.halign = Align.CENTER;
