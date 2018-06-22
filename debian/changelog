@@ -1,3 +1,10 @@
+com.github.tkashkin.gamehub (0.3.1) xenial; urgency=low
+
+  * Humble Bundle authentication fix
+  * Humble Bundle game icons fix
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 22 Jun 2018 18:03:16 +0300
+
 com.github.tkashkin.gamehub (0.3.0) xenial; urgency=low
 
   * Humble Bundle support

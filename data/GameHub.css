@@ -3,6 +3,7 @@
 	opacity: 0.75;
 	border-radius: 4px;
 	transition: 100ms;
+	background-color: #999;
 }
 
 .gamecard.installed
