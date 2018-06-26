@@ -40,7 +40,7 @@ namespace GameHub.Data.Sources.Steam
 			
 			metadata_tries++;
 			
-			print("[Steam app %s] Checking for linux compatibility [%d]...\n", id, metadata_tries);
+			debug("[Steam] <app %s> Checking for compatibility [%d]...\n", id, metadata_tries);
 			
 			var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)";
 			var root = yield Parser.parse_remote_json_file_async(url);
@@ -50,13 +50,13 @@ namespace GameHub.Data.Sources.Steam
 			{
 				if(metadata_tries > 2)
 				{
-					print("[Steam app %s] No data, %d tries failed, assuming no linux support\n", id, metadata_tries);
+					debug("[Steam] <app %s> No data, %d tries failed, assuming no linux support\n", id, metadata_tries);
 					_is_for_linux = false;
 					GamesDB.get_instance().add_unsupported_game(source, id);
 					return _is_for_linux;
 				}
 				
-				print("[Steam app %s] No data, sleeping for 2.5s\n", id);
+				debug("[Steam] <app %s> No data, sleeping for 2.5s\n", id);
 				yield Utils.sleep_async(2500);
 				return yield is_for_linux();
 			}

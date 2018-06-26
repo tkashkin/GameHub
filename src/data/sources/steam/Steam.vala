@@ -58,6 +58,8 @@ namespace GameHub.Data.Sources.Steam
 					user_id = uid;
 					user_name = users.get_object_member(uid).get_string_member("PersonaName");
 					
+					debug("[Auth] SteamID: %s, PersonaName: %s", user_id, user_name);
+					
 					result = true;
 					break;
 				}

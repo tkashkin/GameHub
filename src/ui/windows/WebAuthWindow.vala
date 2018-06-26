@@ -29,6 +29,8 @@ namespace GameHub.UI.Windows
 			
 			set_modal(true);
 			
+			debug("[WebAuth/%s] Authenticating at `%s`; success_url_prefix: `%s`; success_cookie_name: `%s`", source, url, success_url_prefix, success_cookie_name);
+			
 			webview = new WebView();
 			
 			var cookies_file = FSUtils.expand(FSUtils.Paths.Cache.Cookies);
@@ -45,16 +47,21 @@ namespace GameHub.UI.Windows
 				titlebar.subtitle = uri.split("?")[0];
 				titlebar.tooltip_text = uri;
 				
+				debug("[WebAuth/%s] URI: `%s`", source, uri);
+				
 				if(!is_finished && success_cookie_name != null)
 				{					
 					webview.web_context.get_cookie_manager().get_cookies.begin(uri, null, (obj, res) => {
 						var cookies = webview.web_context.get_cookie_manager().get_cookies.end(res);
 						foreach(var cookie in cookies)
 						{
+							debug("[WebAuth/%s] [Cookie] `%s`=`%s`", source, cookie.name, cookie.value);
 							if(!is_finished && cookie.name == success_cookie_name && !cookie.value.contains("\"") && (success_url_prefix == null || uri.has_prefix(success_url_prefix)))
 							{								
 								is_finished = true;
-								finished(cookie.value);
+								var token = cookie.value;
+								debug("[WebAuth/%s] Finished with result `%s`", source, token);
+								finished(token);
 								destroy();
 								break;
 							}
@@ -64,7 +71,9 @@ namespace GameHub.UI.Windows
 				else if(!is_finished && success_url_prefix != null && uri.has_prefix(success_url_prefix))
 				{
 					is_finished = true;
-					finished(uri.substring(success_url_prefix.length));
+					var token = uri.substring(success_url_prefix.length);
+					debug("[WebAuth/%s] Finished with result `%s`", source, token);
+					finished(token);
 					destroy();
 				}
 			});
