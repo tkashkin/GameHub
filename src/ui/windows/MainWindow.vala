@@ -66,7 +66,11 @@ namespace GameHub.UI.Windows
 		{
 			view.attach_to_window(this);
 			stack.add(view);
-			if(show) stack.set_visible_child(view);
+			if(show)
+			{
+				stack.set_visible_child(view);
+				view.show();
+			}
 			stack_updated();
 		}
 		

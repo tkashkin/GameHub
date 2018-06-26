@@ -135,6 +135,7 @@ namespace GameHub.UI.Views
 			if(all_authenticated)
 			{
 				open_games_grid();
+				return;
 			}
 			else
 			{

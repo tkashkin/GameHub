@@ -65,6 +65,7 @@ namespace GameHub.Data.Sources.Humble
 			{
 				user_token = token;
 				settings.access_token = user_token ?? "";
+				debug("[Auth] Humble access token: %s", token);
 				Idle.add(get_token.callback);
 			});
 			
