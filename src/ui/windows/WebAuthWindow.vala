@@ -56,7 +56,7 @@ namespace GameHub.UI.Windows
 						foreach(var cookie in cookies)
 						{
 							debug("[WebAuth/%s] [Cookie] `%s`=`%s`", source, cookie.name, cookie.value);
-							if(!is_finished && cookie.name == success_cookie_name && !cookie.value.contains("\"") && (success_url_prefix == null || uri.has_prefix(success_url_prefix)))
+							if(!is_finished && cookie.name == success_cookie_name && (success_url_prefix == null || uri.has_prefix(success_url_prefix)))
 							{								
 								is_finished = true;
 								var token = cookie.value;
