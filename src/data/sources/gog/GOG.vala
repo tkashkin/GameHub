@@ -12,6 +12,12 @@ namespace GameHub.Data.Sources.GOG
 		
 		public override string name { get { return "GOG"; } }
 		public override string icon { get { return "gog"; } }
+
+		public override bool enabled
+		{
+			get { return Settings.Auth.GOG.get_instance().enabled; }
+			set { Settings.Auth.GOG.get_instance().enabled = value; }
+		}
 		
 		public string? user_id { get; protected set; }
 		public string? user_name { get; protected set; }

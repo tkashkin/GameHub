@@ -1,3 +1,10 @@
+com.github.tkashkin.gamehub (0.4.0) xenial; urgency=low
+
+  * Unneeded game sources now can be disabled
+  * Bug fixes
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 03 Jul 2018 04:51:10 +0300
+
 com.github.tkashkin.gamehub (0.3.1) xenial; urgency=low
 
   * Humble Bundle authentication fix

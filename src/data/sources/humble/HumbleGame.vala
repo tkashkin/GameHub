@@ -159,7 +159,7 @@ namespace GameHub.Data.Sources.Humble
 								break;
 						}
 						
-						Utils.run_async.begin(cmd, (obj, res) => {
+						Utils.run_async.begin(cmd, true, (obj, res) => {
 							Utils.run_async.end(res);
 							Utils.run(@"chmod -R +x \"$(install_dir)\"");
 							

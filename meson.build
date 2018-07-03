@@ -1,4 +1,4 @@
-project('com.github.tkashkin.gamehub', 'vala', 'c', version: '0.3.1')
+project('com.github.tkashkin.gamehub', 'vala', 'c', version: '0.4.0')
 
 i18n = import('i18n')
 gnome = import('gnome')

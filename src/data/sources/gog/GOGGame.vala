@@ -93,7 +93,7 @@ namespace GameHub.Data.Sources.GOG
 						var file = Downloader.get_instance().download.end(res).get_path();
 						var install_dir = FSUtils.expand(FSUtils.Paths.GOG.Games, installation_dir_name);
 						Utils.run(@"chmod +x \"$(file)\"");
-						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir)", (obj, res) => {
+						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir)", true, (obj, res) => {
 							Utils.run_async.end(res);
 							Idle.add(install.callback);
 						});

@@ -12,6 +12,8 @@ namespace GameHub.Data
 		public virtual string icon { get { return ""; } }
 		public virtual string auth_description { owned get { return ""; } }
 		
+		public abstract bool enabled { get; set; }
+
 		public int games_count { get; protected set; }
 
 		public abstract bool is_installed(bool refresh=false);

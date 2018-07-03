@@ -35,7 +35,7 @@ namespace GameHub.UI.Views
 			
 			foreach(var src in GameSources)
 			{
-				if(src.is_authenticated()) sources.add(src);
+				if(src.enabled && src.is_authenticated()) sources.add(src);
 			}
 			
 			games_list = new GamesGridFlowBox();

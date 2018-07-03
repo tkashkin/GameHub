@@ -10,6 +10,12 @@ namespace GameHub.Data.Sources.Humble
 		
 		public override string name { get { return "Humble Bundle"; } }
 		public override string icon { get { return "humble"; } }
+
+		public override bool enabled
+		{
+			get { return Settings.Auth.Humble.get_instance().enabled; }
+			set { Settings.Auth.Humble.get_instance().enabled = value; }
+		}
 		
 		public string? user_token = null;
 		
