@@ -10,12 +10,31 @@ namespace GameHub.Data.Sources.Steam
 		
 		public override string name { get { return "Steam"; } }
 		public override string icon { get { return "steam"; } }
-		public override string auth_description { owned get { return ".\n%s".printf(_("Your SteamID will be read from Steam configuration file")); } }
+		public override string auth_description
+		{
+			owned get
+			{
+				var text = _("Your SteamID will be read from Steam configuration file");
+				if(!is_authenticated_in_steam_client)
+				{
+					text = _("Steam config file not found.\nLogin into your account in Steam client and return to GameHub");
+				}
+				return ".\n%s".printf(text);
+			}
+		}
+
+		public override bool enabled
+		{
+			get { return Settings.Auth.Steam.get_instance().enabled; }
+			set { Settings.Auth.Steam.get_instance().enabled = value; }
+		}
 		
 		public string? user_id { get; protected set; }
 		public string? user_name { get; protected set; }
 
 		private bool? installed = null;
+
+		private bool is_authenticated_in_steam_client { get { return FSUtils.file(FSUtils.Paths.Steam.LoginUsersVDF).query_exists(); } }
 
 		public override bool is_installed(bool refresh)
 		{
@@ -42,6 +61,12 @@ namespace GameHub.Data.Sources.Steam
 			
 			var result = false;
 			
+			if(!is_authenticated_in_steam_client)
+			{
+				yield Utils.run_async("/usr/bin/env steam", false);
+				return false;
+			}
+
 			new Thread<void*>("steam-loginusers-thread", () => {
 				var config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDF);
 				var users = Parser.json_object(config, {"users"});
@@ -79,7 +104,7 @@ namespace GameHub.Data.Sources.Steam
 		
 		public override bool can_authenticate_automatically()
 		{
-			return Settings.Auth.Steam.get_instance().authenticated;
+			return Settings.Auth.Steam.get_instance().authenticated && is_authenticated_in_steam_client;
 		}
 
 		private ArrayList<Game> games = new ArrayList<Game>(Game.is_equal);

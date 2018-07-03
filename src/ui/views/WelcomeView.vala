@@ -8,6 +8,7 @@ namespace GameHub.UI.Views
 	public class WelcomeView: BaseView
 	{
 		private Stack stack;
+		private Granite.Widgets.AlertView empty_alert;
 		private Granite.Widgets.Welcome welcome;
 		
 		private Button skip_btn;
@@ -29,6 +30,11 @@ namespace GameHub.UI.Views
 			spinner.valign = Align.CENTER;
 			stack.add(spinner);
 			
+			empty_alert = new Granite.Widgets.AlertView(_("No enabled game sources"), _("Enable some game sources in settings"), "dialog-warning");
+			empty_alert.show_action(_("Settings"));
+
+			stack.add(empty_alert);
+
 			welcome = new Granite.Widgets.Welcome(_("All your games in one place"), _("Let's get started"));
 			
 			welcome.activated.connect(index => {
@@ -41,6 +47,7 @@ namespace GameHub.UI.Views
 			
 			titlebar.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 			welcome.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+			empty_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 			
 			skip_btn = new Button.with_label(_("Skip"));
 			skip_btn.clicked.connect(open_games_grid);
@@ -53,6 +60,7 @@ namespace GameHub.UI.Views
 			settings.image = new Image.from_icon_name("open-menu", IconSize.LARGE_TOOLBAR);
 			
 			settings.clicked.connect(() => new Dialogs.SettingsDialog().show_all());
+			empty_alert.action_activated.connect(() => settings.clicked());
 			
 			titlebar.pack_end(settings);
 			titlebar.pack_end(skip_btn);
@@ -65,7 +73,7 @@ namespace GameHub.UI.Views
 				var image = FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : ""));
 				
 				var i = welcome.append_with_pixbuf(image, src.name, "");
-				
+
 				ui_settings.notify["dark-theme"].connect(() => {
 					welcome.get_button_from_index(i).icon = new Image.from_pixbuf(FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : "")));
 				});
@@ -91,6 +99,7 @@ namespace GameHub.UI.Views
 			
 			skip_btn.set_sensitive(false);
 			var all_authenticated = true;
+			int enabled_sources = 0;
 			
 			for(int index = 0; index < GameSources.length; index++)
 			{
@@ -98,6 +107,11 @@ namespace GameHub.UI.Views
 				
 				var btn = welcome.get_button_from_index(index);
 				
+				welcome.set_item_visible(index, src.enabled);
+
+				if(!src.enabled) continue;
+				enabled_sources++;
+
 				if(src.is_installed(true))
 				{
 					btn.title = src.name;
@@ -132,19 +146,26 @@ namespace GameHub.UI.Views
 				}
 			}
 			
-			if(all_authenticated)
+			if(enabled_sources > 0 && all_authenticated)
 			{
-				open_games_grid();
+				Idle.add(() => { open_games_grid(); return false; });
 				return;
+			}
+
+			if(enabled_sources == 0)
+			{
+				settings.opacity = 0;
+				skip_btn.opacity = 0;
+				stack.set_visible_child(empty_alert);
+				empty_alert.show_all();
 			}
 			else
 			{
-				stack.set_visible_child(welcome);
 				settings.opacity = 1;
 				skip_btn.opacity = 1;
+				stack.set_visible_child(welcome);
+				welcome.show_all();
 			}
-			
-			welcome.show_all();
 			
 			is_updating = false;
 		}

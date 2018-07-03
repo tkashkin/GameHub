@@ -59,6 +59,7 @@ namespace GameHub.Settings
 	{		
 		public class Steam: Granite.Services.Settings
 		{
+			public bool enabled { get; set; }
 			public bool authenticated { get; set; }
 			public string api_key { get; set; }
 
@@ -80,6 +81,7 @@ namespace GameHub.Settings
 		
 		public class GOG: Granite.Services.Settings
 		{
+			public bool enabled { get; set; }
 			public bool authenticated { get; set; }
 			public string access_token { get; set; }
 			public string refresh_token { get; set; }
@@ -102,6 +104,7 @@ namespace GameHub.Settings
 		
 		public class Humble: Granite.Services.Settings
 		{
+			public bool enabled { get; set; }
 			public bool authenticated { get; set; }
 			public string access_token { get; set; }
 

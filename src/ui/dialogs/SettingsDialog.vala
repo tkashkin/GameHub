@@ -22,22 +22,25 @@ namespace GameHub.UI.Dialogs
 			
 			var ui = Settings.UI.get_instance();
 			var paths = FSUtils.Paths.Settings.get_instance();
+
 			var steam_auth = Settings.Auth.Steam.get_instance();
+			var gog_auth = Settings.Auth.GOG.get_instance();
+			var humble_auth = Settings.Auth.Humble.get_instance();
 			
 			add_switch(_("Use dark theme"), ui.dark_theme, e => { ui.dark_theme = e; });
 			add_separator();
 			
-			add_header("Steam");
+			add_header_with_checkbox("Steam", steam_auth.enabled, v => { steam_auth.enabled = v; });
 			add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "https://steamcommunity.com/dev/apikey");
 			add_entry(_("Steam API key"), steam_auth.api_key, v => { steam_auth.api_key = v; });
 			add_file_chooser(_("Steam installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; }, false);
 			add_separator();
 			
-			add_header("GOG");
+			add_header_with_checkbox("GOG", gog_auth.enabled, v => { gog_auth.enabled = v; });
 			add_file_chooser(_("GOG games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; });
 			add_separator();
 			
-			add_header("Humble Bundle");
+			add_header_with_checkbox("Humble Bundle", humble_auth.enabled, v => { humble_auth.enabled = v; });
 			add_file_chooser(_("Humble Bundle games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; });
 			
 			content.pack_start(box, false, false, 0);
@@ -124,6 +127,19 @@ namespace GameHub.UI.Dialogs
 			add_widget(label);
 		}
 		
+		private void add_header_with_checkbox(string text, bool enabled, owned SwitchAction action)
+		{
+			var cb = new CheckButton.with_label(text);
+			cb.active = enabled;
+			cb.halign = Align.START;
+			cb.hexpand = true;
+			cb.notify["active"].connect(() => { action(cb.active); });
+
+			cb.get_style_context().add_class(Granite.STYLE_CLASS_H4_LABEL);
+
+			add_widget(cb);
+		}
+
 		private void add_link(string text, string uri)
 		{
 			var link = new LinkButton.with_label(uri, text);

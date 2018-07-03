@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-17 04:53+0300\n"
+"POT-Creation-Date: 2018-07-03 04:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: data/com.github.tkashkin.gamehub.appdata.xml.in:9
 #: data/com.github.tkashkin.gamehub.desktop.in:5
-#: src/ui/views/WelcomeView.vala:32
+#: src/ui/views/WelcomeView.vala:38
 msgid "All your games in one place"
 msgstr ""
 
@@ -34,64 +34,58 @@ msgstr ""
 msgid "Manage your Steam and GOG games in one place."
 msgstr ""
 
-#: data/com.github.tkashkin.gamehub.appdata.xml.in:15
-msgid "Anatoliy Kashkin"
-msgstr ""
-
-#: data/com.github.tkashkin.gamehub.desktop.in:7
-msgid "Game;Hub;Steam;GOG;"
-msgstr ""
-
-#: data/com.github.tkashkin.gamehub.desktop.in:10
-msgid "com.github.tkashkin.gamehub"
-msgstr ""
-
-#: src/data/sources/steam/Steam.vala:13
+#: src/data/sources/steam/Steam.vala:17
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:163
+#: src/data/sources/steam/Steam.vala:20
+msgid ""
+"Steam config file not found.\n"
+"Login into your account in Steam client and return to GameHub"
+msgstr ""
+
+#: src/data/sources/humble/HumbleGame.vala:166
 msgid "Select main executable of the game"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:164
+#: src/data/sources/humble/HumbleGame.vala:167
 #: src/ui/dialogs/GameInstallDialog.vala:75
 msgid "Cancel"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:164
+#: src/data/sources/humble/HumbleGame.vala:167
 msgid "Select"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:27
+#: src/ui/dialogs/SettingsDialog.vala:30
 msgid "Use dark theme"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:31
+#: src/ui/dialogs/SettingsDialog.vala:34
 msgid "Steam API keys have limited number of uses per day"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:31
+#: src/ui/dialogs/SettingsDialog.vala:34
 msgid "Generate key"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:32
+#: src/ui/dialogs/SettingsDialog.vala:35
 msgid "Steam API key"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:33
+#: src/ui/dialogs/SettingsDialog.vala:36
 msgid "Steam installation directory"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:37
+#: src/ui/dialogs/SettingsDialog.vala:40
 msgid "GOG games directory"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:41
+#: src/ui/dialogs/SettingsDialog.vala:44
 msgid "Humble Bundle games directory"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:54
+#: src/ui/dialogs/SettingsDialog.vala:57
 msgid "Close"
 msgstr ""
 
@@ -103,37 +97,45 @@ msgstr ""
 msgid "Install"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:32
-msgid "Let's get started"
+#: src/ui/views/WelcomeView.vala:33
+msgid "No enabled game sources"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:42
-msgid "Skip"
+#: src/ui/views/WelcomeView.vala:33
+msgid "Enable some game sources in settings"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:49
+#: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:59
 #: src/ui/views/GamesGridView/GamesGridView.vala:92
 msgid "Settings"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:101
+#: src/ui/views/WelcomeView.vala:38
+msgid "Let's get started"
+msgstr ""
+
+#: src/ui/views/WelcomeView.vala:52
+msgid "Skip"
+msgstr ""
+
+#: src/ui/views/WelcomeView.vala:121
 msgid "Ready"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:107
+#: src/ui/views/WelcomeView.vala:127
 msgid "Authentication required"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:112
+#: src/ui/views/WelcomeView.vala:132
 msgid "Authenticating..."
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:123
+#: src/ui/views/WelcomeView.vala:143
 #, c-format
 msgid "Install %s"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:124
+#: src/ui/views/WelcomeView.vala:144
 msgid "Return to GameHub after installing"
 msgstr ""
 

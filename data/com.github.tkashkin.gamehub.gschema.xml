@@ -31,6 +31,9 @@
 	</schema>
 	
 	<schema path="/com/github/tkashkin/gamehub/auth/steam/" id="com.github.tkashkin.gamehub.auth.steam" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="enabled" type="b">
+			<default>true</default>
+		</key>
 		<key name="authenticated" type="b">
 			<default>false</default>
 		</key>
@@ -40,6 +43,9 @@
 	</schema>
 	
 	<schema path="/com/github/tkashkin/gamehub/auth/gog/" id="com.github.tkashkin.gamehub.auth.gog" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="enabled" type="b">
+			<default>true</default>
+		</key>
 		<key name="authenticated" type="b">
 			<default>false</default>
 		</key>
@@ -52,6 +58,9 @@
 	</schema>
 	
 	<schema path="/com/github/tkashkin/gamehub/auth/humble/" id="com.github.tkashkin.gamehub.auth.humble" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="enabled" type="b">
+			<default>true</default>
+		</key>
 		<key name="authenticated" type="b">
 			<default>false</default>
 		</key>

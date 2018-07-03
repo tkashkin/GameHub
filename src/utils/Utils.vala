@@ -33,7 +33,7 @@ namespace GameHub.Utils
 		return stdout;
 	}
 	
-	public static async int run_async(string cmd)
+	public static async int run_async(string cmd, bool wait=true)
 	{
 		int result = -1;
 		var c = new Granite.Services.SimpleCommand(Environment.get_home_dir(), cmd);
@@ -42,7 +42,7 @@ namespace GameHub.Utils
 			Idle.add(run_async.callback);
 		});
 		c.run();
-		yield;
+		if(wait) yield;
 		return result;
 	}
 	
