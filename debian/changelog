@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.4.1) xenial; urgency=low
+
+  * Small features
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 07 Jul 2018 09:40:55 +0300
+
 com.github.tkashkin.gamehub (0.4.0) xenial; urgency=low
 
   * Unneeded game sources now can be disabled

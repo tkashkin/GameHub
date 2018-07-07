@@ -162,26 +162,7 @@ namespace GameHub.Data.Sources.Humble
 						Utils.run_async.begin(cmd, true, (obj, res) => {
 							Utils.run_async.end(res);
 							Utils.run(@"chmod -R +x \"$(install_dir)\"");
-							
-							var chooser = new FileChooserDialog(_("Select main executable of the game"), GameHub.UI.Windows.MainWindow.instance,
-												FileChooserAction.OPEN, _("Cancel"), ResponseType.CANCEL, _("Select"), ResponseType.ACCEPT);
-							var filter = new FileFilter();
-							filter.add_mime_type("application/x-executable");
-							filter.add_mime_type("application/x-elf");
-							filter.add_mime_type("application/x-sh");
-							filter.add_mime_type("text/x-shellscript");
-							chooser.set_filter(filter);
-							chooser.select_file(executable);
-							
-							if(chooser.run() == ResponseType.ACCEPT)
-							{
-								executable = chooser.get_file();
-								custom_info = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
-								GamesDB.get_instance().add_game(this);
-							}
-							
-							chooser.destroy();
-							
+							choose_executable();
 							Idle.add(install.callback);
 						});
 					}
@@ -192,12 +173,44 @@ namespace GameHub.Data.Sources.Humble
 				});
 			});
 			
+			wnd.import.connect(() => {
+				choose_executable();
+				Idle.add(install.callback);
+			});
+
 			wnd.show_all();
 			wnd.present();
 			
 			yield;
 		}
 		
+		private void choose_executable()
+		{
+			var chooser = new FileChooserDialog(_("Select main executable of the game"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN);
+			var filter = new FileFilter();
+			filter.add_mime_type("application/x-executable");
+			filter.add_mime_type("application/x-elf");
+			filter.add_mime_type("application/x-sh");
+			filter.add_mime_type("text/x-shellscript");
+			chooser.set_filter(filter);
+			chooser.select_file(executable);
+
+			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
+			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
+
+			select_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
+			select_btn.grab_default();
+
+			if(chooser.run() == ResponseType.ACCEPT)
+			{
+				executable = chooser.get_file();
+				custom_info = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
+				GamesDB.get_instance().add_game(this);
+			}
+
+			chooser.destroy();
+		}
+
 		public override async void run()
 		{
 			if(is_installed())

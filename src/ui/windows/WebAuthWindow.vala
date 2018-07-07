@@ -25,6 +25,9 @@ namespace GameHub.UI.Windows
 			titlebar.show_close_button = true;
 			set_titlebar(titlebar);
 			
+			var spinner = new Spinner();
+			titlebar.pack_end(spinner);
+
 			set_size_request(640, 800);
 			
 			set_modal(true);
@@ -39,14 +42,18 @@ namespace GameHub.UI.Windows
 			webview.get_settings().enable_mediasource = true;
 			webview.get_settings().enable_smooth_scrolling = true;
 			
-			webview.user_content_manager.add_style_sheet(new UserStyleSheet(".account-bbm-wrapper{background:#333 !important}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
+			var style = ".banner,.navigation-container-v2,.tabbar,.base-main-wrapper,.site-footer,.evidon-banner{display:none !important}body{overflow:hidden !important}";
+			string[] whitelist = {"https://*.humblebundle.com/*"};
+			webview.user_content_manager.add_style_sheet(new UserStyleSheet(style, UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, whitelist, null));
 
 			webview.load_changed.connect(e => {
 				var uri = webview.get_uri();
 				titlebar.title = webview.title;
 				titlebar.subtitle = uri.split("?")[0];
 				titlebar.tooltip_text = uri;
-				
+
+				spinner.active = e != LoadEvent.FINISHED;
+
 				debug("[WebAuth/%s] URI: `%s`", source, uri);
 				
 				if(!is_finished && success_cookie_name != null)
