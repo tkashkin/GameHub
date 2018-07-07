@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 04:35+0300\n"
+"POT-Creation-Date: 2018-07-07 09:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,16 +44,16 @@ msgid ""
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:166
+#: src/data/sources/humble/HumbleGame.vala:189
 msgid "Select main executable of the game"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:167
-#: src/ui/dialogs/GameInstallDialog.vala:75
+#: src/data/sources/humble/HumbleGame.vala:190
+#: src/ui/dialogs/GameInstallDialog.vala:84
 msgid "Cancel"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:167
+#: src/data/sources/humble/HumbleGame.vala:190
 msgid "Select"
 msgstr ""
 
@@ -89,11 +89,15 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: src/ui/dialogs/GameInstallDialog.vala:48
+#: src/ui/dialogs/GameInstallDialog.vala:51
 msgid "Select game installer"
 msgstr ""
 
-#: src/ui/dialogs/GameInstallDialog.vala:76
+#: src/ui/dialogs/GameInstallDialog.vala:88
+msgid "Import"
+msgstr ""
+
+#: src/ui/dialogs/GameInstallDialog.vala:91
 msgid "Install"
 msgstr ""
 

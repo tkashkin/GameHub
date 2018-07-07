@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 04:35+0300\n"
+"POT-Creation-Date: 2018-07-07 09:38+0300\n"
 "PO-Revision-Date: 2018-05-27 03:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -46,16 +46,16 @@ msgstr ""
 "Файл конфигурации Steam не найден.\n"
 "Войдите в ваш аккаунт в клиенте Steam и вернитесь в GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:166
+#: src/data/sources/humble/HumbleGame.vala:189
 msgid "Select main executable of the game"
 msgstr "Выберите исполняемый файл игры"
 
-#: src/data/sources/humble/HumbleGame.vala:167
-#: src/ui/dialogs/GameInstallDialog.vala:75
+#: src/data/sources/humble/HumbleGame.vala:190
+#: src/ui/dialogs/GameInstallDialog.vala:84
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/data/sources/humble/HumbleGame.vala:167
+#: src/data/sources/humble/HumbleGame.vala:190
 msgid "Select"
 msgstr "Выбрать"
 
@@ -91,11 +91,15 @@ msgstr "Папка игр Humble Bundle"
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/ui/dialogs/GameInstallDialog.vala:48
+#: src/ui/dialogs/GameInstallDialog.vala:51
 msgid "Select game installer"
 msgstr "Выберите установочный файл игры"
 
-#: src/ui/dialogs/GameInstallDialog.vala:76
+#: src/ui/dialogs/GameInstallDialog.vala:88
+msgid "Import"
+msgstr "Импортировать"
+
+#: src/ui/dialogs/GameInstallDialog.vala:91
 msgid "Install"
 msgstr "Установить"
 

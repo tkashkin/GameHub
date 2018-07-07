@@ -18,4 +18,6 @@ Standards-Version: 4.1.4
 Package: com.github.tkashkin.gamehub
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: file-roller
+Suggests: steam
 Description: All your games in one place

@@ -11,6 +11,9 @@ namespace GameHub.UI.Dialogs
 {
 	public class GameInstallDialog: Granite.MessageDialog
 	{
+		private const int RESPONSE_IMPORT = 123;
+
+		public signal void import();
 		public signal void install(Game.Installer installer);
 		public signal void canceled();
 		
@@ -26,6 +29,11 @@ namespace GameHub.UI.Dialogs
 			
 			image_icon = Icon.new_for_string("go-down");
 			
+			if(game.icon != null)
+			{
+				image_icon = new FileIcon(File.new_for_uri(game.icon));
+			}
+
 			primary_text = game.name;
 			
 			installers_list = new ListBox();
@@ -46,6 +54,7 @@ namespace GameHub.UI.Dialogs
 			if(installers.size > 1)
 			{
 				secondary_text = _("Select game installer");
+				custom_bin.hexpand = true;
 				custom_bin.child = installers_list;
 			}
 			
@@ -57,7 +66,13 @@ namespace GameHub.UI.Dialogs
 					case ResponseType.CANCEL:
 						destroy();
 						break;
-						
+
+					case GameInstallDialog.RESPONSE_IMPORT:
+						is_finished = true;
+						import();
+						destroy();
+						break;
+
 					case ResponseType.ACCEPT:
 						var installer = installers[0];
 						if(installers.size > 1)
@@ -73,6 +88,12 @@ namespace GameHub.UI.Dialogs
 			});
 
 			add_button(_("Cancel"), ResponseType.CANCEL);
+
+			if(game is HumbleGame)
+			{
+				add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
+			}
+
 			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
 			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
 			install_btn.grab_default();
