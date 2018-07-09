@@ -6,6 +6,7 @@ namespace GameHub.Data.Sources.Steam
 	public class SteamGame: Game
 	{
 		private bool? _is_for_linux = null;
+		private bool _product_info_updated = false;
 		private int metadata_tries = 0;
 		
 		public SteamGame(Steam src, Json.Object json)
@@ -16,11 +17,14 @@ namespace GameHub.Data.Sources.Steam
 			var icon_hash = json.get_string_member("img_icon_url");
 			icon = @"https://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
 			image = @"https://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
-			
+
 			if(GamesDB.get_instance().is_game_unsupported(src, id))
 			{
 				_is_for_linux = false;
 			}
+			is_installed();
+
+			store_page = @"steam://store/$(id)";
 		}
 		
 		public SteamGame.from_db(Steam src, Sqlite.Statement stmt)
@@ -32,6 +36,23 @@ namespace GameHub.Data.Sources.Steam
 			image = stmt.column_text(4);
 			custom_info = stmt.column_text(5);
 			_is_for_linux = true;
+			is_installed();
+			store_page = @"steam://store/$(id)";
+		}
+
+		public override async void update_game_info()
+		{
+			if(custom_info == null || custom_info.length == 0 || !_product_info_updated)
+			{
+				var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)";
+				custom_info = (yield Parser.load_remote_file_async(url));
+				_product_info_updated = true;
+			}
+
+			var root = Parser.parse_json(custom_info);
+			description = Parser.json_object(root, {id, "data"}).get_string_member("detailed_description");
+
+			if(_is_for_linux == true) GamesDB.get_instance().add_game(this);
 		}
 		
 		public override async bool is_for_linux()
@@ -42,8 +63,9 @@ namespace GameHub.Data.Sources.Steam
 			
 			debug("[Steam] <app %s> Checking for compatibility [%d]...\n", id, metadata_tries);
 			
-			var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)";
-			var root = yield Parser.parse_remote_json_file_async(url);
+			yield update_game_info();
+
+			var root = Parser.parse_json(custom_info);
 			var platforms = Parser.json_object(root, {id, "data", "platforms"});
 			
 			if(platforms == null)
@@ -64,7 +86,7 @@ namespace GameHub.Data.Sources.Steam
 			_is_for_linux = platforms.get_boolean_member("linux");
 			
 			if(_is_for_linux == false) GamesDB.get_instance().add_unsupported_game(source, id);
-			
+
 			return _is_for_linux;
 		}
 		
@@ -75,10 +97,14 @@ namespace GameHub.Data.Sources.Steam
 				var acf = FSUtils.file(dir, @"appmanifest_$(id).acf");
 				if(acf.query_exists())
 				{
+					var root = Parser.parse_vdf_file(acf.get_path()).get_object();
+					install_dir = FSUtils.file(dir, "common/" + root.get_object_member("AppState").get_string_member("installdir"));
+					status = new Game.Status(Game.State.INSTALLED);
 					return true;
 				}
 			}
 			
+			status = new Game.Status(Game.State.UNINSTALLED);
 			return false;
 		}
 		

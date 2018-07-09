@@ -60,4 +60,29 @@ namespace GameHub.Utils
 		}, priority);
 		yield;
 	}
+
+	public static async string cache_image(string url, string prefix="remote")
+	{
+		var parts = url.split("?")[0].split(".");
+		var ext = parts.length > 1 ? parts[parts.length - 1] : null;
+		ext = ext != null && ext.length <= 6 ? "." + ext : null;
+		var hash = Checksum.compute_for_string(ChecksumType.MD5, url, url.length);
+		var remote = File.new_for_uri(url);
+		var cached = FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");
+		if(!cached.query_exists())
+		{
+			try
+			{
+				yield remote.copy_async(cached, FileCopyFlags.NONE);
+			}
+			catch(Error e){}
+		}
+		return cached.get_path();
+	}
+
+	public static async void load_image(GameHub.UI.Widgets.AutoSizeImage image, string url, string prefix="remote")
+	{
+		image.set_source(new Gdk.Pixbuf.from_file(yield cache_image(url, prefix)));
+		image.queue_draw();
+	}
 }

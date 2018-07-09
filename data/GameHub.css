@@ -20,8 +20,36 @@
 {
 	color: rgba(255, 255, 255, 0.9);
 	font-weight: bold;
+	margin-top: 16px;
 	font-size: 1.3em;
 	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.gamecard label.status
+{
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 0.9em;
+	margin-top: -8px;
+	margin-bottom: -16px;
+	opacity: 0;
+	transition: 100ms;
+}
+
+.gamecard.installing label.status,
+.gamecard.hover label.status
+{
+	margin-bottom: 0px;
+	opacity: 1;
+}
+
+.gamecard.downloading label.status
+{
+	margin-bottom: 8px;
+	opacity: 1;
+}
+
+.gamecard .info
+{
 	background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
 	border-radius: 0 0 4px 4px;
 }
@@ -52,4 +80,13 @@
 {
 	background-color: rgba(255, 255, 255, 0.6);
 	border-radius: 4px;
+	transition: 100ms;
+	margin-bottom: -16px;
+	opacity: 0;
+}
+
+.gamecard.downloading .progress
+{
+	margin-bottom: 0;
+	opacity: 1;
 }

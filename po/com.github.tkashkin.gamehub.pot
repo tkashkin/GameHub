@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 09:38+0300\n"
+"POT-Creation-Date: 2018-07-09 11:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,6 +34,23 @@ msgstr ""
 msgid "Manage your Steam and GOG games in one place."
 msgstr ""
 
+#: src/data/Game.vala:73
+msgid "Installed"
+msgstr ""
+
+#: src/data/Game.vala:74
+msgid "Installing"
+msgstr ""
+
+#: src/data/Game.vala:77
+#, c-format
+msgid "Downloading: %d%% (%s / %s)"
+msgstr ""
+
+#: src/data/Game.vala:79
+msgid "Not installed"
+msgstr ""
+
 #: src/data/sources/steam/Steam.vala:17
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr ""
@@ -44,16 +61,16 @@ msgid ""
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:189
+#: src/data/sources/humble/HumbleGame.vala:199
 msgid "Select main executable of the game"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:190
-#: src/ui/dialogs/GameInstallDialog.vala:84
+#: src/data/sources/humble/HumbleGame.vala:208
+#: src/ui/dialogs/GameInstallDialog.vala:90
 msgid "Cancel"
 msgstr ""
 
-#: src/data/sources/humble/HumbleGame.vala:190
+#: src/data/sources/humble/HumbleGame.vala:209
 msgid "Select"
 msgstr ""
 
@@ -86,18 +103,20 @@ msgid "Humble Bundle games directory"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog.vala:57
+#: src/ui/dialogs/GameDetailsDialog.vala:30
 msgid "Close"
 msgstr ""
 
-#: src/ui/dialogs/GameInstallDialog.vala:51
+#: src/ui/dialogs/GameInstallDialog.vala:56
 msgid "Select game installer"
 msgstr ""
 
-#: src/ui/dialogs/GameInstallDialog.vala:88
+#: src/ui/dialogs/GameInstallDialog.vala:94
 msgid "Import"
 msgstr ""
 
-#: src/ui/dialogs/GameInstallDialog.vala:91
+#: src/ui/dialogs/GameInstallDialog.vala:97
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:131
 msgid "Install"
 msgstr ""
 
@@ -110,7 +129,7 @@ msgid "Enable some game sources in settings"
 msgstr ""
 
 #: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:59
-#: src/ui/views/GamesGridView/GamesGridView.vala:92
+#: src/ui/views/GamesView/GamesView.vala:134
 msgid "Settings"
 msgstr ""
 
@@ -143,26 +162,46 @@ msgstr ""
 msgid "Return to GameHub after installing"
 msgstr ""
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:60
+#: src/ui/views/GamesView/GamesView.vala:86
+msgid "Grid view"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:87
+msgid "List view"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:102
 msgid "All games"
 msgstr ""
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:70
+#: src/ui/views/GamesView/GamesView.vala:112
 #, c-format
 msgid "%s games"
 msgstr ""
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:76
+#: src/ui/views/GamesView/GamesView.vala:118
 msgid "Downloads"
 msgstr ""
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:87
+#: src/ui/views/GamesView/GamesView.vala:129
 msgid "Search"
 msgstr ""
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:118
+#: src/ui/views/GamesView/GamesView.vala:170
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] ""
 msgstr[1] ""
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:132
+msgid "Run"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:133
+msgid "Open installation directory"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:134
+msgid "Open store page"
+msgstr ""

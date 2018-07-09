@@ -25,7 +25,7 @@ namespace GameHub.UI.Windows
 			ui_settings.notify["dark-theme"].connect(() => {
 				Gtk.Settings.get_default().gtk_application_prefer_dark_theme = ui_settings.dark_theme;
 			});
-			ui_settings.notify["dark-theme"](((ObjectClass) typeof(Settings.UI).class_ref()).find_property("dark-theme"));
+			ui_settings.notify_property("dark-theme");
 			
 			title = "GameHub";
 

@@ -18,7 +18,7 @@ namespace GameHub.UI.Views
 		
 		construct
 		{
-			var ui_settings = Settings.UI.get_instance();
+			var ui_settings = GameHub.Settings.UI.get_instance();
 			
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
@@ -50,7 +50,7 @@ namespace GameHub.UI.Views
 			empty_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 			
 			skip_btn = new Button.with_label(_("Skip"));
-			skip_btn.clicked.connect(open_games_grid);
+			skip_btn.clicked.connect(open_games_view);
 			skip_btn.halign = Align.CENTER;
 			skip_btn.valign = Align.CENTER;
 			skip_btn.set_sensitive(false);
@@ -87,9 +87,9 @@ namespace GameHub.UI.Views
 			update_entries.begin();
 		}
 		
-		private void open_games_grid()
+		private void open_games_view()
 		{
-			window.add_view(new GamesGridView());
+			window.add_view(new GamesView());
 		}
 		
 		private async void update_entries()
@@ -148,7 +148,7 @@ namespace GameHub.UI.Views
 			
 			if(enabled_sources > 0 && all_authenticated)
 			{
-				Idle.add(() => { open_games_grid(); return false; });
+				Idle.add(() => { open_games_view(); return false; });
 				return;
 			}
 
