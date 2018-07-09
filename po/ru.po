@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 09:38+0300\n"
+"POT-Creation-Date: 2018-07-09 11:48+0300\n"
 "PO-Revision-Date: 2018-05-27 03:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,12 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: data/com.github.tkashkin.gamehub.appdata.xml.in:8
-#: data/com.github.tkashkin.gamehub.desktop.in:3
-#: data/com.github.tkashkin.gamehub.desktop.in:4
-msgid "GameHub"
-msgstr ""
-
 #: data/com.github.tkashkin.gamehub.appdata.xml.in:9
 #: data/com.github.tkashkin.gamehub.desktop.in:5
 #: src/ui/views/WelcomeView.vala:38
@@ -33,6 +27,23 @@ msgstr "Все игры в одном месте"
 #: data/com.github.tkashkin.gamehub.appdata.xml.in:12
 msgid "Manage your Steam and GOG games in one place."
 msgstr "Управляйте играми из Steam и GOG в одном месте"
+
+#: src/data/Game.vala:73
+msgid "Installed"
+msgstr "Установлена"
+
+#: src/data/Game.vala:74
+msgid "Installing"
+msgstr "Установка"
+
+#: src/data/Game.vala:77
+#, c-format
+msgid "Downloading: %d%% (%s / %s)"
+msgstr "Загрузка: %d%% (%s / %s)"
+
+#: src/data/Game.vala:79
+msgid "Not installed"
+msgstr "Не установлена"
 
 #: src/data/sources/steam/Steam.vala:17
 msgid "Your SteamID will be read from Steam configuration file"
@@ -46,16 +57,16 @@ msgstr ""
 "Файл конфигурации Steam не найден.\n"
 "Войдите в ваш аккаунт в клиенте Steam и вернитесь в GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:189
+#: src/data/sources/humble/HumbleGame.vala:199
 msgid "Select main executable of the game"
 msgstr "Выберите исполняемый файл игры"
 
-#: src/data/sources/humble/HumbleGame.vala:190
-#: src/ui/dialogs/GameInstallDialog.vala:84
+#: src/data/sources/humble/HumbleGame.vala:208
+#: src/ui/dialogs/GameInstallDialog.vala:90
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/data/sources/humble/HumbleGame.vala:190
+#: src/data/sources/humble/HumbleGame.vala:209
 msgid "Select"
 msgstr "Выбрать"
 
@@ -88,18 +99,20 @@ msgid "Humble Bundle games directory"
 msgstr "Папка игр Humble Bundle"
 
 #: src/ui/dialogs/SettingsDialog.vala:57
+#: src/ui/dialogs/GameDetailsDialog.vala:30
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/ui/dialogs/GameInstallDialog.vala:51
+#: src/ui/dialogs/GameInstallDialog.vala:56
 msgid "Select game installer"
 msgstr "Выберите установочный файл игры"
 
-#: src/ui/dialogs/GameInstallDialog.vala:88
+#: src/ui/dialogs/GameInstallDialog.vala:94
 msgid "Import"
 msgstr "Импортировать"
 
-#: src/ui/dialogs/GameInstallDialog.vala:91
+#: src/ui/dialogs/GameInstallDialog.vala:97
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:131
 msgid "Install"
 msgstr "Установить"
 
@@ -112,7 +125,7 @@ msgid "Enable some game sources in settings"
 msgstr "Включите источники в настройках"
 
 #: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:59
-#: src/ui/views/GamesGridView/GamesGridView.vala:92
+#: src/ui/views/GamesView/GamesView.vala:134
 msgid "Settings"
 msgstr "Настройки"
 
@@ -145,27 +158,47 @@ msgstr "Установить %s"
 msgid "Return to GameHub after installing"
 msgstr "Вернитесь в GameHub после установки"
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:60
+#: src/ui/views/GamesView/GamesView.vala:86
+msgid "Grid view"
+msgstr "Сетка"
+
+#: src/ui/views/GamesView/GamesView.vala:87
+msgid "List view"
+msgstr "Список"
+
+#: src/ui/views/GamesView/GamesView.vala:102
 msgid "All games"
 msgstr "Все игры"
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:70
+#: src/ui/views/GamesView/GamesView.vala:112
 #, c-format
 msgid "%s games"
 msgstr "Игры из %s"
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:76
+#: src/ui/views/GamesView/GamesView.vala:118
 msgid "Downloads"
 msgstr "Загрузки"
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:87
+#: src/ui/views/GamesView/GamesView.vala:129
 msgid "Search"
 msgstr "Поиск"
 
-#: src/ui/views/GamesGridView/GamesGridView.vala:118
+#: src/ui/views/GamesView/GamesView.vala:170
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u игра"
 msgstr[1] "%u игры"
 msgstr[2] "%u игр"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:132
+msgid "Run"
+msgstr "Запустить"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:133
+msgid "Open installation directory"
+msgstr "Открыть папку установки"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:134
+msgid "Open store page"
+msgstr "Открыть страницу в магазине"

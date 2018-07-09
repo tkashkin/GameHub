@@ -23,15 +23,20 @@ src/ui/windows/WebAuthWindow.vala
 
 src/ui/dialogs/SettingsDialog.vala
 src/ui/dialogs/GameInstallDialog.vala
+src/ui/dialogs/GameDetailsDialog.vala
 
 src/ui/views/BaseView.vala
 src/ui/views/WelcomeView.vala
 
-src/ui/views/GamesGridView/GamesGridView.vala
-src/ui/views/GamesGridView/GameCard.vala
-src/ui/views/GamesGridView/GameDownloadProgressView.vala
+src/ui/views/GamesView/GamesView.vala
+src/ui/views/GamesView/GameCard.vala
+src/ui/views/GamesView/GameListRow.vala
+src/ui/views/GamesView/GameDownloadProgressView.vala
+
+src/ui/views/GameDetailsView/GameDetailsView.vala
 
 src/ui/widgets/AutoSizeImage.vala
+src/ui/widgets/ActionButton.vala
 
 src/utils/Utils.vala
 src/utils/FSUtils.vala

@@ -5,6 +5,12 @@
 		<value nick="Maximized" value="1" />
 		<value nick="Fullscreen" value="2" />
 	</enum>
+
+	<enum id="com.github.tkashkin.gamehub.games-view">
+		<value nick="Grid" value="0" />
+		<value nick="List" value="1" />
+	</enum>
+
 	<schema path="/com/github/tkashkin/gamehub/saved-state/" id="com.github.tkashkin.gamehub.saved-state" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="window-state" enum="com.github.tkashkin.gamehub.window-states">
 			<default>"Normal"</default>
@@ -21,6 +27,9 @@
 		</key>
 		<key name="window-y" type="i">
 			<default>-1</default>
+		</key>
+		<key name="games-view" enum="com.github.tkashkin.gamehub.games-view">
+			<default>"Grid"</default>
 		</key>
 	</schema>
 	

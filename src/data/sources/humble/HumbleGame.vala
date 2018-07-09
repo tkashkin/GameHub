@@ -45,7 +45,10 @@ namespace GameHub.Data.Sources.Humble
 				return;
 			}
 			
-			executable = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name + "/start.sh");
+			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name);
+			executable = FSUtils.file(install_dir.get_path(), "start.sh");
+			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			is_installed();
 			
 			custom_info = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
 		}
@@ -62,7 +65,10 @@ namespace GameHub.Data.Sources.Humble
 			
 			var custom_json = Parser.parse_json(custom_info).get_object();
 			order_id = custom_json.get_string_member("order");
+			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name);
 			executable = FSUtils.file(custom_json.get_string_member("executable"));
+			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			is_installed();
 		}
 		
 		public override async bool is_for_linux()
@@ -72,6 +78,7 @@ namespace GameHub.Data.Sources.Humble
 		
 		public override bool is_installed()
 		{
+			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			return executable.query_exists();
 		}
 		
@@ -122,13 +129,16 @@ namespace GameHub.Data.Sources.Humble
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
 				FSUtils.mkdir(FSUtils.Paths.Humble.Installers);
 				
-				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, progress, null, (obj, res) => {
+				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, (d, t) => {
+					progress(d, t);
+					status = new Game.Status(Game.State.DOWNLOADING, d, t);
+				}, null, (obj, res) => {
 					try
 					{
 						var file = Downloader.get_instance().download.end(res);
+						status = new Game.Status(Game.State.INSTALLING);
 						var path = file.get_path();
-						var install_dir = FSUtils.expand(FSUtils.Paths.Humble.Games, installation_dir_name);
-						FSUtils.mkdir(install_dir);
+						FSUtils.mkdir(install_dir.get_path());
 						Utils.run(@"chmod +x \"$(path)\"");
 						
 						var info = file.query_info(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
@@ -142,7 +152,7 @@ namespace GameHub.Data.Sources.Humble
 							case "application/x-elf":
 							case "application/x-sh":
 							case "application/x-shellscript":
-								cmd = @"$(path) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir)"; // probably mojosetup
+								cmd = @"$(path) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir.get_path())"; // probably mojosetup
 								break;
 							
 							case "application/zip":
@@ -155,13 +165,13 @@ namespace GameHub.Data.Sources.Humble
 							case "application/x-lzma":
 							case "application/x-7z-compressed":
 							case "application/x-rar-compressed":
-								cmd = @"/usr/bin/env file-roller $(path) -e $(install_dir)"; // extract with file-roller
+								cmd = @"/usr/bin/env file-roller $(path) -e $(install_dir.get_path())"; // extract with file-roller
 								break;
 						}
 						
 						Utils.run_async.begin(cmd, true, (obj, res) => {
 							Utils.run_async.end(res);
-							Utils.run(@"chmod -R +x \"$(install_dir)\"");
+							Utils.run(@"chmod -R +x \"$(install_dir.get_path())\"");
 							choose_executable();
 							Idle.add(install.callback);
 						});
@@ -205,6 +215,7 @@ namespace GameHub.Data.Sources.Humble
 			{
 				executable = chooser.get_file();
 				custom_info = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
+				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 				GamesDB.get_instance().add_game(this);
 			}
 

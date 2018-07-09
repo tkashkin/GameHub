@@ -44,7 +44,7 @@ namespace GameHub.UI.Widgets
 			get_allocation(out rect);
 
 			int new_width = 0;
-			int new_height = 0;		
+			int new_height = 0;
 			
 			switch(constraint)
 			{
@@ -61,7 +61,7 @@ namespace GameHub.UI.Widgets
 
 			Pixbuf pixbuf = src;
 			
-			if(src.width != src.height)
+			if(src.width > cmin || src.height > cmin || src.width != src.height)
 			{
 				pixbuf = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
 			}

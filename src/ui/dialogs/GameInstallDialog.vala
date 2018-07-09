@@ -29,7 +29,7 @@ namespace GameHub.UI.Dialogs
 			
 			image_icon = Icon.new_for_string("go-down");
 			
-			if(game.icon != null)
+			if(game.icon != null && game.icon.length > 0)
 			{
 				image_icon = new FileIcon(File.new_for_uri(game.icon));
 			}

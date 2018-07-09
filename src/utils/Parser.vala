@@ -6,7 +6,7 @@ namespace GameHub.Utils
 {
 	public class Parser
 	{
-		private static string load_file(string path, string file="")
+		public static string load_file(string path, string file="")
 		{
 			var f = FSUtils.file(path, file);
 			if(!f.query_exists()) return "";
@@ -42,7 +42,7 @@ namespace GameHub.Utils
 			return message;
 		}
 		
-		private static string load_remote_file(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		public static string load_remote_file(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
 		{
 			var session = new Session();
 			var message = prepare_message(url, method, auth, headers);
@@ -52,7 +52,7 @@ namespace GameHub.Utils
 			return "";
 		}
 		
-		private static async string load_remote_file_async(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		public static async string load_remote_file_async(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
 		{
 			var result = "";
 			var session = new Session();

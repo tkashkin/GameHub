@@ -35,14 +35,20 @@ executable(
 	'ui/dialogs/SettingsDialog.vala',
 	'ui/dialogs/GameInstallDialog.vala',
 
+	'ui/dialogs/GameDetailsDialog.vala',
+
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',
 
-	'ui/views/GamesGridView/GamesGridView.vala',
-	'ui/views/GamesGridView/GameCard.vala',
-	'ui/views/GamesGridView/GameDownloadProgressView.vala',
+	'ui/views/GamesView/GamesView.vala',
+	'ui/views/GamesView/GameCard.vala',
+	'ui/views/GamesView/GameListRow.vala',
+	'ui/views/GamesView/GameDownloadProgressView.vala',
+
+	'ui/views/GameDetailsView/GameDetailsView.vala',
 
 	'ui/widgets/AutoSizeImage.vala',
+	'ui/widgets/ActionButton.vala',
 
 	'utils/Utils.vala',
 	'utils/FSUtils.vala',

@@ -7,6 +7,7 @@ namespace GameHub.Data.Sources.GOG
 	public class GOGGame: Game
 	{
 		private bool _is_for_linux;
+		private bool _product_info_updated = false;
 		
 		public File executable { get; private set; }
 		
@@ -33,7 +34,10 @@ namespace GameHub.Data.Sources.GOG
 				return;
 			}
 			
-			executable = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name + "/start.sh");
+			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
+			executable = FSUtils.file(install_dir.get_path(), "start.sh");
+			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			is_installed();
 		}
 		
 		public GOGGame.from_db(GOG src, Sqlite.Statement stmt)
@@ -45,7 +49,10 @@ namespace GameHub.Data.Sources.GOG
 			image = stmt.column_text(4);
 			custom_info = stmt.column_text(5);
 			_is_for_linux = true;
-			executable = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name + "/start.sh");
+			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
+			executable = FSUtils.file(install_dir.get_path(), "start.sh");
+			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			is_installed();
 		}
 		
 		public override async bool is_for_linux()
@@ -55,15 +62,34 @@ namespace GameHub.Data.Sources.GOG
 		
 		public override bool is_installed()
 		{
+			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			return executable.query_exists();
 		}
 		
+		public override async void update_game_info()
+		{
+			if(custom_info == null || custom_info.length == 0 || !_product_info_updated)
+			{
+				var url = @"https://api.gog.com/products/$(id)?expand=downloads,description";
+				custom_info = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token));
+				_product_info_updated = true;
+			}
+
+			var root = Parser.parse_json(custom_info).get_object();
+			icon = "https:" + root.get_object_member("images").get_string_member("icon");
+			description = root.get_object_member("description").get_string_member("full");
+			store_page = root.get_object_member("links").get_string_member("product_card");
+
+			GamesDB.get_instance().add_game(this);
+
+			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+		}
+
 		public override async void install(DownloadProgress progress = (d, t) => {})
 		{
-			var url = @"https://api.gog.com/products/$(id)?expand=downloads";
-			var root = (yield Parser.parse_remote_json_file_async(url, "GET", ((GOG) source).user_token)).get_object();
-			
-			icon = "https:" + root.get_object_member("images").get_string_member("icon");
+			yield update_game_info();
+
+			var root = Parser.parse_json(custom_info).get_object();
 			
 			var installers_json = root.get_object_member("downloads").get_array_member("installers");
 			
@@ -87,14 +113,18 @@ namespace GameHub.Data.Sources.GOG
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(FSUtils.Paths.GOG.Installers);
 				
-				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, progress, null, (obj, res) => {
+				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, (d, t) => {
+					progress(d, t);
+					status = new Game.Status(Game.State.DOWNLOADING, d, t);
+				}, null, (obj, res) => {
 					try
 					{
 						var file = Downloader.get_instance().download.end(res).get_path();
-						var install_dir = FSUtils.expand(FSUtils.Paths.GOG.Games, installation_dir_name);
+						status = new Game.Status(Game.State.INSTALLING);
 						Utils.run(@"chmod +x \"$(file)\"");
-						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir)", true, (obj, res) => {
+						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir.get_path())", true, (obj, res) => {
 							Utils.run_async.end(res);
+							status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 							Idle.add(install.callback);
 						});
 					}

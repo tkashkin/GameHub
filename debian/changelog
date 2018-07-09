@@ -1,3 +1,12 @@
+com.github.tkashkin.gamehub (0.5.0) xenial; urgency=low
+
+  * Games list view
+  * Game details view/dialog
+  * Games grid improvements
+  * Bug fixes
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 09 Jul 2018 11:44:33 +0300
+
 com.github.tkashkin.gamehub (0.4.1) xenial; urgency=low
 
   * Small features

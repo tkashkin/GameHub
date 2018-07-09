@@ -32,14 +32,37 @@
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3.png</image>
 		</screenshot>
 		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_dialog.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/4.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/1_dark.png</image>
+		</screenshot>
+		<screenshot>
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/2_dark.png</image>
 		</screenshot>
 		<screenshot>
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_dark.png</image>
 		</screenshot>
-    </screenshots>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_dialog_dark.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/4_dark.png</image>
+		</screenshot>
+	</screenshots>
 	
 	<releases>
+		<release version="0.5.0" date="2018-07-07">
+			<description>
+				<p>Games list view</p>
+				<p>Game details view/dialog</p>
+				<p>Games grid improvements</p>
+				<p>Bug fixes</p>
+			</description>
+		</release>
 		<release version="0.4.1" date="2018-07-07">
 			<description>
 				<p>Small features</p>

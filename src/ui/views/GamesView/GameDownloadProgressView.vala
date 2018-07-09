@@ -14,8 +14,6 @@ namespace GameHub.UI.Views
 		private AutoSizeImage image;
 		private ProgressBar progress_bar;
 		
-		private bool image_load_started = false;
-		
 		public GameDownloadProgressView(Game game)
 		{
 			this.game = game;
@@ -34,48 +32,36 @@ namespace GameHub.UI.Views
 			
 			var label = new Label(game.name);
 			label.halign = Align.START;
-			label.ypad = 8;
-			
+			label.get_style_context().add_class("category-label");
+			label.ypad = 2;
+
+			var state_label = new Label(null);
+			state_label.halign = Align.START;
+
 			progress_bar = new ProgressBar();
 			progress_bar.hexpand = true;
 			progress_bar.fraction = 0d;
 			progress_bar.get_style_context().add_class(Gtk.STYLE_CLASS_OSD);
 			
 			vbox.add(label);
+			vbox.add(state_label);
 			vbox.add(progress_bar);
 			
 			hbox.add(vbox);
 			
 			child = hbox;
 			
-			show_all();
-		}
-		
-		private async void load_image()
-		{
-			image_load_started = true;
-			var hash = Checksum.compute_for_string(ChecksumType.MD5, game.icon, game.icon.length);
-			var remote = File.new_for_uri(game.icon);
-			var cached = FSUtils.file(FSUtils.Paths.Cache.Images, hash + ".jpg");
-			try
-			{
-				if(!cached.query_exists())
+			game.status_change.connect(s => {
+				state_label.label = s.description;
+				if(s.state == DOWNLOADING)
 				{
-					yield remote.copy_async(cached, FileCopyFlags.NONE);
+					progress_bar.fraction = (double) s.dl_bytes / s.dl_bytes_total;
 				}
-				image.set_source(new Pixbuf.from_file(cached.get_path()));
-				image.show_all();
-			}
-			catch(Error e)
-			{
-				warning(e.message);
-			}
-		}
-		
-		public void set_progress(double progress)
-		{
-			progress_bar.fraction = progress;
-			if(!image_load_started) load_image.begin();
+			});
+
+			Utils.load_image.begin(image, game.icon, "icon");
+
+			show_all();
 		}
 	}
 }

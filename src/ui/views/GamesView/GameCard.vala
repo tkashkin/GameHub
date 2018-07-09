@@ -16,6 +16,7 @@ namespace GameHub.UI.Views
 		private AutoSizeImage image;
 		private Image src_icon;
 		private Label label;
+		private Label status_label;
 		
 		private Box actions;
 		
@@ -51,13 +52,26 @@ namespace GameHub.UI.Views
 			
 			label = new Label("");
 			label.xpad = 8;
-			label.ypad = 8;
+			label.ypad = 4;
 			label.hexpand = true;
-			label.valign = Align.END;
 			label.justify = Justification.CENTER;
 			label.lines = 3;
 			label.set_line_wrap(true);
 			
+			status_label = new Label("");
+			status_label.get_style_context().add_class("status");
+			status_label.xpad = 8;
+			status_label.ypad = 2;
+			status_label.hexpand = true;
+			status_label.justify = Justification.CENTER;
+			status_label.lines = 1;
+
+			var info = new Box(Orientation.VERTICAL, 0);
+			info.get_style_context().add_class("info");
+			info.add(label);
+			info.add(status_label);
+			info.valign = Align.END;
+
 			actions = new Box(Orientation.VERTICAL, 0);
 			actions.get_style_context().add_class("actions");
 			actions.hexpand = true;
@@ -66,12 +80,11 @@ namespace GameHub.UI.Views
 			progress_bar = new Frame(null);
 			progress_bar.halign = Align.START;
 			progress_bar.valign = Align.END;
-			progress_bar.opacity = 0;
 			progress_bar.get_style_context().add_class("progress");
 			
 			content.add(image);
 			content.add_overlay(actions);
-			content.add_overlay(label);
+			content.add_overlay(info);
 			content.add_overlay(src_icon);
 			content.add_overlay(progress_bar);
 			
@@ -81,26 +94,26 @@ namespace GameHub.UI.Views
 			content.enter_notify_event.connect(e => { card.get_style_context().add_class("hover"); });
 			content.leave_notify_event.connect(e => { card.get_style_context().remove_class("hover"); });
 			content.button_release_event.connect(e => {
-				if(game.is_installed())
+				switch(e.button)
 				{
-					game.run.begin();
-				}
-				else
-				{
-					game.install.begin((d, t) => {
-						var fraction = (double) d / t;
-						progress_view.set_progress(fraction);
-						Allocation alloc;
-						card.get_allocation(out alloc);
-						progress_bar.set_size_request((int) (fraction * alloc.width), 8);
-					}, (obj, res) => {
-						game.install.end(res);
-						if(game.is_installed()) card.get_style_context().add_class("installed");
-						installation_finished(progress_view);
-						progress_bar.opacity = 0;
-					});
-					installation_started(progress_view);
-					progress_bar.opacity = 1;
+					case 1:
+						if(game.status.state == INSTALLED)
+						{
+							game.run.begin();
+						}
+						else if(game.status.state == UNINSTALLED)
+						{
+							game.install.begin((d, t) => {}, (obj, res) => {
+								game.install.end(res);
+								installation_finished(progress_view);
+							});
+							installation_started(progress_view);
+						}
+						break;
+
+					case 3:
+						new Dialogs.GameDetailsDialog(game).show_all();
+						break;
 				}
 			});
 			
@@ -117,28 +130,44 @@ namespace GameHub.UI.Views
 			
 			progress_view = new GameDownloadProgressView(game);
 			
-			if(game.is_installed()) card.get_style_context().add_class("installed");
+			card.get_style_context().add_class("installed");
 			
-			load_image.begin();
-		}
-		
-		private async void load_image()
-		{
-			var hash = Checksum.compute_for_string(ChecksumType.MD5, game.image, game.image.length);
-			var remote = File.new_for_uri(game.image);
-			var cached = FSUtils.file(FSUtils.Paths.Cache.Images, hash + ".jpg");
-			try
-			{
-				if(!cached.query_exists())
+			game.status_change.connect(s => {
+				status_label.label = s.description;
+				switch(s.state)
 				{
-					yield remote.copy_async(cached, FileCopyFlags.NONE);
+					case UNINSTALLED:
+						card.get_style_context().remove_class("installed");
+						card.get_style_context().remove_class("downloading");
+						card.get_style_context().remove_class("installing");
+						break;
+
+					case INSTALLED:
+						card.get_style_context().add_class("installed");
+						card.get_style_context().remove_class("downloading");
+						card.get_style_context().remove_class("installing");
+						break;
+
+					case DOWNLOADING:
+						card.get_style_context().remove_class("installed");
+						card.get_style_context().add_class("downloading");
+						card.get_style_context().remove_class("installing");
+						var fraction = (double) s.dl_bytes / s.dl_bytes_total;
+						Allocation alloc;
+						card.get_allocation(out alloc);
+						progress_bar.set_size_request((int) (fraction * alloc.width), 8);
+						break;
+
+					case INSTALLING:
+						card.get_style_context().remove_class("installed");
+						card.get_style_context().remove_class("downloading");
+						card.get_style_context().add_class("installing");
+						break;
 				}
-				image.set_source(new Pixbuf.from_file(cached.get_path()));
-			}
-			catch(Error e)
-			{
-				warning(e.message);
-			}
+			});
+			game.status_change(game.status);
+
+			Utils.load_image.begin(image, game.image, "image");
 		}
 	}
 }

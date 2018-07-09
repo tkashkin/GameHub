@@ -11,6 +11,12 @@ namespace GameHub.Settings
 		FULLSCREEN = 2
 	}
 	
+	public enum GamesView
+	{
+		GRID = 0,
+		LIST = 1
+	}
+
 	public class SavedState: Granite.Services.Settings
 	{
 		public int window_width { get; set; }
@@ -18,6 +24,8 @@ namespace GameHub.Settings
 		public WindowState window_state { get; set; }
 		public int window_x { get; set; }
 		public int window_y { get; set; }
+
+		public GamesView games_view { get; set; }
 
 		public SavedState()
 		{
