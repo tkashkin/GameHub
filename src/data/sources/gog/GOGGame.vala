@@ -113,6 +113,8 @@ namespace GameHub.Data.Sources.GOG
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(FSUtils.Paths.GOG.Installers);
 				
+				status = new Game.Status(Game.State.DOWNLOAD_STARTED);
+
 				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, (d, t) => {
 					progress(d, t);
 					status = new Game.Status(Game.State.DOWNLOADING, d, t);
@@ -120,8 +122,9 @@ namespace GameHub.Data.Sources.GOG
 					try
 					{
 						var file = Downloader.get_instance().download.end(res).get_path();
-						status = new Game.Status(Game.State.INSTALLING);
+						status = new Game.Status(Game.State.DOWNLOAD_FINISHED);
 						Utils.run(@"chmod +x \"$(file)\"");
+						status = new Game.Status(Game.State.INSTALLING);
 						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir.get_path())", true, (obj, res) => {
 							Utils.run_async.end(res);
 							status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);

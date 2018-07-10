@@ -72,6 +72,8 @@ namespace GameHub.Data
 					{
 						case INSTALLED: return _("Installed");
 						case INSTALLING: return _("Installing");
+						case DOWNLOAD_STARTED: return _("Download started");
+						case DOWNLOAD_FINISHED: return _("Download finished");
 						case DOWNLOADING:
 							var fraction = (double) dl_bytes / dl_bytes_total;
 							return _("Downloading: %d%% (%s / %s)").printf((int)(fraction * 100), format_size(dl_bytes), format_size(dl_bytes_total));
@@ -83,7 +85,7 @@ namespace GameHub.Data
 
 		public enum State
 		{
-			UNINSTALLED, INSTALLED, DOWNLOADING, INSTALLING;
+			UNINSTALLED, INSTALLED, DOWNLOAD_STARTED, DOWNLOADING, DOWNLOAD_FINISHED, INSTALLING;
 		}
 	}
 }

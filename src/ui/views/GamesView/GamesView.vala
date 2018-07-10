@@ -8,6 +8,8 @@ namespace GameHub.UI.Views
 {
 	public class GamesView: BaseView
 	{
+		public static GamesView instance;
+
 		private ArrayList<GameSource> sources = new ArrayList<GameSource>();
 
 		private Stack stack;
@@ -32,9 +34,12 @@ namespace GameHub.UI.Views
 		private MenuButton downloads;
 		private Popover downloads_popover;
 		private ListBox downloads_list;
+		private int downloads_count = 0;
 
 		construct
 		{
+			instance = this;
+
 			var ui_settings = Settings.UI.get_instance();
 			var saved_state = Settings.SavedState.get_instance();
 
@@ -119,7 +124,15 @@ namespace GameHub.UI.Views
 			downloads.image = new Image.from_icon_name("folder-download", IconSize.LARGE_TOOLBAR);
 			downloads_popover = new Popover(downloads);
 			downloads_list = new ListBox();
-			downloads_popover.add(downloads_list);
+
+			var downloads_scrolled = new ScrolledWindow(null, null);
+			downloads_scrolled.propagate_natural_width = true;
+			downloads_scrolled.propagate_natural_height = true;
+			downloads_scrolled.max_content_height = 440;
+			downloads_scrolled.add(downloads_list);
+			downloads_scrolled.show_all();
+
+			downloads_popover.add(downloads_scrolled);
 			downloads_popover.position = PositionType.BOTTOM;
 			downloads_popover.set_size_request(384, -1);
 			downloads.popover = downloads_popover;
@@ -220,21 +233,20 @@ namespace GameHub.UI.Views
 				loading_sources++;
 				spinner.active = loading_sources > 0;
 				src.load_games.begin(g => {
-					var card = new GameCard(g);
-					card.installation_started.connect(p => {
-						downloads_list.add(p);
-						downloads_list.show_all();
-						downloads.set_sensitive(true);
-					});
-					card.installation_finished.connect(p => {
-						downloads_list.remove(p);
-						var has_downloads = downloads_list.get_children().length() > 0;
-						downloads.set_sensitive(has_downloads);
-						if(!has_downloads) downloads_popover.hide();
-					});
-					games_grid.add(card);
-					games_grid.show_all();
+					games_grid.add(new GameCard(g));
 					games_list.add(new GameListRow(g));
+					games_grid.show_all();
+					games_list.show_all();
+
+					var pv = new GameDownloadProgressView(g);
+					downloads_list.add(pv);
+					g.status_change.connect(s => {
+						if(s.state == DOWNLOAD_STARTED) downloads_count++;
+						else if(s.state == DOWNLOAD_FINISHED) downloads_count--;
+						pv.visible = s.state == Game.State.DOWNLOADING || s.state == Game.State.DOWNLOAD_STARTED;
+						downloads.set_sensitive(downloads_count > 0);
+					});
+					g.status_change(g.status);
 				}, (obj, res) => {
 					loading_sources--;
 					spinner.active = loading_sources > 0;

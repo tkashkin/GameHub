@@ -129,6 +129,8 @@ namespace GameHub.Data.Sources.Humble
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
 				FSUtils.mkdir(FSUtils.Paths.Humble.Installers);
 				
+				status = new Game.Status(Game.State.DOWNLOAD_STARTED);
+
 				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, (d, t) => {
 					progress(d, t);
 					status = new Game.Status(Game.State.DOWNLOADING, d, t);
@@ -136,7 +138,7 @@ namespace GameHub.Data.Sources.Humble
 					try
 					{
 						var file = Downloader.get_instance().download.end(res);
-						status = new Game.Status(Game.State.INSTALLING);
+						status = new Game.Status(Game.State.DOWNLOAD_STARTED);
 						var path = file.get_path();
 						FSUtils.mkdir(install_dir.get_path());
 						Utils.run(@"chmod +x \"$(path)\"");
@@ -169,6 +171,8 @@ namespace GameHub.Data.Sources.Humble
 								break;
 						}
 						
+						status = new Game.Status(Game.State.INSTALLING);
+
 						Utils.run_async.begin(cmd, true, (obj, res) => {
 							Utils.run_async.end(res);
 							Utils.run(@"chmod -R +x \"$(install_dir.get_path())\"");
