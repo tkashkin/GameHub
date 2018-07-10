@@ -21,7 +21,7 @@ namespace GameHub.Utils
 		}
 	}
 
-	public class Downloader : GLib.Object
+	public class Downloader: GLib.Object
 	{
 		private static Downloader downloader;
 		private Soup.Session session;

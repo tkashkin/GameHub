@@ -12,11 +12,20 @@ namespace GameHub.UI.Views
 	public class GameDetailsView: BaseView
 	{
 		private Game? _game;
+		private ulong _game_status_handler_id = 0;
 
 		public Game? game
 		{
 			get { return _game; }
-			set { _game = value; update_game.begin(); }
+			set
+			{
+				if(_game != null && _game_status_handler_id > 0)
+				{
+					SignalHandler.disconnect(_game, _game_status_handler_id);
+				}
+				_game = value;
+				update_game.begin();
+			}
 		}
 
 		public GameDetailsView(Game? game=null)
@@ -161,7 +170,7 @@ namespace GameHub.UI.Views
 				description.hide();
 			}
 
-			_game.status_change.connect(s => {
+			_game_status_handler_id = _game.status_change.connect(s => {
 				status.label = s.description;
 				download_progress.hide();
 				if(s.state == DOWNLOADING)

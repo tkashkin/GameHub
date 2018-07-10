@@ -25,10 +25,7 @@ namespace GameHub.UI.Views
 		private const float CARD_RATIO = 0.467f; // 460x215
 		
 		private Frame progress_bar;
-		private GameDownloadProgressView progress_view;
-		public signal void installation_started(GameDownloadProgressView progress);
-		public signal void installation_finished(GameDownloadProgressView progress);
-		
+
 		construct
 		{
 			card = new Frame(null);
@@ -105,9 +102,7 @@ namespace GameHub.UI.Views
 						{
 							game.install.begin((d, t) => {}, (obj, res) => {
 								game.install.end(res);
-								installation_finished(progress_view);
 							});
-							installation_started(progress_view);
 						}
 						break;
 
@@ -127,8 +122,6 @@ namespace GameHub.UI.Views
 			label.label = game.name;
 			
 			src_icon.pixbuf = FSUtils.get_icon(game.source.icon + "-white", 24);
-			
-			progress_view = new GameDownloadProgressView(game);
 			
 			card.get_style_context().add_class("installed");
 			
