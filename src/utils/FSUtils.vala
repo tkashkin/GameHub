@@ -65,7 +65,7 @@ namespace GameHub.Utils
 		
 		public static string expand(string path, string file="")
 		{
-			return path.replace("~", Environment.get_home_dir()) + (file != "" ? "/" + file : "");
+			return path.replace("~/.cache", Environment.get_user_cache_dir()).replace("~", Environment.get_home_dir()) + (file != "" ? "/" + file : "");
 		}
 		
 		public static File file(string path, string file="")
