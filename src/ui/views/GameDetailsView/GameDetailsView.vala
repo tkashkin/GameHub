@@ -173,7 +173,7 @@ namespace GameHub.UI.Views
 			_game_status_handler_id = _game.status_change.connect(s => {
 				status.label = s.description;
 				download_progress.hide();
-				if(s.state == DOWNLOADING)
+				if(s.state == Game.State.DOWNLOADING)
 				{
 					download_progress.show();
 					download_progress.fraction = (double) s.dl_bytes / s.dl_bytes_total;
