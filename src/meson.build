@@ -9,6 +9,22 @@ project_config = configure_file(
 	configuration : conf_data
 )
 
+deps = [
+	dependency('granite'),
+	dependency('gtk+-3.0'),
+	dependency('gdk-3.0'),
+	dependency('webkit2gtk-4.0'),
+	dependency('glib-2.0'),
+	dependency('json-glib-1.0'),
+	dependency('gee-0.8'),
+	dependency('libsoup-2.4'),
+	dependency('sqlite3')
+]
+
+if get_option('use_ivy')
+	deps += dependency('ivy')
+endif
+
 executable(
 	meson.project_name(),
 	project_config,
@@ -59,17 +75,6 @@ executable(
 	icons_gresource,
 	css_gresource,
 
-	dependencies: [
-		dependency('granite'),
-		dependency('gtk+-3.0'),
-		dependency('gdk-3.0'),
-		dependency('webkit2gtk-4.0'),
-		dependency('glib-2.0'),
-		dependency('json-glib-1.0'),
-		dependency('gee-0.8'),
-		dependency('libsoup-2.4'),
-        dependency('sqlite3'),
-		#dependency('ivy'),
-	],
+	dependencies: deps,
 	install: true
 )

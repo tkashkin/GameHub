@@ -34,7 +34,9 @@ namespace GameHub
 
 		public static int main(string[] args)
 		{
-			//Ivy.Stacktrace.register_handlers();
+			#if USE_IVY
+			Ivy.Stacktrace.register_handlers();
+			#endif
 			
 			Intl.setlocale(LocaleCategory.ALL, "");
 			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);

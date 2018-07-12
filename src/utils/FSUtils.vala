@@ -52,13 +52,33 @@ namespace GameHub.Utils
 			
 			public class GOG
 			{
-				public static string Games { get { return FSUtils.Paths.Settings.get_instance().gog_games; } }
+				public static string Games
+				{
+					owned get
+					{
+						#if FLATPAK
+						return Environment.get_user_data_dir() + "/games/GOG";
+						#else
+						return FSUtils.Paths.Settings.get_instance().gog_games;
+						#endif
+					}
+				}
 				public static string Installers { owned get { return FSUtils.Paths.GOG.Games + "/.installers"; } }
 			}
 			
 			public class Humble
 			{
-				public static string Games { get { return FSUtils.Paths.Settings.get_instance().humble_games; } }
+				public static string Games
+				{
+					owned get
+					{
+						#if FLATPAK
+						return Environment.get_user_data_dir() + "/games/HumbleBundle";
+						#else
+						return FSUtils.Paths.Settings.get_instance().humble_games;
+						#endif
+					}
+				}
 				public static string Installers { owned get { return FSUtils.Paths.Humble.Games + "/.installers"; } }
 			}
 		}
