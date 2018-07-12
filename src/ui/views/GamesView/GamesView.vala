@@ -241,8 +241,8 @@ namespace GameHub.UI.Views
 					var pv = new GameDownloadProgressView(g);
 					downloads_list.add(pv);
 					g.status_change.connect(s => {
-						if(s.state == DOWNLOAD_STARTED) downloads_count++;
-						else if(s.state == DOWNLOAD_FINISHED) downloads_count--;
+						if(s.state == Game.State.DOWNLOAD_STARTED) downloads_count++;
+						else if(s.state == Game.State.DOWNLOAD_FINISHED) downloads_count--;
 						pv.visible = s.state == Game.State.DOWNLOADING || s.state == Game.State.DOWNLOAD_STARTED;
 						downloads.set_sensitive(downloads_count > 0);
 					});

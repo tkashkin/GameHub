@@ -178,9 +178,9 @@ namespace GameHub.UI.Views
 					download_progress.show();
 					download_progress.fraction = (double) s.dl_bytes / s.dl_bytes_total;
 				}
-				action_install.visible = s.state == UNINSTALLED;
-				action_run.visible = s.state == INSTALLED;
-				action_open_directory.visible = s.state == INSTALLED;
+				action_install.visible = s.state == Game.State.UNINSTALLED;
+				action_run.visible = s.state == Game.State.INSTALLED;
+				action_open_directory.visible = s.state == Game.State.INSTALLED;
 				action_open_store_page.visible = _game.store_page != null;
 			});
 			_game.status_change(_game.status);
@@ -192,7 +192,7 @@ namespace GameHub.UI.Views
 
 		private void install_game()
 		{
-			if(_game != null && _game.status.state == UNINSTALLED)
+			if(_game != null && _game.status.state == Game.State.UNINSTALLED)
 			{
 				_game.install.begin();
 			}
@@ -200,7 +200,7 @@ namespace GameHub.UI.Views
 
 		private void open_game_directory()
 		{
-			if(_game != null && _game.status.state == INSTALLED)
+			if(_game != null && _game.status.state == Game.State.INSTALLED)
 			{
 				Utils.open_uri(_game.install_dir.get_uri());
 			}
@@ -216,7 +216,7 @@ namespace GameHub.UI.Views
 
 		private void run_game()
 		{
-			if(_game != null && _game.status.state == INSTALLED)
+			if(_game != null && _game.status.state == Game.State.INSTALLED)
 			{
 				_game.run.begin();
 			}

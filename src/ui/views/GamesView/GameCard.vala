@@ -94,11 +94,11 @@ namespace GameHub.UI.Views
 				switch(e.button)
 				{
 					case 1:
-						if(game.status.state == INSTALLED)
+						if(game.status.state == Game.State.INSTALLED)
 						{
 							game.run.begin();
 						}
-						else if(game.status.state == UNINSTALLED)
+						else if(game.status.state == Game.State.UNINSTALLED)
 						{
 							game.install.begin((d, t) => {}, (obj, res) => {
 								game.install.end(res);
@@ -129,19 +129,19 @@ namespace GameHub.UI.Views
 				status_label.label = s.description;
 				switch(s.state)
 				{
-					case UNINSTALLED:
+					case Game.State.UNINSTALLED:
 						card.get_style_context().remove_class("installed");
 						card.get_style_context().remove_class("downloading");
 						card.get_style_context().remove_class("installing");
 						break;
 
-					case INSTALLED:
+					case Game.State.INSTALLED:
 						card.get_style_context().add_class("installed");
 						card.get_style_context().remove_class("downloading");
 						card.get_style_context().remove_class("installing");
 						break;
 
-					case DOWNLOADING:
+					case Game.State.DOWNLOADING:
 						card.get_style_context().remove_class("installed");
 						card.get_style_context().add_class("downloading");
 						card.get_style_context().remove_class("installing");
@@ -151,7 +151,7 @@ namespace GameHub.UI.Views
 						progress_bar.set_size_request((int) (fraction * alloc.width), 8);
 						break;
 
-					case INSTALLING:
+					case Game.State.INSTALLING:
 						card.get_style_context().remove_class("installed");
 						card.get_style_context().remove_class("downloading");
 						card.get_style_context().add_class("installing");

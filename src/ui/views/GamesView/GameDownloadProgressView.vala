@@ -53,7 +53,7 @@ namespace GameHub.UI.Views
 			
 			game.status_change.connect(s => {
 				state_label.label = s.description;
-				if(s.state == DOWNLOADING)
+				if(s.state == Game.State.DOWNLOADING)
 				{
 					progress_bar.fraction = (double) s.dl_bytes / s.dl_bytes_total;
 				}
