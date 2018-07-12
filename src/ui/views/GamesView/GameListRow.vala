@@ -11,6 +11,10 @@ namespace GameHub.UI.Views
 	{
 		public Game game;
 
+		private AutoSizeImage image;
+
+		private string old_icon;
+
 		public GameListRow(Game game)
 		{
 			this.game = game;
@@ -19,7 +23,7 @@ namespace GameHub.UI.Views
 			hbox.margin = 4;
 			var vbox = new Box(Orientation.VERTICAL, 0);
 
-			var image = new AutoSizeImage();
+			image = new AutoSizeImage();
 			image.set_constraint(36, 36, 1);
 			image.set_size_request(36, 36);
 
@@ -41,12 +45,21 @@ namespace GameHub.UI.Views
 
 			game.status_change.connect(s => {
 				state_label.label = s.description;
+				update_icon();
 			});
 			game.status_change(game.status);
 
-			Utils.load_image.begin(image, game.icon, "icon");
+			notify["is-selected"].connect(update_icon);
 
 			show_all();
+		}
+
+		private void update_icon()
+		{
+			image.queue_draw();
+			if(game.icon == old_icon) return;
+			old_icon = game.icon;
+			Utils.load_image.begin(image, game.icon, "icon");
 		}
 	}
 }
