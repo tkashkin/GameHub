@@ -41,6 +41,7 @@ namespace GameHub.UI.Windows
 			
 			webview.get_settings().enable_mediasource = true;
 			webview.get_settings().enable_smooth_scrolling = true;
+			webview.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
 			
 			var style = ".banner,.navigation-container-v2,.tabbar,.base-main-wrapper,.site-footer,.evidon-banner{display:none !important}body{overflow:hidden !important}";
 			string[] whitelist = {"https://*.humblebundle.com/*"};
