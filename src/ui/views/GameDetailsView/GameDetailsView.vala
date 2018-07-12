@@ -113,6 +113,7 @@ namespace GameHub.UI.Views
 			description = new WebView();
 			description.hexpand = true;
 			description.vexpand = (get_toplevel() is GameHub.UI.Windows.MainWindow);
+			description.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
 
 			var ui_settings = GameHub.Settings.UI.get_instance();
 			ui_settings.notify["dark-theme"].connect(() => {
