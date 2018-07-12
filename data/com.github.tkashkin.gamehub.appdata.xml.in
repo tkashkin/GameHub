@@ -9,10 +9,11 @@
 	<summary>All your games in one place</summary>
 	
 	<description>
-		<p>Manage your Steam and GOG games in one place.</p>
+		<p>Manage your Steam, GOG and Humble Bundle games in one place.</p>
 	</description>
 	
 	<developer_name>Anatoliy Kashkin</developer_name>
+	​<update_contact>tkashkin@gmail.com</update_contact>
 	<url type="homepage">https://github.com/tkashkin/GameHub</url>
 	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
 	
@@ -29,87 +30,70 @@
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/2.png</image>
 		</screenshot>
 		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3.png</image>
-		</screenshot>
-		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_dialog.png</image>
-		</screenshot>
-		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/4.png</image>
-		</screenshot>
-		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/1_dark.png</image>
-		</screenshot>
-		<screenshot>
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/2_dark.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3.png</image>
 		</screenshot>
 		<screenshot>
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_dark.png</image>
 		</screenshot>
-		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_dialog_dark.png</image>
-		</screenshot>
-		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/4_dark.png</image>
-		</screenshot>
 	</screenshots>
 	
 	<releases>
-		<release version="0.5.0" date="2018-07-07">
+		<release type="development" version="0.5.0" date="2018-07-07">
 			<description>
-				<p>Games list view</p>
-				<p>Game details view/dialog</p>
-				<p>Games grid improvements</p>
-				<p>Bug fixes</p>
+				<p>New features:</p>
+				<ul>
+					<li>Games list view</li>
+					<li>Game details view/dialog</li>
+				</ul>
 			</description>
 		</release>
-		<release version="0.4.1" date="2018-07-07">
+		<release type="development" version="0.4.1" date="2018-07-07">
 			<description>
-				<p>Small features</p>
+				<p>Small features.</p>
 			</description>
 		</release>
-		<release version="0.4.0" date="2018-07-03">
+		<release type="development" version="0.4.0" date="2018-07-03">
 			<description>
-				<p>Unneeded game sources now can be disabled</p>
-				<p>Bug fixes</p>
+				<p>Unneeded game sources now can be disabled.</p>
 			</description>
 		</release>
-		<release version="0.3.1" date="2018-06-22">
+		<release type="development" version="0.3.1" date="2018-06-22">
 			<description>
-				<p>Humble Bundle authentication fix</p>
-				<p>Humble Bundle game icons fix</p>
+				<p>Humble Bundle authentication fix and icons fix.</p>
 			</description>
 		</release>
-		<release version="0.3.0" date="2018-06-17">
+		<release type="development" version="0.3.0" date="2018-06-17">
 			<description>
-				<p>Humble Bundle support</p>
+				<p>Humble Bundle support.</p>
 			</description>
 		</release>
-		<release version="0.2.5" date="2018-06-12">
+		<release type="development" version="0.2.5" date="2018-06-12">
 			<description>
-				<p>Bug fixes</p>
+				<p>Bug fixes.</p>
 			</description>
 		</release>
-		<release version="0.2.4" date="2018-06-01">
+		<release type="development" version="0.2.4" date="2018-06-01">
 			<description>
-				<p>Settings dialog</p>
+				<p>Settings dialog.</p>
 			</description>
 		</release>
-		<release version="0.2.3" date="2018-06-01">
+		<release type="development" version="0.2.3" date="2018-06-01">
 			<description>
-				<p>GOG games installation and running</p>
-				<p>Various improvements</p>
+				<p>GOG games installation and running.</p>
 			</description>
 		</release>
-		<release version="0.1.3" date="2018-05-28">
+		<release type="development" version="0.1.3" date="2018-05-28">
 			<description>
-				<p>Fix Steam config path</p>
+				<p>Steam config path fix.</p>
 			</description>
 		</release>
-		<release version="0.1.2" date="2018-05-28">
+		<release type="development" version="0.1.2" date="2018-05-28">
 			<description>
-				<p>Initial release</p>
-				<p>Steam and GOG linux-compatible games fetching</p>
+				<p>Initial release.</p>
+				<p>Steam and GOG linux-compatible games fetching.</p>
 			</description>
 		</release>
 	</releases>

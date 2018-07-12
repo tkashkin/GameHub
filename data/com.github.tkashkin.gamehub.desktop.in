@@ -2,8 +2,8 @@
 Name=GameHub
 GenericName=GameHub
 Comment=All your games in one place
-Categories=Game;Utility;
-Keywords=Game;Hub;Steam;GOG;
+Categories=Game;
+Keywords=Game;Hub;Steam;GOG;Humble;HumbleBundle;
 Exec=com.github.tkashkin.gamehub
 X-GNOME-Gettext-Domain=com.github.tkashkin.gamehub
 Icon=com.github.tkashkin.gamehub
