@@ -69,20 +69,26 @@ namespace GameHub.Utils
 		var hash = Checksum.compute_for_string(ChecksumType.MD5, url, url.length);
 		var remote = File.new_for_uri(url);
 		var cached = FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");
-		if(!cached.query_exists())
+		try
 		{
-			try
+			if(!cached.query_exists())
 			{
 				yield remote.copy_async(cached, FileCopyFlags.NONE);
 			}
-			catch(Error e){}
+			return cached.get_path();
 		}
-		return cached.get_path();
+		catch(IOError.EXISTS e){}
+		catch(IOError e)
+		{
+			warning("Error caching `%s` in `%s`: %s", url, cached.get_path(), e.message);
+		}
+		return null;
 	}
 
 	public static async void load_image(GameHub.UI.Widgets.AutoSizeImage image, string url, string prefix="remote")
 	{
-		image.set_source(new Gdk.Pixbuf.from_file(yield cache_image(url, prefix)));
+		var cached = yield cache_image(url, prefix);
+		image.set_source(cached != null ? new Gdk.Pixbuf.from_file(cached) : null);
 		image.queue_draw();
 	}
 }
