@@ -37,11 +37,15 @@ namespace GameHub.UI.Dialogs
 			add_separator();
 			
 			add_header_with_checkbox("GOG", gog_auth.enabled, v => { gog_auth.enabled = v; });
+			#if !FLATPAK
 			add_file_chooser(_("GOG games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; });
+			#endif
 			add_separator();
 			
 			add_header_with_checkbox("Humble Bundle", humble_auth.enabled, v => { humble_auth.enabled = v; });
+			#if !FLATPAK
 			add_file_chooser(_("Humble Bundle games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; });
+			#endif
 			
 			content.pack_start(box, false, false, 0);
 			
