@@ -73,7 +73,7 @@ namespace GameHub.Utils
 		{
 			if(!cached.query_exists())
 			{
-				yield remote.copy_async(cached, FileCopyFlags.NONE);
+				yield Downloader.get_instance().download(remote, { cached.get_path() });
 			}
 			return cached.get_path();
 		}
