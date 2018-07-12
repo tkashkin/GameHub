@@ -104,11 +104,11 @@ namespace GameHub.Utils
 			msg.response_body.set_accumulate(false);
 
 			#if !FLATPAK
-				var address = msg.get_address();
-				var connectable = new NetworkAddress(address.name, (uint16) address.port);
-				var network_monitor = NetworkMonitor.get_default();
-				if(!(yield network_monitor.can_reach_async(connectable)))
-					throw new GLib.IOError.HOST_UNREACHABLE("Failed to reach host");
+			var address = msg.get_address();
+			var connectable = new NetworkAddress(address.name, (uint16) address.port);
+			var network_monitor = NetworkMonitor.get_default();
+			if(!(yield network_monitor.can_reach_async(connectable)))
+				throw new GLib.IOError.HOST_UNREACHABLE("Failed to reach host");
 			#endif
 
 			GLib.Error? err = null;
