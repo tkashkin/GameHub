@@ -66,9 +66,9 @@ msgstr "Seu SteamID será lido a partir do arquivo de configuração do Steam"
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
-msgstr "Entre na sua conta no cliente Steam e retorne ao GameHub"
+msgstr "Entre na sua conta no cliente Steam e retorne ao GameHub\n"
 "Steam config file not found.\n"
-"Entre na sua conta no cliente Steam e retorne ao GameHub"
+"Entre na sua conta no cliente Steam e retorne ao GameHub\n"
 
 #: src/data/sources/humble/HumbleGame.vala:203
 msgid "Select main executable of the game"
