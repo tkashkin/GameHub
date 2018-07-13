@@ -41,6 +41,17 @@
 	</screenshots>
 	
 	<releases>
+		<release type="development" version="0.5.2" date="2018-07-14">
+			<description>
+				<p>Added localizations:</p>
+				<ul>
+					<li>pt_BR</li>
+					<li>pl</li>
+					<li>uk</li>
+					<li>de</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.5.1" date="2018-07-13">
 			<description>
 				<p>Fixes for flatpak packaging.</p>
