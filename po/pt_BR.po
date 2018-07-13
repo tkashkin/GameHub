@@ -68,7 +68,7 @@ msgid ""
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
 "Arquivo de configuração do Steam não encontrado.\n"
-"Entre na sua conta no cliente Steam e retorne ao GameHub\n"
+"Entre na sua conta no cliente Steam e retorne ao GameHub"
 
 #: src/data/sources/humble/HumbleGame.vala:203
 msgid "Select main executable of the game"
