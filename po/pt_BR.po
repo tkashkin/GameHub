@@ -1,0 +1,216 @@
+# Portuguese translations for com.github.tkashkin.gamehub package.
+# Copyright (C) 2018 THE com.github.tkashkin.gamehub'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.tkashkin.gamehub package.
+# Automatically generated, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.tkashkin.gamehub\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-13 16:18+0300\n"
+"PO-Revision-Date: 2018-07-13 16:18+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:8
+#: data/com.github.tkashkin.gamehub.desktop.in:3
+#: data/com.github.tkashkin.gamehub.desktop.in:4
+msgid "GameHub"
+msgstr "GameHub"
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:9
+#: data/com.github.tkashkin.gamehub.desktop.in:5
+#: src/ui/views/WelcomeView.vala:38
+msgid "All your games in one place"
+msgstr "Todos os seus jogos em um só lugar"
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:12
+msgid "Manage your Steam, GOG and Humble Bundle games in one place."
+msgstr "Gerencie seus jogos Steam, GOG e Humble Bundle em um só lugar."
+
+#: src/data/Game.vala:73
+msgid "Installed"
+msgstr "Instalado"
+
+#: src/data/Game.vala:74
+msgid "Installing"
+msgstr "Instalando"
+
+#: src/data/Game.vala:75
+msgid "Download started"
+msgstr "Começou a baixar"
+
+#: src/data/Game.vala:76
+msgid "Download finished"
+msgstr "Jogo baixado com sucesso"
+
+#: src/data/Game.vala:79
+#, c-format
+msgid "Downloading: %d%% (%s / %s)"
+msgstr "Baixando: %d%% (%s / %s)"
+
+#: src/data/Game.vala:81
+msgid "Not installed"
+msgstr "Não instalado"
+
+#: src/data/sources/steam/Steam.vala:17
+msgid "Your SteamID will be read from Steam configuration file"
+msgstr "Seu SteamID será lido a partir do arquivo de configuração do Steam"
+
+#: src/data/sources/steam/Steam.vala:20
+msgid ""
+"Steam config file not found.\n"
+"Login into your account in Steam client and return to GameHub"
+msgstr ""
+"Arquivo de configuração do Steam não encontrado.\n"
+"Entre na sua conta no cliente Steam e retorne ao GameHub"
+
+#: src/data/sources/humble/HumbleGame.vala:203
+msgid "Select main executable of the game"
+msgstr "Selecione o executável principal do jogo"
+
+#: src/data/sources/humble/HumbleGame.vala:212
+#: src/ui/dialogs/GameInstallDialog.vala:90
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/data/sources/humble/HumbleGame.vala:213
+msgid "Select"
+msgstr "Selecione"
+
+#: src/ui/dialogs/SettingsDialog.vala:30
+msgid "Use dark theme"
+msgstr "Use o tema escuro"
+
+#: src/ui/dialogs/SettingsDialog.vala:34
+msgid "Steam API keys have limited number of uses per day"
+msgstr "As chaves da API do Steam têm um número limitado de utilizações por dia"
+
+#: src/ui/dialogs/SettingsDialog.vala:34
+msgid "Generate key"
+msgstr "Gerar chave"
+
+#: src/ui/dialogs/SettingsDialog.vala:35
+msgid "Steam API key"
+msgstr "Chave da API do Steam"
+
+#: src/ui/dialogs/SettingsDialog.vala:36
+msgid "Steam installation directory"
+msgstr "Diretório de instalação do Steam"
+
+#: src/ui/dialogs/SettingsDialog.vala:41
+msgid "GOG games directory"
+msgstr "Diretório de jogos GOG"
+
+#: src/ui/dialogs/SettingsDialog.vala:47
+msgid "Humble Bundle games directory"
+msgstr "Diretório de jogos Humble Bundle"
+
+#: src/ui/dialogs/SettingsDialog.vala:61
+#: src/ui/dialogs/GameDetailsDialog.vala:30
+msgid "Close"
+msgstr "Fechar"
+
+#: src/ui/dialogs/GameInstallDialog.vala:56
+msgid "Select game installer"
+msgstr "Selecione o instalador do jogo"
+
+#: src/ui/dialogs/GameInstallDialog.vala:94
+msgid "Import"
+msgstr "Importar"
+
+#: src/ui/dialogs/GameInstallDialog.vala:97
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:141
+msgid "Install"
+msgstr "Instalar"
+
+#: src/ui/views/WelcomeView.vala:33
+msgid "No enabled game sources"
+msgstr "Nenhuma fonte de jogo ativada"
+
+#: src/ui/views/WelcomeView.vala:33
+msgid "Enable some game sources in settings"
+msgstr "Ative algumas fontes de jogos nas configurações"
+
+#: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:59
+#: src/ui/views/GamesView/GamesView.vala:147
+msgid "Settings"
+msgstr "Configurações"
+
+#: src/ui/views/WelcomeView.vala:38
+msgid "Let's get started"
+msgstr "Vamos começar"
+
+#: src/ui/views/WelcomeView.vala:52
+msgid "Skip"
+msgstr "Pular"
+
+#: src/ui/views/WelcomeView.vala:121
+msgid "Ready"
+msgstr "Pronto"
+
+#: src/ui/views/WelcomeView.vala:127
+msgid "Authentication required"
+msgstr "Autentificação requerida"
+
+#: src/ui/views/WelcomeView.vala:132
+msgid "Authenticating..."
+msgstr "Autenticando..."
+
+#: src/ui/views/WelcomeView.vala:143
+#, c-format
+msgid "Install %s"
+msgstr "Instalar %s"
+
+#: src/ui/views/WelcomeView.vala:144
+msgid "Return to GameHub after installing"
+msgstr "Retornar ao GameHub depois de instalar"
+
+#: src/ui/views/GamesView/GamesView.vala:92
+msgid "Grid view"
+msgstr "Visualizar grade"
+
+#: src/ui/views/GamesView/GamesView.vala:93
+msgid "List view"
+msgstr "Visualizar lista"
+
+#: src/ui/views/GamesView/GamesView.vala:107
+msgid "All games"
+msgstr "Todos os jogos"
+
+#: src/ui/views/GamesView/GamesView.vala:117
+#, c-format
+msgid "%s games"
+msgstr "%s jogos"
+
+#: src/ui/views/GamesView/GamesView.vala:123
+msgid "Downloads"
+msgstr "Baixado"
+
+#: src/ui/views/GamesView/GamesView.vala:142
+msgid "Search"
+msgstr "Pesquisar"
+
+#: src/ui/views/GamesView/GamesView.vala:183
+#, c-format
+msgid "%u game"
+msgid_plural "%u games"
+msgstr[0] "%u jogo"
+msgstr[1] "%u jogos"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:142
+msgid "Run"
+msgstr "Correr"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:143
+msgid "Open installation directory"
+msgstr "Abra o diretório de instalação"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:144
+msgid "Open store page"
+msgstr "Abra a página da loja"
