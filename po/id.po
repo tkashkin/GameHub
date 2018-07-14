@@ -1,0 +1,216 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.tkashkin.gamehub package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.tkashkin.gamehub\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-14 01:42+0300\n"
+"PO-Revision-Date: 2018-07-14 22:01+0700\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.0.6\n"
+"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
+"Language: id\n"
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:8
+#: data/com.github.tkashkin.gamehub.desktop.in:3
+#: data/com.github.tkashkin.gamehub.desktop.in:4
+msgid "GameHub"
+msgstr "GameHub"
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:9
+#: data/com.github.tkashkin.gamehub.desktop.in:5
+#: src/ui/views/WelcomeView.vala:38
+msgid "All your games in one place"
+msgstr "Semua permainan Anda di satu tempat"
+
+#: data/com.github.tkashkin.gamehub.appdata.xml.in:12
+msgid "Manage your Steam, GOG and Humble Bundle games in one place."
+msgstr "Kelola permainan Steam, GOG, dan Humble Bundle Anda di satu tempat."
+
+#: src/data/Game.vala:73
+msgid "Installed"
+msgstr "Terpasang"
+
+#: src/data/Game.vala:74
+msgid "Installing"
+msgstr "Memasang"
+
+#: src/data/Game.vala:75
+msgid "Download started"
+msgstr "Unduhan dimulai"
+
+#: src/data/Game.vala:76
+msgid "Download finished"
+msgstr "Unduhan selesai"
+
+#: src/data/Game.vala:79
+#, c-format
+msgid "Downloading: %d%% (%s / %s)"
+msgstr "Mengunduh: %d%% (%s / %s)"
+
+#: src/data/Game.vala:81
+msgid "Not installed"
+msgstr "Tidak terpasang"
+
+#: src/data/sources/steam/Steam.vala:17
+msgid "Your SteamID will be read from Steam configuration file"
+msgstr "SteamID Anda akan dibaca dari berkas konfigurasi Steam"
+
+#: src/data/sources/steam/Steam.vala:20
+msgid ""
+"Steam config file not found.\n"
+"Login into your account in Steam client and return to GameHub"
+msgstr ""
+"Berkas konfigurasi Steam tidak ditemukan.\n"
+"Masuk ke akun Anda di klien Steam dan kembali ke GameHub"
+
+#: src/data/sources/humble/HumbleGame.vala:203
+msgid "Select main executable of the game"
+msgstr "Pilih main executable dari permainan"
+
+#: src/data/sources/humble/HumbleGame.vala:212
+#: src/ui/dialogs/GameInstallDialog.vala:90
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/data/sources/humble/HumbleGame.vala:213
+msgid "Select"
+msgstr "Pilih"
+
+#: src/ui/dialogs/SettingsDialog.vala:30
+msgid "Use dark theme"
+msgstr "Gunakan tema gelap"
+
+#: src/ui/dialogs/SettingsDialog.vala:34
+msgid "Steam API keys have limited number of uses per day"
+msgstr "Kunci API Steam memiliki jumlah penggunaan terbatas per hari"
+
+#: src/ui/dialogs/SettingsDialog.vala:34
+msgid "Generate key"
+msgstr "Hasilkan kunci"
+
+#: src/ui/dialogs/SettingsDialog.vala:35
+msgid "Steam API key"
+msgstr "Kunci API Steam"
+
+#: src/ui/dialogs/SettingsDialog.vala:36
+msgid "Steam installation directory"
+msgstr "Direktori instalasi Steam"
+
+#: src/ui/dialogs/SettingsDialog.vala:41
+msgid "GOG games directory"
+msgstr "Direktori permainan GOG"
+
+#: src/ui/dialogs/SettingsDialog.vala:47
+msgid "Humble Bundle games directory"
+msgstr "Direktori permainan Humble Bundle"
+
+#: src/ui/dialogs/SettingsDialog.vala:61
+#: src/ui/dialogs/GameDetailsDialog.vala:30
+msgid "Close"
+msgstr "Tutup"
+
+#: src/ui/dialogs/GameInstallDialog.vala:56
+msgid "Select game installer"
+msgstr "Pilih pemasang permainan"
+
+#: src/ui/dialogs/GameInstallDialog.vala:94
+msgid "Import"
+msgstr "Impor"
+
+#: src/ui/dialogs/GameInstallDialog.vala:97
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:141
+msgid "Install"
+msgstr "Pasang"
+
+#: src/ui/views/WelcomeView.vala:33
+msgid "No enabled game sources"
+msgstr "Tidak ada sumber permainan yang diaktifkan"
+
+#: src/ui/views/WelcomeView.vala:33
+msgid "Enable some game sources in settings"
+msgstr "Aktifkan beberapa sumber permainan di pengaturan"
+
+#: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:59
+#: src/ui/views/GamesView/GamesView.vala:147
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: src/ui/views/WelcomeView.vala:38
+msgid "Let's get started"
+msgstr "Mari kita mulai"
+
+#: src/ui/views/WelcomeView.vala:52
+msgid "Skip"
+msgstr "Lewati"
+
+#: src/ui/views/WelcomeView.vala:121
+msgid "Ready"
+msgstr "Siap"
+
+#: src/ui/views/WelcomeView.vala:127
+msgid "Authentication required"
+msgstr "Diperlukan autentikasi"
+
+#: src/ui/views/WelcomeView.vala:132
+msgid "Authenticating..."
+msgstr "Mengautentikasi..."
+
+#: src/ui/views/WelcomeView.vala:143
+#, c-format
+msgid "Install %s"
+msgstr "Pasang %s"
+
+#: src/ui/views/WelcomeView.vala:144
+msgid "Return to GameHub after installing"
+msgstr "Kembali ke GameHub setelah memasang"
+
+#: src/ui/views/GamesView/GamesView.vala:92
+msgid "Grid view"
+msgstr "Tilikan kisi"
+
+#: src/ui/views/GamesView/GamesView.vala:93
+msgid "List view"
+msgstr "Tilikan daftar"
+
+#: src/ui/views/GamesView/GamesView.vala:107
+msgid "All games"
+msgstr "Semua permainan"
+
+#: src/ui/views/GamesView/GamesView.vala:117
+#, c-format
+msgid "%s games"
+msgstr "%s permainan"
+
+#: src/ui/views/GamesView/GamesView.vala:123
+msgid "Downloads"
+msgstr "Unduh"
+
+#: src/ui/views/GamesView/GamesView.vala:142
+msgid "Search"
+msgstr "Cari"
+
+#: src/ui/views/GamesView/GamesView.vala:183
+#, c-format
+msgid "%u game"
+msgid_plural "%u games"
+msgstr[0] "%u permainan"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:142
+msgid "Run"
+msgstr "Jalankan"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:143
+msgid "Open installation directory"
+msgstr "Buka direktori pemasangan"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:144
+msgid "Open store page"
+msgstr "Buka halaman toko"
