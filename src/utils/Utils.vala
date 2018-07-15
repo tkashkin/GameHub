@@ -27,13 +27,9 @@ namespace GameHub.Utils
 		var cenv = Environ.get();
 		var ccmd = cmd;
 
-		if(use_launcher_script)
-		{
-			var arr = new GLib.Array<string>(false);
-			arr.append_val(ProjectConfig.PROJECT_NAME + ".launcher");
-			arr.append_vals(cmd, cmd.length);
-			ccmd = (owned) arr.data;
-		}
+		#if FLATPAK
+		cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", "/app/lib/steamrt:/app/lib/32bit/steamrt");
+		#endif
 
 		try
 		{
@@ -54,30 +50,29 @@ namespace GameHub.Utils
 		var cdir = dir ?? Environment.get_home_dir();
 		var cenv = Environ.get();
 		var ccmd = cmd;
+		var cwait = wait;
 
-		if(use_launcher_script)
-		{
-			var arr = new GLib.Array<string>(false);
-			arr.append_val(ProjectConfig.PROJECT_NAME + ".launcher");
-			arr.append_vals(cmd, cmd.length);
-			ccmd = (owned) arr.data;
-		}
+		#if FLATPAK
+		cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", "/app/lib/steamrt:/app/lib/32bit/steamrt");
+		#endif
 
 		try
 		{
 			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out pid);
 
+			#if !FLATPAK
 			ChildWatch.add(pid, (pid, status) => {
 				Process.close_pid(pid);
 				run_async.callback();
 			});
+			#endif
 		}
 		catch (Error e)
 		{
 			warning(e.message);
 		}
 
-		if(wait) yield;
+		if(cwait) yield;
 
 		return result;
 	}
