@@ -175,7 +175,7 @@ namespace GameHub.Data.Sources.Humble
 						
 						status = new Game.Status(Game.State.INSTALLING);
 
-						Utils.run_async.begin(cmd, null, true, false, (obj, res) => {
+						Utils.run_async.begin(cmd, null, false, true, (obj, res) => {
 							Utils.run_async.end(res);
 							Utils.run({"chmod", "-R", "+x", install_dir.get_path()});
 							choose_executable();
@@ -241,7 +241,7 @@ namespace GameHub.Data.Sources.Humble
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				yield Utils.run_async({path}, null, false, true);
+				yield Utils.run_async({path}, null, true, false);
 			}
 		}
 		
