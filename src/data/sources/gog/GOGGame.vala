@@ -128,7 +128,7 @@ namespace GameHub.Data.Sources.GOG
 						string[] cmd = {file, "--", "--i-agree-to-all-licenses",
 										"--noreadme", "--nooptions", "--noprompt",
 										"--destination", install_dir.get_path()};
-						Utils.run_async.begin(cmd, null, true, false, (obj, res) => {
+						Utils.run_async.begin(cmd, null, false, true, (obj, res) => {
 							Utils.run_async.end(res);
 							status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 							Idle.add(install.callback);
@@ -152,7 +152,7 @@ namespace GameHub.Data.Sources.GOG
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				yield Utils.run_async({path}, null, false, true);
+				yield Utils.run_async({path}, null, true, false);
 			}
 		}
 		
