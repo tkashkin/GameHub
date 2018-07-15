@@ -63,7 +63,7 @@ namespace GameHub.Data.Sources.Steam
 			
 			if(!is_authenticated_in_steam_client)
 			{
-				yield Utils.run_async("/usr/bin/env steam", false);
+				yield Utils.run_async({"steam"}, null, false, false);
 				return false;
 			}
 

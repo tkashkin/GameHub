@@ -27,11 +27,21 @@ namespace GameHub.UI.Dialogs
 			
 			set_modal(true);
 			
-			image_icon = Icon.new_for_string("go-down");
-			
-			if(game.icon != null && game.icon.length > 0)
+			try
 			{
-				image_icon = new FileIcon(File.new_for_uri(game.icon));
+				image_icon = Icon.new_for_string("go-down");
+
+				if(game.icon != null && game.icon.length > 0)
+				{
+					Utils.cache_image.begin(game.icon, "icon", (obj, res) => {
+						var cached = Utils.cache_image.end(res);
+						if(cached != null) image_icon = new FileIcon(File.new_for_uri(cached));
+					});
+				}
+			}
+			catch(Error e)
+			{
+				warning(e.message);
 			}
 
 			primary_text = game.name;

@@ -1,3 +1,4 @@
 option('flatpak', type: 'boolean', value: false)
+option('runtime', type: 'string', value: '')
 
 option('use_ivy', type: 'boolean', value: false)

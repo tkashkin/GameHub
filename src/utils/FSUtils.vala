@@ -114,9 +114,9 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.Cache.Images);
 			
 			var cache = FSUtils.expand(FSUtils.Paths.GOG.Installers, "{*~,.goutputstream-*}");
-			Utils.run(@"bash -c 'rm $(cache)'");
+			Utils.run({"bash", "-c", @"'rm $(cache)'"});
 			cache = FSUtils.expand(FSUtils.Paths.Humble.Installers, "{*~,.goutputstream-*}");
-			Utils.run(@"bash -c 'rm $(cache)'");
+			Utils.run({"bash", "-c", @"'rm $(cache)'"});
 		}
 		
 		public static Pixbuf? get_icon(string name, int size=48)

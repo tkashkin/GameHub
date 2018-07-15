@@ -60,20 +60,24 @@ namespace GameHub.UI.Windows
 				if(!is_finished && success_cookie_name != null)
 				{					
 					webview.web_context.get_cookie_manager().get_cookies.begin(uri, null, (obj, res) => {
-						var cookies = webview.web_context.get_cookie_manager().get_cookies.end(res);
-						foreach(var cookie in cookies)
+						try
 						{
-							debug("[WebAuth/%s] [Cookie] `%s`=`%s`", source, cookie.name, cookie.value);
-							if(!is_finished && cookie.name == success_cookie_name && (success_url_prefix == null || uri.has_prefix(success_url_prefix)))
-							{								
-								is_finished = true;
-								var token = cookie.value;
-								debug("[WebAuth/%s] Finished with result `%s`", source, token);
-								finished(token);
-								destroy();
-								break;
+							var cookies = webview.web_context.get_cookie_manager().get_cookies.end(res);
+							foreach(var cookie in cookies)
+							{
+								debug("[WebAuth/%s] [Cookie] `%s`=`%s`", source, cookie.name, cookie.value);
+								if(!is_finished && cookie.name == success_cookie_name && (success_url_prefix == null || uri.has_prefix(success_url_prefix)))
+								{
+									is_finished = true;
+									var token = cookie.value;
+									debug("[WebAuth/%s] Finished with result `%s`", source, token);
+									finished(token);
+									destroy();
+									break;
+								}
 							}
 						}
+						catch(Error e){}
 					});
 				}
 				else if(!is_finished && success_url_prefix != null && uri.has_prefix(success_url_prefix))
