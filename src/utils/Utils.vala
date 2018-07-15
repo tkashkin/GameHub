@@ -7,10 +7,10 @@ namespace GameHub.Utils
 	public delegate void FutureBoolean(bool result);
 	public delegate void FutureResult<T>(T result);
 	
-	public static void open_uri(string uri, Window? parent = null)
+	public static void open_uri(string uri, Window? parent=null)
 	{
 		try
-		{			
+		{
 			AppInfo.launch_default_for_uri(uri, null);
 		}
 		catch(Error e)
@@ -19,12 +19,25 @@ namespace GameHub.Utils
 		}
 	}
 	
-	public static string run(string cmd)
+	public static string run(string[] cmd, string? dir=null, bool use_launcher_script=false)
 	{
 		string stdout;
+
+		var cdir = dir ?? Environment.get_home_dir();
+		var cenv = Environ.get();
+		var ccmd = cmd;
+
+		if(use_launcher_script)
+		{
+			var arr = new GLib.Array<string>(false);
+			arr.append_val(ProjectConfig.PROJECT_NAME + ".launcher");
+			arr.append_vals(cmd, cmd.length);
+			ccmd = (owned) arr.data;
+		}
+
 		try
 		{
-			Process.spawn_command_line_sync(cmd, out stdout);
+			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out stdout);
 		}
 		catch (Error e)
 		{
@@ -33,23 +46,50 @@ namespace GameHub.Utils
 		return stdout;
 	}
 	
-	public static async int run_async(string cmd, bool wait=true)
+	public static async int run_async(string[] cmd, string? dir=null, bool use_launcher_script=false, bool wait=true)
 	{
+		Pid pid;
 		int result = -1;
-		var c = new Granite.Services.SimpleCommand(Environment.get_home_dir(), cmd);
-		c.done.connect(code => {
-			result = code;
-			Idle.add(run_async.callback);
-		});
-		c.run();
+
+		var cdir = dir ?? Environment.get_home_dir();
+		var cenv = Environ.get();
+		var ccmd = cmd;
+
+		if(use_launcher_script)
+		{
+			var arr = new GLib.Array<string>(false);
+			arr.append_val(ProjectConfig.PROJECT_NAME + ".launcher");
+			arr.append_vals(cmd, cmd.length);
+			ccmd = (owned) arr.data;
+		}
+
+		try
+		{
+			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out pid);
+
+			ChildWatch.add(pid, (pid, status) => {
+				Process.close_pid(pid);
+				run_async.callback();
+			});
+		}
+		catch (Error e)
+		{
+			warning(e.message);
+		}
+
 		if(wait) yield;
+
 		return result;
 	}
 	
 	public static bool is_package_installed(string package)
 	{
-		var output = Utils.run("dpkg-query -W -f=${Status} " + package);
+		#if FLATPAK
+		return false
+		#else
+		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package});
 		return "install ok installed" in output;
+		#endif
 	}
 	
 	public static async void sleep_async(uint interval, int priority = GLib.Priority.DEFAULT)
@@ -61,7 +101,7 @@ namespace GameHub.Utils
 		yield;
 	}
 
-	public static async string cache_image(string url, string prefix="remote")
+	public static async string? cache_image(string url, string prefix="remote")
 	{
 		var parts = url.split("?")[0].split(".");
 		var ext = parts.length > 1 ? parts[parts.length - 1] : null;
@@ -78,7 +118,7 @@ namespace GameHub.Utils
 			return cached.get_path();
 		}
 		catch(IOError.EXISTS e){}
-		catch(IOError e)
+		catch(Error e)
 		{
 			warning("Error caching `%s` in `%s`: %s", url, cached.get_path(), e.message);
 		}
@@ -88,7 +128,11 @@ namespace GameHub.Utils
 	public static async void load_image(GameHub.UI.Widgets.AutoSizeImage image, string url, string prefix="remote")
 	{
 		var cached = yield cache_image(url, prefix);
-		image.set_source(cached != null ? new Gdk.Pixbuf.from_file(cached) : null);
+		try
+		{
+			image.set_source(cached != null ? new Gdk.Pixbuf.from_file(cached) : null);
+		}
+		catch(Error e){}
 		image.queue_draw();
 	}
 }

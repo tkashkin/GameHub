@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eu
+
+RUNTIME=@RUNTIME@
+
+if [[ ! -z "$RUNTIME" ]]; then
+	export LD_LIBRARY_PATH=$RUNTIME:$LD_LIBRARY_PATH
+fi
+
+exec "$@"

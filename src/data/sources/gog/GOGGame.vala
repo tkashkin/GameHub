@@ -123,9 +123,12 @@ namespace GameHub.Data.Sources.GOG
 					{
 						var file = Downloader.get_instance().download.end(res).get_path();
 						status = new Game.Status(Game.State.DOWNLOAD_FINISHED);
-						Utils.run(@"chmod +x \"$(file)\"");
+						Utils.run({"chmod", "+x", file});
 						status = new Game.Status(Game.State.INSTALLING);
-						Utils.run_async.begin(@"$(file) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir.get_path())", true, (obj, res) => {
+						string[] cmd = {file, "--", "--i-agree-to-all-licenses",
+										"--noreadme", "--nooptions", "--noprompt",
+										"--destination", install_dir.get_path()};
+						Utils.run_async.begin(cmd, null, true, false, (obj, res) => {
 							Utils.run_async.end(res);
 							status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 							Idle.add(install.callback);
@@ -149,7 +152,7 @@ namespace GameHub.Data.Sources.GOG
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				yield Utils.run_async(@"$(path)");
+				yield Utils.run_async({path}, null, false, true);
 			}
 		}
 		

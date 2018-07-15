@@ -141,12 +141,12 @@ namespace GameHub.Data.Sources.Humble
 						status = new Game.Status(Game.State.DOWNLOAD_STARTED);
 						var path = file.get_path();
 						FSUtils.mkdir(install_dir.get_path());
-						Utils.run(@"chmod +x \"$(path)\"");
+						Utils.run({"chmod", "+x", path});
 						
 						var info = file.query_info(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
 						var type = info.get_content_type();
 						
-						var cmd = @"/usr/bin/env xdg-open $(path)"; // unknown type, just open
+						string[] cmd = {"xdg-open", path};	// unknown type, just open
 						
 						switch(type)
 						{
@@ -154,7 +154,9 @@ namespace GameHub.Data.Sources.Humble
 							case "application/x-elf":
 							case "application/x-sh":
 							case "application/x-shellscript":
-								cmd = @"$(path) -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination $(install_dir.get_path())"; // probably mojosetup
+								cmd = {path, "--", "--i-agree-to-all-licenses",
+										"--noreadme", "--nooptions", "--noprompt",
+										"--destination", install_dir.get_path()};	// probably mojosetup
 								break;
 							
 							case "application/zip":
@@ -167,15 +169,15 @@ namespace GameHub.Data.Sources.Humble
 							case "application/x-lzma":
 							case "application/x-7z-compressed":
 							case "application/x-rar-compressed":
-								cmd = @"/usr/bin/env file-roller $(path) -e $(install_dir.get_path())"; // extract with file-roller
+								cmd = {"file-roller", path, "-e", install_dir.get_path()}; // extract with file-roller
 								break;
 						}
 						
 						status = new Game.Status(Game.State.INSTALLING);
 
-						Utils.run_async.begin(cmd, true, (obj, res) => {
+						Utils.run_async.begin(cmd, null, true, false, (obj, res) => {
 							Utils.run_async.end(res);
-							Utils.run(@"chmod -R +x \"$(install_dir.get_path())\"");
+							Utils.run({"chmod", "-R", "+x", install_dir.get_path()});
 							choose_executable();
 							Idle.add(install.callback);
 						});
@@ -207,7 +209,15 @@ namespace GameHub.Data.Sources.Humble
 			filter.add_mime_type("application/x-sh");
 			filter.add_mime_type("text/x-shellscript");
 			chooser.set_filter(filter);
-			chooser.select_file(executable);
+
+			try
+			{
+				chooser.select_file(executable);
+			}
+			catch(Error e)
+			{
+				warning(e.message);
+			}
 
 			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
 			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
@@ -231,7 +241,7 @@ namespace GameHub.Data.Sources.Humble
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				yield Utils.run_async(@"$(path)");
+				yield Utils.run_async({path}, null, false, true);
 			}
 		}
 		

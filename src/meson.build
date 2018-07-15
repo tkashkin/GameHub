@@ -4,9 +4,9 @@ conf_data.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 conf_data.set_quoted('VERSION', meson.project_version())
 conf_data.set_quoted('PREFIX', get_option('prefix'))
 project_config = configure_file(
-	input : 'ProjectConfig.vala.in',
-	output : 'ProjectConfig.vala',
-	configuration : conf_data
+	input: 'ProjectConfig.vala.in',
+	output: 'ProjectConfig.vala',
+	configuration: conf_data
 )
 
 deps = [
@@ -77,4 +77,13 @@ executable(
 
 	dependencies: deps,
 	install: true
+)
+
+launcher_conf = configuration_data()
+launcher_conf.set('RUNTIME', get_option('runtime'))
+launcher = configure_file(
+	input: 'launcher.sh.in',
+	output: '@0@.launcher'.format(meson.project_name()),
+	configuration: launcher_conf,
+	install_dir: '@0@/bin'.format(get_option('prefix'))
 )
