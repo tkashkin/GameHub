@@ -5,7 +5,12 @@ RUNTIME=@RUNTIME@
 
 if [[ ! -z "$RUNTIME" ]]; then
 	echo "Runtime path: $RUNTIME"
-	export LD_LIBRARY_PATH=$RUNTIME:$LD_LIBRARY_PATH
+
+	if [[ ! -z "$LD_LIBRARY_PATH" ]]; then
+		RUNTIME=$RUNTIME:$LD_LIBRARY_PATH
+	fi
+
+	export LD_LIBRARY_PATH=$RUNTIME
 fi
 
 exec "$@"
