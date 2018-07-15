@@ -85,7 +85,7 @@ namespace GameHub.Utils
 	public static bool is_package_installed(string package)
 	{
 		#if FLATPAK
-		return false
+		return false;
 		#else
 		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package});
 		return "install ok installed" in output;
