@@ -10,7 +10,7 @@ namespace GameHub.UI.Dialogs
 		
 		public SettingsDialog()
 		{
-			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false);
+			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Settings"));
 			
 			set_modal(true);
 			

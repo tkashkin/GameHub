@@ -19,7 +19,7 @@ namespace GameHub.Utils
 		}
 	}
 	
-	public static string run(string[] cmd, string? dir=null, bool use_launcher_script=false)
+	public static string run(string[] cmd, string? dir=null, bool override_runtime=false)
 	{
 		string stdout;
 
@@ -28,7 +28,10 @@ namespace GameHub.Utils
 		var ccmd = cmd;
 
 		#if FLATPAK
-		cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", "/app/lib/steamrt:/app/lib/32bit/steamrt");
+		if(override_runtime && ProjectConfig.RUNTIME.length > 0)
+		{
+			cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
+		}
 		#endif
 
 		try
@@ -42,7 +45,7 @@ namespace GameHub.Utils
 		return stdout;
 	}
 	
-	public static async int run_async(string[] cmd, string? dir=null, bool use_launcher_script=false, bool wait=true)
+	public static async int run_async(string[] cmd, string? dir=null, bool override_runtime=false, bool wait=true)
 	{
 		Pid pid;
 		int result = -1;
@@ -53,7 +56,10 @@ namespace GameHub.Utils
 		var cwait = wait;
 
 		#if FLATPAK
-		cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", "/app/lib/steamrt:/app/lib/32bit/steamrt");
+		if(override_runtime && ProjectConfig.RUNTIME.length > 0)
+		{
+			cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
+		}
 		#endif
 
 		try

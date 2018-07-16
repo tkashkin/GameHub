@@ -23,7 +23,7 @@ namespace GameHub.UI.Dialogs
 
 		public GameInstallDialog(Game game, ArrayList<Game.Installer> installers)
 		{
-			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false);
+			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Install"));
 			
 			set_modal(true);
 			

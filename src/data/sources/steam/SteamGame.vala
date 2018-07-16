@@ -15,8 +15,8 @@ namespace GameHub.Data.Sources.Steam
 			id = json.get_int_member("appid").to_string();
 			name = json.get_string_member("name");
 			var icon_hash = json.get_string_member("img_icon_url");
-			icon = @"https://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
-			image = @"https://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
+			icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
+			image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
 
 			if(GamesDB.get_instance().is_game_unsupported(src, id))
 			{

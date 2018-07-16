@@ -118,18 +118,5 @@ namespace GameHub.Utils
 			cache = FSUtils.expand(FSUtils.Paths.Humble.Installers, "{*~,.goutputstream-*}");
 			Utils.run({"bash", "-c", @"'rm $(cache)'"});
 		}
-		
-		public static Pixbuf? get_icon(string name, int size=48)
-		{
-			try
-			{
-				return new Pixbuf.from_resource_at_scale(@"/com/github/tkashkin/gamehub/icons/$(name).svg", size, size, true);
-			}
-			catch(Error e)
-			{
-				warning(e.message);
-			}
-			return null;
-		}
 	}
 }

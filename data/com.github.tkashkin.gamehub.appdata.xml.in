@@ -41,7 +41,12 @@
 	</screenshots>
 	
 	<releases>
-		<release type="development" version="0.5.3" date="2018-07-14">
+		<release type="development" version="0.5.4" date="2018-07-16">
+			<description>
+				<p>Icon fixes</p>
+			</description>
+		</release>
+		<release type="development" version="0.5.3" date="2018-07-15">
 			<description>
 				<p>Runtime injection support</p>
 			</description>

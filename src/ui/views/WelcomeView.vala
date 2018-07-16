@@ -69,14 +69,8 @@ namespace GameHub.UI.Views
 			skip_btn.opacity = 0;
 			
 			foreach(var src in GameSources)
-			{				
-				var image = FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : ""));
-				
-				var i = welcome.append_with_pixbuf(image, src.name, "");
-
-				ui_settings.notify["dark-theme"].connect(() => {
-					welcome.get_button_from_index(i).icon = new Image.from_pixbuf(FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : "")));
-				});
+			{
+				welcome.append(src.icon + "-symbolic", src.name, "");
 			}
 			
 			update_entries.begin();
