@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.5.4) xenial; urgency=low
+
+  * Icon fixes
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 16 Jul 2018 05:52:48 +0300
+
 com.github.tkashkin.gamehub (0.5.3) xenial; urgency=low
 
   * Runtime injection support

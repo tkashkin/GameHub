@@ -3,6 +3,7 @@ conf_data.set_quoted('PROJECT_NAME', meson.project_name())
 conf_data.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 conf_data.set_quoted('VERSION', meson.project_version())
 conf_data.set_quoted('PREFIX', get_option('prefix'))
+conf_data.set_quoted('RUNTIME', get_option('runtime'))
 project_config = configure_file(
 	input: 'ProjectConfig.vala.in',
 	output: 'ProjectConfig.vala',
@@ -22,7 +23,12 @@ deps = [
 ]
 
 if get_option('use_ivy')
-	deps += dependency('ivy')
+	ivy = dependency('ivy', required: false)
+
+	if ivy.found()
+		deps += ivy
+		add_global_arguments('-g', '-X', '-rdynamic', '-D', 'USE_IVY', language: 'vala')
+	endif
 endif
 
 executable(
@@ -77,13 +83,4 @@ executable(
 
 	dependencies: deps,
 	install: true
-)
-
-launcher_conf = configuration_data()
-launcher_conf.set('RUNTIME', get_option('runtime'))
-launcher = configure_file(
-	input: 'launcher.sh.in',
-	output: '@0@.launcher'.format(meson.project_name()),
-	configuration: launcher_conf,
-	install_dir: '@0@/bin'.format(get_option('prefix'))
 )

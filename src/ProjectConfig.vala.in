@@ -6,4 +6,6 @@ namespace GameHub.ProjectConfig
 	public const string PROJECT_NAME = @PROJECT_NAME@;
 	public const string VERSION = @VERSION@;
 	public const string INSTALL_PREFIX = @PREFIX@;
+
+	public const string RUNTIME = @RUNTIME@;
 }

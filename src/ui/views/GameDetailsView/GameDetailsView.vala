@@ -98,6 +98,7 @@ namespace GameHub.UI.Views
 			download_progress.hide();
 
 			src_icon = new Image();
+			src_icon.icon_size = IconSize.DIALOG;
 			src_icon.opacity = 0.1;
 
 			var title_vbox = new Box(Orientation.VERTICAL, 0);
@@ -141,7 +142,7 @@ namespace GameHub.UI.Views
 			action_install = add_action("go-down", _("Install"), install_game);
 			action_run = add_action("media-playback-start", _("Run"), run_game);
 			action_open_directory = add_action("folder", _("Open installation directory"), open_game_directory);
-			action_open_store_page = add_action("internet-web-browser", _("Open store page"), open_game_store_page);
+			action_open_store_page = add_action("web-browser", _("Open store page"), open_game_store_page);
 		}
 
 		private async void update_game()
@@ -153,7 +154,7 @@ namespace GameHub.UI.Views
 			yield _game.update_game_info();
 
 			title.label = _game.name;
-			src_icon.pixbuf = FSUtils.get_icon(_game.source.icon, 48);
+			src_icon.icon_name = _game.source.icon + "-symbolic";
 			if(_game.description != null)
 			{
 				description.show();

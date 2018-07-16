@@ -9,7 +9,7 @@ namespace GameHub.UI.Dialogs
 	{
 		public GameDetailsDialog(Game? game)
 		{
-			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false);
+			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: game.name);
 
 			set_modal(true);
 

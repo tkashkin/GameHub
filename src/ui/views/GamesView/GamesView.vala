@@ -89,8 +89,8 @@ namespace GameHub.UI.Views
 			view.halign = Align.CENTER;
 			view.valign = Align.CENTER;
 
-			add_view_button(new Image.from_icon_name("view-grid-symbolic", IconSize.MENU), _("Grid view"));
-			add_view_button(new Image.from_icon_name("view-list-symbolic", IconSize.MENU), _("List view"));
+			add_view_button("view-grid", _("Grid view"));
+			add_view_button("view-list", _("List view"));
 
 			view.mode_changed.connect(() => {
 				var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
@@ -104,17 +104,11 @@ namespace GameHub.UI.Views
 			filter.halign = Align.CENTER;
 			filter.valign = Align.CENTER;
 
-			add_filter_button(new Image.from_icon_name("view-filter-symbolic", IconSize.MENU), _("All games"));
+			add_filter_button("sources-all", _("All games"));
 
 			foreach(var src in sources)
 			{
-				var image = new Image.from_pixbuf(FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : ""), 16));
-
-				ui_settings.notify["dark-theme"].connect(() => {
-					image.pixbuf = FSUtils.get_icon(src.icon + (ui_settings.dark_theme ? "-white" : ""), 16);
-				});
-
-				add_filter_button(image, _("%s games").printf(src.name));
+				add_filter_button(src.icon, _("%s games").printf(src.name));
 			}
 
 			filter.set_active(sources.size > 1 ? 0 : 1);
@@ -256,14 +250,16 @@ namespace GameHub.UI.Views
 			games_list.select_row(games_list.get_row_at_index(0));
 		}
 
-		private void add_view_button(Image image, string tooltip)
+		private void add_view_button(string icon, string tooltip)
 		{
+			var image = new Image.from_icon_name(icon + "-symbolic", IconSize.MENU);
 			image.tooltip_text = tooltip;
 			view.append(image);
 		}
 
-		private void add_filter_button(Image image, string tooltip)
+		private void add_filter_button(string icon, string tooltip)
 		{
+			var image = new Image.from_icon_name(icon + "-symbolic", IconSize.MENU);
 			image.tooltip_text = tooltip;
 			filter.append(image);
 		}

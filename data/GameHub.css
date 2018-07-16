@@ -4,6 +4,7 @@
 	border-radius: 4px;
 	transition: 100ms;
 	background-color: #999;
+	color: white;
 }
 
 .gamecard.installed
@@ -50,6 +51,7 @@
 
 .gamecard .info
 {
+	background-color: transparent;
 	background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
 	border-radius: 0 0 4px 4px;
 }

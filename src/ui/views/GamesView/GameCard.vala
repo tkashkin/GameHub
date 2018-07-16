@@ -41,6 +41,7 @@ namespace GameHub.UI.Views
 			image.set_constraint(CARD_WIDTH_MIN, CARD_WIDTH_MAX, CARD_RATIO);
 			
 			src_icon = new Image();
+			src_icon.icon_size = IconSize.LARGE_TOOLBAR;
 			src_icon.valign = Align.START;
 			src_icon.halign = Align.START;
 			src_icon.margin = 8;
@@ -121,7 +122,7 @@ namespace GameHub.UI.Views
 			
 			label.label = game.name;
 			
-			src_icon.pixbuf = FSUtils.get_icon(game.source.icon + "-white", 24);
+			src_icon.icon_name = game.source.icon + "-symbolic";
 			
 			card.get_style_context().add_class("installed");
 			
