@@ -33,6 +33,8 @@ namespace GameHub.UI.Views
 			Object(game: game);
 		}
 
+		private bool is_dialog = false;
+
 		private Stack stack;
 		private Spinner spinner;
 
@@ -51,13 +53,18 @@ namespace GameHub.UI.Views
 		private ActionButton action_open_directory;
 		private ActionButton action_open_store_page;
 
+		private Granite.HeaderLabel description_header;
 		private WebView description;
+
+		private Box custom_info;
 
 		private const string CSS_LIGHT = "background: rgb(245, 245, 245); color: black";
 		private const string CSS_DARK = "background: rgb(59, 63, 69); color: white";
 
 		construct
 		{
+			is_dialog = !(get_toplevel() is GameHub.UI.Windows.MainWindow);
+
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
 			stack.vexpand = true;
@@ -72,7 +79,7 @@ namespace GameHub.UI.Views
 			content_scrolled.propagate_natural_width = true;
 			content_scrolled.propagate_natural_height = true;
 
-			content = new Box(Orientation.VERTICAL, 24);
+			content = new Box(Orientation.VERTICAL, 0);
 			content.margin_start = content.margin_end = 8;
 
 			var title_hbox = new Box(Orientation.HORIZONTAL, 16);
@@ -111,10 +118,17 @@ namespace GameHub.UI.Views
 			title_hbox.add(title_vbox);
 			title_hbox.add(src_icon);
 
+			description_header = new Granite.HeaderLabel(_("Description"));
+			description_header.xpad = 8;
+
 			description = new WebView();
 			description.hexpand = true;
-			description.vexpand = (get_toplevel() is GameHub.UI.Windows.MainWindow);
+			description.vexpand = false; //(!is_dialog);
 			description.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
+
+			custom_info = new Box(Orientation.VERTICAL, 0);
+			custom_info.hexpand = false;
+			custom_info.margin_start = custom_info.margin_end = 8;
 
 			var ui_settings = GameHub.Settings.UI.get_instance();
 			ui_settings.notify["dark-theme"].connect(() => {
@@ -125,9 +139,12 @@ namespace GameHub.UI.Views
 			ui_settings.notify_property("dark-theme");
 
 			actions = new Box(Orientation.VERTICAL, 0);
+			actions.margin_top = actions.margin_bottom = 16;
 
 			content.add(title_hbox);
 			content.add(actions);
+			content.add(custom_info);
+			content.add(description_header);
 			content.add(description);
 
 			content_scrolled.add(content);
@@ -147,6 +164,8 @@ namespace GameHub.UI.Views
 
 		private async void update_game()
 		{
+			is_dialog = !(get_toplevel() is GameHub.UI.Windows.MainWindow);
+
 			stack.set_visible_child(spinner);
 
 			if(_game == null) return;
@@ -186,6 +205,35 @@ namespace GameHub.UI.Views
 				action_open_store_page.visible = _game.store_page != null;
 			});
 			_game.status_change(_game.status);
+
+			custom_info.forall(w => custom_info.remove(w));
+			if(_game is GameHub.Data.Sources.GOG.GOGGame)
+			{
+				var root = Parser.parse_json(_game.custom_info).get_object();
+
+
+				var sys_langs = Intl.get_language_names();
+				var langs = root.get_object_member("languages");
+				if(langs != null)
+				{
+					var langs_string = "";
+
+					foreach(var l in langs.get_members())
+					{
+						var lang = langs.get_string_member(l);
+						if(l in sys_langs) lang = @"<b>$(lang)</b>";
+						langs_string += (langs_string.length > 0 ? ", " : "") + lang;
+					}
+
+					add_custom_info_label(_("Languages"), langs_string, false, true);
+				}
+
+				var cool = "• " + root.get_object_member("description").get_string_member("whats_cool_about_it").replace("\n", "\n• ");
+				add_custom_info_label(_("What's cool about it?"), cool);
+
+				custom_info.show_all();
+			}
+			custom_info.margin_bottom = custom_info.get_children().length() > 0 ? 16 : 0;
 
 			yield Utils.load_image(icon, _game.icon, "icon");
 
@@ -231,6 +279,28 @@ namespace GameHub.UI.Views
 			actions.add(button);
 			button.clicked.connect(() => action());
 			return button;
+		}
+
+		private void add_custom_info_label(string title, string? text, bool multiline=true, bool markup=false)
+		{
+			if(text == null || text == "") return;
+
+			var title_label = new Granite.HeaderLabel(title);
+			title_label.set_size_request(multiline ? -1 : 128, -1);
+			title_label.valign = Align.START;
+
+			var text_label = new Label(text);
+			text_label.halign = Align.START;
+			text_label.hexpand = false;
+			text_label.wrap = true;
+			text_label.xalign = 0;
+			text_label.max_width_chars = is_dialog ? 80 : -1;
+			text_label.use_markup = markup;
+
+			var box = new Box(multiline ? Orientation.VERTICAL : Orientation.HORIZONTAL, 0);
+			box.add(title_label);
+			box.add(text_label);
+			custom_info.add(box);
 		}
 	}
 }
