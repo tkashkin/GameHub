@@ -39,7 +39,7 @@ namespace GameHub
 			#endif
 			
 			Intl.setlocale(LocaleCategory.ALL, "");
-			Intl.bindtextdomain(ProjectConfig.GETTEXT_PACKAGE, ProjectConfig.INSTALL_PREFIX + "/locale");
+			Intl.bindtextdomain(ProjectConfig.GETTEXT_PACKAGE, ProjectConfig.DATADIR + "/locale");
 			Intl.bind_textdomain_codeset(ProjectConfig.GETTEXT_PACKAGE, "UTF-8");
 			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);
 			
