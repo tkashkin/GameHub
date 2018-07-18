@@ -19,7 +19,7 @@ __Planned:__
 * Maybe more services
 
 ## Installation
-Prebuild releases can be found on [releases page](https://github.com/tkashkin/GameHub/releases).
+Prebuilt releases can be found on [releases page](https://github.com/tkashkin/GameHub/releases).
 
 ## Building
 
