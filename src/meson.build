@@ -24,12 +24,9 @@ deps = [
 ]
 
 if get_option('use_ivy')
-	ivy = dependency('ivy', required: false)
-
-	if ivy.found()
-		deps += ivy
-		add_global_arguments('-g', '-X', '-rdynamic', '-D', 'USE_IVY', language: 'vala')
-	endif
+	add_global_arguments('-g', '-X', '-rdynamic', '-D', 'USE_IVY', language: 'vala')
+	deps += meson.get_compiler('vala').find_library('posix')
+	deps += meson.get_compiler('vala').find_library('linux')
 endif
 
 executable(
@@ -78,6 +75,11 @@ executable(
 	'utils/Parser.vala',
 	'utils/Settings.vala',
 	'utils/Downloader.vala',
+
+	'lib/ivy/Extractor.vala',
+	'lib/ivy/Frame.vala',
+	'lib/ivy/Printer.vala',
+	'lib/ivy/Stacktrace.vala',
 
 	icons_gresource,
 	css_gresource,
