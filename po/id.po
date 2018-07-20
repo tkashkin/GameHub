@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-14 01:42+0300\n"
+"POT-Creation-Date: 2018-07-20 17:06+0300\n"
 "PO-Revision-Date: 2018-07-14 22:01+0700\n"
+"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 2.0.6\n"
-"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
-"Language: id\n"
 
 #: data/com.github.tkashkin.gamehub.appdata.xml.in:8
 #: data/com.github.tkashkin.gamehub.desktop.in:3
@@ -34,28 +34,28 @@ msgstr "Semua permainan Anda di satu tempat"
 msgid "Manage your Steam, GOG and Humble Bundle games in one place."
 msgstr "Kelola permainan Steam, GOG, dan Humble Bundle Anda di satu tempat."
 
-#: src/data/Game.vala:73
+#: src/data/Game.vala:74
 msgid "Installed"
 msgstr "Terpasang"
 
-#: src/data/Game.vala:74
+#: src/data/Game.vala:75
 msgid "Installing"
 msgstr "Memasang"
 
-#: src/data/Game.vala:75
+#: src/data/Game.vala:76
 msgid "Download started"
 msgstr "Unduhan dimulai"
 
-#: src/data/Game.vala:76
+#: src/data/Game.vala:77
 msgid "Download finished"
 msgstr "Unduhan selesai"
 
-#: src/data/Game.vala:79
+#: src/data/Game.vala:80
 #, c-format
 msgid "Downloading: %d%% (%s / %s)"
 msgstr "Mengunduh: %d%% (%s / %s)"
 
-#: src/data/Game.vala:81
+#: src/data/Game.vala:82
 msgid "Not installed"
 msgstr "Tidak terpasang"
 
@@ -71,18 +71,10 @@ msgstr ""
 "Berkas konfigurasi Steam tidak ditemukan.\n"
 "Masuk ke akun Anda di klien Steam dan kembali ke GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:203
-msgid "Select main executable of the game"
-msgstr "Pilih main executable dari permainan"
-
-#: src/data/sources/humble/HumbleGame.vala:212
-#: src/ui/dialogs/GameInstallDialog.vala:90
-msgid "Cancel"
-msgstr "Batal"
-
-#: src/data/sources/humble/HumbleGame.vala:213
-msgid "Select"
-msgstr "Pilih"
+#: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
+#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:141
+msgid "Settings"
+msgstr "Pengaturan"
 
 #: src/ui/dialogs/SettingsDialog.vala:30
 msgid "Use dark theme"
@@ -113,22 +105,27 @@ msgid "Humble Bundle games directory"
 msgstr "Direktori permainan Humble Bundle"
 
 #: src/ui/dialogs/SettingsDialog.vala:61
-#: src/ui/dialogs/GameDetailsDialog.vala:30
+#: src/ui/dialogs/GameDetailsDialog.vala:31
 msgid "Close"
 msgstr "Tutup"
 
-#: src/ui/dialogs/GameInstallDialog.vala:56
+#: src/ui/dialogs/GameInstallDialog.vala:33
+#: src/ui/dialogs/GameInstallDialog.vala:128
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:158
+msgid "Install"
+msgstr "Pasang"
+
+#: src/ui/dialogs/GameInstallDialog.vala:87
 msgid "Select game installer"
 msgstr "Pilih pemasang permainan"
 
-#: src/ui/dialogs/GameInstallDialog.vala:94
+#: src/ui/dialogs/GameInstallDialog.vala:121
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/ui/dialogs/GameInstallDialog.vala:125
 msgid "Import"
 msgstr "Impor"
-
-#: src/ui/dialogs/GameInstallDialog.vala:97
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:141
-msgid "Install"
-msgstr "Pasang"
 
 #: src/ui/views/WelcomeView.vala:33
 msgid "No enabled game sources"
@@ -138,11 +135,6 @@ msgstr "Tidak ada sumber permainan yang diaktifkan"
 msgid "Enable some game sources in settings"
 msgstr "Aktifkan beberapa sumber permainan di pengaturan"
 
-#: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:59
-#: src/ui/views/GamesView/GamesView.vala:147
-msgid "Settings"
-msgstr "Pengaturan"
-
 #: src/ui/views/WelcomeView.vala:38
 msgid "Let's get started"
 msgstr "Mari kita mulai"
@@ -151,24 +143,24 @@ msgstr "Mari kita mulai"
 msgid "Skip"
 msgstr "Lewati"
 
-#: src/ui/views/WelcomeView.vala:121
+#: src/ui/views/WelcomeView.vala:115
 msgid "Ready"
 msgstr "Siap"
 
-#: src/ui/views/WelcomeView.vala:127
+#: src/ui/views/WelcomeView.vala:121
 msgid "Authentication required"
 msgstr "Diperlukan autentikasi"
 
-#: src/ui/views/WelcomeView.vala:132
+#: src/ui/views/WelcomeView.vala:126
 msgid "Authenticating..."
 msgstr "Mengautentikasi..."
 
-#: src/ui/views/WelcomeView.vala:143
+#: src/ui/views/WelcomeView.vala:137
 #, c-format
 msgid "Install %s"
 msgstr "Pasang %s"
 
-#: src/ui/views/WelcomeView.vala:144
+#: src/ui/views/WelcomeView.vala:138
 msgid "Return to GameHub after installing"
 msgstr "Kembali ke GameHub setelah memasang"
 
@@ -184,33 +176,55 @@ msgstr "Tilikan daftar"
 msgid "All games"
 msgstr "Semua permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:117
+#: src/ui/views/GamesView/GamesView.vala:111
 #, c-format
 msgid "%s games"
 msgstr "%s permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:123
+#: src/ui/views/GamesView/GamesView.vala:117
 msgid "Downloads"
 msgstr "Unduh"
 
-#: src/ui/views/GamesView/GamesView.vala:142
+#: src/ui/views/GamesView/GamesView.vala:136
 msgid "Search"
 msgstr "Cari"
 
-#: src/ui/views/GamesView/GamesView.vala:183
+#: src/ui/views/GamesView/GamesView.vala:192
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u permainan"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:142
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:120
+msgid "Description"
+msgstr "Deskripsi"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:159
 msgid "Run"
 msgstr "Jalankan"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:143
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:160
 msgid "Open installation directory"
 msgstr "Buka direktori pemasangan"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:144
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:161
 msgid "Open store page"
 msgstr "Buka halaman toko"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
+msgid "Uninstall"
+msgstr "Copot pemasangan"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:229
+msgid "Language"
+msgstr "Bahasa"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:232
+msgid "Languages"
+msgstr "Bahasa"
+
+#~ msgid "Select main executable of the game"
+#~ msgstr "Pilih main executable dari permainan"
+
+#~ msgid "Select"
+#~ msgstr "Pilih"

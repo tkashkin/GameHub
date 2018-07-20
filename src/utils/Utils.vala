@@ -45,10 +45,9 @@ namespace GameHub.Utils
 		return stdout;
 	}
 	
-	public static async int run_async(string[] cmd, string? dir=null, bool override_runtime=false, bool wait=true)
+	public static async void run_async(string[] cmd, string? dir=null, bool override_runtime=false, bool wait=true)
 	{
 		Pid pid;
-		int result = -1;
 
 		var cdir = dir ?? Environment.get_home_dir();
 		var cenv = Environ.get();
@@ -64,14 +63,12 @@ namespace GameHub.Utils
 
 		try
 		{
-			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out pid);
+			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
 
-			#if !FLATPAK
 			ChildWatch.add(pid, (pid, status) => {
 				Process.close_pid(pid);
-				run_async.callback();
+				Idle.add(run_async.callback);
 			});
-			#endif
 		}
 		catch (Error e)
 		{
@@ -79,17 +76,40 @@ namespace GameHub.Utils
 		}
 
 		if(cwait) yield;
+	}
 
-		return result;
+	public static async string run_thread(string[] cmd, string? dir=null, bool override_runtime=false)
+	{
+		string stdout = "";
+
+		new Thread<void*>("utils-run_thread", () => {
+			stdout = Utils.run(cmd, dir, override_runtime);
+			Idle.add(run_thread.callback);
+			return null;
+		});
+
+		yield;
+		return stdout;
+	}
+
+	public static string get_distro()
+	{
+		#if FLATPAK
+		return "flatpak";
+		#else
+		return Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
+		#endif
 	}
 	
 	public static bool is_package_installed(string package)
 	{
 		#if FLATPAK
 		return false;
-		#else
+		#elif PM_APT
 		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package});
 		return "install ok installed" in output;
+		#else
+		return false;
 		#endif
 	}
 	

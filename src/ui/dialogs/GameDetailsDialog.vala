@@ -11,7 +11,8 @@ namespace GameHub.UI.Dialogs
 		{
 			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: game.name);
 
-			set_modal(true);
+			gravity = Gdk.Gravity.CENTER;
+			modal = true;
 
 			var content = get_content_area();
 			content.set_size_request(560, -1);

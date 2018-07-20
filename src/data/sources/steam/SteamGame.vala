@@ -117,5 +117,13 @@ namespace GameHub.Data.Sources.Steam
 		{
 			Utils.open_uri(@"steam://rungameid/$(id)");
 		}
+
+		public override async void uninstall()
+		{
+			if(is_installed())
+			{
+
+			}
+		}
 	}
 }

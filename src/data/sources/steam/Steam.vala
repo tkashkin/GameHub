@@ -42,14 +42,25 @@ namespace GameHub.Data.Sources.Steam
 			{
 				return (!) installed;
 			}
-			
-			installed = Utils.is_package_installed("steam");
+
+			if("elementary" in Utils.get_distro())
+			{
+				installed = Utils.is_package_installed("steam");
+			}
+			else
+			{
+				installed = FSUtils.file(FSUtils.Paths.Steam.Home).query_exists();
+			}
+
 			return (!) installed;
 		}
 
 		public override async bool install()
 		{
-			Utils.open_uri("appstream://steam.desktop");
+			if("elementary" in Utils.get_distro())
+			{
+				Utils.open_uri("appstream://steam.desktop");
+			}
 			return true;
 		}
 

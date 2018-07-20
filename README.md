@@ -48,7 +48,7 @@ debuild
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
 cd GameHub
-meson build --prefix=/usr
+meson build --prefix=/usr -Ddistro=generic
 cd build
 ninja
 sudo ninja install
