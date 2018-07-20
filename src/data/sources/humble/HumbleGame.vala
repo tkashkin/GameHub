@@ -292,6 +292,7 @@ namespace GameHub.Data.Sources.Humble
 				os = platform;
 				dl_name = download.get_string_member("name");
 				file = download.get_object_member("url").get_string_member("web");
+				file_size = download.get_int_member("file_size");
 			}
 		}
 	}

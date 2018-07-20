@@ -41,6 +41,12 @@
 	</screenshots>
 	
 	<releases>
+		<release type="development" version="0.5.7" date="2018-07-21">
+			<description>
+				<p>Yet another locale fix</p>
+				<p>Installers cache management</p>
+			</description>
+		</release>
 		<release type="development" version="0.5.6" date="2018-07-20">
 			<description>
 				<p>Fix crash for GOG "games" like Hotline Miami 2: Wrong Number - Digital Comics</p>
