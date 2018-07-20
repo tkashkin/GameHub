@@ -40,11 +40,13 @@ namespace GameHub.UI.Dialogs
 			#if !FLATPAK
 			add_file_chooser(_("GOG games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; });
 			#endif
+			add_cache_directory(_("GOG installers cache"), FSUtils.Paths.GOG.Installers);
 			add_separator();
 			
 			add_header_with_checkbox("Humble Bundle", humble_auth.enabled, v => { humble_auth.enabled = v; });
 			#if !FLATPAK
 			add_file_chooser(_("Humble Bundle games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; });
+			add_cache_directory(_("Humble Bundle installers cache"), FSUtils.Paths.Humble.Installers);
 			#endif
 			
 			content.pack_start(box, false, false, 0);
@@ -95,7 +97,7 @@ namespace GameHub.UI.Dialogs
 			hbox.add(entry);
 			add_widget(hbox);
 		}
-		
+
 		private void add_file_chooser(string text, FileChooserAction mode, string val, owned EntryAction action, bool create=true)
 		{
 			var chooser = new FileChooserButton(text, mode);
@@ -166,6 +168,59 @@ namespace GameHub.UI.Dialogs
 			add_widget(hbox);
 		}
 		
+		private void add_cache_directory(string name, string path)
+		{
+			var bbox = new Box(Orientation.HORIZONTAL, 2);
+			bbox.set_size_request(280, -1);
+
+			var size_label = new Label(null);
+			size_label.margin_end = 8;
+			size_label.halign = Align.START;
+
+			var open_btn = new Button();
+			open_btn.label = _("Open");
+			open_btn.clicked.connect(() => {
+				Utils.open_uri(FSUtils.file(path).get_uri());
+			});
+
+			var clear_btn = new Button();
+			clear_btn.get_style_context().add_class(STYLE_CLASS_DESTRUCTIVE_ACTION);
+			clear_btn.label = _("Clear");
+
+			var label = new Label(name);
+			label.halign = Align.START;
+			label.hexpand = true;
+
+			bbox.pack_start(size_label);
+			bbox.pack_start(open_btn, false);
+			bbox.pack_start(clear_btn, false);
+
+			SourceFunc calc_size = () => {
+				try
+				{
+					uint64 dir_size;
+					uint64 files;
+					FSUtils.file(path).measure_disk_usage(FileMeasureFlags.NONE, null, null, out dir_size, null, out files);
+					size_label.label = ngettext("%llu installer; %s", "%llu installers; %s", (ulong) files).printf(files, format_size(dir_size));
+					clear_btn.sensitive = dir_size > 32;
+				}
+				catch(Error e){}
+				return false;
+			};
+
+			calc_size();
+
+			clear_btn.clicked.connect(() => {
+				FSUtils.rm(path, "*");
+				calc_size();
+			});
+
+			var hbox = new Box(Orientation.HORIZONTAL, 12);
+			hbox.add(label);
+			hbox.add(bbox);
+			add_widget(hbox);
+		}
+
 		private void add_separator()
 		{
 			add_widget(new Separator(Orientation.HORIZONTAL));
@@ -179,5 +234,6 @@ namespace GameHub.UI.Dialogs
 		
 		private delegate void SwitchAction(bool active);
 		private delegate void EntryAction(string val);
+		private delegate void ButtonAction();
 	}
 }

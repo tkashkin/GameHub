@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-20 17:06+0300\n"
+"POT-Creation-Date: 2018-07-21 01:58+0300\n"
 "PO-Revision-Date: 2018-05-27 03:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -34,28 +34,28 @@ msgstr "Все игры в одном месте"
 msgid "Manage your Steam, GOG and Humble Bundle games in one place."
 msgstr "Управляйте играми из Steam, GOG и Humble Bundle в одном месте"
 
-#: src/data/Game.vala:74
+#: src/data/Game.vala:75
 msgid "Installed"
 msgstr "Установлена"
 
-#: src/data/Game.vala:75
+#: src/data/Game.vala:76
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:76
+#: src/data/Game.vala:77
 msgid "Download started"
 msgstr "Загрузка начата"
 
-#: src/data/Game.vala:77
+#: src/data/Game.vala:78
 msgid "Download finished"
 msgstr "Загрузка завершена"
 
-#: src/data/Game.vala:80
+#: src/data/Game.vala:81
 #, c-format
 msgid "Downloading: %d%% (%s / %s)"
 msgstr "Загрузка: %d%% (%s / %s)"
 
-#: src/data/Game.vala:82
+#: src/data/Game.vala:83
 msgid "Not installed"
 msgstr "Не установлена"
 
@@ -72,7 +72,7 @@ msgstr ""
 "Войдите в ваш аккаунт в клиенте Steam и вернитесь в GameHub"
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:141
+#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:143
 msgid "Settings"
 msgstr "Настройки"
 
@@ -100,18 +100,41 @@ msgstr "Папка установки Steam"
 msgid "GOG games directory"
 msgstr "Папка игр GOG"
 
-#: src/ui/dialogs/SettingsDialog.vala:47
+#: src/ui/dialogs/SettingsDialog.vala:43
+msgid "GOG installers cache"
+msgstr "Кэш установщиков GOG"
+
+#: src/ui/dialogs/SettingsDialog.vala:48
 msgid "Humble Bundle games directory"
 msgstr "Папка игр Humble Bundle"
 
-#: src/ui/dialogs/SettingsDialog.vala:61
+#: src/ui/dialogs/SettingsDialog.vala:49
+msgid "Humble Bundle installers cache"
+msgstr "Кэш установщиков Humble Bundle"
+
+#: src/ui/dialogs/SettingsDialog.vala:63
 #: src/ui/dialogs/GameDetailsDialog.vala:31
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/ui/dialogs/GameInstallDialog.vala:33
-#: src/ui/dialogs/GameInstallDialog.vala:128
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:158
+#: src/ui/dialogs/SettingsDialog.vala:180
+msgid "Open"
+msgstr "Открыть"
+
+#: src/ui/dialogs/SettingsDialog.vala:187
+msgid "Clear"
+msgstr "Очистить"
+
+#: src/ui/dialogs/SettingsDialog.vala:203
+msgid "%llu installer; %s"
+msgid_plural "%llu installers; %s"
+msgstr[0] "%llu установщик; %s"
+msgstr[1] "%llu установщика; %s"
+msgstr[2] "%llu установщиков; %s"
+
+#: src/ui/dialogs/GameInstallDialog.vala:31
+#: src/ui/dialogs/GameInstallDialog.vala:131
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
 msgid "Install"
 msgstr "Установить"
 
@@ -119,11 +142,15 @@ msgstr "Установить"
 msgid "Select game installer"
 msgstr "Выберите установочный файл игры"
 
-#: src/ui/dialogs/GameInstallDialog.vala:121
+#: src/ui/dialogs/GameInstallDialog.vala:92
+msgid "Installer size: %s"
+msgstr "Размер установщика: %s"
+
+#: src/ui/dialogs/GameInstallDialog.vala:124
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/ui/dialogs/GameInstallDialog.vala:125
+#: src/ui/dialogs/GameInstallDialog.vala:128
 msgid "Import"
 msgstr "Импортировать"
 
@@ -185,11 +212,11 @@ msgstr "Игры из %s"
 msgid "Downloads"
 msgstr "Загрузки"
 
-#: src/ui/views/GamesView/GamesView.vala:136
+#: src/ui/views/GamesView/GamesView.vala:138
 msgid "Search"
 msgstr "Поиск"
 
-#: src/ui/views/GamesView/GamesView.vala:192
+#: src/ui/views/GamesView/GamesView.vala:194
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
@@ -197,31 +224,31 @@ msgstr[0] "%u игра"
 msgstr[1] "%u игры"
 msgstr[2] "%u игр"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:120
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:122
 msgid "Description"
 msgstr "Описание"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:159
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:163
 msgid "Run"
 msgstr "Запустить"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:160
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:164
 msgid "Open installation directory"
 msgstr "Открыть папку установки"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:161
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:165
 msgid "Open store page"
 msgstr "Открыть страницу в магазине"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:166
 msgid "Uninstall"
 msgstr "Удалить"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:229
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:235
 msgid "Language"
 msgstr "Язык"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:232
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:238
 msgid "Languages"
 msgstr "Языки"
 

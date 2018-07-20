@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-20 17:06+0300\n"
+"POT-Creation-Date: 2018-07-21 01:58+0300\n"
 "PO-Revision-Date: 2018-07-14 22:01+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: \n"
@@ -34,28 +34,28 @@ msgstr "Semua permainan Anda di satu tempat"
 msgid "Manage your Steam, GOG and Humble Bundle games in one place."
 msgstr "Kelola permainan Steam, GOG, dan Humble Bundle Anda di satu tempat."
 
-#: src/data/Game.vala:74
+#: src/data/Game.vala:75
 msgid "Installed"
 msgstr "Terpasang"
 
-#: src/data/Game.vala:75
+#: src/data/Game.vala:76
 msgid "Installing"
 msgstr "Memasang"
 
-#: src/data/Game.vala:76
+#: src/data/Game.vala:77
 msgid "Download started"
 msgstr "Unduhan dimulai"
 
-#: src/data/Game.vala:77
+#: src/data/Game.vala:78
 msgid "Download finished"
 msgstr "Unduhan selesai"
 
-#: src/data/Game.vala:80
+#: src/data/Game.vala:81
 #, c-format
 msgid "Downloading: %d%% (%s / %s)"
 msgstr "Mengunduh: %d%% (%s / %s)"
 
-#: src/data/Game.vala:82
+#: src/data/Game.vala:83
 msgid "Not installed"
 msgstr "Tidak terpasang"
 
@@ -72,7 +72,7 @@ msgstr ""
 "Masuk ke akun Anda di klien Steam dan kembali ke GameHub"
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:141
+#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:143
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -100,18 +100,39 @@ msgstr "Direktori instalasi Steam"
 msgid "GOG games directory"
 msgstr "Direktori permainan GOG"
 
-#: src/ui/dialogs/SettingsDialog.vala:47
+#: src/ui/dialogs/SettingsDialog.vala:43
+msgid "GOG installers cache"
+msgstr "Penginstal cache GOG"
+
+#: src/ui/dialogs/SettingsDialog.vala:48
 msgid "Humble Bundle games directory"
 msgstr "Direktori permainan Humble Bundle"
 
-#: src/ui/dialogs/SettingsDialog.vala:61
+#: src/ui/dialogs/SettingsDialog.vala:49
+msgid "Humble Bundle installers cache"
+msgstr "Penginstal cache Humble Bundle"
+
+#: src/ui/dialogs/SettingsDialog.vala:63
 #: src/ui/dialogs/GameDetailsDialog.vala:31
 msgid "Close"
 msgstr "Tutup"
 
-#: src/ui/dialogs/GameInstallDialog.vala:33
-#: src/ui/dialogs/GameInstallDialog.vala:128
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:158
+#: src/ui/dialogs/SettingsDialog.vala:180
+msgid "Open"
+msgstr "Buka"
+
+#: src/ui/dialogs/SettingsDialog.vala:187
+msgid "Clear"
+msgstr "Bersih"
+
+#: src/ui/dialogs/SettingsDialog.vala:203
+msgid "%llu installer; %s"
+msgid_plural "%llu installers; %s"
+msgstr[0] "%llu pemasang; %s"
+
+#: src/ui/dialogs/GameInstallDialog.vala:31
+#: src/ui/dialogs/GameInstallDialog.vala:131
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
 msgid "Install"
 msgstr "Pasang"
 
@@ -119,11 +140,15 @@ msgstr "Pasang"
 msgid "Select game installer"
 msgstr "Pilih pemasang permainan"
 
-#: src/ui/dialogs/GameInstallDialog.vala:121
+#: src/ui/dialogs/GameInstallDialog.vala:92
+msgid "Installer size: %s"
+msgstr "Ukuran penginstal: %s"
+
+#: src/ui/dialogs/GameInstallDialog.vala:124
 msgid "Cancel"
 msgstr "Batal"
 
-#: src/ui/dialogs/GameInstallDialog.vala:125
+#: src/ui/dialogs/GameInstallDialog.vala:128
 msgid "Import"
 msgstr "Impor"
 
@@ -185,41 +210,41 @@ msgstr "%s permainan"
 msgid "Downloads"
 msgstr "Unduh"
 
-#: src/ui/views/GamesView/GamesView.vala:136
+#: src/ui/views/GamesView/GamesView.vala:138
 msgid "Search"
 msgstr "Cari"
 
-#: src/ui/views/GamesView/GamesView.vala:192
+#: src/ui/views/GamesView/GamesView.vala:194
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u permainan"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:120
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:122
 msgid "Description"
 msgstr "Deskripsi"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:159
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:163
 msgid "Run"
 msgstr "Jalankan"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:160
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:164
 msgid "Open installation directory"
 msgstr "Buka direktori pemasangan"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:161
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:165
 msgid "Open store page"
 msgstr "Buka halaman toko"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:166
 msgid "Uninstall"
 msgstr "Copot pemasangan"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:229
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:235
 msgid "Language"
 msgstr "Bahasa"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:232
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:238
 msgid "Languages"
 msgstr "Bahasa"
 

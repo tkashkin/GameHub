@@ -47,6 +47,7 @@ namespace GameHub.Data
 			public string id { get; protected set; }
 			public string os { get; protected set; }
 			public string file { get; protected set; }
+			public int64 file_size { get; protected set; }
 			
 			public virtual string name { get { return id; } }
 		}

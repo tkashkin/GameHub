@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-20 17:06+0300\n"
+"POT-Creation-Date: 2018-07-21 01:58+0300\n"
 "PO-Revision-Date: 2018-07-13 16:18+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -33,28 +33,28 @@ msgstr "Todos os seus jogos em um só lugar"
 msgid "Manage your Steam, GOG and Humble Bundle games in one place."
 msgstr "Gerencie seus jogos Steam, GOG e Humble Bundle em um só lugar."
 
-#: src/data/Game.vala:74
+#: src/data/Game.vala:75
 msgid "Installed"
 msgstr "Instalado"
 
-#: src/data/Game.vala:75
+#: src/data/Game.vala:76
 msgid "Installing"
 msgstr "Instalando"
 
-#: src/data/Game.vala:76
+#: src/data/Game.vala:77
 msgid "Download started"
 msgstr "Começou a baixar"
 
-#: src/data/Game.vala:77
+#: src/data/Game.vala:78
 msgid "Download finished"
 msgstr "Jogo baixado com sucesso"
 
-#: src/data/Game.vala:80
+#: src/data/Game.vala:81
 #, c-format
 msgid "Downloading: %d%% (%s / %s)"
 msgstr "Baixando: %d%% (%s / %s)"
 
-#: src/data/Game.vala:82
+#: src/data/Game.vala:83
 msgid "Not installed"
 msgstr "Não instalado"
 
@@ -71,7 +71,7 @@ msgstr ""
 "Entre na sua conta no cliente Steam e retorne ao GameHub"
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:141
+#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:143
 msgid "Settings"
 msgstr "Configurações"
 
@@ -81,7 +81,8 @@ msgstr "Use o tema escuro"
 
 #: src/ui/dialogs/SettingsDialog.vala:34
 msgid "Steam API keys have limited number of uses per day"
-msgstr "As chaves da API do Steam têm um número limitado de utilizações por dia"
+msgstr ""
+"As chaves da API do Steam têm um número limitado de utilizações por dia"
 
 #: src/ui/dialogs/SettingsDialog.vala:34
 msgid "Generate key"
@@ -99,18 +100,40 @@ msgstr "Diretório de instalação do Steam"
 msgid "GOG games directory"
 msgstr "Diretório de jogos GOG"
 
-#: src/ui/dialogs/SettingsDialog.vala:47
+#: src/ui/dialogs/SettingsDialog.vala:43
+msgid "GOG installers cache"
+msgstr "Cache de instaladores do GOG"
+
+#: src/ui/dialogs/SettingsDialog.vala:48
 msgid "Humble Bundle games directory"
 msgstr "Diretório de jogos Humble Bundle"
 
-#: src/ui/dialogs/SettingsDialog.vala:61
+#: src/ui/dialogs/SettingsDialog.vala:49
+msgid "Humble Bundle installers cache"
+msgstr "Cache de instaladores do Humble Bundle"
+
+#: src/ui/dialogs/SettingsDialog.vala:63
 #: src/ui/dialogs/GameDetailsDialog.vala:31
 msgid "Close"
 msgstr "Fechar"
 
-#: src/ui/dialogs/GameInstallDialog.vala:33
-#: src/ui/dialogs/GameInstallDialog.vala:128
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:158
+#: src/ui/dialogs/SettingsDialog.vala:180
+msgid "Open"
+msgstr "Abrir"
+
+#: src/ui/dialogs/SettingsDialog.vala:187
+msgid "Clear"
+msgstr "Limpar"
+
+#: src/ui/dialogs/SettingsDialog.vala:203
+msgid "%llu installer; %s"
+msgid_plural "%llu installers; %s"
+msgstr[0] "%llu instalador; %s"
+msgstr[1] "%llu instaladores; %s"
+
+#: src/ui/dialogs/GameInstallDialog.vala:31
+#: src/ui/dialogs/GameInstallDialog.vala:131
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
 msgid "Install"
 msgstr "Instalar"
 
@@ -118,11 +141,15 @@ msgstr "Instalar"
 msgid "Select game installer"
 msgstr "Selecione o instalador do jogo"
 
-#: src/ui/dialogs/GameInstallDialog.vala:121
+#: src/ui/dialogs/GameInstallDialog.vala:92
+msgid "Installer size: %s"
+msgstr "Tamanho do instalador: %s"
+
+#: src/ui/dialogs/GameInstallDialog.vala:124
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/ui/dialogs/GameInstallDialog.vala:125
+#: src/ui/dialogs/GameInstallDialog.vala:128
 msgid "Import"
 msgstr "Importar"
 
@@ -184,42 +211,42 @@ msgstr "%s jogos"
 msgid "Downloads"
 msgstr "Baixado"
 
-#: src/ui/views/GamesView/GamesView.vala:136
+#: src/ui/views/GamesView/GamesView.vala:138
 msgid "Search"
 msgstr "Pesquisar"
 
-#: src/ui/views/GamesView/GamesView.vala:192
+#: src/ui/views/GamesView/GamesView.vala:194
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u jogo"
 msgstr[1] "%u jogos"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:120
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:122
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:159
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:163
 msgid "Run"
 msgstr "Correr"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:160
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:164
 msgid "Open installation directory"
 msgstr "Abra o diretório de instalação"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:161
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:165
 msgid "Open store page"
 msgstr "Abra a página da loja"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:166
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:229
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:235
 msgid "Language"
 msgstr "Língua"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:232
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:238
 msgid "Languages"
 msgstr "Línguas"
 

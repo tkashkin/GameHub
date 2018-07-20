@@ -208,6 +208,7 @@ namespace GameHub.Data.Sources.GOG
 				lang = json.get_string_member("language");
 				lang_full = json.get_string_member("language_full");
 				file = json.get_array_member("files").get_object_element(0).get_string_member("downlink");
+				file_size = json.get_int_member("total_size");
 			}
 		}
 	}

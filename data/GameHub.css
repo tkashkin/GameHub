@@ -116,6 +116,10 @@
 	padding-bottom: 6px;
 	padding-top: 6px;
 }
+.description-header
+{
+	padding-bottom: 0;
+}
 list .h4
 {
 	padding-left: 6px;
@@ -134,4 +138,9 @@ button label
 list:not(:backdrop) row:selected:focus label.category-label
 {
 	color: alpha(#ffffff, 0.8);
+}
+
+list.installers-list
+{
+	background: transparent;
 }

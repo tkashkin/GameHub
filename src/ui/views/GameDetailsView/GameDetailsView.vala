@@ -59,7 +59,7 @@ namespace GameHub.UI.Views
 
 		private Box custom_info;
 
-		private const string CSS_LIGHT = "background: rgb(245, 245, 245); color: black";
+		private const string CSS_LIGHT = "background: rgb(245, 245, 245); color: rgb(66, 66, 66)";
 		private const string CSS_DARK = "background: rgb(59, 63, 69); color: white";
 
 		construct
@@ -83,8 +83,8 @@ namespace GameHub.UI.Views
 			content = new Box(Orientation.VERTICAL, 0);
 			content.margin_start = content.margin_end = 8;
 
-			var title_hbox = new Box(Orientation.HORIZONTAL, 16);
-			title_hbox.margin_start = title_hbox.margin_end = 8;
+			var title_hbox = new Box(Orientation.HORIZONTAL, 15);
+			title_hbox.margin_start = title_hbox.margin_end = 7;
 
 			icon = new AutoSizeImage();
 			icon.set_constraint(48, 48, 1);
@@ -120,11 +120,13 @@ namespace GameHub.UI.Views
 			title_hbox.add(src_icon);
 
 			description_header = new Granite.HeaderLabel(_("Description"));
-			description_header.xpad = 8;
+			description_header.margin_start = description_header.margin_end = 7;
+			description_header.get_style_context().add_class("description-header");
 
 			description = new WebView();
 			description.hexpand = true;
 			description.vexpand = false; //(!is_dialog);
+			description.sensitive = false;
 			description.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
 
 			custom_info = new Box(Orientation.VERTICAL, 0);
@@ -135,7 +137,7 @@ namespace GameHub.UI.Views
 			ui_settings.notify["dark-theme"].connect(() => {
 				description.user_content_manager.remove_all_style_sheets();
 				var style = ui_settings.dark_theme ? CSS_DARK : CSS_LIGHT;
-				description.user_content_manager.add_style_sheet(new UserStyleSheet(@"body{overflow: hidden; font-size: 0.8em; line-height: 1.4; $(style)} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
+				description.user_content_manager.add_style_sheet(new UserStyleSheet(@"body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; $(style)} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
 			});
 			ui_settings.notify_property("dark-theme");
 

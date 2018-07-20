@@ -56,6 +56,7 @@ namespace GameHub.UI.Dialogs
 
 			title_hbox.add(icon);
 			title_hbox.add(title_vbox);
+			title_vbox.add(subtitle_label);
 
 			content.add(title_hbox);
 
@@ -63,7 +64,8 @@ namespace GameHub.UI.Dialogs
 			Utils.load_image.begin(icon, game.icon, "icon");
 			
 			installers_list = new ListBox();
-			installers_list.margin_start = 64;
+			installers_list.get_style_context().add_class("installers-list");
+			installers_list.margin_start = 56;
 			installers_list.margin_top = 8;
 			installers_list.margin_bottom = 8;
 			
@@ -83,8 +85,11 @@ namespace GameHub.UI.Dialogs
 			if(installers.size > 1)
 			{
 				subtitle_label.label = _("Select game installer");
-				title_vbox.add(subtitle_label);
 				content.add(installers_list);
+			}
+			else
+			{
+				subtitle_label.label = _("Installer size: %s").printf(format_size(installers[0].file_size));
 			}
 			
 			destroy.connect(() => { if(!is_finished) canceled(); });
@@ -140,10 +145,19 @@ namespace GameHub.UI.Dialogs
 			{
 				this.installer = installer;
 				
-				var label = new Label(installer.name);
-				label.xpad = 16;
-				label.ypad = 4;
-				child = label;
+				var box = new Box(Orientation.HORIZONTAL, 0);
+				box.margin_start = box.margin_end = box.margin_end = 8;
+				box.margin_top = box.margin_bottom = 4;
+
+				var name = new Label(installer.name);
+				name.hexpand = true;
+				name.halign = Align.START;
+
+				var size = new Label(format_size(installer.file_size));
+				size.halign = Align.END;
+				box.add(name);
+				box.add(size);
+				child = box;
 			}
 		}
 	}
