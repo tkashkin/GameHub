@@ -167,26 +167,12 @@ namespace GameHub.UI.Views
 
 			games_grid.set_filter_func(child => {
 				var item = child as GameCard;
-				var f = filter.selected;
-
-				GameSource? src = null;
-				if(f > 0) src = sources[f - 1];
-
-				var games = src == null ? games_grid.get_children().length() : src.games_count;
-				titlebar.title = "GameHub" + (src == null ? "" : "/" + src.name);
-				titlebar.subtitle = ngettext("%u game", "%u games", games).printf(games);
-
-				return (src == null || item == null || src == item.game.source) && (item == null || search.text.casefold() in item.game.name.casefold());
+				return games_filter(item.game);
 			});
 
 			games_list.set_filter_func(row => {
 				var item = row as GameListRow;
-				var f = filter.selected;
-
-				GameSource? src = null;
-				if(f > 0) src = sources[f - 1];
-
-				return (src == null || item == null || src == item.game.source) && (item == null || search.text.casefold() in item.game.name.casefold());
+				return games_filter(item.game);
 			});
 
 			games_list.row_selected.connect(row => {
@@ -197,10 +183,20 @@ namespace GameHub.UI.Views
 			filter.mode_changed.connect(() => {
 				games_grid.invalidate_filter();
 				games_list.invalidate_filter();
+
+				var f = filter.selected;
+				GameSource? src = null;
+				if(f > 0) src = sources[f - 1];
+				var games = src == null ? games_grid.get_children().length() : src.games_count;
+				titlebar.title = "GameHub" + (src == null ? "" : "/" + src.name);
+				titlebar.subtitle = ngettext("%u game", "%u games", games).printf(games);
+
+				Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
 			});
 			search.search_changed.connect(() => {
 				games_grid.invalidate_filter();
 				games_list.invalidate_filter();
+				Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
 			});
 
 			spinner = new Spinner();
@@ -262,6 +258,23 @@ namespace GameHub.UI.Views
 			var image = new Image.from_icon_name(icon + "-symbolic", IconSize.MENU);
 			image.tooltip_text = tooltip;
 			filter.append(image);
+		}
+
+		private bool games_filter(Game game)
+		{
+			var f = filter.selected;
+			GameSource? src = null;
+			if(f > 0) src = sources[f - 1];
+			return (src == null || game == null || src == game.source) && search.text.casefold() in game.name.casefold();
+		}
+
+		private void games_list_select_first_visible_row()
+		{
+			var row = games_list.get_selected_row() as GameListRow?;
+			if(row == null || games_filter(row.game)) return;
+
+			row = games_list.get_row_at_y(1) as GameListRow?;
+			games_list.select_row(row);
 		}
 	}
 }

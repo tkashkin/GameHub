@@ -108,15 +108,18 @@ namespace GameHub.Utils
 			return null;
 		}
 		
+		public static void rm(string path, string file="", string flags="-f")
+		{
+			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file)});
+		}
+
 		public static void make_dirs()
 		{
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Images);
 			
-			var cache = FSUtils.expand(FSUtils.Paths.GOG.Installers, "{*~,.goutputstream-*}");
-			Utils.run({"bash", "-c", @"'rm $(cache)'"});
-			cache = FSUtils.expand(FSUtils.Paths.Humble.Installers, "{*~,.goutputstream-*}");
-			Utils.run({"bash", "-c", @"'rm $(cache)'"});
+			FSUtils.rm(FSUtils.Paths.GOG.Installers, "{*~,.goutputstream-*}");
+			FSUtils.rm(FSUtils.Paths.Humble.Installers, "{*~,.goutputstream-*}");
 		}
 	}
 }

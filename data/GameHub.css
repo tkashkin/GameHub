@@ -92,3 +92,46 @@
 	margin-bottom: 0;
 	opacity: 1;
 }
+
+/* Some granite styles */
+.h1
+{
+	font-size: 24pt;
+}
+.h2
+{
+	font-weight: 300;
+	font-size: 18pt;
+}
+.h3
+{
+	font-size: 11pt;
+}
+.h4, .category-label
+{
+	font-weight: bold;
+}
+.h4, .gameinfo-singleline-value
+{
+	padding-bottom: 6px;
+	padding-top: 6px;
+}
+list .h4
+{
+	padding-left: 6px;
+}
+button label
+{
+	padding: 0 6px;
+}
+.card
+{
+	border: none;
+	border-color: transparent;
+	box-shadow: 0 0 0 1px alpha (#000, 0.05), 0 3px 3px alpha (#000, 0.22);
+	border-radius: 4px;
+}
+list:not(:backdrop) row:selected:focus label.category-label
+{
+	color: alpha(#ffffff, 0.8);
+}

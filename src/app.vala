@@ -24,11 +24,13 @@ namespace GameHub
 		{
 			weak IconTheme default_theme = IconTheme.get_default();
 			default_theme.add_resource_path("/com/github/tkashkin/gamehub/icons");
-			
+
 			var provider = new CssProvider();
 			provider.load_from_resource("/com/github/tkashkin/gamehub/GameHub.css");
 			StyleContext.add_provider_for_screen(Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-			
+
+			info("Distro: %s", Utils.get_distro());
+
 			new GameHub.UI.Windows.MainWindow(this).show_all();
 		}
 
@@ -42,13 +44,13 @@ namespace GameHub
 			Intl.bindtextdomain(ProjectConfig.GETTEXT_PACKAGE, ProjectConfig.DATADIR + "/locale");
 			Intl.bind_textdomain_codeset(ProjectConfig.GETTEXT_PACKAGE, "UTF-8");
 			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);
-			
+
 			FSUtils.make_dirs();
 			
 			GamesDB.init();
 			
 			GameSources = { new Steam(), new GOG(), new Humble() };
-			
+
 			var app = new Application();
 			return app.run(args);
 		}

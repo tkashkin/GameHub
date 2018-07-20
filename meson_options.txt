@@ -1,3 +1,5 @@
+option('distro', type: 'combo', choices: ['generic', 'debian', 'arch'], value: 'debian')
+
 option('flatpak', type: 'boolean', value: false)
 option('runtime', type: 'string', value: '')
 

@@ -12,7 +12,7 @@ namespace GameHub.UI.Dialogs
 		{
 			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Settings"));
 			
-			set_modal(true);
+			modal = true;
 			
 			var content = get_content_area();
 			content.set_size_request(480, -1);

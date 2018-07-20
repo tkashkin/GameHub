@@ -80,6 +80,12 @@ namespace GameHub.Data.Sources.GOG
 			description = root.get_object_member("description").get_string_member("full");
 			store_page = root.get_object_member("links").get_string_member("product_card");
 
+			var cool = root.get_object_member("description").get_string_member("whats_cool_about_it");
+			if(cool != null && cool.length > 0)
+			{
+				description += "<ul><li>" + cool.replace("\n", "</li><li>") + "</li></ul>";
+			}
+
 			GamesDB.get_instance().add_game(this);
 
 			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
@@ -152,7 +158,16 @@ namespace GameHub.Data.Sources.GOG
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				yield Utils.run_async({path}, null, true, false);
+				yield Utils.run_thread({path}, null, true);
+			}
+		}
+
+		public override async void uninstall()
+		{
+			if(is_installed())
+			{
+				yield Utils.run_async({"sh", "-c", FSUtils.expand(install_dir.get_path(), "uninstall-*.sh")}, null, true);
+				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			}
 		}
 		

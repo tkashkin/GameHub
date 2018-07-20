@@ -24,6 +24,7 @@ namespace GameHub.Data
 		
 		public abstract async void install(Utils.DownloadProgress progress = (d, t) => {});
 		public abstract async void run();
+		public abstract async void uninstall();
 		
 		public virtual async void update_game_info(){}
 

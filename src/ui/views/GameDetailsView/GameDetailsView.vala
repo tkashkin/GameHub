@@ -52,6 +52,7 @@ namespace GameHub.UI.Views
 		private ActionButton action_run;
 		private ActionButton action_open_directory;
 		private ActionButton action_open_store_page;
+		private ActionButton action_uninstall;
 
 		private Granite.HeaderLabel description_header;
 		private WebView description;
@@ -63,10 +64,8 @@ namespace GameHub.UI.Views
 
 		construct
 		{
-			is_dialog = !(get_toplevel() is GameHub.UI.Windows.MainWindow);
-
 			stack = new Stack();
-			stack.transition_type = StackTransitionType.CROSSFADE;
+			stack.transition_type = StackTransitionType.NONE;
 			stack.vexpand = true;
 
 			spinner = new Spinner();
@@ -134,11 +133,11 @@ namespace GameHub.UI.Views
 			ui_settings.notify["dark-theme"].connect(() => {
 				description.user_content_manager.remove_all_style_sheets();
 				var style = ui_settings.dark_theme ? CSS_DARK : CSS_LIGHT;
-				description.user_content_manager.add_style_sheet(new UserStyleSheet(@"body{overflow: hidden; font-size: 0.8em; $(style)}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
+				description.user_content_manager.add_style_sheet(new UserStyleSheet(@"body{overflow: hidden; font-size: 0.8em; line-height: 1.4; $(style)} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
 			});
 			ui_settings.notify_property("dark-theme");
 
-			actions = new Box(Orientation.VERTICAL, 0);
+			actions = new Box(Orientation.HORIZONTAL, 0);
 			actions.margin_top = actions.margin_bottom = 16;
 
 			content.add(title_hbox);
@@ -156,15 +155,18 @@ namespace GameHub.UI.Views
 
 			add(stack);
 
-			action_install = add_action("go-down", _("Install"), install_game);
-			action_run = add_action("media-playback-start", _("Run"), run_game);
+			action_install = add_action("go-down", _("Install"), install_game, true);
+			action_run = add_action("media-playback-start", _("Run"), run_game, true);
 			action_open_directory = add_action("folder", _("Open installation directory"), open_game_directory);
 			action_open_store_page = add_action("web-browser", _("Open store page"), open_game_store_page);
+			action_uninstall = add_action("edit-delete", _("Uninstall"), uninstall_game);
 		}
 
 		private async void update_game()
 		{
 			is_dialog = !(get_toplevel() is GameHub.UI.Windows.MainWindow);
+
+			content_scrolled.max_content_height = is_dialog ? 640 : -1;
 
 			stack.set_visible_child(spinner);
 
@@ -199,10 +201,12 @@ namespace GameHub.UI.Views
 					download_progress.show();
 					download_progress.fraction = (double) s.dl_bytes / s.dl_bytes_total;
 				}
-				action_install.visible = s.state == Game.State.UNINSTALLED;
+				action_install.visible = s.state != Game.State.INSTALLED;
+				action_install.sensitive = s.state == Game.State.UNINSTALLED;
 				action_run.visible = s.state == Game.State.INSTALLED;
 				action_open_directory.visible = s.state == Game.State.INSTALLED;
 				action_open_store_page.visible = _game.store_page != null;
+				action_uninstall.visible = s.state == Game.State.INSTALLED;
 			});
 			_game.status_change(_game.status);
 
@@ -211,25 +215,24 @@ namespace GameHub.UI.Views
 			{
 				var root = Parser.parse_json(_game.custom_info).get_object();
 
-
 				var sys_langs = Intl.get_language_names();
 				var langs = root.get_object_member("languages");
 				if(langs != null)
 				{
 					var langs_string = "";
-
 					foreach(var l in langs.get_members())
 					{
 						var lang = langs.get_string_member(l);
 						if(l in sys_langs) lang = @"<b>$(lang)</b>";
 						langs_string += (langs_string.length > 0 ? ", " : "") + lang;
 					}
-
-					add_custom_info_label(_("Languages"), langs_string, false, true);
+					var langs_label = _("Language");
+					if(langs_string.contains(","))
+					{
+						langs_label = _("Languages");
+					}
+					add_custom_info_label(langs_label, langs_string, false, true);
 				}
-
-				var cool = "• " + root.get_object_member("description").get_string_member("whats_cool_about_it").replace("\n", "\n• ");
-				add_custom_info_label(_("What's cool about it?"), cool);
 
 				custom_info.show_all();
 			}
@@ -272,10 +275,19 @@ namespace GameHub.UI.Views
 			}
 		}
 
-		private delegate void Action();
-		private ActionButton add_action(string icon, string title, Action action)
+		private void uninstall_game()
 		{
-			var button = new ActionButton(new Image.from_icon_name(icon, IconSize.DIALOG), title);
+			if(_game != null && _game.status.state == Game.State.INSTALLED)
+			{
+				_game.uninstall.begin();
+			}
+		}
+
+		private delegate void Action();
+		private ActionButton add_action(string icon, string title, Action action, bool primary=false)
+		{
+			var button = new ActionButton(new Image.from_icon_name(icon, IconSize.DIALOG), title, primary);
+			button.hexpand = primary;
 			actions.add(button);
 			button.clicked.connect(() => action());
 			return button;
@@ -296,6 +308,11 @@ namespace GameHub.UI.Views
 			text_label.xalign = 0;
 			text_label.max_width_chars = is_dialog ? 80 : -1;
 			text_label.use_markup = markup;
+
+			if(!multiline)
+			{
+				text_label.get_style_context().add_class("gameinfo-singleline-value");
+			}
 
 			var box = new Box(multiline ? Orientation.VERTICAL : Orientation.HORIZONTAL, 0);
 			box.add(title_label);

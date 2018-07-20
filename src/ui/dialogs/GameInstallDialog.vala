@@ -2,6 +2,7 @@ using Gtk;
 using GLib;
 using Gee;
 using GameHub.Utils;
+using GameHub.UI.Widgets;
 
 using GameHub.Data;
 using GameHub.Data.Sources.GOG;
@@ -9,7 +10,7 @@ using GameHub.Data.Sources.Humble;
 
 namespace GameHub.UI.Dialogs
 {
-	public class GameInstallDialog: Granite.MessageDialog
+	public class GameInstallDialog: Dialog
 	{
 		private const int RESPONSE_IMPORT = 123;
 
@@ -17,6 +18,12 @@ namespace GameHub.UI.Dialogs
 		public signal void install(Game.Installer installer);
 		public signal void canceled();
 		
+		private Box content;
+		private Box actions;
+		private Label title_label;
+		private Label subtitle_label;
+		private AutoSizeImage icon;
+
 		private ListBox installers_list;
 		
 		private bool is_finished = false;
@@ -25,28 +32,42 @@ namespace GameHub.UI.Dialogs
 		{
 			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Install"));
 			
-			set_modal(true);
-			
-			try
-			{
-				image_icon = Icon.new_for_string("go-down");
+			modal = true;
 
-				if(game.icon != null && game.icon.length > 0)
-				{
-					Utils.cache_image.begin(game.icon, "icon", (obj, res) => {
-						var cached = Utils.cache_image.end(res);
-						if(cached != null) image_icon = new FileIcon(File.new_for_uri(cached));
-					});
-				}
-			}
-			catch(Error e)
-			{
-				warning(e.message);
-			}
+			content = new Box(Orientation.VERTICAL, 0);
+			content.margin_start = content.margin_end = 8;
 
-			primary_text = game.name;
+			var title_hbox = new Box(Orientation.HORIZONTAL, 16);
+
+			var icon = new AutoSizeImage();
+			icon.set_constraint(48, 48, 1);
+			icon.set_size_request(48, 48);
+
+			title_label = new Label(null);
+			title_label.halign = Align.START;
+			title_label.hexpand = true;
+			title_label.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
+
+			subtitle_label = new Label(null);
+			subtitle_label.halign = Align.START;
+			subtitle_label.hexpand = true;
+
+			var title_vbox = new Box(Orientation.VERTICAL, 0);
+
+			title_vbox.add(title_label);
+
+			title_hbox.add(icon);
+			title_hbox.add(title_vbox);
+
+			content.add(title_hbox);
+
+			title_label.label = game.name;
+			Utils.load_image.begin(icon, game.icon, "icon");
 			
 			installers_list = new ListBox();
+			installers_list.margin_start = 64;
+			installers_list.margin_top = 8;
+			installers_list.margin_bottom = 8;
 			
 			var sys_langs = Intl.get_language_names();
 			
@@ -63,9 +84,9 @@ namespace GameHub.UI.Dialogs
 			
 			if(installers.size > 1)
 			{
-				secondary_text = _("Select game installer");
-				custom_bin.hexpand = true;
-				custom_bin.child = installers_list;
+				subtitle_label.label = _("Select game installer");
+				title_vbox.add(subtitle_label);
+				content.add(installers_list);
 			}
 			
 			destroy.connect(() => { if(!is_finished) canceled(); });
@@ -107,7 +128,9 @@ namespace GameHub.UI.Dialogs
 			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
 			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
 			install_btn.grab_default();
-			
+
+			get_content_area().add(content);
+			get_content_area().set_size_request(340, 96);
 			show_all();
 		}
 		

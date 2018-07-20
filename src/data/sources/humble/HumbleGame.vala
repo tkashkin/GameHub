@@ -178,6 +178,28 @@ namespace GameHub.Data.Sources.Humble
 						Utils.run_async.begin(cmd, null, false, true, (obj, res) => {
 							Utils.run_async.end(res);
 							Utils.run({"chmod", "-R", "+x", install_dir.get_path()});
+
+							string? dirname = null;
+							FileInfo? finfo = null;
+							var enumerator = install_dir.enumerate_children("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+							while((finfo = enumerator.next_file()) != null)
+							{
+								if(dirname == null)
+								{
+									dirname = finfo.get_name();
+								}
+								else
+								{
+									dirname = null;
+								}
+							}
+
+							if(dirname != null)
+							{
+								Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, install_dir.get_path());
+								FSUtils.rm(install_dir.get_path(), dirname, "-rf");
+							}
+
 							choose_executable();
 							Idle.add(install.callback);
 						});
@@ -241,7 +263,16 @@ namespace GameHub.Data.Sources.Humble
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				yield Utils.run_async({path}, null, true, false);
+				yield Utils.run_thread({path}, null, true);
+			}
+		}
+
+		public override async void uninstall()
+		{
+			if(is_installed())
+			{
+				FSUtils.rm(install_dir.get_path(), "", "-rf");
+				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			}
 		}
 		

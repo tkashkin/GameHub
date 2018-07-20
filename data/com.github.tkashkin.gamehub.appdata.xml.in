@@ -41,6 +41,13 @@
 	</screenshots>
 	
 	<releases>
+		<release type="development" version="0.5.5" date="2018-07-20">
+			<description>
+				<p>Bugfixes</p>
+				<p>Design changes</p>
+				<p>Compatibility</p>
+			</description>
+		</release>
 		<release type="development" version="0.5.4" date="2018-07-16">
 			<description>
 				<p>Icon fixes</p>

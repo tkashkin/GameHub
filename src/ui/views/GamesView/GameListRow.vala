@@ -22,6 +22,7 @@ namespace GameHub.UI.Views
 			var hbox = new Box(Orientation.HORIZONTAL, 8);
 			hbox.margin = 4;
 			var vbox = new Box(Orientation.VERTICAL, 0);
+			vbox.valign = Align.CENTER;
 
 			image = new AutoSizeImage();
 			image.set_constraint(36, 36, 1);

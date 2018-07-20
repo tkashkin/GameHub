@@ -9,6 +9,12 @@ if get_option('flatpak')
 	add_global_arguments('-D', 'FLATPAK', language: 'vala')
 endif
 
+if get_option('distro') == 'debian'
+	add_global_arguments('-D', 'DISTRO_DEBIAN', '-D', 'PM_APT', language: 'vala')
+elif get_option('distro') == 'arch'
+	add_global_arguments('-D', 'DISTRO_ARCH', '-D', 'PM_PACMAN', language: 'vala')
+endif
+
 subdir('data')
 subdir('src')
 subdir('po')
