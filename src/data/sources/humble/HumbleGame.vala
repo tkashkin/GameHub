@@ -179,26 +179,30 @@ namespace GameHub.Data.Sources.Humble
 							Utils.run_async.end(res);
 							Utils.run({"chmod", "-R", "+x", install_dir.get_path()});
 
-							string? dirname = null;
-							FileInfo? finfo = null;
-							var enumerator = install_dir.enumerate_children("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
-							while((finfo = enumerator.next_file()) != null)
+							try
 							{
-								if(dirname == null)
+								string? dirname = null;
+								FileInfo? finfo = null;
+								var enumerator = install_dir.enumerate_children("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+								while((finfo = enumerator.next_file()) != null)
 								{
-									dirname = finfo.get_name();
+									if(dirname == null)
+									{
+										dirname = finfo.get_name();
+									}
+									else
+									{
+										dirname = null;
+									}
 								}
-								else
-								{
-									dirname = null;
-								}
-							}
 
-							if(dirname != null)
-							{
-								Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, install_dir.get_path());
-								FSUtils.rm(install_dir.get_path(), dirname, "-rf");
+								if(dirname != null)
+								{
+									Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, install_dir.get_path());
+									FSUtils.rm(install_dir.get_path(), dirname, "-rf");
+								}
 							}
+							catch(Error e){}
 
 							choose_executable();
 							Idle.add(install.callback);

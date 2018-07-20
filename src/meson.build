@@ -13,7 +13,6 @@ project_config = configure_file(
 
 deps = [
 	dependency('granite'),
-	dependency('gtk+-3.0'),
 	dependency('gdk-3.0'),
 	dependency('webkit2gtk-4.0'),
 	dependency('glib-2.0'),
@@ -22,6 +21,14 @@ deps = [
 	dependency('libsoup-2.4'),
 	dependency('sqlite3')
 ]
+
+gtk322 = dependency('gtk+-3.0', version: '>=3.22', required: false)
+if gtk322.found()
+	add_global_arguments('-D', 'GTK_3_22', language: 'vala')
+	deps += gtk322
+else
+	deps += dependency('gtk+-3.0')
+endif
 
 if get_option('use_ivy')
 	add_global_arguments('-g', '-X', '-rdynamic', '-D', 'USE_IVY', language: 'vala')

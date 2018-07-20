@@ -10,6 +10,8 @@ namespace GameHub.Data.Sources.GOG
 		private const string CLIENT_SECRET = "9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9";
 		private const string REDIRECT = "https%3A%2F%2Fembed.gog.com%2Fon_login_success%3Forigin%3Dclient";
 		
+		private const string[] GAMES_BLACKLIST = {"1424856371" /* Hotline Miami 2: Wrong Number - Digital Comics */};
+
 		public override string name { get { return "GOG"; } }
 		public override string icon { get { return "gog"; } }
 
@@ -164,12 +166,15 @@ namespace GameHub.Data.Sources.GOG
 			var cached = GamesDB.get_instance().get_games(this);
 			if(cached.size > 0)
 			{
-				games = cached;
 				if(game_loaded != null)
 				{
 					foreach(var g in cached)
 					{
-						game_loaded(g);
+						if(!(g.id in GAMES_BLACKLIST))
+						{
+							games.add(g);
+							game_loaded(g);
+						}
 					}
 				}
 			}
@@ -193,7 +198,7 @@ namespace GameHub.Data.Sources.GOG
 				foreach(var g in products.get_elements())
 				{
 					var game = new GOGGame(this, g.get_object());
-					if(!games.contains(game) && yield game.is_for_linux())
+					if(!(game.id in GAMES_BLACKLIST) && !games.contains(game) && yield game.is_for_linux())
 					{
 						games.add(game);
 						if(game_loaded != null) game_loaded(game);

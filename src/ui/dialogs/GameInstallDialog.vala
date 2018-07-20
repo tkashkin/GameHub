@@ -19,10 +19,8 @@ namespace GameHub.UI.Dialogs
 		public signal void canceled();
 		
 		private Box content;
-		private Box actions;
 		private Label title_label;
 		private Label subtitle_label;
-		private AutoSizeImage icon;
 
 		private ListBox installers_list;
 		

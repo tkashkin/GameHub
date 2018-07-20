@@ -1,10 +1,17 @@
+com.github.tkashkin.gamehub (0.5.6) xenial; urgency=low
+
+  * Fix crash for GOG "games" like Hotline Miami 2 Digital Comics
+  * Fix building with GTK+3 < 3.22
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 20 Jul 2018 19:01:45 +0300
+
 com.github.tkashkin.gamehub (0.5.5) xenial; urgency=low
 
   * Bugfixes
   * Design changes
   * Compatibility
 
- -- tkashkin <tkashkin@gmail.com>  Mon, 16 Jul 2018 05:52:48 +0300
+ -- tkashkin <tkashkin@gmail.com>  Fri, 20 Jul 2018 17:15:34 +0300
 
 com.github.tkashkin.gamehub (0.5.4) xenial; urgency=low
 

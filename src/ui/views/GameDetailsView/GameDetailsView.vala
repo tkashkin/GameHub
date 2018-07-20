@@ -75,8 +75,10 @@ namespace GameHub.UI.Views
 			spinner.valign = Align.CENTER;
 
 			content_scrolled = new ScrolledWindow(null, null);
+			#if GTK_3_22
 			content_scrolled.propagate_natural_width = true;
 			content_scrolled.propagate_natural_height = true;
+			#endif
 
 			content = new Box(Orientation.VERTICAL, 0);
 			content.margin_start = content.margin_end = 8;
@@ -166,7 +168,9 @@ namespace GameHub.UI.Views
 		{
 			is_dialog = !(get_toplevel() is GameHub.UI.Windows.MainWindow);
 
+			#if GTK_3_22
 			content_scrolled.max_content_height = is_dialog ? 640 : -1;
+			#endif
 
 			stack.set_visible_child(spinner);
 
