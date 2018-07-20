@@ -175,21 +175,34 @@ namespace GameHub.Data.Sources.GOG
 			}
 			games_count = games.size;
 			
-			var url = @"https://embed.gog.com/account/getFilteredProducts?mediaType=1";
-			var root = (yield Parser.parse_remote_json_file_async(url, "GET", user_token)).get_object();
+			var page = 1;
+			var pages = 1;
 			
-			var products = root.get_array_member("products");
-			
-			foreach(var g in products.get_elements())
+			while(page <= pages)
 			{
-				var game = new GOGGame(this, g.get_object());
-				if(!games.contains(game) && yield game.is_for_linux())
+				var url = @"https://embed.gog.com/account/getFilteredProducts?mediaType=1&page=$(page)";
+				var root = (yield Parser.parse_remote_json_file_async(url, "GET", user_token)).get_object();
+
+				page = (int) root.get_int_member("page");
+				pages = (int) root.get_int_member("totalPages");
+
+				debug("[GOG] Loading games: page %d of %d", page, pages);
+
+				var products = root.get_array_member("products");
+
+				foreach(var g in products.get_elements())
 				{
-					games.add(game);
-					if(game_loaded != null) game_loaded(game);
-					GamesDB.get_instance().add_game(game);
+					var game = new GOGGame(this, g.get_object());
+					if(!games.contains(game) && yield game.is_for_linux())
+					{
+						games.add(game);
+						if(game_loaded != null) game_loaded(game);
+						GamesDB.get_instance().add_game(game);
+					}
+					games_count = games.size;
 				}
-				games_count = games.size;
+
+				page++;
 			}
 			
 			return games;
