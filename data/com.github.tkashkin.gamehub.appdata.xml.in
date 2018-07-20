@@ -41,6 +41,12 @@
 	</screenshots>
 	
 	<releases>
+		<release type="development" version="0.5.6" date="2018-07-20">
+			<description>
+				<p>Fix crash for GOG "games" like Hotline Miami 2: Wrong Number - Digital Comics</p>
+				<p>Fix building with GTK+3 &lt; 3.22</p>
+			</description>
+		</release>
 		<release type="development" version="0.5.5" date="2018-07-20">
 			<description>
 				<p>Bugfixes</p>

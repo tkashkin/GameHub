@@ -120,9 +120,11 @@ namespace GameHub.UI.Views
 			downloads_list = new ListBox();
 
 			var downloads_scrolled = new ScrolledWindow(null, null);
+			#if GTK_3_22
 			downloads_scrolled.propagate_natural_width = true;
 			downloads_scrolled.propagate_natural_height = true;
 			downloads_scrolled.max_content_height = 440;
+			#endif
 			downloads_scrolled.add(downloads_list);
 			downloads_scrolled.show_all();
 

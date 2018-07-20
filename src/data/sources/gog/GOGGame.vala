@@ -75,15 +75,32 @@ namespace GameHub.Data.Sources.GOG
 				_product_info_updated = true;
 			}
 
-			var root = Parser.parse_json(custom_info).get_object();
-			icon = "https:" + root.get_object_member("images").get_string_member("icon");
-			description = root.get_object_member("description").get_string_member("full");
-			store_page = root.get_object_member("links").get_string_member("product_card");
+			var root = Parser.parse_json(custom_info);
 
-			var cool = root.get_object_member("description").get_string_member("whats_cool_about_it");
-			if(cool != null && cool.length > 0)
+			var images = Parser.json_object(root, {"images"});
+			var desc = Parser.json_object(root, {"description"});
+			var links = Parser.json_object(root, {"links"});
+
+			if(images != null)
 			{
-				description += "<ul><li>" + cool.replace("\n", "</li><li>") + "</li></ul>";
+				icon = images.get_string_member("icon");
+				if(icon != null) icon = "https:" + icon;
+				else icon = image;
+			}
+
+			if(desc != null)
+			{
+				description = desc.get_string_member("full");
+				var cool = desc.get_string_member("whats_cool_about_it");
+				if(cool != null && cool.length > 0)
+				{
+					description += "<ul><li>" + cool.replace("\n", "</li><li>") + "</li></ul>";
+				}
+			}
+
+			if(links != null)
+			{
+				store_page = links.get_string_member("product_card");
 			}
 
 			GamesDB.get_instance().add_game(this);
@@ -95,10 +112,16 @@ namespace GameHub.Data.Sources.GOG
 		{
 			yield update_game_info();
 
-			var root = Parser.parse_json(custom_info).get_object();
+			var root = Parser.parse_json(custom_info);
+
+			var downloads = Parser.json_object(root, {"downloads"});
+
+			if(downloads == null) return;
 			
-			var installers_json = root.get_object_member("downloads").get_array_member("installers");
+			var installers_json = downloads.get_array_member("installers");
 			
+			if(installers_json == null) return;
+
 			var installers = new ArrayList<Game.Installer>();
 			
 			foreach(var installer_json in installers_json.get_elements())
@@ -112,8 +135,8 @@ namespace GameHub.Data.Sources.GOG
 			wnd.canceled.connect(() => Idle.add(install.callback));
 			
 			wnd.install.connect(installer => {
-				root = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token).get_object();
-				var link = root.get_string_member("downlink");
+				root = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token);
+				var link = root.get_object().get_string_member("downlink");
 				var local = FSUtils.expand(FSUtils.Paths.GOG.Installers, "gog_" + id + "_" + installer.id + ".sh");
 				
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
