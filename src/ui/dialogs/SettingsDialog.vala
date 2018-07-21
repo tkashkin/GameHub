@@ -46,8 +46,8 @@ namespace GameHub.UI.Dialogs
 			add_header_with_checkbox("Humble Bundle", humble_auth.enabled, v => { humble_auth.enabled = v; });
 			#if !FLATPAK
 			add_file_chooser(_("Humble Bundle games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; });
-			add_cache_directory(_("Humble Bundle installers cache"), FSUtils.Paths.Humble.Installers);
 			#endif
+			add_cache_directory(_("Humble Bundle installers cache"), FSUtils.Paths.Humble.Installers);
 			
 			content.pack_start(box, false, false, 0);
 			
