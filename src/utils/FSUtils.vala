@@ -118,8 +118,8 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Images);
 			
-			FSUtils.rm(FSUtils.Paths.GOG.Installers, "{*~,.goutputstream-*}");
-			FSUtils.rm(FSUtils.Paths.Humble.Installers, "{*~,.goutputstream-*}");
+			FSUtils.rm(FSUtils.Paths.GOG.Installers, ".goutputstream-*");
+			FSUtils.rm(FSUtils.Paths.Humble.Installers, ".goutputstream-*");
 		}
 	}
 }

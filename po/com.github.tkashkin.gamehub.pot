@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-21 01:58+0300\n"
+"POT-Creation-Date: 2018-07-22 17:49+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,21 +42,28 @@ msgstr ""
 msgid "Installing"
 msgstr ""
 
-#: src/data/Game.vala:77
+#: src/data/Game.vala:77 src/utils/downloader/Downloader.vala:137
 msgid "Download started"
 msgstr ""
 
-#: src/data/Game.vala:78
-msgid "Download finished"
-msgstr ""
-
-#: src/data/Game.vala:81
-#, c-format
-msgid "Downloading: %d%% (%s / %s)"
-msgstr ""
-
-#: src/data/Game.vala:83
+#: src/data/Game.vala:79
 msgid "Not installed"
+msgstr ""
+
+#: src/data/Game.vala:89
+msgid "Installed:"
+msgstr ""
+
+#: src/data/Game.vala:90
+msgid "Installing:"
+msgstr ""
+
+#: src/data/Game.vala:91
+msgid "Downloading:"
+msgstr ""
+
+#: src/data/Game.vala:93
+msgid "Not installed:"
 msgstr ""
 
 #: src/data/sources/steam/Steam.vala:17
@@ -70,7 +77,8 @@ msgid ""
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:143
+#: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:158
+#: src/ui/views/GamesView/GamesView.vala:355
 msgid "Settings"
 msgstr ""
 
@@ -84,10 +92,6 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog.vala:34
 msgid "Generate key"
-msgstr ""
-
-#: src/ui/dialogs/SettingsDialog.vala:35
-msgid "Steam API key"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog.vala:36
@@ -106,7 +110,7 @@ msgstr ""
 msgid "Humble Bundle games directory"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:49
+#: src/ui/dialogs/SettingsDialog.vala:50
 msgid "Humble Bundle installers cache"
 msgstr ""
 
@@ -115,15 +119,27 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:180
+#: src/ui/dialogs/SettingsDialog.vala:106
+msgid "Default"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog.vala:114
+msgid "Restore default API key"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog.vala:125
+msgid "Steam API key"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog.vala:215
 msgid "Open"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:187
+#: src/ui/dialogs/SettingsDialog.vala:222
 msgid "Clear"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog.vala:203
+#: src/ui/dialogs/SettingsDialog.vala:238
 #, c-format
 msgid "%llu installer; %s"
 msgid_plural "%llu installers; %s"
@@ -132,7 +148,7 @@ msgstr[1] ""
 
 #: src/ui/dialogs/GameInstallDialog.vala:31
 #: src/ui/dialogs/GameInstallDialog.vala:131
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:202
 msgid "Install"
 msgstr ""
 
@@ -169,83 +185,155 @@ msgstr ""
 msgid "Skip"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:115
+#: src/ui/views/WelcomeView.vala:116
 msgid "Ready"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:121
+#: src/ui/views/WelcomeView.vala:122
 msgid "Authentication required"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:126
+#: src/ui/views/WelcomeView.vala:127
 msgid "Authenticating..."
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:137
+#: src/ui/views/WelcomeView.vala:138
 #, c-format
 msgid "Install %s"
 msgstr ""
 
-#: src/ui/views/WelcomeView.vala:138
+#: src/ui/views/WelcomeView.vala:139
 msgid "Return to GameHub after installing"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:92
+#: src/ui/views/GamesView/GamesView.vala:62
+msgid "No games"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:62
+msgid "Get some games or enable some game sources in settings"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:63
+msgid "Reload"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:108
 msgid "Grid view"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:93
+#: src/ui/views/GamesView/GamesView.vala:109
 msgid "List view"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:107
+#: src/ui/views/GamesView/GamesView.vala:121
 msgid "All games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:111
+#: src/ui/views/GamesView/GamesView.vala:125
 #, c-format
 msgid "%s games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:117
+#: src/ui/views/GamesView/GamesView.vala:131
 msgid "Downloads"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:138
+#: src/ui/views/GamesView/GamesView.vala:153
 msgid "Search"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:194
+#: src/ui/views/GamesView/GamesView.vala:277
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:122
+#: src/ui/views/GamesView/GamesView.vala:281
+#, c-format
+msgid "No %s games"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:282
+msgid "Get some Linux-compatible games"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:353
+msgid ""
+"No games were loaded from Steam. Set your games list privacy to public or "
+"use your own Steam API key in settings."
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:354
+msgid "Privacy"
+msgstr ""
+
+#: src/ui/views/GamesView/GameDownloadProgressView.vala:59
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:129
+msgid "Pause download"
+msgstr ""
+
+#: src/ui/views/GamesView/GameDownloadProgressView.vala:64
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:135
+msgid "Resume download"
+msgstr ""
+
+#: src/ui/views/GamesView/GameDownloadProgressView.vala:69
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:141
+msgid "Cancel download"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
 msgid "Description"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:163
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:203
 msgid "Run"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:164
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:204
 msgid "Open installation directory"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:165
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:205
 msgid "Open store page"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:166
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:206
 msgid "Uninstall"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:235
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:307
 msgid "Language"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:238
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:310
 msgid "Languages"
+msgstr ""
+
+#: src/utils/downloader/Downloader.vala:136
+msgid "Starting download"
+msgstr ""
+
+#: src/utils/downloader/Downloader.vala:138
+msgid "Download finished"
+msgstr ""
+
+#: src/utils/downloader/Downloader.vala:139
+msgid "Download failed"
+msgstr ""
+
+#: src/utils/downloader/Downloader.vala:141
+#, c-format
+msgid "Downloading: %d%% (%s / %s)"
+msgstr ""
+
+#: src/utils/downloader/Downloader.vala:143
+#, c-format
+msgid "Paused: %d%% (%s / %s)"
+msgstr ""
+
+#: src/utils/downloader/Downloader.vala:145
+msgid "Download cancelled"
 msgstr ""

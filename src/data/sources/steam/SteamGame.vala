@@ -50,7 +50,8 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			var root = Parser.parse_json(custom_info);
-			description = Parser.json_object(root, {id, "data"}).get_string_member("detailed_description");
+			var data = Parser.json_object(root, {id, "data"});
+			description = data != null && data.has_member("detailed_description") ? data.get_string_member("detailed_description") : "";
 
 			if(_is_for_linux == true) GamesDB.get_instance().add_game(this);
 		}
@@ -108,7 +109,7 @@ namespace GameHub.Data.Sources.Steam
 			return false;
 		}
 		
-		public override async void install(DownloadProgress progress = (d, t) => {})
+		public override async void install()
 		{
 			yield run();
 		}

@@ -74,7 +74,7 @@ namespace GameHub.Data.Sources.Steam
 			
 			if(!is_authenticated_in_steam_client)
 			{
-				yield Utils.run_async({"steam"}, null, false, false);
+				Utils.open_uri("steam://");
 				return false;
 			}
 
@@ -147,18 +147,22 @@ namespace GameHub.Data.Sources.Steam
 			var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(api_key)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
 			
 			var root = yield Parser.parse_remote_json_file_async(url);
-			var json_games = Parser.json_object(root, {"response"}).get_array_member("games");
+			var response = Parser.json_object(root, {"response"});
+			var json_games = response != null && response.has_member("games") ? response.get_array_member("games") : null;
 			
-			foreach(var g in json_games.get_elements())
+			if(json_games != null)
 			{
-				var game = new SteamGame(this, g.get_object());
-				if(!games.contains(game) && yield game.is_for_linux())
+				foreach(var g in json_games.get_elements())
 				{
-					games.add(game);
-					if(game_loaded != null) game_loaded(game);
-					GamesDB.get_instance().add_game(game);
+					var game = new SteamGame(this, g.get_object());
+					if(!games.contains(game) && yield game.is_for_linux())
+					{
+						games.add(game);
+						if(game_loaded != null) game_loaded(game);
+						GamesDB.get_instance().add_game(game);
+					}
+					games_count = games.size;
 				}
-				games_count = games.size;
 			}
 			
 			return games;

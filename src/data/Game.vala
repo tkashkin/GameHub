@@ -1,5 +1,7 @@
 using Gtk;
 
+using GameHub.Utils.Downloader;
+
 namespace GameHub.Data
 {
 	public abstract class Game
@@ -22,7 +24,7 @@ namespace GameHub.Data
 		
 		public virtual bool is_installed(){ return false; }
 		
-		public abstract async void install(Utils.DownloadProgress progress = (d, t) => {});
+		public abstract async void install();
 		public abstract async void run();
 		public abstract async void uninstall();
 		
@@ -56,14 +58,12 @@ namespace GameHub.Data
 		{
 			public Game.State state;
 
-			public int64 dl_bytes;
-			public int64 dl_bytes_total;
+			public Download? download;
 
-			public Status(Game.State state=Game.State.UNINSTALLED, int64 dl_bytes = -1, int64 dl_bytes_total = -1)
+			public Status(Game.State state=Game.State.UNINSTALLED, Download? download=null)
 			{
 				this.state = state;
-				this.dl_bytes = dl_bytes;
-				this.dl_bytes_total = dl_bytes_total;
+				this.download = download;
 			}
 
 			public string description
@@ -74,20 +74,30 @@ namespace GameHub.Data
 					{
 						case Game.State.INSTALLED: return _("Installed");
 						case Game.State.INSTALLING: return _("Installing");
-						case Game.State.DOWNLOAD_STARTED: return _("Download started");
-						case Game.State.DOWNLOAD_FINISHED: return _("Download finished");
-						case Game.State.DOWNLOADING:
-							var fraction = (double) dl_bytes / dl_bytes_total;
-							return _("Downloading: %d%% (%s / %s)").printf((int)(fraction * 100), format_size(dl_bytes), format_size(dl_bytes_total));
+						case Game.State.DOWNLOADING: return download != null ? download.status.description : _("Download started");
 					}
 					return _("Not installed");
+				}
+			}
+
+			public string header
+			{
+				owned get
+				{
+					switch(state)
+					{
+						case Game.State.INSTALLED: return _("Installed:");
+						case Game.State.INSTALLING: return _("Installing:");
+						case Game.State.DOWNLOADING: return _("Downloading:");
+					}
+					return _("Not installed:");
 				}
 			}
 		}
 
 		public enum State
 		{
-			UNINSTALLED, INSTALLED, DOWNLOAD_STARTED, DOWNLOADING, DOWNLOAD_FINISHED, INSTALLING;
+			UNINSTALLED, INSTALLED, DOWNLOADING, INSTALLING;
 		}
 	}
 }
