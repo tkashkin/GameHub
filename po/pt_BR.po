@@ -295,7 +295,7 @@ msgstr "Descrição"
 
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:203
 msgid "Run"
-msgstr "Correr"
+msgstr "Jogar"
 
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:204
 msgid "Open installation directory"
@@ -327,7 +327,7 @@ msgstr "Jogo baixado com sucesso"
 
 #: src/utils/downloader/Downloader.vala:139
 msgid "Download failed"
-msgstr "Download falhou"
+msgstr "Falhou download"
 
 #: src/utils/downloader/Downloader.vala:141
 #, c-format
