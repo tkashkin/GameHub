@@ -260,7 +260,7 @@ msgstr "Nenhum jogo do %s"
 
 #: src/ui/views/GamesView/GamesView.vala:282
 msgid "Get some Linux-compatible games"
-msgstr "Obtenha alguns jogos compatíveis com o Linux"
+msgstr "Obtenha alguns jogos compatíveis com o seu sistema"
 
 #: src/ui/views/GamesView/GamesView.vala:353
 msgid ""
