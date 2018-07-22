@@ -21,6 +21,9 @@ __Planned:__
 ## Installation
 Prebuilt releases can be found on [releases page](https://github.com/tkashkin/GameHub/releases).
 
+### Arch Linux
+There is an [AUR package](https://aur.archlinux.org/packages/gamehub/), maintained by [@twisty1](https://github.com/twisty1).
+
 ## Building
 
 ### Debian/Ubuntu-based distros
