@@ -327,7 +327,7 @@ msgstr "Jogo baixado com sucesso"
 
 #: src/utils/downloader/Downloader.vala:139
 msgid "Download failed"
-msgstr "Falhou download"
+msgstr "Download falhou"
 
 #: src/utils/downloader/Downloader.vala:141
 #, c-format
