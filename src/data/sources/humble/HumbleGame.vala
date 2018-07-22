@@ -78,11 +78,14 @@ namespace GameHub.Data.Sources.Humble
 		
 		public override bool is_installed()
 		{
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			if(status.state != Game.State.DOWNLOADING)
+			{
+				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			}
 			return executable.query_exists();
 		}
 		
-		public override async void install(DownloadProgress progress = (d, t) => {})
+		public override async void install()
 		{
 			var token = ((Humble) source).user_token;
 			
@@ -120,29 +123,37 @@ namespace GameHub.Data.Sources.Humble
 			
 			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
 			
-			wnd.canceled.connect(() => Idle.add(install.callback));
+			wnd.cancelled.connect(() => Idle.add(install.callback));
 			
 			wnd.install.connect(installer => {
 				var link = installer.file;
-				var local = FSUtils.expand(FSUtils.Paths.Humble.Installers, "humble_" + installer.id);
+				var remote = File.new_for_uri(link);
+				var local = FSUtils.file(FSUtils.Paths.Humble.Installers, "humble_" + installer.id);
 				
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
 				FSUtils.mkdir(FSUtils.Paths.Humble.Installers);
 				
-				status = new Game.Status(Game.State.DOWNLOAD_STARTED);
+				status = new Game.Status(Game.State.DOWNLOADING, null);
+				var ds_id = Downloader.get_instance().download_started.connect(dl => {
+					if(dl.remote != remote) return;
+					status = new Game.Status(Game.State.DOWNLOADING, dl);
+					dl.status_change.connect(s => {
+						status_change(status);
+					});
+				});
 
-				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, (d, t) => {
-					progress(d, t);
-					status = new Game.Status(Game.State.DOWNLOADING, d, t);
-				}, null, (obj, res) => {
+				Downloader.download.begin(remote, local, (obj, res) => {
 					try
 					{
-						var file = Downloader.get_instance().download.end(res);
-						status = new Game.Status(Game.State.DOWNLOAD_STARTED);
+						var file = Downloader.download.end(res);
+
+						Downloader.get_instance().disconnect(ds_id);
+
 						var path = file.get_path();
-						FSUtils.mkdir(install_dir.get_path());
 						Utils.run({"chmod", "+x", path});
 						
+						FSUtils.mkdir(install_dir.get_path());
+
 						var info = file.query_info(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
 						var type = info.get_content_type();
 						
@@ -205,9 +216,11 @@ namespace GameHub.Data.Sources.Humble
 							catch(Error e){}
 
 							choose_executable();
+							status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 							Idle.add(install.callback);
 						});
 					}
+					catch(IOError.CANCELLED e){}
 					catch(Error e)
 					{
 						warning(e.message);

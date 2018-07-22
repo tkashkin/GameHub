@@ -48,6 +48,12 @@ namespace GameHub.UI.Views
 		private AutoSizeImage icon;
 		private Image src_icon;
 
+		private Downloader.Download? download;
+
+		private Button action_pause;
+		private Button action_resume;
+		private Button action_cancel;
+
 		private ActionButton action_install;
 		private ActionButton action_run;
 		private ActionButton action_open_directory;
@@ -110,9 +116,43 @@ namespace GameHub.UI.Views
 			src_icon.opacity = 0.1;
 
 			var title_vbox = new Box(Orientation.VERTICAL, 0);
+			var vbox_labels = new Box(Orientation.VERTICAL, 0);
+			vbox_labels.hexpand = true;
 
-			title_vbox.add(title);
-			title_vbox.add(status);
+			var hbox_inner = new Box(Orientation.HORIZONTAL, 8);
+			var hbox_actions = new Box(Orientation.HORIZONTAL, 0);
+			hbox_actions.vexpand = false;
+			hbox_actions.valign = Align.CENTER;
+
+			action_pause = new Button.from_icon_name("media-playback-pause-symbolic");
+			action_pause.set_size_request(36, 36);
+			action_pause.tooltip_text = _("Pause download");
+			action_pause.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			action_pause.visible = false;
+
+			action_resume = new Button.from_icon_name("media-playback-start-symbolic");
+			action_resume.set_size_request(36, 36);
+			action_resume.tooltip_text = _("Resume download");
+			action_resume.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			action_resume.visible = false;
+
+			action_cancel = new Button.from_icon_name("process-stop-symbolic");
+			action_cancel.set_size_request(36, 36);
+			action_cancel.tooltip_text = _("Cancel download");
+			action_cancel.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			action_cancel.visible = false;
+
+			vbox_labels.add(title);
+			vbox_labels.add(status);
+
+			hbox_inner.add(vbox_labels);
+			hbox_inner.add(hbox_actions);
+
+			hbox_actions.add(action_pause);
+			hbox_actions.add(action_resume);
+			hbox_actions.add(action_cancel);
+
+			title_vbox.add(hbox_inner);
 			title_vbox.add(download_progress);
 
 			title_hbox.add(icon);
@@ -164,6 +204,24 @@ namespace GameHub.UI.Views
 			action_open_directory = add_action("folder", _("Open installation directory"), open_game_directory);
 			action_open_store_page = add_action("web-browser", _("Open store page"), open_game_store_page);
 			action_uninstall = add_action("edit-delete", _("Uninstall"), uninstall_game);
+
+			action_cancel.clicked.connect(() => {
+				if(download != null) download.cancel();
+			});
+
+			action_pause.clicked.connect(() => {
+				if(download != null && download is Downloader.PausableDownload)
+				{
+					((Downloader.PausableDownload) download).pause();
+				}
+			});
+
+			action_resume.clicked.connect(() => {
+				if(download != null && download is Downloader.PausableDownload)
+				{
+					((Downloader.PausableDownload) download).resume();
+				}
+			});
 		}
 
 		private async void update_game()
@@ -202,10 +260,24 @@ namespace GameHub.UI.Views
 			_game_status_handler_id = _game.status_change.connect(s => {
 				status.label = s.description;
 				download_progress.hide();
-				if(s.state == Game.State.DOWNLOADING)
+				if(s.state == Game.State.DOWNLOADING && s.download != null)
 				{
+					download = s.download;
+					var ds = download.status.state;
+
 					download_progress.show();
-					download_progress.fraction = (double) s.dl_bytes / s.dl_bytes_total;
+					download_progress.fraction = s.download.status.progress;
+
+					action_cancel.visible = true;
+					action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
+					action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
+					action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
+				}
+				else
+				{
+					action_cancel.visible = false;
+					action_pause.visible = false;
+					action_resume.visible = false;
 				}
 				action_install.visible = s.state != Game.State.INSTALLED;
 				action_install.sensitive = s.state == Game.State.UNINSTALLED;
@@ -217,7 +289,7 @@ namespace GameHub.UI.Views
 			_game.status_change(_game.status);
 
 			custom_info.forall(w => custom_info.remove(w));
-			if(_game is GameHub.Data.Sources.GOG.GOGGame)
+			if(_game is GameHub.Data.Sources.GOG.GOGGame && _game.custom_info.length > 0)
 			{
 				var root = Parser.parse_json(_game.custom_info).get_object();
 

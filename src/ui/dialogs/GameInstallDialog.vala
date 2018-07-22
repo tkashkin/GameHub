@@ -16,7 +16,7 @@ namespace GameHub.UI.Dialogs
 
 		public signal void import();
 		public signal void install(Game.Installer installer);
-		public signal void canceled();
+		public signal void cancelled();
 		
 		private Box content;
 		private Label title_label;
@@ -92,7 +92,7 @@ namespace GameHub.UI.Dialogs
 				subtitle_label.label = _("Installer size: %s").printf(format_size(installers[0].file_size));
 			}
 			
-			destroy.connect(() => { if(!is_finished) canceled(); });
+			destroy.connect(() => { if(!is_finished) cancelled(); });
 			
 			response.connect((source, response_id) => {
 				switch(response_id)

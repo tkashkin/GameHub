@@ -42,4 +42,6 @@ src/utils/Utils.vala
 src/utils/FSUtils.vala
 src/utils/Parser.vala
 src/utils/Settings.vala
-src/utils/Downloader.vala
+
+src/utils/downloader/Downloader.vala
+src/utils/downloader/SoupDownloader.vala

@@ -75,7 +75,21 @@ namespace GameHub.Settings
 			{
 				base(ProjectConfig.PROJECT_NAME + ".auth.steam");
 			}
-		
+
+			protected override void verify(string key)
+			{
+				switch(key)
+				{
+					case "api-key":
+						if(api_key.length != 32)
+						{
+							schema.reset("api-key");
+						}
+						break;
+				}
+			}
+
+
 			private static Steam? instance;
 			public static unowned Steam get_instance()
 			{

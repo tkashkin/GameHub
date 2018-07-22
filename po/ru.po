@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-21 01:58+0300\n"
+"POT-Creation-Date: 2018-07-22 17:49+0300\n"
 "PO-Revision-Date: 2018-05-27 03:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -42,22 +42,29 @@ msgstr "Установлена"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:77
+#: src/data/Game.vala:77 src/utils/downloader/Downloader.vala:137
 msgid "Download started"
 msgstr "Загрузка начата"
 
-#: src/data/Game.vala:78
-msgid "Download finished"
-msgstr "Загрузка завершена"
-
-#: src/data/Game.vala:81
-#, c-format
-msgid "Downloading: %d%% (%s / %s)"
-msgstr "Загрузка: %d%% (%s / %s)"
-
-#: src/data/Game.vala:83
+#: src/data/Game.vala:79
 msgid "Not installed"
 msgstr "Не установлена"
+
+#: src/data/Game.vala:89
+msgid "Installed:"
+msgstr "Установленые:"
+
+#: src/data/Game.vala:90
+msgid "Installing:"
+msgstr "Установка:"
+
+#: src/data/Game.vala:91
+msgid "Downloading:"
+msgstr "Загрузки:"
+
+#: src/data/Game.vala:93
+msgid "Not installed:"
+msgstr "Не установленые:"
 
 #: src/data/sources/steam/Steam.vala:17
 msgid "Your SteamID will be read from Steam configuration file"
@@ -72,7 +79,8 @@ msgstr ""
 "Войдите в ваш аккаунт в клиенте Steam и вернитесь в GameHub"
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:59 src/ui/views/GamesView/GamesView.vala:143
+#: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:158
+#: src/ui/views/GamesView/GamesView.vala:355
 msgid "Settings"
 msgstr "Настройки"
 
@@ -87,10 +95,6 @@ msgstr "API-ключи Steam имеют ограничение на количе
 #: src/ui/dialogs/SettingsDialog.vala:34
 msgid "Generate key"
 msgstr "Сгенерировать ключ"
-
-#: src/ui/dialogs/SettingsDialog.vala:35
-msgid "Steam API key"
-msgstr "API-ключ Steam"
 
 #: src/ui/dialogs/SettingsDialog.vala:36
 msgid "Steam installation directory"
@@ -108,7 +112,7 @@ msgstr "Кэш установщиков GOG"
 msgid "Humble Bundle games directory"
 msgstr "Папка игр Humble Bundle"
 
-#: src/ui/dialogs/SettingsDialog.vala:49
+#: src/ui/dialogs/SettingsDialog.vala:50
 msgid "Humble Bundle installers cache"
 msgstr "Кэш установщиков Humble Bundle"
 
@@ -117,15 +121,28 @@ msgstr "Кэш установщиков Humble Bundle"
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/ui/dialogs/SettingsDialog.vala:180
+#: src/ui/dialogs/SettingsDialog.vala:106
+msgid "Default"
+msgstr "По умолчанию"
+
+#: src/ui/dialogs/SettingsDialog.vala:114
+msgid "Restore default API key"
+msgstr "Восстановить API-ключ по умолчанию"
+
+#: src/ui/dialogs/SettingsDialog.vala:125
+msgid "Steam API key"
+msgstr "API-ключ Steam"
+
+#: src/ui/dialogs/SettingsDialog.vala:215
 msgid "Open"
 msgstr "Открыть"
 
-#: src/ui/dialogs/SettingsDialog.vala:187
+#: src/ui/dialogs/SettingsDialog.vala:222
 msgid "Clear"
 msgstr "Очистить"
 
-#: src/ui/dialogs/SettingsDialog.vala:203
+#: src/ui/dialogs/SettingsDialog.vala:238
+#, c-format
 msgid "%llu installer; %s"
 msgid_plural "%llu installers; %s"
 msgstr[0] "%llu установщик; %s"
@@ -134,7 +151,7 @@ msgstr[2] "%llu установщиков; %s"
 
 #: src/ui/dialogs/GameInstallDialog.vala:31
 #: src/ui/dialogs/GameInstallDialog.vala:131
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:202
 msgid "Install"
 msgstr "Установить"
 
@@ -143,6 +160,7 @@ msgid "Select game installer"
 msgstr "Выберите установочный файл игры"
 
 #: src/ui/dialogs/GameInstallDialog.vala:92
+#, c-format
 msgid "Installer size: %s"
 msgstr "Размер установщика: %s"
 
@@ -170,53 +188,65 @@ msgstr "Давайте начнём"
 msgid "Skip"
 msgstr "Пропустить"
 
-#: src/ui/views/WelcomeView.vala:115
+#: src/ui/views/WelcomeView.vala:116
 msgid "Ready"
 msgstr "Готово"
 
-#: src/ui/views/WelcomeView.vala:121
+#: src/ui/views/WelcomeView.vala:122
 msgid "Authentication required"
 msgstr "Требуется авторизация"
 
-#: src/ui/views/WelcomeView.vala:126
+#: src/ui/views/WelcomeView.vala:127
 msgid "Authenticating..."
 msgstr "Авторизация..."
 
-#: src/ui/views/WelcomeView.vala:137
+#: src/ui/views/WelcomeView.vala:138
 #, c-format
 msgid "Install %s"
 msgstr "Установить %s"
 
-#: src/ui/views/WelcomeView.vala:138
+#: src/ui/views/WelcomeView.vala:139
 msgid "Return to GameHub after installing"
 msgstr "Вернитесь в GameHub после установки"
 
-#: src/ui/views/GamesView/GamesView.vala:92
+#: src/ui/views/GamesView/GamesView.vala:62
+msgid "No games"
+msgstr "Нет игр"
+
+#: src/ui/views/GamesView/GamesView.vala:62
+msgid "Get some games or enable some game sources in settings"
+msgstr "Получите игры или включите источники в настройках"
+
+#: src/ui/views/GamesView/GamesView.vala:63
+msgid "Reload"
+msgstr "Обновить"
+
+#: src/ui/views/GamesView/GamesView.vala:108
 msgid "Grid view"
 msgstr "Сетка"
 
-#: src/ui/views/GamesView/GamesView.vala:93
+#: src/ui/views/GamesView/GamesView.vala:109
 msgid "List view"
 msgstr "Список"
 
-#: src/ui/views/GamesView/GamesView.vala:107
+#: src/ui/views/GamesView/GamesView.vala:121
 msgid "All games"
 msgstr "Все игры"
 
-#: src/ui/views/GamesView/GamesView.vala:111
+#: src/ui/views/GamesView/GamesView.vala:125
 #, c-format
 msgid "%s games"
 msgstr "Игры из %s"
 
-#: src/ui/views/GamesView/GamesView.vala:117
+#: src/ui/views/GamesView/GamesView.vala:131
 msgid "Downloads"
 msgstr "Загрузки"
 
-#: src/ui/views/GamesView/GamesView.vala:138
+#: src/ui/views/GamesView/GamesView.vala:153
 msgid "Search"
 msgstr "Поиск"
 
-#: src/ui/views/GamesView/GamesView.vala:194
+#: src/ui/views/GamesView/GamesView.vala:277
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
@@ -224,33 +254,95 @@ msgstr[0] "%u игра"
 msgstr[1] "%u игры"
 msgstr[2] "%u игр"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:122
+#: src/ui/views/GamesView/GamesView.vala:281
+#, c-format
+msgid "No %s games"
+msgstr "Нет игр из %s"
+
+#: src/ui/views/GamesView/GamesView.vala:282
+msgid "Get some Linux-compatible games"
+msgstr "Получите игры, совместимые с Linux"
+
+#: src/ui/views/GamesView/GamesView.vala:353
+msgid ""
+"No games were loaded from Steam. Set your games list privacy to public or "
+"use your own Steam API key in settings."
+msgstr ""
+"Нет игр, загруженных из Steam. Настройте список игр как публичный или "
+"используйте свой API-ключ Steam в настройках."
+
+#: src/ui/views/GamesView/GamesView.vala:354
+msgid "Privacy"
+msgstr "Приватность"
+
+#: src/ui/views/GamesView/GameDownloadProgressView.vala:59
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:129
+msgid "Pause download"
+msgstr "Приостановить загрузку"
+
+#: src/ui/views/GamesView/GameDownloadProgressView.vala:64
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:135
+msgid "Resume download"
+msgstr "Возобновить загрузку"
+
+#: src/ui/views/GamesView/GameDownloadProgressView.vala:69
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:141
+msgid "Cancel download"
+msgstr "Отменить загрузку"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
 msgid "Description"
 msgstr "Описание"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:163
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:203
 msgid "Run"
 msgstr "Запустить"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:164
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:204
 msgid "Open installation directory"
 msgstr "Открыть папку установки"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:165
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:205
 msgid "Open store page"
 msgstr "Открыть страницу в магазине"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:166
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:206
 msgid "Uninstall"
 msgstr "Удалить"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:235
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:307
 msgid "Language"
 msgstr "Язык"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:238
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:310
 msgid "Languages"
 msgstr "Языки"
+
+#: src/utils/downloader/Downloader.vala:136
+msgid "Starting download"
+msgstr "Начало загрузки"
+
+#: src/utils/downloader/Downloader.vala:138
+msgid "Download finished"
+msgstr "Загрузка завершена"
+
+#: src/utils/downloader/Downloader.vala:139
+msgid "Download failed"
+msgstr "Ошибка загрузки"
+
+#: src/utils/downloader/Downloader.vala:141
+#, c-format
+msgid "Downloading: %d%% (%s / %s)"
+msgstr "Загрузка: %d%% (%s / %s)"
+
+#: src/utils/downloader/Downloader.vala:143
+#, c-format
+msgid "Paused: %d%% (%s / %s)"
+msgstr "Приостановлено: %d%% (%s / %s)"
+
+#: src/utils/downloader/Downloader.vala:145
+msgid "Download cancelled"
+msgstr "Загрузка отменена"
 
 #~ msgid "Select main executable of the game"
 #~ msgstr "Выберите исполняемый файл игры"

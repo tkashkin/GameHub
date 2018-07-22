@@ -132,7 +132,7 @@ button label
 {
 	border: none;
 	border-color: transparent;
-	box-shadow: 0 0 0 1px alpha (#000, 0.05), 0 3px 3px alpha (#000, 0.22);
+	box-shadow: 0 0 0 1px alpha(#000, 0.05), 0 3px 3px alpha(#000, 0.22);
 	border-radius: 4px;
 }
 list:not(:backdrop) row:selected:focus label.category-label
@@ -143,4 +143,33 @@ list:not(:backdrop) row:selected:focus label.category-label
 list.installers-list
 {
 	background: transparent;
+}
+
+list.downloads-list row
+{
+	background: transparent;
+	border-bottom: 1px alpha(#333, 0.3) solid;
+	outline: none;
+}
+list.downloads-list row:last-child
+{
+	border-bottom: none;
+}
+list.downloads-list row:selected
+{
+	background: transparent;
+	outline: none;
+}
+list.downloads-list row:focus
+{
+	background: transparent;
+	outline: none;
+}
+
+label.games-list-header
+{
+	background: alpha(#333, 0.1);
+	margin-top: -1px;
+	border-top: 1px alpha(#333, 0.3) solid;
+	border-bottom: 1px alpha(#333, 0.3) solid;
 }

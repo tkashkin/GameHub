@@ -101,9 +101,7 @@ namespace GameHub.UI.Views
 						}
 						else if(game.status.state == Game.State.UNINSTALLED)
 						{
-							game.install.begin((d, t) => {}, (obj, res) => {
-								game.install.end(res);
-							});
+							game.install.begin();
 						}
 						break;
 
@@ -146,10 +144,12 @@ namespace GameHub.UI.Views
 						card.get_style_context().remove_class("installed");
 						card.get_style_context().add_class("downloading");
 						card.get_style_context().remove_class("installing");
-						var fraction = (double) s.dl_bytes / s.dl_bytes_total;
 						Allocation alloc;
 						card.get_allocation(out alloc);
-						progress_bar.set_size_request((int) (fraction * alloc.width), 8);
+						if(s.download != null)
+						{
+							progress_bar.set_size_request((int) (s.download.status.progress * alloc.width), 8);
+						}
 						break;
 
 					case Game.State.INSTALLING:

@@ -1,3 +1,11 @@
+com.github.tkashkin.gamehub (0.6.0) xenial; urgency=low
+
+  * Downloader rewrite: now it's possible to pause and cancel downloads
+  * Downloads can be resumed after interruption
+  * UI improvements
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 22 Jul 2018 16:18:24 +0300
+
 com.github.tkashkin.gamehub (0.5.7) xenial; urgency=low
 
   * Yet another locale fix

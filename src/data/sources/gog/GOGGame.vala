@@ -62,7 +62,10 @@ namespace GameHub.Data.Sources.GOG
 		
 		public override bool is_installed()
 		{
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			if(status.state != Game.State.DOWNLOADING)
+			{
+				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			}
 			return executable.query_exists();
 		}
 		
@@ -105,10 +108,13 @@ namespace GameHub.Data.Sources.GOG
 
 			GamesDB.get_instance().add_game(this);
 
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			if(status.state != Game.State.DOWNLOADING)
+			{
+				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			}
 		}
 
-		public override async void install(DownloadProgress progress = (d, t) => {})
+		public override async void install()
 		{
 			yield update_game_info();
 
@@ -132,27 +138,35 @@ namespace GameHub.Data.Sources.GOG
 			
 			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
 			
-			wnd.canceled.connect(() => Idle.add(install.callback));
+			wnd.cancelled.connect(() => Idle.add(install.callback));
 			
 			wnd.install.connect(installer => {
 				root = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token);
 				var link = root.get_object().get_string_member("downlink");
-				var local = FSUtils.expand(FSUtils.Paths.GOG.Installers, "gog_" + id + "_" + installer.id + ".sh");
+				var remote = File.new_for_uri(link);
+				var local = FSUtils.file(FSUtils.Paths.GOG.Installers, "gog_" + id + "_" + installer.id + ".sh");
 				
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(FSUtils.Paths.GOG.Installers);
 				
-				status = new Game.Status(Game.State.DOWNLOAD_STARTED);
+				status = new Game.Status(Game.State.DOWNLOADING, null);
+				var ds_id = Downloader.get_instance().download_started.connect(dl => {
+					if(dl.remote != remote) return;
+					status = new Game.Status(Game.State.DOWNLOADING, dl);
+					dl.status_change.connect(s => {
+						status_change(status);
+					});
+				});
 
-				Downloader.get_instance().download.begin(File.new_for_uri(link), { local }, (d, t) => {
-					progress(d, t);
-					status = new Game.Status(Game.State.DOWNLOADING, d, t);
-				}, null, (obj, res) => {
+				Downloader.download.begin(remote, local, (obj, res) => {
 					try
 					{
-						var file = Downloader.get_instance().download.end(res).get_path();
-						status = new Game.Status(Game.State.DOWNLOAD_FINISHED);
+						var file = Downloader.download.end(res).get_path();
+
+						Downloader.get_instance().disconnect(ds_id);
+
 						Utils.run({"chmod", "+x", file});
+
 						status = new Game.Status(Game.State.INSTALLING);
 						string[] cmd = {file, "--", "--i-agree-to-all-licenses",
 										"--noreadme", "--nooptions", "--noprompt",
@@ -163,10 +177,12 @@ namespace GameHub.Data.Sources.GOG
 							Idle.add(install.callback);
 						});
 					}
+					catch(IOError.CANCELLED e){}
 					catch(Error e)
 					{
 						warning(e.message);
 					}
+					status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 				});
 			});
 			

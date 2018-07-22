@@ -1,8 +1,10 @@
 using Gtk;
+using GLib;
 using Gee;
 using Granite;
 using GameHub.Data;
 using GameHub.Utils;
+using GameHub.Utils.Downloader;
 
 namespace GameHub.UI.Views
 {
@@ -12,7 +14,11 @@ namespace GameHub.UI.Views
 
 		private ArrayList<GameSource> sources = new ArrayList<GameSource>();
 
+		private Box messages;
+
 		private Stack stack;
+
+		private Granite.Widgets.AlertView empty_alert;
 
 		private ScrolledWindow games_grid_scrolled;
 		private FlowBox games_grid;
@@ -36,12 +42,14 @@ namespace GameHub.UI.Views
 		private ListBox downloads_list;
 		private int downloads_count = 0;
 
+		private Settings.SavedState saved_state;
+
 		construct
 		{
 			instance = this;
 
 			var ui_settings = Settings.UI.get_instance();
-			var saved_state = Settings.SavedState.get_instance();
+			saved_state = Settings.SavedState.get_instance();
 
 			foreach(var src in GameSources)
 			{
@@ -50,6 +58,9 @@ namespace GameHub.UI.Views
 
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
+
+			empty_alert = new Granite.Widgets.AlertView(_("No games"), _("Get some games or enable some game sources in settings"), "dialog-warning");
+			empty_alert.show_action(_("Reload"));
 
 			games_grid = new FlowBox();
 			games_grid.margin = 4;
@@ -81,9 +92,14 @@ namespace GameHub.UI.Views
 			games_list_paned.pack1(games_list_scrolled, false, false);
 			games_list_paned.pack2(games_list_details, true, true);
 
+			stack.add(empty_alert);
 			stack.add(games_grid_scrolled);
 			stack.add(games_list_paned);
-			add(stack);
+
+			messages = new Box(Orientation.VERTICAL, 0);
+
+			attach(messages, 0, 0);
+			attach(stack, 0, 1);
 
 			view = new Granite.Widgets.ModeButton();
 			view.halign = Align.CENTER;
@@ -93,9 +109,7 @@ namespace GameHub.UI.Views
 			add_view_button("view-list", _("List view"));
 
 			view.mode_changed.connect(() => {
-				var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
-				stack.set_visible_child(tab);
-				saved_state.games_view = view.selected == 0 ? Settings.GamesView.GRID : Settings.GamesView.LIST;
+				update_view();
 			});
 
 			titlebar.pack_start(view);
@@ -115,9 +129,10 @@ namespace GameHub.UI.Views
 
 			downloads = new MenuButton();
 			downloads.tooltip_text = _("Downloads");
-			downloads.image = new Image.from_icon_name("folder-download", IconSize.LARGE_TOOLBAR);
+			downloads.image = new Image.from_icon_name("emblem-downloads", IconSize.LARGE_TOOLBAR);
 			downloads_popover = new Popover(downloads);
 			downloads_list = new ListBox();
+			downloads_list.get_style_context().add_class("downloads-list");
 
 			var downloads_scrolled = new ScrolledWindow(null, null);
 			#if GTK_3_22
@@ -162,6 +177,16 @@ namespace GameHub.UI.Views
 				var item2 = row2 as GameListRow;
 				if(item1 != null && item2 != null)
 				{
+					var s1 = item1.game.status.state;
+					var s2 = item2.game.status.state;
+
+					if(s1 == Game.State.DOWNLOADING && s2 != Game.State.DOWNLOADING) return -1;
+					if(s1 != Game.State.DOWNLOADING && s2 == Game.State.DOWNLOADING) return 1;
+					if(s1 == Game.State.INSTALLING && s2 != Game.State.INSTALLING) return -1;
+					if(s1 != Game.State.INSTALLING && s2 == Game.State.INSTALLING) return 1;
+					if(s1 == Game.State.INSTALLED && s2 != Game.State.INSTALLED) return -1;
+					if(s1 != Game.State.INSTALLED && s2 == Game.State.INSTALLED) return 1;
+
 					return item1.game.name.collate(item2.game.name);
 				}
 				return 0;
@@ -177,6 +202,24 @@ namespace GameHub.UI.Views
 				return games_filter(item.game);
 			});
 
+			games_list.set_header_func((row, prev) => {
+				var item = row as GameListRow;
+				var prev_item = prev as GameListRow;
+				var s = item.game.status.state;
+				var ps = prev_item != null ? prev_item.game.status.state : s;
+
+				games_list.grab_focus();
+
+				if(prev_item != null && s == ps) row.set_header(null);
+				else
+				{
+					var label = new HeaderLabel(item.game.status.header);
+					label.get_style_context().add_class("games-list-header");
+					label.set_size_request(1024, -1); // ugly hack
+					row.set_header(label);
+				}
+			});
+
 			games_list.row_selected.connect(row => {
 				var item = row as GameListRow;
 				games_list_details.game = item != null ? item.game : null;
@@ -186,12 +229,7 @@ namespace GameHub.UI.Views
 				games_grid.invalidate_filter();
 				games_list.invalidate_filter();
 
-				var f = filter.selected;
-				GameSource? src = null;
-				if(f > 0) src = sources[f - 1];
-				var games = src == null ? games_grid.get_children().length() : src.games_count;
-				titlebar.title = "GameHub" + (src == null ? "" : "/" + src.name);
-				titlebar.subtitle = ngettext("%u game", "%u games", games).printf(games);
+				update_view();
 
 				Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
 			});
@@ -212,19 +250,74 @@ namespace GameHub.UI.Views
 			games_grid_scrolled.show_all();
 			games_grid.show_all();
 
-			view.set_active(saved_state.games_view == Settings.GamesView.LIST ? 1 : 0);
-			stack.set_visible_child(saved_state.games_view == Settings.GamesView.LIST ? (Widget) games_list_paned : (Widget) games_grid_scrolled);
+			empty_alert.action_activated.connect(() => load_games.begin());
+
+			stack.set_visible_child(empty_alert);
+
+			view.opacity = 0;
+			view.sensitive = false;
+			filter.opacity = 0;
+			filter.sensitive = false;
+			search.opacity = 0;
+			search.sensitive = false;
+			downloads.opacity = 0;
 
 			load_games.begin();
 		}
 
+		private void update_view()
+		{
+			show_games();
+
+			var f = filter.selected;
+			GameSource? src = null;
+			if(f > 0) src = sources[f - 1];
+			var games = src == null ? games_grid.get_children().length() : src.games_count;
+			titlebar.title = "GameHub" + (src == null ? "" : "/" + src.name);
+			titlebar.subtitle = ngettext("%u game", "%u games", games).printf(games);
+
+			if(src != null && src.games_count == 0)
+			{
+				empty_alert.title = _("No %s games").printf(src.name);
+				empty_alert.description = _("Get some Linux-compatible games");
+				empty_alert.icon_name = src.icon + "-symbolic";
+				stack.set_visible_child(empty_alert);
+			}
+			else
+			{
+				var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
+				stack.set_visible_child(tab);
+				saved_state.games_view = view.selected == 0 ? Settings.GamesView.GRID : Settings.GamesView.LIST;
+			}
+		}
+
+		private void show_games()
+		{
+			if(view.opacity != 0 || stack.visible_child != empty_alert) return;
+
+			view.set_active(saved_state.games_view == Settings.GamesView.LIST ? 1 : 0);
+			stack.set_visible_child(saved_state.games_view == Settings.GamesView.LIST ? (Widget) games_list_paned : (Widget) games_grid_scrolled);
+
+			view.opacity = 1;
+			view.sensitive = true;
+			filter.opacity = 1;
+			filter.sensitive = true;
+			search.opacity = 1;
+			search.sensitive = true;
+			downloads.opacity = 1;
+		}
+
 		private async void load_games()
 		{
+			messages.get_children().foreach(c => messages.remove(c));
+
 			foreach(var src in sources)
 			{
 				loading_sources++;
 				spinner.active = loading_sources > 0;
 				src.load_games.begin(g => {
+					update_view();
+
 					games_grid.add(new GameCard(g));
 					games_list.add(new GameListRow(g));
 					games_grid.show_all();
@@ -233,15 +326,57 @@ namespace GameHub.UI.Views
 					var pv = new GameDownloadProgressView(g);
 					downloads_list.add(pv);
 					g.status_change.connect(s => {
-						if(s.state == Game.State.DOWNLOAD_STARTED) downloads_count++;
-						else if(s.state == Game.State.DOWNLOAD_FINISHED) downloads_count--;
-						pv.visible = s.state == Game.State.DOWNLOADING || s.state == Game.State.DOWNLOAD_STARTED;
+						if(s.state == Game.State.INSTALLING)
+						{
+							downloads_count--;
+						}
+						else if(s.state == Game.State.DOWNLOADING)
+						{
+							if(s.download != null && (s.download.status.state == DownloadState.CANCELLED
+							                       || s.download.status.state == DownloadState.FAILED))
+								downloads_count--;
+							else if(!pv.visible) downloads_count++;
+						}
+						pv.visible = s.state == Game.State.DOWNLOADING;
+						downloads_count = int.max(0, downloads_count);
 						downloads.set_sensitive(downloads_count > 0);
 					});
 					g.status_change(g.status);
 				}, (obj, res) => {
 					loading_sources--;
 					spinner.active = loading_sources > 0;
+
+					if(src.games_count == 0)
+					{
+						if(src is GameHub.Data.Sources.Steam.Steam)
+						{
+							var msg = message(_("No games were loaded from Steam. Set your games list privacy to public or use your own Steam API key in settings."), MessageType.WARNING);
+							msg.add_button(_("Privacy"), 1);
+							msg.add_button(_("Settings"), 2);
+
+							msg.close.connect(() => {
+								msg.revealed = false;
+								Timeout.add(250, () => { messages.remove(msg); return false; });
+							});
+
+							msg.response.connect(r => {
+								switch(r)
+								{
+									case 1:
+										Utils.open_uri("steam://openurl/https://steamcommunity.com/my/edit/settings");
+										break;
+
+									case 2:
+										settings.clicked();
+										break;
+
+									case ResponseType.CLOSE:
+										msg.close();
+										break;
+								}
+							});
+						}
+					}
 				});
 			}
 
@@ -275,8 +410,25 @@ namespace GameHub.UI.Views
 			var row = games_list.get_selected_row() as GameListRow?;
 			if(row == null || games_filter(row.game)) return;
 
-			row = games_list.get_row_at_y(1) as GameListRow?;
+			row = games_list.get_row_at_y(32) as GameListRow?;
 			games_list.select_row(row);
+		}
+
+		private InfoBar message(string text, MessageType type=MessageType.OTHER)
+		{
+			var bar = new InfoBar();
+			bar.message_type = type;
+			bar.revealed = false;
+			bar.show_close_button = true;
+			bar.get_content_area().add(new Label(text));
+
+			messages.add(bar);
+
+			bar.show_all();
+
+			bar.revealed = true;
+
+			return bar;
 		}
 	}
 }

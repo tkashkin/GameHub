@@ -41,6 +41,13 @@
 	</screenshots>
 	
 	<releases>
+		<release type="development" version="0.6.0" date="2018-07-22">
+			<description>
+				<p>Downloader rewrite: now it's possible to pause and cancel downloads</p>
+				<p>Downloads can be resumed after interruption</p>
+				<p>UI improvements</p>
+			</description>
+		</release>
 		<release type="development" version="0.5.7" date="2018-07-21">
 			<description>
 				<p>Yet another locale fix</p>

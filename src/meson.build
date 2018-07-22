@@ -19,8 +19,10 @@ deps = [
 	dependency('glib-2.0'),
 	dependency('json-glib-1.0'),
 	dependency('gee-0.8'),
+	dependency('sqlite3'),
 	dependency('libsoup-2.4'),
-	dependency('sqlite3')
+	meson.get_compiler('vala').find_library('posix'),
+	meson.get_compiler('vala').find_library('linux')
 ]
 
 gtk322 = dependency('gtk+-3.0', version: '>=3.22', required: false)
@@ -33,8 +35,6 @@ endif
 
 if get_option('use_ivy')
 	add_global_arguments('-g', '-X', '-rdynamic', '-D', 'USE_IVY', language: 'vala')
-	deps += meson.get_compiler('vala').find_library('posix')
-	deps += meson.get_compiler('vala').find_library('linux')
 endif
 
 executable(
@@ -82,7 +82,9 @@ executable(
 	'utils/FSUtils.vala',
 	'utils/Parser.vala',
 	'utils/Settings.vala',
-	'utils/Downloader.vala',
+
+	'utils/downloader/Downloader.vala',
+	'utils/downloader/SoupDownloader.vala',
 
 	'lib/ivy/Extractor.vala',
 	'lib/ivy/Frame.vala',

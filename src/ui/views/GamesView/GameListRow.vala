@@ -47,6 +47,7 @@ namespace GameHub.UI.Views
 			game.status_change.connect(s => {
 				state_label.label = s.description;
 				update_icon();
+				changed();
 			});
 			game.status_change(game.status);
 

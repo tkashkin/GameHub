@@ -53,8 +53,7 @@ namespace GameHub.UI.Views
 			skip_btn.clicked.connect(open_games_view);
 			skip_btn.halign = Align.CENTER;
 			skip_btn.valign = Align.CENTER;
-			skip_btn.set_sensitive(false);
-			
+
 			settings = new Button();
 			settings.tooltip_text = _("Settings");
 			settings.image = new Image.from_icon_name("open-menu", IconSize.LARGE_TOOLBAR);
@@ -66,7 +65,9 @@ namespace GameHub.UI.Views
 			titlebar.pack_end(skip_btn);
 			
 			settings.opacity = 0;
+			settings.sensitive = false;
 			skip_btn.opacity = 0;
+			skip_btn.sensitive = false;
 			
 			foreach(var src in GameSources)
 			{
@@ -91,7 +92,7 @@ namespace GameHub.UI.Views
 			if(is_updating) return;
 			is_updating = true;
 			
-			skip_btn.set_sensitive(false);
+			skip_btn.sensitive = false;
 			var all_authenticated = true;
 			int enabled_sources = 0;
 			
@@ -114,7 +115,7 @@ namespace GameHub.UI.Views
 					{
 						btn.description = _("Ready");
 						welcome.set_item_sensitivity(index, false);
-						skip_btn.set_sensitive(true);
+						skip_btn.sensitive = true;
 					}
 					else
 					{
@@ -149,6 +150,7 @@ namespace GameHub.UI.Views
 			if(enabled_sources == 0)
 			{
 				settings.opacity = 0;
+				settings.sensitive = false;
 				skip_btn.opacity = 0;
 				stack.set_visible_child(empty_alert);
 				empty_alert.show_all();
@@ -156,6 +158,7 @@ namespace GameHub.UI.Views
 			else
 			{
 				settings.opacity = 1;
+				settings.sensitive = true;
 				skip_btn.opacity = 1;
 				stack.set_visible_child(welcome);
 				welcome.show_all();

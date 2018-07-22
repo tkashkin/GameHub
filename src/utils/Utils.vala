@@ -122,19 +122,24 @@ namespace GameHub.Utils
 		yield;
 	}
 
+	public static string md5(string s)
+	{
+		return Checksum.compute_for_string(ChecksumType.MD5, s, s.length);
+	}
+
 	public static async string? cache_image(string url, string prefix="remote")
 	{
 		var parts = url.split("?")[0].split(".");
 		var ext = parts.length > 1 ? parts[parts.length - 1] : null;
 		ext = ext != null && ext.length <= 6 ? "." + ext : null;
-		var hash = Checksum.compute_for_string(ChecksumType.MD5, url, url.length);
+		var hash = md5(url);
 		var remote = File.new_for_uri(url);
 		var cached = FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");
 		try
 		{
 			if(!cached.query_exists())
 			{
-				yield Downloader.get_instance().download(remote, { cached.get_path() });
+				yield Downloader.download(remote, cached);
 			}
 			return cached.get_path();
 		}
