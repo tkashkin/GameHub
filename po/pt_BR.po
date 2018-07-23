@@ -260,7 +260,7 @@ msgstr "Nenhum jogo do %s"
 
 #: src/ui/views/GamesView/GamesView.vala:282
 msgid "Get some Linux-compatible games"
-msgstr "Obtenha alguns jogos compatíveis com o Linux"
+msgstr "Obtenha alguns jogos compatíveis com o seu sistema"
 
 #: src/ui/views/GamesView/GamesView.vala:353
 msgid ""
@@ -295,7 +295,7 @@ msgstr "Descrição"
 
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:203
 msgid "Run"
-msgstr "Correr"
+msgstr "Jogar"
 
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:204
 msgid "Open installation directory"
