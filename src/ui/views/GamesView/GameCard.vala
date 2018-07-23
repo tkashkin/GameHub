@@ -28,9 +28,12 @@ namespace GameHub.UI.Views
 
 		construct
 		{
+			margin = 0;
+
 			card = new Frame(null);
 			card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
 			card.get_style_context().add_class("gamecard");
+			card.shadow_type = ShadowType.NONE;
 			card.margin = 4;
 			
 			child = card;
