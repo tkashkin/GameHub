@@ -1,0 +1,51 @@
+name: gamehub
+version: "0.6.0"
+summary: Games manager written in Vala that supports GOG, Steam and Humble Bundle
+description: |
+    Games manager/downloader/library written in Vala
+    Currently supported sources: Steam, GOG, Humble Bundle
+icon: ../data/com.github.tkashkin.gamehub.svg
+architectures: [amd64, i386]
+grade: stable
+confinement: strict
+
+apps:
+    gamehub:
+        command: usr/bin/com.github.tkashkin.gamehub
+        desktop: usr/share/applications/com.github.tkashkin.gamehub.desktop
+        plugs: [network, gsettings, home, desktop, pulseaudio, x11, wayland, mir]
+
+parts:
+    granite:
+        plugin: cmake
+        source: https://github.com/elementary/granite/archive/0.5.tar.gz
+        source-type: tar
+        configflags: [-DCMAKE_BUILD_TYPE=Release, -DCMAKE_INSTALL_PREFIX=/usr, -DCMAKE_INSTALL_LIBDIR=/usr/lib]
+        build-packages:
+            - build-essential
+            - libgee-0.8-dev
+            - libgirepository1.0-dev
+            - libgtk-3-dev
+            - cmake
+            - gobject-introspection
+
+    gamehub:
+        source: ..
+        plugin: meson
+        meson-parameters: [--prefix=/usr, -Ddistro=generic, -Dsnap=true]
+        after: [granite, desktop-gtk3]
+        build-packages:
+            - meson
+            - valac
+            - libgtk-3-dev
+            - libglib2.0-dev
+            - libwebkit2gtk-4.0-dev
+            - libjson-glib-dev
+            - libgee-0.8-dev
+            - libsoup2.4-dev
+            - libsqlite3-dev
+        stage-packages:
+            - libc6
+            - libgtk-3-dev
+            - libglib2.0-dev
+            - libwebkit2gtk-4.0-dev

@@ -91,13 +91,20 @@ namespace GameHub.Data.Sources.Steam
 				
 				foreach(var uid in users.get_members())
 				{
+					var user = users.get_object_member(uid);
+					
 					user_id = uid;
-					user_name = users.get_object_member(uid).get_string_member("PersonaName");
+					user_name = user.get_string_member("PersonaName");
+
+					var last = !user.has_member("mostrecent") || user.get_string_member("mostrecent") == "1";
+
+					debug(@"[Auth] SteamID: $(user_id), PersonaName: $(user_name), last: $(last)");
 					
-					debug("[Auth] SteamID: %s, PersonaName: %s", user_id, user_name);
-					
-					result = true;
-					break;
+					if(last)
+					{
+						result = true;
+						break;
+					}
 				}
 				
 				Idle.add(authenticate.callback);

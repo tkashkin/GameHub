@@ -63,6 +63,7 @@ namespace GameHub.UI.Views
 			empty_alert.show_action(_("Reload"));
 
 			games_grid = new FlowBox();
+			games_grid.get_style_context().add_class("games-grid");
 			games_grid.margin = 4;
 
 			games_grid.activate_on_single_click = false;

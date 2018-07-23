@@ -1,10 +1,15 @@
 .gamecard
 {
 	opacity: 0.75;
-	border-radius: 4px;
 	transition: 100ms;
-	background-color: #999;
+	background-color: alpha(#999, 0.5);
 	color: white;
+}
+
+.gamecard, .gamecard border
+{
+	border: none;
+	border-radius: 4px;
 }
 
 .gamecard.installed

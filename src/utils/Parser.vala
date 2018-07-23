@@ -118,6 +118,7 @@ namespace GameHub.Utils
 		
 		public static Json.Object? json_object(Json.Node root, string[] keys)
 		{
+			if(root == null) return null;
 			Json.Object? obj = root.get_object();
 			
 			foreach(var key in keys)
