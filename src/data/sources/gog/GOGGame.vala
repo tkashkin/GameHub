@@ -73,7 +73,8 @@ namespace GameHub.Data.Sources.GOG
 		{
 			if(custom_info == null || custom_info.length == 0 || !_product_info_updated)
 			{
-				var url = @"https://api.gog.com/products/$(id)?expand=downloads,description";
+				var lang = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
+				var url = @"https://api.gog.com/products/$(id)?expand=downloads,description" + (lang != null && lang.length > 0 ? "&locale=" + lang : "");
 				custom_info = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token));
 				_product_info_updated = true;
 			}

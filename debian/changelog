@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.6.1) xenial; urgency=low
+
+  * UI improvements
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 24 Jul 2018 08:01:37 +0300
+
 com.github.tkashkin.gamehub (0.6.0) xenial; urgency=low
 
   * Downloader rewrite: now it's possible to pause and cancel downloads

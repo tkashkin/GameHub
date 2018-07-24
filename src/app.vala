@@ -40,7 +40,10 @@ namespace GameHub
 			Ivy.Stacktrace.register_handlers();
 			#endif
 			
-			Intl.setlocale(LocaleCategory.ALL, "");
+			var app = new Application();
+
+			var lang = Environment.get_variable("LC_ALL") ?? "";
+			Intl.setlocale(LocaleCategory.ALL, lang);
 			Intl.bindtextdomain(ProjectConfig.GETTEXT_PACKAGE, ProjectConfig.GETTEXT_DIR);
 			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);
 
@@ -50,7 +53,6 @@ namespace GameHub
 			
 			GameSources = { new Steam(), new GOG(), new Humble() };
 
-			var app = new Application();
 			return app.run(args);
 		}
 	}

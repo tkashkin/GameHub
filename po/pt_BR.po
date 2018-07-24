@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-22 17:49+0300\n"
+"POT-Creation-Date: 2018-07-24 07:50+0300\n"
 "PO-Revision-Date: 2018-07-13 16:18+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -78,8 +78,8 @@ msgstr ""
 "Entre na sua conta no cliente Steam e retorne ao GameHub"
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:158
-#: src/ui/views/GamesView/GamesView.vala:355
+#: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:159
+#: src/ui/views/GamesView/GamesView.vala:356
 msgid "Settings"
 msgstr "Configurações"
 
@@ -221,48 +221,48 @@ msgstr ""
 msgid "Reload"
 msgstr "Recarregar"
 
-#: src/ui/views/GamesView/GamesView.vala:108
+#: src/ui/views/GamesView/GamesView.vala:109
 msgid "Grid view"
 msgstr "Visualizar grade"
 
-#: src/ui/views/GamesView/GamesView.vala:109
+#: src/ui/views/GamesView/GamesView.vala:110
 msgid "List view"
 msgstr "Visualizar lista"
 
-#: src/ui/views/GamesView/GamesView.vala:121
+#: src/ui/views/GamesView/GamesView.vala:122
 msgid "All games"
 msgstr "Todos os jogos"
 
-#: src/ui/views/GamesView/GamesView.vala:125
+#: src/ui/views/GamesView/GamesView.vala:126
 #, c-format
 msgid "%s games"
 msgstr "%s jogos"
 
-#: src/ui/views/GamesView/GamesView.vala:131
+#: src/ui/views/GamesView/GamesView.vala:132
 msgid "Downloads"
 msgstr "Baixado"
 
-#: src/ui/views/GamesView/GamesView.vala:153
+#: src/ui/views/GamesView/GamesView.vala:154
 msgid "Search"
 msgstr "Pesquisar"
 
-#: src/ui/views/GamesView/GamesView.vala:277
+#: src/ui/views/GamesView/GamesView.vala:278
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u jogo"
 msgstr[1] "%u jogos"
 
-#: src/ui/views/GamesView/GamesView.vala:281
+#: src/ui/views/GamesView/GamesView.vala:282
 #, c-format
 msgid "No %s games"
 msgstr "Nenhum jogo do %s"
 
-#: src/ui/views/GamesView/GamesView.vala:282
+#: src/ui/views/GamesView/GamesView.vala:283
 msgid "Get some Linux-compatible games"
 msgstr "Obtenha alguns jogos compatíveis com o seu sistema"
 
-#: src/ui/views/GamesView/GamesView.vala:353
+#: src/ui/views/GamesView/GamesView.vala:354
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -270,7 +270,7 @@ msgstr ""
 "Nenhum jogo foi carregado do Steam. Defina a privacidade da lista de jogos "
 "como pública ou use sua própria chave de API do Steam nas configurações."
 
-#: src/ui/views/GamesView/GamesView.vala:354
+#: src/ui/views/GamesView/GamesView.vala:355
 msgid "Privacy"
 msgstr "Privacidade"
 
@@ -309,13 +309,31 @@ msgstr "Abra a página da loja"
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:307
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:311
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:365
 msgid "Language"
 msgstr "Língua"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:310
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:314
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:368
 msgid "Languages"
 msgstr "Línguas"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:335
+msgid "Category"
+msgstr "Categoria"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:338
+msgid "Categories"
+msgstr "Categorias"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:353
+msgid "Genre"
+msgstr "Gênero"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:356
+msgid "Genres"
+msgstr "Gêneros"
 
 #: src/utils/downloader/Downloader.vala:136
 msgid "Starting download"
