@@ -22,7 +22,7 @@
 	opacity: 0.8;
 }
 
-.gamecard label
+.gamecard GtkLabel, .gamecard label
 {
 	color: rgba(255, 255, 255, 0.9);
 	font-weight: bold;
@@ -31,7 +31,7 @@
 	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-.gamecard label.status
+.gamecard GtkLabel.status, .gamecard label.status
 {
 	color: rgba(255, 255, 255, 0.6);
 	font-size: 0.9em;
@@ -41,14 +41,14 @@
 	transition: 100ms;
 }
 
-.gamecard.installing label.status,
-.gamecard.hover label.status
+.gamecard.installing GtkLabel.status, .gamecard.installing label.status,
+.gamecard.hover GtkLabel.status, .gamecard.hover label.status
 {
 	margin-bottom: 0px;
 	opacity: 1;
 }
 
-.gamecard.downloading label.status
+.gamecard.downloading GtkLabel.status, .gamecard.downloading label.status
 {
 	margin-bottom: 8px;
 	opacity: 1;
@@ -59,11 +59,15 @@
 	background-color: transparent;
 	background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
 	border-radius: 0 0 4px 4px;
+	border: none;
+	outline: none;
+	box-shadow: none;
 }
 
 .gamecard .actions
 {
 	background-color: rgba(0, 0, 0, 0.4);
+	border: 1px rgba(0, 0, 0, 0.6) solid;
 	border-radius: 4px;
 	transition: 100ms;
 }
@@ -125,11 +129,11 @@
 {
 	padding-bottom: 0;
 }
-list .h4
+GtkList .h4, list .h4
 {
 	padding-left: 6px;
 }
-button label
+GtkButton GtkLabel, button label
 {
 	padding: 0 6px;
 }
@@ -140,37 +144,44 @@ button label
 	box-shadow: 0 0 0 1px alpha(#000, 0.05), 0 3px 3px alpha(#000, 0.22);
 	border-radius: 4px;
 }
+GtkListBox:not(:backdrop) .list-row:selected:focus GtkLabel.category-label,
 list:not(:backdrop) row:selected:focus label.category-label
 {
 	color: alpha(#ffffff, 0.8);
 }
 
+GtkListBox.installers-list,
 list.installers-list
 {
 	background: transparent;
 }
 
+GtkListBox.downloads-list .list-row,
 list.downloads-list row
 {
 	background: transparent;
 	border-bottom: 1px alpha(#333, 0.3) solid;
 	outline: none;
 }
+GtkListBox.downloads-list .list-row:last-child,
 list.downloads-list row:last-child
 {
 	border-bottom: none;
 }
+GtkListBox.downloads-list .list-row:selected,
 list.downloads-list row:selected
 {
 	background: transparent;
 	outline: none;
 }
+GtkListBox.downloads-list .list-row:focus,
 list.downloads-list row:focus
 {
 	background: transparent;
 	outline: none;
 }
 
+GtkLabel.games-list-header,
 label.games-list-header
 {
 	background: alpha(#333, 0.1);

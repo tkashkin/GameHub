@@ -356,7 +356,9 @@ namespace GameHub.UI.Views
 							msg.add_button(_("Settings"), 2);
 
 							msg.close.connect(() => {
+								#if GTK_3_22
 								msg.revealed = false;
+								#endif
 								Timeout.add(250, () => { messages.remove(msg); return false; });
 							});
 
@@ -419,7 +421,11 @@ namespace GameHub.UI.Views
 		{
 			var bar = new InfoBar();
 			bar.message_type = type;
+
+			#if GTK_3_22
 			bar.revealed = false;
+			#endif
+
 			bar.show_close_button = true;
 			bar.get_content_area().add(new Label(text));
 
@@ -427,7 +433,9 @@ namespace GameHub.UI.Views
 
 			bar.show_all();
 
+			#if GTK_3_22
 			bar.revealed = true;
+			#endif
 
 			return bar;
 		}

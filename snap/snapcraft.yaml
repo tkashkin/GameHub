@@ -5,38 +5,44 @@ description: |
     Games manager/downloader/library written in Vala
     Currently supported sources: Steam, GOG, Humble Bundle
 icon: ../data/com.github.tkashkin.gamehub.svg
-architectures: [amd64, i386]
 grade: stable
 confinement: strict
 
+plugs:
+    gnome-3-26-1604:
+        interface: content
+        target: $SNAP/gnome-platform
+        default-provider: gnome-3-26-1604:gnome-3-26-1604
+    gtk-3-themes:
+        interface: content
+        target: $SNAP/usr/share/themes
+        default-provider: gtk-common-themes:gtk-3-themes
+    icon-themes:
+        interface: content
+        target: $SNAP/usr/share/icons
+        default-provider: gtk-common-themes:icon-themes
+    sound-themes:
+        interface: content
+        target: $SNAP/usr/share/sounds
+        default-provider: gtk-common-themes:sounds-themes
+
 apps:
     gamehub:
-        command: usr/bin/com.github.tkashkin.gamehub
+        command: desktop-launch snapcraft-preload $SNAP/usr/bin/com.github.tkashkin.gamehub
         desktop: usr/share/applications/com.github.tkashkin.gamehub.desktop
-        plugs: [network, gsettings, home, desktop, pulseaudio, x11, wayland, mir]
+        environment:
+            LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0/:$LD_LIBRARY_PATH
+        plugs: [network, network-observe, browser-support, gsettings, home, desktop, desktop-legacy, pulseaudio, opengl, x11, wayland, mir]
 
 parts:
-    granite:
-        plugin: cmake
-        source: https://github.com/elementary/granite/archive/0.5.tar.gz
-        source-type: tar
-        configflags: [-DCMAKE_BUILD_TYPE=Release, -DCMAKE_INSTALL_PREFIX=/usr, -DCMAKE_INSTALL_LIBDIR=/usr/lib]
-        build-packages:
-            - build-essential
-            - libgee-0.8-dev
-            - libgirepository1.0-dev
-            - libgtk-3-dev
-            - cmake
-            - gobject-introspection
-
     gamehub:
         source: ..
         plugin: meson
         meson-parameters: [--prefix=/usr, -Ddistro=generic, -Dsnap=true]
-        after: [granite, desktop-gtk3]
+        after: [desktop-gtk3, snapcraft-preload]
         build-packages:
+            - build-essential
             - meson
-            - valac
             - libgtk-3-dev
             - libglib2.0-dev
             - libwebkit2gtk-4.0-dev
@@ -45,7 +51,14 @@ parts:
             - libsoup2.4-dev
             - libsqlite3-dev
         stage-packages:
-            - libc6
-            - libgtk-3-dev
-            - libglib2.0-dev
-            - libwebkit2gtk-4.0-dev
+            - libgl1
+            - binutils
+            - libwebkit2gtk-4.0-37
+            - libcairo2
+            - libgdk-pixbuf2.0-0
+            - libglib2.0-0
+            - libgstreamer1.0-0
+            - libgtk-3-0
+            - libjavascriptcoregtk-4.0-18
+            - libpango-1.0-0
+            - libsoup2.4-1

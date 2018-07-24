@@ -11,3 +11,6 @@ debian/*
 *~
 
 .buildconfig
+
+snap/*
+!snap/snapcraft.yaml
