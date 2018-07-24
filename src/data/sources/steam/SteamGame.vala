@@ -44,7 +44,8 @@ namespace GameHub.Data.Sources.Steam
 		{
 			if(custom_info == null || custom_info.length == 0 || !_product_info_updated)
 			{
-				var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)";
+				var lang = Utils.get_language_name().down();
+				var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)" + (lang != null && lang.length > 0 ? "&l=" + lang : "");
 				custom_info = (yield Parser.load_remote_file_async(url));
 				_product_info_updated = true;
 			}

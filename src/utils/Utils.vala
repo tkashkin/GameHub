@@ -101,9 +101,14 @@ namespace GameHub.Utils
 		#endif
 	}
 	
+	public static string get_language_name()
+	{
+		return Posix.nl_langinfo((Posix.NLItem) 786439); // _NL_IDENTIFICATION_LANGUAGE
+	}
+
 	public static bool is_package_installed(string package)
 	{
-		#if FLATPAK
+		#if FLATPAK || SNAP
 		return false;
 		#elif PM_APT
 		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package});

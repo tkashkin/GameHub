@@ -1,4 +1,4 @@
-project('com.github.tkashkin.gamehub', 'vala', 'c', version: '0.6.0')
+project('com.github.tkashkin.gamehub', 'vala', 'c', version: '0.6.1')
 
 i18n = import('i18n')
 gnome = import('gnome')
@@ -7,6 +7,8 @@ add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()), lan
 
 if get_option('flatpak')
 	add_global_arguments('-D', 'FLATPAK', language: 'vala')
+elif get_option('snap')
+	add_global_arguments('-D', 'SNAP', language: 'vala')
 endif
 
 if get_option('distro') == 'debian'

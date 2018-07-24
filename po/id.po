@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-22 17:49+0300\n"
+"POT-Creation-Date: 2018-07-24 07:50+0300\n"
 "PO-Revision-Date: 2018-07-23 18:31+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: \n"
@@ -79,8 +79,8 @@ msgstr ""
 "Masuk ke akun Anda di klien Steam dan kembali ke GameHub"
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:158
-#: src/ui/views/GamesView/GamesView.vala:355
+#: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:159
+#: src/ui/views/GamesView/GamesView.vala:356
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -221,47 +221,47 @@ msgstr ""
 msgid "Reload"
 msgstr "Muat ulang"
 
-#: src/ui/views/GamesView/GamesView.vala:108
+#: src/ui/views/GamesView/GamesView.vala:109
 msgid "Grid view"
 msgstr "Tilikan kisi"
 
-#: src/ui/views/GamesView/GamesView.vala:109
+#: src/ui/views/GamesView/GamesView.vala:110
 msgid "List view"
 msgstr "Tilikan daftar"
 
-#: src/ui/views/GamesView/GamesView.vala:121
+#: src/ui/views/GamesView/GamesView.vala:122
 msgid "All games"
 msgstr "Semua permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:125
+#: src/ui/views/GamesView/GamesView.vala:126
 #, c-format
 msgid "%s games"
 msgstr "%s permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:131
+#: src/ui/views/GamesView/GamesView.vala:132
 msgid "Downloads"
 msgstr "Unduh"
 
-#: src/ui/views/GamesView/GamesView.vala:153
+#: src/ui/views/GamesView/GamesView.vala:154
 msgid "Search"
 msgstr "Cari"
 
-#: src/ui/views/GamesView/GamesView.vala:277
+#: src/ui/views/GamesView/GamesView.vala:278
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:281
+#: src/ui/views/GamesView/GamesView.vala:282
 #, c-format
 msgid "No %s games"
 msgstr "Tidak ada %s permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:282
+#: src/ui/views/GamesView/GamesView.vala:283
 msgid "Get some Linux-compatible games"
 msgstr "Dapatkan beberapa permainan Linux yang kompatibel"
 
-#: src/ui/views/GamesView/GamesView.vala:353
+#: src/ui/views/GamesView/GamesView.vala:354
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -269,7 +269,7 @@ msgstr ""
 "Tidak ada permainan yang dimuat dari Steam. Setel privasi daftar permainan "
 "anda ke publik atau gunakan kunci API Steam anda sendiri dalam pengaturan."
 
-#: src/ui/views/GamesView/GamesView.vala:354
+#: src/ui/views/GamesView/GamesView.vala:355
 msgid "Privacy"
 msgstr "Privasi"
 
@@ -308,13 +308,31 @@ msgstr "Buka halaman toko"
 msgid "Uninstall"
 msgstr "Copot pemasangan"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:307
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:311
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:365
 msgid "Language"
 msgstr "Bahasa"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:310
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:314
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:368
 msgid "Languages"
 msgstr "Bahasa"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:335
+msgid "Category"
+msgstr "Kategori"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:338
+msgid "Categories"
+msgstr "Kategori"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:353
+msgid "Genre"
+msgstr "Aliran"
+
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:356
+msgid "Genres"
+msgstr "Aliran"
 
 #: src/utils/downloader/Downloader.vala:136
 msgid "Starting download"
