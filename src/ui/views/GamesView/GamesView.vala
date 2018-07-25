@@ -234,11 +234,7 @@ namespace GameHub.UI.Views
 
 				Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
 			});
-			search.search_changed.connect(() => {
-				games_grid.invalidate_filter();
-				games_list.invalidate_filter();
-				Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
-			});
+			search.search_changed.connect(() => filter.mode_changed(filter));
 
 			spinner = new Spinner();
 
@@ -282,14 +278,41 @@ namespace GameHub.UI.Views
 				empty_alert.title = _("No %s games").printf(src.name);
 				empty_alert.description = _("Get some Linux-compatible games");
 				empty_alert.icon_name = src.icon + "-symbolic";
+				empty_alert.show_action(_("Reload"));
 				stack.set_visible_child(empty_alert);
+				return;
 			}
-			else
+			else if(search.text.strip().length > 0)
 			{
-				var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
-				stack.set_visible_child(tab);
-				saved_state.games_view = view.selected == 0 ? Settings.GamesView.GRID : Settings.GamesView.LIST;
+				var something_shown = false;
+
+				foreach(var card in games_grid.get_children())
+				{
+					if(games_filter(((GameCard) card).game))
+					{
+						something_shown = true;
+						break;
+					}
+				}
+
+				if(!something_shown)
+				{
+					empty_alert.title = _("No games matching “%s”").printf(search.text.strip());
+					empty_alert.description = null;
+					empty_alert.icon_name = null;
+					if(src != null)
+					{
+						empty_alert.title = _("No %1$s games matching “%2$s”").printf(src.name, search.text.strip());
+					}
+					empty_alert.hide_action();
+					stack.set_visible_child(empty_alert);
+					return;
+				}
 			}
+
+			var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
+			stack.set_visible_child(tab);
+			saved_state.games_view = view.selected == 0 ? Settings.GamesView.GRID : Settings.GamesView.LIST;
 		}
 
 		private void show_games()
@@ -405,14 +428,13 @@ namespace GameHub.UI.Views
 			var f = filter.selected;
 			GameSource? src = null;
 			if(f > 0) src = sources[f - 1];
-			return (src == null || game == null || src == game.source) && search.text.casefold() in game.name.casefold();
+			return (src == null || game == null || src == game.source) && search.text.strip().casefold() in game.name.casefold();
 		}
 
 		private void games_list_select_first_visible_row()
 		{
 			var row = games_list.get_selected_row() as GameListRow?;
-			if(row == null || games_filter(row.game)) return;
-
+			if(row != null && games_filter(row.game)) return;
 			row = games_list.get_row_at_y(32) as GameListRow?;
 			games_list.select_row(row);
 		}

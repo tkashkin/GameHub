@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-24 07:50+0300\n"
+"POT-Creation-Date: 2018-07-25 20:05+0300\n"
 "PO-Revision-Date: 2018-05-27 03:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -80,7 +80,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
 #: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:159
-#: src/ui/views/GamesView/GamesView.vala:356
+#: src/ui/views/GamesView/GamesView.vala:379
 msgid "Settings"
 msgstr "Настройки"
 
@@ -218,6 +218,7 @@ msgid "Get some games or enable some game sources in settings"
 msgstr "Получите игры или включите источники в настройках"
 
 #: src/ui/views/GamesView/GamesView.vala:63
+#: src/ui/views/GamesView/GamesView.vala:281
 msgid "Reload"
 msgstr "Обновить"
 
@@ -246,7 +247,7 @@ msgstr "Загрузки"
 msgid "Search"
 msgstr "Поиск"
 
-#: src/ui/views/GamesView/GamesView.vala:278
+#: src/ui/views/GamesView/GamesView.vala:274
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
@@ -254,16 +255,26 @@ msgstr[0] "%u игра"
 msgstr[1] "%u игры"
 msgstr[2] "%u игр"
 
-#: src/ui/views/GamesView/GamesView.vala:282
+#: src/ui/views/GamesView/GamesView.vala:278
 #, c-format
 msgid "No %s games"
 msgstr "Нет игр из %s"
 
-#: src/ui/views/GamesView/GamesView.vala:283
+#: src/ui/views/GamesView/GamesView.vala:279
 msgid "Get some Linux-compatible games"
 msgstr "Получите игры, совместимые с Linux"
 
-#: src/ui/views/GamesView/GamesView.vala:354
+#: src/ui/views/GamesView/GamesView.vala:300
+#, c-format
+msgid "No games matching “%s”"
+msgstr "Нет игр, соответствующих запросу «%s»"
+
+#: src/ui/views/GamesView/GamesView.vala:305
+#, c-format
+msgid "No %1$s games matching “%2$s”"
+msgstr "Нет игр из %1$s, соответствующих запросу «%2$s»"
+
+#: src/ui/views/GamesView/GamesView.vala:377
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -271,7 +282,7 @@ msgstr ""
 "Нет игр, загруженных из Steam. Настройте список игр как публичный или "
 "используйте свой API-ключ Steam в настройках."
 
-#: src/ui/views/GamesView/GamesView.vala:355
+#: src/ui/views/GamesView/GamesView.vala:378
 msgid "Privacy"
 msgstr "Приватность"
 
@@ -310,29 +321,29 @@ msgstr "Открыть страницу в магазине"
 msgid "Uninstall"
 msgstr "Удалить"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:311
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:365
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:313
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:367
 msgid "Language"
 msgstr "Язык"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:314
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:368
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:316
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:370
 msgid "Languages"
 msgstr "Языки"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:335
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:337
 msgid "Category"
 msgstr "Категория"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:338
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:340
 msgid "Categories"
 msgstr "Категории"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:353
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:355
 msgid "Genre"
 msgstr "Жанр"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:356
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:358
 msgid "Genres"
 msgstr "Жанры"
 
