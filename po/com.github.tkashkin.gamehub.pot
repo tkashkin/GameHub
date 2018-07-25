@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-24 07:50+0300\n"
+"POT-Creation-Date: 2018-07-25 20:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
@@ -78,7 +78,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
 #: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:159
-#: src/ui/views/GamesView/GamesView.vala:356
+#: src/ui/views/GamesView/GamesView.vala:379
 msgid "Settings"
 msgstr ""
 
@@ -215,6 +215,7 @@ msgid "Get some games or enable some game sources in settings"
 msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:63
+#: src/ui/views/GamesView/GamesView.vala:281
 msgid "Reload"
 msgstr ""
 
@@ -243,29 +244,39 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:278
+#: src/ui/views/GamesView/GamesView.vala:274
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ui/views/GamesView/GamesView.vala:282
+#: src/ui/views/GamesView/GamesView.vala:278
 #, c-format
 msgid "No %s games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:283
+#: src/ui/views/GamesView/GamesView.vala:279
 msgid "Get some Linux-compatible games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:354
+#: src/ui/views/GamesView/GamesView.vala:300
+#, c-format
+msgid "No games matching “%s”"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:305
+#, c-format
+msgid "No %1$s games matching “%2$s”"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:377
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:355
+#: src/ui/views/GamesView/GamesView.vala:378
 msgid "Privacy"
 msgstr ""
 
@@ -304,29 +315,29 @@ msgstr ""
 msgid "Uninstall"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:311
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:365
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:313
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:367
 msgid "Language"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:314
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:368
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:316
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:370
 msgid "Languages"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:335
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:337
 msgid "Category"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:338
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:340
 msgid "Categories"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:353
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:355
 msgid "Genre"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:356
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:358
 msgid "Genres"
 msgstr ""
 

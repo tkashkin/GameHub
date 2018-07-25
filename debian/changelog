@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.6.2) xenial; urgency=low
+
+  * Search crash fix and UI improvements
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 25 Jul 2018 20:04:18 +0300
+
 com.github.tkashkin.gamehub (0.6.1) xenial; urgency=low
 
   * UI improvements
