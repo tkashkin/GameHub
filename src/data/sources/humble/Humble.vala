@@ -69,9 +69,9 @@ namespace GameHub.Data.Sources.Humble
 			
 			wnd.finished.connect(token =>
 			{
-				user_token = token;
+				user_token = token.replace("\"", "");
 				settings.access_token = user_token ?? "";
-				debug("[Auth] Humble access token: %s", token);
+				debug("[Auth] Humble access token: %s", user_token);
 				Idle.add(get_token.callback);
 			});
 			
