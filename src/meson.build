@@ -60,9 +60,15 @@ executable(
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
 	
-	'ui/dialogs/SettingsDialog.vala',
-	'ui/dialogs/GameInstallDialog.vala',
+	'ui/dialogs/SettingsDialog/SettingsDialog.vala',
+	'ui/dialogs/SettingsDialog/SettingsDialogTab.vala',
 
+	'ui/dialogs/SettingsDialog/tabs/UI.vala',
+	'ui/dialogs/SettingsDialog/tabs/Steam.vala',
+	'ui/dialogs/SettingsDialog/tabs/GOG.vala',
+	'ui/dialogs/SettingsDialog/tabs/Humble.vala',
+
+	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
 
 	'ui/views/BaseView.vala',

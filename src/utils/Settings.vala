@@ -46,6 +46,7 @@ namespace GameHub.Settings
 	public class UI: Granite.Services.Settings
 	{
 		public bool dark_theme { get; set; }
+		public bool compact_list { get; set; }
 
 		public UI()
 		{

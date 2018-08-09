@@ -41,6 +41,12 @@
 	</screenshots>
 	
 	<releases>
+		<release type="development" version="0.7.0" date="2018-08-09">
+			<description>
+				<p>Settings dialog rework</p>
+				<p>Compact games list</p>
+			</description>
+		</release>
 		<release type="development" version="0.6.3" date="2018-08-06">
 			<description>
 				<p>Trying to fix Humble Bundle access token extraction</p>

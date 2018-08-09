@@ -12,8 +12,11 @@ namespace GameHub.UI.Views
 		public Game game;
 
 		private AutoSizeImage image;
+		private Label state_label;
 
 		private string old_icon;
+
+		private GameHub.Settings.UI ui_settings;
 
 		public GameListRow(Game game)
 		{
@@ -25,8 +28,6 @@ namespace GameHub.UI.Views
 			vbox.valign = Align.CENTER;
 
 			image = new AutoSizeImage();
-			image.set_constraint(36, 36, 1);
-			image.set_size_request(36, 36);
 
 			hbox.add(image);
 
@@ -34,7 +35,7 @@ namespace GameHub.UI.Views
 			label.halign = Align.START;
 			label.get_style_context().add_class("category-label");
 
-			var state_label = new Label(null);
+			state_label = new Label(null);
 			state_label.halign = Align.START;
 
 			vbox.add(label);
@@ -53,7 +54,25 @@ namespace GameHub.UI.Views
 
 			notify["is-selected"].connect(update_icon);
 
+			ui_settings = GameHub.Settings.UI.get_instance();
+			ui_settings.notify["compact-list"].connect(update_view);
+
 			show_all();
+		}
+
+		public override void show_all()
+		{
+			base.show_all();
+			update_view();
+		}
+
+		private void update_view()
+		{
+			var compact = ui_settings.compact_list;
+			var image_size = compact ? 16 : 36;
+			image.set_constraint(image_size, image_size, 1);
+			image.set_size_request(image_size, image_size);
+			state_label.visible = !compact;
 		}
 
 		private void update_icon()

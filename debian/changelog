@@ -1,3 +1,10 @@
+com.github.tkashkin.gamehub (0.7.0) xenial; urgency=low
+
+  * Settings dialog rework
+  * Compact games list
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 09 Aug 2018 20:27:23 +0300
+
 com.github.tkashkin.gamehub (0.6.3) xenial; urgency=low
 
   * Trying to fix Humble Bundle access token extraction

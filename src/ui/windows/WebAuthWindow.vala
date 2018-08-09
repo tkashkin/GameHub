@@ -58,7 +58,7 @@ namespace GameHub.UI.Windows
 				debug("[WebAuth/%s] URI: `%s`", source, uri);
 				
 				if(!is_finished && success_cookie_name != null)
-				{					
+				{
 					webview.web_context.get_cookie_manager().get_cookies.begin(uri, null, (obj, res) => {
 						try
 						{
