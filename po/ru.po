@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 20:05+0300\n"
+"POT-Creation-Date: 2018-08-09 20:06+0300\n"
 "PO-Revision-Date: 2018-05-27 03:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -52,7 +52,7 @@ msgstr "Не установлена"
 
 #: src/data/Game.vala:89
 msgid "Installed:"
-msgstr "Установленые:"
+msgstr "Установленные:"
 
 #: src/data/Game.vala:90
 msgid "Installing:"
@@ -64,7 +64,7 @@ msgstr "Загрузки:"
 
 #: src/data/Game.vala:93
 msgid "Not installed:"
-msgstr "Не установленые:"
+msgstr "Не установленные:"
 
 #: src/data/sources/steam/Steam.vala:17
 msgid "Your SteamID will be read from Steam configuration file"
@@ -78,76 +78,89 @@ msgstr ""
 "Файл конфигурации Steam не найден.\n"
 "Войдите в ваш аккаунт в клиенте Steam и вернитесь в GameHub"
 
-#: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:159
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:17
+#: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:58
+#: src/ui/views/GamesView/GamesView.vala:159
 #: src/ui/views/GamesView/GamesView.vala:379
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/ui/dialogs/SettingsDialog.vala:30
-msgid "Use dark theme"
-msgstr "Использовать тёмную тему"
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:27
+msgid "Some settings will be applied after application restart"
+msgstr "Некоторые настройки будут применены после перезапуска приложения"
 
-#: src/ui/dialogs/SettingsDialog.vala:34
-msgid "Steam API keys have limited number of uses per day"
-msgstr "API-ключи Steam имеют ограничение на количество использований в день"
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:42
+msgid "Interface"
+msgstr "Интерфейс"
 
-#: src/ui/dialogs/SettingsDialog.vala:34
-msgid "Generate key"
-msgstr "Сгенерировать ключ"
-
-#: src/ui/dialogs/SettingsDialog.vala:36
-msgid "Steam installation directory"
-msgstr "Папка установки Steam"
-
-#: src/ui/dialogs/SettingsDialog.vala:41
-msgid "GOG games directory"
-msgstr "Папка игр GOG"
-
-#: src/ui/dialogs/SettingsDialog.vala:43
-msgid "GOG installers cache"
-msgstr "Кэш установщиков GOG"
-
-#: src/ui/dialogs/SettingsDialog.vala:48
-msgid "Humble Bundle games directory"
-msgstr "Папка игр Humble Bundle"
-
-#: src/ui/dialogs/SettingsDialog.vala:50
-msgid "Humble Bundle installers cache"
-msgstr "Кэш установщиков Humble Bundle"
-
-#: src/ui/dialogs/SettingsDialog.vala:63
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:60
 #: src/ui/dialogs/GameDetailsDialog.vala:31
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/ui/dialogs/SettingsDialog.vala:106
-msgid "Default"
-msgstr "По умолчанию"
-
-#: src/ui/dialogs/SettingsDialog.vala:114
-msgid "Restore default API key"
-msgstr "Восстановить API-ключ по умолчанию"
-
-#: src/ui/dialogs/SettingsDialog.vala:125
-msgid "Steam API key"
-msgstr "API-ключ Steam"
-
-#: src/ui/dialogs/SettingsDialog.vala:215
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:134
 msgid "Open"
 msgstr "Открыть"
 
-#: src/ui/dialogs/SettingsDialog.vala:222
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:141
 msgid "Clear"
 msgstr "Очистить"
 
-#: src/ui/dialogs/SettingsDialog.vala:238
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:157
 #, c-format
 msgid "%llu installer; %s"
 msgid_plural "%llu installers; %s"
 msgstr[0] "%llu установщик; %s"
 msgstr[1] "%llu установщика; %s"
 msgstr[2] "%llu установщиков; %s"
+
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:18
+msgid "Use dark theme"
+msgstr "Использовать тёмную тему"
+
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:19
+msgid "Compact list"
+msgstr "Компактный список"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:20
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:20
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:20
+msgid "Enabled"
+msgstr "Включено"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:25
+msgid "Steam API keys have limited number of uses per day"
+msgstr "API-ключи Steam имеют ограничение на количество использований в день"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:25
+msgid "Generate key"
+msgstr "Сгенерировать ключ"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:29
+msgid "Installation directory"
+msgstr "Папка установки"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:37
+msgid "Default"
+msgstr "По умолчанию"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:45
+msgid "Restore default API key"
+msgstr "Восстановить API-ключ по умолчанию"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:56
+msgid "Steam API key"
+msgstr "API-ключ Steam"
+
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:25
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:25
+msgid "Games directory"
+msgstr "Папка игр"
+
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:27
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:27
+msgid "Installers cache"
+msgstr "Кэш установщиков"
 
 #: src/ui/dialogs/GameInstallDialog.vala:31
 #: src/ui/dialogs/GameInstallDialog.vala:131
@@ -372,9 +385,3 @@ msgstr "Приостановлено: %d%% (%s / %s)"
 #: src/utils/downloader/Downloader.vala:145
 msgid "Download cancelled"
 msgstr "Загрузка отменена"
-
-#~ msgid "Select main executable of the game"
-#~ msgstr "Выберите исполняемый файл игры"
-
-#~ msgid "Select"
-#~ msgstr "Выбрать"

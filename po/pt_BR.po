@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 20:05+0300\n"
+"POT-Creation-Date: 2018-08-09 20:06+0300\n"
 "PO-Revision-Date: 2018-07-13 16:18+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -77,76 +77,90 @@ msgstr ""
 "Arquivo de configuração do Steam não encontrado.\n"
 "Entre na sua conta no cliente Steam e retorne ao GameHub"
 
-#: src/ui/dialogs/SettingsDialog.vala:13 src/ui/views/WelcomeView.vala:34
-#: src/ui/views/WelcomeView.vala:58 src/ui/views/GamesView/GamesView.vala:159
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:17
+#: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:58
+#: src/ui/views/GamesView/GamesView.vala:159
 #: src/ui/views/GamesView/GamesView.vala:379
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/ui/dialogs/SettingsDialog.vala:30
-msgid "Use dark theme"
-msgstr "Use o tema escuro"
-
-#: src/ui/dialogs/SettingsDialog.vala:34
-msgid "Steam API keys have limited number of uses per day"
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:27
+msgid "Some settings will be applied after application restart"
 msgstr ""
-"As chaves da API do Steam têm um número limitado de utilizações por dia"
+"Algumas configurações serão aplicadas após a reinicialização do aplicativo"
 
-#: src/ui/dialogs/SettingsDialog.vala:34
-msgid "Generate key"
-msgstr "Gerar chave"
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:42
+msgid "Interface"
+msgstr "Interface"
 
-#: src/ui/dialogs/SettingsDialog.vala:36
-msgid "Steam installation directory"
-msgstr "Diretório de instalação do Steam"
-
-#: src/ui/dialogs/SettingsDialog.vala:41
-msgid "GOG games directory"
-msgstr "Diretório de jogos GOG"
-
-#: src/ui/dialogs/SettingsDialog.vala:43
-msgid "GOG installers cache"
-msgstr "Cache de instaladores do GOG"
-
-#: src/ui/dialogs/SettingsDialog.vala:48
-msgid "Humble Bundle games directory"
-msgstr "Diretório de jogos Humble Bundle"
-
-#: src/ui/dialogs/SettingsDialog.vala:50
-msgid "Humble Bundle installers cache"
-msgstr "Cache de instaladores do Humble Bundle"
-
-#: src/ui/dialogs/SettingsDialog.vala:63
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:60
 #: src/ui/dialogs/GameDetailsDialog.vala:31
 msgid "Close"
 msgstr "Fechar"
 
-#: src/ui/dialogs/SettingsDialog.vala:106
-msgid "Default"
-msgstr "Padrão"
-
-#: src/ui/dialogs/SettingsDialog.vala:114
-msgid "Restore default API key"
-msgstr "Restaurar chave de API padrão"
-
-#: src/ui/dialogs/SettingsDialog.vala:125
-msgid "Steam API key"
-msgstr "Chave da API do Steam"
-
-#: src/ui/dialogs/SettingsDialog.vala:215
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:134
 msgid "Open"
 msgstr "Abrir"
 
-#: src/ui/dialogs/SettingsDialog.vala:222
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:141
 msgid "Clear"
 msgstr "Limpar"
 
-#: src/ui/dialogs/SettingsDialog.vala:238
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:157
 #, c-format
 msgid "%llu installer; %s"
 msgid_plural "%llu installers; %s"
 msgstr[0] "%llu instalador; %s"
 msgstr[1] "%llu instaladores; %s"
+
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:18
+msgid "Use dark theme"
+msgstr "Use o tema escuro"
+
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:19
+msgid "Compact list"
+msgstr "Lista compacta"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:20
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:20
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:20
+msgid "Enabled"
+msgstr "Ativado"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:25
+msgid "Steam API keys have limited number of uses per day"
+msgstr ""
+"As chaves da API do Steam têm um número limitado de utilizações por dia"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:25
+msgid "Generate key"
+msgstr "Gerar chave"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:29
+msgid "Installation directory"
+msgstr "Diretório de instalação"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:37
+msgid "Default"
+msgstr "Padrão"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:45
+msgid "Restore default API key"
+msgstr "Restaurar chave de API padrão"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:56
+msgid "Steam API key"
+msgstr "Chave da API do Steam"
+
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:25
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:25
+msgid "Games directory"
+msgstr "Diretório de jogos"
+
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:27
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:27
+msgid "Installers cache"
+msgstr "Cache de instaladores"
 
 #: src/ui/dialogs/GameInstallDialog.vala:31
 #: src/ui/dialogs/GameInstallDialog.vala:131
@@ -371,9 +385,3 @@ msgstr "Pausado: %d%% (%s / %s)"
 #: src/utils/downloader/Downloader.vala:145
 msgid "Download cancelled"
 msgstr "Download cancelado"
-
-#~ msgid "Select main executable of the game"
-#~ msgstr "Selecione o executável principal do jogo"
-
-#~ msgid "Select"
-#~ msgstr "Selecione"

@@ -159,7 +159,7 @@ namespace GameHub.UI.Views
 			settings.tooltip_text = _("Settings");
 			settings.image = new Image.from_icon_name("open-menu", IconSize.LARGE_TOOLBAR);
 
-			settings.clicked.connect(() => new Dialogs.SettingsDialog().show_all());
+			settings.clicked.connect(() => new Dialogs.SettingsDialog.SettingsDialog());
 
 			if(sources.size > 1) titlebar.pack_start(filter);
 
