@@ -134,6 +134,7 @@ namespace GameHub.Utils
 
 	public static async string? cache_image(string url, string prefix="remote")
 	{
+		if(url == null || url == "") return null;
 		var parts = url.split("?")[0].split(".");
 		var ext = parts.length > 1 ? parts[parts.length - 1] : null;
 		ext = ext != null && ext.length <= 6 ? "." + ext : null;
