@@ -34,6 +34,11 @@ namespace GameHub.Data
 		{
 			return first == second || (first.source == second.source && first.id == second.id);
 		}
+
+		public static uint hash(Game game)
+		{
+			return str_hash(@"$(game.source.name)/$(game.id)");
+		}
 		
 		protected Game.Status _status = new Game.Status();
 		public signal void status_change(Game.Status status);

@@ -1,5 +1,6 @@
 using Gtk;
 using Gdk;
+using Gee;
 using Granite;
 using GameHub.Data;
 using GameHub.Utils;
@@ -9,15 +10,18 @@ namespace GameHub.UI.Views
 {
 	public class GameCard: FlowBoxChild
 	{
-		public Game game;
+		public Game game { get; construct; }
+		public HashMap<Game, ArrayList<Game>> merged_games { get; construct; }
 		
 		private Frame card;
 		private Overlay content;
 		private AutoSizeImage image;
-		private Image src_icon;
 		private Label label;
 		private Label status_label;
 		
+		private Box src_icons;
+		private Image src_icon;
+
 		private Box actions;
 		
 		private const int CARD_WIDTH_MIN = 320;
@@ -43,14 +47,16 @@ namespace GameHub.UI.Views
 			image = new AutoSizeImage();
 			image.set_constraint(CARD_WIDTH_MIN, CARD_WIDTH_MAX, CARD_RATIO);
 			
+			src_icons = new Box(Orientation.HORIZONTAL, 4);
+			src_icons.valign = Align.START;
+			src_icons.halign = Align.START;
+			src_icons.margin = 8;
+			src_icons.set_events(0);
+
 			src_icon = new Image();
 			src_icon.icon_size = IconSize.LARGE_TOOLBAR;
-			src_icon.valign = Align.START;
-			src_icon.halign = Align.START;
-			src_icon.margin = 8;
 			src_icon.opacity = 0.6;
-			src_icon.set_events(0);
-			
+
 			label = new Label("");
 			label.xpad = 8;
 			label.ypad = 4;
@@ -86,7 +92,7 @@ namespace GameHub.UI.Views
 			content.add(image);
 			content.add_overlay(actions);
 			content.add_overlay(info);
-			content.add_overlay(src_icon);
+			content.add_overlay(src_icons);
 			content.add_overlay(progress_bar);
 			
 			card.add(content);
@@ -109,7 +115,7 @@ namespace GameHub.UI.Views
 						break;
 
 					case 3:
-						new Dialogs.GameDetailsDialog(game).show_all();
+						new Dialogs.GameDetailsDialog(game, merged_games).show_all();
 						break;
 				}
 			});
@@ -117,14 +123,16 @@ namespace GameHub.UI.Views
 			show_all();
 		}
 		
-		public GameCard(Game game)
+		public GameCard(Game game, HashMap<Game, ArrayList<Game>> merged_games)
 		{
-			this.game = game;
+			Object(game: game, merged_games: merged_games);
 			
 			label.label = game.name;
 			
 			src_icon.icon_name = game.source.icon + "-symbolic";
 			
+			update();
+
 			card.get_style_context().add_class("installed");
 			
 			game.status_change.connect(s => {
@@ -165,6 +173,24 @@ namespace GameHub.UI.Views
 			game.status_change(game.status);
 
 			Utils.load_image.begin(image, game.image, "image");
+		}
+
+		public void update()
+		{
+			src_icons.foreach(w => src_icons.remove(w));
+			src_icons.add(src_icon);
+			if(merged_games.has_key(game))
+			{
+				foreach(var g in merged_games.get(game))
+				{
+					var icon = new Image();
+					icon.icon_name = g.source.icon + "-symbolic";
+					icon.icon_size = IconSize.LARGE_TOOLBAR;
+					icon.opacity = 0.6;
+					src_icons.add(icon);
+				}
+			}
+			src_icons.show_all();
 		}
 	}
 }

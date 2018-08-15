@@ -80,6 +80,7 @@ executable(
 	'ui/views/GamesView/GameDownloadProgressView.vala',
 
 	'ui/views/GameDetailsView/GameDetailsView.vala',
+	'ui/views/GameDetailsView/GameDetailsPage.vala',
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',

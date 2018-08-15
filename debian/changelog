@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.8.0) xenial; urgency=low
+
+  * Option to merge games from different sources
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 15 Aug 2018 16:25:54 +0300
+
 com.github.tkashkin.gamehub (0.7.0) xenial; urgency=low
 
   * Settings dialog rework
