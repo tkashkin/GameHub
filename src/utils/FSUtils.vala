@@ -42,7 +42,16 @@ namespace GameHub.Utils
 			
 			public class Steam
 			{
-				public static string Home { get { return FSUtils.Paths.Settings.get_instance().steam_home; } }
+				public static string Home {
+					get
+					{
+						#if FLATPAK
+						return Environment.get_user_data_dir() + "/.var/app/com.valvesoftware.Steam";
+						#else
+						return FSUtils.Paths.Settings.get_instance().steam_home;
+						#endif
+					}
+				}
 				public static string Config { owned get { return FSUtils.Paths.Steam.Home + "/steam/config"; } }
 				public static string LoginUsersVDF { owned get { return FSUtils.Paths.Steam.Config + "/loginusers.vdf"; } }
 				

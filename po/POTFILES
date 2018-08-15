@@ -41,6 +41,7 @@ src/ui/views/GamesView/GameListRow.vala
 src/ui/views/GamesView/GameDownloadProgressView.vala
 
 src/ui/views/GameDetailsView/GameDetailsView.vala
+src/ui/views/GameDetailsView/GameDetailsPage.vala
 
 src/ui/widgets/AutoSizeImage.vala
 src/ui/widgets/ActionButton.vala

@@ -167,4 +167,27 @@ namespace GameHub.Utils
 		catch(Error e){}
 		image.queue_draw();
 	}
+
+	private const string NAME_CHARS_TO_STRIP = "!@#$%^&*()-_+=:~`;?'\"<>,./\\|’“”„«»™℠®©";
+	public static string strip_name(string name, string? keep=null)
+	{
+		if(name == null) return name;
+		var n = name.strip();
+		if(n == "") return n;
+		unichar c;
+		for(int i = 0; NAME_CHARS_TO_STRIP.get_next_char(ref i, out c);)
+		{
+			if(keep != null && keep != "")
+			{
+				unichar k;
+				for(int j = 0; keep.get_next_char(ref j, out k);)
+				{
+					if(k == c) break;
+				}
+				if(k == c) break;
+			}
+			n = n.replace(c.to_string(), "");
+		}
+		return new Regex(" {2,}").replace(n, n.length, 0, " ").strip();
+	}
 }

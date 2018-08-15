@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-09 20:06+0300\n"
+"POT-Creation-Date: 2018-08-15 16:17+0300\n"
 "PO-Revision-Date: 2018-07-14 00:51+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -34,35 +34,35 @@ msgstr "Wszystkie gry w jednym miejscu"
 msgid "Manage your Steam, GOG and Humble Bundle games in one place."
 msgstr "Zarządzaj grami Steam, GOG i Humble Bundle w jednym miejscu"
 
-#: src/data/Game.vala:75
+#: src/data/Game.vala:80
 msgid "Installed"
 msgstr "Zainstalowana"
 
-#: src/data/Game.vala:76
+#: src/data/Game.vala:81
 msgid "Installing"
 msgstr "Instalacja"
 
-#: src/data/Game.vala:77 src/utils/downloader/Downloader.vala:137
+#: src/data/Game.vala:82 src/utils/downloader/Downloader.vala:137
 msgid "Download started"
 msgstr "Pobieranie rozpoczęte"
 
-#: src/data/Game.vala:79
+#: src/data/Game.vala:84
 msgid "Not installed"
 msgstr "Nie zainstalowana"
 
-#: src/data/Game.vala:89
+#: src/data/Game.vala:94
 msgid "Installed:"
 msgstr "Zainstalowani:"
 
-#: src/data/Game.vala:90
+#: src/data/Game.vala:95
 msgid "Installing:"
 msgstr "Instalowanie:"
 
-#: src/data/Game.vala:91
+#: src/data/Game.vala:96
 msgid "Downloading:"
 msgstr "Ściąganie:"
 
-#: src/data/Game.vala:93
+#: src/data/Game.vala:98
 msgid "Not installed:"
 msgstr "Nie zainstalowani:"
 
@@ -80,8 +80,8 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:17
 #: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:58
-#: src/ui/views/GamesView/GamesView.vala:159
-#: src/ui/views/GamesView/GamesView.vala:379
+#: src/ui/views/GamesView/GamesView.vala:163
+#: src/ui/views/GamesView/GamesView.vala:384
 msgid "Settings"
 msgstr "Ustawienia"
 
@@ -95,19 +95,19 @@ msgid "Interface"
 msgstr "Interface"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:60
-#: src/ui/dialogs/GameDetailsDialog.vala:31
+#: src/ui/dialogs/GameDetailsDialog.vala:32
 msgid "Close"
 msgstr "Zamknij"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:134
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:132
 msgid "Open"
 msgstr "Otwórz"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:141
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:139
 msgid "Clear"
 msgstr "Oczyścić"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:157
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:155
 #, c-format
 msgid "%llu installer; %s"
 msgid_plural "%llu installers; %s"
@@ -123,49 +123,53 @@ msgstr "Użyj ciemnego wyglądu"
 msgid "Compact list"
 msgstr "Lista kompaktowa"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:20
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:20
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:20
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:23
+msgid "Merge games from different sources"
+msgstr "Scalaj gry z różnych źródeł"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:23
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:23
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:23
 msgid "Enabled"
 msgstr "Włączone"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:25
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:28
 msgid "Steam API keys have limited number of uses per day"
 msgstr "Klucz Steam API mają ograniczoną liczbę zastosowań dziennie"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:25
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:28
 msgid "Generate key"
 msgstr "Wygeneruj klucz"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:29
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:32
 msgid "Installation directory"
 msgstr "Katalog instalacyjny"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:37
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:50
 msgid "Default"
 msgstr "Domyślny"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:45
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:58
 msgid "Restore default API key"
 msgstr "Przywróć domyślny klucz API"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:56
+#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:69
 msgid "Steam API key"
 msgstr "Klucz Steam API"
 
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:25
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:25
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:28
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:28
 msgid "Games directory"
 msgstr "Katalog gier"
 
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:27
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:27
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:30
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:30
 msgid "Installers cache"
 msgstr "Pamięć podręczna instalatorów"
 
 #: src/ui/dialogs/GameInstallDialog.vala:31
 #: src/ui/dialogs/GameInstallDialog.vala:131
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:202
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:187
 msgid "Install"
 msgstr "Instaluj"
 
@@ -223,45 +227,45 @@ msgstr "Instaluj %s"
 msgid "Return to GameHub after installing"
 msgstr "Wróć do GameHub po instalacji"
 
-#: src/ui/views/GamesView/GamesView.vala:62
+#: src/ui/views/GamesView/GamesView.vala:66
 msgid "No games"
 msgstr "Brak gier"
 
-#: src/ui/views/GamesView/GamesView.vala:62
+#: src/ui/views/GamesView/GamesView.vala:66
 msgid "Get some games or enable some game sources in settings"
 msgstr "Pobierz gry lub włącz niektóre źródła gier w ustawieniach"
 
-#: src/ui/views/GamesView/GamesView.vala:63
-#: src/ui/views/GamesView/GamesView.vala:281
+#: src/ui/views/GamesView/GamesView.vala:67
+#: src/ui/views/GamesView/GamesView.vala:285
 msgid "Reload"
 msgstr "Przeładować"
 
-#: src/ui/views/GamesView/GamesView.vala:109
+#: src/ui/views/GamesView/GamesView.vala:113
 msgid "Grid view"
 msgstr "Widok siatki"
 
-#: src/ui/views/GamesView/GamesView.vala:110
+#: src/ui/views/GamesView/GamesView.vala:114
 msgid "List view"
 msgstr "Widok listy"
 
-#: src/ui/views/GamesView/GamesView.vala:122
+#: src/ui/views/GamesView/GamesView.vala:126
 msgid "All games"
 msgstr "Wszystkie gry"
 
-#: src/ui/views/GamesView/GamesView.vala:126
+#: src/ui/views/GamesView/GamesView.vala:130
 #, c-format
 msgid "%s games"
 msgstr "Gry z %s"
 
-#: src/ui/views/GamesView/GamesView.vala:132
+#: src/ui/views/GamesView/GamesView.vala:136
 msgid "Downloads"
 msgstr "Pliki do pobrania"
 
-#: src/ui/views/GamesView/GamesView.vala:154
+#: src/ui/views/GamesView/GamesView.vala:158
 msgid "Search"
 msgstr "Szukaj"
 
-#: src/ui/views/GamesView/GamesView.vala:274
+#: src/ui/views/GamesView/GamesView.vala:278
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
@@ -269,26 +273,26 @@ msgstr[0] "%u gra"
 msgstr[1] "%u gry"
 msgstr[2] "%u gier"
 
-#: src/ui/views/GamesView/GamesView.vala:278
+#: src/ui/views/GamesView/GamesView.vala:282
 #, c-format
 msgid "No %s games"
 msgstr "Brak gier z %s"
 
-#: src/ui/views/GamesView/GamesView.vala:279
+#: src/ui/views/GamesView/GamesView.vala:283
 msgid "Get some Linux-compatible games"
 msgstr "Zdobądź gry kompatybilne z Linuksem"
 
-#: src/ui/views/GamesView/GamesView.vala:300
+#: src/ui/views/GamesView/GamesView.vala:304
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Brak gier pasujących do «%s»"
 
-#: src/ui/views/GamesView/GamesView.vala:305
+#: src/ui/views/GamesView/GamesView.vala:309
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Brak gier %1$s pasujących do «%2$s»"
 
-#: src/ui/views/GamesView/GamesView.vala:377
+#: src/ui/views/GamesView/GamesView.vala:382
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -296,68 +300,68 @@ msgstr ""
 "Żadne gry nie zostały załadowane ze Steam. Ustaw prywatność listy gier jako "
 "publiczną lub użyj swojego własnego klucza Steam API w ustawieniach."
 
-#: src/ui/views/GamesView/GamesView.vala:378
+#: src/ui/views/GamesView/GamesView.vala:383
 msgid "Privacy"
 msgstr "Prywatność"
 
 #: src/ui/views/GamesView/GameDownloadProgressView.vala:59
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:129
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:114
 msgid "Pause download"
 msgstr "Wstrzymaj pobieranie"
 
 #: src/ui/views/GamesView/GameDownloadProgressView.vala:64
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:135
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:120
 msgid "Resume download"
 msgstr "Wznów pobieranie"
 
 #: src/ui/views/GamesView/GameDownloadProgressView.vala:69
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:141
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:126
 msgid "Cancel download"
 msgstr "Anuluj pobieranie"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:162
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:147
 msgid "Description"
 msgstr "Opis"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:203
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:188
 msgid "Run"
 msgstr "Uruchom"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:204
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:189
 msgid "Open installation directory"
 msgstr "Otwórz katalog instalacyjny"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:205
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:190
 msgid "Open store page"
 msgstr "Otwórz stronę sklepu"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:206
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:191
 msgid "Uninstall"
 msgstr "Odinstaluj"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:313
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:367
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:304
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:358
 msgid "Language"
 msgstr "Język"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:316
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:370
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:307
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:361
 msgid "Languages"
 msgstr "Języki"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:337
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:328
 msgid "Category"
 msgstr "Kategoria"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:340
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:331
 msgid "Categories"
 msgstr "Kategorie"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:355
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:346
 msgid "Genre"
 msgstr "Gatunek"
 
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:358
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:349
 msgid "Genres"
 msgstr "Gatunki"
 

@@ -125,7 +125,6 @@ namespace GameHub.Data.Sources.Steam
 			return Settings.Auth.Steam.get_instance().authenticated && is_authenticated_in_steam_client;
 		}
 
-		private ArrayList<Game> games = new ArrayList<Game>(Game.is_equal);
 		public override async ArrayList<Game> load_games(FutureResult<Game>? game_loaded = null)
 		{
 			api_key = Settings.Auth.Steam.get_instance().api_key;

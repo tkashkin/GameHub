@@ -13,7 +13,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			Object(orientation: Orientation.VERTICAL, dialog: dlg);
 		}
 
-		protected void add_switch(string text, bool enabled, owned SwitchAction action)
+		protected Box add_switch(string text, bool enabled, owned SwitchAction action)
 		{
 			var sw = new Switch();
 			sw.active = enabled;
@@ -27,10 +27,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var hbox = new Box(Orientation.HORIZONTAL, 12);
 			hbox.add(label);
 			hbox.add(sw);
-			add_widget(hbox);
+			return add_widget(hbox);
 		}
 
-		protected void add_entry(string text, string val, owned EntryAction action)
+		protected Box add_entry(string text, string val, owned EntryAction action)
 		{
 			var entry = new Entry();
 			entry.text = val;
@@ -44,10 +44,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var hbox = new Box(Orientation.HORIZONTAL, 12);
 			hbox.add(label);
 			hbox.add(entry);
-			add_widget(hbox);
+			return add_widget(hbox);
 		}
 
-		protected void add_file_chooser(string text, FileChooserAction mode, string val, owned EntryAction action, bool create=true)
+		protected Box add_file_chooser(string text, FileChooserAction mode, string val, owned EntryAction action, bool create=true)
 		{
 			var chooser = new FileChooserButton(text, mode);
 			chooser.create_folders = create;
@@ -62,48 +62,46 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var hbox = new Box(Orientation.HORIZONTAL, 12);
 			hbox.add(label);
 			hbox.add(chooser);
-			add_widget(hbox);
+			return add_widget(hbox);
 		}
 
-		protected void add_label(string text)
+		protected Label add_label(string text)
 		{
 			var label = new Label(text);
 			label.halign = Align.START;
 			label.hexpand = true;
-			add_widget(label);
+			return add_widget(label);
 		}
 
-		protected void add_header(string text)
+		protected HeaderLabel add_header(string text)
 		{
 			var label = new HeaderLabel(text);
 			label.xpad = 4;
 			label.halign = Align.START;
 			label.hexpand = true;
-			add_widget(label);
+			return add_widget(label);
 		}
 
-		protected void add_header_with_checkbox(string text, bool enabled, owned SwitchAction action)
+		protected CheckButton add_header_with_checkbox(string text, bool enabled, owned SwitchAction action)
 		{
 			var cb = new CheckButton.with_label(text);
 			cb.active = enabled;
 			cb.halign = Align.START;
 			cb.hexpand = true;
 			cb.notify["active"].connect(() => { action(cb.active); });
-
 			cb.get_style_context().add_class(Granite.STYLE_CLASS_H4_LABEL);
-
-			add_widget(cb);
+			return add_widget(cb);
 		}
 
-		protected void add_link(string text, string uri)
+		protected LinkButton add_link(string text, string uri)
 		{
 			var link = new LinkButton.with_label(uri, text);
 			link.halign = Align.START;
 			link.hexpand = true;
-			add_widget(link);
+			return add_widget(link);
 		}
 
-		protected void add_labeled_link(string label_text, string text, string uri)
+		protected Box add_labeled_link(string label_text, string text, string uri)
 		{
 			var label = new Label(label_text);
 			label.max_width_chars = 44;
@@ -118,10 +116,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var hbox = new Box(Orientation.HORIZONTAL, 12);
 			hbox.add(label);
 			hbox.add(link);
-			add_widget(hbox);
+			return add_widget(hbox);
 		}
 
-		protected void add_cache_directory(string name, string path)
+		protected Box add_cache_directory(string name, string path)
 		{
 			var bbox = new Box(Orientation.HORIZONTAL, 2);
 			bbox.set_size_request(280, -1);
@@ -171,18 +169,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var hbox = new Box(Orientation.HORIZONTAL, 12);
 			hbox.add(label);
 			hbox.add(bbox);
-			add_widget(hbox);
+			return add_widget(hbox);
 		}
 
-		protected void add_separator()
+		protected Separator add_separator()
 		{
-			add_widget(new Separator(Orientation.HORIZONTAL));
+			return add_widget(new Separator(Orientation.HORIZONTAL));
 		}
 
-		protected void add_widget(Widget widget)
+		protected T add_widget<T>(T widget)
 		{
-			if(!(widget is HeaderLabel)) widget.margin = 4;
-			add(widget);
+			if(!(widget is HeaderLabel)) (widget as Widget).margin = 4;
+			add(widget as Widget);
+			return widget;
 		}
 
 		protected delegate void SwitchAction(bool active);

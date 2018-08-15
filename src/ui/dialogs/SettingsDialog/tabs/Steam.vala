@@ -6,6 +6,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 {
 	public class Steam: SettingsDialogTab
 	{
+		private Settings.Auth.Steam steam_auth;
+		private Box enabled_box;
+
 		public Steam(SettingsDialog dlg)
 		{
 			Object(orientation: Orientation.VERTICAL, dialog: dlg);
@@ -15,18 +18,28 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 		{
 			var paths = FSUtils.Paths.Settings.get_instance();
 
-			var steam_auth = Settings.Auth.Steam.get_instance();
+			steam_auth = Settings.Auth.Steam.get_instance();
 
-			add_switch(_("Enabled"), steam_auth.enabled, v => { steam_auth.enabled = v; dialog.show_restart_message(); });
+			enabled_box = add_switch(_("Enabled"), steam_auth.enabled, v => { steam_auth.enabled = v; update(); dialog.show_restart_message(); });
 
 			add_separator();
 
 			add_steam_apikey_entry();
 			add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey");
 
+			#if !FLATPAK
 			add_separator();
-
 			add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; dialog.show_restart_message(); }, false);
+			#endif
+
+			update();
+		}
+
+		private void update()
+		{
+			this.foreach(w => {
+				if(w != enabled_box) w.sensitive = steam_auth.enabled;
+			});
 		}
 
 		protected void add_steam_apikey_entry()

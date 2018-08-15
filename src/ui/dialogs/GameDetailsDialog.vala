@@ -1,4 +1,5 @@
 using Gtk;
+using Gee;
 using Granite;
 using GameHub.Data;
 using GameHub.Utils;
@@ -7,7 +8,7 @@ namespace GameHub.UI.Dialogs
 {
 	public class GameDetailsDialog: Dialog
 	{
-		public GameDetailsDialog(Game? game)
+		public GameDetailsDialog(Game? game, HashMap<Game, ArrayList<Game>> merged_games)
 		{
 			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: game.name);
 
@@ -17,7 +18,7 @@ namespace GameHub.UI.Dialogs
 			var content = get_content_area();
 			content.set_size_request(560, -1);
 
-			content.add(new GameHub.UI.Views.GameDetailsView(game));
+			content.add(new GameHub.UI.Views.GameDetailsView(game, merged_games));
 
 			response.connect((source, response_id) => {
 				switch(response_id)

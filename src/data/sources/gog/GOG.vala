@@ -153,7 +153,6 @@ namespace GameHub.Data.Sources.GOG
 			return user_token != null;
 		}
 
-		private ArrayList<Game> games = new ArrayList<Game>(Game.is_equal);
 		public override async ArrayList<Game> load_games(FutureResult<Game>? game_loaded = null)
 		{
 			if(user_id == null || user_token == null || games.size > 0)

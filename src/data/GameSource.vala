@@ -24,6 +24,8 @@ namespace GameHub.Data
 		public abstract bool is_authenticated();
 		public abstract bool can_authenticate_automatically();
 		
+		public ArrayList<Game> games { get; protected set; default = new ArrayList<Game>(Game.is_equal); }
+
 		public abstract async ArrayList<Game> load_games(FutureResult<Game>? game_loaded = null);
 		
 		public static GameSource? by_name(string name)

@@ -55,7 +55,7 @@ namespace GameHub.UI.Views
 			notify["is-selected"].connect(update_icon);
 
 			ui_settings = GameHub.Settings.UI.get_instance();
-			ui_settings.notify["compact-list"].connect(update_view);
+			ui_settings.notify["compact-list"].connect(update);
 
 			show_all();
 		}
@@ -63,10 +63,10 @@ namespace GameHub.UI.Views
 		public override void show_all()
 		{
 			base.show_all();
-			update_view();
+			update();
 		}
 
-		private void update_view()
+		public void update()
 		{
 			var compact = ui_settings.compact_list;
 			var image_size = compact ? 16 : 36;
