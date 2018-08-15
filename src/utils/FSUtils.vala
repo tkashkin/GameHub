@@ -43,7 +43,7 @@ namespace GameHub.Utils
 			public class Steam
 			{
 				public static string Home {
-					get
+					owned get
 					{
 						#if FLATPAK
 						return Environment.get_user_data_dir() + "/.var/app/com.valvesoftware.Steam";
