@@ -46,7 +46,7 @@ namespace GameHub.Utils
 					owned get
 					{
 						#if FLATPAK
-						return Environment.get_user_data_dir() + "/.var/app/com.valvesoftware.Steam/.steam";
+						return "/home/" + Environment.get_user_name() + "/.var/app/com.valvesoftware.Steam/.steam";
 						#else
 						return FSUtils.Paths.Settings.get_instance().steam_home;
 						#endif
