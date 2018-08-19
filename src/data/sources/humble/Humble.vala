@@ -85,55 +85,84 @@ namespace GameHub.Data.Sources.Humble
 			return user_token != null;
 		}
 
-		public override async ArrayList<Game> load_games(FutureResult<Game>? game_loaded = null)
+		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
+
+		public override ArrayList<Game> games { get { return _games; } }
+
+		public override async ArrayList<Game> load_games(Utils.FutureResult<Game>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
-			if(user_token == null || games.size > 0)
+			if(user_token == null || _games.size > 0)
 			{
-				return games;
+				return _games;
 			}
 			
-			games.clear();
-			
-			var cached = GamesDB.get_instance().get_games(this);
-			if(cached.size > 0)
-			{
-				games = cached;
-				if(game_loaded != null)
+			new Thread<void*>("HumbleLoading", () => {
+				_games.clear();
+
+				var cached = GamesDB.get_instance().get_games(this);
+				if(cached.size > 0)
 				{
 					foreach(var g in cached)
 					{
-						game_loaded(g);
+						if(!GamesDB.get_instance().is_game_merged(g))
+						{
+							_games.add(g);
+							if(game_loaded != null)
+							{
+								Idle.add(() => { game_loaded(g); return Source.REMOVE; });
+								Thread.usleep(10000);
+							}
+						}
 					}
 				}
-			}
-			games_count = games.size;
-			
-			var headers = new HashMap<string, string>();
-			headers["Cookie"] = @"$(AUTH_COOKIE)=\"$(user_token)\";";
-			
-			var orders = (yield Parser.parse_remote_json_file_async("https://www.humblebundle.com/api/v1/user/order?ajax=true", "GET", null, headers)).get_array();
-			
-			foreach(var order in orders.get_elements())
-			{
-				var key = order.get_object().get_string_member("gamekey");
-				
-				var root = (yield Parser.parse_remote_json_file_async(@"https://www.humblebundle.com/api/v1/order/$(key)?ajax=true", "GET", null, headers)).get_object();
-				var products = root.get_array_member("subproducts");
-				
-				foreach(var product in products.get_elements())
+
+				games_count = _games.size;
+
+				if(cache_loaded != null)
 				{
-					var game = new HumbleGame(this, key, product.get_object());
-					if(!games.contains(game) && yield game.is_for_linux())
-					{
-						games.add(game);
-						if(game_loaded != null) game_loaded(game);
-						GamesDB.get_instance().add_game(game);
-					}
-					games_count = games.size;
+					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
 				}
-			}
+
+				var headers = new HashMap<string, string>();
+				headers["Cookie"] = @"$(AUTH_COOKIE)=\"$(user_token)\";";
+
+				var orders = Parser.parse_remote_json_file("https://www.humblebundle.com/api/v1/user/order?ajax=true", "GET", null, headers).get_array();
+
+				foreach(var order in orders.get_elements())
+				{
+					var key = order.get_object().get_string_member("gamekey");
+
+					var root = Parser.parse_remote_json_file(@"https://www.humblebundle.com/api/v1/order/$(key)?ajax=true", "GET", null, headers).get_object();
+					var products = root.get_array_member("subproducts");
+
+					foreach(var product in products.get_elements())
+					{
+						var game = new HumbleGame(this, key, product.get_object());
+						if(!_games.contains(game) && !GamesDB.get_instance().is_game_merged(game))
+						{
+							game.is_for_linux.begin((obj, res) => {
+								if(!game.is_for_linux.end(res)) return;
+
+								_games.add(game);
+								if(game_loaded != null)
+								{
+									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
+								}
+								GamesDB.get_instance().add_game(game);
+							});
+						}
+						games_count = _games.size;
+					}
+				}
+
+				Idle.add(load_games.callback);
+
+				return null;
+			});
+
+			yield;
 			
-			return games;
+			return _games;
 		}
 	}
 }

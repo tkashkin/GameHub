@@ -20,11 +20,11 @@ namespace GameHub.Utils.Downloader
 			return downloader;
 		}
 
-		public abstract async File download(File remote, File local) throws Error;
+		public abstract async File download(File remote, File local, bool preserve_filename=true) throws Error;
 		public abstract Download? get_download(File remote);
 	}
 
-	public static async File download(File remote, File local) throws Error
+	public static async File download(File remote, File local, bool preserve_filename=true) throws Error
 	{
 		File result = local;
 		Error? error = null;
@@ -37,7 +37,7 @@ namespace GameHub.Utils.Downloader
 			}
 			else
 			{
-				downloader.download.begin(remote, local, (obj, res) => {
+				downloader.download.begin(remote, local, preserve_filename, (obj, res) => {
 					try
 					{
 						result = downloader.download.end(res);

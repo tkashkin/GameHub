@@ -145,7 +145,7 @@ namespace GameHub.Utils
 		{
 			if(!cached.query_exists())
 			{
-				yield Downloader.download(remote, cached);
+				yield Downloader.download(remote, cached, false);
 			}
 			return cached.get_path();
 		}

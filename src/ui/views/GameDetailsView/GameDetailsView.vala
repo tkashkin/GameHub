@@ -102,7 +102,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			var page = new GameDetailsPage(g);
 			page.content.margin = content_margin;
 			page.content.margin_top = stack_switcher.visible ? 40 : content_margin;
-			stack.add_titled(page, g.source.name, g.source.name);
+			stack.add_titled(page, g.source.name + "/" + g.id, g.source.name);
 		}
 	}
 }

@@ -45,7 +45,6 @@ namespace GameHub.UI.Views
 		private Settings.UI ui_settings;
 		private Settings.SavedState saved_state;
 
-		private bool merging_thread_running = false;
 		private HashMap<Game, ArrayList<Game>> merged_games = new HashMap<Game, ArrayList<Game>>(Game.hash, Game.is_equal);
 
 		construct
@@ -371,9 +370,13 @@ namespace GameHub.UI.Views
 					});
 					g.status_change(g.status);
 					merge_game(g);
+				}, () => {
+					//merge_games();
 				}, (obj, res) => {
 					loading_sources--;
 					spinner.active = loading_sources > 0;
+
+					merge_games();
 
 					if(src.games_count == 0)
 					{
@@ -506,47 +509,70 @@ namespace GameHub.UI.Views
 		private void merge_games()
 		{
 			if(!ui_settings.merge_games) return;
-			Idle.add(() => {
-				foreach(var src1 in GameSources)
+			new Thread<void*>("merging", () => {
+				foreach(var src in GameSources)
 				{
-					foreach(var game in src1.games)
+					foreach(var game in src.games)
 					{
 						merge_game(game);
 					}
 				}
-				return Source.REMOVE;
+				return null;
 			});
 		}
 
 		private void merge_game(Game game)
 		{
 			if(!ui_settings.merge_games) return;
-			Idle.add(() => {
+			new Thread<void*>("merging_" + game.source.name + "_" + game.id, () => {
+				if(!merged_games.has_key(game))
+				{
+					var merged = GamesDB.get_instance().get_merged_games(game);
+					if(merged != null && merged.size > 0)
+					{
+						debug(@"[Merge] '$(game.name)' ($(game.source.name):$(game.id)): $(merged.size) existing merges");
+						merged_games.set(game, merged);
+						Idle.add(() => {
+							games_list.foreach(r => { (r as GameListRow).update(); });
+							games_grid.foreach(c => { (c as GameCard).update(); });
+							return Source.REMOVE;
+						});
+					}
+				}
+
 				foreach(var src in GameSources)
 				{
-					if(game.source == src) continue;
 					foreach(var game2 in src.games)
 					{
-						if(merged_games.has_key(game2)) continue;
+						if(Game.is_equal(game, game2) || merged_games.has_key(game2)) continue;
 						bool name_match_exact = Utils.strip_name(game.name).casefold() == Utils.strip_name(game2.name).casefold();
-						bool name_match_fuzzy_prefix = Utils.strip_name(game.name, ":").casefold().has_prefix(Utils.strip_name(game2.name).casefold() + ":")
-						                            || Utils.strip_name(game2.name, ":").casefold().has_prefix(Utils.strip_name(game.name).casefold() + ":");
+						bool name_match_fuzzy_prefix = game.source != src
+						                  && (Utils.strip_name(game.name, ":").casefold().has_prefix(Utils.strip_name(game2.name).casefold() + ":")
+						                  || Utils.strip_name(game2.name, ":").casefold().has_prefix(Utils.strip_name(game.name).casefold() + ":"));
 						if(name_match_exact || name_match_fuzzy_prefix)
 						{
 							if(!merged_games.has_key(game))
 							{
 								merged_games.set(game, new ArrayList<Game>(Game.is_equal));
 							}
-							merged_games.get(game).add(game2);
-							debug(@"[Merge] Merging '$(game.name)' ($(game.source.name):$(game.id)) with '$(game2.name)' ($(game2.source.name):$(game2.id))");
-							remove_game(game2);
+							if(!merged_games.get(game).contains(game2))
+							{
+								merged_games.get(game).add(game2);
+								GamesDB.get_instance().merge(game, game2);
+								debug(@"[Merge] Merging '$(game.name)' ($(game.source.name):$(game.id)) with '$(game2.name)' ($(game2.source.name):$(game2.id))");
+
+								Idle.add(() => {
+									remove_game(game2);
+									games_list.foreach(r => { (r as GameListRow).update(); });
+									games_grid.foreach(c => { (c as GameCard).update(); });
+									return Source.REMOVE;
+								});
+							}
 						}
 					}
 				}
 
-				games_list.foreach(r => { (r as GameListRow).update(); });
-				games_grid.foreach(c => { (c as GameCard).update(); });
-				return Source.REMOVE;
+				return null;
 			});
 		}
 	}
