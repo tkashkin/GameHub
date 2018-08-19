@@ -61,6 +61,14 @@ namespace GameHub.UI.Views.GameDetailsView
 				if(page != null) page.update();
 			});
 
+			get_style_context().add_class("gameinfo-background");
+			var ui_settings = GameHub.Settings.UI.get_instance();
+			ui_settings.notify["dark-theme"].connect(() => {
+				get_style_context().remove_class("dark");
+				if(ui_settings.dark_theme) get_style_context().add_class("dark");
+			});
+			ui_settings.notify_property("dark-theme");
+
 			Idle.add(update);
 		}
 

@@ -100,8 +100,6 @@ namespace GameHub.Data
 
 					yield Utils.run_async(cmd, null, false, true);
 
-					Utils.run({"chmod", "-R", "+x", game.install_dir.get_path()});
-
 					try
 					{
 						string? dirname = null;
@@ -126,6 +124,8 @@ namespace GameHub.Data
 						}
 					}
 					catch(Error e){}
+
+					Utils.run({"chmod", "-R", "+x", game.install_dir.get_path()});
 
 					game.status = new Game.Status(game.executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 				}

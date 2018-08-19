@@ -170,7 +170,8 @@ namespace GameHub.Data.Sources.GOG
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				yield Utils.run_thread({path}, null, true);
+				var dir = executable.get_parent().get_path();
+				yield Utils.run_thread({path}, dir, true);
 			}
 		}
 

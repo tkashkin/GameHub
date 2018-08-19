@@ -189,3 +189,14 @@ label.games-list-header
 	border-top: 1px alpha(#333, 0.3) solid;
 	border-bottom: 1px alpha(#333, 0.3) solid;
 }
+
+.gameinfo-background
+{
+	background-color: rgb(245, 245, 245);
+	color: rgb(66, 66, 66);
+}
+.gameinfo-background.dark
+{
+	background-color: rgb(59, 63, 69);
+	color: white;
+}
