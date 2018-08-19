@@ -40,6 +40,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			tabs_switcher.margin_bottom = 8;
 
 			add_tab("ui", new Tabs.UI(this), _("Interface"));
+			add_tab("collection", new Tabs.Collection(this), _("Collection"));
 			add_tab("gs/steam", new Tabs.Steam(this), "Steam", "steam-symbolic");
 			add_tab("gs/gog", new Tabs.GOG(this), "GOG", "gog-symbolic");
 			add_tab("gs/humble", new Tabs.Humble(this), "Humble Bundle", "humble-symbolic");

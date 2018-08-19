@@ -79,32 +79,19 @@ namespace GameHub.Data
 
 					FSUtils.mkdir(game.install_dir.get_path());
 
-					var info = file.query_info(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
-					var type = info.get_content_type();
+					var type = yield guess_type(file);
 
 					string[] cmd = {"xdg-open", path}; // unknown type, just open
 
 					switch(type)
 					{
-						case "application/x-executable":
-						case "application/x-elf":
-						case "application/x-sh":
-						case "application/x-shellscript":
+						case InstallerType.EXECUTABLE:
 							cmd = {path, "--", "--i-agree-to-all-licenses",
 									"--noreadme", "--nooptions", "--noprompt",
 									"--destination", game.install_dir.get_path()}; // probably mojosetup
 							break;
 
-						case "application/zip":
-						case "application/x-tar":
-						case "application/x-gtar":
-						case "application/x-cpio":
-						case "application/x-bzip2":
-						case "application/gzip":
-						case "application/x-lzip":
-						case "application/x-lzma":
-						case "application/x-7z-compressed":
-						case "application/x-rar-compressed":
+						case InstallerType.ARCHIVE:
 							cmd = {"file-roller", path, "-e", game.install_dir.get_path()}; // extract with file-roller
 							break;
 					}
@@ -146,6 +133,74 @@ namespace GameHub.Data
 				catch(Error e)
 				{
 					warning(e.message);
+				}
+			}
+
+			private static async InstallerType guess_type(File file)
+			{
+				var type = InstallerType.UNKNOWN;
+
+				var finfo = yield file.query_info_async(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
+				var mime = finfo.get_content_type();
+				type = InstallerType.from_mime(mime);
+
+				if(type != InstallerType.UNKNOWN) return type;
+
+				var info = yield Utils.run_thread({"file", "-bi", file.get_path()});
+				if(info != null && info.length > 0)
+				{
+					mime = info.split(";")[0];
+					if(mime != null && mime.length > 0)
+					{
+						type = InstallerType.from_mime(mime);
+					}
+				}
+
+				if(type != InstallerType.UNKNOWN) return type;
+
+				string[] exe_ext = {"sh", "elf", "bin", "run"};
+				string[] arc_ext = {"zip", "tar", "cpio", "bz2", "gz", "lz", "lzma", "7z", "rar"};
+
+				foreach(var ext in exe_ext)
+				{
+					if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
+				}
+				foreach(var ext in arc_ext)
+				{
+					if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.ARCHIVE;
+				}
+
+				return type;
+			}
+
+			private enum InstallerType
+			{
+				UNKNOWN, EXECUTABLE, ARCHIVE;
+
+				public static InstallerType from_mime(string type)
+				{
+					switch(type.strip())
+					{
+						case "application/x-executable":
+						case "application/x-elf":
+						case "application/x-sh":
+						case "application/x-shellscript":
+							return InstallerType.EXECUTABLE;
+
+						case "application/zip":
+						case "application/x-tar":
+						case "application/x-gtar":
+						case "application/x-cpio":
+						case "application/x-bzip2":
+						case "application/gzip":
+						case "application/x-lzip":
+						case "application/x-lzma":
+						case "application/x-7z-compressed":
+						case "application/x-rar-compressed":
+						case "application/x-compressed-tar":
+							return InstallerType.ARCHIVE;
+					}
+					return InstallerType.UNKNOWN;
 				}
 			}
 		}
