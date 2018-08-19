@@ -29,6 +29,14 @@ namespace GameHub.UI.Dialogs
 				}
 			});
 
+			get_style_context().add_class("gameinfo-background");
+			var ui_settings = GameHub.Settings.UI.get_instance();
+			ui_settings.notify["dark-theme"].connect(() => {
+				get_style_context().remove_class("dark");
+				if(ui_settings.dark_theme) get_style_context().add_class("dark");
+			});
+			ui_settings.notify_property("dark-theme");
+
 			add_button(_("Close"), ResponseType.CLOSE).margin_end = 7;
 			show_all();
 		}

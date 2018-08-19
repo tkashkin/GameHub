@@ -181,6 +181,10 @@ namespace GameHub.Data.Sources.Humble
 				executable = chooser.get_file();
 				custom_info = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
 				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+				if(executable.query_exists())
+				{
+					Utils.run({"chmod", "+x", executable.get_path()});
+				}
 				GamesDB.get_instance().add_game(this);
 			}
 
@@ -192,7 +196,8 @@ namespace GameHub.Data.Sources.Humble
 			if(is_installed())
 			{
 				var path = executable.get_path();
-				yield Utils.run_thread({path}, null, true);
+				var dir = executable.get_parent().get_path();
+				yield Utils.run_thread({path}, dir, true);
 			}
 		}
 
