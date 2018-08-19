@@ -18,7 +18,7 @@ namespace GameHub.UI.Dialogs
 			var content = get_content_area();
 			content.set_size_request(560, -1);
 
-			content.add(new GameHub.UI.Views.GameDetailsView(game, merged_games));
+			content.add(new GameHub.UI.Views.GameDetailsView.GameDetailsView(game, merged_games));
 
 			response.connect((source, response_id) => {
 				switch(response_id)

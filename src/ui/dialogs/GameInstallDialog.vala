@@ -146,7 +146,7 @@ namespace GameHub.UI.Dialogs
 				this.installer = installer;
 				
 				var box = new Box(Orientation.HORIZONTAL, 0);
-				box.margin_start = box.margin_end = box.margin_end = 8;
+				box.margin_start = box.margin_end = 8;
 				box.margin_top = box.margin_bottom = 4;
 
 				var name = new Label(installer.name);
@@ -155,6 +155,7 @@ namespace GameHub.UI.Dialogs
 
 				var size = new Label(format_size(installer.file_size));
 				size.halign = Align.END;
+
 				box.add(name);
 				box.add(size);
 				child = box;
