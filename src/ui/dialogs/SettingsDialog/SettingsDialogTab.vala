@@ -30,12 +30,14 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			return add_widget(hbox);
 		}
 
-		protected Box add_entry(string text, string val, owned EntryAction action)
+		protected Box add_entry(string text, string val, owned EntryAction action, string? icon=null)
 		{
 			var entry = new Entry();
 			entry.text = val;
 			entry.notify["text"].connect(() => { action(entry.text); });
 			entry.set_size_request(280, -1);
+
+			entry.primary_icon_name = icon;
 
 			var label = new Label(text);
 			label.halign = Align.START;
@@ -71,6 +73,26 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			label.halign = Align.START;
 			label.hexpand = true;
 			return add_widget(label);
+		}
+
+		protected Box add_labels(string text, string text2)
+		{
+			var label = new Label(text);
+			label.max_width_chars = 44;
+			label.xalign = 0;
+			label.wrap = true;
+			label.halign = Align.START;
+			label.hexpand = true;
+
+			var label2 = new Label(text2);
+			label2.xalign = 0;
+			label2.wrap = true;
+			label2.set_size_request(280, -1);
+
+			var hbox = new Box(Orientation.HORIZONTAL, 12);
+			hbox.add(label);
+			hbox.add(label2);
+			return add_widget(hbox);
 		}
 
 		protected HeaderLabel add_header(string text)
