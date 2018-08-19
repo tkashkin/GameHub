@@ -25,7 +25,7 @@ namespace GameHub.UI.Views
 
 		private Paned games_list_paned;
 		private ListBox games_list;
-		private GameDetailsView games_list_details;
+		private GameDetailsView.GameDetailsView games_list_details;
 
 		private Granite.Widgets.ModeButton view;
 
@@ -86,7 +86,7 @@ namespace GameHub.UI.Views
 			games_list = new ListBox();
 			games_list.selection_mode = SelectionMode.BROWSE;
 
-			games_list_details = new GameDetailsView(null, merged_games);
+			games_list_details = new GameDetailsView.GameDetailsView(null, merged_games);
 			games_list_details.content_margin = 16;
 
 			var games_list_scrolled = new ScrolledWindow(null, null);

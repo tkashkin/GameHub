@@ -82,6 +82,11 @@ executable(
 	'ui/views/GameDetailsView/GameDetailsView.vala',
 	'ui/views/GameDetailsView/GameDetailsPage.vala',
 
+	'ui/views/GameDetailsView/GameDetailsBlock.vala',
+	'ui/views/GameDetailsView/blocks/Description.vala',
+	'ui/views/GameDetailsView/blocks/GOGDetails.vala',
+	'ui/views/GameDetailsView/blocks/SteamDetails.vala',
+
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
 

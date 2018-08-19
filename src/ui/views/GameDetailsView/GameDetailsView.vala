@@ -7,7 +7,7 @@ using GameHub.Utils;
 using GameHub.UI.Widgets;
 using WebKit;
 
-namespace GameHub.UI.Views
+namespace GameHub.UI.Views.GameDetailsView
 {
 	public class GameDetailsView: BaseView
 	{

@@ -7,7 +7,7 @@ using GameHub.Utils;
 using GameHub.UI.Widgets;
 using WebKit;
 
-namespace GameHub.UI.Views
+namespace GameHub.UI.Views.GameDetailsView
 {
 	public class GameDetailsPage: Grid
 	{
@@ -19,6 +19,7 @@ namespace GameHub.UI.Views
 		}
 
 		private bool is_dialog = false;
+		private bool is_updated = false;
 
 		private Stack stack;
 		private Spinner spinner;
@@ -45,13 +46,7 @@ namespace GameHub.UI.Views
 		private ActionButton action_open_store_page;
 		private ActionButton action_uninstall;
 
-		private Granite.HeaderLabel description_header;
-		private WebView description;
-
-		private Box custom_info;
-
-		private const string CSS_LIGHT = "background: rgb(245, 245, 245); color: rgb(66, 66, 66)";
-		private const string CSS_DARK = "background: rgb(59, 63, 69); color: white";
+		private Box blocks;
 
 		construct
 		{
@@ -144,36 +139,15 @@ namespace GameHub.UI.Views
 			title_hbox.add(title_vbox);
 			title_hbox.add(src_icon);
 
-			description_header = new Granite.HeaderLabel(_("Description"));
-			description_header.margin_start = description_header.margin_end = 7;
-			description_header.get_style_context().add_class("description-header");
-
-			description = new WebView();
-			description.hexpand = true;
-			description.vexpand = false; //(!is_dialog);
-			description.sensitive = false;
-			description.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
-
-			custom_info = new Box(Orientation.VERTICAL, 0);
-			custom_info.hexpand = false;
-			custom_info.margin_start = custom_info.margin_end = 8;
-
-			var ui_settings = GameHub.Settings.UI.get_instance();
-			ui_settings.notify["dark-theme"].connect(() => {
-				description.user_content_manager.remove_all_style_sheets();
-				var style = ui_settings.dark_theme ? CSS_DARK : CSS_LIGHT;
-				description.user_content_manager.add_style_sheet(new UserStyleSheet(@"body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; $(style)} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%;}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
-			});
-			ui_settings.notify_property("dark-theme");
+			blocks = new Box(Orientation.VERTICAL, 0);
+			blocks.hexpand = false;
 
 			actions = new Box(Orientation.HORIZONTAL, 0);
 			actions.margin_top = actions.margin_bottom = 16;
 
 			content.add(title_hbox);
 			content.add(actions);
-			content.add(custom_info);
-			content.add(description_header);
-			content.add(description);
+			content.add(blocks);
 
 			content_scrolled.add(content);
 
@@ -222,35 +196,31 @@ namespace GameHub.UI.Views
 			content_scrolled.max_content_height = is_dialog ? 640 : -1;
 			#endif
 
+			if(is_updated) return;
+
 			stack.set_visible_child(spinner);
 
-			if(_game == null) return;
+			if(game == null) return;
 
 			yield game.update_game_info();
 
-			if(_game == null) return;	// game can be changed or nullified while updating async
+			is_updated = true;
 
 			title.label = game.name;
 			src_icon.icon_name = game.source.icon + "-symbolic";
 
-			if(game.description != null)
+			blocks.foreach(b => blocks.remove(b));
+
+			GameDetailsBlock[] blk = { new Blocks.GOGDetails(game), new Blocks.SteamDetails(game), new Blocks.Description(game) };
+			foreach(var b in blk)
 			{
-				description_header.show();
-				description.show();
-				description.set_size_request(-1, -1);
-				var desc = game.description + "<script>setInterval(function(){document.title = -1; document.title = document.documentElement.clientHeight;},250);</script>";
-				description.load_html(desc, null);
-				description.notify["title"].connect(e => {
-					description.set_size_request(-1, -1);
-					var height = int.parse(description.title);
-					description.set_size_request(-1, height);
-				});
+				if(b.supports_game)
+				{
+					blocks.add(new Separator(Orientation.HORIZONTAL));
+					blocks.add(b);
+				}
 			}
-			else
-			{
-				description_header.hide();
-				description.hide();
-			}
+			blocks.show_all();
 
 			game.status_change.connect(s => {
 				status.label = s.description;
@@ -282,91 +252,6 @@ namespace GameHub.UI.Views
 				action_uninstall.visible = s.state == Game.State.INSTALLED;
 			});
 			game.status_change(game.status);
-
-			custom_info.foreach(w => custom_info.remove(w));
-			if(game.custom_info.length > 0)
-			{
-				var root = Parser.parse_json(game.custom_info).get_object();
-
-				if(_game is GameHub.Data.Sources.GOG.GOGGame)
-				{
-					var sys_langs = Intl.get_language_names();
-					var langs = root.get_object_member("languages");
-					if(langs != null)
-					{
-						var langs_string = "";
-						foreach(var l in langs.get_members())
-						{
-							var lang = langs.get_string_member(l);
-							if(l in sys_langs) lang = @"<b>$(lang)</b>";
-							langs_string += (langs_string.length > 0 ? ", " : "") + lang;
-						}
-						var langs_label = _("Language");
-						if(langs_string.contains(","))
-						{
-							langs_label = _("Languages");
-						}
-						add_custom_info_label(langs_label, langs_string, false, true);
-					}
-				}
-				else if(_game is GameHub.Data.Sources.Steam.SteamGame)
-				{
-					var app = root.has_member(game.id) ? root.get_object_member(game.id) : null;
-					var data = app != null && app.has_member("data") ? app.get_object_member("data") : null;
-					if(data != null)
-					{
-						var categories = data.has_member("categories") ? data.get_array_member("categories") : null;
-						if(categories != null)
-						{
-							var categories_string = "";
-							foreach(var c in categories.get_elements())
-							{
-								var cat = c.get_object().get_string_member("description");
-								categories_string += (categories_string.length > 0 ? ", " : "") + cat;
-							}
-
-							var categories_label = _("Category");
-							if(categories_string.contains(","))
-							{
-								categories_label = _("Categories");
-							}
-							add_custom_info_label(categories_label, categories_string, false, true);
-						}
-
-						var genres = data.has_member("genres") ? data.get_array_member("genres") : null;
-						if(genres != null)
-						{
-							var genres_string = "";
-							foreach(var g in genres.get_elements())
-							{
-								var genre = g.get_object().get_string_member("description");
-								genres_string += (genres_string.length > 0 ? ", " : "") + genre;
-							}
-
-							var genres_label = _("Genre");
-							if(genres_string.contains(","))
-							{
-								genres_label = _("Genres");
-							}
-							add_custom_info_label(genres_label, genres_string, false, true);
-						}
-
-						var langs = data.has_member("supported_languages") ? data.get_string_member("supported_languages") : null;
-						if(langs != null)
-						{
-							langs = langs.split("<br><strong>*</strong>")[0].replace("strong>", "b>");
-							var langs_label = _("Language");
-							if(langs.contains(","))
-							{
-								langs_label = _("Languages");
-							}
-							add_custom_info_label(langs_label, langs, false, true);
-						}
-					}
-				}
-
-				custom_info.show_all();
-			}
 
 			yield Utils.load_image(icon, game.icon, "icon");
 
@@ -421,33 +306,6 @@ namespace GameHub.UI.Views
 			actions.add(button);
 			button.clicked.connect(() => action());
 			return button;
-		}
-
-		private void add_custom_info_label(string title, string? text, bool multiline=true, bool markup=false)
-		{
-			if(text == null || text == "") return;
-
-			var title_label = new Granite.HeaderLabel(title);
-			title_label.set_size_request(multiline ? -1 : 128, -1);
-			title_label.valign = Align.START;
-
-			var text_label = new Label(text);
-			text_label.halign = Align.START;
-			text_label.hexpand = false;
-			text_label.wrap = true;
-			text_label.xalign = 0;
-			text_label.max_width_chars = is_dialog ? 80 : -1;
-			text_label.use_markup = markup;
-
-			if(!multiline)
-			{
-				text_label.get_style_context().add_class("gameinfo-singleline-value");
-			}
-
-			var box = new Box(multiline ? Orientation.VERTICAL : Orientation.HORIZONTAL, 0);
-			box.add(title_label);
-			box.add(text_label);
-			custom_info.add(box);
 		}
 	}
 }

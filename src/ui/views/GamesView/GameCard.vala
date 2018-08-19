@@ -11,7 +11,7 @@ namespace GameHub.UI.Views
 	public class GameCard: FlowBoxChild
 	{
 		public Game game { get; construct; }
-		public HashMap<Game, ArrayList<Game>> merged_games { get; construct; }
+		public HashMap<Game, ArrayList<Game>>? merged_games { get; construct; }
 		
 		private Frame card;
 		private Overlay content;
@@ -123,7 +123,7 @@ namespace GameHub.UI.Views
 			show_all();
 		}
 		
-		public GameCard(Game game, HashMap<Game, ArrayList<Game>> merged_games)
+		public GameCard(Game game, HashMap<Game, ArrayList<Game>>? merged_games)
 		{
 			Object(game: game, merged_games: merged_games);
 			
@@ -179,7 +179,7 @@ namespace GameHub.UI.Views
 		{
 			src_icons.foreach(w => src_icons.remove(w));
 			src_icons.add(src_icon);
-			if(merged_games.has_key(game))
+			if(merged_games != null && merged_games.has_key(game))
 			{
 				foreach(var g in merged_games.get(game))
 				{

@@ -41,7 +41,7 @@ namespace GameHub.Utils.Downloader.Soup
 
 			var tmp = File.new_for_path(local.get_path() + "~");
 
-			download = new SoupDownload(remote, tmp);
+			download = new SoupDownload(remote, local, tmp);
 			download.session = session;
 			downloads.set(uri, download);
 
@@ -72,13 +72,16 @@ namespace GameHub.Utils.Downloader.Soup
 				downloads.remove(uri);
 			}
 
-			tmp.move(local, FileCopyFlags.NONE);
+			if(download.local_tmp.query_exists())
+			{
+				download.local_tmp.move(download.local, FileCopyFlags.OVERWRITE);
+			}
 
 			debug("[SoupDownloader] Downloaded '%s'", uri);
 
 			downloaded(download);
 
-			return local;
+			return download.local;
 		}
 
 		private async void download_from_http(SoupDownload download) throws Error
@@ -107,9 +110,9 @@ namespace GameHub.Utils.Downloader.Soup
 			int64 resume_from = 0;
 			var resume_dl = false;
 
-			if(download.local.get_basename().has_suffix("~") && download.local.query_exists())
+			if(download.local_tmp.get_basename().has_suffix("~") && download.local_tmp.query_exists())
 			{
-				var info = yield download.local.query_info_async(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
+				var info = yield download.local_tmp.query_info_async(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
 				resume_from = info.get_size();
 				if(resume_from > 0)
 				{
@@ -124,17 +127,54 @@ namespace GameHub.Utils.Downloader.Soup
 				debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
 				try
 				{
+					string filename = null;
+					string disposition = null;
+					HashTable<string, string> dparams = null;
+
+					if(msg.response_headers.get_content_disposition(out disposition, out dparams))
+					{
+						if(disposition == "attachment" && dparams != null)
+						{
+							filename = dparams.get("filename");
+							if(filename != null)
+							{
+								debug(@"[SoupDownloader] Content-Disposition: filename=%s", filename);
+							}
+						}
+					}
+
+					if(filename == null)
+					{
+						filename = download.remote.get_basename();
+					}
+
+					if(filename != null)
+					{
+						download.local = download.local.get_parent().get_child(filename);
+						if(download.local.query_exists())
+						{
+							debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
+							var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
+							if(info.get_size() == dl_bytes_total)
+							{
+								session.cancel_message(msg, Status.OK);
+								return;
+							}
+						}
+						debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
+					}
+
 					int64 rstart = -1, rend = -1;
 					if(resume_dl && msg.response_headers.get_content_range(out rstart, out rend, out dl_bytes_total))
 					{
 						debug(@"[SoupDownloader] Content-Range is supported($(rstart)-$(rend)), resuming from $(resume_from)");
 						debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
 						dl_bytes = resume_from;
-						local_stream = download.local.append_to(FileCreateFlags.NONE);
+						local_stream = download.local_tmp.append_to(FileCreateFlags.NONE);
 					}
 					else
 					{
-						local_stream = download.local.replace(null, false, FileCreateFlags.REPLACE_DESTINATION);
+						local_stream = download.local_tmp.replace(null, false, FileCreateFlags.REPLACE_DESTINATION);
 					}
 				}
 				catch(Error e)
@@ -144,7 +184,7 @@ namespace GameHub.Utils.Downloader.Soup
 			});
 
 			msg.got_chunk.connect((msg, chunk) => {
-				if(session.would_redirect(msg)) return;
+				if(session.would_redirect(msg) || local_stream == null) return;
 
 				dl_bytes += chunk.length;
 				try
@@ -164,6 +204,8 @@ namespace GameHub.Utils.Downloader.Soup
 			});
 
 			yield;
+
+			if(local_stream == null) return;
 
 			yield local_stream.close_async(Priority.DEFAULT);
 
@@ -189,7 +231,7 @@ namespace GameHub.Utils.Downloader.Soup
 			SourceFunc callback = await_download.callback;
 			var downloaded_id = downloaded.connect((downloader, downloaded) => {
 				if(downloaded.remote.get_uri() != download.remote.get_uri()) return;
-				downloaded_file = downloaded.local;
+				downloaded_file = downloaded.local_tmp;
 				callback();
 			});
 			var downloaded_failed_id = download_failed.connect((downloader, failed_download, error) => {
@@ -212,9 +254,9 @@ namespace GameHub.Utils.Downloader.Soup
 		{
 			try
 			{
-				debug("[SoupDownloader] Copying '%s' to '%s'", download.remote.get_path(), download.local.get_path());
+				debug("[SoupDownloader] Copying '%s' to '%s'", download.remote.get_path(), download.local_tmp.get_path());
 				yield download.remote.copy_async(
-					download.local,
+					download.local_tmp,
 					FileCopyFlags.OVERWRITE,
 					Priority.DEFAULT,
 					null,
@@ -229,9 +271,9 @@ namespace GameHub.Utils.Downloader.Soup
 		public Session? session;
 		public Message? message;
 
-		public SoupDownload(File remote, File local)
+		public SoupDownload(File remote, File local, File local_tmp)
 		{
-			base(remote, local);
+			base(remote, local, local_tmp);
 		}
 
 		public override void pause()
