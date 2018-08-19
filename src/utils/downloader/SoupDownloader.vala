@@ -26,7 +26,7 @@ namespace GameHub.Utils.Downloader.Soup
 			return downloads.get(remote.get_uri());
 		}
 
-		public override async File download(File remote, File local) throws Error
+		public override async File download(File remote, File local, bool preserve_filename=true) throws Error
 		{
 			var uri = remote.get_uri();
 			SoupDownload download = downloads.get(uri);
@@ -52,7 +52,7 @@ namespace GameHub.Utils.Downloader.Soup
 			try
 			{
 				if(remote.get_uri_scheme() in supported_schemes)
-					yield download_from_http(download);
+					yield download_from_http(download, preserve_filename);
 				else
 					yield download_from_filesystem(download);
 			}
@@ -84,7 +84,7 @@ namespace GameHub.Utils.Downloader.Soup
 			return download.local;
 		}
 
-		private async void download_from_http(SoupDownload download) throws Error
+		private async void download_from_http(SoupDownload download, bool preserve_filename=true) throws Error
 		{
 			var msg = new Message("GET", download.remote.get_uri());
 			msg.response_body.set_accumulate(false);
@@ -127,41 +127,44 @@ namespace GameHub.Utils.Downloader.Soup
 				debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
 				try
 				{
-					string filename = null;
-					string disposition = null;
-					HashTable<string, string> dparams = null;
-
-					if(msg.response_headers.get_content_disposition(out disposition, out dparams))
+					if(preserve_filename)
 					{
-						if(disposition == "attachment" && dparams != null)
+						string filename = null;
+						string disposition = null;
+						HashTable<string, string> dparams = null;
+
+						if(msg.response_headers.get_content_disposition(out disposition, out dparams))
 						{
-							filename = dparams.get("filename");
-							if(filename != null)
+							if(disposition == "attachment" && dparams != null)
 							{
-								debug(@"[SoupDownloader] Content-Disposition: filename=%s", filename);
+								filename = dparams.get("filename");
+								if(filename != null)
+								{
+									debug(@"[SoupDownloader] Content-Disposition: filename=%s", filename);
+								}
 							}
 						}
-					}
 
-					if(filename == null)
-					{
-						filename = download.remote.get_basename();
-					}
-
-					if(filename != null)
-					{
-						download.local = download.local.get_parent().get_child(filename);
-						if(download.local.query_exists())
+						if(filename == null)
 						{
-							debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
-							var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
-							if(info.get_size() == dl_bytes_total)
-							{
-								session.cancel_message(msg, Status.OK);
-								return;
-							}
+							filename = download.remote.get_basename();
 						}
-						debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
+
+						if(filename != null)
+						{
+							download.local = download.local.get_parent().get_child(filename);
+							if(download.local.query_exists())
+							{
+								debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
+								var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
+								if(info.get_size() == dl_bytes_total)
+								{
+									session.cancel_message(msg, Status.OK);
+									return;
+								}
+							}
+							debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
+						}
 					}
 
 					int64 rstart = -1, rend = -1;

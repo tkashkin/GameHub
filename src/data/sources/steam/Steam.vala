@@ -125,55 +125,86 @@ namespace GameHub.Data.Sources.Steam
 			return Settings.Auth.Steam.get_instance().authenticated && is_authenticated_in_steam_client;
 		}
 
-		public override async ArrayList<Game> load_games(FutureResult<Game>? game_loaded = null)
+		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
+
+		public override ArrayList<Game> games { get { return _games; } }
+
+		public override async ArrayList<Game> load_games(Utils.FutureResult<Game>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
 			api_key = Settings.Auth.Steam.get_instance().api_key;
 			
-			if(!is_authenticated() || games.size > 0)
+			if(!is_authenticated() || _games.size > 0)
 			{
-				return games;
+				return _games;
 			}
 			
-			games.clear();
-			
-			var cached = GamesDB.get_instance().get_games(this);
-			if(cached.size > 0)
-			{
-				games = cached;
-				if(game_loaded != null)
+			new Thread<void*>("SteamLoading", () => {
+				_games.clear();
+
+				var cached = GamesDB.get_instance().get_games(this);
+				if(cached.size > 0)
 				{
 					foreach(var g in cached)
 					{
-						game_loaded(g);
+						if(!GamesDB.get_instance().is_game_merged(g))
+						{
+							_games.add(g);
+							if(game_loaded != null)
+							{
+								Idle.add(() => { game_loaded(g); return Source.REMOVE; });
+								Thread.usleep(10000);
+							}
+						}
 					}
 				}
-			}
-			games_count = games.size;
+
+				games_count = _games.size;
+
+				if(cache_loaded != null)
+				{
+					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
+				}
+
+				var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(api_key)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
+
+				var root = Parser.parse_remote_json_file(url);
+				var response = Parser.json_object(root, {"response"});
+				var json_games = response != null && response.has_member("games") ? response.get_array_member("games") : null;
+
+				add_games.begin(json_games, game_loaded, (obj, res) => {
+					add_games.end(res);
+					Idle.add(load_games.callback);
+				});
+
+				return null;
+			});
+
+			yield;
 			
-			var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(api_key)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
-			
-			var root = yield Parser.parse_remote_json_file_async(url);
-			var response = Parser.json_object(root, {"response"});
-			var json_games = response != null && response.has_member("games") ? response.get_array_member("games") : null;
-			
+			return _games;
+		}
+
+		private async void add_games(Json.Array json_games, FutureResult<Game>? game_loaded = null)
+		{
 			if(json_games != null)
 			{
 				foreach(var g in json_games.get_elements())
 				{
 					var game = new SteamGame(this, g.get_object());
-					if(!games.contains(game) && yield game.is_for_linux())
+					if(!_games.contains(game) && !GamesDB.get_instance().is_game_merged(game) && yield game.is_for_linux())
 					{
-						games.add(game);
-						if(game_loaded != null) game_loaded(game);
+						_games.add(game);
+						if(game_loaded != null)
+						{
+							Idle.add(() => { game_loaded(game); return Source.REMOVE; });
+						}
 						GamesDB.get_instance().add_game(game);
 					}
-					games_count = games.size;
+					games_count = _games.size;
 				}
 			}
-			
-			return games;
 		}
-		
+
 		public static ArrayList<string>? folders = null;
 		public static ArrayList<string> LibraryFolders
 		{

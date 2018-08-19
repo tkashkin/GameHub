@@ -153,63 +153,89 @@ namespace GameHub.Data.Sources.GOG
 			return user_token != null;
 		}
 
-		public override async ArrayList<Game> load_games(FutureResult<Game>? game_loaded = null)
+		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
+
+		public override ArrayList<Game> games { get { return _games; } }
+
+		public override async ArrayList<Game> load_games(Utils.FutureResult<Game>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
-			if(user_id == null || user_token == null || games.size > 0)
+			if(user_id == null || user_token == null || _games.size > 0)
 			{
-				return games;
+				return _games;
 			}
 			
-			games.clear();
-			
-			var cached = GamesDB.get_instance().get_games(this);
-			if(cached.size > 0)
-			{
-				if(game_loaded != null)
+			new Thread<void*>("GOGLoading", () => {
+				_games.clear();
+
+				var cached = GamesDB.get_instance().get_games(this);
+				if(cached.size > 0)
 				{
 					foreach(var g in cached)
 					{
-						if(!(g.id in GAMES_BLACKLIST))
+						if(!(g.id in GAMES_BLACKLIST) && !GamesDB.get_instance().is_game_merged(g))
 						{
-							games.add(g);
-							game_loaded(g);
+							_games.add(g);
+							if(game_loaded != null)
+							{
+								Idle.add(() => { game_loaded(g); return Source.REMOVE; });
+								Thread.usleep(10000);
+							}
 						}
 					}
 				}
-			}
-			games_count = games.size;
-			
-			var page = 1;
-			var pages = 1;
-			
-			while(page <= pages)
-			{
-				var url = @"https://embed.gog.com/account/getFilteredProducts?mediaType=1&page=$(page)";
-				var root = (yield Parser.parse_remote_json_file_async(url, "GET", user_token)).get_object();
 
-				page = (int) root.get_int_member("page");
-				pages = (int) root.get_int_member("totalPages");
+				games_count = _games.size;
 
-				debug("[GOG] Loading games: page %d of %d", page, pages);
-
-				var products = root.get_array_member("products");
-
-				foreach(var g in products.get_elements())
+				if(cache_loaded != null)
 				{
-					var game = new GOGGame(this, g.get_object());
-					if(!(game.id in GAMES_BLACKLIST) && !games.contains(game) && yield game.is_for_linux())
-					{
-						games.add(game);
-						if(game_loaded != null) game_loaded(game);
-						GamesDB.get_instance().add_game(game);
-					}
-					games_count = games.size;
+					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
 				}
 
-				page++;
-			}
+				var page = 1;
+				var pages = 1;
+
+				while(page <= pages)
+				{
+					var url = @"https://embed.gog.com/account/getFilteredProducts?mediaType=1&page=$(page)";
+					var root = Parser.parse_remote_json_file(url, "GET", user_token).get_object();
+
+					page = (int) root.get_int_member("page");
+					pages = (int) root.get_int_member("totalPages");
+
+					debug("[GOG] Loading games: page %d of %d", page, pages);
+
+					var products = root.get_array_member("products");
+
+					foreach(var g in products.get_elements())
+					{
+						var game = new GOGGame(this, g.get_object());
+						if(!(game.id in GAMES_BLACKLIST) && !_games.contains(game) && !GamesDB.get_instance().is_game_merged(game))
+						{
+							game.is_for_linux.begin((obj, res) => {
+								if(!game.is_for_linux.end(res)) return;
+
+								_games.add(game);
+								if(game_loaded != null)
+								{
+									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
+								}
+								GamesDB.get_instance().add_game(game);
+							});
+						}
+						games_count = _games.size;
+					}
+
+					page++;
+				}
+
+				Idle.add(load_games.callback);
+
+				return null;
+			});
+
+			yield;
 			
-			return games;
+			return _games;
 		}
 	}
 }
