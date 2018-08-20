@@ -127,10 +127,11 @@ namespace GameHub.Data.Sources.Humble
 			wnd.install.connect(installer => {
 				var link = installer.file;
 				var remote = File.new_for_uri(link);
-				var local = FSUtils.file(FSUtils.Paths.Humble.Installers, "humble_" + installer.id);
+				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(name);
+				var local = FSUtils.file(installers_dir, "humble_" + installer.id);
 				
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
-				FSUtils.mkdir(FSUtils.Paths.Humble.Installers);
+				FSUtils.mkdir(installers_dir);
 				
 				installer.install.begin(this, remote, local, (obj, res) => {
 					installer.install.end(res);

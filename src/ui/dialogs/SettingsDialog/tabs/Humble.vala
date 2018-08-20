@@ -27,7 +27,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			#if !FLATPAK
 			add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; dialog.show_restart_message(); });
 			#endif
-			add_cache_directory(_("Installers cache"), FSUtils.Paths.Humble.Installers);
+			//add_cache_directory(_("Installers cache"), FSUtils.Paths.Humble.Installers);
 
 			update();
 		}

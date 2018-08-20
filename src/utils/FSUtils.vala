@@ -1,6 +1,8 @@
-using Gtk;
+using Gee;
 using Gdk;
 using GLib;
+
+using GameHub.Data;
 
 namespace GameHub.Utils
 {
@@ -72,7 +74,6 @@ namespace GameHub.Utils
 						#endif
 					}
 				}
-				public static string Installers { owned get { return FSUtils.Paths.GOG.Games + "/.installers"; } }
 			}
 			
 			public class Humble
@@ -88,25 +89,155 @@ namespace GameHub.Utils
 						#endif
 					}
 				}
-				public static string Installers { owned get { return FSUtils.Paths.Humble.Games + "/.installers"; } }
+			}
+
+			public class Collection: Granite.Services.Settings
+			{
+				public string root { get; set; }
+
+				public static string expand_root()
+				{
+					return FSUtils.expand(get_instance().root);
+				}
+
+				public Collection()
+				{
+					base(ProjectConfig.PROJECT_NAME + ".paths.collection");
+				}
+
+				private static Collection? instance;
+				public static unowned Collection get_instance()
+				{
+					if(instance == null)
+					{
+						instance = new Collection();
+					}
+					return instance;
+				}
+
+				public class GOG: Granite.Services.Settings
+				{
+					public string game_dir { get; set; }
+					public string installers { get; set; }
+					public string dlc { get; set; }
+					public string bonus { get; set; }
+
+					public static string expand_game_dir(string game)
+					{
+						var g = game.replace(": ", " - ").replace(":", "");
+						var variables = new HashMap<string, string>();
+						variables.set("root", Collection.get_instance().root);
+						variables.set("game", g);
+						return FSUtils.expand(get_instance().game_dir, null, variables);
+					}
+					public static string expand_installers(string game)
+					{
+						var g = game.replace(": ", " - ").replace(":", "");
+						var variables = new HashMap<string, string>();
+						variables.set("root", Collection.get_instance().root);
+						variables.set("game", g);
+						variables.set("game_dir", expand_game_dir(g));
+						return FSUtils.expand(get_instance().installers, null, variables);
+					}
+					public static string expand_dlc(string game)
+					{
+						var g = game.replace(": ", " - ").replace(":", "");
+						var variables = new HashMap<string, string>();
+						variables.set("root", Collection.get_instance().root);
+						variables.set("game", g);
+						variables.set("game_dir", expand_game_dir(g));
+						return FSUtils.expand(get_instance().dlc, null, variables);
+					}
+					public static string expand_bonus(string game)
+					{
+						var g = game.replace(": ", " - ").replace(":", "");
+						var variables = new HashMap<string, string>();
+						variables.set("root", Collection.get_instance().root);
+						variables.set("game", g);
+						variables.set("game_dir", expand_game_dir(g));
+						return FSUtils.expand(get_instance().bonus, null, variables);
+					}
+
+					public GOG()
+					{
+						base(ProjectConfig.PROJECT_NAME + ".paths.collection.gog");
+					}
+
+					private static GOG? instance;
+					public static unowned GOG get_instance()
+					{
+						if(instance == null)
+						{
+							instance = new GOG();
+						}
+						return instance;
+					}
+				}
+
+				public class Humble: Granite.Services.Settings
+				{
+					public string game_dir { get; set; }
+					public string installers { get; set; }
+
+					public static string expand_game_dir(string game)
+					{
+						var g = game.replace(": ", " - ").replace(":", "");
+						var variables = new HashMap<string, string>();
+						variables.set("root", Collection.get_instance().root);
+						variables.set("game", g);
+						return FSUtils.expand(get_instance().game_dir, null, variables);
+					}
+					public static string expand_installers(string game)
+					{
+						var g = game.replace(": ", " - ").replace(":", "");
+						var variables = new HashMap<string, string>();
+						variables.set("root", Collection.get_instance().root);
+						variables.set("game", g);
+						variables.set("game_dir", expand_game_dir(g));
+						return FSUtils.expand(get_instance().installers, null, variables);
+					}
+
+					public Humble()
+					{
+						base(ProjectConfig.PROJECT_NAME + ".paths.collection.humble");
+					}
+
+					private static Humble? instance;
+					public static unowned Humble get_instance()
+					{
+						if(instance == null)
+						{
+							instance = new Humble();
+						}
+						return instance;
+					}
+				}
 			}
 		}
 		
-		public static string expand(string path, string file="")
+		public static string expand(string path, string? file=null, HashMap<string, string>? variables=null)
 		{
-			return path.replace("~/.cache", Environment.get_user_cache_dir()).replace("~", Environment.get_home_dir()) + (file != "" ? "/" + file : "");
+			var expanded_path = path;
+			if(variables != null)
+			{
+				foreach(var v in variables.entries)
+				{
+					expanded_path = expanded_path.replace("${" + v.key + "}", v.value).replace("$" + v.key, v.value);
+				}
+			}
+			return expanded_path.replace("~/.cache", Environment.get_user_cache_dir()).replace("~", Environment.get_home_dir()) + (file != null && file != "" ? "/" + file : "");
 		}
 		
-		public static File file(string path, string file="")
+		public static File file(string path, string? file=null, HashMap<string, string>? variables=null)
 		{
-			return File.new_for_path(FSUtils.expand(path, file));
+			return File.new_for_path(FSUtils.expand(path, file, variables));
 		}
 		
-		public static File? mkdir(string path, string file="")
+		public static File? mkdir(string path, string? file=null, HashMap<string, string>? variables=null)
 		{
 			try
 			{
-				var dir = FSUtils.file(path, file);
+				var dir = FSUtils.file(path, file, variables);
 				if(!dir.query_exists()) dir.make_directory_with_parents();
 				return dir;
 			}
@@ -117,9 +248,9 @@ namespace GameHub.Utils
 			return null;
 		}
 		
-		public static void rm(string path, string file="", string flags="-f")
+		public static void rm(string path, string? file=null, string flags="-f", HashMap<string, string>? variables=null)
 		{
-			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file)});
+			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables)});
 		}
 
 		public static void make_dirs()
@@ -127,8 +258,8 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Images);
 			
-			FSUtils.rm(FSUtils.Paths.GOG.Installers, ".goutputstream-*");
-			FSUtils.rm(FSUtils.Paths.Humble.Installers, ".goutputstream-*");
+			FSUtils.rm(FSUtils.Paths.Collection.Humble.expand_installers("*"), ".goutputstream-*");
+			FSUtils.rm(FSUtils.Paths.Collection.Humble.expand_installers("*"), ".goutputstream-*");
 		}
 	}
 }

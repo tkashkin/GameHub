@@ -1,22 +1,18 @@
-data/com.github.tkashkin.gamehub.appdata.xml.in
 data/com.github.tkashkin.gamehub.desktop.in
-data/com.github.tkashkin.gamehub.gschema.xml
+data/com.github.tkashkin.gamehub.appdata.xml.in
 
 src/app.vala
 
 src/data/Game.vala
 src/data/GameSource.vala
+src/data/GamesDB.vala
 
 src/data/sources/steam/Steam.vala
 src/data/sources/steam/SteamGame.vala
-
 src/data/sources/gog/GOG.vala
 src/data/sources/gog/GOGGame.vala
-
 src/data/sources/humble/Humble.vala
 src/data/sources/humble/HumbleGame.vala
-
-src/data/GamesDB.vala
 
 src/ui/windows/MainWindow.vala
 src/ui/windows/WebAuthWindow.vala
@@ -28,6 +24,7 @@ src/ui/dialogs/SettingsDialog/tabs/UI.vala
 src/ui/dialogs/SettingsDialog/tabs/Steam.vala
 src/ui/dialogs/SettingsDialog/tabs/GOG.vala
 src/ui/dialogs/SettingsDialog/tabs/Humble.vala
+src/ui/dialogs/SettingsDialog/tabs/Collection.vala
 
 src/ui/dialogs/GameInstallDialog.vala
 src/ui/dialogs/GameDetailsDialog.vala
@@ -42,6 +39,10 @@ src/ui/views/GamesView/GameDownloadProgressView.vala
 
 src/ui/views/GameDetailsView/GameDetailsView.vala
 src/ui/views/GameDetailsView/GameDetailsPage.vala
+src/ui/views/GameDetailsView/GameDetailsBlock.vala
+src/ui/views/GameDetailsView/blocks/Description.vala
+src/ui/views/GameDetailsView/blocks/GOGDetails.vala
+src/ui/views/GameDetailsView/blocks/SteamDetails.vala
 
 src/ui/widgets/AutoSizeImage.vala
 src/ui/widgets/ActionButton.vala
