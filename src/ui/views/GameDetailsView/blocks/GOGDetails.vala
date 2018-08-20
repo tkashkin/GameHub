@@ -50,6 +50,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			var bonuses_json = downloads == null || !downloads.has_member("bonus_content") ? null : downloads.get_array_member("bonus_content");
 
+			var downloads_visible = false;
+
 			if(bonuses_json != null)
 			{
 				var bonuses = new ArrayList<GOGGame.BonusContent>();
@@ -75,7 +77,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					var header = new Granite.HeaderLabel(_("Bonus content"));
 					header.margin_start = header.margin_end = 8;
 
-					bonusbox.add(new Separator(Orientation.HORIZONTAL));
+					downloads_visible = true;
 					bonusbox.add(header);
 					bonusbox.add(bonuslist);
 
@@ -110,12 +112,17 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					var header = new Granite.HeaderLabel(_("DLC"));
 					header.margin_start = header.margin_end = 8;
 
-					dlcbox.add(new Separator(Orientation.HORIZONTAL));
+					downloads_visible = true;
 					dlcbox.add(header);
 					dlcbox.add(dlclist);
 
 					dlbox.add(dlcbox);
 				}
+			}
+
+			if(downloads_visible)
+			{
+				add(new Separator(Orientation.HORIZONTAL));
 			}
 
 			add(dlbox);
