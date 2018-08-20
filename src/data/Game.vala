@@ -88,7 +88,7 @@ namespace GameHub.Data
 						case InstallerType.EXECUTABLE:
 							cmd = {path, "--", "--i-agree-to-all-licenses",
 									"--noreadme", "--nooptions", "--noprompt",
-									"--destination", game.install_dir.get_path()}; // probably mojosetup
+									"--destination", game.install_dir.get_path().replace("'", "\\'")}; // probably mojosetup
 							break;
 
 						case InstallerType.ARCHIVE:
