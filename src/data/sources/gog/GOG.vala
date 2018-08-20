@@ -172,7 +172,7 @@ namespace GameHub.Data.Sources.GOG
 				{
 					foreach(var g in cached)
 					{
-						if(!(g.id in GAMES_BLACKLIST) && !GamesDB.get_instance().is_game_merged(g))
+						if(!(g.id in GAMES_BLACKLIST) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g)))
 						{
 							_games.add(g);
 							if(game_loaded != null)
@@ -209,7 +209,7 @@ namespace GameHub.Data.Sources.GOG
 					foreach(var g in products.get_elements())
 					{
 						var game = new GOGGame(this, g.get_object());
-						if(!(game.id in GAMES_BLACKLIST) && !_games.contains(game) && !GamesDB.get_instance().is_game_merged(game))
+						if(!(game.id in GAMES_BLACKLIST) && !_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 						{
 							game.is_for_linux.begin((obj, res) => {
 								if(!game.is_for_linux.end(res)) return;
