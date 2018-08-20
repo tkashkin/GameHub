@@ -184,7 +184,7 @@ namespace GameHub.Data.Sources.GOG
 					}
 				}
 
-				games_count = _games.size;
+				games_count = cached.size;
 
 				if(cache_loaded != null)
 				{
@@ -215,6 +215,7 @@ namespace GameHub.Data.Sources.GOG
 								if(!game.is_for_linux.end(res)) return;
 
 								_games.add(game);
+								games_count++;
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
@@ -222,7 +223,6 @@ namespace GameHub.Data.Sources.GOG
 								GamesDB.get_instance().add_game(game);
 							});
 						}
-						games_count = _games.size;
 					}
 
 					page++;
