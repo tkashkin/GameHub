@@ -95,4 +95,34 @@
 			<default>'~/Games/HumbleBundle'</default>
 		</key>
 	</schema>
+
+	<schema path="/com/github/tkashkin/gamehub/paths/collection/" id="com.github.tkashkin.gamehub.paths.collection" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="root" type="s">
+			<default>'~/Games/_Collection'</default>
+		</key>
+	</schema>
+
+	<schema path="/com/github/tkashkin/gamehub/paths/collection/gog/" id="com.github.tkashkin.gamehub.paths.collection.gog" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="game-dir" type="s">
+			<default>'$root/GOG/$game'</default>
+		</key>
+		<key name="installers" type="s">
+			<default>'$game_dir'</default>
+		</key>
+		<key name="dlc" type="s">
+			<default>'$game_dir/dlc'</default>
+		</key>
+		<key name="bonus" type="s">
+			<default>'$game_dir/bonus'</default>
+		</key>
+	</schema>
+
+	<schema path="/com/github/tkashkin/gamehub/paths/collection/humble/" id="com.github.tkashkin.gamehub.paths.collection.humble" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="game-dir" type="s">
+			<default>'$root/Humble Bundle/$game'</default>
+		</key>
+		<key name="installers" type="s">
+			<default>'$game_dir'</default>
+		</key>
+	</schema>
 </schemalist>

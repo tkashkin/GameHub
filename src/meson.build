@@ -64,10 +64,10 @@ executable(
 	'ui/dialogs/SettingsDialog/SettingsDialogTab.vala',
 
 	'ui/dialogs/SettingsDialog/tabs/UI.vala',
-	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
 	'ui/dialogs/SettingsDialog/tabs/Steam.vala',
 	'ui/dialogs/SettingsDialog/tabs/GOG.vala',
 	'ui/dialogs/SettingsDialog/tabs/Humble.vala',
+	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
 
 	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',

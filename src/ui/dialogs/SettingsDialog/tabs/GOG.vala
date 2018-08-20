@@ -27,7 +27,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			#if !FLATPAK
 			add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; dialog.show_restart_message(); });
 			#endif
-			add_cache_directory(_("Installers cache"), FSUtils.Paths.GOG.Installers);
+			//add_cache_directory(_("Installers cache"), FSUtils.Paths.GOG.Installers);
 
 			update();
 		}

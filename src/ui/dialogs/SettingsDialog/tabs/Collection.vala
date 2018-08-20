@@ -6,6 +6,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 {
 	public class Collection: SettingsDialogTab
 	{
+		private FileChooserButton collection_root;
+
+		private Entry gog_game_dir;
+		private Entry gog_installers;
+		private Entry gog_dlc;
+		private Entry gog_bonus;
+
+		private Entry humble_game_dir;
+		private Entry humble_installers;
+
 		public Collection(SettingsDialog dlg)
 		{
 			Object(orientation: Orientation.VERTICAL, dialog: dlg);
@@ -13,28 +23,49 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 		construct
 		{
-			add_file_chooser(_("Collection root directory"), FileChooserAction.SELECT_FOLDER, "", v => {});
+			var collection = FSUtils.Paths.Collection.get_instance();
+			var gog = FSUtils.Paths.Collection.GOG.get_instance();
+			var humble = FSUtils.Paths.Collection.Humble.get_instance();
+
+			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update_hints(); }).get_children().last().data as FileChooserButton;
 
 			add_separator();
 
 			add_header("GOG");
-			add_entry(_("Game directory ($game_dir)"), "$root/GOG/$game", v => {}, "gog-symbolic");
-			add_entry(_("Installers"), "$game_dir", v => {}, "gog-symbolic");
-			add_entry(_("DLC"), "$game_dir/dlc", v => {}, "folder-download-symbolic");
-			add_entry(_("Bonus content"), "$game_dir/bonus", v => {}, "folder-music-symbolic");
+			gog_game_dir = add_entry(_("Game directory") + " ($game_dir)", gog.game_dir, v => { gog.game_dir = v; update_hints(); }, "gog-symbolic").get_children().last().data as Entry;
+			gog_installers = add_entry(_("Installers"), gog.installers, v => { gog.installers = v; update_hints(); }, "gog-symbolic").get_children().last().data as Entry;
+			gog_dlc = add_entry(_("DLC"), gog.dlc, v => { gog.dlc = v; update_hints(); }, "folder-download-symbolic").get_children().last().data as Entry;
+			gog_bonus = add_entry(_("Bonus content"), gog.bonus, v => { gog.bonus = v; update_hints(); }, "folder-music-symbolic").get_children().last().data as Entry;
 
 			add_separator();
 
 			add_header("Humble Bundle");
-			add_entry(_("Game directory ($game_dir)"), "$root/Humble Bundle/$game", v => {}, "humble-symbolic");
-			add_entry(_("Installers"), "$game_dir", v => {}, "humble-symbolic");
+			humble_game_dir = add_entry(_("Game directory") + " ($game_dir)", humble.game_dir, v => { humble.game_dir = v; update_hints(); }, "humble-symbolic").get_children().last().data as Entry;
+			humble_installers = add_entry(_("Installers"), humble.installers, v => { humble.installers = v; update_hints(); }, "humble-symbolic").get_children().last().data as Entry;
 
 			add_separator();
 
 			add_header(_("Variables")).sensitive = false;
-			add_labels("• $root", _("Collection root directory")).sensitive = false;
-			add_labels("• $game", _("Game")).sensitive = false;
+			add_labels("• $root", _("Collection directory")).sensitive = false;
+			add_labels("• $game", _("Game name")).sensitive = false;
 			add_labels("• $game_dir", _("Game directory")).sensitive = false;
+
+			update_hints();
+		}
+
+		private void update_hints()
+		{
+			var game = "VVVVVV";
+
+			collection_root.tooltip_text = FSUtils.Paths.Collection.expand_root();
+
+			gog_game_dir.tooltip_text = FSUtils.Paths.Collection.GOG.expand_game_dir(game);
+			gog_installers.tooltip_text = FSUtils.Paths.Collection.GOG.expand_installers(game);
+			gog_dlc.tooltip_text = FSUtils.Paths.Collection.GOG.expand_dlc(game);
+			gog_bonus.tooltip_text = FSUtils.Paths.Collection.GOG.expand_bonus(game);
+
+			humble_game_dir.tooltip_text = FSUtils.Paths.Collection.Humble.expand_game_dir(game);
+			humble_installers.tooltip_text = FSUtils.Paths.Collection.Humble.expand_installers(game);
 		}
 
 	}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-15 16:17+0300\n"
+"POT-Creation-Date: 2018-08-20 18:27+0300\n"
 "PO-Revision-Date: 2018-07-23 18:31+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: \n"
@@ -36,13 +36,14 @@ msgstr "Kelola permainan Steam, GOG, dan Humble Bundle Anda di satu tempat."
 
 #: src/data/Game.vala:80
 msgid "Installed"
-msgstr "Terpasang"
+msgstr "Dipasang"
 
 #: src/data/Game.vala:81
 msgid "Installing"
 msgstr "Memasang"
 
 #: src/data/Game.vala:82 src/utils/downloader/Downloader.vala:137
+#: src/utils/downloader/Downloader.vala:139
 msgid "Download started"
 msgstr "Unduhan dimulai"
 
@@ -82,6 +83,8 @@ msgstr ""
 #: src/ui/views/WelcomeView.vala:34 src/ui/views/WelcomeView.vala:58
 #: src/ui/views/GamesView/GamesView.vala:163
 #: src/ui/views/GamesView/GamesView.vala:384
+#: src/ui/views/GamesView/GamesView.vala:160
+#: src/ui/views/GamesView/GamesView.vala:393
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -95,18 +98,23 @@ msgstr "Antarmuka"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:60
 #: src/ui/dialogs/GameDetailsDialog.vala:32
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:61
+#: src/ui/dialogs/GameDetailsDialog.vala:40
 msgid "Close"
 msgstr "Tutup"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:132
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:154
 msgid "Open"
 msgstr "Buka"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:139
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:161
 msgid "Clear"
 msgstr "Bersih"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:155
+#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:177
 #, c-format
 msgid "%llu installer; %s"
 msgid_plural "%llu installers; %s"
@@ -167,6 +175,7 @@ msgstr "Penginstal cache"
 #: src/ui/dialogs/GameInstallDialog.vala:31
 #: src/ui/dialogs/GameInstallDialog.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:187
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
 msgid "Install"
 msgstr "Pasang"
 
@@ -180,6 +189,7 @@ msgid "Installer size: %s"
 msgstr "Ukuran penginstal: %s"
 
 #: src/ui/dialogs/GameInstallDialog.vala:124
+#: src/data/sources/humble/HumbleGame.vala:174
 msgid "Cancel"
 msgstr "Batal"
 
@@ -225,10 +235,12 @@ msgid "Return to GameHub after installing"
 msgstr "Kembali ke GameHub setelah memasang"
 
 #: src/ui/views/GamesView/GamesView.vala:66
+#: src/ui/views/GamesView/GamesView.vala:63
 msgid "No games"
 msgstr "Tidak ada permainan"
 
 #: src/ui/views/GamesView/GamesView.vala:66
+#: src/ui/views/GamesView/GamesView.vala:63
 msgid "Get some games or enable some game sources in settings"
 msgstr ""
 "Dapatkan beberapa permainan atau aktifkan beberapa sumber permainan di "
@@ -236,60 +248,74 @@ msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:67
 #: src/ui/views/GamesView/GamesView.vala:285
+#: src/ui/views/GamesView/GamesView.vala:64
+#: src/ui/views/GamesView/GamesView.vala:282
 msgid "Reload"
 msgstr "Muat ulang"
 
 #: src/ui/views/GamesView/GamesView.vala:113
+#: src/ui/views/GamesView/GamesView.vala:110
 msgid "Grid view"
 msgstr "Tilikan kisi"
 
 #: src/ui/views/GamesView/GamesView.vala:114
+#: src/ui/views/GamesView/GamesView.vala:111
 msgid "List view"
 msgstr "Tilikan daftar"
 
 #: src/ui/views/GamesView/GamesView.vala:126
+#: src/ui/views/GamesView/GamesView.vala:123
 msgid "All games"
 msgstr "Semua permainan"
 
 #: src/ui/views/GamesView/GamesView.vala:130
+#: src/ui/views/GamesView/GamesView.vala:127
 #, c-format
 msgid "%s games"
 msgstr "%s permainan"
 
 #: src/ui/views/GamesView/GamesView.vala:136
+#: src/ui/views/GamesView/GamesView.vala:133
 msgid "Downloads"
 msgstr "Unduh"
 
 #: src/ui/views/GamesView/GamesView.vala:158
+#: src/ui/views/GamesView/GamesView.vala:155
 msgid "Search"
 msgstr "Cari"
 
 #: src/ui/views/GamesView/GamesView.vala:278
+#: src/ui/views/GamesView/GamesView.vala:275
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u permainan"
 
 #: src/ui/views/GamesView/GamesView.vala:282
+#: src/ui/views/GamesView/GamesView.vala:279
 #, c-format
 msgid "No %s games"
 msgstr "Tidak ada %s permainan"
 
 #: src/ui/views/GamesView/GamesView.vala:283
+#: src/ui/views/GamesView/GamesView.vala:280
 msgid "Get some Linux-compatible games"
 msgstr "Dapatkan beberapa permainan Linux yang kompatibel"
 
 #: src/ui/views/GamesView/GamesView.vala:304
+#: src/ui/views/GamesView/GamesView.vala:301
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Tidak ada permainan yang cocok dengan “%s”"
 
 #: src/ui/views/GamesView/GamesView.vala:309
+#: src/ui/views/GamesView/GamesView.vala:306
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Tidak ada permainan dari %1$s yang cocok dengan “%2$s”"
 
 #: src/ui/views/GamesView/GamesView.vala:382
+#: src/ui/views/GamesView/GamesView.vala:391
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -298,92 +324,161 @@ msgstr ""
 "anda ke publik atau gunakan kunci API Steam anda sendiri dalam pengaturan."
 
 #: src/ui/views/GamesView/GamesView.vala:383
+#: src/ui/views/GamesView/GamesView.vala:392
 msgid "Privacy"
 msgstr "Privasi"
 
 #: src/ui/views/GamesView/GameDownloadProgressView.vala:59
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:114
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:109
 msgid "Pause download"
 msgstr "Jeda unduhan"
 
 #: src/ui/views/GamesView/GameDownloadProgressView.vala:64
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:120
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:115
 msgid "Resume download"
 msgstr "Lanjutkan unduhan"
 
 #: src/ui/views/GamesView/GameDownloadProgressView.vala:69
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:126
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:121
 msgid "Cancel download"
 msgstr "Batalkan unduhan"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:147
+#: src/ui/views/GameDetailsView/blocks/Description.vala:29
 msgid "Description"
 msgstr "Deskripsi"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:188
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Run"
 msgstr "Jalankan"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:189
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:163
 msgid "Open installation directory"
 msgstr "Buka direktori pemasangan"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:190
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:164
 msgid "Open store page"
 msgstr "Buka halaman toko"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:191
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:165
 msgid "Uninstall"
 msgstr "Copot pemasangan"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:304
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:358
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:39
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:69
 msgid "Language"
 msgstr "Bahasa"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:307
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:361
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:42
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:72
 msgid "Languages"
 msgstr "Bahasa"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:328
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:39
 msgid "Category"
 msgstr "Kategori"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:331
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:42
 msgid "Categories"
 msgstr "Kategori"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:346
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:57
 msgid "Genre"
 msgstr "Aliran"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:349
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:60
 msgid "Genres"
 msgstr "Aliran"
 
 #: src/utils/downloader/Downloader.vala:136
+#: src/utils/downloader/Downloader.vala:138
 msgid "Starting download"
 msgstr "Mulai mengunduh"
 
 #: src/utils/downloader/Downloader.vala:138
+#: src/utils/downloader/Downloader.vala:140
 msgid "Download finished"
 msgstr "Unduhan selesai"
 
 #: src/utils/downloader/Downloader.vala:139
+#: src/utils/downloader/Downloader.vala:141
 msgid "Download failed"
 msgstr "Unduhan gagal"
 
 #: src/utils/downloader/Downloader.vala:141
+#: src/utils/downloader/Downloader.vala:143
 #, c-format
 msgid "Downloading: %d%% (%s / %s)"
 msgstr "Mengunduh: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:143
+#: src/utils/downloader/Downloader.vala:145
 #, c-format
 msgid "Paused: %d%% (%s / %s)"
 msgstr "Dijeda: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:145
+#: src/utils/downloader/Downloader.vala:147
 msgid "Download cancelled"
 msgstr "Unduhan dibatalkan"
+
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:46
+msgid "Koleksi"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:30
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:49
+msgid "Collection directory"
+msgstr "Direktori koleksi"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:35
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:43
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:51
+msgid "Game directory"
+msgstr "Direktori permainan"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:36
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:44
+msgid "Installers"
+msgstr "Pemasang"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:37
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:112
+msgid "DLC"
+msgstr "DLC"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:38
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
+msgid "Bonus content"
+msgstr "Konten bonus"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:48
+msgid "Variables"
+msgstr "Variabel"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:50
+msgid "Game name"
+msgstr "Nama permainan"
+
+#: src/data/sources/humble/HumbleGame.vala:157
+msgid "Select main executable of the game"
+msgstr "Pilih main executable dari permainan"
+
+#: src/data/sources/humble/HumbleGame.vala:175
+msgid "Select"
+msgstr "Memilih"

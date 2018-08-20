@@ -148,10 +148,11 @@ namespace GameHub.Data.Sources.GOG
 				root = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token);
 				var link = root.get_object().get_string_member("downlink");
 				var remote = File.new_for_uri(link);
-				var local = FSUtils.file(FSUtils.Paths.GOG.Installers, "gog_" + id + "_" + installer.id + ".sh");
+				var installers_dir = FSUtils.Paths.Collection.GOG.expand_installers(name);
+				var local = FSUtils.file(installers_dir, "gog_" + id + "_" + installer.id + ".sh");
 				
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-				FSUtils.mkdir(FSUtils.Paths.GOG.Installers);
+				FSUtils.mkdir(installers_dir);
 				
 				installer.install.begin(this, remote, local, (obj, res) => {
 					installer.install.end(res);
@@ -180,17 +181,20 @@ namespace GameHub.Data.Sources.GOG
 			if(is_installed())
 			{
 				string? uninstaller = null;
-				FileInfo? finfo = null;
-				var enumerator = yield install_dir.enumerate_children_async("standard::*", FileQueryInfoFlags.NONE);
-				while((finfo = enumerator.next_file()) != null)
+				try
 				{
-					debug("[GOGGame] File '%s'...", finfo.get_name());
-					if(finfo.get_name().has_prefix("uninstall-"))
+					FileInfo? finfo = null;
+					var enumerator = yield install_dir.enumerate_children_async("standard::*", FileQueryInfoFlags.NONE);
+					while((finfo = enumerator.next_file()) != null)
 					{
-						uninstaller = finfo.get_name();
-						break;
+						if(finfo.get_name().has_prefix("uninstall-"))
+						{
+							uninstaller = finfo.get_name();
+							break;
+						}
 					}
 				}
+				catch(Error e){}
 
 				if(uninstaller != null)
 				{
