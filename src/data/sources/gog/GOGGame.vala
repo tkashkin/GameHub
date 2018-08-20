@@ -124,9 +124,8 @@ namespace GameHub.Data.Sources.GOG
 			}
 
 			var bonuses_json = downloads == null || !downloads.has_member("bonus_content") ? null : downloads.get_array_member("bonus_content");
-			if(bonuses_json != null)
+			if(bonuses_json != null && bonus_content.size == 0)
 			{
-				bonus_content.clear();
 				foreach(var bonus_json in bonuses_json.get_elements())
 				{
 					bonus_content.add(new BonusContent(this, bonus_json.get_object()));
@@ -134,7 +133,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 
 			var dlcs_json = !root.get_object().has_member("expanded_dlcs") ? null : root.get_object().get_array_member("expanded_dlcs");
-			if(dlcs_json != null)
+			if(dlcs_json != null && dlc.size == 0)
 			{
 				foreach(var dlc_json in dlcs_json.get_elements())
 				{
