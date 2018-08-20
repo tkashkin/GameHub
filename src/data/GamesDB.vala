@@ -30,14 +30,16 @@ namespace GameHub.Data
 		public void create_tables() requires (db != null)
 		{
 			Statement stmt;
-			if(db.prepare_v2("SELECT `playtime` FROM `games`", -1, out stmt) == Sqlite.OK)	// migrate from v1
+			if(db.prepare_v2("SELECT `playtime` FROM `games`", -1, out stmt) == Sqlite.OK) // migrate from v1
 			{
 				db.exec("DROP TABLE `games`");
 			}
 			
+			db.exec("DROP TABLE IF EXISTS `merged_games`"); // migrate from v2
+
 			db.exec("CREATE TABLE IF NOT EXISTS `games`(`source` string not null, `id` string not null, `name` string not null, `icon` string, `image` string, `custom_info` string, PRIMARY KEY(`source`, `id`))");
 			db.exec("CREATE TABLE IF NOT EXISTS `unsupported_games`(`source` string not null, `id` string not null, PRIMARY KEY(`source`, `id`))");
-			db.exec("CREATE TABLE IF NOT EXISTS `merged_games`(`primary_source` string not null, `primary_id` string not null, `secondary_source` string not null, `secondary_id` string not null, PRIMARY KEY(`primary_source`, `primary_id`, `secondary_source`, `secondary_id`))");
+			db.exec("CREATE TABLE IF NOT EXISTS `merges`(`merge` string not null, PRIMARY KEY(`merge`))");
 		}
 		
 		public bool add_game(Game game) requires (db != null)
@@ -72,16 +74,70 @@ namespace GameHub.Data
 			return res == Sqlite.DONE;
 		}
 		
-		public bool merge(Game primary, Game secondary) requires (db != null)
+		public bool merge(Game first, Game second) requires (db != null)
 		{
 			Statement stmt;
-			int res = db.prepare_v2("INSERT OR REPLACE INTO `merged_games`(`primary_source`, `primary_id`, `secondary_source`, `secondary_id`) VALUES (?, ?, ?, ?)", -1, out stmt);
+
+			int res = db.prepare_v2("SELECT rowid, * FROM `merges` WHERE `merge` LIKE ? OR `merge` LIKE ?", -1, out stmt);
 			assert(res == Sqlite.OK);
 
-			stmt.bind_text(1, primary.source.name);
-			stmt.bind_text(2, primary.id);
-			stmt.bind_text(3, secondary.source.name);
-			stmt.bind_text(4, secondary.id);
+			stmt.bind_text(1, @"%$(first.source.name):$(first.id)%");
+			stmt.bind_text(2, @"%$(second.source.name):$(second.id)%");
+
+			int64? row = null;
+			int merge_var = 1;
+
+			string old_merge = null;
+
+			if((res = stmt.step()) == Sqlite.ROW)
+			{
+				row = stmt.column_int64(0);
+				old_merge = stmt.column_text(1);
+				merge_var = 2;
+				res = db.prepare_v2("INSERT OR REPLACE INTO `merges`(rowid, `merge`) VALUES (?, ?)", -1, out stmt);
+			}
+			else
+			{
+				res = db.prepare_v2("INSERT OR REPLACE INTO `merges`(`merge`) VALUES (?)", -1, out stmt);
+			}
+			assert(res == Sqlite.OK);
+
+			string new_merge = "";
+
+			var games = new ArrayList<Game>(Game.is_equal);
+			games.add(first);
+			games.add(second);
+			if(old_merge != null)
+			{
+				foreach(var gameid in old_merge.split("|"))
+				{
+					var gparts = gameid.split(":");
+					var gsrc = gparts[0];
+					var gid = gparts[1];
+
+					if(gsrc == null || gid == null) continue;
+
+					var game = get_game(gsrc, gid);
+
+					if(game != null && !games.contains(game)) games.add(game);
+				}
+			}
+
+			foreach(var src in GameSources)
+			{
+				foreach(var game in games)
+				{
+					if(game.source.name == src.name)
+					{
+						if(new_merge != "") new_merge += "|";
+						new_merge += @"$(game.source.name):$(game.id)";
+					}
+				}
+			}
+
+			stmt.bind_text(merge_var, new_merge);
+
+			debug("[GamesDB] Merging: " + new_merge);
 
 			res = stmt.step();
 
@@ -162,33 +218,40 @@ namespace GameHub.Data
 			return games;
 		}
 
-		public ArrayList<Game> get_merged_games(Game primary) requires (db != null)
+		public ArrayList<Game>? get_merged_games(Game game) requires (db != null)
 		{
 			Statement stmt;
 
-			int res = db.prepare_v2("SELECT * FROM `merged_games` WHERE `primary_source` = ? AND `primary_id` = ? LIMIT 1", -1, out stmt);
-			stmt.bind_text(1, primary.source.name);
-			stmt.bind_text(2, primary.id);
+			int res = db.prepare_v2("SELECT * FROM `merges` WHERE `merge` LIKE ? LIMIT 1", -1, out stmt);
+			stmt.bind_text(1, @"$(game.source.name):$(game.id)|%");
 
 			assert(res == Sqlite.OK);
 
-			var games = new ArrayList<Game>(Game.is_equal);
-
 			while((res = stmt.step()) == Sqlite.ROW)
 			{
-				var src = stmt.column_text(2);
-				var id = stmt.column_text(3);
+				var games = new ArrayList<Game>(Game.is_equal);
+				var merge = stmt.column_text(0);
 
-				if(src == null || id == null) continue;
-
-				var game = get_game(src, id);
-				if(game != null)
+				if(merge != null)
 				{
-					games.add(game);
+					foreach(var gameid in merge.split("|"))
+					{
+						var gparts = gameid.split(":");
+						var gsrc = gparts[0];
+						var gid = gparts[1];
+
+						if(gsrc == null || gid == null) continue;
+
+						var g = get_game(gsrc, gid);
+
+						if(g != null && !games.contains(g) && !Game.is_equal(game, g)) games.add(g);
+					}
 				}
+
+				return games;
 			}
 
-			return games;
+			return null;
 		}
 		
 		public ArrayList<string> get_unsupported_games(GameSource src) requires (db != null)
@@ -224,11 +287,11 @@ namespace GameHub.Data
 		public bool is_game_merged(Game game) requires (db != null)
 		{
 			Statement stmt;
-			int res;
 
-			res = db.prepare_v2("SELECT * FROM `merged_games` WHERE `secondary_source` = ? AND `secondary_id` = ? LIMIT 1", -1, out stmt);
-			stmt.bind_text(1, game.source.name);
-			stmt.bind_text(2, game.id);
+			int res = db.prepare_v2("SELECT * FROM `merges` WHERE `merge` LIKE ? LIMIT 1", -1, out stmt);
+			stmt.bind_text(1, @"%|$(game.source.name):$(game.id)%");
+
+			assert(res == Sqlite.OK);
 
 			return stmt.step() == Sqlite.ROW;
 		}
@@ -236,11 +299,11 @@ namespace GameHub.Data
 		public bool is_game_merged_as_primary(Game game) requires (db != null)
 		{
 			Statement stmt;
-			int res;
 
-			res = db.prepare_v2("SELECT * FROM `merged_games` WHERE `primary_source` = ? AND `primary_id` = ? LIMIT 1", -1, out stmt);
-			stmt.bind_text(1, game.source.name);
-			stmt.bind_text(2, game.id);
+			int res = db.prepare_v2("SELECT * FROM `merges` WHERE `merge` LIKE ? LIMIT 1", -1, out stmt);
+			stmt.bind_text(1, @"$(game.source.name):$(game.id)|%");
+
+			assert(res == Sqlite.OK);
 
 			return stmt.step() == Sqlite.ROW;
 		}

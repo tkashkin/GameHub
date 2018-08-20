@@ -11,8 +11,7 @@ namespace GameHub.UI.Views
 	public class GameCard: FlowBoxChild
 	{
 		public Game game { get; construct; }
-		public HashMap<Game, ArrayList<Game>>? merged_games { get; construct; }
-		
+
 		private Frame card;
 		private Overlay content;
 		private AutoSizeImage image;
@@ -115,7 +114,7 @@ namespace GameHub.UI.Views
 						break;
 
 					case 3:
-						new Dialogs.GameDetailsDialog(game, merged_games).show_all();
+						new Dialogs.GameDetailsDialog(game).show_all();
 						break;
 				}
 			});
@@ -123,9 +122,9 @@ namespace GameHub.UI.Views
 			show_all();
 		}
 		
-		public GameCard(Game game, HashMap<Game, ArrayList<Game>>? merged_games)
+		public GameCard(Game game)
 		{
-			Object(game: game, merged_games: merged_games);
+			Object(game: game);
 			
 			label.label = game.name;
 			
@@ -179,12 +178,18 @@ namespace GameHub.UI.Views
 		{
 			src_icons.foreach(w => src_icons.remove(w));
 			src_icons.add(src_icon);
-			if(merged_games != null && merged_games.has_key(game))
+
+			var merges = GamesDB.get_instance().get_merged_games(game);
+			if(merges != null && merges.size > 0)
 			{
-				foreach(var g in merged_games.get(game))
+				foreach(var g in merges)
 				{
+					var icon_name = g.source.icon + "-symbolic";
+
+					src_icons.foreach(w => { if((w as Image).icon_name == icon_name) src_icons.remove(w); });
+
 					var icon = new Image();
-					icon.icon_name = g.source.icon + "-symbolic";
+					icon.icon_name = icon_name;
 					icon.icon_size = IconSize.LARGE_TOOLBAR;
 					icon.opacity = 0.6;
 					src_icons.add(icon);

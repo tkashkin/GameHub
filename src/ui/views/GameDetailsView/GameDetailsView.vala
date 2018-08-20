@@ -25,11 +25,9 @@ namespace GameHub.UI.Views.GameDetailsView
 			}
 		}
 
-		public HashMap<Game, ArrayList<Game>> merged_games { get; construct; }
-
-		public GameDetailsView(Game? game=null, HashMap<Game, ArrayList<Game>> merged_games)
+		public GameDetailsView(Game? game=null)
 		{
-			Object(game: game, merged_games: merged_games);
+			Object(game: game);
 		}
 
 		private Stack stack;
@@ -78,7 +76,8 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(_game == null) return Source.REMOVE;
 
-			bool merged = merged_games.has_key(game);
+			var merges = GamesDB.get_instance().get_merged_games(game);
+			bool merged = merges != null && merges.size > 0;
 
 			stack_switcher.visible = merged;
 
@@ -86,7 +85,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(merged)
 			{
-				foreach(var g in merged_games.get(game))
+				foreach(var g in merges)
 				{
 					add_page(g);
 				}
@@ -99,10 +98,12 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void add_page(Game g)
 		{
+			if(stack.get_child_by_name(g.source.name) != null) return;
+
 			var page = new GameDetailsPage(g);
 			page.content.margin = content_margin;
 			page.content.margin_top = stack_switcher.visible ? 40 : content_margin;
-			stack.add_titled(page, g.source.name + "/" + g.id, g.source.name);
+			stack.add_titled(page, g.source.name, g.source.name);
 		}
 	}
 }
