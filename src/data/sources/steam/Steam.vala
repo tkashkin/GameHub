@@ -158,7 +158,7 @@ namespace GameHub.Data.Sources.Steam
 					}
 				}
 
-				games_count = _games.size;
+				games_count = cached.size;
 
 				if(cache_loaded != null)
 				{
@@ -194,13 +194,13 @@ namespace GameHub.Data.Sources.Steam
 					if(!_games.contains(game) && !GamesDB.get_instance().is_game_merged(game) && yield game.is_for_linux())
 					{
 						_games.add(game);
+						games_count++;
 						if(game_loaded != null)
 						{
 							Idle.add(() => { game_loaded(game); return Source.REMOVE; });
 						}
 						GamesDB.get_instance().add_game(game);
 					}
-					games_count = _games.size;
 				}
 			}
 		}

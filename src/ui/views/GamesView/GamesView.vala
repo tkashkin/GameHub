@@ -271,8 +271,8 @@ namespace GameHub.UI.Views
 			GameSource? src = null;
 			if(f > 0) src = sources[f - 1];
 			var games = src == null ? games_grid.get_children().length() : src.games_count;
-			titlebar.title = "GameHub" + (src == null ? "" : "/" + src.name);
-			titlebar.subtitle = ngettext("%u game", "%u games", games).printf(games);
+			titlebar.title = "GameHub";
+			titlebar.subtitle = (src == null ? "" : src.name + ": ") + ngettext("%u game", "%u games", games).printf(games);
 
 			if(src != null && src.games_count == 0)
 			{

@@ -116,7 +116,7 @@ namespace GameHub.Data.Sources.Humble
 					}
 				}
 
-				games_count = _games.size;
+				games_count = cached.size;
 
 				if(cache_loaded != null)
 				{
@@ -144,6 +144,7 @@ namespace GameHub.Data.Sources.Humble
 								if(!game.is_for_linux.end(res)) return;
 
 								_games.add(game);
+								games_count++;
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
@@ -151,7 +152,6 @@ namespace GameHub.Data.Sources.Humble
 								GamesDB.get_instance().add_game(game);
 							});
 						}
-						games_count = _games.size;
 					}
 				}
 
