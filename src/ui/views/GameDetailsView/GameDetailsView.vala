@@ -76,7 +76,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(_game == null) return Source.REMOVE;
 
-			var merges = GamesDB.get_instance().get_merged_games(game);
+			var merges = Settings.UI.get_instance().merge_games ? GamesDB.get_instance().get_merged_games(game) : null;
 			bool merged = merges != null && merges.size > 0;
 
 			stack_switcher.visible = merged;

@@ -146,7 +146,7 @@ namespace GameHub.Data.Sources.Steam
 				{
 					foreach(var g in cached)
 					{
-						if(!GamesDB.get_instance().is_game_merged(g))
+						if(!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g))
 						{
 							_games.add(g);
 							if(game_loaded != null)
@@ -191,7 +191,7 @@ namespace GameHub.Data.Sources.Steam
 				foreach(var g in json_games.get_elements())
 				{
 					var game = new SteamGame(this, g.get_object());
-					if(!_games.contains(game) && !GamesDB.get_instance().is_game_merged(game) && yield game.is_for_linux())
+					if(!_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)) && yield game.is_for_linux())
 					{
 						_games.add(game);
 						games_count++;

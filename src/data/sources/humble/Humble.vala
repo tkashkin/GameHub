@@ -104,7 +104,7 @@ namespace GameHub.Data.Sources.Humble
 				{
 					foreach(var g in cached)
 					{
-						if(!GamesDB.get_instance().is_game_merged(g))
+						if(!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g))
 						{
 							_games.add(g);
 							if(game_loaded != null)
@@ -132,13 +132,22 @@ namespace GameHub.Data.Sources.Humble
 				{
 					var key = order.get_object().get_string_member("gamekey");
 
-					var root = Parser.parse_remote_json_file(@"https://www.humblebundle.com/api/v1/order/$(key)?ajax=true", "GET", null, headers).get_object();
+					var root_node = Parser.parse_remote_json_file(@"https://www.humblebundle.com/api/v1/order/$(key)?ajax=true", "GET", null, headers);
+
+					if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) continue;
+
+					var root = root_node.get_object();
+
+					if(root == null) continue;
+
 					var products = root.get_array_member("subproducts");
+
+					if(products == null) continue;
 
 					foreach(var product in products.get_elements())
 					{
 						var game = new HumbleGame(this, key, product.get_object());
-						if(!_games.contains(game) && !GamesDB.get_instance().is_game_merged(game))
+						if(!_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 						{
 							game.is_for_linux.begin((obj, res) => {
 								if(!game.is_for_linux.end(res)) return;

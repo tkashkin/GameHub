@@ -376,13 +376,9 @@ namespace GameHub.UI.Views
 							return Source.REMOVE;
 						});
 					}
-				}, () => {
-					//merge_games();
-				}, (obj, res) => {
+				}, () => {}, (obj, res) => {
 					loading_sources--;
 					spinner.active = loading_sources > 0;
-
-					//merge_games();
 
 					if(src.games_count == 0)
 					{
@@ -508,21 +504,6 @@ namespace GameHub.UI.Views
 					games_grid.remove(gc);
 					return;
 				}
-			});
-		}
-
-		private void merge_games()
-		{
-			if(!ui_settings.merge_games) return;
-			new Thread<void*>("merging", () => {
-				foreach(var src in GameSources)
-				{
-					foreach(var game in src.games)
-					{
-						merge_game(game);
-					}
-				}
-				return null;
 			});
 		}
 
