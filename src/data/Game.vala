@@ -70,7 +70,9 @@ namespace GameHub.Data
 						});
 					});
 
-					var file = yield Downloader.download(remote, local);
+					var info = new Downloader.DownloadInfo(game.name, game.icon, null, null, game.source.icon + "-symbolic");
+
+					var file = yield Downloader.download(remote, local, info);
 
 					Downloader.get_instance().disconnect(ds_id);
 
@@ -126,49 +128,52 @@ namespace GameHub.Data
 					catch(Error e){}
 
 					Utils.run({"chmod", "-R", "+x", game.install_dir.get_path()});
-
-					game.status = new Game.Status(game.executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 				}
 				catch(IOError.CANCELLED e){}
 				catch(Error e)
 				{
 					warning(e.message);
 				}
+				game.status = new Game.Status(game.executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			}
 
 			private static async InstallerType guess_type(File file)
 			{
 				var type = InstallerType.UNKNOWN;
 
-				var finfo = yield file.query_info_async(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
-				var mime = finfo.get_content_type();
-				type = InstallerType.from_mime(mime);
-
-				if(type != InstallerType.UNKNOWN) return type;
-
-				var info = yield Utils.run_thread({"file", "-bi", file.get_path()});
-				if(info != null && info.length > 0)
+				try
 				{
-					mime = info.split(";")[0];
-					if(mime != null && mime.length > 0)
+					var finfo = yield file.query_info_async(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
+					var mime = finfo.get_content_type();
+					type = InstallerType.from_mime(mime);
+
+					if(type != InstallerType.UNKNOWN) return type;
+
+					var info = yield Utils.run_thread({"file", "-bi", file.get_path()});
+					if(info != null && info.length > 0)
 					{
-						type = InstallerType.from_mime(mime);
+						mime = info.split(";")[0];
+						if(mime != null && mime.length > 0)
+						{
+							type = InstallerType.from_mime(mime);
+						}
+					}
+
+					if(type != InstallerType.UNKNOWN) return type;
+
+					string[] exe_ext = {"sh", "elf", "bin", "run"};
+					string[] arc_ext = {"zip", "tar", "cpio", "bz2", "gz", "lz", "lzma", "7z", "rar"};
+
+					foreach(var ext in exe_ext)
+					{
+						if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
+					}
+					foreach(var ext in arc_ext)
+					{
+						if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.ARCHIVE;
 					}
 				}
-
-				if(type != InstallerType.UNKNOWN) return type;
-
-				string[] exe_ext = {"sh", "elf", "bin", "run"};
-				string[] arc_ext = {"zip", "tar", "cpio", "bz2", "gz", "lz", "lzma", "7z", "rar"};
-
-				foreach(var ext in exe_ext)
-				{
-					if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
-				}
-				foreach(var ext in arc_ext)
-				{
-					if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.ARCHIVE;
-				}
+				catch(Error e){}
 
 				return type;
 			}

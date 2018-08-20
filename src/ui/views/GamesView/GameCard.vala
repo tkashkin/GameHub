@@ -117,6 +117,7 @@ namespace GameHub.UI.Views
 						new Dialogs.GameDetailsDialog(game).show_all();
 						break;
 				}
+				return true;
 			});
 			
 			show_all();

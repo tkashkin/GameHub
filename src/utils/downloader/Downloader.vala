@@ -10,6 +10,9 @@ namespace GameHub.Utils.Downloader
 		public signal void downloaded(Download download);
 		public signal void download_failed(Download download, Error error);
 
+		public signal void dl_started(DownloadInfo info);
+		public signal void dl_ended(DownloadInfo info);
+
 		public static Downloader? get_instance()
 		{
 			if(downloader == null)
@@ -20,11 +23,11 @@ namespace GameHub.Utils.Downloader
 			return downloader;
 		}
 
-		public abstract async File download(File remote, File local, bool preserve_filename=true) throws Error;
+		public abstract async File download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error;
 		public abstract Download? get_download(File remote);
 	}
 
-	public static async File download(File remote, File local, bool preserve_filename=true) throws Error
+	public static async File download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error
 	{
 		File result = local;
 		Error? error = null;
@@ -37,7 +40,7 @@ namespace GameHub.Utils.Downloader
 			}
 			else
 			{
-				downloader.download.begin(remote, local, preserve_filename, (obj, res) => {
+				downloader.download.begin(remote, local, info, preserve_filename, (obj, res) => {
 					try
 					{
 						result = downloader.download.end(res);
@@ -152,5 +155,21 @@ namespace GameHub.Utils.Downloader
 	public enum DownloadState
 	{
 		STARTING, STARTED, DOWNLOADING, FINISHED, PAUSED, CANCELLED, FAILED;
+	}
+
+	public class DownloadInfo: Object
+	{
+		public string name { get; construct; }
+		public string? icon { get; construct; }
+		public string? icon_name { get; construct; }
+		public string? type_icon { get; construct; }
+		public string? type_icon_name { get; construct; }
+
+		public Download? download { get; set; }
+
+		public DownloadInfo(string name, string? icon=null, string? icon_name=null, string? type_icon=null, string? type_icon_name=null)
+		{
+			Object(name: name, icon: icon, icon_name: icon_name, type_icon: type_icon, type_icon_name: type_icon_name);
+		}
 	}
 }

@@ -7,7 +7,7 @@ namespace GameHub.Utils
 	public delegate void FutureBoolean(bool result);
 	public delegate void FutureResult<T>(T result);
 	
-	public static void open_uri(string uri, Window? parent=null)
+	public static void open_uri(string uri)
 	{
 		try
 		{
@@ -145,7 +145,7 @@ namespace GameHub.Utils
 		{
 			if(!cached.query_exists())
 			{
-				yield Downloader.download(remote, cached, false);
+				yield Downloader.download(remote, cached, null, false);
 			}
 			return cached.get_path();
 		}

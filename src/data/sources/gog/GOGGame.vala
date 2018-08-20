@@ -1,4 +1,3 @@
-using Gtk;
 using Gee;
 using GameHub.Utils;
 
@@ -17,10 +16,11 @@ namespace GameHub.Data.Sources.GOG
 			}
 		}
 		
-		public GOGGame.default()
-		{
+		public ArrayList<Game.Installer>? installers { get; protected set; default = new ArrayList<Game.Installer>(); }
+		public ArrayList<BonusContent>? bonus_content { get; protected set; default = new ArrayList<BonusContent>(); }
+		public ArrayList<DLC>? dlc { get; protected set; default = new ArrayList<DLC>(); }
 
-		}
+		public GOGGame.default(){}
 
 		public GOGGame(GOG src, Json.Object json)
 		{
@@ -110,6 +110,38 @@ namespace GameHub.Data.Sources.GOG
 				store_page = links.get_string_member("product_card");
 			}
 
+			var downloads = Parser.json_object(root, {"downloads"});
+
+			var installers_json = downloads == null || !downloads.has_member("installers") ? null : downloads.get_array_member("installers");
+			if(installers_json != null)
+			{
+				installers.clear();
+				foreach(var installer_json in installers_json.get_elements())
+				{
+					var installer = new Installer(installer_json.get_object());
+					if(installer.os == "linux") installers.add(installer);
+				}
+			}
+
+			var bonuses_json = downloads == null || !downloads.has_member("bonus_content") ? null : downloads.get_array_member("bonus_content");
+			if(bonuses_json != null)
+			{
+				bonus_content.clear();
+				foreach(var bonus_json in bonuses_json.get_elements())
+				{
+					bonus_content.add(new BonusContent(this, bonus_json.get_object()));
+				}
+			}
+
+			var dlcs_json = !root.get_object().has_member("expanded_dlcs") ? null : root.get_object().get_array_member("expanded_dlcs");
+			if(dlcs_json != null)
+			{
+				foreach(var dlc_json in dlcs_json.get_elements())
+				{
+					dlc.add(new GOGGame.DLC(this, dlc_json.get_object()));
+				}
+			}
+
 			GamesDB.get_instance().add_game(this);
 
 			if(status.state != Game.State.DOWNLOADING)
@@ -124,21 +156,7 @@ namespace GameHub.Data.Sources.GOG
 
 			var root = Parser.parse_json(custom_info);
 
-			var downloads = Parser.json_object(root, {"downloads"});
-
-			if(downloads == null) return;
-			
-			var installers_json = downloads.get_array_member("installers");
-			
-			if(installers_json == null) return;
-
-			var installers = new ArrayList<Game.Installer>();
-			
-			foreach(var installer_json in installers_json.get_elements())
-			{
-				var installer = new Installer(installer_json.get_object());
-				if(installer.os == "linux") installers.add(installer);
-			}
+			if(installers == null || installers.size < 1) return;
 			
 			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
 			
@@ -230,23 +248,133 @@ namespace GameHub.Data.Sources.GOG
 
 		public class BonusContent
 		{
-			public int64 id;
+			public GOGGame game;
+
+			public string id;
 			public string name;
 			public string type;
 			public int64 count;
 			public string file;
 			public int64 size;
 
+			protected BonusContent.Status _status = new BonusContent.Status();
+			public signal void status_change(BonusContent.Status status);
+
+			public BonusContent.Status status
+			{
+				get { return _status; }
+				set { _status = value; status_change(_status); }
+			}
+
+			public Downloader.DownloadInfo dl_info;
+
+			public File? downloaded_file;
+
 			public string text { owned get { return count > 1 ? @"$(count) $(name)" : name; } }
 
-			public BonusContent(Json.Object json)
+			public string icon
 			{
-				id = json.get_int_member("id");
+				get
+				{
+					switch(type)
+					{
+						case "wallpapers":
+						case "images":
+						case "avatars":
+						case "artworks":
+							return "folder-pictures-symbolic";
+
+						case "audio":
+						case "soundtrack":
+							return "folder-music-symbolic";
+
+						case "video":
+							return "folder-videos-symbolic";
+
+						default: return "folder-documents-symbolic";
+					}
+				}
+			}
+
+			public BonusContent(GOGGame game, Json.Object json)
+			{
+				this.game = game;
+				id = json.get_int_member("id").to_string();
 				name = json.get_string_member("name");
 				type = json.get_string_member("type");
 				count = json.get_int_member("count");
 				file = json.get_array_member("files").get_object_element(0).get_string_member("downlink");
 				size = json.get_int_member("total_size");
+
+				dl_info = new Downloader.DownloadInfo(game.name + ": " + text, game.icon, null, null, icon);
+			}
+
+			public async File? download()
+			{
+				var root = yield Parser.parse_remote_json_file_async(file, "GET", ((GOG) game.source).user_token);
+				var link = root.get_object().get_string_member("downlink");
+				var remote = File.new_for_uri(link);
+				var bonus_dir = FSUtils.Paths.Collection.GOG.expand_bonus(game.name);
+				var local = FSUtils.file(bonus_dir, "gog_" + game.id + "_bonus_" + id);
+
+				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
+				FSUtils.mkdir(bonus_dir);
+
+				status = new BonusContent.Status(BonusContent.State.DOWNLOADING, null);
+				var ds_id = Downloader.get_instance().download_started.connect(dl => {
+					if(dl.remote != remote) return;
+					status = new BonusContent.Status(BonusContent.State.DOWNLOADING, dl);
+					dl.status_change.connect(s => {
+						status_change(status);
+					});
+				});
+
+				var start_date = new DateTime.now_local();
+
+				try
+				{
+					downloaded_file = yield Downloader.download(remote, local, dl_info);
+				}
+				catch(Error e){}
+
+				Downloader.get_instance().disconnect(ds_id);
+
+				status = new BonusContent.Status(downloaded_file != null && downloaded_file.query_exists() ? BonusContent.State.DOWNLOADED : BonusContent.State.NOT_DOWNLOADED);
+
+				var elapsed = new DateTime.now_local().difference(start_date);
+
+				if(elapsed <= 10 * TimeSpan.SECOND) open();
+
+				return downloaded_file;
+			}
+
+			public void open()
+			{
+				if(downloaded_file != null && downloaded_file.query_exists())
+				{
+					Idle.add(() => {
+						Utils.open_uri(downloaded_file.get_uri());
+						return Source.REMOVE;
+					});
+				}
+			}
+
+			public class Status
+			{
+				public BonusContent.State state;
+
+				public Downloader.Download? download;
+
+				public Status(BonusContent.State state=BonusContent.State.NOT_DOWNLOADED, Downloader.Download? download=null)
+				{
+					this.state = state;
+					this.download = download;
+				}
+			}
+
+			public enum State
+			{
+				NOT_DOWNLOADED, DOWNLOADING, DOWNLOADED;
 			}
 		}
 
