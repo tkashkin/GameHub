@@ -10,12 +10,14 @@ namespace GameHub.Utils.Downloader.Soup
 		private Session session;
 
 		private HashTable<string, SoupDownload> downloads;
+		private HashTable<string, DownloadInfo> dl_info;
 
 		private static string[] supported_schemes = { "http", "https" };
 
 		public SoupDownloader()
 		{
 			downloads = new HashTable<string, SoupDownload>(str_hash, str_equal);
+			dl_info = new HashTable<string, DownloadInfo>(str_hash, str_equal);
 			session = new Session();
 			session.max_conns = 32;
 			session.max_conns_per_host = 16;
@@ -26,7 +28,7 @@ namespace GameHub.Utils.Downloader.Soup
 			return downloads.get(remote.get_uri());
 		}
 
-		public override async File download(File remote, File local, bool preserve_filename=true) throws Error
+		public override async File download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error
 		{
 			var uri = remote.get_uri();
 			SoupDownload download = downloads.get(uri);
@@ -47,6 +49,13 @@ namespace GameHub.Utils.Downloader.Soup
 
 			download_started(download);
 
+			if(info != null)
+			{
+				info.download = download;
+				dl_info.set(uri, info);
+				dl_started(info);
+			}
+
 			debug("[SoupDownloader] Downloading '%s'...", uri);
 
 			try
@@ -59,17 +68,20 @@ namespace GameHub.Utils.Downloader.Soup
 			catch(IOError.CANCELLED error)
 			{
 				download.status = new DownloadStatus(DownloadState.CANCELLED);
+				if(info != null) dl_ended(info);
 				throw error;
 			}
 			catch(Error error)
 			{
 				download.status = new DownloadStatus(DownloadState.FAILED);
 				download_failed(download, error);
+				if(info != null) dl_ended(info);
 				throw error;
 			}
 			finally
 			{
 				downloads.remove(uri);
+				dl_info.remove(uri);
 			}
 
 			if(download.local_tmp.query_exists())
@@ -80,6 +92,7 @@ namespace GameHub.Utils.Downloader.Soup
 			debug("[SoupDownloader] Downloaded '%s'", uri);
 
 			downloaded(download);
+			if(info != null) dl_ended(info);
 
 			return download.local;
 		}

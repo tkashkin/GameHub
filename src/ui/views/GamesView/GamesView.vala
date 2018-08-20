@@ -4,7 +4,6 @@ using Gee;
 using Granite;
 using GameHub.Data;
 using GameHub.Utils;
-using GameHub.Utils.Downloader;
 
 namespace GameHub.UI.Views
 {
@@ -149,7 +148,7 @@ namespace GameHub.UI.Views
 			downloads_popover.position = PositionType.BOTTOM;
 			downloads_popover.set_size_request(384, -1);
 			downloads.popover = downloads_popover;
-			downloads.set_sensitive(false);
+			downloads.sensitive = false;
 
 			search = new SearchEntry();
 			search.placeholder_text = _("Search");
@@ -260,6 +259,25 @@ namespace GameHub.UI.Views
 			search.sensitive = false;
 			downloads.opacity = 0;
 
+			Downloader.get_instance().dl_started.connect(dl => {
+				downloads_list.add(new DownloadProgressView(dl));
+				downloads.sensitive = true;
+				downloads_count++;
+			});
+			Downloader.get_instance().dl_ended.connect(dl => {
+				downloads_count--;
+				if(downloads_count < 0) downloads_count = 0;
+				downloads.sensitive = downloads_count > 0;
+				if(downloads_count == 0)
+				{
+					#if GTK_3_22
+					downloads_popover.popdown();
+					#else
+					downloads_popover.hide();
+					#endif
+				}
+			});
+
 			load_games.begin();
 		}
 
@@ -348,25 +366,6 @@ namespace GameHub.UI.Views
 					games_grid.show_all();
 					games_list.show_all();
 
-					var pv = new GameDownloadProgressView(g);
-					downloads_list.add(pv);
-					g.status_change.connect(s => {
-						if(s.state == Game.State.INSTALLING)
-						{
-							downloads_count--;
-						}
-						else if(s.state == Game.State.DOWNLOADING)
-						{
-							if(s.download != null && (s.download.status.state == DownloadState.CANCELLED
-							                       || s.download.status.state == DownloadState.FAILED))
-								downloads_count--;
-							else if(!pv.visible) downloads_count++;
-						}
-						pv.visible = s.state == Game.State.DOWNLOADING;
-						downloads_count = int.max(0, downloads_count);
-						downloads.set_sensitive(downloads_count > 0);
-					});
-					g.status_change(g.status);
 					merge_game(g);
 
 					if(games_list.get_selected_row() == null)

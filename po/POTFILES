@@ -35,7 +35,7 @@ src/ui/views/WelcomeView.vala
 src/ui/views/GamesView/GamesView.vala
 src/ui/views/GamesView/GameCard.vala
 src/ui/views/GamesView/GameListRow.vala
-src/ui/views/GamesView/GameDownloadProgressView.vala
+src/ui/views/GamesView/DownloadProgressView.vala
 
 src/ui/views/GameDetailsView/GameDetailsView.vala
 src/ui/views/GameDetailsView/GameDetailsPage.vala
