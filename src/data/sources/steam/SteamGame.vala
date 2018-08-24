@@ -5,109 +5,116 @@ namespace GameHub.Data.Sources.Steam
 {
 	public class SteamGame: Game
 	{
-		private bool? _is_for_linux = null;
-		private bool _product_info_updated = false;
 		private int metadata_tries = 0;
 		
-		public SteamGame(Steam src, Json.Object json)
+		public SteamGame(Steam src, Json.Node json_node)
 		{
 			source = src;
-			id = json.get_int_member("appid").to_string();
-			name = json.get_string_member("name");
-			var icon_hash = json.get_string_member("img_icon_url");
+
+			var json_obj = json_node.get_object();
+
+			id = json_obj.get_int_member("appid").to_string();
+			name = json_obj.get_string_member("name");
+			var icon_hash = json_obj.get_string_member("img_icon_url");
 			icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
 			image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
 
-			if(GamesDB.get_instance().is_game_unsupported(src, id))
-			{
-				_is_for_linux = false;
-			}
-			is_installed();
+			info = Json.to_string(json_node, false);
 
 			store_page = @"steam://store/$(id)";
+
+			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
 		
-		public SteamGame.from_db(Steam src, Sqlite.Statement stmt)
+		public SteamGame.from_db(Steam src, Sqlite.Statement s)
 		{
 			source = src;
-			id = stmt.column_text(1);
-			name = stmt.column_text(2);
-			icon = stmt.column_text(3);
-			image = stmt.column_text(4);
-			custom_info = stmt.column_text(5);
-			_is_for_linux = true;
-			is_installed();
+			id = GamesDB.GAMES.ID.get(s);
+			name = GamesDB.GAMES.NAME.get(s);
+			icon = GamesDB.GAMES.ICON.get(s);
+			image = GamesDB.GAMES.IMAGE.get(s);
+			info = GamesDB.GAMES.INFO.get(s);
+			info_detailed = GamesDB.GAMES.INFO_DETAILED.get(s);
+
+			platforms.clear();
+			var pls = GamesDB.GAMES.PLATFORMS.get(s).split(",");
+			foreach(var pl in pls)
+			{
+				foreach(var p in Platforms)
+				{
+					if(pl == p.id())
+					{
+						platforms.add(p);
+					}
+				}
+			}
+
 			store_page = @"steam://store/$(id)";
+
+			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
 
 		public override async void update_game_info()
 		{
-			if(custom_info == null || custom_info.length == 0 || !_product_info_updated)
+			if(info_detailed == null || info_detailed.length == 0)
 			{
+				debug("[Steam:%s] No cached app data for '%s', fetching...", id, name);
 				var lang = Utils.get_language_name().down();
 				var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)" + (lang != null && lang.length > 0 ? "&l=" + lang : "");
-				custom_info = (yield Parser.load_remote_file_async(url));
-				_product_info_updated = true;
+				info_detailed = (yield Parser.load_remote_file_async(url));
 			}
 
-			var root = Parser.parse_json(custom_info);
+			GamesDB.get_instance().add_game(this);
+
+			var root = Parser.parse_json(info_detailed);
+
+			var app = Parser.json_object(root, {id});
+
+			if(app == null)
+			{
+				debug("[Steam:%s] No app data for '%s', store page does not exist", id, name);
+				return;
+			}
+
 			var data = Parser.json_object(root, {id, "data"});
+
+			if(data == null)
+			{
+				bool success = app.has_member("success") && app.get_boolean_member("success");
+				debug("[Steam:%s] No app data for '%s', success: %s, store page does not exist", id, name, success.to_string());
+				if(metadata_tries > 0) return;
+			}
+
 			description = data != null && data.has_member("detailed_description") ? data.get_string_member("detailed_description") : "";
 
-			if(_is_for_linux == true) GamesDB.get_instance().add_game(this);
-		}
-		
-		public override async bool is_for_linux()
-		{
-			if(_is_for_linux != null) return _is_for_linux;
-			
 			metadata_tries++;
 			
-			debug("[Steam] <app %s> Checking for compatibility [%d]...\n", id, metadata_tries);
+			var platforms_json = Parser.json_object(root, {id, "data", "platforms"});
 			
-			yield update_game_info();
-
-			var root = Parser.parse_json(custom_info);
-			var platforms = Parser.json_object(root, {id, "data", "platforms"});
-			
-			if(platforms == null)
+			platforms.clear();
+			if(platforms_json == null)
 			{
-				if(metadata_tries > 2)
-				{
-					debug("[Steam] <app %s> No data, %d tries failed, assuming no linux support\n", id, metadata_tries);
-					_is_for_linux = false;
-					GamesDB.get_instance().add_unsupported_game(source, id);
-					return _is_for_linux;
-				}
-				
-				debug("[Steam] <app %s> No data, sleeping for 2.5s\n", id);
-				yield Utils.sleep_async(2500);
-				return yield is_for_linux();
+				debug("[Steam:%s] No platform support data, %d tries failed, assuming Windows support", id, metadata_tries);
+				platforms.add(Platform.WINDOWS);
+				GamesDB.get_instance().add_game(this);
+				return;
 			}
-			
-			_is_for_linux = platforms.get_boolean_member("linux");
-			
-			if(_is_for_linux == false) GamesDB.get_instance().add_unsupported_game(source, id);
 
-			return _is_for_linux;
+			foreach(var p in Platforms)
+			{
+				if(platforms_json.get_boolean_member(p.id()))
+				{
+					platforms.add(p);
+				}
+			}
+
+			GamesDB.get_instance().add_game(this);
 		}
-		
-		public override bool is_installed()
+
+		public override bool is_supported(Platform? platform=null)
 		{
-			foreach(var dir in Steam.LibraryFolders)
-			{
-				var acf = FSUtils.file(dir, @"appmanifest_$(id).acf");
-				if(acf.query_exists())
-				{
-					var root = Parser.parse_vdf_file(acf.get_path()).get_object();
-					install_dir = FSUtils.file(dir, "common/" + root.get_object_member("AppState").get_string_member("installdir"));
-					status = new Game.Status(Game.State.INSTALLED);
-					return true;
-				}
-			}
-			
-			status = new Game.Status(Game.State.UNINSTALLED);
-			return false;
+			if(platform == null) platform = CurrentPlatform;
+			return base.is_supported(platform) || (Steam.is_app_installed(Steam.PROTON_APPID) && base.is_supported(Platform.WINDOWS));
 		}
 		
 		public override async void install()
@@ -118,14 +125,13 @@ namespace GameHub.Data.Sources.Steam
 		public override async void run()
 		{
 			Utils.open_uri(@"steam://rungameid/$(id)");
+			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
 
 		public override async void uninstall()
 		{
-			if(is_installed())
-			{
-
-			}
+			Utils.open_uri(@"steam://uninstall/$(id)");
+			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
 	}
 }

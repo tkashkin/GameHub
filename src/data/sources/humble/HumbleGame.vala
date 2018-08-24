@@ -6,76 +6,78 @@ namespace GameHub.Data.Sources.Humble
 {
 	public class HumbleGame: Game
 	{
-		private bool _is_for_linux;
-		
 		private string order_id;
 
-		private string installation_dir_name
-		{
-			owned get
-			{
-				return name.escape().replace(" ", "_").replace(":", "");
-			}
-		}
-		
-		public HumbleGame(Humble src, string order, Json.Object json)
+		public ArrayList<Game.Installer>? installers { get; protected set; default = new ArrayList<Game.Installer>(); }
+
+		public HumbleGame(Humble src, string order, Json.Node json_node)
 		{
 			source = src;
-			id = json.get_string_member("machine_name");
-			name = json.get_string_member("human_name");
-			image = json.get_string_member("icon");
+
+			var json_obj = json_node.get_object();
+
+			id = json_obj.get_string_member("machine_name");
+			name = json_obj.get_string_member("human_name");
+			image = json_obj.get_string_member("icon");
 			icon = image;
 			order_id = order;
 			
-			_is_for_linux = false;
-			
-			foreach(var dl in json.get_array_member("downloads").get_elements())
+			info = Json.to_string(json_node, false);
+
+			platforms.clear();
+			foreach(var dl in json_obj.get_array_member("downloads").get_elements())
 			{
-				if(dl.get_object().get_string_member("platform") == "linux")
+				var pl = dl.get_object().get_string_member("platform");
+				foreach(var p in Platforms)
 				{
-					_is_for_linux = true;
-					break;
+					if(pl == p.id())
+					{
+						platforms.add(p);
+					}
 				}
-			}
-			
-			if(!_is_for_linux)
-			{
-				GamesDB.get_instance().add_unsupported_game(source, id);
-				return;
 			}
 			
 			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name);
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
-			is_installed();
-			
-			custom_info = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
+			info_detailed = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
+			update_status();
 		}
 		
-		public HumbleGame.from_db(Humble src, Sqlite.Statement stmt)
+		public HumbleGame.from_db(Humble src, Sqlite.Statement s)
 		{
 			source = src;
-			id = stmt.column_text(1);
-			name = stmt.column_text(2);
-			icon = stmt.column_text(3);
-			image = stmt.column_text(4);
-			custom_info = stmt.column_text(5);
-			_is_for_linux = true;
-			
-			var custom_json = Parser.parse_json(custom_info).get_object();
-			order_id = custom_json.get_string_member("order");
-			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name);
-			executable = FSUtils.file(custom_json.get_string_member("executable"));
+			id = GamesDB.GAMES.ID.get(s);
+			name = GamesDB.GAMES.NAME.get(s);
+			icon = GamesDB.GAMES.ICON.get(s);
+			image = GamesDB.GAMES.IMAGE.get(s);
+			install_dir = FSUtils.file(GamesDB.GAMES.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
+			info = GamesDB.GAMES.INFO.get(s);
+			info_detailed = GamesDB.GAMES.INFO_DETAILED.get(s);
+
+			platforms.clear();
+			var pls = GamesDB.GAMES.PLATFORMS.get(s).split(",");
+			foreach(var pl in pls)
+			{
+				foreach(var p in Platforms)
+				{
+					if(pl == p.id())
+					{
+						platforms.add(p);
+					}
+				}
+			}
+
+			executable = FSUtils.file(install_dir.get_path(), "start.sh");
 			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
-			is_installed();
+
+			var json = Parser.parse_json(info_detailed).get_object();
+			order_id = json.get_string_member("order");
+			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name);
+			executable = FSUtils.file(json.get_string_member("executable"));
+			update_status();
 		}
 		
-		public override async bool is_for_linux()
-		{
-			return _is_for_linux;
-		}
-		
-		public override bool is_installed()
+		public bool update_status()
 		{
 			if(status.state != Game.State.DOWNLOADING)
 			{
@@ -84,39 +86,54 @@ namespace GameHub.Data.Sources.Humble
 			return executable.query_exists();
 		}
 		
-		public override async void install()
+		public override async void update_game_info()
 		{
-			var token = ((Humble) source).user_token;
+			update_status();
 			
-			var headers = new HashMap<string, string>();
-			headers["Cookie"] = @"$(Humble.AUTH_COOKIE)=\"$(token)\";";
-			
-			var root = (yield Parser.parse_remote_json_file_async(@"https://www.humblebundle.com/api/v1/order/$(order_id)?ajax=true", "GET", null, headers)).get_object();
-			var products = root.get_array_member("subproducts");
-			
-			if(products == null) return;
-			
-			var installers = new ArrayList<Game.Installer>();
-			
-			foreach(var product_node in products.get_elements())
+			if(info == null || info.length == 0)
 			{
-				var product = product_node.get_object();
-				if(product.get_string_member("machine_name") != id) continue;
-				
-				foreach(var dl_node in product.get_array_member("downloads").get_elements())
+				var token = ((Humble) source).user_token;
+
+				var headers = new HashMap<string, string>();
+				headers["Cookie"] = @"$(Humble.AUTH_COOKIE)=\"$(token)\";";
+
+				var root_node = yield Parser.parse_remote_json_file_async(@"https://www.humblebundle.com/api/v1/order/$(order_id)?ajax=true", "GET", null, headers);
+				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return;
+				var root = root_node.get_object();
+				if(root == null) return;
+				var products = root.get_array_member("subproducts");
+				if(products == null) return;
+				foreach(var product_node in products.get_elements())
 				{
-					var dl = dl_node.get_object();
-					var id = dl.get_string_member("machine_name");
-					var os = dl.get_string_member("platform");
-					if(os != "linux") continue;
-					
-					foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
-					{
-						var installer = new Installer(id, os, dls_node.get_object());
-						installers.add(installer);
-					}
+					if(product_node.get_object().get_string_member("machine_name") != id) continue;
+					info = Json.to_string(product_node, false);
+					break;
 				}
 			}
+
+			if(installers.size > 0) return;
+			
+			var product = Parser.parse_json(info).get_object();
+			if(product == null) return;
+
+			foreach(var dl_node in product.get_array_member("downloads").get_elements())
+			{
+				var dl = dl_node.get_object();
+				var id = dl.get_string_member("machine_name");
+				var os = dl.get_string_member("platform");
+				if(os != CurrentPlatform.id()) continue;
+
+				foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
+				{
+					var installer = new Installer(id, os, dls_node.get_object());
+					installers.add(installer);
+				}
+			}
+		}
+
+		public override async void install()
+		{
+			yield update_game_info();
 			
 			if(installers.size < 1) return;
 			
@@ -136,7 +153,7 @@ namespace GameHub.Data.Sources.Humble
 				installer.install.begin(this, remote, local, (obj, res) => {
 					installer.install.end(res);
 					choose_executable();
-					status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+					update_status();
 					Idle.add(install.callback);
 				});
 			});
@@ -180,8 +197,8 @@ namespace GameHub.Data.Sources.Humble
 			if(chooser.run() == ResponseType.ACCEPT)
 			{
 				executable = chooser.get_file();
-				custom_info = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
-				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+				info_detailed = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
+				update_status();
 				if(executable.query_exists())
 				{
 					Utils.run({"chmod", "+x", executable.get_path()});
@@ -194,7 +211,7 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void run()
 		{
-			if(is_installed())
+			if(executable.query_exists())
 			{
 				var path = executable.get_path();
 				var dir = executable.get_parent().get_path();
@@ -204,10 +221,10 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void uninstall()
 		{
-			if(is_installed())
+			if(executable.query_exists())
 			{
 				FSUtils.rm(install_dir.get_path(), "", "-rf");
-				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+				update_status();
 			}
 		}
 		

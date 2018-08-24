@@ -116,14 +116,22 @@ namespace GameHub.Utils
 			return parse_vdf(yield load_remote_file_async(url, method, auth, headers));
 		}
 		
-		public static Json.Object? json_object(Json.Node root, string[] keys)
+		public static Json.Object? json_object(Json.Node? root, string[] keys)
 		{
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return null;
 			Json.Object? obj = root.get_object();
 			
 			foreach(var key in keys)
 			{
-				if(obj != null && obj.has_member(key)) obj = obj.get_object_member(key);
+				if(obj != null && obj.has_member(key))
+				{
+					var member = obj.get_member(key);
+					if(member != null && member.get_node_type() == Json.NodeType.OBJECT)
+					{
+						obj = member.get_object();
+					}
+					else obj = null;
+				}
 				else obj = null;
 				
 				if(obj == null) break;

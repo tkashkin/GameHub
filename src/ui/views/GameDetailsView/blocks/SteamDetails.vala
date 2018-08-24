@@ -21,7 +21,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			if(!supports_game) return;
 
-			var root = Parser.parse_json(game.custom_info).get_object();
+			var root = Parser.parse_json(game.info_detailed).get_object();
 			var app = root.has_member(game.id) ? root.get_object_member(game.id) : null;
 			var data = app != null && app.has_member("data") ? app.get_object_member("data") : null;
 			if(data != null)
@@ -76,6 +76,6 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			}
 		}
 
-		public override bool supports_game { get { return (game is SteamGame) && game.custom_info != null && game.custom_info.length > 0; } }
+		public override bool supports_game { get { return (game is SteamGame) && game.info_detailed != null && game.info_detailed.length > 0; } }
 	}
 }

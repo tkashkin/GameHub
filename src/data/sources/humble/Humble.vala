@@ -8,8 +8,9 @@ namespace GameHub.Data.Sources.Humble
 	{
 		public const string AUTH_COOKIE = "_simpleauth_sess";
 		
+		public override string id { get { return "humble"; } }
 		public override string name { get { return "Humble Bundle"; } }
-		public override string icon { get { return "humble"; } }
+		public override string icon { get { return "humble-symbolic"; } }
 
 		public override bool enabled
 		{
@@ -106,12 +107,16 @@ namespace GameHub.Data.Sources.Humble
 					{
 						if(!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g))
 						{
-							_games.add(g);
-							if(game_loaded != null)
-							{
-								Idle.add(() => { game_loaded(g); return Source.REMOVE; });
-								Thread.usleep(10000);
-							}
+							g.update_game_info.begin((obj, res) => {
+								g.update_game_info.end(res);
+								if(g.platforms.size == 0) return;
+								_games.add(g);
+								if(game_loaded != null)
+								{
+									Idle.add(() => { game_loaded(g); return Source.REMOVE; });
+									Thread.usleep(10000);
+								}
+							});
 						}
 					}
 				}
@@ -146,19 +151,18 @@ namespace GameHub.Data.Sources.Humble
 
 					foreach(var product in products.get_elements())
 					{
-						var game = new HumbleGame(this, key, product.get_object());
-						if(!_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
+						var game = new HumbleGame(this, key, product);
+						if(!_games.contains(game) && game.platforms.size > 0 && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 						{
-							game.is_for_linux.begin((obj, res) => {
-								if(!game.is_for_linux.end(res)) return;
-
+							GamesDB.get_instance().add_game(game);
+							game.update_game_info.begin((obj, res) => {
+								game.update_game_info.end(res);
 								_games.add(game);
 								games_count++;
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
 								}
-								GamesDB.get_instance().add_game(game);
 							});
 						}
 					}

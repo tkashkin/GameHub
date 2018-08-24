@@ -5,5 +5,9 @@
 		<file alias="scalable/actions/steam-symbolic.svg">steam.svg</file>
 		<file alias="scalable/actions/gog-symbolic.svg">gog.svg</file>
 		<file alias="scalable/actions/humble-symbolic.svg">humble.svg</file>
+
+		<file alias="scalable/actions/platform-linux-symbolic.svg">platform-linux.svg</file>
+		<file alias="scalable/actions/platform-windows-symbolic.svg">platform-windows.svg</file>
+		<file alias="scalable/actions/platform-macos-symbolic.svg">platform-macos.svg</file>
 	</gresource>
 </gresources>

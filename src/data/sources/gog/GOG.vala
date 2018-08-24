@@ -12,8 +12,9 @@ namespace GameHub.Data.Sources.GOG
 		
 		private const string[] GAMES_BLACKLIST = {"1424856371" /* Hotline Miami 2: Wrong Number - Digital Comics */};
 
+		public override string id { get { return "gog"; } }
 		public override string name { get { return "GOG"; } }
-		public override string icon { get { return "gog"; } }
+		public override string icon { get { return "gog-symbolic"; } }
 
 		public override bool enabled
 		{
@@ -174,6 +175,7 @@ namespace GameHub.Data.Sources.GOG
 					{
 						if(!(g.id in GAMES_BLACKLIST) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g)))
 						{
+							g.update_game_info.begin();
 							_games.add(g);
 							if(game_loaded != null)
 							{
@@ -208,19 +210,18 @@ namespace GameHub.Data.Sources.GOG
 
 					foreach(var g in products.get_elements())
 					{
-						var game = new GOGGame(this, g.get_object());
+						var game = new GOGGame(this, g);
 						if(!(game.id in GAMES_BLACKLIST) && !_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 						{
-							game.is_for_linux.begin((obj, res) => {
-								if(!game.is_for_linux.end(res)) return;
-
+							GamesDB.get_instance().add_game(game);
+							game.update_game_info.begin((obj, res) => {
+								game.update_game_info.end(res);
 								_games.add(game);
 								games_count++;
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
 								}
-								GamesDB.get_instance().add_game(game);
 							});
 						}
 					}

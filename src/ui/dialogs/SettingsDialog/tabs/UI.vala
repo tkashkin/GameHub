@@ -21,6 +21,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			add_separator();
 
 			add_switch(_("Merge games from different sources"), ui.merge_games, v => { ui.merge_games = v; dialog.show_restart_message(); });
+
+			add_separator();
+
+			add_switch(_("Show non-native games"), ui.show_unsupported_games, v => { ui.show_unsupported_games = v; });
 		}
 
 	}
