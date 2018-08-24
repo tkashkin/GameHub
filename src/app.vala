@@ -51,6 +51,9 @@ namespace GameHub
 			
 			GamesDB.init();
 			
+			Platforms = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS };
+			CurrentPlatform = Platform.LINUX;
+
 			GameSources = { new Steam(), new GOG(), new Humble() };
 
 			return app.run(args);

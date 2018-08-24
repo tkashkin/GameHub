@@ -1,3 +1,5 @@
+using Gee;
+
 using GameHub.Utils;
 
 namespace GameHub.Data
@@ -13,21 +15,44 @@ namespace GameHub.Data
 		public string icon { get; protected set; }
 		public string image { get; protected set; }
 		
-		public string custom_info { get; protected set; default = ""; }
+		public string? info { get; protected set; }
+		public string? info_detailed { get; protected set; }
+
+		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
+		public virtual bool is_supported(Platform? platform=null)
+		{
+			if(platform == null) platform = CurrentPlatform;
+			return platform in platforms;
+		}
+
+		public bool is_installable { get; protected set; default = false; }
 		
 		public File executable { get; protected set; }
 		public File install_dir { get; protected set; }
 		public string? store_page { get; protected set; default = null; }
 
-		public virtual async bool is_for_linux(){ return true; }
-		
-		public virtual bool is_installed(){ return false; }
-		
 		public abstract async void install();
 		public abstract async void run();
 		public abstract async void uninstall();
 		
 		public virtual async void update_game_info(){}
+
+		protected Game.Status _status = new Game.Status();
+		public signal void status_change(Game.Status status);
+
+		public Game.Status status
+		{
+			get { return _status; }
+			set { _status = value; status_change(_status); }
+		}
+
+		public virtual string installation_dir_name
+		{
+			owned get
+			{
+				return name.escape().replace(" ", "_").replace(":", "");
+			}
+		}
 
 		public static bool is_equal(Game first, Game second)
 		{
@@ -37,15 +62,6 @@ namespace GameHub.Data
 		public static uint hash(Game game)
 		{
 			return str_hash(@"$(game.source.name)/$(game.id)");
-		}
-		
-		protected Game.Status _status = new Game.Status();
-		public signal void status_change(Game.Status status);
-
-		public Game.Status status
-		{
-			get { return _status; }
-			set { _status = value; status_change(_status); }
 		}
 
 		public abstract class Installer
@@ -256,4 +272,44 @@ namespace GameHub.Data
 			UNINSTALLED, INSTALLED, DOWNLOADING, INSTALLING;
 		}
 	}
+
+	public enum Platform
+	{
+		LINUX, WINDOWS, MACOS;
+
+		public string id()
+		{
+			switch(this)
+			{
+				case Platform.LINUX: return "linux";
+				case Platform.WINDOWS: return "windows";
+				case Platform.MACOS: return "mac";
+			}
+			assert_not_reached();
+		}
+
+		public string name()
+		{
+			switch(this)
+			{
+				case Platform.LINUX: return "Linux";
+				case Platform.WINDOWS: return "Windows";
+				case Platform.MACOS: return "macOS";
+			}
+			assert_not_reached();
+		}
+
+		public string icon()
+		{
+			switch(this)
+			{
+				case Platform.LINUX: return "platform-linux-symbolic";
+				case Platform.WINDOWS: return "platform-windows-symbolic";
+				case Platform.MACOS: return "platform-macos-symbolic";
+			}
+			assert_not_reached();
+		}
+	}
+	public static Platform[] Platforms;
+	public static Platform CurrentPlatform;
 }

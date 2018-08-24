@@ -215,8 +215,9 @@ namespace GameHub.Utils
 			}
 		}
 		
-		public static string expand(string path, string? file=null, HashMap<string, string>? variables=null)
+		public static string? expand(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
+			if(path == null) return null;
 			var expanded_path = path;
 			if(variables != null)
 			{
@@ -228,17 +229,18 @@ namespace GameHub.Utils
 			return expanded_path.replace("~/.cache", Environment.get_user_cache_dir()).replace("~", Environment.get_home_dir()) + (file != null && file != "" ? "/" + file : "");
 		}
 		
-		public static File file(string path, string? file=null, HashMap<string, string>? variables=null)
+		public static File? file(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
-			return File.new_for_path(FSUtils.expand(path, file, variables));
+			var f = FSUtils.expand(path, file, variables);
+			return f != null ? File.new_for_path(f) : null;
 		}
 		
-		public static File? mkdir(string path, string? file=null, HashMap<string, string>? variables=null)
+		public static File? mkdir(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
 			try
 			{
 				var dir = FSUtils.file(path, file, variables);
-				if(!dir.query_exists()) dir.make_directory_with_parents();
+				if(dir == null || !dir.query_exists()) dir.make_directory_with_parents();
 				return dir;
 			}
 			catch(Error e)

@@ -8,6 +8,7 @@ namespace GameHub.Data
 {
 	public abstract class GameSource
 	{
+		public virtual string id { get { return ""; } }
 		public virtual string name { get { return ""; } }
 		public virtual string icon { get { return ""; } }
 		public virtual string auth_description { owned get { return ""; } }
@@ -28,6 +29,15 @@ namespace GameHub.Data
 
 		public abstract async ArrayList<Game> load_games(Utils.FutureResult<Game>? game_loaded=null, Utils.Future? cache_loaded=null);
 		
+		public static GameSource? by_id(string id)
+		{
+			foreach(var src in GameSources)
+			{
+				if(src.id == id) return src;
+			}
+			return null;
+		}
+
 		public static GameSource? by_name(string name)
 		{
 			foreach(var src in GameSources)

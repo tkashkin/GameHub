@@ -188,6 +188,11 @@ namespace GameHub.Utils
 			}
 			n = n.replace(c.to_string(), "");
 		}
-		return new Regex(" {2,}").replace(n, n.length, 0, " ").strip();
+		try
+		{
+			n = new Regex(" {2,}").replace(n, n.length, 0, " ");
+		}
+		catch(Error e){}
+		return n.strip();
 	}
 }

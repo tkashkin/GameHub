@@ -8,8 +8,11 @@ namespace GameHub.Data.Sources.Steam
 	{
 		private string api_key;
 		
+		public static string PROTON_APPID = "858280";
+
+		public override string id { get { return "steam"; } }
 		public override string name { get { return "Steam"; } }
-		public override string icon { get { return "steam"; } }
+		public override string icon { get { return "steam-symbolic"; } }
 		public override string auth_description
 		{
 			owned get
@@ -53,6 +56,28 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			return (!) installed;
+		}
+
+		public static bool find_app_install_dir(string app, out File? install_dir)
+		{
+			install_dir = null;
+			foreach(var dir in Steam.LibraryFolders)
+			{
+				var acf = FSUtils.file(dir, @"appmanifest_$(app).acf");
+				if(acf.query_exists())
+				{
+					var root = Parser.parse_vdf_file(acf.get_path()).get_object();
+					var d = FSUtils.file(dir, "common/" + root.get_object_member("AppState").get_string_member("installdir"));
+					install_dir = d;
+					return d.query_exists();
+				}
+			}
+			return false;
+		}
+
+		public static bool is_app_installed(string app)
+		{
+			return find_app_install_dir(app, null);
 		}
 
 		public override async bool install()
@@ -148,6 +173,7 @@ namespace GameHub.Data.Sources.Steam
 					{
 						if(!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g))
 						{
+							g.update_game_info.begin();
 							_games.add(g);
 							if(game_loaded != null)
 							{
@@ -190,16 +216,17 @@ namespace GameHub.Data.Sources.Steam
 			{
 				foreach(var g in json_games.get_elements())
 				{
-					var game = new SteamGame(this, g.get_object());
-					if(!_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)) && yield game.is_for_linux())
+					var game = new SteamGame(this, g);
+					if(!_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 					{
+						GamesDB.get_instance().add_game(game);
+						yield game.update_game_info();
 						_games.add(game);
 						games_count++;
 						if(game_loaded != null)
 						{
 							Idle.add(() => { game_loaded(game); return Source.REMOVE; });
 						}
-						GamesDB.get_instance().add_game(game);
 					}
 				}
 			}

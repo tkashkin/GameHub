@@ -207,7 +207,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			is_updated = true;
 
 			title.label = game.name;
-			src_icon.icon_name = game.source.icon + "-symbolic";
+			src_icon.icon_name = game.source.icon;
 
 			blocks.foreach(b => blocks.remove(b));
 

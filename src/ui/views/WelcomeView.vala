@@ -71,7 +71,7 @@ namespace GameHub.UI.Views
 			
 			foreach(var src in GameSources)
 			{
-				welcome.append(src.icon + "-symbolic", src.name, "");
+				welcome.append(src.icon, src.name, "");
 			}
 			
 			update_entries.begin();

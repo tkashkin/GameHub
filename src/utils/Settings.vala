@@ -50,6 +50,8 @@ namespace GameHub.Settings
 
 		public bool merge_games { get; set; }
 
+		public bool show_unsupported_games { get; set; }
+
 		public UI()
 		{
 			base(ProjectConfig.PROJECT_NAME + ".ui");

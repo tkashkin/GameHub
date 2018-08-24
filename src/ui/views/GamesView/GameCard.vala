@@ -21,6 +21,8 @@ namespace GameHub.UI.Views
 		private Box src_icons;
 		private Image src_icon;
 
+		private Box platform_icons;
+
 		private Box actions;
 		
 		private const int CARD_WIDTH_MIN = 320;
@@ -51,6 +53,12 @@ namespace GameHub.UI.Views
 			src_icons.halign = Align.START;
 			src_icons.margin = 8;
 			src_icons.set_events(0);
+
+			platform_icons = new Box(Orientation.HORIZONTAL, 4);
+			platform_icons.valign = Align.START;
+			platform_icons.halign = Align.END;
+			platform_icons.margin = 8;
+			platform_icons.set_events(0);
 
 			src_icon = new Image();
 			src_icon.icon_size = IconSize.LARGE_TOOLBAR;
@@ -91,6 +99,7 @@ namespace GameHub.UI.Views
 			content.add(image);
 			content.add_overlay(actions);
 			content.add_overlay(info);
+			content.add_overlay(platform_icons);
 			content.add_overlay(src_icons);
 			content.add_overlay(progress_bar);
 			
@@ -129,7 +138,7 @@ namespace GameHub.UI.Views
 			
 			label.label = game.name;
 			
-			src_icon.icon_name = game.source.icon + "-symbolic";
+			src_icon.icon_name = game.source.icon;
 			
 			update();
 
@@ -185,7 +194,7 @@ namespace GameHub.UI.Views
 			{
 				foreach(var g in merges)
 				{
-					var icon_name = g.source.icon + "-symbolic";
+					var icon_name = g.source.icon;
 
 					src_icons.foreach(w => { if((w as Image).icon_name == icon_name) src_icons.remove(w); });
 
@@ -197,6 +206,17 @@ namespace GameHub.UI.Views
 				}
 			}
 			src_icons.show_all();
+
+			platform_icons.foreach(w => platform_icons.remove(w));
+			foreach(var p in game.platforms)
+			{
+				var icon = new Image();
+				icon.icon_name = p.icon();
+				icon.icon_size = IconSize.LARGE_TOOLBAR;
+				icon.opacity = 0.6;
+				platform_icons.add(icon);
+			}
+			platform_icons.show_all();
 		}
 	}
 }

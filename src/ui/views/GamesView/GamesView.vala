@@ -106,8 +106,8 @@ namespace GameHub.UI.Views
 			view.halign = Align.CENTER;
 			view.valign = Align.CENTER;
 
-			add_view_button("view-grid", _("Grid view"));
-			add_view_button("view-list", _("List view"));
+			add_view_button("view-grid-symbolic", _("Grid view"));
+			add_view_button("view-list-symbolic", _("List view"));
 
 			view.mode_changed.connect(() => {
 				update_view();
@@ -119,7 +119,7 @@ namespace GameHub.UI.Views
 			filter.halign = Align.CENTER;
 			filter.valign = Align.CENTER;
 
-			add_filter_button("sources-all", _("All games"));
+			add_filter_button("sources-all-symbolic", _("All games"));
 
 			foreach(var src in sources)
 			{
@@ -236,6 +236,8 @@ namespace GameHub.UI.Views
 			});
 			search.search_changed.connect(() => filter.mode_changed(filter));
 
+			ui_settings.notify["show-unsupported-games"].connect(() => filter.mode_changed(filter));
+
 			spinner = new Spinner();
 
 			titlebar.pack_end(settings);
@@ -283,6 +285,8 @@ namespace GameHub.UI.Views
 
 		private void update_view()
 		{
+			if(in_destruction()) return;
+
 			show_games();
 
 			var f = filter.selected;
@@ -290,13 +294,14 @@ namespace GameHub.UI.Views
 			if(f > 0) src = sources[f - 1];
 			var games = src == null ? games_grid.get_children().length() : src.games_count;
 			titlebar.title = "GameHub";
-			titlebar.subtitle = (src == null ? "" : src.name + ": ") + ngettext("%u game", "%u games", games).printf(games);
+			titlebar.subtitle = (src == null ? null : src.name);
+			titlebar.tooltip_text = ngettext("%u game", "%u games", games).printf(games);
 
 			if(src != null && src.games_count == 0)
 			{
 				empty_alert.title = _("No %s games").printf(src.name);
 				empty_alert.description = _("Get some Linux-compatible games");
-				empty_alert.icon_name = src.icon + "-symbolic";
+				empty_alert.icon_name = src.icon;
 				empty_alert.show_action(_("Reload"));
 				stack.set_visible_child(empty_alert);
 				return;
@@ -359,6 +364,7 @@ namespace GameHub.UI.Views
 				loading_sources++;
 				spinner.active = loading_sources > 0;
 				src.load_games.begin(g => {
+					if(in_destruction()) return;
 					update_view();
 
 					games_grid.add(new GameCard(g));
@@ -376,6 +382,10 @@ namespace GameHub.UI.Views
 						});
 					}
 				}, () => {}, (obj, res) => {
+					src.load_games.end(res);
+
+					if(in_destruction()) return;
+
 					loading_sources--;
 					spinner.active = loading_sources > 0;
 
@@ -418,20 +428,22 @@ namespace GameHub.UI.Views
 
 		private void add_view_button(string icon, string tooltip)
 		{
-			var image = new Image.from_icon_name(icon + "-symbolic", IconSize.MENU);
+			var image = new Image.from_icon_name(icon, IconSize.MENU);
 			image.tooltip_text = tooltip;
 			view.append(image);
 		}
 
 		private void add_filter_button(string icon, string tooltip)
 		{
-			var image = new Image.from_icon_name(icon + "-symbolic", IconSize.MENU);
+			var image = new Image.from_icon_name(icon, IconSize.MENU);
 			image.tooltip_text = tooltip;
 			filter.append(image);
 		}
 
 		private bool games_filter(Game game)
 		{
+			if(!ui_settings.show_unsupported_games && !game.is_supported()) return false;
+
 			var f = filter.selected;
 			GameSource? src = null;
 			if(f > 0) src = sources[f - 1];
@@ -508,7 +520,7 @@ namespace GameHub.UI.Views
 
 		private void merge_game(Game game)
 		{
-			if(!ui_settings.merge_games) return;
+			if(!ui_settings.merge_games || in_destruction()) return;
 			new Thread<void*>("merging_" + game.source.name + "_" + game.id, () => {
 				foreach(var src in GameSources)
 				{

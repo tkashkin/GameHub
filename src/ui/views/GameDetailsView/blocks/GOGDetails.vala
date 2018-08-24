@@ -23,7 +23,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			var gog_game = game as GOGGame;
 
-			var root = Parser.parse_json(game.custom_info);
+			var root = Parser.parse_json(game.info_detailed);
 
 			if(root == null || gog_game == null) return;
 
@@ -103,7 +103,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			add(dlbox);
 		}
 
-		public override bool supports_game { get { return (game is GOGGame) && game.custom_info != null && game.custom_info.length > 0; } }
+		public override bool supports_game { get { return (game is GOGGame) && game.info_detailed != null && game.info_detailed.length > 0; } }
 
 		public class BonusContentRow: ListBoxRow
 		{
