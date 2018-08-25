@@ -12,9 +12,11 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 {
 	public class GOGDetails: GameDetailsBlock
 	{
-		public GOGDetails(Game game)
+		public GameDetailsPage details_page { get; construct; }
+
+		public GOGDetails(Game game, GameDetailsPage page)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL);
+			Object(game: game, orientation: Orientation.VERTICAL, details_page: page);
 		}
 
 		construct
@@ -46,7 +48,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				add_info_label(langs_label, langs_string, false, true);
 			}
 
-			var dlbox = new Box(Orientation.HORIZONTAL, 16);
+			var dlbox = new Box(Orientation.HORIZONTAL, 8);
 
 			var downloads_visible = false;
 
@@ -78,11 +80,10 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				var dlclist = new ListBox();
 				dlclist.selection_mode = SelectionMode.NONE;
 				dlclist.get_style_context().add_class("gameinfo-content-list");
-				dlclist.sensitive = false; // TODO: Implement download
 
 				foreach(var dlc in gog_game.dlc)
 				{
-					dlclist.add(new DLCRow(dlc));
+					dlclist.add(new DLCRow(dlc, details_page));
 				}
 
 				var header = new Granite.HeaderLabel(_("DLC"));
@@ -189,11 +190,11 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			public GOGGame.DLC dlc;
 
-			public DLCRow(GOGGame.DLC dlc)
+			public DLCRow(GOGGame.DLC dlc, GameDetailsPage details_page)
 			{
 				this.dlc = dlc;
 
-				var box = new Box(Orientation.HORIZONTAL, 0);
+				var box = new EventBox();
 				box.margin_start = box.margin_end = 8;
 				box.margin_top = box.margin_bottom = 4;
 
@@ -201,13 +202,16 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				name.hexpand = true;
 				name.halign = Align.START;
 
-				var dl = new Button.from_icon_name("folder-download-symbolic");
-				dl.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-				dl.margin_start = 8;
-				dl.halign = Align.END;
+				box.add_events(EventMask.ALL_EVENTS_MASK);
+				box.button_release_event.connect(e => {
+					if(e.button == 1)
+					{
+						details_page.details_view.navigate(dlc);
+					}
+					return true;
+				});
 
 				box.add(name);
-				box.add(dl);
 				child = box;
 			}
 		}

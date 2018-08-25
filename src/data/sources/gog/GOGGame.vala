@@ -9,6 +9,8 @@ namespace GameHub.Data.Sources.GOG
 		public ArrayList<BonusContent>? bonus_content { get; protected set; default = new ArrayList<BonusContent>(); }
 		public ArrayList<DLC>? dlc { get; protected set; default = new ArrayList<DLC>(); }
 
+		private bool game_info_updated = false;
+
 		public GOGGame.default(){}
 
 		public GOGGame(GOG src, Json.Node json_node)
@@ -64,6 +66,13 @@ namespace GameHub.Data.Sources.GOG
 		
 		public override async void update_game_info()
 		{
+			if(status.state != Game.State.DOWNLOADING)
+			{
+				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			}
+
+			if(game_info_updated) return;
+
 			if(info_detailed == null || info_detailed.length == 0)
 			{
 				var lang = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
@@ -107,7 +116,7 @@ namespace GameHub.Data.Sources.GOG
 				foreach(var installer_json in installers_json.get_elements())
 				{
 					var installer = new Installer(installer_json.get_object());
-					if(installer.os == "linux") installers.add(installer);
+					installers.add(installer);
 				}
 			}
 
@@ -135,6 +144,8 @@ namespace GameHub.Data.Sources.GOG
 			{
 				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			}
+
+			game_info_updated = true;
 		}
 
 		public override async void install()
@@ -148,10 +159,32 @@ namespace GameHub.Data.Sources.GOG
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 			
 			wnd.install.connect(installer => {
-				var root = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token);
-				var link = root.get_object().get_string_member("downlink");
+				var root_node = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token);
+				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT)
+				{
+					Idle.add(install.callback);
+					return;
+				}
+
+				var root = root_node.get_object();
+				if(root == null || !root.has_member("downlink"))
+				{
+					Idle.add(install.callback);
+					return;
+				}
+
+				var link = root.get_string_member("downlink");
 				var remote = File.new_for_uri(link);
-				var installers_dir = FSUtils.Paths.Collection.GOG.expand_installers(name);
+
+				string g = name;
+				string? d = null;
+				if(this is DLC)
+				{
+					g = (this as DLC).game.name;
+					d = name;
+				}
+
+				var installers_dir = FSUtils.Paths.Collection.GOG.expand_installers(g, d);
 				var local = FSUtils.file(installers_dir, "gog_" + id + "_" + installer.id + ".sh");
 				
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
@@ -296,10 +329,24 @@ namespace GameHub.Data.Sources.GOG
 
 			public async File? download()
 			{
-				var root = yield Parser.parse_remote_json_file_async(file, "GET", ((GOG) game.source).user_token);
-				var link = root.get_object().get_string_member("downlink");
+				var root_node = yield Parser.parse_remote_json_file_async(file, "GET", ((GOG) game.source).user_token);
+				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return null;
+				var root = root_node.get_object();
+				if(root == null || !root.has_member("downlink")) return null;
+
+				var link = root.get_string_member("downlink");
 				var remote = File.new_for_uri(link);
-				var bonus_dir = FSUtils.Paths.Collection.GOG.expand_bonus(game.name);
+
+				string g = game.name;
+				string? d = null;
+				if(game is DLC)
+				{
+					g = (this as DLC).game.name;
+					d = game.name;
+				}
+				debug("G/D: %s / %s", g, d == null ? "null" : d);
+				var bonus_dir = FSUtils.Paths.Collection.GOG.expand_bonus(g, d);
+
 				var local = FSUtils.file(bonus_dir, "gog_" + game.id + "_bonus_" + id);
 
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
@@ -380,7 +427,7 @@ namespace GameHub.Data.Sources.GOG
 				image = game.image;
 				icon = "https:" + json_obj.get_object_member("images").get_string_member("icon");
 
-				info = Json.to_string(json_node, false);
+				info_detailed = Json.to_string(json_node, false);
 
 				platforms.clear();
 
@@ -389,11 +436,6 @@ namespace GameHub.Data.Sources.GOG
 				install_dir = game.install_dir;
 				executable = game.executable;
 				status = new Game.Status(Game.State.UNINSTALLED);
-			}
-
-			public override async void update_game_info()
-			{
-
 			}
 		}
 	}

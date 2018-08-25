@@ -69,27 +69,52 @@ namespace GameHub.UI.Dialogs
 			installers_list.margin_top = 8;
 			installers_list.margin_bottom = 8;
 			
+			installers_list.set_sort_func((row1, row2) => {
+				var item1 = row1 as InstallerRow;
+				var item2 = row2 as InstallerRow;
+				if(item1 != null && item2 != null)
+				{
+					var i1 = item1.installer;
+					var i2 = item2.installer;
+
+					if(i1.os == CurrentPlatform.id() && i2.os != CurrentPlatform.id()) return -1;
+					if(i1.os != CurrentPlatform.id() && i2.os == CurrentPlatform.id()) return 1;
+
+					return i1.name.collate(i2.name);
+				}
+				return 0;
+			});
+
 			var sys_langs = Intl.get_language_names();
 			
+			var compatible_installers = new ArrayList<Game.Installer>();
+
 			foreach(var installer in installers)
 			{
-				var row = new InstallerRow(installer);
+				if(installer.os != CurrentPlatform.id() && !Settings.UI.get_instance().show_unsupported_games) continue;
+
+				compatible_installers.add(installer);
+				var row = new InstallerRow(game, installer);
 				installers_list.add(row);
 				
 				if(installer is GOGGame.Installer && (installer as GOGGame.Installer).lang in sys_langs)
 				{
 					installers_list.select_row(row);
 				}
+				else if(installers_list.get_selected_row() == null && installer.os == CurrentPlatform.id())
+				{
+					installers_list.select_row(row);
+				}
 			}
 			
-			if(installers.size > 1)
+			if(compatible_installers.size > 1)
 			{
 				subtitle_label.label = _("Select game installer");
 				content.add(installers_list);
 			}
 			else
 			{
-				subtitle_label.label = _("Installer size: %s").printf(format_size(installers[0].file_size));
+				subtitle_label.label = _("Installer size: %s").printf(format_size(compatible_installers[0].file_size));
 			}
 			
 			destroy.connect(() => { if(!is_finished) cancelled(); });
@@ -108,8 +133,8 @@ namespace GameHub.UI.Dialogs
 						break;
 
 					case ResponseType.ACCEPT:
-						var installer = installers[0];
-						if(installers.size > 1)
+						var installer = compatible_installers[0];
+						if(compatible_installers.size > 1)
 						{
 							var row = installers_list.get_selected_row() as InstallerRow;
 							installer = row.installer;
@@ -139,15 +164,27 @@ namespace GameHub.UI.Dialogs
 		
 		private class InstallerRow: ListBoxRow
 		{
+			public Game game;
 			public Game.Installer installer;
 			
-			public InstallerRow(Game.Installer installer)
+			public InstallerRow(Game game, Game.Installer installer)
 			{
+				this.game = game;
 				this.installer = installer;
 				
-				var box = new Box(Orientation.HORIZONTAL, 0);
+				var box = new Box(Orientation.HORIZONTAL, 8);
 				box.margin_start = box.margin_end = 8;
 				box.margin_top = box.margin_bottom = 4;
+
+				var icon = new Image.from_icon_name(game.source.icon, IconSize.BUTTON);
+
+				foreach(var p in Platforms)
+				{
+					if(p.id() == installer.os)
+					{
+						icon.icon_name = p.icon();
+					}
+				}
 
 				var name = new Label(installer.name);
 				name.hexpand = true;
@@ -156,6 +193,7 @@ namespace GameHub.UI.Dialogs
 				var size = new Label(format_size(installer.file_size));
 				size.halign = Align.END;
 
+				box.add(icon);
 				box.add(name);
 				box.add(size);
 				child = box;

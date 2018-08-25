@@ -8,6 +8,8 @@ namespace GameHub.Data.Sources.Humble
 	{
 		private string order_id;
 
+		private bool game_info_updated = false;
+
 		public ArrayList<Game.Installer>? installers { get; protected set; default = new ArrayList<Game.Installer>(); }
 
 		public HumbleGame(Humble src, string order, Json.Node json_node)
@@ -89,6 +91,8 @@ namespace GameHub.Data.Sources.Humble
 		public override async void update_game_info()
 		{
 			update_status();
+
+			if(game_info_updated) return;
 			
 			if(info == null || info.length == 0)
 			{
@@ -129,6 +133,8 @@ namespace GameHub.Data.Sources.Humble
 					installers.add(installer);
 				}
 			}
+
+			game_info_updated = true;
 		}
 
 		public override async void install()

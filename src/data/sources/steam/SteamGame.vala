@@ -6,6 +6,8 @@ namespace GameHub.Data.Sources.Steam
 	public class SteamGame: Game
 	{
 		private int metadata_tries = 0;
+
+		private bool game_info_updated = false;
 		
 		public SteamGame(Steam src, Json.Node json_node)
 		{
@@ -56,6 +58,8 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async void update_game_info()
 		{
+			if(game_info_updated) return;
+
 			if(info_detailed == null || info_detailed.length == 0)
 			{
 				debug("[Steam:%s] No cached app data for '%s', fetching...", id, name);
@@ -73,6 +77,7 @@ namespace GameHub.Data.Sources.Steam
 			if(app == null)
 			{
 				debug("[Steam:%s] No app data for '%s', store page does not exist", id, name);
+				game_info_updated = true;
 				return;
 			}
 
@@ -82,7 +87,11 @@ namespace GameHub.Data.Sources.Steam
 			{
 				bool success = app.has_member("success") && app.get_boolean_member("success");
 				debug("[Steam:%s] No app data for '%s', success: %s, store page does not exist", id, name, success.to_string());
-				if(metadata_tries > 0) return;
+				if(metadata_tries > 0)
+				{
+					game_info_updated = true;
+					return;
+				}
 			}
 
 			description = data != null && data.has_member("detailed_description") ? data.get_string_member("detailed_description") : "";
@@ -97,6 +106,7 @@ namespace GameHub.Data.Sources.Steam
 				debug("[Steam:%s] No platform support data, %d tries failed, assuming Windows support", id, metadata_tries);
 				platforms.add(Platform.WINDOWS);
 				GamesDB.get_instance().add_game(this);
+				game_info_updated = true;
 				return;
 			}
 
@@ -109,6 +119,8 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			GamesDB.get_instance().add_game(this);
+
+			game_info_updated = true;
 		}
 
 		public override bool is_supported(Platform? platform=null)

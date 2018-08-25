@@ -294,15 +294,15 @@ namespace GameHub.UI.Views
 			if(f > 0) src = sources[f - 1];
 			var games = src == null ? games_grid.get_children().length() : src.games_count;
 			titlebar.title = "GameHub";
-			titlebar.subtitle = (src == null ? null : src.name);
-			titlebar.tooltip_text = ngettext("%u game", "%u games", games).printf(games);
+			titlebar.subtitle = (src == null ? "" : src.name + ": ") + ngettext("%u game", "%u games", games).printf(games);
+
+			games_list_details.preferred_source = src;
 
 			if(src != null && src.games_count == 0)
 			{
 				empty_alert.title = _("No %s games").printf(src.name);
 				empty_alert.description = _("Get some Linux-compatible games");
 				empty_alert.icon_name = src.icon;
-				empty_alert.show_action(_("Reload"));
 				stack.set_visible_child(empty_alert);
 				return;
 			}
@@ -520,13 +520,13 @@ namespace GameHub.UI.Views
 
 		private void merge_game(Game game)
 		{
-			if(!ui_settings.merge_games || in_destruction()) return;
+			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
 			new Thread<void*>("merging_" + game.source.name + "_" + game.id, () => {
 				foreach(var src in GameSources)
 				{
 					foreach(var game2 in src.games)
 					{
-						if(Game.is_equal(game, game2)) continue;
+						if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC) continue;
 						bool name_match_exact = Utils.strip_name(game.name).casefold() == Utils.strip_name(game2.name).casefold();
 						bool name_match_fuzzy_prefix = game.source != src
 						                  && (Utils.strip_name(game.name, ":").casefold().has_prefix(Utils.strip_name(game2.name).casefold() + ":")
@@ -534,7 +534,7 @@ namespace GameHub.UI.Views
 						if(name_match_exact || name_match_fuzzy_prefix)
 						{
 							GamesDB.get_instance().merge(game, game2);
-							debug(@"[Merge] Merging '$(game.name)' ($(game.source.name):$(game.id)) with '$(game2.name)' ($(game2.source.name):$(game2.id))");
+							debug(@"[Merge] Merging '$(game.name)' ($(game.source.id):$(game.id)) with '$(game2.name)' ($(game2.source.id):$(game2.id))");
 
 							Idle.add(() => {
 								remove_game(game2);
