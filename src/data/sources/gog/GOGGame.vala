@@ -185,7 +185,7 @@ namespace GameHub.Data.Sources.GOG
 				}
 
 				var installers_dir = FSUtils.Paths.Collection.GOG.expand_installers(g, d);
-				var local = FSUtils.file(installers_dir, "gog_" + id + "_" + installer.id + ".sh");
+				var local = FSUtils.file(installers_dir, "gog_" + id + "_" + installer.id);
 				
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(installers_dir);
