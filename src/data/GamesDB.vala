@@ -139,6 +139,8 @@ namespace GameHub.Data
 
 		public bool add_game(Game game) requires (db != null)
 		{
+			if(game is Sources.GOG.GOGGame.DLC) return false;
+
 			Statement s;
 			int res = db.prepare_v2("INSERT OR REPLACE INTO `games`
 				(`source`, `id`, `name`, `icon`, `image`, `install_path`, `platforms`, `info`, `info_detailed`)
@@ -170,6 +172,8 @@ namespace GameHub.Data
 		
 		public bool merge(Game first, Game second) requires (db != null)
 		{
+			if(first is Sources.GOG.GOGGame.DLC || second is Sources.GOG.GOGGame.DLC) return false;
+
 			Statement s;
 
 			int res = db.prepare_v2("SELECT rowid, * FROM `merges` WHERE `merge` LIKE ? OR `merge` LIKE ?", -1, out s);

@@ -13,9 +13,11 @@ namespace GameHub.UI.Views.GameDetailsView
 	{
 		public Game game { get; construct; }
 
-		public GameDetailsPage(Game game)
+		public GameDetailsView details_view { get; construct; }
+
+		public GameDetailsPage(Game game, GameDetailsView parent)
 		{
-			Object(game: game);
+			Object(game: game, details_view: parent);
 		}
 
 		private bool is_dialog = false;
@@ -211,7 +213,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			blocks.foreach(b => blocks.remove(b));
 
-			GameDetailsBlock[] blk = { new Blocks.GOGDetails(game), new Blocks.SteamDetails(game), new Blocks.Description(game) };
+			GameDetailsBlock[] blk = { new Blocks.GOGDetails(game, this), new Blocks.SteamDetails(game), new Blocks.Description(game) };
 			foreach(var b in blk)
 			{
 				if(b.supports_game)

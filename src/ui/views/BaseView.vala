@@ -4,7 +4,7 @@ using GameHub.UI.Windows;
 
 namespace GameHub.UI.Views
 {
-	public abstract class BaseView: Gtk.Grid
+	public abstract class BaseView: Grid
 	{
 		protected MainWindow window;
 		protected HeaderBar titlebar;

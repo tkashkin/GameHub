@@ -257,3 +257,35 @@ list.gameinfo-content-list row:hover
 {
 	opacity: 1;
 }
+
+.gameinfo-toolbar
+{
+	border: none;
+	border-bottom: 1px alpha(#333, 0.3) solid;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 8px 16px;
+	margin: 0;
+	background: alpha(#333, 0.1);
+}
+
+.gameinfo-toolbar revealer, .gameinfo-toolbar box
+{
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 0;
+	margin: 0;
+	background: transparent;
+}
+
+.dark .gameinfo-toolbar
+{
+	border-bottom: 1px alpha(#333, 0.8) solid;
+	background: alpha(#333, 0.3);
+}
+
+dialog .gameinfo-toolbar, dialog .dark .gameinfo-toolbar
+{
+	background: transparent;
+}

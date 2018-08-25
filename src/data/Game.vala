@@ -86,7 +86,7 @@ namespace GameHub.Data
 						});
 					});
 
-					var info = new Downloader.DownloadInfo(game.name, game.icon, null, null, game.source.icon + "-symbolic");
+					var info = new Downloader.DownloadInfo(game.name, game.icon, null, null, game.source.icon);
 
 					var file = yield Downloader.download(remote, local, info);
 

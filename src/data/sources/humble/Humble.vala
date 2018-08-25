@@ -111,17 +111,18 @@ namespace GameHub.Data.Sources.Humble
 								g.update_game_info.end(res);
 								if(g.platforms.size == 0) return;
 								_games.add(g);
+								games_count = _games.size;
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(g); return Source.REMOVE; });
-									Thread.usleep(10000);
+									Thread.usleep(100000);
 								}
 							});
 						}
 					}
 				}
 
-				games_count = cached.size;
+				games_count = _games.size;
 
 				if(cache_loaded != null)
 				{
@@ -158,7 +159,7 @@ namespace GameHub.Data.Sources.Humble
 							game.update_game_info.begin((obj, res) => {
 								game.update_game_info.end(res);
 								_games.add(game);
-								games_count++;
+								games_count = _games.size;
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
