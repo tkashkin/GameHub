@@ -283,12 +283,12 @@ namespace GameHub.Data
 			
 			if(src != null)
 			{
-				res = db.prepare_v2("SELECT * FROM `games` WHERE `source` = ?", -1, out st);
+				res = db.prepare_v2("SELECT * FROM `games` WHERE `source` = ? ORDER BY `name` ASC", -1, out st);
 				res = st.bind_text(1, src.id);
 			}
 			else
 			{
-				res = db.prepare_v2("SELECT * FROM `games`", -1, out st);
+				res = db.prepare_v2("SELECT * FROM `games` ORDER BY `name` ASC", -1, out st);
 			}
 			
 			assert(res == Sqlite.OK);
