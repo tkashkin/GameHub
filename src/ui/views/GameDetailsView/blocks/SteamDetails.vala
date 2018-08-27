@@ -12,9 +12,9 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 {
 	public class SteamDetails: GameDetailsBlock
 	{
-		public SteamDetails(Game game)
+		public SteamDetails(Game game, bool is_dialog)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL);
+			Object(game: game, orientation: Orientation.VERTICAL, is_dialog: is_dialog);
 		}
 
 		construct

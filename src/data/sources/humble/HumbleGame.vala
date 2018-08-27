@@ -48,16 +48,16 @@ namespace GameHub.Data.Sources.Humble
 		public HumbleGame.from_db(Humble src, Sqlite.Statement s)
 		{
 			source = src;
-			id = GamesDB.GAMES.ID.get(s);
-			name = GamesDB.GAMES.NAME.get(s);
-			icon = GamesDB.GAMES.ICON.get(s);
-			image = GamesDB.GAMES.IMAGE.get(s);
-			install_dir = FSUtils.file(GamesDB.GAMES.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
-			info = GamesDB.GAMES.INFO.get(s);
-			info_detailed = GamesDB.GAMES.INFO_DETAILED.get(s);
+			id = GamesDB.Tables.Games.ID.get(s);
+			name = GamesDB.Tables.Games.NAME.get(s);
+			icon = GamesDB.Tables.Games.ICON.get(s);
+			image = GamesDB.Tables.Games.IMAGE.get(s);
+			install_dir = FSUtils.file(GamesDB.Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
+			info = GamesDB.Tables.Games.INFO.get(s);
+			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
 
 			platforms.clear();
-			var pls = GamesDB.GAMES.PLATFORMS.get(s).split(",");
+			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
 				foreach(var p in Platforms)
@@ -65,6 +65,7 @@ namespace GameHub.Data.Sources.Humble
 					if(pl == p.id())
 					{
 						platforms.add(p);
+						break;
 					}
 				}
 			}

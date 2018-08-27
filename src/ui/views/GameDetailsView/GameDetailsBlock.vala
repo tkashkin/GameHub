@@ -10,12 +10,11 @@ namespace GameHub.UI.Views.GameDetailsView
 	{
 		public Game game { get; construct; }
 
-		protected bool is_dialog;
+		public bool is_dialog { get; construct; }
 
-		public GameDetailsBlock(Game game)
+		public GameDetailsBlock(Game game, bool is_dialog)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL);
-			is_dialog = !(get_toplevel() is GameHub.UI.Windows.MainWindow);
+			Object(game: game, orientation: Orientation.VERTICAL, is_dialog: is_dialog);
 		}
 
 		public abstract bool supports_game { get; }
@@ -33,7 +32,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			text_label.hexpand = false;
 			text_label.wrap = true;
 			text_label.xalign = 0;
-			text_label.max_width_chars = is_dialog ? 80 : -1;
+			text_label.max_width_chars = is_dialog ? 60 : -1;
 			text_label.use_markup = markup;
 
 			if(!multiline)

@@ -41,6 +41,9 @@ namespace GameHub.UI.Views
 		private ListBox downloads_list;
 		private int downloads_count = 0;
 
+		private MenuButton filters;
+		private FiltersPopover filters_popover;
+
 		private Settings.UI ui_settings;
 		private Settings.SavedState saved_state;
 
@@ -150,6 +153,13 @@ namespace GameHub.UI.Views
 			downloads.popover = downloads_popover;
 			downloads.sensitive = false;
 
+			filters = new MenuButton();
+			filters.tooltip_text = _("Filters");
+			filters.image = new Image.from_icon_name("tag", IconSize.LARGE_TOOLBAR);
+			filters_popover = new FiltersPopover(filters);
+			filters_popover.position = PositionType.BOTTOM;
+			filters.popover = filters_popover;
+
 			search = new SearchEntry();
 			search.placeholder_text = _("Search");
 			search.halign = Align.CENTER;
@@ -240,6 +250,7 @@ namespace GameHub.UI.Views
 
 			spinner = new Spinner();
 
+			titlebar.pack_start(filters);
 			titlebar.pack_end(settings);
 			titlebar.pack_end(downloads);
 			titlebar.pack_end(search);

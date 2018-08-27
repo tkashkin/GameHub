@@ -207,6 +207,21 @@ namespace GameHub.Data.Sources.GOG
 
 					debug("[GOG] Loading games: page %d of %d", page, pages);
 
+					if(page == 1)
+					{
+						var tags = root.has_member("tags") ? root.get_array_member("tags") : null;
+						if(tags != null)
+						{
+							foreach(var t in tags.get_elements())
+							{
+								var id = t.get_object().get_string_member("id");
+								var name = t.get_object().get_string_member("name");
+								GamesDB.get_instance().add_tag(new GamesDB.Tables.Tags.Tag("gog:" + id, name, icon));
+								debug("[GOG] Imported tag: %s (%s)", name, id);
+							}
+						}
+					}
+
 					var products = root.get_array_member("products");
 
 					foreach(var g in products.get_elements())
@@ -214,7 +229,6 @@ namespace GameHub.Data.Sources.GOG
 						var game = new GOGGame(this, g);
 						if(!(game.id in GAMES_BLACKLIST) && !_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 						{
-							GamesDB.get_instance().add_game(game);
 							game.update_game_info.begin((obj, res) => {
 								game.update_game_info.end(res);
 								_games.add(game);

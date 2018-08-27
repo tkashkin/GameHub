@@ -220,7 +220,6 @@ namespace GameHub.Data.Sources.Steam
 					var game = new SteamGame(this, g);
 					if(!_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 					{
-						GamesDB.get_instance().add_game(game);
 						yield game.update_game_info();
 						_games.add(game);
 						games_count = _games.size;

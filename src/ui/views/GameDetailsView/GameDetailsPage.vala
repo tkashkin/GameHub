@@ -80,6 +80,8 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			title = new Label(null);
 			title.halign = Align.START;
+			title.wrap = true;
+			title.xalign = 0;
 			title.hexpand = true;
 			title.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
@@ -194,6 +196,8 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			is_dialog = !(get_toplevel() is GameHub.UI.Windows.MainWindow);
 
+			title.max_width_chars = is_dialog ? 36 : -1;
+
 			#if GTK_3_22
 			content_scrolled.max_content_height = is_dialog ? 640 : -1;
 			#endif
@@ -213,7 +217,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			blocks.foreach(b => blocks.remove(b));
 
-			GameDetailsBlock[] blk = { new Blocks.GOGDetails(game, this), new Blocks.SteamDetails(game), new Blocks.Description(game) };
+			GameDetailsBlock[] blk = { new Blocks.GOGDetails(game, this, is_dialog), new Blocks.SteamDetails(game, is_dialog), new Blocks.Description(game, is_dialog) };
 			foreach(var b in blk)
 			{
 				if(b.supports_game)

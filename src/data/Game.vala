@@ -25,6 +25,8 @@ namespace GameHub.Data
 			return platform in platforms;
 		}
 
+		public ArrayList<GamesDB.Tables.Tags.Tag> tags { get; protected set; default = new ArrayList<GamesDB.Tables.Tags.Tag>(GamesDB.Tables.Tags.Tag.is_equal); }
+
 		public bool is_installable { get; protected set; default = false; }
 		
 		public File executable { get; protected set; }
