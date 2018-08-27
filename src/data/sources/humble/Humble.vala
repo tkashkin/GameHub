@@ -155,7 +155,6 @@ namespace GameHub.Data.Sources.Humble
 						var game = new HumbleGame(this, key, product);
 						if(!_games.contains(game) && game.platforms.size > 0 && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 						{
-							GamesDB.get_instance().add_game(game);
 							game.update_game_info.begin((obj, res) => {
 								game.update_game_info.end(res);
 								_games.add(game);

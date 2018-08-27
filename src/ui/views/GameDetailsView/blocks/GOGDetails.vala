@@ -14,9 +14,9 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 	{
 		public GameDetailsPage details_page { get; construct; }
 
-		public GOGDetails(Game game, GameDetailsPage page)
+		public GOGDetails(Game game, GameDetailsPage page, bool is_dialog)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL, details_page: page);
+			Object(game: game, orientation: Orientation.VERTICAL, details_page: page, is_dialog: is_dialog);
 		}
 
 		construct

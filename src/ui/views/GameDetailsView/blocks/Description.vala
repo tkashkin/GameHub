@@ -17,9 +17,9 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		private const string CSS_LIGHT = "background: rgb(245, 245, 245); color: rgb(66, 66, 66)";
 		private const string CSS_DARK = "background: rgb(59, 63, 69); color: white";
 
-		public Description(Game game)
+		public Description(Game game, bool is_dialog)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL);
+			Object(game: game, orientation: Orientation.VERTICAL, is_dialog: is_dialog);
 		}
 
 		construct

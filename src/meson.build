@@ -79,6 +79,7 @@ executable(
 	'ui/views/GamesView/GameCard.vala',
 	'ui/views/GamesView/GameListRow.vala',
 	'ui/views/GamesView/DownloadProgressView.vala',
+	'ui/views/GamesView/FiltersPopover.vala',
 
 	'ui/views/GameDetailsView/GameDetailsView.vala',
 	'ui/views/GameDetailsView/GameDetailsPage.vala',

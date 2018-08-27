@@ -31,15 +31,15 @@ namespace GameHub.Data.Sources.Steam
 		public SteamGame.from_db(Steam src, Sqlite.Statement s)
 		{
 			source = src;
-			id = GamesDB.GAMES.ID.get(s);
-			name = GamesDB.GAMES.NAME.get(s);
-			icon = GamesDB.GAMES.ICON.get(s);
-			image = GamesDB.GAMES.IMAGE.get(s);
-			info = GamesDB.GAMES.INFO.get(s);
-			info_detailed = GamesDB.GAMES.INFO_DETAILED.get(s);
+			id = GamesDB.Tables.Games.ID.get(s);
+			name = GamesDB.Tables.Games.NAME.get(s);
+			icon = GamesDB.Tables.Games.ICON.get(s);
+			image = GamesDB.Tables.Games.IMAGE.get(s);
+			info = GamesDB.Tables.Games.INFO.get(s);
+			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
 
 			platforms.clear();
-			var pls = GamesDB.GAMES.PLATFORMS.get(s).split(",");
+			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
 				foreach(var p in Platforms)
@@ -47,6 +47,7 @@ namespace GameHub.Data.Sources.Steam
 					if(pl == p.id())
 					{
 						platforms.add(p);
+						break;
 					}
 				}
 			}

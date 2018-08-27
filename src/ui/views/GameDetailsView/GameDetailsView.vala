@@ -145,7 +145,13 @@ namespace GameHub.UI.Views.GameDetailsView
 			{
 				foreach(var m in merges)
 				{
-					if(g is Sources.GOG.GOGGame.DLC && Game.is_equal((g as Sources.GOG.GOGGame.DLC).game, m)) continue;
+					if(Game.is_equal(g, m)
+						|| (!Settings.UI.get_instance().show_unsupported_games && !m.is_supported())
+						|| (g is Sources.GOG.GOGGame.DLC && Game.is_equal((g as Sources.GOG.GOGGame.DLC).game, m)))
+					{
+						continue;
+					}
+
 					add_page(m);
 				}
 			}
@@ -166,7 +172,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void add_page(Game g)
 		{
-			if(stack.get_child_by_name(g.source.name) != null) return;
+			if(stack.get_child_by_name(g.source.id) != null) return;
 
 			var page = new GameDetailsPage(g, this);
 			page.content.margin = content_margin;

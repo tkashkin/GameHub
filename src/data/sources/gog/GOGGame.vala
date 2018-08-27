@@ -39,16 +39,16 @@ namespace GameHub.Data.Sources.GOG
 		public GOGGame.from_db(GOG src, Sqlite.Statement s)
 		{
 			source = src;
-			id = GamesDB.GAMES.ID.get(s);
-			name = GamesDB.GAMES.NAME.get(s);
-			icon = GamesDB.GAMES.ICON.get(s);
-			image = GamesDB.GAMES.IMAGE.get(s);
-			install_dir = FSUtils.file(GamesDB.GAMES.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
-			info = GamesDB.GAMES.INFO.get(s);
-			info_detailed = GamesDB.GAMES.INFO_DETAILED.get(s);
+			id = GamesDB.Tables.Games.ID.get(s);
+			name = GamesDB.Tables.Games.NAME.get(s);
+			icon = GamesDB.Tables.Games.ICON.get(s);
+			image = GamesDB.Tables.Games.IMAGE.get(s);
+			install_dir = FSUtils.file(GamesDB.Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
+			info = GamesDB.Tables.Games.INFO.get(s);
+			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
 
 			platforms.clear();
-			var pls = GamesDB.GAMES.PLATFORMS.get(s).split(",");
+			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
 				foreach(var p in Platforms)
@@ -56,6 +56,21 @@ namespace GameHub.Data.Sources.GOG
 					if(pl == p.id())
 					{
 						platforms.add(p);
+						break;
+					}
+				}
+			}
+
+			tags.clear();
+			var tag_ids = (GamesDB.Tables.Games.TAGS.get(s) ?? "").split(",");
+			foreach(var tid in tag_ids)
+			{
+				foreach(var t in GamesDB.Tables.Tags.TAGS)
+				{
+					if(tid == t.id)
+					{
+						if(!tags.contains(t)) tags.add(t);
+						break;
 					}
 				}
 			}
@@ -135,6 +150,26 @@ namespace GameHub.Data.Sources.GOG
 				foreach(var dlc_json in dlcs_json.get_elements())
 				{
 					dlc.add(new GOGGame.DLC(this, dlc_json));
+				}
+			}
+
+			root = Parser.parse_json(info);
+
+			var tags_json = !root.get_object().has_member("tags") ? null : root.get_object().get_array_member("tags");
+
+			if(tags_json != null)
+			{
+				foreach(var tag_json in tags_json.get_elements())
+				{
+					var tid = source.id + ":" + tag_json.get_string();
+					foreach(var t in GamesDB.Tables.Tags.TAGS)
+					{
+						if(tid == t.id)
+						{
+							if(!tags.contains(t)) tags.add(t);
+							break;
+						}
+					}
 				}
 			}
 
