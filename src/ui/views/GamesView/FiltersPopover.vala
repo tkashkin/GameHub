@@ -1,14 +1,21 @@
 using Gtk;
 using Gdk;
+using Gee;
 using Granite;
 using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Views
+namespace GameHub.UI.Views.GamesView
 {
 	public class FiltersPopover: Popover
 	{
+		public ArrayList<GamesDB.Tables.Tags.Tag> selected_tags { get; private set; }
+		public signal void filters_changed(ArrayList<GamesDB.Tables.Tags.Tag> selected_tags);
+
+		private CheckButton tags_header_check;
+		private bool is_toggling_all = false;
+
 		public FiltersPopover(Widget? relative_to)
 		{
 			Object(relative_to: relative_to);
@@ -16,6 +23,8 @@ namespace GameHub.UI.Views
 
 		construct
 		{
+			selected_tags = new ArrayList<GamesDB.Tables.Tags.Tag>(GamesDB.Tables.Tags.Tag.is_equal);
+
 			set_size_request(220, -1);
 
 			var vbox = new Box(Orientation.VERTICAL, 0);
@@ -33,22 +42,47 @@ namespace GameHub.UI.Views
 			tags_scrolled.add(tags_list);
 			tags_scrolled.show_all();
 
+			var tebox = new EventBox();
+			tebox.get_style_context().add_class("tags-list-header");
+			tebox.above_child = true;
+
 			var tbox = new Box(Orientation.HORIZONTAL, 8);
 			tbox.margin_start = tbox.margin_end = 8;
-			tbox.margin_top = tbox.margin_bottom = 4;
+			tbox.margin_top = tbox.margin_bottom = 6;
 
-			var check = new CheckButton();
-			check.inconsistent = true;
+			tags_header_check = new CheckButton();
 
 			var header = new HeaderLabel(_("Tags"));
 			header.halign = Align.START;
 			header.xalign = 0;
 			header.hexpand = true;
 
-			tbox.add(check);
+			tbox.add(tags_header_check);
 			tbox.add(header);
 
-			vbox.add(tbox);
+			tebox.add_events(EventMask.ALL_EVENTS_MASK);
+			tebox.enter_notify_event.connect(e => { tebox.get_style_context().add_class("hover"); });
+			tebox.leave_notify_event.connect(e => { tebox.get_style_context().remove_class("hover"); });
+			tebox.button_release_event.connect(e => {
+				if(e.button == 1)
+				{
+					tags_header_check.inconsistent = false;
+					tags_header_check.active = !tags_header_check.active;
+
+					is_toggling_all = true;
+					foreach(var tag in GamesDB.Tables.Tags.TAGS)
+					{
+						tag.selected = tags_header_check.active;
+					}
+					is_toggling_all = false;
+					update();
+				}
+				return true;
+			});
+
+			tebox.add(tbox);
+
+			vbox.add(tebox);
 			vbox.add(new Separator(Orientation.HORIZONTAL));
 			vbox.add(tags_scrolled);
 
@@ -57,9 +91,30 @@ namespace GameHub.UI.Views
 			foreach(var tag in GamesDB.Tables.Tags.TAGS)
 			{
 				tags_list.add(new TagRow(tag));
+				tag.notify["selected"].connect(update);
 			}
 
-			show_all();
+			vbox.show_all();
+
+			update();
+		}
+
+		private void update()
+		{
+			if(is_toggling_all) return;
+
+			selected_tags.clear();
+
+			foreach(var tag in GamesDB.Tables.Tags.TAGS)
+			{
+				if(tag.selected) selected_tags.add(tag);
+				GamesDB.get_instance().add_tag(tag, true);
+			}
+
+			tags_header_check.inconsistent = selected_tags.size != 0 && selected_tags.size != GamesDB.Tables.Tags.TAGS.size;
+			tags_header_check.active = selected_tags.size > 0;
+
+			filters_changed(selected_tags);
 		}
 
 		public class TagRow: ListBoxRow
@@ -70,12 +125,15 @@ namespace GameHub.UI.Views
 			{
 				this.tag = tag;
 
+				var ebox = new EventBox();
+				ebox.above_child = true;
+
 				var box = new Box(Orientation.HORIZONTAL, 8);
 				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 4;
+				box.margin_top = box.margin_bottom = 6;
 
 				var check = new CheckButton();
-				check.active = true;
+				check.active = tag.selected;
 
 				var name = new Label(tag.name);
 				name.halign = Align.START;
@@ -88,7 +146,23 @@ namespace GameHub.UI.Views
 				box.add(name);
 				box.add(icon);
 
-				child = box;
+				tag.notify["selected"].connect(() => {
+					check.active = tag.selected;
+				});
+
+				ebox.add_events(EventMask.ALL_EVENTS_MASK);
+				ebox.button_release_event.connect(e => {
+					if(e.button == 1)
+					{
+						check.active = !check.active;
+						tag.selected = check.active;
+					}
+					return true;
+				});
+
+				ebox.add(box);
+
+				child = ebox;
 			}
 		}
 	}

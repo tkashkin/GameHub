@@ -6,11 +6,13 @@ using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Views
+namespace GameHub.UI.Views.GamesView
 {
 	public class GameCard: FlowBoxChild
 	{
 		public Game game { get; construct; }
+
+		public signal void update_tags();
 
 		private Frame card;
 		private Overlay content;
@@ -123,7 +125,12 @@ namespace GameHub.UI.Views
 						break;
 
 					case 3:
-						new Dialogs.GameDetailsDialog(game).show_all();
+						var menu = new GameContextMenu(game);
+						menu.update_tags.connect(() => {
+							update_tags();
+							game.status_change(game.status);
+						});
+						menu.open(this, e);
 						break;
 				}
 				return true;
@@ -145,6 +152,7 @@ namespace GameHub.UI.Views
 			card.get_style_context().add_class("installed");
 			
 			game.status_change.connect(s => {
+				label.label = (game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
 				status_label.label = s.description;
 				switch(s.state)
 				{

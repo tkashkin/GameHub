@@ -5,11 +5,13 @@ using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Views
+namespace GameHub.UI.Views.GamesView
 {
 	class GameListRow: ListBoxRow
 	{
 		public Game game;
+
+		public signal void update_tags();
 
 		private AutoSizeImage image;
 		private Label state_label;
@@ -43,9 +45,8 @@ namespace GameHub.UI.Views
 
 			hbox.add(vbox);
 
-			child = hbox;
-
 			game.status_change.connect(s => {
+				label.label = (game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
 				state_label.label = s.description;
 				update_icon();
 				changed();
@@ -56,6 +57,31 @@ namespace GameHub.UI.Views
 
 			ui_settings = GameHub.Settings.UI.get_instance();
 			ui_settings.notify["compact-list"].connect(update);
+
+			var ebox = new EventBox();
+			ebox.add(hbox);
+
+			child = ebox;
+
+			ebox.add_events(EventMask.ALL_EVENTS_MASK);
+			ebox.button_release_event.connect(e => {
+				switch(e.button)
+				{
+					case 1:
+						activate();
+						break;
+
+					case 3:
+						var menu = new GameContextMenu(game);
+						menu.update_tags.connect(() => {
+							game.status_change(game.status);
+							update_tags();
+						});
+						menu.open(this, e);
+						break;
+				}
+				return true;
+			});
 
 			show_all();
 		}
