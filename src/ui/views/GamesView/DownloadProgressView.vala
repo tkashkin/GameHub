@@ -5,7 +5,7 @@ using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Views
+namespace GameHub.UI.Views.GamesView
 {
 	public class DownloadProgressView: ListBoxRow
 	{

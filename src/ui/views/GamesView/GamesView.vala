@@ -5,7 +5,7 @@ using Granite;
 using GameHub.Data;
 using GameHub.Utils;
 
-namespace GameHub.UI.Views
+namespace GameHub.UI.Views.GamesView
 {
 	public class GamesView: BaseView
 	{
@@ -191,6 +191,12 @@ namespace GameHub.UI.Views
 					var s1 = item1.game.status.state;
 					var s2 = item2.game.status.state;
 
+					var f1 = item1.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
+					var f2 = item2.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
+
+					if(f1 && !f2) return -1;
+					if(f2 && !f1) return 1;
+
 					if(s1 == Game.State.DOWNLOADING && s2 != Game.State.DOWNLOADING) return -1;
 					if(s1 != Game.State.DOWNLOADING && s2 == Game.State.DOWNLOADING) return 1;
 					if(s1 == Game.State.INSTALLING && s2 != Game.State.INSTALLING) return -1;
@@ -218,13 +224,13 @@ namespace GameHub.UI.Views
 				var prev_item = prev as GameListRow;
 				var s = item.game.status.state;
 				var ps = prev_item != null ? prev_item.game.status.state : s;
+				var f = item.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
+				var pf = prev_item != null ? prev_item.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES) : f;
 
-				games_list.grab_focus();
-
-				if(prev_item != null && s == ps) row.set_header(null);
+				if(prev_item != null && f == pf && (f || s == ps)) row.set_header(null);
 				else
 				{
-					var label = new HeaderLabel(item.game.status.header);
+					var label = new HeaderLabel(f ? _("Favorites:") : item.game.status.header);
 					label.get_style_context().add_class("games-list-header");
 					label.set_size_request(1024, -1); // ugly hack
 					row.set_header(label);
@@ -247,6 +253,8 @@ namespace GameHub.UI.Views
 			search.search_changed.connect(() => filter.mode_changed(filter));
 
 			ui_settings.notify["show-unsupported-games"].connect(() => filter.mode_changed(filter));
+
+			filters_popover.filters_changed.connect(() => filter.mode_changed(filter));
 
 			spinner = new Spinner();
 
@@ -378,8 +386,15 @@ namespace GameHub.UI.Views
 					if(in_destruction()) return;
 					update_view();
 
-					games_grid.add(new GameCard(g));
-					games_list.add(new GameListRow(g));
+					var card = new GameCard(g);
+					var row = new GameListRow(g);
+
+					card.update_tags.connect(() => filter.mode_changed(filter));
+					row.update_tags.connect(() => filter.mode_changed(filter));
+
+					games_grid.add(card);
+					games_list.add(row);
+
 					games_grid.show_all();
 					games_list.show_all();
 
@@ -458,12 +473,16 @@ namespace GameHub.UI.Views
 			var f = filter.selected;
 			GameSource? src = null;
 			if(f > 0) src = sources[f - 1];
+
 			bool same_src = (src == null || game == null || src == game.source);
 			bool merged_src = false;
-			if(!same_src && ui_settings.merge_games)
+
+			ArrayList<Game>? merges = null;
+
+			if(ui_settings.merge_games)
 			{
-				var merges = GamesDB.get_instance().get_merged_games(game);
-				if(merges != null && merges.size > 0)
+				merges = GamesDB.get_instance().get_merged_games(game);
+				if(!same_src && merges != null && merges.size > 0)
 				{
 					foreach(var g in merges)
 					{
@@ -475,7 +494,36 @@ namespace GameHub.UI.Views
 					}
 				}
 			}
-			return (same_src || merged_src) && Utils.strip_name(search.text).casefold() in Utils.strip_name(game.name).casefold();
+
+			var tags = filters_popover.selected_tags;
+			bool tags_all_enabled = tags == null || tags.size == 0 || tags.size == GamesDB.Tables.Tags.TAGS.size;
+			bool tags_all_except_hidden_enabled = tags != null && tags.size == GamesDB.Tables.Tags.TAGS.size - 1 && !(GamesDB.Tables.Tags.BUILTIN_HIDDEN in tags);
+			bool tags_match = false;
+			bool tags_match_merged = false;
+
+			if(!tags_all_enabled)
+			{
+				foreach(var tag in tags)
+				{
+					tags_match = game.has_tag(tag);
+					if(tags_match) break;
+				}
+				if(!tags_match && merges != null && merges.size > 0)
+				{
+					foreach(var g in merges)
+					{
+						foreach(var tag in tags)
+						{
+							tags_match = g.has_tag(tag);
+							if(tags_match_merged) break;
+						}
+					}
+				}
+			}
+
+			bool hidden = game.has_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN) && (tags == null || tags.size == 0 || !(GamesDB.Tables.Tags.BUILTIN_HIDDEN in tags));
+
+			return (same_src || merged_src) && (tags_all_enabled || tags_all_except_hidden_enabled || tags_match || tags_match_merged) && !hidden && Utils.strip_name(search.text).casefold() in Utils.strip_name(game.name).casefold();
 		}
 
 		private void games_list_select_first_visible_row()

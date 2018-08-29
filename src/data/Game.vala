@@ -26,6 +26,30 @@ namespace GameHub.Data
 		}
 
 		public ArrayList<GamesDB.Tables.Tags.Tag> tags { get; protected set; default = new ArrayList<GamesDB.Tables.Tags.Tag>(GamesDB.Tables.Tags.Tag.is_equal); }
+		public bool has_tag(GamesDB.Tables.Tags.Tag tag)
+		{
+			return has_tag_id(tag.id);
+		}
+		public bool has_tag_id(string tag)
+		{
+			foreach(var t in tags)
+			{
+				if(t.id == tag) return true;
+			}
+			return false;
+		}
+		public void toggle_tag(GamesDB.Tables.Tags.Tag tag)
+		{
+			if(tags.contains(tag))
+			{
+				tags.remove(tag);
+			}
+			else
+			{
+				tags.add(tag);
+			}
+			GamesDB.get_instance().add_game(this);
+		}
 
 		public bool is_installable { get; protected set; default = false; }
 		

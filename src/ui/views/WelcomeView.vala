@@ -84,7 +84,7 @@ namespace GameHub.UI.Views
 		
 		private void open_games_view()
 		{
-			window.add_view(new GamesView());
+			window.add_view(new GamesView.GamesView());
 		}
 		
 		private async void update_entries()

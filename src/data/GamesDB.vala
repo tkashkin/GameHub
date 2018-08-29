@@ -83,6 +83,11 @@ namespace GameHub.Data
 						if(i == null) return bind_null(s);
 						return s.bind_int64(column_for_bind, i);
 					}
+					public int bind_bool(Statement s, bool? b)
+					{
+						if(b == null) return bind_null(s);
+						return s.bind_int(column_for_bind, b ? 1 : 0);
+					}
 					public int bind_value(Statement s, Sqlite.Value? v)
 					{
 						if(v == null) return bind_null(s);
@@ -97,11 +102,15 @@ namespace GameHub.Data
 					{
 						return s.column_text(column);
 					}
-					public int? get_int(Statement s)
+					public int get_int(Statement s)
 					{
 						return s.column_int(column);
 					}
-					public int64? get_int64(Statement s)
+					public bool get_bool(Statement s)
+					{
+						return get_int(s) == 0 ? false : true;
+					}
+					public int64 get_int64(Statement s)
 					{
 						return s.column_int64(column);
 					}
@@ -174,8 +183,12 @@ namespace GameHub.Data
 				public static DBTable.Field ID;
 				public static DBTable.Field NAME;
 				public static DBTable.Field ICON;
+				public static DBTable.Field SELECTED;
 
 				public static ArrayList<Tag> TAGS;
+
+				public static Tag BUILTIN_FAVORITES;
+				public static Tag BUILTIN_HIDDEN;
 
 				public class Tag: Object
 				{
@@ -218,19 +231,20 @@ namespace GameHub.Data
 
 					public string? id { get; construct set; }
 					public string? name { get; construct set; }
-					public string icon { get; construct; }
+					public string icon { get; construct set; }
+					public bool selected { get; construct set; default = true; }
 
-					public Tag(string? id, string? name, string icon="tag-symbolic")
+					public Tag(string? id, string? name, string icon="tag-symbolic", bool selected=true)
 					{
-						Object(id: id, name: name, icon: icon);
+						Object(id: id, name: name, icon: icon, selected: selected);
 					}
 					public Tag.from_db(Statement s)
 					{
-						this(ID.get(s), NAME.get(s), ICON.get(s));
+						this(ID.get(s), NAME.get(s), ICON.get(s), SELECTED.get_bool(s));
 					}
 					public Tag.from_builtin(Builtin t)
 					{
-						this(BUILTIN_PREFIX + t.id(), t.name(), t.icon());
+						this(BUILTIN_PREFIX + t.id(), t.name(), t.icon(), true);
 					}
 
 					public static bool is_equal(Tag first, Tag second)
@@ -241,27 +255,40 @@ namespace GameHub.Data
 
 				public static void init(Database? db) requires (db != null)
 				{
-					db.exec("CREATE TABLE IF NOT EXISTS `tags`(`id` string, `name` string, `icon` string, PRIMARY KEY(`id`))");
+					Statement s;
+					if(db.prepare_v2("SELECT `selected` FROM `tags`", -1, out s) != Sqlite.OK)
+					{
+						db.exec("ALTER TABLE `tags` ADD `selected` int");
+					}
+
+					db.exec("CREATE TABLE IF NOT EXISTS `tags`(`id` string, `name` string, `icon` string, `selected` int, PRIMARY KEY(`id`))");
 
 					ID            = f(0);
 					NAME          = f(1);
 					ICON          = f(2);
+					SELECTED      = f(3);
 
 					TAGS = new ArrayList<Tag>(Tag.is_equal);
-					TAGS.add(new Tag.from_builtin(Tag.Builtin.FAVORITES));
-					TAGS.add(new Tag.from_builtin(Tag.Builtin.HIDDEN));
 
-					foreach(var t in TAGS)
-					{
-						GamesDB.get_instance().add_tag(t);
-					}
-
-					Statement s;
-					int res = db.prepare_v2("SELECT * FROM `tags`", -1, out s);
+					int res = db.prepare_v2("SELECT * FROM `tags` ORDER BY SUBSTR(`id`, 1, 1) ASC, `name` ASC", -1, out s);
 					while((res = s.step()) == Sqlite.ROW)
 					{
 						var tag = new Tag.from_db(s);
 						if(!TAGS.contains(tag)) TAGS.add(tag);
+
+						if(BUILTIN_FAVORITES == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.FAVORITES.id()) BUILTIN_FAVORITES = tag;
+						if(BUILTIN_HIDDEN == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.HIDDEN.id()) BUILTIN_HIDDEN = tag;
+					}
+
+					Tag.Builtin[] builtin = { Tag.Builtin.FAVORITES, Tag.Builtin.HIDDEN };
+
+					foreach(var bt in builtin)
+					{
+						var tag = new Tag.from_builtin(bt);
+						GamesDB.get_instance().add_tag(tag);
+
+						if(BUILTIN_FAVORITES == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.FAVORITES.id()) BUILTIN_FAVORITES = tag;
+						if(BUILTIN_HIDDEN == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.HIDDEN.id()) BUILTIN_HIDDEN = tag;
 					}
 				}
 			}
@@ -308,16 +335,17 @@ namespace GameHub.Data
 			return res == Sqlite.DONE;
 		}
 
-		public bool add_tag(Tables.Tags.Tag tag) requires (db != null)
+		public bool add_tag(Tables.Tags.Tag tag, bool replace=false) requires (db != null)
 		{
 			Statement s;
-			int res = db.prepare_v2("INSERT OR REPLACE INTO `tags` (`id`, `name`, `icon`) VALUES (?, ?, ?)", -1, out s);
+			int res = db.prepare_v2("INSERT " + (replace ? "OR REPLACE " : "") + "INTO `tags` (`id`, `name`, `icon`, `selected`) VALUES (?, ?, ?, ?)", -1, out s);
 
 			assert(res == Sqlite.OK);
 
 			Tables.Tags.ID.bind(s, tag.id);
 			Tables.Tags.NAME.bind(s, tag.name);
 			Tables.Tags.ICON.bind(s, tag.icon);
+			Tables.Tags.SELECTED.bind_bool(s, tag.selected);
 
 			res = s.step();
 
