@@ -243,9 +243,6 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			filter.mode_changed.connect(() => {
-				games_grid.invalidate_filter();
-				games_list.invalidate_filter();
-
 				update_view();
 
 				Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
@@ -307,6 +304,9 @@ namespace GameHub.UI.Views.GamesView
 			if(in_destruction()) return;
 
 			show_games();
+
+			games_grid.invalidate_filter();
+			games_list.invalidate_filter();
 
 			var f = filter.selected;
 			GameSource? src = null;

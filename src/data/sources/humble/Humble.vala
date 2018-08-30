@@ -7,7 +7,7 @@ namespace GameHub.Data.Sources.Humble
 	public class Humble: GameSource
 	{
 		public const string AUTH_COOKIE = "_simpleauth_sess";
-		
+
 		public override string id { get { return "humble"; } }
 		public override string name { get { return "Humble Bundle"; } }
 		public override string icon { get { return "humble-symbolic"; } }
@@ -17,11 +17,11 @@ namespace GameHub.Data.Sources.Humble
 			get { return Settings.Auth.Humble.get_instance().enabled; }
 			set { Settings.Auth.Humble.get_instance().enabled = value; }
 		}
-		
+
 		public string? user_token = null;
-		
+
 		private Settings.Auth.Humble settings;
-		
+
 		public Humble()
 		{
 			settings = Settings.Auth.Humble.get_instance();
@@ -41,33 +41,33 @@ namespace GameHub.Data.Sources.Humble
 		{
 			return true;
 		}
-		
+
 		public override async bool authenticate()
 		{
 			settings.authenticated = true;
-			
+
 			return yield get_token();
 		}
-		
+
 		public override bool is_authenticated()
 		{
 			return user_token != null;
 		}
-		
+
 		public override bool can_authenticate_automatically()
 		{
 			return user_token != null && settings.authenticated;
 		}
-		
+
 		private async bool get_token()
 		{
 			if(user_token != null)
 			{
 				return true;
 			}
-			
+
 			var wnd = new GameHub.UI.Windows.WebAuthWindow(this.name, "https://www.humblebundle.com/login?goto=home", "https://www.humblebundle.com/home/library", AUTH_COOKIE);
-			
+
 			wnd.finished.connect(token =>
 			{
 				user_token = token.replace("\"", "");
@@ -75,14 +75,14 @@ namespace GameHub.Data.Sources.Humble
 				debug("[Auth] Humble access token: %s", user_token);
 				Idle.add(get_token.callback);
 			});
-			
+
 			wnd.canceled.connect(() => Idle.add(get_token.callback));
-			
+
 			wnd.show_all();
 			wnd.present();
-			
+
 			yield;
-			
+
 			return user_token != null;
 		}
 
@@ -96,7 +96,7 @@ namespace GameHub.Data.Sources.Humble
 			{
 				return _games;
 			}
-			
+
 			new Thread<void*>("HumbleLoading", () => {
 				_games.clear();
 
@@ -115,9 +115,9 @@ namespace GameHub.Data.Sources.Humble
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(g); return Source.REMOVE; });
-									Thread.usleep(100000);
 								}
 							});
+							Thread.usleep(100000);
 						}
 					}
 				}
@@ -174,7 +174,7 @@ namespace GameHub.Data.Sources.Humble
 			});
 
 			yield;
-			
+
 			return _games;
 		}
 	}
