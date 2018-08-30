@@ -70,6 +70,20 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
+			tags.clear();
+			var tag_ids = (GamesDB.Tables.Games.TAGS.get(s) ?? "").split(",");
+			foreach(var tid in tag_ids)
+			{
+				foreach(var t in GamesDB.Tables.Tags.TAGS)
+				{
+					if(tid == t.id)
+					{
+						if(!tags.contains(t)) tags.add(t);
+						break;
+					}
+				}
+			}
+
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
 			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 

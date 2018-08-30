@@ -14,7 +14,10 @@ namespace GameHub.UI.Views.GamesView
 		public signal void filters_changed(ArrayList<GamesDB.Tables.Tags.Tag> selected_tags);
 
 		private CheckButton tags_header_check;
+		private ListBox tags_list;
+
 		private bool is_toggling_all = false;
+		private bool is_updating = false;
 
 		public FiltersPopover(Widget? relative_to)
 		{
@@ -29,9 +32,34 @@ namespace GameHub.UI.Views.GamesView
 
 			var vbox = new Box(Orientation.VERTICAL, 0);
 
-			var tags_list = new ListBox();
+			tags_list = new ListBox();
 			tags_list.get_style_context().add_class("tags-list");
 			tags_list.selection_mode = SelectionMode.NONE;
+
+			tags_list.set_sort_func((row1, row2) => {
+				var item1 = row1 as TagRow;
+				var item2 = row2 as TagRow;
+
+				if(row1 != null && row2 != null)
+				{
+					var t1 = item1.tag.id;
+					var t2 = item2.tag.id;
+
+					var b1 = t1.has_prefix(GamesDB.Tables.Tags.Tag.BUILTIN_PREFIX);
+					var b2 = t2.has_prefix(GamesDB.Tables.Tags.Tag.BUILTIN_PREFIX);
+					if(b1 && !b2) return -1;
+					if(!b1 && b2) return 1;
+
+					var u1 = t1.has_prefix(GamesDB.Tables.Tags.Tag.USER_PREFIX);
+					var u2 = t2.has_prefix(GamesDB.Tables.Tags.Tag.USER_PREFIX);
+					if(u1 && !u2) return -1;
+					if(!u1 && u2) return 1;
+
+					return item1.tag.name.collate(item1.tag.name);
+				}
+
+				return 0;
+			});
 
 			var tags_scrolled = new ScrolledWindow(null, null);
 			#if GTK_3_22
@@ -88,20 +116,32 @@ namespace GameHub.UI.Views.GamesView
 
 			child = vbox;
 
-			foreach(var tag in GamesDB.Tables.Tags.TAGS)
-			{
-				tags_list.add(new TagRow(tag));
-				tag.notify["selected"].connect(update);
-			}
+			load_tags();
+
+			GamesDB.get_instance().tags_updated.connect(load_tags);
 
 			vbox.show_all();
 
 			update();
 		}
 
+		private void load_tags()
+		{
+			tags_list.foreach(w => w.destroy());
+
+			foreach(var tag in GamesDB.Tables.Tags.TAGS)
+			{
+				tags_list.add(new TagRow(tag));
+				tag.notify["selected"].connect(update);
+			}
+
+			tags_list.show_all();
+		}
+
 		private void update()
 		{
-			if(is_toggling_all) return;
+			if(is_toggling_all || is_updating) return;
+			is_updating = true;
 
 			selected_tags.clear();
 
@@ -115,6 +155,8 @@ namespace GameHub.UI.Views.GamesView
 			tags_header_check.active = selected_tags.size > 0;
 
 			filters_changed(selected_tags);
+
+			is_updating = false;
 		}
 
 		public class TagRow: ListBoxRow

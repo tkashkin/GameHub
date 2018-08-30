@@ -40,7 +40,7 @@ endif
 executable(
 	meson.project_name(),
 	project_config,
-	
+
 	'app.vala',
 
 	'data/Game.vala',
@@ -54,12 +54,12 @@ executable(
 
 	'data/sources/humble/Humble.vala',
 	'data/sources/humble/HumbleGame.vala',
-	
+
 	'data/GamesDB.vala',
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
-	
+
 	'ui/dialogs/SettingsDialog/SettingsDialog.vala',
 	'ui/dialogs/SettingsDialog/SettingsDialogTab.vala',
 
@@ -71,6 +71,8 @@ executable(
 
 	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
+
+	'ui/dialogs/GameTagsDialog/GameTagsDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',

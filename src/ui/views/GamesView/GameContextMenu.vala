@@ -11,8 +11,6 @@ namespace GameHub.UI.Views.GamesView
 	{
 		public Game game { get; construct; }
 
-		public signal void update_tags();
-
 		public GameContextMenu(Game game)
 		{
 			Object(game: game);
@@ -31,19 +29,14 @@ namespace GameHub.UI.Views.GamesView
 
 			var favorite = new Gtk.CheckMenuItem.with_label(_("Favorite"));
 			favorite.active = game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
-			favorite.toggled.connect(() => {
-				game.toggle_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
-				update_tags();
-			});
+			favorite.toggled.connect(() => game.toggle_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES));
 
 			var hidden = new Gtk.CheckMenuItem.with_label(_("Hidden"));
 			hidden.active = game.has_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN);
-			hidden.toggled.connect(() => {
-				game.toggle_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN);
-				update_tags();
-			});
+			hidden.toggled.connect(() => game.toggle_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN));
 
 			var manage_tags = new Gtk.MenuItem.with_label(_("Manage tags"));
+			manage_tags.activate.connect(() => new Dialogs.GameTagsDialog.GameTagsDialog(game).show_all());
 
 			if(game.status.state == Game.State.INSTALLED)
 			{

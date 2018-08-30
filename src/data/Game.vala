@@ -7,14 +7,14 @@ namespace GameHub.Data
 	public abstract class Game: Object
 	{
 		public GameSource source { get; protected set; }
-		
+
 		public string id { get; protected set; }
 		public string name { get; protected set; }
 		public string description { get; protected set; }
-		
+
 		public string icon { get; protected set; }
 		public string image { get; protected set; }
-		
+
 		public string? info { get; protected set; }
 		public string? info_detailed { get; protected set; }
 
@@ -38,21 +38,40 @@ namespace GameHub.Data
 			}
 			return false;
 		}
-		public void toggle_tag(GamesDB.Tables.Tags.Tag tag)
+		public void add_tag(GamesDB.Tables.Tags.Tag tag)
+		{
+			if(!tags.contains(tag))
+			{
+				tags.add(tag);
+			}
+			GamesDB.get_instance().add_game(this);
+			status_change(_status);
+			tags_update();
+		}
+		public void remove_tag(GamesDB.Tables.Tags.Tag tag)
 		{
 			if(tags.contains(tag))
 			{
 				tags.remove(tag);
 			}
+			GamesDB.get_instance().add_game(this);
+			status_change(_status);
+			tags_update();
+		}
+		public void toggle_tag(GamesDB.Tables.Tags.Tag tag)
+		{
+			if(tags.contains(tag))
+			{
+				remove_tag(tag);
+			}
 			else
 			{
-				tags.add(tag);
+				add_tag(tag);
 			}
-			GamesDB.get_instance().add_game(this);
 		}
 
 		public bool is_installable { get; protected set; default = false; }
-		
+
 		public File executable { get; protected set; }
 		public File install_dir { get; protected set; }
 		public string? store_page { get; protected set; default = null; }
@@ -60,11 +79,12 @@ namespace GameHub.Data
 		public abstract async void install();
 		public abstract async void run();
 		public abstract async void uninstall();
-		
+
 		public virtual async void update_game_info(){}
 
 		protected Game.Status _status = new Game.Status();
 		public signal void status_change(Game.Status status);
+		public signal void tags_update();
 
 		public Game.Status status
 		{
@@ -96,7 +116,7 @@ namespace GameHub.Data
 			public string os { get; protected set; }
 			public string file { get; protected set; }
 			public int64 file_size { get; protected set; }
-			
+
 			public virtual string name { get { return id; } }
 
 			public async void install(Game game, File remote, File local)

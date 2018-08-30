@@ -389,8 +389,7 @@ namespace GameHub.UI.Views.GamesView
 					var card = new GameCard(g);
 					var row = new GameListRow(g);
 
-					card.update_tags.connect(() => filter.mode_changed(filter));
-					row.update_tags.connect(() => filter.mode_changed(filter));
+					g.tags_update.connect(() => filter.mode_changed(filter));
 
 					games_grid.add(card);
 					games_list.add(row);

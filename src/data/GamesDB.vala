@@ -14,19 +14,21 @@ namespace GameHub.Data
 	public class GamesDB
 	{
 		private Database? db = null;
-		
+
+		public signal void tags_updated();
+
 		public GamesDB()
 		{
 			var path = FSUtils.expand(FSUtils.Paths.Cache.GamesDB);
-			
+
 			if(Database.open(path, out db) != Sqlite.OK)
 			{
 				warning("Can't open games database: " + db.errmsg());
 				db = null;
 				return;
 			}
-		} 
-		
+		}
+
 		public void create_tables() requires (db != null)
 		{
 			Statement s;
@@ -53,7 +55,7 @@ namespace GameHub.Data
 
 			db.exec("CREATE TABLE IF NOT EXISTS `merges`(`merge` string not null, PRIMARY KEY(`merge`))");
 		}
-		
+
 		public class Tables
 		{
 			public abstract class DBTable
@@ -193,6 +195,7 @@ namespace GameHub.Data
 				public class Tag: Object
 				{
 					public const string BUILTIN_PREFIX = "builtin:";
+					public const string USER_PREFIX = "user:";
 
 					public enum Builtin
 					{
@@ -246,6 +249,10 @@ namespace GameHub.Data
 					{
 						this(BUILTIN_PREFIX + t.id(), t.name(), t.icon(), true);
 					}
+					public Tag.from_name(string name)
+					{
+						this(USER_PREFIX + Utils.md5(name), name);
+					}
 
 					public static bool is_equal(Tag first, Tag second)
 					{
@@ -290,6 +297,8 @@ namespace GameHub.Data
 						if(BUILTIN_FAVORITES == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.FAVORITES.id()) BUILTIN_FAVORITES = tag;
 						if(BUILTIN_HIDDEN == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.HIDDEN.id()) BUILTIN_HIDDEN = tag;
 					}
+
+					GamesDB.get_instance().tags_updated();
 				}
 			}
 		}
@@ -349,11 +358,15 @@ namespace GameHub.Data
 
 			res = s.step();
 
-			if(!Tables.Tags.TAGS.contains(tag)) Tables.Tags.TAGS.add(tag);
+			if(!Tables.Tags.TAGS.contains(tag))
+			{
+				Tables.Tags.TAGS.add(tag);
+				tags_updated();
+			}
 
 			return res == Sqlite.DONE;
 		}
-		
+
 		public bool merge(Game first, Game second) requires (db != null)
 		{
 			if(first is Sources.GOG.GOGGame.DLC || second is Sources.GOG.GOGGame.DLC) return false;
@@ -464,7 +477,7 @@ namespace GameHub.Data
 		{
 			Statement st;
 			int res;
-			
+
 			if(src != null)
 			{
 				res = db.prepare_v2("SELECT * FROM `games` WHERE `source` = ? ORDER BY `name` ASC", -1, out st);
@@ -474,15 +487,15 @@ namespace GameHub.Data
 			{
 				res = db.prepare_v2("SELECT * FROM `games` ORDER BY `name` ASC", -1, out st);
 			}
-			
+
 			assert(res == Sqlite.OK);
-			
+
 			var games = new ArrayList<Game>(Game.is_equal);
-			
+
 			while((res = st.step()) == Sqlite.ROW)
 			{
 				var s = GameSource.by_id(Tables.Games.SOURCE.get(st));
-				
+
 				if(s is Steam)
 				{
 					games.add(new SteamGame.from_db((Steam) s, st));
@@ -496,7 +509,7 @@ namespace GameHub.Data
 					games.add(new HumbleGame.from_db((Humble) s, st));
 				}
 			}
-			
+
 			return games;
 		}
 
@@ -535,7 +548,7 @@ namespace GameHub.Data
 
 			return null;
 		}
-		
+
 		public bool is_game_merged(Game game) requires (db != null)
 		{
 			Statement s;
@@ -569,7 +582,7 @@ namespace GameHub.Data
 			}
 			return instance;
 		}
-		
+
 		public static void init()
 		{
 			GamesDB.get_instance().create_tables();
