@@ -23,7 +23,7 @@ namespace GameHub.Data.Sources.Humble
 			image = json_obj.get_string_member("icon");
 			icon = image;
 			order_id = order;
-			
+
 			info = Json.to_string(json_node, false);
 
 			platforms.clear();
@@ -38,13 +38,13 @@ namespace GameHub.Data.Sources.Humble
 					}
 				}
 			}
-			
+
 			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name);
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
 			info_detailed = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
 			update_status();
 		}
-		
+
 		public HumbleGame.from_db(Humble src, Sqlite.Statement s)
 		{
 			source = src;
@@ -93,7 +93,7 @@ namespace GameHub.Data.Sources.Humble
 			executable = FSUtils.file(json.get_string_member("executable"));
 			update_status();
 		}
-		
+
 		public bool update_status()
 		{
 			if(status.state != Game.State.DOWNLOADING)
@@ -102,13 +102,13 @@ namespace GameHub.Data.Sources.Humble
 			}
 			return executable.query_exists();
 		}
-		
+
 		public override async void update_game_info()
 		{
 			update_status();
 
 			if(game_info_updated) return;
-			
+
 			if(info == null || info.length == 0)
 			{
 				var token = ((Humble) source).user_token;
@@ -131,7 +131,7 @@ namespace GameHub.Data.Sources.Humble
 			}
 
 			if(installers.size > 0) return;
-			
+
 			var product = Parser.parse_json(info).get_object();
 			if(product == null) return;
 
@@ -155,22 +155,22 @@ namespace GameHub.Data.Sources.Humble
 		public override async void install()
 		{
 			yield update_game_info();
-			
+
 			if(installers.size < 1) return;
-			
+
 			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
-			
+
 			wnd.cancelled.connect(() => Idle.add(install.callback));
-			
+
 			wnd.install.connect(installer => {
 				var link = installer.file;
 				var remote = File.new_for_uri(link);
 				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(name);
 				var local = FSUtils.file(installers_dir, "humble_" + installer.id);
-				
+
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
 				FSUtils.mkdir(installers_dir);
-				
+
 				installer.install.begin(this, remote, local, (obj, res) => {
 					installer.install.end(res);
 					choose_executable();
@@ -178,7 +178,7 @@ namespace GameHub.Data.Sources.Humble
 					Idle.add(install.callback);
 				});
 			});
-			
+
 			wnd.import.connect(() => {
 				choose_executable();
 				Idle.add(install.callback);
@@ -186,10 +186,10 @@ namespace GameHub.Data.Sources.Humble
 
 			wnd.show_all();
 			wnd.present();
-			
+
 			yield;
 		}
-		
+
 		private void choose_executable()
 		{
 			var chooser = new FileChooserDialog(_("Select main executable of the game"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN);
@@ -248,20 +248,21 @@ namespace GameHub.Data.Sources.Humble
 				update_status();
 			}
 		}
-		
+
 		public class Installer: Game.Installer
 		{
 			public string dl_name;
-			
+
 			public override string name { get { return dl_name; } }
-			
+
 			public Installer(string machine_name, string platform, Json.Object download)
 			{
 				id = machine_name;
 				os = platform;
-				dl_name = download.get_string_member("name");
-				file = download.get_object_member("url").get_string_member("web");
-				file_size = download.get_int_member("file_size");
+				dl_name = download.has_member("name") ? download.get_string_member("name") : "";
+				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
+				file = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
+				file_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
 			}
 		}
 	}
