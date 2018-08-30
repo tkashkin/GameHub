@@ -299,7 +299,6 @@ GtkListBox.tags-list .list-row,
 list.tags-list row
 {
 	background: transparent;
-	border-bottom: 1px alpha(#888, 0.2) solid;
 	outline: none;
 	padding: 0;
 	margin: 0;

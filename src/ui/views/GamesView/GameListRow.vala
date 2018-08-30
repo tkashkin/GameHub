@@ -72,12 +72,7 @@ namespace GameHub.UI.Views.GamesView
 						break;
 
 					case 3:
-						var menu = new GameContextMenu(game);
-						menu.update_tags.connect(() => {
-							game.status_change(game.status);
-							update_tags();
-						});
-						menu.open(this, e);
+						new GameContextMenu(game).open(this, e);
 						break;
 				}
 				return true;

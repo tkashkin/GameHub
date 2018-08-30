@@ -12,7 +12,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		private Stack tabs;
 
-		public SettingsDialog()
+		public SettingsDialog(string tab="ui")
 		{
 			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Settings"));
 
@@ -60,6 +60,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 			add_button(_("Close"), ResponseType.CLOSE).margin_end = 7;
 			show_all();
+
+			tabs.visible_child_name = tab;
 		}
 
 		private void add_tab(string id, SettingsDialogTab tab, string title, string? icon=null)

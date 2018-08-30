@@ -52,6 +52,20 @@ namespace GameHub.Data.Sources.Steam
 				}
 			}
 
+			tags.clear();
+			var tag_ids = (GamesDB.Tables.Games.TAGS.get(s) ?? "").split(",");
+			foreach(var tid in tag_ids)
+			{
+				foreach(var t in GamesDB.Tables.Tags.TAGS)
+				{
+					if(tid == t.id)
+					{
+						if(!tags.contains(t)) tags.add(t);
+						break;
+					}
+				}
+			}
+
 			store_page = @"steam://store/$(id)";
 
 			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
@@ -68,8 +82,6 @@ namespace GameHub.Data.Sources.Steam
 				var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)" + (lang != null && lang.length > 0 ? "&l=" + lang : "");
 				info_detailed = (yield Parser.load_remote_file_async(url));
 			}
-
-			GamesDB.get_instance().add_game(this);
 
 			var root = Parser.parse_json(info_detailed);
 
