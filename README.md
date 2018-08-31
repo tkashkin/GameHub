@@ -2,27 +2,23 @@
 Games manager/downloader/library written in Vala for elementary OS
 
 ## Game sources
-GameHub can support multiple game sources and services
+GameHub supports multiple game sources and services
 
 __Currently supported sources:__
 * Steam
-* GOG.com
+* GOG
 * Humble Bundle
 
 ## Features
-__Implemented:__
-* Fetching linux-compatible games from Steam and GOG
-* Game installation
-* Game launching
+GameHub allows to view, download, install, run and uninstall games from supported sources.
 
-__Planned:__
-* Maybe more services
+It also allows to download bonus content for GOG games.
 
 ## Installation
 Prebuilt releases can be found on [releases page](https://github.com/tkashkin/GameHub/releases).
 
 ### Arch Linux
-There is an [AUR package](https://aur.archlinux.org/packages/gamehub/), maintained by [@twisty1](https://github.com/twisty1).
+~~There is an [AUR package](https://aur.archlinux.org/packages/gamehub/), maintained by [@twisty1](https://github.com/twisty1).~~ *[outdated]*
 
 ## Building
 
@@ -31,13 +27,13 @@ There is an [AUR package](https://aur.archlinux.org/packages/gamehub/), maintain
 #### Build dependencies
 * meson
 * valac
-* libgranite-dev,
-* libgtk-3-dev,
-* libglib2.0-dev,
-* libwebkit2gtk-4.0-dev,
-* libjson-glib-dev,
-* libgee-0.8-dev,
-* libsoup2.4-dev,
+* libgranite-dev
+* libgtk-3-dev
+* libglib2.0-dev
+* libwebkit2gtk-4.0-dev
+* libjson-glib-dev
+* libgee-0.8-dev
+* libsoup2.4-dev
 * libsqlite3-dev
 
 #### Building
