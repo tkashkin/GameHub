@@ -9,7 +9,7 @@ namespace GameHub.Data.Sources.GOG
 		private const string CLIENT_ID = "46899977096215655";
 		private const string CLIENT_SECRET = "9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9";
 		private const string REDIRECT = "https%3A%2F%2Fembed.gog.com%2Fon_login_success%3Forigin%3Dclient";
-		
+
 		private const string[] GAMES_BLACKLIST = {"1424856371" /* Hotline Miami 2: Wrong Number - Digital Comics */};
 
 		public override string id { get { return "gog"; } }
@@ -21,17 +21,17 @@ namespace GameHub.Data.Sources.GOG
 			get { return Settings.Auth.GOG.get_instance().enabled; }
 			set { Settings.Auth.GOG.get_instance().enabled = value; }
 		}
-		
+
 		public string? user_id { get; protected set; }
 		public string? user_name { get; protected set; }
-		
+
 		private string? user_auth_code = null;
 		public string? user_token = null;
 		private string? user_refresh_token = null;
 		private bool token_needs_refresh = false;
-		
+
 		private Settings.Auth.GOG settings;
-		
+
 		public GOG()
 		{
 			settings = Settings.Auth.GOG.get_instance();
@@ -54,103 +54,103 @@ namespace GameHub.Data.Sources.GOG
 		{
 			return true;
 		}
-		
+
 		public override async bool authenticate()
 		{
 			settings.authenticated = true;
-			
+
 			if(token_needs_refresh && user_refresh_token != null)
 			{
 				return (yield refresh_token());
 			}
-			
+
 			return (yield get_auth_code()) && (yield get_token());
 		}
-		
+
 		public override bool is_authenticated()
 		{
 			return !token_needs_refresh && user_token != null;
 		}
-		
+
 		public override bool can_authenticate_automatically()
 		{
 			return user_refresh_token != null && settings.authenticated;
 		}
-		
+
 		private async bool get_auth_code()
 		{
 			if(user_auth_code != null)
 			{
 				return true;
 			}
-			
+
 			var wnd = new GameHub.UI.Windows.WebAuthWindow(this.name, @"https://auth.gog.com/auth?client_id=$(CLIENT_ID)&redirect_uri=$(REDIRECT)&response_type=code&layout=client2", "https://embed.gog.com/on_login_success?origin=client&code=");
-			
+
 			wnd.finished.connect(code =>
 			{
 				user_auth_code = code;
 				debug("[Auth] GOG auth code: %s", code);
 				Idle.add(get_auth_code.callback);
 			});
-			
+
 			wnd.canceled.connect(() => Idle.add(get_auth_code.callback));
-			
+
 			wnd.set_size_request(550, 680);
 			wnd.show_all();
 			wnd.present();
-			
+
 			yield;
-			
+
 			return user_auth_code != null;
 		}
-		
+
 		private async bool get_token()
 		{
 			if(user_token != null)
 			{
 				return true;
 			}
-			
+
 			var url = @"https://auth.gog.com/token?client_id=$(CLIENT_ID)&client_secret=$(CLIENT_SECRET)&grant_type=authorization_code&redirect_uri=$(REDIRECT)&code=$(user_auth_code)";
 			var root = (yield Parser.parse_remote_json_file_async(url)).get_object();
 			user_token = root.get_string_member("access_token");
 			user_refresh_token = root.get_string_member("refresh_token");
 			user_id = root.get_string_member("user_id");
-			
+
 			settings.access_token = user_token ?? "";
 			settings.refresh_token = user_refresh_token ?? "";
-			
+
 			debug("[Auth] GOG access token: %s", user_token);
 			debug("[Auth] GOG refresh token: %s", user_refresh_token);
 			debug("[Auth] GOG user id: %s", user_id);
-			
+
 			return user_token != null;
 		}
-		
+
 		private async bool refresh_token()
 		{
 			if(user_refresh_token == null)
 			{
 				return false;
 			}
-			
+
 			debug("[Auth] Refreshing GOG access token with refresh token: %s", user_refresh_token);
-			
+
 			var url = @"https://auth.gog.com/token?client_id=$(CLIENT_ID)&client_secret=$(CLIENT_SECRET)&grant_type=refresh_token&refresh_token=$(user_refresh_token)";
 			var root = (yield Parser.parse_remote_json_file_async(url)).get_object();
 			user_token = root.get_string_member("access_token");
 			user_refresh_token = root.get_string_member("refresh_token");
 			user_id = root.get_string_member("user_id");
-			
+
 			settings.access_token = user_token ?? "";
 			settings.refresh_token = user_refresh_token ?? "";
-			
+
 			debug("[Auth] GOG access token: %s", user_token);
 			debug("[Auth] GOG refresh token: %s", user_refresh_token);
 			debug("[Auth] GOG user id: %s", user_id);
-			
+
 			token_needs_refresh = false;
-			
+
 			return user_token != null;
 		}
 
@@ -158,14 +158,14 @@ namespace GameHub.Data.Sources.GOG
 
 		public override ArrayList<Game> games { get { return _games; } }
 
-		public override async ArrayList<Game> load_games(Utils.FutureResult<Game>? game_loaded=null, Utils.Future? cache_loaded=null)
+		public override async ArrayList<Game> load_games(Utils.FutureResult2<Game, bool>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
 			if(user_id == null || user_token == null || _games.size > 0)
 			{
 				return _games;
 			}
-			
-			new Thread<void*>("GOGLoading", () => {
+
+			Utils.thread("GOGLoading", () => {
 				_games.clear();
 
 				var cached = GamesDB.get_instance().get_games(this);
@@ -175,12 +175,12 @@ namespace GameHub.Data.Sources.GOG
 					{
 						if(!(g.id in GAMES_BLACKLIST) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g)))
 						{
-							g.update_game_info.begin();
+							//g.update_game_info.begin();
 							_games.add(g);
 							games_count = _games.size;
 							if(game_loaded != null)
 							{
-								Idle.add(() => { game_loaded(g); return Source.REMOVE; });
+								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
 								Thread.usleep(100000);
 							}
 						}
@@ -235,7 +235,7 @@ namespace GameHub.Data.Sources.GOG
 								games_count = _games.size;
 								if(game_loaded != null)
 								{
-									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
+									Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
 								}
 							});
 						}
@@ -245,12 +245,10 @@ namespace GameHub.Data.Sources.GOG
 				}
 
 				Idle.add(load_games.callback);
-
-				return null;
 			});
 
 			yield;
-			
+
 			return _games;
 		}
 	}

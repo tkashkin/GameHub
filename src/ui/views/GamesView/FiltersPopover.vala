@@ -121,8 +121,6 @@ namespace GameHub.UI.Views.GamesView
 			GamesDB.get_instance().tags_updated.connect(load_tags);
 
 			vbox.show_all();
-
-			update();
 		}
 
 		private void load_tags()
@@ -136,6 +134,8 @@ namespace GameHub.UI.Views.GamesView
 			}
 
 			tags_list.show_all();
+
+			update();
 		}
 
 		private void update()

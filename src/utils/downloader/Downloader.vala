@@ -32,28 +32,24 @@ namespace GameHub.Utils.Downloader
 		File result = local;
 		Error? error = null;
 
-		new Thread<void*>("dl-thread-" + Utils.md5(remote.get_uri()), () => {
-			var downloader = Downloader.get_instance();
-			if(downloader == null)
-			{
-				Idle.add(download.callback);
-			}
-			else
-			{
-				downloader.download.begin(remote, local, info, preserve_filename, (obj, res) => {
-					try
-					{
-						result = downloader.download.end(res);
-					}
-					catch(Error e)
-					{
-						error = e;
-					}
-					Idle.add(download.callback);
-				});
-			}
+		var downloader = Downloader.get_instance();
+		if(downloader == null)
+		{
+			return result;
+		}
 
-			return null;
+		Utils.thread("Download-" + Utils.md5(remote.get_uri()), () => {
+			downloader.download.begin(remote, local, info, preserve_filename, (obj, res) => {
+				try
+				{
+					result = downloader.download.end(res);
+				}
+				catch(Error e)
+				{
+					error = e;
+				}
+				Idle.add(download.callback);
+			});
 		});
 
 		yield;

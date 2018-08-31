@@ -6,7 +6,27 @@ namespace GameHub.Utils
 	public delegate void Future();
 	public delegate void FutureBoolean(bool result);
 	public delegate void FutureResult<T>(T result);
-	
+	public delegate void FutureResult2<T, T2>(T t, T2 t2);
+
+	private class Worker
+	{
+		public string name;
+		public Future worker;
+		public Worker(string name, owned Future worker)
+		{
+			this.name = name;
+			this.worker = (owned) worker;
+		}
+		public void run()
+		{
+			debug("[Worker] %s started", name);
+			worker();
+			debug("[Worker] %s finished", name);
+		}
+	}
+
+	private static ThreadPool<Worker>? threadpool = null;
+
 	public static void open_uri(string uri)
 	{
 		try
@@ -18,7 +38,7 @@ namespace GameHub.Utils
 			warning(e.message);
 		}
 	}
-	
+
 	public static string run(string[] cmd, string? dir=null, bool override_runtime=false)
 	{
 		string stdout;
@@ -44,7 +64,7 @@ namespace GameHub.Utils
 		}
 		return stdout;
 	}
-	
+
 	public static async void run_async(string[] cmd, string? dir=null, bool override_runtime=false, bool wait=true)
 	{
 		Pid pid;
@@ -82,14 +102,29 @@ namespace GameHub.Utils
 	{
 		string stdout = "";
 
-		new Thread<void*>("utils-run_thread", () => {
+		Utils.thread("Utils.run", () => {
 			stdout = Utils.run(cmd, dir, override_runtime);
 			Idle.add(run_thread.callback);
-			return null;
 		});
 
 		yield;
 		return stdout;
+	}
+
+	public static void thread(string name, owned Future worker)
+	{
+		try
+		{
+			if(threadpool == null)
+			{
+				threadpool = new ThreadPool<Worker>.with_owned_data(w => w.run(), -1, false);
+			}
+			threadpool.add(new Worker(name, (owned) worker));
+		}
+		catch(Error e)
+		{
+			warning(e.message);
+		}
 	}
 
 	public static string get_distro()
@@ -100,7 +135,7 @@ namespace GameHub.Utils
 		return Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
 		#endif
 	}
-	
+
 	public static string get_language_name()
 	{
 		return Posix.nl_langinfo((Posix.NLItem) 786439); // _NL_IDENTIFICATION_LANGUAGE
@@ -117,7 +152,7 @@ namespace GameHub.Utils
 		return false;
 		#endif
 	}
-	
+
 	public static async void sleep_async(uint interval, int priority = GLib.Priority.DEFAULT)
 	{
 		Timeout.add(interval, () => {
