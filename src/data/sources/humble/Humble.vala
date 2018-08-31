@@ -90,14 +90,14 @@ namespace GameHub.Data.Sources.Humble
 
 		public override ArrayList<Game> games { get { return _games; } }
 
-		public override async ArrayList<Game> load_games(Utils.FutureResult<Game>? game_loaded=null, Utils.Future? cache_loaded=null)
+		public override async ArrayList<Game> load_games(Utils.FutureResult2<Game, bool>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
 			if(user_token == null || _games.size > 0)
 			{
 				return _games;
 			}
 
-			new Thread<void*>("HumbleLoading", () => {
+			Utils.thread("HumbleLoading", () => {
 				_games.clear();
 
 				var cached = GamesDB.get_instance().get_games(this);
@@ -114,7 +114,7 @@ namespace GameHub.Data.Sources.Humble
 								games_count = _games.size;
 								if(game_loaded != null)
 								{
-									Idle.add(() => { game_loaded(g); return Source.REMOVE; });
+									Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
 								}
 							});
 							Thread.usleep(100000);
@@ -161,7 +161,7 @@ namespace GameHub.Data.Sources.Humble
 								games_count = _games.size;
 								if(game_loaded != null)
 								{
-									Idle.add(() => { game_loaded(game); return Source.REMOVE; });
+									Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
 								}
 							});
 						}
@@ -169,8 +169,6 @@ namespace GameHub.Data.Sources.Humble
 				}
 
 				Idle.add(load_games.callback);
-
-				return null;
 			});
 
 			yield;

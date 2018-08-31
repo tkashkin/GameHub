@@ -265,7 +265,7 @@ namespace GameHub.UI.Views.GamesView
 			games_grid_scrolled.show_all();
 			games_grid.show_all();
 
-			empty_alert.action_activated.connect(() => load_games.begin());
+			empty_alert.action_activated.connect(() => load_games());
 
 			stack.set_visible_child(empty_alert);
 
@@ -276,6 +276,8 @@ namespace GameHub.UI.Views.GamesView
 			search.opacity = 0;
 			search.sensitive = false;
 			downloads.opacity = 0;
+			filters.opacity = 0;
+			filters.sensitive = false;
 
 			Downloader.get_instance().dl_started.connect(dl => {
 				downloads_list.add(new DownloadProgressView(dl));
@@ -296,13 +298,11 @@ namespace GameHub.UI.Views.GamesView
 				}
 			});
 
-			load_games.begin();
+			load_games();
 		}
 
 		private void update_view()
 		{
-			if(in_destruction()) return;
-
 			show_games();
 
 			games_grid.invalidate_filter();
@@ -372,9 +372,11 @@ namespace GameHub.UI.Views.GamesView
 			search.opacity = 1;
 			search.sensitive = true;
 			downloads.opacity = 1;
+			filters.opacity = 1;
+			filters.sensitive = true;
 		}
 
-		private async void load_games()
+		private void load_games()
 		{
 			messages.get_children().foreach(c => messages.remove(c));
 
@@ -382,10 +384,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				loading_sources++;
 				spinner.active = loading_sources > 0;
-				src.load_games.begin(g => {
-					if(in_destruction()) return;
-					update_view();
-
+				src.load_games.begin((g, cached) => {
 					var card = new GameCard(g);
 					var row = new GameListRow(g);
 
@@ -394,10 +393,12 @@ namespace GameHub.UI.Views.GamesView
 					games_grid.add(card);
 					games_list.add(row);
 
-					games_grid.show_all();
-					games_list.show_all();
+					card.show();
+					row.show();
 
-					merge_game(g);
+					if(!cached) merge_game(g);
+
+					update_view();
 
 					if(games_list.get_selected_row() == null)
 					{
@@ -406,13 +407,18 @@ namespace GameHub.UI.Views.GamesView
 							return Source.REMOVE;
 						});
 					}
-				}, () => {}, (obj, res) => {
+				}, () => {
+					update_view();
+				}, (obj, res) => {
 					src.load_games.end(res);
-
-					if(in_destruction()) return;
 
 					loading_sources--;
 					spinner.active = loading_sources > 0;
+
+					if(loading_sources == 0)
+					{
+						merge_games();
+					}
 
 					if(src.games_count == 0)
 					{
@@ -576,11 +582,33 @@ namespace GameHub.UI.Views.GamesView
 			});
 		}
 
+		private void merge_games()
+		{
+			if(!ui_settings.merge_games || in_destruction()) return;
+			Utils.thread("Merging", () => {
+				foreach(var src in sources)
+				{
+					merge_games_from(src);
+				}
+			});
+		}
+
+		private void merge_games_from(GameSource src)
+		{
+			if(!ui_settings.merge_games || in_destruction() || src == null) return;
+			Utils.thread("Merging-" + src.id, () => {
+				foreach(var game in src.games)
+				{
+					merge_game(game);
+				}
+			});
+		}
+
 		private void merge_game(Game game)
 		{
 			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
-			new Thread<void*>("merging_" + game.source.name + "_" + game.id, () => {
-				foreach(var src in GameSources)
+			Utils.thread("Merging-" + game.source.id + ":" + game.id, () => {
+				foreach(var src in sources)
 				{
 					foreach(var game2 in src.games)
 					{
@@ -603,8 +631,6 @@ namespace GameHub.UI.Views.GamesView
 						}
 					}
 				}
-
-				return null;
 			});
 		}
 	}

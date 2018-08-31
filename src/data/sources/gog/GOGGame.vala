@@ -30,12 +30,12 @@ namespace GameHub.Data.Sources.GOG
 			if(json_obj.get_object_member("worksOn").get_boolean_member("Linux")) platforms.add(Platform.LINUX);
 			if(json_obj.get_object_member("worksOn").get_boolean_member("Windows")) platforms.add(Platform.WINDOWS);
 			if(json_obj.get_object_member("worksOn").get_boolean_member("Mac")) platforms.add(Platform.MACOS);
-			
+
 			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
 			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
-		
+
 		public GOGGame.from_db(GOG src, Sqlite.Statement s)
 		{
 			source = src;
@@ -78,7 +78,7 @@ namespace GameHub.Data.Sources.GOG
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
 			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
-		
+
 		public override async void update_game_info()
 		{
 			if(status.state != Game.State.DOWNLOADING)
@@ -155,7 +155,7 @@ namespace GameHub.Data.Sources.GOG
 
 			root = Parser.parse_json(info);
 
-			var tags_json = !root.get_object().has_member("tags") ? null : root.get_object().get_array_member("tags");
+			var tags_json = root == null || root.get_node_type() != Json.NodeType.OBJECT || !root.get_object().has_member("tags") ? null : root.get_object().get_array_member("tags");
 
 			if(tags_json != null)
 			{
@@ -188,11 +188,11 @@ namespace GameHub.Data.Sources.GOG
 			yield update_game_info();
 
 			if(installers == null || installers.size < 1) return;
-			
+
 			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
-			
+
 			wnd.cancelled.connect(() => Idle.add(install.callback));
-			
+
 			wnd.install.connect(installer => {
 				var root_node = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token);
 				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT)
@@ -221,22 +221,22 @@ namespace GameHub.Data.Sources.GOG
 
 				var installers_dir = FSUtils.Paths.Collection.GOG.expand_installers(g, d);
 				var local = FSUtils.file(installers_dir, "gog_" + id + "_" + installer.id);
-				
+
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(installers_dir);
-				
+
 				installer.install.begin(this, remote, local, (obj, res) => {
 					installer.install.end(res);
 					Idle.add(install.callback);
 				});
 			});
-			
+
 			wnd.show_all();
 			wnd.present();
-			
+
 			yield;
 		}
-		
+
 		public override async void run()
 		{
 			if(executable.query_exists())
@@ -280,14 +280,14 @@ namespace GameHub.Data.Sources.GOG
 				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			}
 		}
-		
+
 		public class Installer: Game.Installer
 		{
 			public string lang;
 			public string lang_full;
-			
+
 			public override string name { get { return lang_full; } }
-			
+
 			public Installer(Json.Object json)
 			{
 				id = json.get_string_member("id");

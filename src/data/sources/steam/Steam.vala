@@ -7,7 +7,7 @@ namespace GameHub.Data.Sources.Steam
 	public class Steam: GameSource
 	{
 		private string api_key;
-		
+
 		public static string PROTON_APPID = "858280";
 
 		public override string id { get { return "steam"; } }
@@ -31,7 +31,7 @@ namespace GameHub.Data.Sources.Steam
 			get { return Settings.Auth.Steam.get_instance().enabled; }
 			set { Settings.Auth.Steam.get_instance().enabled = value; }
 		}
-		
+
 		public string? user_id { get; protected set; }
 		public string? user_name { get; protected set; }
 
@@ -92,59 +92,58 @@ namespace GameHub.Data.Sources.Steam
 		public override async bool authenticate()
 		{
 			Settings.Auth.Steam.get_instance().authenticated = true;
-			
+
 			if(is_authenticated()) return true;
-			
+
 			var result = false;
-			
+
 			if(!is_authenticated_in_steam_client)
 			{
 				Utils.open_uri("steam://");
 				return false;
 			}
 
-			new Thread<void*>("steam-loginusers-thread", () => {
+			Utils.thread("Steam-loginusers", () => {
 				var config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDF);
 				var users = Parser.json_object(config, {"users"});
-				
+
 				if(users == null)
 				{
 					result = false;
 					Idle.add(authenticate.callback);
-					return null;
+					return;
 				}
-				
+
 				foreach(var uid in users.get_members())
 				{
 					var user = users.get_object_member(uid);
-					
+
 					user_id = uid;
 					user_name = user.get_string_member("PersonaName");
 
 					var last = !user.has_member("mostrecent") || user.get_string_member("mostrecent") == "1";
 
 					debug(@"[Auth] SteamID: $(user_id), PersonaName: $(user_name), last: $(last)");
-					
+
 					if(last)
 					{
 						result = true;
 						break;
 					}
 				}
-				
+
 				Idle.add(authenticate.callback);
-				return null;
 			});
-			
+
 			yield;
 			return result;
 		}
-		
+
 		public override bool is_authenticated()
 		{
 			return user_id != null;
 		}
-		
+
 		public override bool can_authenticate_automatically()
 		{
 			return Settings.Auth.Steam.get_instance().authenticated && is_authenticated_in_steam_client;
@@ -154,16 +153,16 @@ namespace GameHub.Data.Sources.Steam
 
 		public override ArrayList<Game> games { get { return _games; } }
 
-		public override async ArrayList<Game> load_games(Utils.FutureResult<Game>? game_loaded=null, Utils.Future? cache_loaded=null)
+		public override async ArrayList<Game> load_games(Utils.FutureResult2<Game, bool>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
 			api_key = Settings.Auth.Steam.get_instance().api_key;
-			
+
 			if(!is_authenticated() || _games.size > 0)
 			{
 				return _games;
 			}
-			
-			new Thread<void*>("SteamLoading", () => {
+
+			Utils.thread("SteamLoading", () => {
 				_games.clear();
 
 				var cached = GamesDB.get_instance().get_games(this);
@@ -173,12 +172,12 @@ namespace GameHub.Data.Sources.Steam
 					{
 						if(!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g))
 						{
-							g.update_game_info.begin();
+							//g.update_game_info.begin();
 							_games.add(g);
 							games_count = _games.size;
 							if(game_loaded != null)
 							{
-								Idle.add(() => { game_loaded(g); return Source.REMOVE; });
+								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
 								Thread.usleep(100000);
 							}
 						}
@@ -202,16 +201,14 @@ namespace GameHub.Data.Sources.Steam
 					add_games.end(res);
 					Idle.add(load_games.callback);
 				});
-
-				return null;
 			});
 
 			yield;
-			
+
 			return _games;
 		}
 
-		private async void add_games(Json.Array json_games, FutureResult<Game>? game_loaded = null)
+		private async void add_games(Json.Array json_games, FutureResult2<Game, bool>? game_loaded = null)
 		{
 			if(json_games != null)
 			{
@@ -225,7 +222,8 @@ namespace GameHub.Data.Sources.Steam
 						games_count = _games.size;
 						if(game_loaded != null)
 						{
-							Idle.add(() => { game_loaded(game); return Source.REMOVE; });
+							Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
+							Thread.usleep(100000);
 						}
 					}
 				}
@@ -238,13 +236,13 @@ namespace GameHub.Data.Sources.Steam
 			get
 			{
 				if(folders != null) return folders;
-				
+
 				folders = new ArrayList<string>();
 				folders.add(FSUtils.Paths.Steam.SteamApps);
-				
+
 				var root = Parser.parse_vdf_file(FSUtils.Paths.Steam.LibraryFoldersVDF);
 				var lf = Parser.json_object(root, {"LibraryFolders"});
-				
+
 				if(lf != null)
 				{
 					foreach(var key in lf.get_members())
@@ -253,7 +251,7 @@ namespace GameHub.Data.Sources.Steam
 						if(FSUtils.file(dir).query_exists()) folders.add(dir);
 					}
 				}
-				
+
 				return folders;
 			}
 		}
