@@ -8,7 +8,7 @@ namespace GameHub.Data.Sources.Steam
 		private int metadata_tries = 0;
 
 		private bool game_info_updated = false;
-		
+
 		public SteamGame(Steam src, Json.Node json_node)
 		{
 			source = src;
@@ -27,7 +27,7 @@ namespace GameHub.Data.Sources.Steam
 
 			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
-		
+
 		public SteamGame.from_db(Steam src, Sqlite.Statement s)
 		{
 			source = src;
@@ -110,9 +110,9 @@ namespace GameHub.Data.Sources.Steam
 			description = data != null && data.has_member("detailed_description") ? data.get_string_member("detailed_description") : "";
 
 			metadata_tries++;
-			
+
 			var platforms_json = Parser.json_object(root, {id, "data", "platforms"});
-			
+
 			platforms.clear();
 			if(platforms_json == null)
 			{
@@ -139,14 +139,22 @@ namespace GameHub.Data.Sources.Steam
 		public override bool is_supported(Platform? platform=null)
 		{
 			if(platform == null) platform = CurrentPlatform;
-			return base.is_supported(platform) || (Steam.is_app_installed(Steam.PROTON_APPID) && base.is_supported(Platform.WINDOWS));
+			if(base.is_supported()) return true;
+			foreach(var appid in Steam.PROTON_APPIDS)
+			{
+				if(Steam.is_app_installed(appid))
+				{
+					return base.is_supported(Platform.WINDOWS);
+				}
+			}
+			return false;
 		}
-		
+
 		public override async void install()
 		{
 			yield run();
 		}
-		
+
 		public override async void run()
 		{
 			Utils.open_uri(@"steam://rungameid/$(id)");

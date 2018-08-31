@@ -8,7 +8,7 @@ namespace GameHub.Data.Sources.Steam
 	{
 		private string api_key;
 
-		public static string PROTON_APPID = "858280";
+		public static string[] PROTON_APPIDS = {"858280", "930400"};
 
 		public override string id { get { return "steam"; } }
 		public override string name { get { return "Steam"; } }
