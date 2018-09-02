@@ -33,7 +33,7 @@ namespace GameHub.Data.Sources.GOG
 
 			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
 
 		public GOGGame.from_db(GOG src, Sqlite.Statement s)
@@ -76,15 +76,12 @@ namespace GameHub.Data.Sources.GOG
 			}
 
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
 
 		public override async void update_game_info()
 		{
-			if(status.state != Game.State.DOWNLOADING)
-			{
-				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
-			}
+			update_status();
 
 			if(game_info_updated) return;
 
@@ -130,7 +127,7 @@ namespace GameHub.Data.Sources.GOG
 			{
 				foreach(var installer_json in installers_json.get_elements())
 				{
-					var installer = new Installer(installer_json.get_object());
+					var installer = new Installer(this, installer_json.get_object());
 					installers.add(installer);
 				}
 			}
@@ -175,10 +172,7 @@ namespace GameHub.Data.Sources.GOG
 
 			GamesDB.get_instance().add_game(this);
 
-			if(status.state != Game.State.DOWNLOADING)
-			{
-				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
-			}
+			update_status();
 
 			game_info_updated = true;
 		}
@@ -194,38 +188,10 @@ namespace GameHub.Data.Sources.GOG
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
 			wnd.install.connect(installer => {
-				var root_node = Parser.parse_remote_json_file(installer.file, "GET", ((GOG) source).user_token);
-				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT)
-				{
-					Idle.add(install.callback);
-					return;
-				}
-
-				var root = root_node.get_object();
-				if(root == null || !root.has_member("downlink"))
-				{
-					Idle.add(install.callback);
-					return;
-				}
-
-				var link = root.get_string_member("downlink");
-				var remote = File.new_for_uri(link);
-
-				string g = name;
-				string? d = null;
-				if(this is DLC)
-				{
-					g = (this as DLC).game.name;
-					d = name;
-				}
-
-				var installers_dir = FSUtils.Paths.Collection.GOG.expand_installers(g, d);
-				var local = FSUtils.file(installers_dir, "gog_" + id + "_" + installer.id);
-
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-				FSUtils.mkdir(installers_dir);
+				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
 
-				installer.install.begin(this, remote, local, (obj, res) => {
+				installer.install.begin(this, (obj, res) => {
 					installer.install.end(res);
 					Idle.add(install.callback);
 				});
@@ -277,8 +243,31 @@ namespace GameHub.Data.Sources.GOG
 				{
 					FSUtils.rm(install_dir.get_path(), "", "-rf");
 				}
-				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+				update_status();
 			}
+		}
+
+		private void update_status()
+		{
+			if(status.state == Game.State.DOWNLOADING) return;
+
+			var files = new ArrayList<File>();
+			files.add(executable);
+			if(!is_supported())
+			{
+				files.add(FSUtils.file(install_dir.get_path(), "gameinfo"));
+				files.add(FSUtils.file(install_dir.get_path(), @"goggame-$(id).info"));
+			}
+			var state = Game.State.UNINSTALLED;
+			foreach(var file in files)
+			{
+				if(file.query_exists())
+				{
+					state = Game.State.INSTALLED;
+					break;
+				}
+			}
+			status = new Game.Status(state);
 		}
 
 		public class Installer: Game.Installer
@@ -288,14 +277,59 @@ namespace GameHub.Data.Sources.GOG
 
 			public override string name { get { return lang_full; } }
 
-			public Installer(Json.Object json)
+			public Installer(GOGGame game, Json.Object json)
 			{
 				id = json.get_string_member("id");
-				os = json.get_string_member("os");
 				lang = json.get_string_member("language");
 				lang_full = json.get_string_member("language_full");
-				file = json.get_array_member("files").get_object_element(0).get_string_member("downlink");
-				file_size = json.get_int_member("total_size");
+
+				var os = json.get_string_member("os");
+				platform = CurrentPlatform;
+				foreach(var p in Platforms)
+				{
+					if(os == p.id())
+					{
+						platform = p;
+						break;
+					}
+				}
+
+				full_size = json.get_int_member("total_size");
+
+				if(!json.has_member("files") || json.get_member("files").get_node_type() != Json.NodeType.ARRAY) return;
+
+				foreach(var file_node in json.get_array_member("files").get_elements())
+				{
+					var file = file_node != null && file_node.get_node_type() == Json.NodeType.OBJECT ? file_node.get_object() : null;
+					if(file != null)
+					{
+						var id = file.get_string_member("id");
+						var size = file.get_int_member("size");
+						var downlink_url = file.get_string_member("downlink");
+
+						var root_node = Parser.parse_remote_json_file(downlink_url, "GET", ((GOG) game.source).user_token);
+						if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) continue;
+
+						var root = root_node.get_object();
+						if(root == null || !root.has_member("downlink")) continue;
+
+						var url = root.get_string_member("downlink");
+						var remote = File.new_for_uri(url);
+
+						string g = game.name;
+						string? d = null;
+						if(game is DLC)
+						{
+							g = (game as DLC).game.name;
+							d = game.name;
+						}
+
+						var installers_dir = FSUtils.Paths.Collection.GOG.expand_installers(g, d);
+						var local = FSUtils.file(installers_dir, "gog_" + game.id + "_" + this.id + "_" + id);
+
+						parts.add(new Game.Installer.Part(id, url, size, remote, local));
+					}
+				}
 			}
 		}
 
@@ -470,7 +504,7 @@ namespace GameHub.Data.Sources.GOG
 
 				install_dir = game.install_dir;
 				executable = game.executable;
-				status = new Game.Status(Game.State.UNINSTALLED);
+				update_status();
 			}
 		}
 	}

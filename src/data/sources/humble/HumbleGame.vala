@@ -140,11 +140,19 @@ namespace GameHub.Data.Sources.Humble
 				var dl = dl_node.get_object();
 				var id = dl.get_string_member("machine_name");
 				var os = dl.get_string_member("platform");
-				if(os != CurrentPlatform.id()) continue;
+				var platform = CurrentPlatform;
+				foreach(var p in Platforms)
+				{
+					if(os == p.id())
+					{
+						platform = p;
+						break;
+					}
+				}
 
 				foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
 				{
-					var installer = new Installer(id, os, dls_node.get_object());
+					var installer = new Installer(id, platform, dls_node.get_object());
 					installers.add(installer);
 				}
 			}
@@ -163,15 +171,10 @@ namespace GameHub.Data.Sources.Humble
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
 			wnd.install.connect(installer => {
-				var link = installer.file;
-				var remote = File.new_for_uri(link);
-				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(name);
-				var local = FSUtils.file(installers_dir, "humble_" + installer.id);
-
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
-				FSUtils.mkdir(installers_dir);
+				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
 
-				installer.install.begin(this, remote, local, (obj, res) => {
+				installer.install.begin(this, (obj, res) => {
 					installer.install.end(res);
 					choose_executable();
 					update_status();
@@ -255,14 +258,18 @@ namespace GameHub.Data.Sources.Humble
 
 			public override string name { get { return dl_name; } }
 
-			public Installer(string machine_name, string platform, Json.Object download)
+			public Installer(string machine_name, Platform platform, Json.Object download)
 			{
 				id = machine_name;
-				os = platform;
+				this.platform = platform;
 				dl_name = download.has_member("name") ? download.get_string_member("name") : "";
 				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
-				file = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
-				file_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
+				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
+				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
+				var remote = File.new_for_uri(url);
+				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(name);
+				var local = FSUtils.file(installers_dir, "humble_" + id);
+				parts.add(new Game.Installer.Part(id, url, full_size, remote, local));
 			}
 		}
 	}

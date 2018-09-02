@@ -43,6 +43,7 @@ namespace GameHub.UI.Views.GamesView
 			vbox_labels.hexpand = true;
 
 			image_overlay = new Overlay();
+			image_overlay.valign = Align.START;
 			image_overlay.set_size_request(48, 48);
 
 			if(dl_info.icon != null)
@@ -88,6 +89,11 @@ namespace GameHub.UI.Views.GamesView
 			label.get_style_context().add_class("category-label");
 			label.ypad = 2;
 
+			var desc_label = new Label(dl_info.description);
+			desc_label.halign = Align.START;
+			desc_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+			desc_label.ypad = 2;
+
 			var state_label = new Label(null);
 			state_label.halign = Align.START;
 
@@ -112,6 +118,7 @@ namespace GameHub.UI.Views.GamesView
 			action_cancel.visible = false;
 
 			vbox_labels.add(label);
+			vbox_labels.add(desc_label);
 			vbox_labels.add(state_label);
 
 			hbox_inner.add(vbox_labels);

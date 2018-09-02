@@ -156,6 +156,7 @@ namespace GameHub.Utils.Downloader
 	public class DownloadInfo: Object
 	{
 		public string name { get; construct; }
+		public string description { get; construct; }
 		public string? icon { get; construct; }
 		public string? icon_name { get; construct; }
 		public string? type_icon { get; construct; }
@@ -163,9 +164,9 @@ namespace GameHub.Utils.Downloader
 
 		public Download? download { get; set; }
 
-		public DownloadInfo(string name, string? icon=null, string? icon_name=null, string? type_icon=null, string? type_icon_name=null)
+		public DownloadInfo(string name, string description, string? icon=null, string? icon_name=null, string? type_icon=null, string? type_icon_name=null)
 		{
-			Object(name: name, icon: icon, icon_name: icon_name, type_icon: type_icon, type_icon_name: type_icon_name);
+			Object(name: name, description: description, icon: icon, icon_name: icon_name, type_icon: type_icon, type_icon_name: type_icon_name);
 		}
 	}
 }
