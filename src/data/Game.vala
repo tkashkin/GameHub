@@ -112,57 +112,109 @@ namespace GameHub.Data
 
 		public abstract class Installer
 		{
-			public string id { get; protected set; }
-			public string os { get; protected set; }
-			public string file { get; protected set; }
-			public int64 file_size { get; protected set; }
+			public class Part: Object
+			{
+				public string id     { get; construct; }
+				public string url    { get; construct; }
+				public int64  size   { get; construct; }
+				public File   remote { get; construct; }
+				public File   local  { get; construct; }
+				public Part(string id, string url, int64 size, File remote, File local)
+				{
+					Object(id: id, url: url, size: size, remote: remote, local: local);
+				}
+			}
 
-			public virtual string name { get { return id; } }
+			public string   id           { get; protected set; }
+			public Platform platform     { get; protected set; default = CurrentPlatform; }
+			public ArrayList<Part> parts { get; protected set; default = new ArrayList<Part>(); }
+			public int64    full_size    { get; protected set; default = 0; }
 
-			public async void install(Game game, File remote, File local)
+			public virtual string  name  { get { return id; } }
+
+			public async void install(Game game)
 			{
 				try
 				{
 					game.status = new Game.Status(Game.State.DOWNLOADING, null);
-					var ds_id = Downloader.get_instance().download_started.connect(dl => {
-						if(dl.remote != remote) return;
-						game.status = new Game.Status(Game.State.DOWNLOADING, dl);
-						dl.status_change.connect(s => {
-							game.status_change(game.status);
-						});
-					});
 
-					var info = new Downloader.DownloadInfo(game.name, game.icon, null, null, game.source.icon);
+					var files = new ArrayList<File>();
 
-					var file = yield Downloader.download(remote, local, info);
-
-					Downloader.get_instance().disconnect(ds_id);
-
-					var path = file.get_path();
-					Utils.run({"chmod", "+x", path});
-
-					FSUtils.mkdir(game.install_dir.get_path());
-
-					var type = yield guess_type(file);
-
-					string[] cmd = {"xdg-open", path}; // unknown type, just open
-
-					switch(type)
+					uint p = 1;
+					foreach(var part in parts)
 					{
-						case InstallerType.EXECUTABLE:
-							cmd = {path, "--", "--i-agree-to-all-licenses",
-									"--noreadme", "--nooptions", "--noprompt",
-									"--destination", game.install_dir.get_path().replace("'", "\\'")}; // probably mojosetup
-							break;
+						var ds_id = Downloader.get_instance().download_started.connect(dl => {
+							if(dl.remote != part.remote) return;
+							game.status = new Game.Status(Game.State.DOWNLOADING, dl);
+							dl.status_change.connect(s => {
+								game.status_change(game.status);
+							});
+						});
 
-						case InstallerType.ARCHIVE:
-							cmd = {"file-roller", path, "-e", game.install_dir.get_path()}; // extract with file-roller
-							break;
+						var partDesc = "";
+
+						if(parts.size > 1)
+						{
+							partDesc = _("Part %u of %u: ").printf(p, parts.size);
+						}
+
+						var info = new Downloader.DownloadInfo(game.name, partDesc + part.id, game.icon, null, null, game.source.icon);
+						files.add(yield Downloader.download(part.remote, part.local, info));
+						Downloader.get_instance().disconnect(ds_id);
+
+						p++;
 					}
 
-					game.status = new Game.Status(Game.State.INSTALLING);
+					uint f = 0;
+					bool gog_windows_installer = false;
+					foreach(var file in files)
+					{
+						var path = file.get_path();
+						Utils.run({"chmod", "+x", path});
 
-					yield Utils.run_async(cmd, null, false, true);
+						FSUtils.mkdir(game.install_dir.get_path());
+
+						var type = yield guess_type(file, f > 0);
+
+						string[]? cmd = null;
+
+						switch(type)
+						{
+							case InstallerType.EXECUTABLE:
+								cmd = {path, "--", "--i-agree-to-all-licenses",
+										"--noreadme", "--nooptions", "--noprompt",
+										"--destination", game.install_dir.get_path().replace("'", "\\'")}; // probably mojosetup
+								break;
+
+							case InstallerType.ARCHIVE:
+								cmd = {"file-roller", path, "-e", game.install_dir.get_path()}; // extract with file-roller
+								break;
+
+							case InstallerType.WINDOWS_EXECUTABLE:
+								cmd = {"innoextract", "-e", "-m", "-d", game.install_dir.get_path(), (game is Sources.GOG.GOGGame) ? "--gog" : "", path}; // use innoextract
+								break;
+
+							case InstallerType.GOG_PART:
+								cmd = null; // do nothing, already extracted
+								break;
+
+							default:
+								cmd = {"xdg-open", path}; // unknown type, just open
+								break;
+						}
+
+						game.status = new Game.Status(Game.State.INSTALLING);
+
+						if(cmd != null)
+						{
+							yield Utils.run_async(cmd, null, false, true);
+						}
+						if(type == InstallerType.WINDOWS_EXECUTABLE)
+						{
+							gog_windows_installer = true;
+						}
+						f++;
+					}
 
 					try
 					{
@@ -171,6 +223,15 @@ namespace GameHub.Data
 						var enumerator = yield game.install_dir.enumerate_children_async("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
 						while((finfo = enumerator.next_file()) != null)
 						{
+							if(gog_windows_installer)
+							{
+								dirname = "app";
+								if(finfo.get_name() != "app")
+								{
+									FSUtils.rm(game.install_dir.get_path(), finfo.get_name(), "-rf");
+								}
+								continue;
+							}
 							if(dirname == null)
 							{
 								dirname = finfo.get_name();
@@ -199,7 +260,7 @@ namespace GameHub.Data
 				game.status = new Game.Status(game.executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			}
 
-			private static async InstallerType guess_type(File file)
+			private static async InstallerType guess_type(File file, bool part=false)
 			{
 				var type = InstallerType.UNKNOWN;
 
@@ -223,10 +284,24 @@ namespace GameHub.Data
 
 					if(type != InstallerType.UNKNOWN) return type;
 
+					string[] gog_part_ext = {"bin"};
 					string[] exe_ext = {"sh", "elf", "bin", "run"};
+					string[] win_exe_ext = {"exe"};
 					string[] arc_ext = {"zip", "tar", "cpio", "bz2", "gz", "lz", "lzma", "7z", "rar"};
 
+					if(part)
+					{
+						foreach(var ext in gog_part_ext)
+						{
+							if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.GOG_PART;
+						}
+					}
+
 					foreach(var ext in exe_ext)
+					{
+						if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
+					}
+					foreach(var ext in win_exe_ext)
 					{
 						if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
 					}
@@ -242,7 +317,7 @@ namespace GameHub.Data
 
 			private enum InstallerType
 			{
-				UNKNOWN, EXECUTABLE, ARCHIVE;
+				UNKNOWN, EXECUTABLE, WINDOWS_EXECUTABLE, GOG_PART, ARCHIVE;
 
 				public static InstallerType from_mime(string type)
 				{
@@ -253,6 +328,19 @@ namespace GameHub.Data
 						case "application/x-sh":
 						case "application/x-shellscript":
 							return InstallerType.EXECUTABLE;
+
+						case "application/x-dosexec":
+						case "application/x-ms-dos-executable":
+						case "application/dos-exe":
+						case "application/exe":
+						case "application/msdos-windows":
+						case "application/x-exe":
+						case "application/x-msdownload":
+						case "application/x-winexe":
+							return InstallerType.WINDOWS_EXECUTABLE;
+
+						case "application/octet-stream":
+							return InstallerType.GOG_PART;
 
 						case "application/zip":
 						case "application/x-tar":
