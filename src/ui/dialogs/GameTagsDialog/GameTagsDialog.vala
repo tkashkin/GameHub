@@ -86,7 +86,7 @@ namespace GameHub.UI.Dialogs.GameTagsDialog
 			new_entry.margin = 4;
 
 			new_entry.icon_press.connect((icon, event) => {
-				if(icon == EntryIconPosition.SECONDARY && event.button == 1)
+				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
 				{
 					add_tag();
 				}
