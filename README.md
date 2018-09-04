@@ -19,8 +19,10 @@ Prebuilt releases can be found on [releases page](https://github.com/tkashkin/Ga
 
 ### Arch Linux
 Arch Linux users can find GameHub under the name [gamehub-git](https://aur.archlinux.org/packages/gamehub-git/) in the **AUR**:
-
-`$ aurman -S gamehub-git`
+```bash
+aurman -S gamehub-git
+```
+Package is maintained by [@btd1337](https://github.com/btd1337).
 
 ## Building
 
