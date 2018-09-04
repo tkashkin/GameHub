@@ -18,7 +18,11 @@ It also allows to download bonus content for GOG games.
 Prebuilt releases can be found on [releases page](https://github.com/tkashkin/GameHub/releases).
 
 ### Arch Linux
-~~There is an [AUR package](https://aur.archlinux.org/packages/gamehub/), maintained by [@twisty1](https://github.com/twisty1).~~ *[outdated]*
+Arch Linux users can find GameHub under the name [gamehub-git](https://aur.archlinux.org/packages/gamehub-git/) in the **AUR**:
+```bash
+aurman -S gamehub-git
+```
+Package is maintained by [@btd1337](https://github.com/btd1337).
 
 ## Building
 
