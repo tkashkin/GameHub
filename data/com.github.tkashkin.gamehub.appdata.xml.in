@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
 	<id>com.github.tkashkin.gamehub.desktop</id>
-	
+
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>WTFPL</project_license>
-	
+
 	<name>GameHub</name>
 	<summary>All your games in one place</summary>
-	
+
 	<description>
 		<p>Manage your Steam, GOG and Humble Bundle games in one place.</p>
 	</description>
-	
+
 	<developer_name>Anatoliy Kashkin</developer_name>
 	​<update_contact>tkashkin@gmail.com</update_contact>
 	<url type="homepage">https://github.com/tkashkin/GameHub</url>
 	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
-	
+
 	<provides>
 		<binary>com.github.tkashkin.gamehub</binary>
 	</provides>
 	<launchable type="desktop-id">com.github.tkashkin.gamehub.desktop</launchable>
-	
+
 	<screenshots>
 		<screenshot type="default">
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/1.png</image>
@@ -39,15 +39,18 @@
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/master/data/screenshots/3_dark.png</image>
 		</screenshot>
 	</screenshots>
-	
+
 	<releases>
-		<release type="development" version="0.9.0" date="2018-08-24">
+		<release type="development" version="0.9.0" date="2018-09-04">
 			<description>
-				<p>Basic games collection management</p>
-				<p>GOG bonus content downloading</p>
-				<p>Improved performance and loading times</p>
-				<p>Non-native games can now be shown</p>
-				<p>Bugfixes</p>
+				<ul>
+					<li>Basic games collection management</li>
+					<li>GOG bonus content downloading</li>
+					<li>GOG multipart installer support</li>
+					<li>Improved performance and loading times</li>
+					<li>Non-native games can now be shown and installed</li>
+					<li>Bugfixes</li>
+				</ul>
 			</description>
 		</release>
 		<release type="development" version="0.8.0" date="2018-08-15">
@@ -184,7 +187,7 @@
 			</description>
 		</release>
 	</releases>
-	
+
 	<content_rating type="oars-1.1">
 		<content_attribute id="violence-cartoon">none</content_attribute>
 		<content_attribute id="violence-fantasy">none</content_attribute>
