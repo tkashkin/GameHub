@@ -2,11 +2,12 @@ com.github.tkashkin.gamehub (0.9.0) xenial; urgency=low
 
   * Basic games collection management
   * GOG bonus content downloading
+  * GOG multipart installer support
   * Improved performance and loading times
-  * Non-native games can now be shown
+  * Non-native games can now be shown and installed
   * Bugfixes
 
- -- tkashkin <tkashkin@gmail.com>  Fri, 24 Aug 2018 22:08:11 +0300
+ -- tkashkin <tkashkin@gmail.com>  Tue, 04 Sep 2018 09:47:25 +0300
 
 com.github.tkashkin.gamehub (0.8.0) xenial; urgency=low
 
