@@ -32,7 +32,7 @@
 			<default>"Grid"</default>
 		</key>
 	</schema>
-	
+
 	<schema path="/com/github/tkashkin/gamehub/ui/" id="com.github.tkashkin.gamehub.ui" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="dark-theme" type="b">
 			<default>false</default>
@@ -46,8 +46,11 @@
 		<key name="show-unsupported-games" type="b">
 			<default>false</default>
 		</key>
+		<key name="use-proton" type="b">
+			<default>true</default>
+		</key>
 	</schema>
-	
+
 	<schema path="/com/github/tkashkin/gamehub/auth/steam/" id="com.github.tkashkin.gamehub.auth.steam" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="enabled" type="b">
 			<default>true</default>
@@ -59,7 +62,7 @@
 			<default>'8B10B604CAC6AC90F57AACE025DD904C'</default>
 		</key>
 	</schema>
-	
+
 	<schema path="/com/github/tkashkin/gamehub/auth/gog/" id="com.github.tkashkin.gamehub.auth.gog" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="enabled" type="b">
 			<default>true</default>
@@ -74,7 +77,7 @@
 			<default>''</default>
 		</key>
 	</schema>
-	
+
 	<schema path="/com/github/tkashkin/gamehub/auth/humble/" id="com.github.tkashkin.gamehub.auth.humble" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="enabled" type="b">
 			<default>true</default>
@@ -86,7 +89,7 @@
 			<default>''</default>
 		</key>
 	</schema>
-	
+
 	<schema path="/com/github/tkashkin/gamehub/paths/" id="com.github.tkashkin.gamehub.paths" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="steam-home" type="s">
 			<default>'~/.steam'</default>

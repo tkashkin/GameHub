@@ -31,7 +31,7 @@ namespace GameHub.Data.Sources.GOG
 			if(json_obj.get_object_member("worksOn").get_boolean_member("Windows")) platforms.add(Platform.WINDOWS);
 			if(json_obj.get_object_member("worksOn").get_boolean_member("Mac")) platforms.add(Platform.MACOS);
 
-			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
+			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
 			update_status();
 		}
@@ -43,7 +43,8 @@ namespace GameHub.Data.Sources.GOG
 			name = GamesDB.Tables.Games.NAME.get(s);
 			icon = GamesDB.Tables.Games.ICON.get(s);
 			image = GamesDB.Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(GamesDB.Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
+			install_dir = FSUtils.file(GamesDB.Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			executable = FSUtils.file(GamesDB.Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
 			info = GamesDB.Tables.Games.INFO.get(s);
 			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
 
@@ -75,7 +76,6 @@ namespace GameHub.Data.Sources.GOG
 				}
 			}
 
-			executable = FSUtils.file(install_dir.get_path(), "start.sh");
 			update_status();
 		}
 
@@ -83,14 +83,14 @@ namespace GameHub.Data.Sources.GOG
 		{
 			update_status();
 
-			if(game_info_updated) return;
-
 			if(info_detailed == null || info_detailed.length == 0)
 			{
 				var lang = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
 				var url = @"https://api.gog.com/products/$(id)?expand=downloads,description,expanded_dlcs" + (lang != null && lang.length > 0 ? "&locale=" + lang : "");
 				info_detailed = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token));
 			}
+
+			if(game_info_updated) return;
 
 			var root = Parser.parse_json(info_detailed);
 
@@ -197,20 +197,15 @@ namespace GameHub.Data.Sources.GOG
 				});
 			});
 
+			wnd.import.connect(() => {
+				import();
+				Idle.add(install.callback);
+			});
+
 			wnd.show_all();
 			wnd.present();
 
 			yield;
-		}
-
-		public override async void run()
-		{
-			if(executable.query_exists())
-			{
-				var path = executable.get_path();
-				var dir = executable.get_parent().get_path();
-				yield Utils.run_thread({path}, dir, true);
-			}
 		}
 
 		public override async void uninstall()
@@ -237,7 +232,7 @@ namespace GameHub.Data.Sources.GOG
 				{
 					uninstaller = FSUtils.expand(install_dir.get_path(), uninstaller);
 					debug("[GOGGame] Running uninstaller '%s'...", uninstaller);
-					yield Utils.run_async({uninstaller, "--noprompt", "--force"}, null, true);
+					yield Utils.run_thread({uninstaller, "--noprompt", "--force"}, null, null, true);
 				}
 				else
 				{
@@ -247,17 +242,14 @@ namespace GameHub.Data.Sources.GOG
 			}
 		}
 
-		private void update_status()
+		public override void update_status()
 		{
 			if(status.state == Game.State.DOWNLOADING) return;
 
 			var files = new ArrayList<File>();
 			files.add(executable);
-			if(!is_supported())
-			{
-				files.add(FSUtils.file(install_dir.get_path(), "gameinfo"));
-				files.add(FSUtils.file(install_dir.get_path(), @"goggame-$(id).info"));
-			}
+			files.add(FSUtils.file(install_dir.get_path(), "gameinfo"));
+			files.add(FSUtils.file(install_dir.get_path(), @"goggame-$(id).info"));
 			var state = Game.State.UNINSTALLED;
 			foreach(var file in files)
 			{

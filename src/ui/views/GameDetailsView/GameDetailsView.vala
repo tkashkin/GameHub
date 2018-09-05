@@ -146,7 +146,7 @@ namespace GameHub.UI.Views.GameDetailsView
 				foreach(var m in merges)
 				{
 					if(Game.is_equal(g, m)
-						|| (!Settings.UI.get_instance().show_unsupported_games && !m.is_supported())
+						|| (!Settings.UI.get_instance().show_unsupported_games && !m.is_supported(null, Settings.UI.get_instance().use_proton))
 						|| (g is Sources.GOG.GOGGame.DLC && Game.is_equal((g as Sources.GOG.GOGGame.DLC).game, m)))
 					{
 						continue;

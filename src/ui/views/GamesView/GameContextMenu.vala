@@ -21,6 +21,9 @@ namespace GameHub.UI.Views.GamesView
 			var run = new Gtk.MenuItem.with_label(_("Run"));
 			run.activate.connect(() => game.run.begin());
 
+			var run_with_proton = new Gtk.MenuItem.with_label(_("Run with Proton"));
+			run_with_proton.activate.connect(() => game.run_with_proton.begin());
+
 			var install = new Gtk.MenuItem.with_label(_("Install"));
 			install.activate.connect(() => game.install.begin());
 
@@ -40,14 +43,21 @@ namespace GameHub.UI.Views.GamesView
 
 			if(game.status.state == Game.State.INSTALLED)
 			{
-				add(run);
+				if(!game.is_supported(null, false) && game.is_supported(null, true))
+				{
+					add(run_with_proton);
+				}
+				else
+				{
+					add(run);
+				}
+				add(new Gtk.SeparatorMenuItem());
 			}
 			else if(game.status.state == Game.State.UNINSTALLED)
 			{
 				add(install);
+				add(new Gtk.SeparatorMenuItem());
 			}
-
-			add(new Gtk.SeparatorMenuItem());
 
 			add(details);
 

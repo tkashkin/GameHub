@@ -20,7 +20,7 @@ namespace GameHub.Utils
 				{
 					base(ProjectConfig.PROJECT_NAME + ".paths");
 				}
-			
+
 				private static Settings? instance;
 				public static unowned Settings get_instance()
 				{
@@ -31,20 +31,24 @@ namespace GameHub.Utils
 					return instance;
 				}
 			}
-			
+
 			public class Cache
 			{
 				public const string Home = "~/.cache/com.github.tkashkin.gamehub";
-				
+
 				public const string Cookies = FSUtils.Paths.Cache.Home + "/cookies";
 				public const string Images = FSUtils.Paths.Cache.Home + "/images";
-				
+
 				public const string GamesDB = FSUtils.Paths.Cache.Home + "/games.db";
+
+				public const string CompatData = FSUtils.Paths.Cache.Home + "/compat";
+				public const string ProtonCompatData = FSUtils.Paths.Cache.CompatData + "/proton";
 			}
-			
+
 			public class Steam
 			{
-				public static string Home {
+				public static string Home
+				{
 					owned get
 					{
 						#if FLATPAK
@@ -56,11 +60,11 @@ namespace GameHub.Utils
 				}
 				public static string Config { owned get { return FSUtils.Paths.Steam.Home + "/steam/config"; } }
 				public static string LoginUsersVDF { owned get { return FSUtils.Paths.Steam.Config + "/loginusers.vdf"; } }
-				
+
 				public static string SteamApps { owned get { return FSUtils.Paths.Steam.Home + "/steam/steamapps"; } }
 				public static string LibraryFoldersVDF { owned get { return FSUtils.Paths.Steam.SteamApps + "/libraryfolders.vdf"; } }
 			}
-			
+
 			public class GOG
 			{
 				public static string Games
@@ -75,7 +79,7 @@ namespace GameHub.Utils
 					}
 				}
 			}
-			
+
 			public class Humble
 			{
 				public static string Games
@@ -230,7 +234,7 @@ namespace GameHub.Utils
 				}
 			}
 		}
-		
+
 		public static string? expand(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
 			if(path == null) return null;
@@ -244,13 +248,13 @@ namespace GameHub.Utils
 			}
 			return expanded_path.replace("~/.cache", Environment.get_user_cache_dir()).replace("~", Environment.get_home_dir()) + (file != null && file != "" ? "/" + file : "");
 		}
-		
+
 		public static File? file(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
 			var f = FSUtils.expand(path, file, variables);
 			return f != null ? File.new_for_path(f) : null;
 		}
-		
+
 		public static File? mkdir(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
 			try
@@ -265,7 +269,7 @@ namespace GameHub.Utils
 			}
 			return null;
 		}
-		
+
 		public static void rm(string path, string? file=null, string flags="-f", HashMap<string, string>? variables=null)
 		{
 			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables)});
@@ -275,8 +279,11 @@ namespace GameHub.Utils
 		{
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Images);
-			
-			FSUtils.rm(FSUtils.Paths.Collection.Humble.expand_installers("*"), ".goutputstream-*");
+
+			mkdir(FSUtils.Paths.Cache.CompatData);
+			mkdir(FSUtils.Paths.Cache.ProtonCompatData);
+
+			FSUtils.rm(FSUtils.Paths.Collection.GOG.expand_installers("*"), ".goutputstream-*");
 			FSUtils.rm(FSUtils.Paths.Collection.Humble.expand_installers("*"), ".goutputstream-*");
 		}
 	}

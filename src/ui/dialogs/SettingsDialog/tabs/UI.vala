@@ -25,6 +25,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			add_separator();
 
 			add_switch(_("Show non-native games"), ui.show_unsupported_games, v => { ui.show_unsupported_games = v; });
+			add_switch(_("Consider Windows games compatible (use Proton)"), ui.use_proton, v => { ui.use_proton = v; });
 		}
 
 	}
