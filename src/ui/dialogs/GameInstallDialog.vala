@@ -91,7 +91,7 @@ namespace GameHub.UI.Dialogs
 
 			foreach(var installer in installers)
 			{
-				if(installer.platform.id() != CurrentPlatform.id() && !Settings.UI.get_instance().show_unsupported_games) continue;
+				if(installer.platform.id() != CurrentPlatform.id() && !Settings.UI.get_instance().show_unsupported_games && !Settings.UI.get_instance().use_proton) continue;
 
 				compatible_installers.add(installer);
 				var row = new InstallerRow(game, installer);
@@ -148,10 +148,7 @@ namespace GameHub.UI.Dialogs
 
 			add_button(_("Cancel"), ResponseType.CANCEL);
 
-			if(game is HumbleGame)
-			{
-				add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
-			}
+			add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
 
 			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
 			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
@@ -176,9 +173,7 @@ namespace GameHub.UI.Dialogs
 				box.margin_start = box.margin_end = 8;
 				box.margin_top = box.margin_bottom = 4;
 
-				var icon = new Image.from_icon_name(game.source.icon, IconSize.BUTTON);
-
-				icon.icon_name = installer.platform.icon();
+				var icon = new Image.from_icon_name(installer.platform.icon(), IconSize.BUTTON);
 
 				var name = new Label(installer.name);
 				name.hexpand = true;

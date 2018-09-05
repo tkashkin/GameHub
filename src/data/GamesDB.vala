@@ -31,21 +31,7 @@ namespace GameHub.Data
 
 		public void create_tables() requires (db != null)
 		{
-			Statement s;
-
-			// v1
-
-			if(db.prepare_v2("SELECT `playtime` FROM `games`", -1, out s) == Sqlite.OK)
-			{
-				db.exec("DROP TABLE `games`");
-			}
-
-			// v2
-
 			db.exec("DROP TABLE IF EXISTS `merged_games`");
-
-			// v3
-
 			db.exec("DROP TABLE IF EXISTS `unsupported_games`");
 
 			// current db format
@@ -135,16 +121,20 @@ namespace GameHub.Data
 				public static DBTable.Field NAME;
 				public static DBTable.Field ICON;
 				public static DBTable.Field IMAGE;
+				public static DBTable.Field TAGS;
 				public static DBTable.Field INSTALL_PATH;
+				public static DBTable.Field EXECUTABLE;
 				public static DBTable.Field PLATFORMS;
 				public static DBTable.Field INFO;
 				public static DBTable.Field INFO_DETAILED;
-				public static DBTable.Field TAGS;
 
 				public static void init(Database? db) requires (db != null)
 				{
 					Statement s;
-					if(db.prepare_v2("SELECT `platforms` FROM `games`", -1, out s) != Sqlite.OK)
+					if(db.prepare_v2("SELECT `playtime` FROM `games`", -1, out s) == Sqlite.OK
+					|| db.prepare_v2("SELECT `platforms` FROM `games`", -1, out s) != Sqlite.OK
+					|| db.prepare_v2("SELECT `tags` FROM `games`", -1, out s) != Sqlite.OK
+					|| db.prepare_v2("SELECT `executable` FROM `games`", -1, out s) != Sqlite.OK)
 					{
 						db.exec("DROP TABLE `games`");
 					}
@@ -155,28 +145,25 @@ namespace GameHub.Data
 						`name` string not null,
 						`icon` string,
 						`image` string,
+						`tags` string,
 						`install_path` string,
+						`executable` string,
 						`platforms` string,
 						`info` string,
 						`info_detailed` string,
-						`tags` string,
 					PRIMARY KEY(`source`, `id`))");
-
-					if(db.prepare_v2("SELECT `tags` FROM `games`", -1, out s) != Sqlite.OK)
-					{
-						db.exec("ALTER TABLE `games` ADD `tags` string");
-					}
 
 					SOURCE        = f(0);
 					ID            = f(1);
 					NAME          = f(2);
 					ICON          = f(3);
 					IMAGE         = f(4);
-					INSTALL_PATH  = f(5);
-					PLATFORMS     = f(6);
-					INFO          = f(7);
-					INFO_DETAILED = f(8);
-					TAGS          = f(9);
+					TAGS          = f(5);
+					INSTALL_PATH  = f(6);
+					EXECUTABLE    = f(7);
+					PLATFORMS     = f(8);
+					INFO          = f(9);
+					INFO_DETAILED = f(10);
 				}
 			}
 
@@ -309,8 +296,8 @@ namespace GameHub.Data
 
 			Statement s;
 			int res = db.prepare_v2("INSERT OR REPLACE INTO `games`
-				(`source`, `id`, `name`, `icon`, `image`, `install_path`, `platforms`, `info`, `info_detailed`, `tags`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+				(`source`, `id`, `name`, `icon`, `image`, `tags`, `install_path`, `executable`, `platforms`, `info`, `info_detailed`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			assert(res == Sqlite.OK);
 
@@ -333,11 +320,12 @@ namespace GameHub.Data
 			Tables.Games.NAME.bind(s, game.name);
 			Tables.Games.ICON.bind(s, game.icon);
 			Tables.Games.IMAGE.bind(s, game.image);
+			Tables.Games.TAGS.bind(s, tags);
+			Tables.Games.EXECUTABLE.bind(s, game.executable == null || !game.executable.query_exists() ? null : game.executable.get_path());
 			Tables.Games.INSTALL_PATH.bind(s, game.install_dir == null || !game.install_dir.query_exists() ? null : game.install_dir.get_path());
 			Tables.Games.PLATFORMS.bind(s, platforms);
 			Tables.Games.INFO.bind(s, game.info);
 			Tables.Games.INFO_DETAILED.bind(s, game.info_detailed);
-			Tables.Games.TAGS.bind(s, tags);
 
 			res = s.step();
 

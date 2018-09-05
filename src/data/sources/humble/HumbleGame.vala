@@ -39,9 +39,9 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name);
+			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
-			info_detailed = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
+			info_detailed = @"{\"order\":\"$(order_id)\"}";
 			update_status();
 		}
 
@@ -52,7 +52,8 @@ namespace GameHub.Data.Sources.Humble
 			name = GamesDB.Tables.Games.NAME.get(s);
 			icon = GamesDB.Tables.Games.ICON.get(s);
 			image = GamesDB.Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(GamesDB.Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, installation_dir_name);
+			install_dir = FSUtils.file(GamesDB.Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			executable = FSUtils.file(GamesDB.Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
 			info = GamesDB.Tables.Games.INFO.get(s);
 			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
 
@@ -84,23 +85,17 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			executable = FSUtils.file(install_dir.get_path(), "start.sh");
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
-
 			var json = Parser.parse_json(info_detailed).get_object();
 			order_id = json.get_string_member("order");
-			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, installation_dir_name);
-			executable = FSUtils.file(json.get_string_member("executable"));
 			update_status();
 		}
 
-		public bool update_status()
+		public override void update_status()
 		{
 			if(status.state != Game.State.DOWNLOADING)
 			{
 				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			}
-			return executable.query_exists();
 		}
 
 		public override async void update_game_info()
@@ -176,14 +171,13 @@ namespace GameHub.Data.Sources.Humble
 
 				installer.install.begin(this, (obj, res) => {
 					installer.install.end(res);
-					choose_executable();
 					update_status();
 					Idle.add(install.callback);
 				});
 			});
 
 			wnd.import.connect(() => {
-				choose_executable();
+				import();
 				Idle.add(install.callback);
 			});
 
@@ -191,56 +185,6 @@ namespace GameHub.Data.Sources.Humble
 			wnd.present();
 
 			yield;
-		}
-
-		private void choose_executable()
-		{
-			var chooser = new FileChooserDialog(_("Select main executable of the game"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN);
-			var filter = new FileFilter();
-			filter.add_mime_type("application/x-executable");
-			filter.add_mime_type("application/x-elf");
-			filter.add_mime_type("application/x-sh");
-			filter.add_mime_type("text/x-shellscript");
-			chooser.set_filter(filter);
-
-			try
-			{
-				chooser.select_file(executable);
-			}
-			catch(Error e)
-			{
-				warning(e.message);
-			}
-
-			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
-			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
-
-			select_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
-			select_btn.grab_default();
-
-			if(chooser.run() == ResponseType.ACCEPT)
-			{
-				executable = chooser.get_file();
-				info_detailed = @"{\"order\":\"$(order_id)\",\"executable\":\"$(executable.get_path())\"}";
-				update_status();
-				if(executable.query_exists())
-				{
-					Utils.run({"chmod", "+x", executable.get_path()});
-				}
-				GamesDB.get_instance().add_game(this);
-			}
-
-			chooser.destroy();
-		}
-
-		public override async void run()
-		{
-			if(executable.query_exists())
-			{
-				var path = executable.get_path();
-				var dir = executable.get_parent().get_path();
-				yield Utils.run_thread({path}, dir, true);
-			}
 		}
 
 		public override async void uninstall()

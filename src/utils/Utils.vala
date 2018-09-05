@@ -39,12 +39,12 @@ namespace GameHub.Utils
 		}
 	}
 
-	public static string run(string[] cmd, string? dir=null, bool override_runtime=false)
+	public static string run(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false)
 	{
 		string stdout;
 
 		var cdir = dir ?? Environment.get_home_dir();
-		var cenv = Environ.get();
+		var cenv = env ?? Environ.get();
 		var ccmd = cmd;
 
 		#if FLATPAK
@@ -65,12 +65,12 @@ namespace GameHub.Utils
 		return stdout;
 	}
 
-	public static async void run_async(string[] cmd, string? dir=null, bool override_runtime=false, bool wait=true)
+	public static async void run_async(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool wait=true)
 	{
 		Pid pid;
 
 		var cdir = dir ?? Environment.get_home_dir();
-		var cenv = Environ.get();
+		var cenv = env ?? Environ.get();
 		var ccmd = cmd;
 		var cwait = wait;
 
@@ -98,12 +98,12 @@ namespace GameHub.Utils
 		if(cwait) yield;
 	}
 
-	public static async string run_thread(string[] cmd, string? dir=null, bool override_runtime=false)
+	public static async string run_thread(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false)
 	{
 		string stdout = "";
 
 		Utils.thread("Utils.run", () => {
-			stdout = Utils.run(cmd, dir, override_runtime);
+			stdout = Utils.run(cmd, dir, env, override_runtime);
 			Idle.add(run_thread.callback);
 		});
 

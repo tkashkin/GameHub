@@ -4,68 +4,55 @@ namespace GameHub.UI.Widgets
 {
 	class ActionButton: Gtk.Button
 	{
-		Label button_text;
-		Image? _icon;
-		Grid button_grid;
+		public string icon { get; construct; }
+		public string? icon_overlay { get; construct; }
+		public string text { get; construct; }
+		public bool show_text { get; construct; default = true; }
 
-		public string text
+		public ActionButton(string icon, string? icon_overlay, string text, bool show_text=true)
 		{
-			get { return button_text.label; }
-			set { button_text.label = value; }
-		}
-
-		public bool show_text
-		{
-			get { return button_text.visible; }
-			set
-			{
-				button_text.visible = value;
-
-				tooltip_text = value ? null : text;
-				button_grid.remove(button_text);
-				if(value) button_grid.attach(button_text, 1, 0, 1, 1);
-			}
-		}
-
-		public Gtk.Image? icon
-		{
-			get { return _icon; }
-			set
-			{
-				if(_icon != null)
-				{
-					_icon.destroy();
-				}
-				_icon = value;
-				if(_icon != null)
-				{
-					_icon.set_pixel_size(48);
-					_icon.halign = Align.CENTER;
-					_icon.valign = Align.CENTER;
-					button_grid.attach(_icon, 0, 0, 1, 1);
-				}
-			}
-		}
-
-		public ActionButton(Gtk.Image? image, string text, bool show_text=true)
-		{
-			Object(text: text, icon: image, show_text: show_text);
+			Object(icon: icon, icon_overlay: icon_overlay, text: text, show_text: show_text);
 		}
 
 		construct
 		{
-			button_text = new Label(null);
-			button_text.get_style_context().add_class(Granite.STYLE_CLASS_H3_LABEL);
-			button_text.halign = Align.START;
-			button_text.valign = Align.CENTER;
-
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
-			button_grid = new Grid();
-			button_grid.column_spacing = 8;
+			var box = new Box(Orientation.HORIZONTAL, 8);
 
-			button_grid.attach(button_text, 1, 0, 1, 1);
-			this.add(button_grid);
+			var overlay = new Overlay();
+			overlay.valign = Align.START;
+			overlay.set_size_request(48, 48);
+
+			var image = new Image.from_icon_name(icon, IconSize.DIALOG);
+			image.set_size_request(48, 48);
+			overlay.add(image);
+
+			if(icon_overlay != null)
+			{
+				var overlay_image = new Image.from_icon_name(icon_overlay, IconSize.LARGE_TOOLBAR);
+				overlay_image.set_size_request(24, 24);
+				overlay_image.halign = Align.END;
+				overlay_image.valign = Align.END;
+				overlay.add_overlay(overlay_image);
+			}
+
+			box.add(overlay);
+
+			if(show_text)
+			{
+				var label = new Label(text);
+				label.get_style_context().add_class(Granite.STYLE_CLASS_H3_LABEL);
+				label.halign = Align.START;
+				label.valign = Align.CENTER;
+				box.add(label);
+			}
+			else
+			{
+				tooltip_text = text;
+			}
+
+			child = box;
 		}
 	}
 }

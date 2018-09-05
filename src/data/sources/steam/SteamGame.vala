@@ -136,20 +136,6 @@ namespace GameHub.Data.Sources.Steam
 			game_info_updated = true;
 		}
 
-		public override bool is_supported(Platform? platform=null)
-		{
-			if(platform == null) platform = CurrentPlatform;
-			if(base.is_supported()) return true;
-			foreach(var appid in Steam.PROTON_APPIDS)
-			{
-				if(Steam.is_app_installed(appid))
-				{
-					return base.is_supported(Platform.WINDOWS);
-				}
-			}
-			return false;
-		}
-
 		public override async void install()
 		{
 			yield run();
@@ -161,10 +147,18 @@ namespace GameHub.Data.Sources.Steam
 			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
 
+		public override async void run_with_proton()
+		{
+			yield run();
+		}
+
 		public override async void uninstall()
 		{
 			Utils.open_uri(@"steam://uninstall/$(id)");
 			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
+
+		public override void import(bool update=true){}
+		public override void choose_executable(bool update=true){}
 	}
 }

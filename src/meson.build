@@ -68,11 +68,11 @@ executable(
 	'ui/dialogs/SettingsDialog/tabs/GOG.vala',
 	'ui/dialogs/SettingsDialog/tabs/Humble.vala',
 	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
+	'ui/dialogs/GameTagsDialog/GameTagsDialog.vala',
 
 	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
-
-	'ui/dialogs/GameTagsDialog/GameTagsDialog.vala',
+	'ui/dialogs/ProtonRunDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',

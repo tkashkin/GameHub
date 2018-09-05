@@ -242,16 +242,13 @@ namespace GameHub.UI.Views.GamesView
 				games_list_details.game = item != null ? item.game : null;
 			});
 
-			filter.mode_changed.connect(() => {
-				update_view();
+			filter.mode_changed.connect(update_view);
+			search.search_changed.connect(update_view);
 
-				Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
-			});
-			search.search_changed.connect(() => filter.mode_changed(filter));
+			ui_settings.notify["show-unsupported-games"].connect(update_view);
+			ui_settings.notify["use-proton"].connect(update_view);
 
-			ui_settings.notify["show-unsupported-games"].connect(() => filter.mode_changed(filter));
-
-			filters_popover.filters_changed.connect(() => filter.mode_changed(filter));
+			filters_popover.filters_changed.connect(update_view);
 
 			spinner = new Spinner();
 
@@ -356,6 +353,8 @@ namespace GameHub.UI.Views.GamesView
 			var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
 			stack.set_visible_child(tab);
 			saved_state.games_view = view.selected == 0 ? Settings.GamesView.GRID : Settings.GamesView.LIST;
+
+			Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
 		}
 
 		private void show_games()
@@ -388,7 +387,7 @@ namespace GameHub.UI.Views.GamesView
 					var card = new GameCard(g);
 					var row = new GameListRow(g);
 
-					g.tags_update.connect(() => filter.mode_changed(filter));
+					g.tags_update.connect(update_view);
 
 					games_grid.add(card);
 					games_list.add(row);
@@ -415,10 +414,8 @@ namespace GameHub.UI.Views.GamesView
 					loading_sources--;
 					spinner.active = loading_sources > 0;
 
-					if(loading_sources == 0)
-					{
-						merge_games();
-					}
+					if(loading_sources == 0) merge_games();
+					update_view();
 
 					if(src.games_count == 0)
 					{
@@ -473,7 +470,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private bool games_filter(Game game)
 		{
-			if(!ui_settings.show_unsupported_games && !game.is_supported()) return false;
+			if(!ui_settings.show_unsupported_games && !game.is_supported(null, ui_settings.use_proton)) return false;
 
 			var f = filter.selected;
 			GameSource? src = null;

@@ -1,4 +1,5 @@
 using Gee;
+using Gtk;
 
 using GameHub.Utils;
 
@@ -19,10 +20,19 @@ namespace GameHub.Data
 		public string? info_detailed { get; protected set; }
 
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
-		public virtual bool is_supported(Platform? platform=null)
+		public virtual bool is_supported(Platform? platform=null, bool with_proton=true)
 		{
-			if(platform == null) platform = CurrentPlatform;
-			return platform in platforms;
+			platform = platform ?? CurrentPlatform;
+			if(platform in platforms) return true;
+			if(!with_proton) return false;
+			foreach(var appid in Sources.Steam.Steam.PROTON_APPIDS)
+			{
+				if(Sources.Steam.Steam.is_app_installed(appid))
+				{
+					return Platform.WINDOWS in platforms;
+				}
+			}
+			return false;
 		}
 
 		public ArrayList<GamesDB.Tables.Tags.Tag> tags { get; protected set; default = new ArrayList<GamesDB.Tables.Tags.Tag>(GamesDB.Tables.Tags.Tag.is_equal); }
@@ -77,10 +87,133 @@ namespace GameHub.Data
 		public string? store_page { get; protected set; default = null; }
 
 		public abstract async void install();
-		public abstract async void run();
 		public abstract async void uninstall();
 
+		public virtual async void run()
+		{
+			if(executable.query_exists())
+			{
+				var path = executable.get_path();
+				var dir = executable.get_parent().get_path();
+				yield Utils.run_thread({path}, dir, null, true);
+			}
+		}
+
+		public virtual async void run_with_proton()
+		{
+			new UI.Dialogs.ProtonRunDialog(this).show_all();
+		}
+
 		public virtual async void update_game_info(){}
+		public virtual void update_status(){}
+
+		public virtual void import(bool update=true)
+		{
+			var chooser = new FileChooserDialog(_("Select game directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER);
+
+			try
+			{
+				var games_dir = "";
+				if(this is Sources.GOG.GOGGame)
+				{
+					games_dir = FSUtils.Paths.GOG.Games;
+				}
+				else if(this is Sources.Humble.HumbleGame)
+				{
+					games_dir = FSUtils.Paths.Humble.Games;
+				}
+
+				chooser.set_current_folder(games_dir);
+			}
+			catch(Error e)
+			{
+				warning(e.message);
+			}
+
+			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
+			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
+
+			select_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+			select_btn.grab_default();
+
+			if(chooser.run() == ResponseType.ACCEPT)
+			{
+				install_dir = chooser.get_file();
+				executable = FSUtils.file(install_dir.get_path(), "start.sh");
+
+				if(!executable.query_exists())
+				{
+					choose_executable(false);
+				}
+
+				if(install_dir.query_exists())
+				{
+					Utils.run({"chmod", "-R", "+x", install_dir.get_path()});
+				}
+
+				if(update)
+				{
+					update_status();
+					GamesDB.get_instance().add_game(this);
+				}
+			}
+
+			chooser.destroy();
+		}
+
+		public virtual void choose_executable(bool update=true)
+		{
+			var chooser = new FileChooserDialog(_("Select main executable of the game"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN);
+			var filter = new FileFilter();
+
+			filter.add_mime_type("application/x-executable");
+			filter.add_mime_type("application/x-elf");
+			filter.add_mime_type("application/x-sh");
+			filter.add_mime_type("text/x-shellscript");
+
+			filter.add_mime_type("application/x-dosexec");
+			filter.add_mime_type("application/x-ms-dos-executable");
+			filter.add_mime_type("application/dos-exe");
+			filter.add_mime_type("application/exe");
+			filter.add_mime_type("application/msdos-windows");
+			filter.add_mime_type("application/x-exe");
+			filter.add_mime_type("application/x-msdownload");
+			filter.add_mime_type("application/x-winexe");
+
+			chooser.set_filter(filter);
+
+			try
+			{
+				chooser.set_current_folder_file(install_dir);
+			}
+			catch(Error e)
+			{
+				warning(e.message);
+			}
+
+			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
+			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
+
+			select_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+			select_btn.grab_default();
+
+			if(chooser.run() == ResponseType.ACCEPT)
+			{
+				executable = chooser.get_file();
+				if(executable.query_exists())
+				{
+					Utils.run({"chmod", "+x", executable.get_path()});
+				}
+
+				if(update)
+				{
+					update_status();
+					GamesDB.get_instance().add_game(this);
+				}
+			}
+
+			chooser.destroy();
+		}
 
 		protected Game.Status _status = new Game.Status();
 		public signal void status_change(Game.Status status);
@@ -92,11 +225,11 @@ namespace GameHub.Data
 			set { _status = value; status_change(_status); }
 		}
 
-		public virtual string installation_dir_name
+		public virtual string escaped_name
 		{
 			owned get
 			{
-				return name.escape().replace(" ", "_").replace(":", "");
+				return Utils.strip_name(name.replace(" ", "_").replace(":", ""), "_'.,");
 			}
 		}
 
@@ -207,7 +340,7 @@ namespace GameHub.Data
 
 						if(cmd != null)
 						{
-							yield Utils.run_async(cmd, null, false, true);
+							yield Utils.run_async(cmd, null, null, false, true);
 						}
 						if(type == InstallerType.WINDOWS_EXECUTABLE)
 						{
@@ -251,13 +384,18 @@ namespace GameHub.Data
 					catch(Error e){}
 
 					Utils.run({"chmod", "-R", "+x", game.install_dir.get_path()});
+
+					if(!game.executable.query_exists())
+					{
+						game.choose_executable();
+					}
 				}
 				catch(IOError.CANCELLED e){}
 				catch(Error e)
 				{
 					warning(e.message);
 				}
-				game.status = new Game.Status(game.executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+				game.update_status();
 			}
 
 			private static async InstallerType guess_type(File file, bool part=false)
