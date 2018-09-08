@@ -15,7 +15,7 @@ namespace GameHub.UI.Dialogs
 		private const int RESPONSE_IMPORT = 123;
 
 		public signal void import();
-		public signal void install(Game.Installer installer);
+		public signal void install(Game.Installer installer, CompatTool? tool);
 		public signal void cancelled();
 
 		private Box content;
@@ -25,6 +25,8 @@ namespace GameHub.UI.Dialogs
 		private ListBox installers_list;
 
 		private bool is_finished = false;
+
+		private CompatToolPicker compat_tool_picker;
 
 		public GameInstallDialog(Game game, ArrayList<Game.Installer> installers)
 		{
@@ -91,7 +93,7 @@ namespace GameHub.UI.Dialogs
 
 			foreach(var installer in installers)
 			{
-				if(installer.platform.id() != CurrentPlatform.id() && !Settings.UI.get_instance().show_unsupported_games && !Settings.UI.get_instance().use_proton) continue;
+				if(installer.platform.id() != CurrentPlatform.id() && !Settings.UI.get_instance().show_unsupported_games && !Settings.UI.get_instance().use_compat) continue;
 
 				compatible_installers.add(installer);
 				var row = new InstallerRow(game, installer);
@@ -105,6 +107,13 @@ namespace GameHub.UI.Dialogs
 				{
 					installers_list.select_row(row);
 				}
+			}
+
+			if(Settings.UI.get_instance().show_unsupported_games || Settings.UI.get_instance().use_compat)
+			{
+				compat_tool_picker = new CompatToolPicker(game, true);
+				compat_tool_picker.margin_start = 64;
+				content.add(compat_tool_picker);
 			}
 
 			if(compatible_installers.size > 1)
@@ -140,7 +149,7 @@ namespace GameHub.UI.Dialogs
 							installer = row.installer;
 						}
 						is_finished = true;
-						install(installer);
+						install(installer, compat_tool_picker != null ? compat_tool_picker.selected : null);
 						destroy();
 						break;
 				}

@@ -187,11 +187,11 @@ namespace GameHub.Data.Sources.GOG
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
-			wnd.install.connect(installer => {
+			wnd.install.connect((installer, tool) => {
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
 
-				installer.install.begin(this, (obj, res) => {
+				installer.install.begin(this, tool, (obj, res) => {
 					installer.install.end(res);
 					Idle.add(install.callback);
 				});
@@ -210,7 +210,7 @@ namespace GameHub.Data.Sources.GOG
 
 		public override async void uninstall()
 		{
-			if(executable.query_exists())
+			if(install_dir.query_exists())
 			{
 				string? uninstaller = null;
 				try
@@ -238,6 +238,13 @@ namespace GameHub.Data.Sources.GOG
 				{
 					FSUtils.rm(install_dir.get_path(), "", "-rf");
 				}
+				update_status();
+			}
+			if(!install_dir.query_exists() && !executable.query_exists())
+			{
+				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+				executable = FSUtils.file(install_dir.get_path(), "start.sh");
+				GamesDB.get_instance().add_game(this);
 				update_status();
 			}
 		}
@@ -405,7 +412,6 @@ namespace GameHub.Data.Sources.GOG
 					g = (this as DLC).game.name;
 					d = game.name;
 				}
-				debug("G/D: %s / %s", g, d == null ? "null" : d);
 				var bonus_dir = FSUtils.Paths.Collection.GOG.expand_bonus(g, d);
 
 				var local = FSUtils.file(bonus_dir, "gog_" + game.id + "_bonus_" + id);

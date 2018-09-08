@@ -39,7 +39,7 @@ namespace GameHub
 			#if USE_IVY
 			Ivy.Stacktrace.register_handlers();
 			#endif
-			
+
 			var app = new Application();
 
 			var lang = Environment.get_variable("LC_ALL") ?? "";
@@ -48,13 +48,22 @@ namespace GameHub
 			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);
 
 			FSUtils.make_dirs();
-			
+
 			GamesDB.init();
-			
+
 			Platforms = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS };
 			CurrentPlatform = Platform.LINUX;
 
 			GameSources = { new Steam(), new GOG(), new Humble() };
+
+			CompatTool[] tools = { new Compat.Innoextract() };
+			foreach(var appid in Compat.Proton.APPIDS)
+			{
+				tools += new Compat.Proton(appid);
+			}
+			tools += new Compat.Wine("wine64");
+			tools += new Compat.Wine("wine");
+			CompatTools = tools;
 
 			return app.run(args);
 		}

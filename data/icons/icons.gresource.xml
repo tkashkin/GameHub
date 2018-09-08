@@ -9,5 +9,7 @@
 		<file alias="scalable/actions/platform-linux-symbolic.svg">platform-linux.svg</file>
 		<file alias="scalable/actions/platform-windows-symbolic.svg">platform-windows.svg</file>
 		<file alias="scalable/actions/platform-macos-symbolic.svg">platform-macos.svg</file>
+
+		<file alias="scalable/actions/wine-symbolic.svg">wine.svg</file>
 	</gresource>
 </gresources>

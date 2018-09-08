@@ -46,7 +46,7 @@
 		<key name="show-unsupported-games" type="b">
 			<default>false</default>
 		</key>
-		<key name="use-proton" type="b">
+		<key name="use-compat" type="b">
 			<default>true</default>
 		</key>
 	</schema>

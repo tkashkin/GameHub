@@ -51,7 +51,7 @@ namespace GameHub.Settings
 		public bool merge_games { get; set; }
 
 		public bool show_unsupported_games { get; set; }
-		public bool use_proton { get; set; }
+		public bool use_compat { get; set; }
 
 		public UI()
 		{

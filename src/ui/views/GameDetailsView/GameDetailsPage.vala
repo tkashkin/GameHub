@@ -44,7 +44,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private ActionButton action_install;
 		private ActionButton action_run;
-		private ActionButton action_run_with_proton;
+		private ActionButton action_run_with_compat;
 		private ActionButton action_open_directory;
 		private ActionButton action_open_store_page;
 		private ActionButton action_uninstall;
@@ -165,7 +165,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			action_install = add_action("go-down", null, _("Install"), install_game, true);
 			action_run = add_action("media-playback-start", null, _("Run"), run_game, true);
-			action_run_with_proton = add_action("media-playback-start", "steam-symbolic", _("Run with Proton"), run_game_with_proton, true);
+			action_run_with_compat = add_action("media-playback-start", "platform-windows-symbolic", _("Run with compatibility layer"), run_game_with_compat, true);
 			action_open_directory = add_action("folder", null, _("Open installation directory"), open_game_directory);
 			action_open_store_page = add_action("web-browser", null, _("Open store page"), open_game_store_page);
 			action_uninstall = add_action("edit-delete", null, _("Uninstall"), uninstall_game);
@@ -254,8 +254,9 @@ namespace GameHub.UI.Views.GameDetailsView
 				}
 				action_install.visible = s.state != Game.State.INSTALLED;
 				action_install.sensitive = s.state == Game.State.UNINSTALLED;
-				action_run_with_proton.visible = s.state == Game.State.INSTALLED && ((!game.is_supported(null, false) && game.is_supported(null, true)) || game.executable.get_basename().has_suffix(".exe"));
-				action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_proton.visible;
+				action_run_with_compat.visible = s.state == Game.State.INSTALLED && ((!game.is_supported(null, false) && game.is_supported(null, true)) || game.executable.get_basename().has_suffix(".exe"));
+				action_run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
+				action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
 				action_open_directory.visible = s.state == Game.State.INSTALLED;
 				action_open_store_page.visible = game.store_page != null;
 				action_uninstall.visible = s.state == Game.State.INSTALLED;
@@ -299,11 +300,11 @@ namespace GameHub.UI.Views.GameDetailsView
 			}
 		}
 
-		private void run_game_with_proton()
+		private void run_game_with_compat()
 		{
 			if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
-				game.run_with_proton.begin();
+				game.run_with_compat.begin();
 			}
 		}
 

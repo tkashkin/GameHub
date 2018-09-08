@@ -147,7 +147,7 @@ namespace GameHub.Data.Sources.Steam
 			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 		}
 
-		public override async void run_with_proton()
+		public override async void run_with_compat()
 		{
 			yield run();
 		}

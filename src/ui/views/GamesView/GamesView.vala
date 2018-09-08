@@ -470,7 +470,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private bool games_filter(Game game)
 		{
-			if(!ui_settings.show_unsupported_games && !game.is_supported(null, ui_settings.use_proton)) return false;
+			if(!ui_settings.show_unsupported_games && !game.is_supported(null, ui_settings.use_compat)) return false;
 
 			var f = filter.selected;
 			GameSource? src = null;
