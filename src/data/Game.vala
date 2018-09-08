@@ -20,17 +20,14 @@ namespace GameHub.Data
 		public string? info_detailed { get; protected set; }
 
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
-		public virtual bool is_supported(Platform? platform=null, bool with_proton=true)
+		public virtual bool is_supported(Platform? platform=null, bool with_compat=true)
 		{
 			platform = platform ?? CurrentPlatform;
 			if(platform in platforms) return true;
-			if(!with_proton) return false;
-			foreach(var appid in Sources.Steam.Steam.PROTON_APPIDS)
+			if(!with_compat) return false;
+			foreach(var tool in CompatTools)
 			{
-				if(Sources.Steam.Steam.is_app_installed(appid))
-				{
-					return Platform.WINDOWS in platforms;
-				}
+				if(tool.can_run(this)) return true;
 			}
 			return false;
 		}
@@ -99,9 +96,9 @@ namespace GameHub.Data
 			}
 		}
 
-		public virtual async void run_with_proton()
+		public virtual async void run_with_compat()
 		{
-			new UI.Dialogs.ProtonRunDialog(this).show_all();
+			new UI.Dialogs.CompatRunDialog(this).show_all();
 		}
 
 		public virtual async void update_game_info(){}
@@ -111,24 +108,17 @@ namespace GameHub.Data
 		{
 			var chooser = new FileChooserDialog(_("Select game directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER);
 
-			try
+			var games_dir = "";
+			if(this is Sources.GOG.GOGGame)
 			{
-				var games_dir = "";
-				if(this is Sources.GOG.GOGGame)
-				{
-					games_dir = FSUtils.Paths.GOG.Games;
-				}
-				else if(this is Sources.Humble.HumbleGame)
-				{
-					games_dir = FSUtils.Paths.Humble.Games;
-				}
+				games_dir = FSUtils.Paths.GOG.Games;
+			}
+			else if(this is Sources.Humble.HumbleGame)
+			{
+				games_dir = FSUtils.Paths.Humble.Games;
+			}
 
-				chooser.set_current_folder(games_dir);
-			}
-			catch(Error e)
-			{
-				warning(e.message);
-			}
+			chooser.set_current_folder(games_dir);
 
 			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
 			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
@@ -265,7 +255,7 @@ namespace GameHub.Data
 
 			public virtual string  name  { get { return id; } }
 
-			public async void install(Game game)
+			public async void install(Game game, CompatTool? tool=null)
 			{
 				try
 				{
@@ -299,7 +289,7 @@ namespace GameHub.Data
 					}
 
 					uint f = 0;
-					bool gog_windows_installer = false;
+					bool windows_installer = false;
 					foreach(var file in files)
 					{
 						var path = file.get_path();
@@ -324,11 +314,8 @@ namespace GameHub.Data
 								break;
 
 							case InstallerType.WINDOWS_EXECUTABLE:
-								cmd = {"innoextract", "-e", "-m", "-d", game.install_dir.get_path(), (game is Sources.GOG.GOGGame) ? "--gog" : "", path}; // use innoextract
-								break;
-
 							case InstallerType.GOG_PART:
-								cmd = null; // do nothing, already extracted
+								cmd = null; // use compattool later
 								break;
 
 							default:
@@ -344,7 +331,11 @@ namespace GameHub.Data
 						}
 						if(type == InstallerType.WINDOWS_EXECUTABLE)
 						{
-							gog_windows_installer = true;
+							windows_installer = true;
+							if(tool != null && tool.can_install(game))
+							{
+								yield tool.install(game, file);
+							}
 						}
 						f++;
 					}
@@ -356,7 +347,7 @@ namespace GameHub.Data
 						var enumerator = yield game.install_dir.enumerate_children_async("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
 						while((finfo = enumerator.next_file()) != null)
 						{
-							if(gog_windows_installer)
+							if(windows_installer && tool is Compat.Innoextract)
 							{
 								dirname = "app";
 								if(finfo.get_name() != "app")
@@ -375,7 +366,7 @@ namespace GameHub.Data
 							}
 						}
 
-						if(dirname != null)
+						if(dirname != null && dirname != "_gamehub")
 						{
 							Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, game.install_dir.get_path());
 							FSUtils.rm(game.install_dir.get_path(), dirname, "-rf");
@@ -398,7 +389,7 @@ namespace GameHub.Data
 				game.update_status();
 			}
 
-			private static async InstallerType guess_type(File file, bool part=false)
+			public static async InstallerType guess_type(File file, bool part=false)
 			{
 				var type = InstallerType.UNKNOWN;
 
@@ -453,7 +444,7 @@ namespace GameHub.Data
 				return type;
 			}
 
-			private enum InstallerType
+			public enum InstallerType
 			{
 				UNKNOWN, EXECUTABLE, WINDOWS_EXECUTABLE, GOG_PART, ARCHIVE;
 

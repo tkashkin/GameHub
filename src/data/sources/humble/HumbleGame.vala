@@ -165,11 +165,11 @@ namespace GameHub.Data.Sources.Humble
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
-			wnd.install.connect(installer => {
+			wnd.install.connect((installer, tool) => {
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
 				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
 
-				installer.install.begin(this, (obj, res) => {
+				installer.install.begin(this, tool, (obj, res) => {
 					installer.install.end(res);
 					update_status();
 					Idle.add(install.callback);
@@ -192,6 +192,13 @@ namespace GameHub.Data.Sources.Humble
 			if(executable.query_exists())
 			{
 				FSUtils.rm(install_dir.get_path(), "", "-rf");
+				update_status();
+			}
+			if(!install_dir.query_exists() && !executable.query_exists())
+			{
+				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+				executable = FSUtils.file(install_dir.get_path(), "start.sh");
+				GamesDB.get_instance().add_game(this);
 				update_status();
 			}
 		}

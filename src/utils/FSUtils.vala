@@ -40,9 +40,6 @@ namespace GameHub.Utils
 				public const string Images = FSUtils.Paths.Cache.Home + "/images";
 
 				public const string GamesDB = FSUtils.Paths.Cache.Home + "/games.db";
-
-				public const string CompatData = FSUtils.Paths.Cache.Home + "/compat";
-				public const string ProtonCompatData = FSUtils.Paths.Cache.CompatData + "/proton";
 			}
 
 			public class Steam
@@ -279,9 +276,6 @@ namespace GameHub.Utils
 		{
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Images);
-
-			mkdir(FSUtils.Paths.Cache.CompatData);
-			mkdir(FSUtils.Paths.Cache.ProtonCompatData);
 
 			FSUtils.rm(FSUtils.Paths.Collection.GOG.expand_installers("*"), ".goutputstream-*");
 			FSUtils.rm(FSUtils.Paths.Collection.Humble.expand_installers("*"), ".goutputstream-*");

@@ -21,8 +21,9 @@ namespace GameHub.UI.Views.GamesView
 			var run = new Gtk.MenuItem.with_label(_("Run"));
 			run.activate.connect(() => game.run.begin());
 
-			var run_with_proton = new Gtk.MenuItem.with_label(_("Run with Proton"));
-			run_with_proton.activate.connect(() => game.run_with_proton.begin());
+			var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
+			run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
+			run_with_compat.activate.connect(() => game.run_with_compat.begin());
 
 			var install = new Gtk.MenuItem.with_label(_("Install"));
 			install.activate.connect(() => game.install.begin());
@@ -45,7 +46,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				if(!game.is_supported(null, false) && game.is_supported(null, true))
 				{
-					add(run_with_proton);
+					add(run_with_compat);
 				}
 				else
 				{

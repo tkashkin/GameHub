@@ -57,6 +57,11 @@ executable(
 
 	'data/GamesDB.vala',
 
+	'data/CompatTool.vala',
+	'data/compat/Innoextract.vala',
+	'data/compat/Proton.vala',
+	'data/compat/Wine.vala',
+
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
 
@@ -72,7 +77,7 @@ executable(
 
 	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
-	'ui/dialogs/ProtonRunDialog.vala',
+	'ui/dialogs/CompatRunDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',
@@ -94,6 +99,7 @@ executable(
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
+	'ui/widgets/CompatToolPicker.vala',
 
 	'utils/Utils.vala',
 	'utils/FSUtils.vala',
