@@ -4,7 +4,7 @@ using GameHub.Data.Sources.Steam;
 
 namespace GameHub.Data.Compat
 {
-	public class Proton: CompatTool
+	public class Proton: Wine
 	{
 		public const string[] APPIDS = {"930400", "858280"}; // 3.7 Beta, 3.7
 
@@ -12,7 +12,7 @@ namespace GameHub.Data.Compat
 
 		public Proton(string appid)
 		{
-			Object(appid: appid);
+			Object(appid: appid, binary: "proton");
 		}
 
 		construct
@@ -38,40 +38,33 @@ namespace GameHub.Data.Compat
 					installed = executable.query_exists();
 				}
 			}
+
+			if(installed)
+			{
+				actions = {
+					new CompatTool.Action("winecfg", _("Run winecfg"), game => {
+						wineutil.begin(proton_dir.get_child("dist/bin/wine"), FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/proton_$(name)/pfx"), game, "winecfg");
+					}),
+					new CompatTool.Action("winetricks", _("Run winetricks"), game => {
+						winetricks.begin(proton_dir.get_child("dist/bin/wine"), FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/proton_$(name)/pfx"), game);
+					}),
+					new CompatTool.Action("regedit", _("Run regedit"), game => {
+						wineutil.begin(proton_dir.get_child("dist/bin/wine"), FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/proton_$(name)/pfx"), game, "regedit");
+					})
+				};
+			}
 		}
 
-		public override bool can_install(Game game)
-		{
-			return installed && Platform.WINDOWS in game.platforms;
-		}
-
-		public override bool can_run(Game game)
-		{
-			return installed && Platform.WINDOWS in game.platforms;
-		}
-
-		public override async void install(Game game, File installer)
-		{
-			if(!can_install(game) || (yield Game.Installer.guess_type(installer)) != Game.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
-			yield exec(game, installer, installer.get_parent(), false);
-		}
-
-		public override async void run(Game game)
-		{
-			if(!can_run(game)) return;
-			yield exec(game, game.executable, game.install_dir);
-		}
-
-		private async void exec(Game game, File file, File dir, bool parse_opts=true)
+		protected override async void exec(Game game, File file, File dir, bool parse_opts=true)
 		{
 			yield Utils.run_thread({ executable.get_path(), "run", file.get_path() }, dir.get_path(), prepare_env(game, parse_opts));
 		}
 
-		private string[] prepare_env(Game game, bool parse_opts=true)
+		protected override string[] prepare_env(Game game, bool parse_opts=true)
 		{
 			var env = Environ.get();
 
-			var compatdata = FSUtils.mkdir(game.install_dir.get_path(), "_gamehub/proton");
+			var compatdata = FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/proton_$(name)");
 			if(compatdata != null && compatdata.query_exists())
 			{
 				env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.Paths.Steam.Home);

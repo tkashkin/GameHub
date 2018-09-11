@@ -37,6 +37,7 @@ namespace GameHub.Data.Sources.Steam
 			image = GamesDB.Tables.Games.IMAGE.get(s);
 			info = GamesDB.Tables.Games.INFO.get(s);
 			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
+			compat_tool = GamesDB.Tables.Games.COMPAT_TOOL.get(s);
 
 			platforms.clear();
 			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
@@ -73,6 +74,18 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async void update_game_info()
 		{
+			if(image == null || image == "")
+			{
+				image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
+			}
+
+			if((icon == null || icon == "") && (info != null && info.length > 0))
+			{
+				var i = Parser.parse_json(info).get_object();
+				var icon_hash = i.get_string_member("img_icon_url");
+				icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
+			}
+
 			if(game_info_updated) return;
 
 			if(info_detailed == null || info_detailed.length == 0)

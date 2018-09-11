@@ -39,8 +39,8 @@ namespace GameHub.UI.Views.GamesView
 			hidden.active = game.has_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN);
 			hidden.toggled.connect(() => game.toggle_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN));
 
-			var manage_tags = new Gtk.MenuItem.with_label(_("Manage tags"));
-			manage_tags.activate.connect(() => new Dialogs.GameTagsDialog.GameTagsDialog(game).show_all());
+			var properties = new Gtk.MenuItem.with_label(_("Properties"));
+			properties.activate.connect(() => new Dialogs.GamePropertiesDialog(game).show_all());
 
 			if(game.status.state == Game.State.INSTALLED)
 			{
@@ -69,7 +69,7 @@ namespace GameHub.UI.Views.GamesView
 
 			add(new Gtk.SeparatorMenuItem());
 
-			add(manage_tags);
+			add(properties);
 
 			show_all();
 		}

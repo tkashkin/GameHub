@@ -101,17 +101,17 @@ namespace GameHub.Data.Sources.Humble
 				_games.clear();
 
 				var cached = GamesDB.get_instance().get_games(this);
+				games_count = 0;
 				if(cached.size > 0)
 				{
 					foreach(var g in cached)
 					{
+						if(g.platforms.size == 0) continue;
 						if(!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g))
 						{
 							g.update_game_info.begin((obj, res) => {
 								g.update_game_info.end(res);
-								if(g.platforms.size == 0) return;
 								_games.add(g);
-								games_count = _games.size;
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
@@ -119,10 +119,9 @@ namespace GameHub.Data.Sources.Humble
 							});
 							Thread.usleep(100000);
 						}
+						games_count++;
 					}
 				}
-
-				games_count = _games.size;
 
 				if(cache_loaded != null)
 				{
@@ -153,18 +152,20 @@ namespace GameHub.Data.Sources.Humble
 					foreach(var product in products.get_elements())
 					{
 						var game = new HumbleGame(this, key, product);
-						if(!_games.contains(game) && game.platforms.size > 0 && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
+						if(game.platforms.size == 0) continue;
+						bool is_new_game = !_games.contains(game);
+						if(is_new_game && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 						{
 							game.update_game_info.begin((obj, res) => {
 								game.update_game_info.end(res);
 								_games.add(game);
-								games_count = _games.size;
 								if(game_loaded != null)
 								{
 									Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
 								}
 							});
 						}
+						if(is_new_game) games_count++;
 					}
 				}
 

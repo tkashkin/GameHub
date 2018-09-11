@@ -127,6 +127,7 @@ namespace GameHub.Data
 				public static DBTable.Field PLATFORMS;
 				public static DBTable.Field INFO;
 				public static DBTable.Field INFO_DETAILED;
+				public static DBTable.Field COMPAT_TOOL;
 
 				public static void init(Database? db) requires (db != null)
 				{
@@ -137,6 +138,11 @@ namespace GameHub.Data
 					|| db.prepare_v2("SELECT `executable` FROM `games`", -1, out s) != Sqlite.OK)
 					{
 						db.exec("DROP TABLE `games`");
+					}
+
+					if(db.prepare_v2("SELECT `compat_tool` FROM `games`", -1, out s) != Sqlite.OK)
+					{
+						db.exec("ALTER TABLE `games` ADD `compat_tool` string");
 					}
 
 					db.exec("CREATE TABLE IF NOT EXISTS `games`(
@@ -151,6 +157,7 @@ namespace GameHub.Data
 						`platforms` string,
 						`info` string,
 						`info_detailed` string,
+						`compat_tool` string,
 					PRIMARY KEY(`source`, `id`))");
 
 					SOURCE        = f(0);
@@ -164,6 +171,7 @@ namespace GameHub.Data
 					PLATFORMS     = f(8);
 					INFO          = f(9);
 					INFO_DETAILED = f(10);
+					COMPAT_TOOL   = f(11);
 				}
 			}
 
@@ -296,8 +304,8 @@ namespace GameHub.Data
 
 			Statement s;
 			int res = db.prepare_v2("INSERT OR REPLACE INTO `games`
-				(`source`, `id`, `name`, `icon`, `image`, `tags`, `install_path`, `executable`, `platforms`, `info`, `info_detailed`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+				(`source`, `id`, `name`, `icon`, `image`, `tags`, `install_path`, `executable`, `platforms`, `info`, `info_detailed`, `compat_tool`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			assert(res == Sqlite.OK);
 
@@ -326,6 +334,7 @@ namespace GameHub.Data
 			Tables.Games.PLATFORMS.bind(s, platforms);
 			Tables.Games.INFO.bind(s, game.info);
 			Tables.Games.INFO_DETAILED.bind(s, game.info_detailed);
+			Tables.Games.COMPAT_TOOL.bind(s, game.compat_tool);
 
 			res = s.step();
 

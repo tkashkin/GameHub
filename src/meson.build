@@ -33,10 +33,6 @@ else
 	deps += dependency('gtk+-3.0')
 endif
 
-if get_option('use_ivy')
-	add_global_arguments('-g', '-X', '-rdynamic', '-D', 'USE_IVY', language: 'vala')
-endif
-
 executable(
 	meson.project_name(),
 	project_config,
@@ -73,10 +69,10 @@ executable(
 	'ui/dialogs/SettingsDialog/tabs/GOG.vala',
 	'ui/dialogs/SettingsDialog/tabs/Humble.vala',
 	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
-	'ui/dialogs/GameTagsDialog/GameTagsDialog.vala',
 
 	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
+	'ui/dialogs/GamePropertiesDialog.vala',
 	'ui/dialogs/CompatRunDialog.vala',
 
 	'ui/views/BaseView.vala',
@@ -108,11 +104,6 @@ executable(
 
 	'utils/downloader/Downloader.vala',
 	'utils/downloader/SoupDownloader.vala',
-
-	'lib/ivy/Extractor.vala',
-	'lib/ivy/Frame.vala',
-	'lib/ivy/Printer.vala',
-	'lib/ivy/Stacktrace.vala',
 
 	icons_gresource,
 	css_gresource,

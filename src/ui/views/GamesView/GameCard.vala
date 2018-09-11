@@ -19,18 +19,18 @@ namespace GameHub.UI.Views.GamesView
 		private AutoSizeImage image;
 		private Label label;
 		private Label status_label;
-		
+
 		private Box src_icons;
 		private Image src_icon;
 
 		private Box platform_icons;
 
 		private Box actions;
-		
+
 		private const int CARD_WIDTH_MIN = 320;
 		private const int CARD_WIDTH_MAX = 680;
 		private const float CARD_RATIO = 0.467f; // 460x215
-		
+
 		private Frame progress_bar;
 
 		construct
@@ -42,14 +42,14 @@ namespace GameHub.UI.Views.GamesView
 			card.get_style_context().add_class("gamecard");
 			card.shadow_type = ShadowType.NONE;
 			card.margin = 4;
-			
+
 			child = card;
-			
+
 			content = new Overlay();
-			
+
 			image = new AutoSizeImage();
 			image.set_constraint(CARD_WIDTH_MIN, CARD_WIDTH_MAX, CARD_RATIO);
-			
+
 			src_icons = new Box(Orientation.HORIZONTAL, 4);
 			src_icons.valign = Align.START;
 			src_icons.halign = Align.START;
@@ -73,7 +73,7 @@ namespace GameHub.UI.Views.GamesView
 			label.justify = Justification.CENTER;
 			label.lines = 3;
 			label.set_line_wrap(true);
-			
+
 			status_label = new Label("");
 			status_label.get_style_context().add_class("status");
 			status_label.xpad = 8;
@@ -92,21 +92,21 @@ namespace GameHub.UI.Views.GamesView
 			actions.get_style_context().add_class("actions");
 			actions.hexpand = true;
 			actions.vexpand = true;
-			
+
 			progress_bar = new Frame(null);
 			progress_bar.halign = Align.START;
 			progress_bar.valign = Align.END;
 			progress_bar.get_style_context().add_class("progress");
-			
+
 			content.add(image);
 			content.add_overlay(actions);
 			content.add_overlay(info);
 			content.add_overlay(platform_icons);
 			content.add_overlay(src_icons);
 			content.add_overlay(progress_bar);
-			
+
 			card.add(content);
-			
+
 			content.add_events(EventMask.ALL_EVENTS_MASK);
 			content.enter_notify_event.connect(e => { card.get_style_context().add_class("hover"); });
 			content.leave_notify_event.connect(e => { card.get_style_context().remove_class("hover"); });
@@ -130,22 +130,22 @@ namespace GameHub.UI.Views.GamesView
 				}
 				return true;
 			});
-			
+
 			show_all();
 		}
-		
+
 		public GameCard(Game game)
 		{
 			Object(game: game);
-			
+
 			label.label = game.name;
-			
+
 			src_icon.icon_name = game.source.icon;
-			
+
 			update();
 
 			card.get_style_context().add_class("installed");
-			
+
 			game.status_change.connect(s => {
 				label.label = (game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
 				status_label.label = s.description;
@@ -184,7 +184,10 @@ namespace GameHub.UI.Views.GamesView
 			});
 			game.status_change(game.status);
 
-			Utils.load_image.begin(image, game.image, "image");
+			game.notify["image"].connect(() => {
+				Utils.load_image.begin(image, game.image, "image");
+			});
+			game.notify_property("image");
 		}
 
 		public void update()
