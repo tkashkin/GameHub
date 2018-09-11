@@ -56,6 +56,7 @@ namespace GameHub.Data.Sources.Humble
 			executable = FSUtils.file(GamesDB.Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
 			info = GamesDB.Tables.Games.INFO.get(s);
 			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
+			compat_tool = GamesDB.Tables.Games.COMPAT_TOOL.get(s);
 
 			platforms.clear();
 			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
@@ -101,6 +102,17 @@ namespace GameHub.Data.Sources.Humble
 		public override async void update_game_info()
 		{
 			update_status();
+
+			if((icon == null || icon == "") && (info != null && info.length > 0))
+			{
+				var i = Parser.parse_json(info).get_object();
+				icon = i.get_string_member("icon");
+			}
+
+			if(image == null || image == "")
+			{
+				image = icon;
+			}
 
 			if(game_info_updated) return;
 
@@ -151,6 +163,10 @@ namespace GameHub.Data.Sources.Humble
 					installers.add(installer);
 				}
 			}
+
+			GamesDB.get_instance().add_game(this);
+
+			update_status();
 
 			game_info_updated = true;
 		}

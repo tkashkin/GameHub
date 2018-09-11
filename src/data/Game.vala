@@ -13,11 +13,13 @@ namespace GameHub.Data
 		public string name { get; protected set; }
 		public string description { get; protected set; }
 
-		public string icon { get; protected set; }
-		public string image { get; protected set; }
+		public string icon { get; set; }
+		public string image { get; set; }
 
 		public string? info { get; protected set; }
 		public string? info_detailed { get; protected set; }
+
+		public string? compat_tool { get; set; }
 
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
 		public virtual bool is_supported(Platform? platform=null, bool with_compat=true)
@@ -219,7 +221,7 @@ namespace GameHub.Data
 		{
 			owned get
 			{
-				return Utils.strip_name(name.replace(" ", "_").replace(":", ""), "_'.,");
+				return Utils.strip_name(name.replace(" ", "_"), "_'.,");
 			}
 		}
 
@@ -392,6 +394,7 @@ namespace GameHub.Data
 			public static async InstallerType guess_type(File file, bool part=false)
 			{
 				var type = InstallerType.UNKNOWN;
+				if(file == null) return type;
 
 				try
 				{

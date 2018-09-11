@@ -17,9 +17,11 @@ namespace GameHub.UI.Widgets
 		private Gtk.TreeIter iter;
 		private ComboBox combo;
 
+		private Box actions;
+
 		public CompatToolPicker(Game game, bool install_mode)
 		{
-			Object(orientation: Orientation.HORIZONTAL, spacing: 8, game: game, install_mode: install_mode);
+			Object(orientation: Orientation.VERTICAL, spacing: 8, game: game, install_mode: install_mode);
 		}
 
 		construct
@@ -46,16 +48,6 @@ namespace GameHub.UI.Widgets
 			combo = new ComboBox.with_model(model);
 			combo.halign = Align.END;
 
-			combo.changed.connect(() => {
-				Value v;
-				combo.get_active_iter(out iter);
-				model.get_value(iter, 2, out v);
-				selected = v as CompatTool;
-				combo.tooltip_text = selected != null ? selected.executable.get_path() : null;
-			});
-
-			combo.active = 0;
-
 			CellRendererPixbuf r_icon = new CellRendererPixbuf();
 			combo.pack_start(r_icon, false);
 			combo.add_attribute(r_icon, "icon-name", 0);
@@ -65,10 +57,71 @@ namespace GameHub.UI.Widgets
 			combo.pack_start(r_name, true);
 			combo.add_attribute(r_name, "text", 1);
 
-			add(label);
-			add(combo);
+			var tool_box = new Box(Orientation.HORIZONTAL, 8);
+
+			tool_box.add(label);
+			tool_box.add(combo);
+
+			actions = new Box(Orientation.HORIZONTAL, 8);
+
+			combo.changed.connect(() => {
+				Value v;
+				combo.get_active_iter(out iter);
+				model.get_value(iter, 2, out v);
+				selected = v as CompatTool;
+				combo.tooltip_text = selected != null ? selected.executable.get_path() : null;
+
+				if(selected.can_run(game))
+				{
+					game.compat_tool = selected.id;
+					GamesDB.get_instance().add_game(game);
+				}
+
+				actions.foreach(w => w.destroy());
+
+				if(selected.actions != null)
+				{
+					foreach(var action in selected.actions)
+					{
+						add_action(action);
+					}
+				}
+
+				actions.show_all();
+			});
+
+			int index = 0;
+
+			if(game.compat_tool != null && game.compat_tool.length > 0)
+			{
+				model.foreach((m, p, i) => {
+					Value v;
+					m.get_value(i, 2, out v);
+					var tool = v as CompatTool;
+					if(game.compat_tool == tool.id)
+					{
+						return true;
+					}
+					index++;
+					return false;
+				});
+			}
+
+			combo.active = index;
+
+			add(tool_box);
+			add(actions);
 
 			show_all();
+		}
+
+		private void add_action(CompatTool.Action action)
+		{
+			var btn = new Button.with_label(action.name);
+			btn.tooltip_text = action.description;
+			btn.hexpand = true;
+			btn.clicked.connect(() => action.invoke(game));
+			actions.add(btn);
 		}
 	}
 }

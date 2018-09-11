@@ -33,6 +33,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private Spinner spinner;
 		private int loading_sources = 0;
+		private bool new_games_added = false;
 
 		private Button settings;
 
@@ -395,7 +396,11 @@ namespace GameHub.UI.Views.GamesView
 					card.show();
 					row.show();
 
-					if(!cached) merge_game(g);
+					if(!cached)
+					{
+						merge_game(g);
+						new_games_added = true;
+					}
 
 					update_view();
 
@@ -414,7 +419,7 @@ namespace GameHub.UI.Views.GamesView
 					loading_sources--;
 					spinner.active = loading_sources > 0;
 
-					if(loading_sources == 0) merge_games();
+					if(loading_sources == 0 && new_games_added) merge_games();
 					update_view();
 
 					if(src.games_count == 0)
@@ -592,13 +597,17 @@ namespace GameHub.UI.Views.GamesView
 
 		private void merge_games_from(GameSource src)
 		{
-			if(!ui_settings.merge_games || in_destruction() || src == null) return;
-			Utils.thread("Merging-" + src.id, () => {
-				foreach(var game in src.games)
+			int i = 0;
+			foreach(var game in src.games)
+			{
+				merge_game(game);
+				i++;
+				if(i >= 10)
 				{
-					merge_game(game);
+					Thread.usleep(100000);
+					i = 0;
 				}
-			});
+			}
 		}
 
 		private void merge_game(Game game)

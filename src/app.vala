@@ -36,10 +36,6 @@ namespace GameHub
 
 		public static int main(string[] args)
 		{
-			#if USE_IVY
-			Ivy.Stacktrace.register_handlers();
-			#endif
-
 			var app = new Application();
 
 			var lang = Environment.get_variable("LC_ALL") ?? "";

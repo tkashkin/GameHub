@@ -23,7 +23,13 @@ namespace GameHub.UI.Dialogs
 
 		public CompatRunDialog(Game game)
 		{
-			Object(game: game, transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Run with compatibility tool"));
+			Object(game: game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility tool"));
+		}
+
+		construct
+		{
+			get_style_context().add_class("rounded");
+			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 			modal = true;
 
@@ -67,18 +73,11 @@ namespace GameHub.UI.Dialogs
 			response.connect((source, response_id) => {
 				switch(response_id)
 				{
-					case ResponseType.CANCEL:
-						destroy();
-						break;
-
 					case ResponseType.ACCEPT:
 						run_with_compat();
-						//destroy();
 						break;
 				}
 			});
-
-			add_button(_("Cancel"), ResponseType.CANCEL);
 
 			var run_btn = add_button(_("Run"), ResponseType.ACCEPT);
 			run_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);

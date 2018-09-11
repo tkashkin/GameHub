@@ -164,6 +164,7 @@ namespace GameHub.Data.Sources.Steam
 				_games.clear();
 
 				var cached = GamesDB.get_instance().get_games(this);
+				games_count = 0;
 				if(cached.size > 0)
 				{
 					foreach(var g in cached)
@@ -172,17 +173,15 @@ namespace GameHub.Data.Sources.Steam
 						{
 							//g.update_game_info.begin();
 							_games.add(g);
-							games_count = _games.size;
 							if(game_loaded != null)
 							{
 								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
 								Thread.usleep(100000);
 							}
 						}
+						games_count++;
 					}
 				}
-
-				games_count = _games.size;
 
 				if(cache_loaded != null)
 				{
@@ -213,16 +212,17 @@ namespace GameHub.Data.Sources.Steam
 				foreach(var g in json_games.get_elements())
 				{
 					var game = new SteamGame(this, g);
-					if(!_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
+					bool is_new_game = !_games.contains(game);
+					if(is_new_game && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
 					{
 						yield game.update_game_info();
 						_games.add(game);
-						games_count = _games.size;
 						if(game_loaded != null)
 						{
 							Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
 						}
 					}
+					if(is_new_game) games_count++;
 				}
 			}
 		}

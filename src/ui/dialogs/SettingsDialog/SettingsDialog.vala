@@ -12,9 +12,18 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		private Stack tabs;
 
+		private string default_tab;
+
 		public SettingsDialog(string tab="ui")
 		{
-			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Settings"));
+			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Settings"));
+			default_tab = tab;
+		}
+
+		construct
+		{
+			get_style_context().add_class("rounded");
+			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 			gravity = Gdk.Gravity.NORTH;
 			modal = true;
@@ -58,10 +67,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 				}
 			});
 
-			add_button(_("Close"), ResponseType.CLOSE).margin_end = 7;
 			show_all();
 
-			tabs.visible_child_name = tab;
+			tabs.visible_child_name = default_tab;
 		}
 
 		private void add_tab(string id, SettingsDialogTab tab, string title, string? icon=null)

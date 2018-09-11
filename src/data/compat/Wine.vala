@@ -30,6 +30,21 @@ namespace GameHub.Data.Compat
 				executable = FSUtils.file(which);
 				installed = executable.query_exists();
 			}
+
+			if(installed)
+			{
+				actions = {
+					new CompatTool.Action("winecfg", _("Run winecfg"), game => {
+						wineutil.begin(executable, null, game, "winecfg");
+					}),
+					new CompatTool.Action("winetricks", _("Run winetricks"), game => {
+						winetricks.begin(executable, null, game);
+					}),
+					new CompatTool.Action("regedit", _("Run regedit"), game => {
+						wineutil.begin(executable, null, game, "regedit");
+					})
+				};
+			}
 		}
 
 		public override bool can_install(Game game)
@@ -54,12 +69,12 @@ namespace GameHub.Data.Compat
 			yield exec(game, game.executable, game.install_dir);
 		}
 
-		private async void exec(Game game, File file, File dir)
+		protected virtual async void exec(Game game, File file, File dir, bool parse_opts=true)
 		{
 			yield Utils.run_thread({ executable.get_path(), file.get_path() }, dir.get_path(), prepare_env(game));
 		}
 
-		private string[] prepare_env(Game game)
+		protected virtual string[] prepare_env(Game game, bool parse_opts=true)
 		{
 			var env = Environ.get();
 
@@ -70,6 +85,30 @@ namespace GameHub.Data.Compat
 			}
 
 			return env;
+		}
+
+		protected async void wineutil(File wine, File? wineprefix, Game game, string util="winecfg")
+		{
+			var env = Environ.get();
+			env = Environ.set_variable(env, "WINE", wine.get_path());
+			var prefix = wineprefix ?? FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/$(binary)");
+			if(prefix != null && prefix.query_exists())
+			{
+				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
+			}
+			yield Utils.run_thread({ wine.get_path(), util }, game.install_dir.get_path(), env);
+		}
+
+		protected async void winetricks(File wine, File? wineprefix, Game game)
+		{
+			var env = Environ.get();
+			env = Environ.set_variable(env, "WINE", wine.get_path());
+			var prefix = wineprefix ?? FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/$(binary)");
+			if(prefix != null && prefix.query_exists())
+			{
+				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
+			}
+			yield Utils.run_thread({ "winetricks" }, game.install_dir.get_path(), env);
 		}
 	}
 }

@@ -22,7 +22,7 @@ namespace GameHub.Data.Sources.GOG
 			id = json_obj.get_int_member("id").to_string();
 			name = json_obj.get_string_member("title");
 			image = "https:" + json_obj.get_string_member("image") + "_392.jpg";
-			icon = image;
+			icon = "";
 
 			info = Json.to_string(json_node, false);
 
@@ -47,6 +47,7 @@ namespace GameHub.Data.Sources.GOG
 			executable = FSUtils.file(GamesDB.Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
 			info = GamesDB.Tables.Games.INFO.get(s);
 			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
+			compat_tool = GamesDB.Tables.Games.COMPAT_TOOL.get(s);
 
 			platforms.clear();
 			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
@@ -90,20 +91,26 @@ namespace GameHub.Data.Sources.GOG
 				info_detailed = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token));
 			}
 
-			if(game_info_updated) return;
-
 			var root = Parser.parse_json(info_detailed);
 
 			var images = Parser.json_object(root, {"images"});
 			var desc = Parser.json_object(root, {"description"});
 			var links = Parser.json_object(root, {"links"});
 
-			if(images != null)
+			if(image == null || image == "")
+			{
+				var i = Parser.parse_json(info).get_object();
+				image = "https:" + i.get_string_member("image") + "_392.jpg";
+			}
+
+			if(icon == null || icon == "" && (images != null))
 			{
 				icon = images.get_string_member("icon");
 				if(icon != null) icon = "https:" + icon;
 				else icon = image;
 			}
+
+			if(game_info_updated) return;
 
 			if(desc != null)
 			{

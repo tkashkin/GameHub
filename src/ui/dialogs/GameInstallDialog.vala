@@ -30,7 +30,10 @@ namespace GameHub.UI.Dialogs
 
 		public GameInstallDialog(Game game, ArrayList<Game.Installer> installers)
 		{
-			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Install"));
+			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Install"));
+
+			get_style_context().add_class("rounded");
+			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 			modal = true;
 
@@ -131,7 +134,7 @@ namespace GameHub.UI.Dialogs
 			response.connect((source, response_id) => {
 				switch(response_id)
 				{
-					case ResponseType.CANCEL:
+					case ResponseType.CLOSE:
 						destroy();
 						break;
 
@@ -154,8 +157,6 @@ namespace GameHub.UI.Dialogs
 						break;
 				}
 			});
-
-			add_button(_("Cancel"), ResponseType.CANCEL);
 
 			add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
 
