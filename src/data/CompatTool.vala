@@ -11,6 +11,7 @@ namespace GameHub.Data
 		public bool installed { get; protected set; default = false; }
 
 		public Option[]? options = null;
+		public Option[]? install_options = null;
 		public Action[]? actions = null;
 
 		public virtual bool can_install(Game game) { return false; }

@@ -104,7 +104,9 @@ namespace GameHub.Utils
 		string stdout = "";
 
 		Utils.thread("Utils.run", () => {
+			debug("[Utils.run] Running {'%s'}", string.joinv("' '", cmd));
 			stdout = Utils.run(cmd, dir, env, override_runtime);
+			debug("[Utils.run] Output: '%s'", stdout);
 			Idle.add(run_thread.callback);
 		});
 

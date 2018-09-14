@@ -34,6 +34,13 @@ namespace GameHub.Data.Compat
 				wine_binary = executable;
 			}
 
+			install_options = {
+				new CompatTool.Option("/SILENT", _("Silent installation"), false),
+				new CompatTool.Option("/VERYSILENT", _("Very silent installation"), true),
+				new CompatTool.Option("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
+				new CompatTool.Option("/NOGUI", _("No GUI"), true)
+			};
+
 			if(installed)
 			{
 				actions = {
@@ -66,18 +73,22 @@ namespace GameHub.Data.Compat
 		protected virtual async string[] prepare_installer_args(Game game)
 		{
 			var win_path = yield convert_path(game, game.install_dir);
-			return { @"/DIR=$(win_path)", "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NOICONS", "/NOCANCEL", "/NORESTART", "/CLOSEAPPLICATIONS", "/FORCECLOSEAPPLICATIONS" };
+			string[] opts = { "/SP-", "/NOCANCEL", "/NOGUI", "/NOICONS", @"/DIR=$(win_path)", "/LOG=C:\\install.log" };
+
+			foreach(var opt in install_options)
+			{
+				if(opt.enabled)
+				{
+					opts += opt.name;
+				}
+			}
+
+			return opts;
 		}
 
 		public override async void install(Game game, File installer)
 		{
 			if(!can_install(game) || (yield Game.Installer.guess_type(installer)) != Game.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
-			var prefix = get_wineprefix(game);
-			if(!prefix.get_child("drive_c").query_exists())
-			{
-				yield wineutil(prefix, game, "ping"); // create prefix
-				yield Utils.sleep_async(1000);
-			}
 			yield exec(game, installer, installer.get_parent(), yield prepare_installer_args(game));
 		}
 
@@ -116,6 +127,7 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mscoree,mshtml=");
 
 			return env;
 		}
