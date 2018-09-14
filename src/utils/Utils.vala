@@ -57,11 +57,13 @@ namespace GameHub.Utils
 
 		try
 		{
+			debug("[Utils.run] Running {'%s'}", string.joinv("' '", cmd));
 			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out stdout);
+			debug("[Utils.run] Output: '%s'", stdout);
 		}
 		catch (Error e)
 		{
-			warning(e.message);
+			warning("[Utils.run] %s", e.message);
 		}
 		return stdout;
 	}
@@ -84,6 +86,7 @@ namespace GameHub.Utils
 
 		try
 		{
+			debug("[Utils.run_async] Running {'%s'}", string.joinv("' '", cmd));
 			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
 
 			ChildWatch.add(pid, (pid, status) => {
@@ -93,7 +96,7 @@ namespace GameHub.Utils
 		}
 		catch (Error e)
 		{
-			warning(e.message);
+			warning("[Utils.run_async] %s", e.message);
 		}
 
 		if(cwait) yield;
@@ -103,10 +106,8 @@ namespace GameHub.Utils
 	{
 		string stdout = "";
 
-		Utils.thread("Utils.run", () => {
-			debug("[Utils.run] Running {'%s'}", string.joinv("' '", cmd));
+		Utils.thread("Utils.run_thread", () => {
 			stdout = Utils.run(cmd, dir, env, override_runtime);
-			debug("[Utils.run] Output: '%s'", stdout);
 			Idle.add(run_thread.callback);
 		});
 
