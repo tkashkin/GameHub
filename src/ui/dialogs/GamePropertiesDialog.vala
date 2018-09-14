@@ -4,6 +4,7 @@ using Gee;
 using Granite;
 
 using GameHub.Data;
+using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -59,13 +60,13 @@ namespace GameHub.UI.Dialogs
 					var t1 = item1.tag.id;
 					var t2 = item2.tag.id;
 
-					var b1 = t1.has_prefix(GamesDB.Tables.Tags.Tag.BUILTIN_PREFIX);
-					var b2 = t2.has_prefix(GamesDB.Tables.Tags.Tag.BUILTIN_PREFIX);
+					var b1 = t1.has_prefix(Tables.Tags.Tag.BUILTIN_PREFIX);
+					var b2 = t2.has_prefix(Tables.Tags.Tag.BUILTIN_PREFIX);
 					if(b1 && !b2) return -1;
 					if(!b1 && b2) return 1;
 
-					var u1 = t1.has_prefix(GamesDB.Tables.Tags.Tag.USER_PREFIX);
-					var u2 = t2.has_prefix(GamesDB.Tables.Tags.Tag.USER_PREFIX);
+					var u1 = t1.has_prefix(Tables.Tags.Tag.USER_PREFIX);
+					var u2 = t2.has_prefix(Tables.Tags.Tag.USER_PREFIX);
 					if(u1 && !u2) return -1;
 					if(!u1 && u2) return 1;
 
@@ -89,7 +90,7 @@ namespace GameHub.UI.Dialogs
 
 			new_entry = new Entry();
 			new_entry.placeholder_text = _("Add tag");
-			new_entry.primary_icon_name = "tag-symbolic";
+			new_entry.primary_icon_name = "tag-add-symbolic";
 			new_entry.primary_icon_activatable = false;
 			new_entry.secondary_icon_name = "list-add-symbolic";
 			new_entry.secondary_icon_activatable = true;
@@ -131,6 +132,13 @@ namespace GameHub.UI.Dialogs
 			images_header.xpad = 8;
 			properties_box.add(images_header);
 
+			var images_card = new Frame(null);
+			images_card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
+			images_card.get_style_context().add_class("gamecard");
+			images_card.get_style_context().add_class("static");
+			images_card.shadow_type = ShadowType.NONE;
+			images_card.margin = 4;
+
 			icon_view = new AutoSizeImage();
 			icon_view.margin = 4;
 			icon_view.set_constraint(48, 48, 1);
@@ -141,11 +149,18 @@ namespace GameHub.UI.Dialogs
 			image_view.hexpand = false;
 			image_view.set_constraint(360, 400, 0.467f);
 
+			var actions = new Box(Orientation.VERTICAL, 0);
+			actions.get_style_context().add_class("actions");
+			actions.hexpand = true;
+			actions.vexpand = false;
+
 			var images_overlay = new Overlay();
-			images_overlay.margin = 4;
 			images_overlay.add(image_view);
+			images_overlay.add_overlay(actions);
 			images_overlay.add_overlay(icon_view);
-			properties_box.add(images_overlay);
+
+			images_card.add(images_overlay);
+			properties_box.add(images_card);
 
 			image_entry = new Entry();
 			image_entry.placeholder_text = image_entry.primary_icon_tooltip_text = _("Image URL");
@@ -199,11 +214,12 @@ namespace GameHub.UI.Dialogs
 			var image_search_links_label = new Label(_("Search images:"));
 			image_search_links_label.halign = Align.START;
 			image_search_links_label.xalign = 0;
+			image_search_links_label.hexpand = true;
 			image_search_links.add(image_search_links_label);
 
-			add_image_search_link("Google", @"https://www.google.com/search?tbm=isch&tbs=isz:ex,iszw:460,iszh:215&q=$(game.name)");
-			add_image_search_link("Jinx's SGVI", @"http://steam.cryotank.net/?s=$(game.name)");
 			add_image_search_link("SteamGridDB", @"http://www.steamgriddb.com/game/$(game.name)");
+			add_image_search_link("Jinx's SGVI", @"http://steam.cryotank.net/?s=$(game.name)");
+			add_image_search_link("Google", @"https://www.google.com/search?tbm=isch&tbs=isz:ex,iszw:460,iszh:215&q=$(game.name)");
 
 			properties_box.add(image_search_links);
 
@@ -219,7 +235,7 @@ namespace GameHub.UI.Dialogs
 				properties_box.add(compat_header);
 
 				var compat_tool = new CompatToolPicker(game, false);
-				compat_tool.margin_start = compat_tool.margin_end = 8;
+				compat_tool.margin_start = compat_tool.margin_end = 4;
 				properties_box.add(compat_tool);
 			}
 
@@ -233,11 +249,11 @@ namespace GameHub.UI.Dialogs
 			delete_event.connect(() => {
 				set_image_url(true);
 				set_icon_url(true);
-				GamesDB.get_instance().add_game(game);
+				Tables.Games.add(game);
 				destroy();
 			});
 
-			GamesDB.get_instance().tags_updated.connect(update);
+			Tables.Tags.instance.tags_updated.connect(update);
 
 			update();
 
@@ -248,7 +264,7 @@ namespace GameHub.UI.Dialogs
 		{
 			tags_list.foreach(w => w.destroy());
 
-			foreach(var tag in GamesDB.Tables.Tags.TAGS)
+			foreach(var tag in Tables.Tags.TAGS)
 			{
 				var row = new TagRow(game, tag);
 				tags_list.add(row);
@@ -264,8 +280,8 @@ namespace GameHub.UI.Dialogs
 
 			new_entry.text = "";
 
-			var tag = new GamesDB.Tables.Tags.Tag.from_name(name);
-			GamesDB.get_instance().add_tag(tag);
+			var tag = new Tables.Tags.Tag.from_name(name);
+			Tables.Tags.add(tag);
 			game.add_tag(tag);
 			update();
 		}
@@ -309,9 +325,9 @@ namespace GameHub.UI.Dialogs
 		public class TagRow: ListBoxRow
 		{
 			public Game game;
-			public GamesDB.Tables.Tags.Tag tag;
+			public Tables.Tags.Tag tag;
 
-			public TagRow(Game game, GamesDB.Tables.Tags.Tag tag)
+			public TagRow(Game game, Tables.Tags.Tag tag)
 			{
 				this.game = game;
 				this.tag = tag;

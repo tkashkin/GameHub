@@ -1,4 +1,5 @@
 using Gee;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.GOG
@@ -31,6 +32,23 @@ namespace GameHub.Data.Sources.GOG
 			if(json_obj.get_object_member("worksOn").get_boolean_member("Windows")) platforms.add(Platform.WINDOWS);
 			if(json_obj.get_object_member("worksOn").get_boolean_member("Mac")) platforms.add(Platform.MACOS);
 
+			var tags_json = !json_obj.has_member("tags") ? null : json_obj.get_array_member("tags");
+			if(tags_json != null)
+			{
+				foreach(var tag_json in tags_json.get_elements())
+				{
+					var tid = source.id + ":" + tag_json.get_string();
+					foreach(var t in Tables.Tags.TAGS)
+					{
+						if(tid == t.id)
+						{
+							if(!tags.contains(t)) tags.add(t);
+							break;
+						}
+					}
+				}
+			}
+
 			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
 			executable = FSUtils.file(install_dir.get_path(), "start.sh");
 			update_status();
@@ -39,18 +57,19 @@ namespace GameHub.Data.Sources.GOG
 		public GOGGame.from_db(GOG src, Sqlite.Statement s)
 		{
 			source = src;
-			id = GamesDB.Tables.Games.ID.get(s);
-			name = GamesDB.Tables.Games.NAME.get(s);
-			icon = GamesDB.Tables.Games.ICON.get(s);
-			image = GamesDB.Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(GamesDB.Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
-			executable = FSUtils.file(GamesDB.Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
-			info = GamesDB.Tables.Games.INFO.get(s);
-			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
-			compat_tool = GamesDB.Tables.Games.COMPAT_TOOL.get(s);
+			id = Tables.Games.ID.get(s);
+			name = Tables.Games.NAME.get(s);
+			info = Tables.Games.INFO.get(s);
+			info_detailed = Tables.Games.INFO_DETAILED.get(s);
+			icon = Tables.Games.ICON.get(s);
+			image = Tables.Games.IMAGE.get(s);
+			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			executable = FSUtils.file(Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
+			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
+			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 
 			platforms.clear();
-			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
+			var pls = Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
 				foreach(var p in Platforms)
@@ -64,10 +83,10 @@ namespace GameHub.Data.Sources.GOG
 			}
 
 			tags.clear();
-			var tag_ids = (GamesDB.Tables.Games.TAGS.get(s) ?? "").split(",");
+			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
 			foreach(var tid in tag_ids)
 			{
-				foreach(var t in GamesDB.Tables.Tags.TAGS)
+				foreach(var t in Tables.Tags.TAGS)
 				{
 					if(tid == t.id)
 					{
@@ -166,7 +185,7 @@ namespace GameHub.Data.Sources.GOG
 				foreach(var tag_json in tags_json.get_elements())
 				{
 					var tid = source.id + ":" + tag_json.get_string();
-					foreach(var t in GamesDB.Tables.Tags.TAGS)
+					foreach(var t in Tables.Tags.TAGS)
 					{
 						if(tid == t.id)
 						{
@@ -177,7 +196,7 @@ namespace GameHub.Data.Sources.GOG
 				}
 			}
 
-			GamesDB.get_instance().add_game(this);
+			Tables.Games.add(this);
 
 			update_status();
 
@@ -251,7 +270,7 @@ namespace GameHub.Data.Sources.GOG
 			{
 				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
 				executable = FSUtils.file(install_dir.get_path(), "start.sh");
-				GamesDB.get_instance().add_game(this);
+				Tables.Games.add(this);
 				update_status();
 			}
 		}

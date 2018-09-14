@@ -39,7 +39,7 @@ namespace GameHub.Utils
 				public const string Cookies = FSUtils.Paths.Cache.Home + "/cookies";
 				public const string Images = FSUtils.Paths.Cache.Home + "/images";
 
-				public const string GamesDB = FSUtils.Paths.Cache.Home + "/games.db";
+				public const string Database = FSUtils.Paths.Cache.Home + "/gamehub.db";
 			}
 
 			public class Steam

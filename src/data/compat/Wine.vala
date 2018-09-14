@@ -17,7 +17,8 @@ namespace GameHub.Data.Compat
 		{
 			id = @"wine_$(binary)";
 			name = @"Wine ($(binary))";
-			icon = "wine-symbolic";
+			icon = "tool-wine-symbolic";
+			installed = false;
 
 			var which = Utils.run({"which", binary}).strip();
 

@@ -19,9 +19,10 @@ namespace GameHub.Utils
 		}
 		public void run()
 		{
-			debug("[Worker] %s started", name);
+			bool dbg = !name.has_prefix("Merging-");
+			if(dbg) debug("[Worker] %s started", name);
 			worker();
-			debug("[Worker] %s finished", name);
+			if(dbg) debug("[Worker] %s finished", name);
 		}
 	}
 

@@ -3,6 +3,7 @@ using Gdk;
 using Gee;
 using Granite;
 using GameHub.Data;
+using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 using WebKit;
@@ -134,7 +135,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(g == null) return Source.REMOVE;
 
-			var merges = Settings.UI.get_instance().merge_games ? GamesDB.get_instance().get_merged_games(game) : null;
+			var merges = Settings.UI.get_instance().merge_games ? Tables.Merges.get(game) : null;
 			bool merged = merges != null && merges.size > 0;
 
 			stack_switcher.visible = merged;

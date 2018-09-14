@@ -3,6 +3,7 @@ using Gdk;
 using Gee;
 using Granite;
 using GameHub.Data;
+using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -147,7 +148,7 @@ namespace GameHub.UI.Views.GamesView
 			card.get_style_context().add_class("installed");
 
 			game.status_change.connect(s => {
-				label.label = (game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
+				label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
 				status_label.label = s.description;
 				switch(s.state)
 				{
@@ -195,7 +196,7 @@ namespace GameHub.UI.Views.GamesView
 			src_icons.foreach(w => src_icons.remove(w));
 			src_icons.add(src_icon);
 
-			var merges = GamesDB.get_instance().get_merged_games(game);
+			var merges = Tables.Merges.get(game);
 			if(merges != null && merges.size > 0)
 			{
 				foreach(var g in merges)

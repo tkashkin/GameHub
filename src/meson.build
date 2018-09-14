@@ -51,7 +51,11 @@ executable(
 	'data/sources/humble/Humble.vala',
 	'data/sources/humble/HumbleGame.vala',
 
-	'data/GamesDB.vala',
+	'data/db/Database.vala',
+	'data/db/Table.vala',
+	'data/db/tables/Games.vala',
+	'data/db/tables/Tags.vala',
+	'data/db/tables/Merges.vala',
 
 	'data/CompatTool.vala',
 	'data/compat/Innoextract.vala',

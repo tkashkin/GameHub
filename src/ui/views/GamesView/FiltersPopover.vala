@@ -3,6 +3,7 @@ using Gdk;
 using Gee;
 using Granite;
 using GameHub.Data;
+using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -10,8 +11,8 @@ namespace GameHub.UI.Views.GamesView
 {
 	public class FiltersPopover: Popover
 	{
-		public ArrayList<GamesDB.Tables.Tags.Tag> selected_tags { get; private set; }
-		public signal void filters_changed(ArrayList<GamesDB.Tables.Tags.Tag> selected_tags);
+		public ArrayList<Tables.Tags.Tag> selected_tags { get; private set; }
+		public signal void filters_changed(ArrayList<Tables.Tags.Tag> selected_tags);
 
 		private CheckButton tags_header_check;
 		private ListBox tags_list;
@@ -26,7 +27,7 @@ namespace GameHub.UI.Views.GamesView
 
 		construct
 		{
-			selected_tags = new ArrayList<GamesDB.Tables.Tags.Tag>(GamesDB.Tables.Tags.Tag.is_equal);
+			selected_tags = new ArrayList<Tables.Tags.Tag>(Tables.Tags.Tag.is_equal);
 
 			set_size_request(220, -1);
 
@@ -45,13 +46,13 @@ namespace GameHub.UI.Views.GamesView
 					var t1 = item1.tag.id;
 					var t2 = item2.tag.id;
 
-					var b1 = t1.has_prefix(GamesDB.Tables.Tags.Tag.BUILTIN_PREFIX);
-					var b2 = t2.has_prefix(GamesDB.Tables.Tags.Tag.BUILTIN_PREFIX);
+					var b1 = t1.has_prefix(Tables.Tags.Tag.BUILTIN_PREFIX);
+					var b2 = t2.has_prefix(Tables.Tags.Tag.BUILTIN_PREFIX);
 					if(b1 && !b2) return -1;
 					if(!b1 && b2) return 1;
 
-					var u1 = t1.has_prefix(GamesDB.Tables.Tags.Tag.USER_PREFIX);
-					var u2 = t2.has_prefix(GamesDB.Tables.Tags.Tag.USER_PREFIX);
+					var u1 = t1.has_prefix(Tables.Tags.Tag.USER_PREFIX);
+					var u2 = t2.has_prefix(Tables.Tags.Tag.USER_PREFIX);
 					if(u1 && !u2) return -1;
 					if(!u1 && u2) return 1;
 
@@ -98,7 +99,7 @@ namespace GameHub.UI.Views.GamesView
 					tags_header_check.active = !tags_header_check.active;
 
 					is_toggling_all = true;
-					foreach(var tag in GamesDB.Tables.Tags.TAGS)
+					foreach(var tag in Tables.Tags.TAGS)
 					{
 						tag.selected = tags_header_check.active;
 					}
@@ -118,7 +119,7 @@ namespace GameHub.UI.Views.GamesView
 
 			load_tags();
 
-			GamesDB.get_instance().tags_updated.connect(load_tags);
+			Tables.Tags.instance.tags_updated.connect(load_tags);
 
 			vbox.show_all();
 		}
@@ -127,7 +128,7 @@ namespace GameHub.UI.Views.GamesView
 		{
 			tags_list.foreach(w => w.destroy());
 
-			foreach(var tag in GamesDB.Tables.Tags.TAGS)
+			foreach(var tag in Tables.Tags.TAGS)
 			{
 				tags_list.add(new TagRow(tag));
 				tag.notify["selected"].connect(update);
@@ -145,13 +146,13 @@ namespace GameHub.UI.Views.GamesView
 
 			selected_tags.clear();
 
-			foreach(var tag in GamesDB.Tables.Tags.TAGS)
+			foreach(var tag in Tables.Tags.TAGS)
 			{
 				if(tag.selected) selected_tags.add(tag);
-				GamesDB.get_instance().add_tag(tag, true);
+				Tables.Tags.add(tag, true);
 			}
 
-			tags_header_check.inconsistent = selected_tags.size != 0 && selected_tags.size != GamesDB.Tables.Tags.TAGS.size;
+			tags_header_check.inconsistent = selected_tags.size != 0 && selected_tags.size != Tables.Tags.TAGS.size;
 			tags_header_check.active = selected_tags.size > 0;
 
 			filters_changed(selected_tags);
@@ -161,9 +162,9 @@ namespace GameHub.UI.Views.GamesView
 
 		public class TagRow: ListBoxRow
 		{
-			public GamesDB.Tables.Tags.Tag tag;
+			public Tables.Tags.Tag tag;
 
-			public TagRow(GamesDB.Tables.Tags.Tag tag)
+			public TagRow(Tables.Tags.Tag tag)
 			{
 				this.tag = tag;
 

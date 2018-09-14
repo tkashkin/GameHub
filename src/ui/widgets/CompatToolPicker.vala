@@ -3,6 +3,7 @@ using Gdk;
 using Granite;
 
 using GameHub.Data;
+using GameHub.Data.DB;
 
 namespace GameHub.UI.Widgets
 {
@@ -21,16 +22,17 @@ namespace GameHub.UI.Widgets
 
 		public CompatToolPicker(Game game, bool install_mode)
 		{
-			Object(orientation: Orientation.VERTICAL, spacing: 8, game: game, install_mode: install_mode);
+			Object(orientation: Orientation.VERTICAL, spacing: 4, game: game, install_mode: install_mode);
 		}
 
 		construct
 		{
-			margin_top = margin_bottom = 4;
+			margin_bottom = 3;
 
 			var label = new Label(_("Compatibility tool:"));
 			label.hexpand = true;
 			label.xalign = 0;
+			label.margin_start = label.margin_end = 4;
 
 			model = new Gtk.ListStore(3, typeof(string), typeof(string), typeof(CompatTool));
 
@@ -62,7 +64,7 @@ namespace GameHub.UI.Widgets
 			tool_box.add(label);
 			tool_box.add(combo);
 
-			actions = new Box(Orientation.HORIZONTAL, 8);
+			actions = new Box(Orientation.HORIZONTAL, 4);
 
 			combo.changed.connect(() => {
 				Value v;
@@ -74,7 +76,7 @@ namespace GameHub.UI.Widgets
 				if(selected.can_run(game))
 				{
 					game.compat_tool = selected.id;
-					GamesDB.get_instance().add_game(game);
+					Tables.Games.add(game);
 				}
 
 				actions.foreach(w => w.destroy());
