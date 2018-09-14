@@ -17,11 +17,6 @@
 	opacity: 1;
 }
 
-.gamecard.static
-{
-	background-color: transparent;
-}
-
 .gamecard.hover:not(.installed)
 {
 	opacity: 0.8;

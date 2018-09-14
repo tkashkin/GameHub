@@ -39,7 +39,7 @@ namespace GameHub.UI.Dialogs
 			gravity = Gdk.Gravity.CENTER;
 
 			content = new Box(Orientation.HORIZONTAL, 8);
-			content.margin_start = content.margin_end = 8;
+			content.margin_start = content.margin_end = 6;
 
 			var tags_box = new Box(Orientation.VERTICAL, 0);
 
