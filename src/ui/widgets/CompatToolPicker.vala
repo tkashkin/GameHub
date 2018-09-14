@@ -27,7 +27,7 @@ namespace GameHub.UI.Widgets
 
 		construct
 		{
-			margin_bottom = 3;
+			margin_bottom = 4;
 
 			var label = new Label(_("Compatibility tool:"));
 			label.hexpand = true;

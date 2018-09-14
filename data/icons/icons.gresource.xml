@@ -10,7 +10,7 @@
 		<file alias="scalable/actions/platform-windows-symbolic.svg">symbolic/platforms/windows.svg</file>
 		<file alias="scalable/actions/platform-macos-symbolic.svg">symbolic/platforms/macos.svg</file>
 
-		<file alias="scalable/actions/wine-symbolic.svg">symbolic/tools/wine.svg</file>
+		<file alias="scalable/actions/tool-wine-symbolic.svg">symbolic/tools/wine.svg</file>
 
 		<file alias="scalable/actions/tag.svg">normal/tags/tag.svg</file>
 

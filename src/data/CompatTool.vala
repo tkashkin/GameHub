@@ -16,6 +16,8 @@ namespace GameHub.Data
 		public virtual bool can_install(Game game) { return false; }
 		public virtual bool can_run(Game game) { return false; }
 
+		public virtual File get_install_root(Game game) { return game.install_dir; }
+
 		public virtual async void install(Game game, File installer){}
 		public virtual async void run(Game game){}
 

@@ -37,28 +37,42 @@ namespace GameHub.Data.Compat
 					name = proton_dir.get_basename();
 					executable = proton_dir.get_child("proton");
 					installed = executable.query_exists();
+					wine_binary = proton_dir.get_child("dist/bin/wine");
 				}
 			}
 
 			if(installed)
 			{
 				actions = {
+					new CompatTool.Action("prefix", _("Open prefix directory"), game => {
+						Utils.open_uri(get_wineprefix(game).get_uri());
+					}),
 					new CompatTool.Action("winecfg", _("Run winecfg"), game => {
-						wineutil.begin(proton_dir.get_child("dist/bin/wine"), FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/proton_$(name)/pfx"), game, "winecfg");
+						wineutil.begin(null, game, "winecfg");
 					}),
 					new CompatTool.Action("winetricks", _("Run winetricks"), game => {
-						winetricks.begin(proton_dir.get_child("dist/bin/wine"), FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/proton_$(name)/pfx"), game);
+						winetricks.begin(null, game);
 					}),
 					new CompatTool.Action("regedit", _("Run regedit"), game => {
-						wineutil.begin(proton_dir.get_child("dist/bin/wine"), FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/proton_$(name)/pfx"), game, "regedit");
+						wineutil.begin(null, game, "regedit");
 					})
 				};
 			}
 		}
 
-		protected override async void exec(Game game, File file, File dir, bool parse_opts=true)
+		protected override async void exec(Game game, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
-			yield Utils.run_thread({ executable.get_path(), "run", file.get_path() }, dir.get_path(), prepare_env(game, parse_opts));
+			string[] cmd = { executable.get_path(), "run", file.get_path() };
+			if(args != null)
+			{
+				foreach(var arg in args) cmd += arg;
+			}
+			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(game, parse_opts));
+		}
+
+		protected override File get_wineprefix(Game game)
+		{
+			return FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/proton_$(name)/pfx");
 		}
 
 		protected override string[] prepare_env(Game game, bool parse_opts=true)

@@ -37,42 +37,38 @@ namespace GameHub.UI.Dialogs
 
 			modal = true;
 
-			content = new Box(Orientation.VERTICAL, 0);
-			content.margin_start = content.margin_end = 8;
+			var hbox = new Box(Orientation.HORIZONTAL, 8);
+			hbox.margin_start = hbox.margin_end = 5;
 
-			var title_hbox = new Box(Orientation.HORIZONTAL, 16);
+			content = new Box(Orientation.VERTICAL, 0);
 
 			var icon = new AutoSizeImage();
 			icon.set_constraint(48, 48, 1);
 			icon.set_size_request(48, 48);
 
 			title_label = new Label(null);
+			title_label.margin_start = title_label.margin_end = 8;
 			title_label.halign = Align.START;
 			title_label.hexpand = true;
 			title_label.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
 			subtitle_label = new Label(null);
+			subtitle_label.margin_start = subtitle_label.margin_end = 8;
 			subtitle_label.halign = Align.START;
 			subtitle_label.hexpand = true;
 
-			var title_vbox = new Box(Orientation.VERTICAL, 0);
+			hbox.add(icon);
+			hbox.add(content);
 
-			title_vbox.add(title_label);
-
-			title_hbox.add(icon);
-			title_hbox.add(title_vbox);
-			title_vbox.add(subtitle_label);
-
-			content.add(title_hbox);
+			content.add(title_label);
+			content.add(subtitle_label);
 
 			title_label.label = game.name;
 			Utils.load_image.begin(icon, game.icon, "icon");
 
 			installers_list = new ListBox();
+			installers_list.margin_top = 4;
 			installers_list.get_style_context().add_class("installers-list");
-			installers_list.margin_start = 56;
-			installers_list.margin_top = 8;
-			installers_list.margin_bottom = 8;
 
 			installers_list.set_sort_func((row1, row2) => {
 				var item1 = row1 as InstallerRow;
@@ -112,13 +108,6 @@ namespace GameHub.UI.Dialogs
 				}
 			}
 
-			if(Settings.UI.get_instance().show_unsupported_games || Settings.UI.get_instance().use_compat)
-			{
-				compat_tool_picker = new CompatToolPicker(game, true);
-				compat_tool_picker.margin_start = 64;
-				content.add(compat_tool_picker);
-			}
-
 			if(compatible_installers.size > 1)
 			{
 				subtitle_label.label = _("Select game installer");
@@ -127,6 +116,40 @@ namespace GameHub.UI.Dialogs
 			else
 			{
 				subtitle_label.label = _("Installer size: %s").printf(format_size(compatible_installers[0].full_size));
+			}
+
+			if(Settings.UI.get_instance().show_unsupported_games || Settings.UI.get_instance().use_compat)
+			{
+				var compat_tool_revealer = new Revealer();
+
+				compat_tool_picker = new CompatToolPicker(game, true);
+				compat_tool_picker.margin_start = 4;
+				compat_tool_picker.margin_top = 8;
+
+				compat_tool_revealer.add(compat_tool_picker);
+
+				if(compatible_installers.size > 1)
+				{
+					compat_tool_revealer.reveal_child = false;
+
+					installers_list.row_selected.connect(r => {
+						var row = r as InstallerRow;
+						if(row == null)
+						{
+							compat_tool_revealer.reveal_child = false;
+						}
+						else
+						{
+							compat_tool_revealer.reveal_child = row.installer.platform == Platform.WINDOWS;
+						}
+					});
+				}
+				else
+				{
+					compat_tool_revealer.reveal_child = !game.is_supported(null, false) && game.is_supported(null, true);
+				}
+
+				content.add(compat_tool_revealer);
 			}
 
 			destroy.connect(() => { if(!is_finished) cancelled(); });
@@ -164,8 +187,8 @@ namespace GameHub.UI.Dialogs
 			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
 			install_btn.grab_default();
 
-			get_content_area().add(content);
-			get_content_area().set_size_request(340, 96);
+			get_content_area().add(hbox);
+			get_content_area().set_size_request(380, 96);
 			show_all();
 		}
 

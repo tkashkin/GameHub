@@ -34,8 +34,7 @@ namespace GameHub.UI.Dialogs
 			modal = true;
 
 			var hbox = new Box(Orientation.HORIZONTAL, 8);
-			hbox.margin_start = 8;
-			hbox.margin_end = 5;
+			hbox.margin_start = hbox.margin_end = 5;
 
 			content = new Box(Orientation.VERTICAL, 0);
 
