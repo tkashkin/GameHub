@@ -1,4 +1,5 @@
 using Gtk;
+using Gdk;
 using GLib;
 using Gee;
 using GameHub.Utils;
@@ -27,6 +28,7 @@ namespace GameHub.UI.Dialogs
 		private bool is_finished = false;
 
 		private CompatToolPicker compat_tool_picker;
+		private ListBox opts_list;
 
 		public GameInstallDialog(Game game, ArrayList<Game.Installer> installers)
 		{
@@ -122,11 +124,14 @@ namespace GameHub.UI.Dialogs
 			{
 				var compat_tool_revealer = new Revealer();
 
+				var compat_tool_box = new Box(Orientation.VERTICAL, 4);
+
 				compat_tool_picker = new CompatToolPicker(game, true);
 				compat_tool_picker.margin_start = 4;
 				compat_tool_picker.margin_top = 8;
 
-				compat_tool_revealer.add(compat_tool_picker);
+				compat_tool_box.add(compat_tool_picker);
+				compat_tool_revealer.add(compat_tool_box);
 
 				if(compatible_installers.size > 1)
 				{
@@ -150,6 +155,15 @@ namespace GameHub.UI.Dialogs
 				}
 
 				content.add(compat_tool_revealer);
+
+				opts_list = new ListBox();
+				opts_list.visible = false;
+				opts_list.get_style_context().add_class("tags-list");
+				opts_list.selection_mode = SelectionMode.NONE;
+
+				update_options();
+				compat_tool_picker.notify["selected"].connect(update_options);
+				compat_tool_box.add(opts_list);
 			}
 
 			destroy.connect(() => { if(!is_finished) cancelled(); });
@@ -192,6 +206,22 @@ namespace GameHub.UI.Dialogs
 			show_all();
 		}
 
+		private void update_options()
+		{
+			opts_list.foreach(r => r.destroy());
+			opts_list.visible = false;
+
+			if(compat_tool_picker == null || compat_tool_picker.selected == null
+				|| compat_tool_picker.selected.install_options == null) return;
+
+			foreach(var opt in compat_tool_picker.selected.install_options)
+			{
+				opts_list.add(new OptionRow(opt));
+			}
+
+			opts_list.show_all();
+		}
+
 		private class InstallerRow: ListBoxRow
 		{
 			public Game game;
@@ -219,6 +249,53 @@ namespace GameHub.UI.Dialogs
 				box.add(name);
 				box.add(size);
 				child = box;
+			}
+		}
+
+		private class OptionRow: ListBoxRow
+		{
+			public CompatTool.Option option { get; construct; }
+
+			public OptionRow(CompatTool.Option option)
+			{
+				Object(option: option);
+			}
+
+			construct
+			{
+				var ebox = new EventBox();
+				ebox.above_child = true;
+
+				var box = new Box(Orientation.HORIZONTAL, 8);
+				box.margin_start = box.margin_end = 8;
+				box.margin_top = box.margin_bottom = 6;
+
+				var check = new CheckButton();
+				check.active = option.enabled;
+
+				var name = new Label(option.name);
+				name.halign = Align.START;
+				name.xalign = 0;
+				name.hexpand = true;
+
+				ebox.tooltip_text = option.description;
+
+				box.add(check);
+				box.add(name);
+
+				ebox.add_events(EventMask.ALL_EVENTS_MASK);
+				ebox.button_release_event.connect(e => {
+					if(e.button == 1)
+					{
+						check.active = !check.active;
+						option.enabled = check.active;
+					}
+					return true;
+				});
+
+				ebox.add(box);
+
+				child = ebox;
 			}
 		}
 	}
