@@ -43,7 +43,7 @@
 	<releases>
 		<release type="development" version="0.10.0" date="2018-09-14">
 			<description>
-				<p>Compatibility tools support for non-native games:
+				<p>Compatibility tools support for non-native games:</p>
 				<ul>
 					<li>Innoextract</li>
 					<li>Proton</li>
