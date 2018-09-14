@@ -41,6 +41,19 @@
 	</screenshots>
 
 	<releases>
+		<release type="development" version="0.10.0" date="2018-09-14">
+			<description>
+				<p>Compatibility tools support for non-native games:
+				<ul>
+					<li>Innoextract</li>
+					<li>Proton</li>
+					<li>Wine</li>
+				</ul>
+				<p>Database rewrite</p>
+				<p>Performance improvements</p>
+				<p>Bugfixes</p>
+			</description>
+		</release>
 		<release type="development" version="0.9.0" date="2018-09-04">
 			<description>
 				<ul>
