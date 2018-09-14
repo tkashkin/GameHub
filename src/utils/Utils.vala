@@ -46,7 +46,6 @@ namespace GameHub.Utils
 
 		var cdir = dir ?? Environment.get_home_dir();
 		var cenv = env ?? Environ.get();
-		var ccmd = cmd;
 
 		#if FLATPAK
 		if(override_runtime && ProjectConfig.RUNTIME.length > 0)
@@ -57,8 +56,8 @@ namespace GameHub.Utils
 
 		try
 		{
-			debug("[Utils.run] Running {'%s'}", string.joinv("' '", cmd));
-			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out stdout);
+			debug("[Utils.run] Running {'%s'} in '%s'", string.joinv("' '", cmd), cdir);
+			Process.spawn_sync(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out stdout);
 			debug("[Utils.run] Output: '%s'", stdout);
 		}
 		catch (Error e)
@@ -74,8 +73,6 @@ namespace GameHub.Utils
 
 		var cdir = dir ?? Environment.get_home_dir();
 		var cenv = env ?? Environ.get();
-		var ccmd = cmd;
-		var cwait = wait;
 
 		#if FLATPAK
 		if(override_runtime && ProjectConfig.RUNTIME.length > 0)
@@ -86,8 +83,8 @@ namespace GameHub.Utils
 
 		try
 		{
-			debug("[Utils.run_async] Running {'%s'}", string.joinv("' '", cmd));
-			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
+			debug("[Utils.run_async] Running {'%s'} in '%s'", string.joinv("' '", cmd), cdir);
+			Process.spawn_async(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
 
 			ChildWatch.add(pid, (pid, status) => {
 				Process.close_pid(pid);
@@ -99,7 +96,7 @@ namespace GameHub.Utils
 			warning("[Utils.run_async] %s", e.message);
 		}
 
-		if(cwait) yield;
+		if(wait) yield;
 	}
 
 	public static async string run_thread(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false)
