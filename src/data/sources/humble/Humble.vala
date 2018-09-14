@@ -1,5 +1,5 @@
-using Gtk;
 using Gee;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Humble
@@ -10,7 +10,7 @@ namespace GameHub.Data.Sources.Humble
 
 		public override string id { get { return "humble"; } }
 		public override string name { get { return "Humble Bundle"; } }
-		public override string icon { get { return "humble-symbolic"; } }
+		public override string icon { get { return "source-humble-symbolic"; } }
 
 		public override bool enabled
 		{
@@ -100,14 +100,14 @@ namespace GameHub.Data.Sources.Humble
 			Utils.thread("HumbleLoading", () => {
 				_games.clear();
 
-				var cached = GamesDB.get_instance().get_games(this);
+				var cached = Tables.Games.get_all(this);
 				games_count = 0;
 				if(cached.size > 0)
 				{
 					foreach(var g in cached)
 					{
 						if(g.platforms.size == 0) continue;
-						if(!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g))
+						if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
 						{
 							g.update_game_info.begin((obj, res) => {
 								g.update_game_info.end(res);
@@ -154,7 +154,7 @@ namespace GameHub.Data.Sources.Humble
 						var game = new HumbleGame(this, key, product);
 						if(game.platforms.size == 0) continue;
 						bool is_new_game = !_games.contains(game);
-						if(is_new_game && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
+						if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
 						{
 							game.update_game_info.begin((obj, res) => {
 								game.update_game_info.end(res);

@@ -2,6 +2,7 @@ using Gee;
 using Gtk;
 
 using GameHub.Utils;
+using GameHub.Data.DB;
 
 namespace GameHub.Data
 {
@@ -20,6 +21,7 @@ namespace GameHub.Data
 		public string? info_detailed { get; protected set; }
 
 		public string? compat_tool { get; set; }
+		public string? compat_tool_settings { get; set; }
 
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
 		public virtual bool is_supported(Platform? platform=null, bool with_compat=true)
@@ -34,8 +36,8 @@ namespace GameHub.Data
 			return false;
 		}
 
-		public ArrayList<GamesDB.Tables.Tags.Tag> tags { get; protected set; default = new ArrayList<GamesDB.Tables.Tags.Tag>(GamesDB.Tables.Tags.Tag.is_equal); }
-		public bool has_tag(GamesDB.Tables.Tags.Tag tag)
+		public ArrayList<Tables.Tags.Tag> tags { get; protected set; default = new ArrayList<Tables.Tags.Tag>(Tables.Tags.Tag.is_equal); }
+		public bool has_tag(Tables.Tags.Tag tag)
 		{
 			return has_tag_id(tag.id);
 		}
@@ -47,27 +49,27 @@ namespace GameHub.Data
 			}
 			return false;
 		}
-		public void add_tag(GamesDB.Tables.Tags.Tag tag)
+		public void add_tag(Tables.Tags.Tag tag)
 		{
 			if(!tags.contains(tag))
 			{
 				tags.add(tag);
 			}
-			GamesDB.get_instance().add_game(this);
+			Tables.Games.add(this);
 			status_change(_status);
 			tags_update();
 		}
-		public void remove_tag(GamesDB.Tables.Tags.Tag tag)
+		public void remove_tag(Tables.Tags.Tag tag)
 		{
 			if(tags.contains(tag))
 			{
 				tags.remove(tag);
 			}
-			GamesDB.get_instance().add_game(this);
+			Tables.Games.add(this);
 			status_change(_status);
 			tags_update();
 		}
-		public void toggle_tag(GamesDB.Tables.Tags.Tag tag)
+		public void toggle_tag(Tables.Tags.Tag tag)
 		{
 			if(tags.contains(tag))
 			{
@@ -146,7 +148,7 @@ namespace GameHub.Data
 				if(update)
 				{
 					update_status();
-					GamesDB.get_instance().add_game(this);
+					Tables.Games.add(this);
 				}
 			}
 
@@ -200,7 +202,7 @@ namespace GameHub.Data
 				if(update)
 				{
 					update_status();
-					GamesDB.get_instance().add_game(this);
+					Tables.Games.add(this);
 				}
 			}
 

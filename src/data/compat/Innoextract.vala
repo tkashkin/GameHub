@@ -18,6 +18,7 @@ namespace GameHub.Data.Compat
 			id = @"innoextract";
 			name = @"Innoextract";
 			icon = "package-x-generic-symbolic";
+			installed = false;
 
 			var which = Utils.run({"which", binary}).strip();
 

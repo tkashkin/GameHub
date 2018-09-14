@@ -2,6 +2,7 @@ using Gtk;
 using Gdk;
 using Granite;
 using GameHub.Data;
+using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -32,12 +33,12 @@ namespace GameHub.UI.Views.GamesView
 			details.activate.connect(() => new Dialogs.GameDetailsDialog(game).show_all());
 
 			var favorite = new Gtk.CheckMenuItem.with_label(_("Favorite"));
-			favorite.active = game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
-			favorite.toggled.connect(() => game.toggle_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES));
+			favorite.active = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+			favorite.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_FAVORITES));
 
 			var hidden = new Gtk.CheckMenuItem.with_label(_("Hidden"));
-			hidden.active = game.has_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN);
-			hidden.toggled.connect(() => game.toggle_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN));
+			hidden.active = game.has_tag(Tables.Tags.BUILTIN_HIDDEN);
+			hidden.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_HIDDEN));
 
 			var properties = new Gtk.MenuItem.with_label(_("Properties"));
 			properties.activate.connect(() => new Dialogs.GamePropertiesDialog(game).show_all());

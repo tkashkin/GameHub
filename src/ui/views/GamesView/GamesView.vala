@@ -3,6 +3,7 @@ using GLib;
 using Gee;
 using Granite;
 using GameHub.Data;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.UI.Views.GamesView
@@ -192,8 +193,8 @@ namespace GameHub.UI.Views.GamesView
 					var s1 = item1.game.status.state;
 					var s2 = item2.game.status.state;
 
-					var f1 = item1.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
-					var f2 = item2.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
+					var f1 = item1.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+					var f2 = item2.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 
 					if(f1 && !f2) return -1;
 					if(f2 && !f1) return 1;
@@ -225,8 +226,8 @@ namespace GameHub.UI.Views.GamesView
 				var prev_item = prev as GameListRow;
 				var s = item.game.status.state;
 				var ps = prev_item != null ? prev_item.game.status.state : s;
-				var f = item.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
-				var pf = prev_item != null ? prev_item.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES) : f;
+				var f = item.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+				var pf = prev_item != null ? prev_item.game.has_tag(Tables.Tags.BUILTIN_FAVORITES) : f;
 
 				if(prev_item != null && f == pf && (f || s == ps)) row.set_header(null);
 				else
@@ -419,7 +420,11 @@ namespace GameHub.UI.Views.GamesView
 					loading_sources--;
 					spinner.active = loading_sources > 0;
 
-					if(loading_sources == 0 && new_games_added) merge_games();
+					if(loading_sources == 0)
+					{
+						if(new_games_added) merge_games();
+						update_games();
+					}
 					update_view();
 
 					if(src.games_count == 0)
@@ -488,7 +493,7 @@ namespace GameHub.UI.Views.GamesView
 
 			if(ui_settings.merge_games)
 			{
-				merges = GamesDB.get_instance().get_merged_games(game);
+				merges = Tables.Merges.get(game);
 				if(!same_src && merges != null && merges.size > 0)
 				{
 					foreach(var g in merges)
@@ -503,8 +508,8 @@ namespace GameHub.UI.Views.GamesView
 			}
 
 			var tags = filters_popover.selected_tags;
-			bool tags_all_enabled = tags == null || tags.size == 0 || tags.size == GamesDB.Tables.Tags.TAGS.size;
-			bool tags_all_except_hidden_enabled = tags != null && tags.size == GamesDB.Tables.Tags.TAGS.size - 1 && !(GamesDB.Tables.Tags.BUILTIN_HIDDEN in tags);
+			bool tags_all_enabled = tags == null || tags.size == 0 || tags.size == Tables.Tags.TAGS.size;
+			bool tags_all_except_hidden_enabled = tags != null && tags.size == Tables.Tags.TAGS.size - 1 && !(Tables.Tags.BUILTIN_HIDDEN in tags);
 			bool tags_match = false;
 			bool tags_match_merged = false;
 
@@ -528,7 +533,7 @@ namespace GameHub.UI.Views.GamesView
 				}
 			}
 
-			bool hidden = game.has_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN) && (tags == null || tags.size == 0 || !(GamesDB.Tables.Tags.BUILTIN_HIDDEN in tags));
+			bool hidden = game.has_tag(Tables.Tags.BUILTIN_HIDDEN) && (tags == null || tags.size == 0 || !(Tables.Tags.BUILTIN_HIDDEN in tags));
 
 			return (same_src || merged_src) && (tags_all_enabled || tags_all_except_hidden_enabled || tags_match || tags_match_merged) && !hidden && Utils.strip_name(search.text).casefold() in Utils.strip_name(game.name).casefold();
 		}
@@ -584,29 +589,42 @@ namespace GameHub.UI.Views.GamesView
 			});
 		}
 
-		private void merge_games()
+		private void update_games()
 		{
-			if(!ui_settings.merge_games || in_destruction()) return;
-			Utils.thread("Merging", () => {
+			if(in_destruction()) return;
+			Utils.thread("Updating", () => {
 				foreach(var src in sources)
 				{
-					merge_games_from(src);
+					foreach(var game in src.games)
+					{
+						game.update_game_info.begin();
+						Thread.usleep(50000);
+					}
 				}
 			});
 		}
 
-		private void merge_games_from(GameSource src)
+		private void merge_games()
 		{
-			int i = 0;
+			if(!ui_settings.merge_games || in_destruction()) return;
+			Utils.thread("Merging", () => {
+				merge_games_async.begin();
+			});
+		}
+
+		private async void merge_games_async()
+		{
+			foreach(var src in sources)
+			{
+				yield merge_games_from(src);
+			}
+		}
+
+		private async void merge_games_from(GameSource src)
+		{
 			foreach(var game in src.games)
 			{
-				merge_game(game);
-				i++;
-				if(i >= 10)
-				{
-					Thread.usleep(100000);
-					i = 0;
-				}
+				yield merge_game_async(game);
 			}
 		}
 
@@ -614,30 +632,49 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
 			Utils.thread("Merging-" + game.source.id + ":" + game.id, () => {
-				foreach(var src in sources)
-				{
-					foreach(var game2 in src.games)
-					{
-						if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC) continue;
-						bool name_match_exact = Utils.strip_name(game.name).casefold() == Utils.strip_name(game2.name).casefold();
-						bool name_match_fuzzy_prefix = game.source != src
-						                  && (Utils.strip_name(game.name, ":").casefold().has_prefix(Utils.strip_name(game2.name).casefold() + ":")
-						                  || Utils.strip_name(game2.name, ":").casefold().has_prefix(Utils.strip_name(game.name).casefold() + ":"));
-						if(name_match_exact || name_match_fuzzy_prefix)
-						{
-							GamesDB.get_instance().merge(game, game2);
-							debug(@"[Merge] Merging '$(game.name)' ($(game.source.id):$(game.id)) with '$(game2.name)' ($(game2.source.id):$(game2.id))");
+				merge_game_async.begin(game);
+			});
+		}
 
-							Idle.add(() => {
-								remove_game(game2);
-								games_list.foreach(r => { (r as GameListRow).update(); });
-								games_grid.foreach(c => { (c as GameCard).update(); });
-								return Source.REMOVE;
-							});
-						}
-					}
+		private async void merge_game_async(Game game)
+		{
+			foreach(var src in sources)
+			{
+				foreach(var game2 in src.games)
+				{
+					yield merge_game_with(src, game, game2);
+				}
+			}
+		}
+
+		private async void merge_game_with(GameSource src, Game game, Game game2)
+		{
+			Utils.thread("Merging-" + game.source.id + ":" + game.id + "-" + game2.source.id + ":" + game2.id, () => {
+				if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC)
+				{
+					merge_game_with.callback();
+					return;
+				}
+
+				bool name_match_exact = Utils.strip_name(game.name).casefold() == Utils.strip_name(game2.name).casefold();
+				bool name_match_fuzzy_prefix = game.source != src
+				                  && (Utils.strip_name(game.name, ":").casefold().has_prefix(Utils.strip_name(game2.name).casefold() + ":")
+				                  || Utils.strip_name(game2.name, ":").casefold().has_prefix(Utils.strip_name(game.name).casefold() + ":"));
+				if(name_match_exact || name_match_fuzzy_prefix)
+				{
+					Tables.Merges.add(game, game2);
+					debug(@"[Merge] Merging '$(game.name)' ($(game.source.id):$(game.id)) with '$(game2.name)' ($(game2.source.id):$(game2.id))");
+
+					Idle.add(() => {
+						remove_game(game2);
+						games_list.foreach(r => { (r as GameListRow).update(); });
+						games_grid.foreach(c => { (c as GameCard).update(); });
+						merge_game_with.callback();
+						return Source.REMOVE;
+					});
 				}
 			});
+			yield;
 		}
 	}
 }

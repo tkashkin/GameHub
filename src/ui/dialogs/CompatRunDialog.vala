@@ -33,32 +33,29 @@ namespace GameHub.UI.Dialogs
 
 			modal = true;
 
-			content = new Box(Orientation.VERTICAL, 0);
-			content.margin_start = content.margin_end = 8;
+			var hbox = new Box(Orientation.HORIZONTAL, 8);
+			hbox.margin_start = 8;
+			hbox.margin_end = 5;
 
-			var title_hbox = new Box(Orientation.HORIZONTAL, 16);
+			content = new Box(Orientation.VERTICAL, 0);
 
 			var icon = new AutoSizeImage();
 			icon.set_constraint(48, 48, 1);
 			icon.set_size_request(48, 48);
 
 			title_label = new Label(game.name);
+			title_label.margin_start = 8;
 			title_label.halign = Align.START;
 			title_label.valign = Align.START;
 			title_label.hexpand = true;
 			title_label.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
-
-			title_hbox.add(icon);
-			title_hbox.add(title_label);
-
-			content.add(title_hbox);
+			content.add(title_label);
 
 			compat_tool_picker = new CompatToolPicker(game, false);
-			compat_tool_picker.margin_start = 64;
+			compat_tool_picker.margin_start = 4;
 			content.add(compat_tool_picker);
 
 			opts_list = new ListBox();
-			opts_list.margin_start = 56;
 			opts_list.visible = false;
 			opts_list.get_style_context().add_class("tags-list");
 			opts_list.selection_mode = SelectionMode.NONE;
@@ -83,7 +80,10 @@ namespace GameHub.UI.Dialogs
 			run_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
 			run_btn.grab_default();
 
-			get_content_area().add(content);
+			hbox.add(icon);
+			hbox.add(content);
+
+			get_content_area().add(hbox);
 			get_content_area().set_size_request(340, 96);
 			show_all();
 		}

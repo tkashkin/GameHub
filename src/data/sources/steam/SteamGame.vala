@@ -1,4 +1,4 @@
-using Gtk;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Steam
@@ -31,16 +31,19 @@ namespace GameHub.Data.Sources.Steam
 		public SteamGame.from_db(Steam src, Sqlite.Statement s)
 		{
 			source = src;
-			id = GamesDB.Tables.Games.ID.get(s);
-			name = GamesDB.Tables.Games.NAME.get(s);
-			icon = GamesDB.Tables.Games.ICON.get(s);
-			image = GamesDB.Tables.Games.IMAGE.get(s);
-			info = GamesDB.Tables.Games.INFO.get(s);
-			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
-			compat_tool = GamesDB.Tables.Games.COMPAT_TOOL.get(s);
+			id = Tables.Games.ID.get(s);
+			name = Tables.Games.NAME.get(s);
+			info = Tables.Games.INFO.get(s);
+			info_detailed = Tables.Games.INFO_DETAILED.get(s);
+			icon = Tables.Games.ICON.get(s);
+			image = Tables.Games.IMAGE.get(s);
+			info = Tables.Games.INFO.get(s);
+			info_detailed = Tables.Games.INFO_DETAILED.get(s);
+			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
+			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 
 			platforms.clear();
-			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
+			var pls = Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
 				foreach(var p in Platforms)
@@ -54,10 +57,10 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			tags.clear();
-			var tag_ids = (GamesDB.Tables.Games.TAGS.get(s) ?? "").split(",");
+			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
 			foreach(var tid in tag_ids)
 			{
-				foreach(var t in GamesDB.Tables.Tags.TAGS)
+				foreach(var t in Tables.Tags.TAGS)
 				{
 					if(tid == t.id)
 					{
@@ -131,7 +134,7 @@ namespace GameHub.Data.Sources.Steam
 			{
 				debug("[Steam:%s] No platform support data, %d tries failed, assuming Windows support", id, metadata_tries);
 				platforms.add(Platform.WINDOWS);
-				GamesDB.get_instance().add_game(this);
+				Tables.Games.add(this);
 				game_info_updated = true;
 				return;
 			}
@@ -144,7 +147,7 @@ namespace GameHub.Data.Sources.Steam
 				}
 			}
 
-			GamesDB.get_instance().add_game(this);
+			Tables.Games.add(this);
 
 			game_info_updated = true;
 		}

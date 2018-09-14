@@ -53,7 +53,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			{
 				entry.text = steam_auth.api_key;
 			}
-			entry.primary_icon_name = "steam-symbolic";
+			entry.primary_icon_name = "source-steam-symbolic";
 			entry.secondary_icon_name = "edit-delete-symbolic";
 			entry.secondary_icon_tooltip_text = _("Restore default API key");
 			entry.set_size_request(280, -1);

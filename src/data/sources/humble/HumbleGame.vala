@@ -1,5 +1,5 @@
-using Gtk;
 using Gee;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Humble
@@ -48,18 +48,19 @@ namespace GameHub.Data.Sources.Humble
 		public HumbleGame.from_db(Humble src, Sqlite.Statement s)
 		{
 			source = src;
-			id = GamesDB.Tables.Games.ID.get(s);
-			name = GamesDB.Tables.Games.NAME.get(s);
-			icon = GamesDB.Tables.Games.ICON.get(s);
-			image = GamesDB.Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(GamesDB.Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
-			executable = FSUtils.file(GamesDB.Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
-			info = GamesDB.Tables.Games.INFO.get(s);
-			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
-			compat_tool = GamesDB.Tables.Games.COMPAT_TOOL.get(s);
+			id = Tables.Games.ID.get(s);
+			name = Tables.Games.NAME.get(s);
+			info = Tables.Games.INFO.get(s);
+			info_detailed = Tables.Games.INFO_DETAILED.get(s);
+			icon = Tables.Games.ICON.get(s);
+			image = Tables.Games.IMAGE.get(s);
+			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			executable = FSUtils.file(Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
+			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
+			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 
 			platforms.clear();
-			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
+			var pls = Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
 				foreach(var p in Platforms)
@@ -73,10 +74,10 @@ namespace GameHub.Data.Sources.Humble
 			}
 
 			tags.clear();
-			var tag_ids = (GamesDB.Tables.Games.TAGS.get(s) ?? "").split(",");
+			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
 			foreach(var tid in tag_ids)
 			{
-				foreach(var t in GamesDB.Tables.Tags.TAGS)
+				foreach(var t in Tables.Tags.TAGS)
 				{
 					if(tid == t.id)
 					{
@@ -164,7 +165,7 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			GamesDB.get_instance().add_game(this);
+			Tables.Games.add(this);
 
 			update_status();
 
@@ -214,7 +215,7 @@ namespace GameHub.Data.Sources.Humble
 			{
 				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
 				executable = FSUtils.file(install_dir.get_path(), "start.sh");
-				GamesDB.get_instance().add_game(this);
+				Tables.Games.add(this);
 				update_status();
 			}
 		}

@@ -5,7 +5,12 @@ src/app.vala
 
 src/data/Game.vala
 src/data/GameSource.vala
-src/data/GamesDB.vala
+
+src/data/db/Database.vala
+src/data/db/Table.vala
+src/data/db/tables/Games.vala
+src/data/db/tables/Tags.vala
+src/data/db/tables/Merges.vala
 
 src/data/sources/steam/Steam.vala
 src/data/sources/steam/SteamGame.vala

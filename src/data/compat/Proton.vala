@@ -19,7 +19,8 @@ namespace GameHub.Data.Compat
 		{
 			id = @"proton_$(appid)";
 			name = "Proton";
-			icon = "steam-symbolic";
+			icon = "source-steam-symbolic";
+			installed = false;
 
 			options = {
 				new CompatTool.Option("PROTON_NO_ESYNC", _("Disable esync"), false),
