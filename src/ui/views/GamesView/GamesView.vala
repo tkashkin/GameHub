@@ -608,51 +608,42 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(!ui_settings.merge_games || in_destruction()) return;
 			Utils.thread("Merging", () => {
-				merge_games_async.begin();
+				foreach(var src in sources)
+				{
+					merge_games_from(src);
+				}
 			});
 		}
 
-		private async void merge_games_async()
+		private void merge_games_from(GameSource src)
 		{
-			foreach(var src in sources)
-			{
-				yield merge_games_from(src);
-			}
-		}
-
-		private async void merge_games_from(GameSource src)
-		{
-			foreach(var game in src.games)
-			{
-				yield merge_game_async(game);
-			}
+			Utils.thread("Merging-" + src.id, () => {
+				foreach(var game in src.games)
+				{
+					merge_game(game);
+				}
+			});
 		}
 
 		private void merge_game(Game game)
 		{
 			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
 			Utils.thread("Merging-" + game.source.id + ":" + game.id, () => {
-				merge_game_async.begin(game);
+				foreach(var src in sources)
+				{
+					foreach(var game2 in src.games)
+					{
+						merge_game_with_game(src, game, game2);
+					}
+				}
 			});
 		}
 
-		private async void merge_game_async(Game game)
-		{
-			foreach(var src in sources)
-			{
-				foreach(var game2 in src.games)
-				{
-					yield merge_game_with(src, game, game2);
-				}
-			}
-		}
-
-		private async void merge_game_with(GameSource src, Game game, Game game2)
+		private void merge_game_with_game(GameSource src, Game game, Game game2)
 		{
 			Utils.thread("Merging-" + game.source.id + ":" + game.id + "-" + game2.source.id + ":" + game2.id, () => {
 				if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC)
 				{
-					merge_game_with.callback();
 					return;
 				}
 
@@ -669,12 +660,10 @@ namespace GameHub.UI.Views.GamesView
 						remove_game(game2);
 						games_list.foreach(r => { (r as GameListRow).update(); });
 						games_grid.foreach(c => { (c as GameCard).update(); });
-						merge_game_with.callback();
 						return Source.REMOVE;
 					});
 				}
 			});
-			yield;
 		}
 	}
 }

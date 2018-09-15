@@ -6,7 +6,7 @@ namespace GameHub.Data.Sources.Humble
 {
 	public class HumbleGame: Game
 	{
-		private string order_id;
+		public string order_id;
 
 		private bool game_info_updated = false;
 
@@ -27,14 +27,17 @@ namespace GameHub.Data.Sources.Humble
 			info = Json.to_string(json_node, false);
 
 			platforms.clear();
-			foreach(var dl in json_obj.get_array_member("downloads").get_elements())
+			if(json_obj.has_member("downloads") && json_obj.get_member("downloads").get_node_type() == Json.NodeType.ARRAY)
 			{
-				var pl = dl.get_object().get_string_member("platform");
-				foreach(var p in Platforms)
+				foreach(var dl in json_obj.get_array_member("downloads").get_elements())
 				{
-					if(pl == p.id())
+					var pl = dl.get_object().get_string_member("platform");
+					foreach(var p in Platforms)
 					{
-						platforms.add(p);
+						if(pl == p.id())
+						{
+							platforms.add(p);
+						}
 					}
 				}
 			}
@@ -54,7 +57,7 @@ namespace GameHub.Data.Sources.Humble
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
 			executable = FSUtils.file(Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
@@ -143,25 +146,36 @@ namespace GameHub.Data.Sources.Humble
 			var product = Parser.parse_json(info).get_object();
 			if(product == null) return;
 
-			foreach(var dl_node in product.get_array_member("downloads").get_elements())
+			if(product.has_member("_gamehub_description"))
 			{
-				var dl = dl_node.get_object();
-				var id = dl.get_string_member("machine_name");
-				var os = dl.get_string_member("platform");
-				var platform = CurrentPlatform;
-				foreach(var p in Platforms)
-				{
-					if(os == p.id())
-					{
-						platform = p;
-						break;
-					}
-				}
+				description = product.get_string_member("_gamehub_description");
+			}
 
-				foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
+			if(product.has_member("downloads") && product.get_member("downloads").get_node_type() == Json.NodeType.ARRAY)
+			{
+				foreach(var dl_node in product.get_array_member("downloads").get_elements())
 				{
-					var installer = new Installer(id, platform, dls_node.get_object());
-					installers.add(installer);
+					var dl = dl_node.get_object();
+					var id = dl.get_string_member("machine_name");
+					var os = dl.get_string_member("platform");
+					var platform = CurrentPlatform;
+					foreach(var p in Platforms)
+					{
+						if(os == p.id())
+						{
+							platform = p;
+							break;
+						}
+					}
+
+					if(dl.has_member("download_struct") && dl.get_member("download_struct").get_node_type() == Json.NodeType.ARRAY)
+					{
+						foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
+						{
+							var installer = new Installer(id, platform, dls_node.get_object());
+							installers.add(installer);
+						}
+					}
 				}
 			}
 

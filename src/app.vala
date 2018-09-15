@@ -24,7 +24,7 @@ namespace GameHub
 		protected override void activate()
 		{
 			info("Distro: %s", Utils.get_distro());
-			
+
 			FSUtils.make_dirs();
 
 			Database.create();
@@ -32,7 +32,7 @@ namespace GameHub
 			Platforms = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS };
 			CurrentPlatform = Platform.LINUX;
 
-			GameSources = { new Steam(), new GOG(), new Humble() };
+			GameSources = { new Steam(), new GOG(), new Humble(), new Trove() };
 
 			CompatTool[] tools = { new Compat.Innoextract() };
 			foreach(var appid in Compat.Proton.APPIDS)

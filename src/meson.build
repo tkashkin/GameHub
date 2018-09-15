@@ -21,6 +21,7 @@ deps = [
 	dependency('gee-0.8'),
 	dependency('sqlite3'),
 	dependency('libsoup-2.4'),
+	dependency('libxml-2.0'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
@@ -50,6 +51,7 @@ executable(
 
 	'data/sources/humble/Humble.vala',
 	'data/sources/humble/HumbleGame.vala',
+	'data/sources/humble/Trove.vala',
 
 	'data/db/Database.vala',
 	'data/db/Table.vala',

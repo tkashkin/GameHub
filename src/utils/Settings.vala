@@ -136,6 +136,8 @@ namespace GameHub.Settings
 			public bool authenticated { get; set; }
 			public string access_token { get; set; }
 
+			public bool load_trove_games { get; set; }
+
 			public Humble()
 			{
 				base(ProjectConfig.PROJECT_NAME + ".auth.humble");

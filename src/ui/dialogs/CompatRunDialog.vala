@@ -23,7 +23,7 @@ namespace GameHub.UI.Dialogs
 
 		public CompatRunDialog(Game game)
 		{
-			Object(game: game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility tool"));
+			Object(game: game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"));
 		}
 
 		construct
@@ -71,12 +71,13 @@ namespace GameHub.UI.Dialogs
 				{
 					case ResponseType.ACCEPT:
 						run_with_compat();
+						destroy();
 						break;
 				}
 			});
 
 			var run_btn = add_button(_("Run"), ResponseType.ACCEPT);
-			run_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
+			run_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
 			run_btn.grab_default();
 
 			hbox.add(icon);

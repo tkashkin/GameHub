@@ -75,6 +75,7 @@ namespace GameHub.Data.DB.Tables
 		public static bool add(Game game)
 		{
 			if(game is Sources.GOG.GOGGame.DLC) return false;
+			//if(game is Sources.Humble.HumbleGame && ((Sources.Humble.HumbleGame) game).order_id == Sources.Humble.Trove.FAKE_ORDER) return false;
 
 			unowned Sqlite.Database? db = Database.instance.db;
 			if(db == null) return false;
