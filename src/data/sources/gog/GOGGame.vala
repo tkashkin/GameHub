@@ -215,7 +215,11 @@ namespace GameHub.Data.Sources.GOG
 
 			wnd.install.connect((installer, tool) => {
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
+
+				if(installer.parts.size > 0)
+				{
+					FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
+				}
 
 				installer.install.begin(this, tool, (obj, res) => {
 					installer.install.end(res);
