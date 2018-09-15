@@ -5,6 +5,7 @@
 		<file alias="scalable/actions/source-steam-symbolic.svg">symbolic/sources/steam.svg</file>
 		<file alias="scalable/actions/source-gog-symbolic.svg">symbolic/sources/gog.svg</file>
 		<file alias="scalable/actions/source-humble-symbolic.svg">symbolic/sources/humble.svg</file>
+		<file alias="scalable/actions/source-humble-trove-symbolic.svg">symbolic/sources/humble-trove.svg</file>
 
 		<file alias="scalable/actions/platform-linux-symbolic.svg">symbolic/platforms/linux.svg</file>
 		<file alias="scalable/actions/platform-windows-symbolic.svg">symbolic/platforms/windows.svg</file>

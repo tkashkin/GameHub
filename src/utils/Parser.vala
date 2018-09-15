@@ -22,7 +22,7 @@ namespace GameHub.Utils
 			return data;
 		}
 
-		private static Message prepare_message(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		private static Message prepare_message(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
 			var message = new Message(method, url);
 
@@ -39,24 +39,34 @@ namespace GameHub.Utils
 				}
 			}
 
+			if(data != null)
+			{
+				var multipart = new Multipart("multipart/form-data");
+				foreach(var v in data.entries)
+				{
+					multipart.append_form_string(v.key, v.value);
+				}
+				multipart.to_message(message.request_headers, message.request_body);
+			}
+
 			return message;
 		}
 
-		public static string load_remote_file(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		public static string load_remote_file(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
 			var session = new Session();
-			var message = prepare_message(url, method, auth, headers);
+			var message = prepare_message(url, method, auth, headers, data);
 
 			var status = session.send_message(message);
 			if (status == 200) return (string) message.response_body.data;
 			return "";
 		}
 
-		public static async string load_remote_file_async(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		public static async string load_remote_file_async(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
 			var result = "";
 			var session = new Session();
-			var message = prepare_message(url, method, auth, headers);
+			var message = prepare_message(url, method, auth, headers, data);
 
 			session.queue_message(message, (s, m) => {
 				if(m.status_code == 200) result = (string) m.response_body.data;
@@ -97,24 +107,24 @@ namespace GameHub.Utils
 			return parse_vdf(load_file(path, file));
 		}
 
-		public static Json.Node parse_remote_json_file(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		public static Json.Node parse_remote_json_file(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
-			return parse_json(load_remote_file(url, method, auth, headers));
+			return parse_json(load_remote_file(url, method, auth, headers, data));
 		}
 
-		public static Json.Node parse_remote_vdf_file(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		public static Json.Node parse_remote_vdf_file(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
-			return parse_vdf(load_remote_file(url, method, auth, headers));
+			return parse_vdf(load_remote_file(url, method, auth, headers, data));
 		}
 
-		public static async Json.Node parse_remote_json_file_async(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		public static async Json.Node parse_remote_json_file_async(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
-			return parse_json(yield load_remote_file_async(url, method, auth, headers));
+			return parse_json(yield load_remote_file_async(url, method, auth, headers, data));
 		}
 
-		public static async Json.Node parse_remote_vdf_file_async(string url, string method="GET", string? auth = null, HashMap<string, string>? headers = null)
+		public static async Json.Node parse_remote_vdf_file_async(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
-			return parse_vdf(yield load_remote_file_async(url, method, auth, headers));
+			return parse_vdf(yield load_remote_file_async(url, method, auth, headers, data));
 		}
 
 		public static Json.Object? json_object(Json.Node? root, string[] keys)
@@ -159,6 +169,63 @@ namespace GameHub.Utils
 			}
 
 			return "{" + json + "}";
+		}
+
+		public static unowned Html.Doc* parse_html(string? html, string url)
+		{
+			if(html == null || html.length == 0) return null;
+			return Html.Doc.read_doc(html, url, null, Html.ParserOption.NOERROR | Html.ParserOption.NOWARNING | Html.ParserOption.RECOVER | Html.ParserOption.NONET);
+		}
+
+		public static Html.Node* html_node(Html.Node* root, string[] tags)
+		{
+			if(root == null) return null;
+			var obj = root;
+
+			foreach(var tag in tags)
+			{
+				if(obj != null)
+				{
+					obj = html_subnode(obj, tag);
+				}
+				else obj = null;
+
+				if(obj == null) break;
+			}
+
+			return obj;
+		}
+
+		public static Html.Node* html_subnode(Xml.Node* root, string name)
+		{
+			for(var iter = root->children; iter != null; iter = iter->next)
+			{
+				if(iter->type == Xml.ElementType.ELEMENT_NODE)
+				{
+					if(iter->name == name)
+					{
+						return (Html.Node*) iter;
+					}
+				}
+			}
+			return null;
+		}
+
+		public static Html.Doc* parse_html_file(string path, string file="")
+		{
+			return parse_html(load_file(path, file), "file://" + path);
+		}
+
+		public static Html.Doc* parse_remote_html_file(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
+		{
+			return parse_html(load_remote_file(url, method, auth, headers, data), url);
+		}
+
+		public static string xml_node_to_string(Xml.Node* node)
+		{
+			var buf = new Xml.Buffer();
+			buf.node_dump(node->doc, node, 0, 1);
+			return buf.content();
 		}
 	}
 }

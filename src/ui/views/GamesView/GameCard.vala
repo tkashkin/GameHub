@@ -117,7 +117,14 @@ namespace GameHub.UI.Views.GamesView
 					case 1:
 						if(game.status.state == Game.State.INSTALLED)
 						{
-							game.run.begin();
+							if(!game.is_supported(null, false) && game.is_supported(null, true))
+							{
+								game.run_with_compat.begin();
+							}
+							else
+							{
+								game.run.begin();
+							}
 						}
 						else if(game.status.state == Game.State.UNINSTALLED)
 						{

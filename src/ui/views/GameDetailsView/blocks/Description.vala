@@ -57,6 +57,6 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			add(description);
 		}
 
-		public override bool supports_game { get { return !(game is HumbleGame) && game.description != null; } }
+		public override bool supports_game { get { return game.description != null; } }
 	}
 }

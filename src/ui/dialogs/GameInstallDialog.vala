@@ -117,7 +117,7 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				subtitle_label.label = _("Installer size: %s").printf(format_size(compatible_installers[0].full_size));
+				subtitle_label.label = _("Installer size: %s").printf(fsize(compatible_installers[0].full_size));
 			}
 
 			if(Settings.UI.get_instance().show_unsupported_games || Settings.UI.get_instance().use_compat)
@@ -222,6 +222,15 @@ namespace GameHub.UI.Dialogs
 			opts_list.show_all();
 		}
 
+		public static string fsize(int64 size)
+		{
+			if(size > 0)
+			{
+				return format_size(size);
+			}
+			return _("Unknown");
+		}
+
 		private class InstallerRow: ListBoxRow
 		{
 			public Game game;
@@ -242,7 +251,7 @@ namespace GameHub.UI.Dialogs
 				name.hexpand = true;
 				name.halign = Align.START;
 
-				var size = new Label(format_size(installer.full_size));
+				var size = new Label(fsize(installer.full_size));
 				size.halign = Align.END;
 
 				box.add(icon);
