@@ -50,7 +50,7 @@ namespace GameHub.UI.Views.GamesView
 				label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
 				state_label.label = s.description;
 				update_icon();
-				changed();
+				Idle.add(() => { changed(); return Source.REMOVE; });
 			});
 			game.status_change(game.status);
 
