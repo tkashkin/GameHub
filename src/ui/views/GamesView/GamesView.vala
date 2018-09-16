@@ -306,7 +306,6 @@ namespace GameHub.UI.Views.GamesView
 
 		private void postpone_view_update()
 		{
-			debug("[GamesView] postpone_view_update");
 			view_update_pending = true;
 			if(!view_update_interval_started)
 			{
@@ -323,7 +322,6 @@ namespace GameHub.UI.Views.GamesView
 						else
 						{
 							view_update_no_updates_cycles++;
-							debug("[GamesView] postpone_view_update: %d cycles without pending update", view_update_no_updates_cycles);
 						}
 						view_update_pending = false;
 						Thread.usleep(500000);
@@ -335,8 +333,6 @@ namespace GameHub.UI.Views.GamesView
 
 		private void update_view()
 		{
-			debug("[GamesView] update_view");
-
 			show_games();
 
 			games_grid.invalidate_filter();
@@ -346,7 +342,6 @@ namespace GameHub.UI.Views.GamesView
 			GameSource? src = null;
 			if(f > 0) src = sources[f - 1];
 			var games = src == null ? games_grid.get_children().length() : src.games_count;
-			titlebar.title = "GameHub";
 			titlebar.subtitle = (src == null ? "" : src.name + ": ") + ngettext("%u game", "%u games", games).printf(games);
 
 			games_list_details.preferred_source = src;

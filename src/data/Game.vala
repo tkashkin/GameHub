@@ -247,11 +247,11 @@ namespace GameHub.Data
 		{
 			public class Part: Object
 			{
-				public string id     { get; construct; }
-				public string url    { get; construct; }
-				public int64  size   { get; construct; }
-				public File   remote { get; construct; }
-				public File   local  { get; construct; }
+				public string id     { get; construct set; }
+				public string url    { get; construct set; }
+				public int64  size   { get; construct set; }
+				public File   remote { get; construct set; }
+				public File   local  { get; construct set; }
 				public Part(string id, string url, int64 size, File remote, File local)
 				{
 					Object(id: id, url: url, size: size, remote: remote, local: local);
@@ -294,7 +294,7 @@ namespace GameHub.Data
 						var info = new Downloader.DownloadInfo(game.name, partDesc + part.id, game.icon, null, null, game.source.icon);
 						files.add(yield Downloader.download(part.remote, part.local, info));
 						Downloader.get_instance().disconnect(ds_id);
-						
+
 						game.update_status();
 
 						p++;

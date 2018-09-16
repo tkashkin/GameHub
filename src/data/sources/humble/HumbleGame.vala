@@ -127,6 +127,8 @@ namespace GameHub.Data.Sources.Humble
 
 			if(game_info_updated) return;
 
+			debug("[HumbleGame.update_game_info] %s:%s", source.id, id);
+
 			if(info == null || info.length == 0)
 			{
 				var token = ((Humble) source).user_token;
@@ -164,6 +166,7 @@ namespace GameHub.Data.Sources.Humble
 				{
 					var dl = dl_node.get_object();
 					var id = dl.get_string_member("machine_name");
+					var dl_id = dl.has_member("download_identifier") ? dl.get_string_member("download_identifier") : null;
 					var os = dl.get_string_member("platform");
 					var platform = CurrentPlatform;
 					foreach(var p in Platforms)
@@ -175,13 +178,42 @@ namespace GameHub.Data.Sources.Humble
 						}
 					}
 
+					bool refresh = false;
+
 					if(dl.has_member("download_struct") && dl.get_member("download_struct").get_node_type() == Json.NodeType.ARRAY)
 					{
 						foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
 						{
-							var installer = new Installer(this, id, platform, dls_node.get_object());
-							installers.add(installer);
+							var installer = new Installer(this, id, dl_id, platform, dls_node.get_object());
+							if(installer.is_url_update_required())
+							{
+								if(source is Trove)
+								{
+									var old_url = installer.part.url;
+									var new_url = installer.update_url(this);
+									if(new_url != null)
+									{
+										info = info.replace(old_url, new_url);
+									}
+									refresh = true;
+								}
+								else
+								{
+									info = null;
+									refresh = true;
+								}
+							}
+							if(!refresh) installers.add(installer);
 						}
+					}
+
+					if(refresh)
+					{
+						debug("[HumbleGame.update_game_info] Refreshing");
+						game_info_updated = false;
+						installers.clear();
+						yield update_game_info();
+						return;
 					}
 				}
 			}
@@ -244,13 +276,16 @@ namespace GameHub.Data.Sources.Humble
 		public class Installer: Game.Installer
 		{
 			public string dl_name;
+			public string? dl_id;
+			public Game.Installer.Part part;
 
 			public override string name { get { return dl_name; } }
 
-			public Installer(HumbleGame game, string machine_name, Platform platform, Json.Object download)
+			public Installer(HumbleGame game, string machine_name, string? download_identifier, Platform platform, Json.Object download)
 			{
 				id = machine_name;
 				this.platform = platform;
+				this.dl_id = download_identifier;
 				dl_name = download.has_member("name") ? download.get_string_member("name") : "";
 				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
@@ -258,7 +293,32 @@ namespace GameHub.Data.Sources.Humble
 				var remote = File.new_for_uri(url);
 				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(game.name);
 				var local = FSUtils.file(installers_dir, "humble_" + game.id + "_" + id);
-				parts.add(new Game.Installer.Part(id, url, full_size, remote, local));
+				part = new Game.Installer.Part(id, url, full_size, remote, local);
+				parts.add(part);
+			}
+
+			public bool is_url_update_required()
+			{
+				if(part.url == null || part.url.length == 0) return true;
+				if(!part.url.contains("&ttl=")) return false;
+				var ttl_string = part.url.split("&ttl=")[1].split("&")[0];
+				var ttl = new DateTime.from_unix_utc(int64.parse(ttl_string));
+				var now = new DateTime.now_utc();
+				var res = ttl.compare(now);
+				return res != 1;
+			}
+
+			public string? update_url(HumbleGame game)
+			{
+				if(!(game.source is Trove) || !is_url_update_required()) return null;
+
+				debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s:%s)", part.url, game.source.id, game.id);
+				var new_url = Trove.sign_url(id, dl_id, ((Humble) game.source).user_token);
+				debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s:%s)", new_url, game.source.id, game.id);
+
+				if(new_url != null) part.url = new_url;
+
+				return new_url;
 			}
 		}
 	}

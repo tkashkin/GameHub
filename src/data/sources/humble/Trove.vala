@@ -125,18 +125,13 @@ namespace GameHub.Data.Sources.Humble
 									dl.set_string_member("download_identifier", dn->get_prop("data-url"));
 									dl.set_string_member("machine_name", dn->get_prop("data-machine-name"));
 
-									var data = new HashMap<string, string>();
-									data["machine_name"] = dn->get_prop("data-machine-name");
-									data["filename"] = dn->get_prop("data-url");
-
-									var signed = Parser.parse_remote_json_file(Trove.SIGN_URL, "POST", null, headers, data).get_object();
+									var signed_url = sign_url(dn->get_prop("data-machine-name"), dn->get_prop("data-url"), user_token);
 
 									var dl_struct = new Json.Object();
 									dl_struct.set_string_member("name", @"$(name) (Trove)");
 
 									var urls = new Json.Object();
-									urls.set_string_member("web", signed.has_member("signed_url") ? signed.get_string_member("signed_url") : "");
-									urls.set_string_member("bittorrent", signed.has_member("signed_torrent_url") ? signed.get_string_member("signed_torrent_url") : "");
+									urls.set_string_member("web", signed_url);
 
 									dl_struct.set_object_member("url", urls);
 
@@ -182,6 +177,20 @@ namespace GameHub.Data.Sources.Humble
 			yield;
 
 			return _games;
+		}
+
+		public static string? sign_url(string machine_name, string filename, string humble_token)
+		{
+			var headers = new HashMap<string, string>();
+			headers["Cookie"] = @"$(AUTH_COOKIE)=\"$(humble_token)\";";
+
+			var data = new HashMap<string, string>();
+			data["machine_name"] = machine_name;
+			data["filename"] = filename;
+
+			var signed = Parser.parse_remote_json_file(Trove.SIGN_URL, "POST", null, headers, data).get_object();
+
+			return signed.has_member("signed_url") ? signed.get_string_member("signed_url") : null;
 		}
 	}
 }
