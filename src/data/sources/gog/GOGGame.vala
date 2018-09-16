@@ -281,7 +281,7 @@ namespace GameHub.Data.Sources.GOG
 
 		public override void update_status()
 		{
-			if(status.state == Game.State.DOWNLOADING) return;
+			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
 
 			var files = new ArrayList<File>();
 			files.add(executable);
@@ -297,6 +297,14 @@ namespace GameHub.Data.Sources.GOG
 				}
 			}
 			status = new Game.Status(state);
+			if(state == Game.State.INSTALLED)
+			{
+				add_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
+			else
+			{
+				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
 		}
 
 		public class Installer: Game.Installer

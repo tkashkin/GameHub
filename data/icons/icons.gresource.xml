@@ -15,11 +15,11 @@
 
 		<file alias="scalable/actions/tag.svg">normal/tags/tag.svg</file>
 
-		<file alias="scalable/actions/tag-symbolic.svg">symbolic/tags/tag.svg</file>
-		<file alias="scalable/actions/tag-add-symbolic.svg">symbolic/tags/tag-add.svg</file>
-		<file alias="scalable/actions/tag-remove-symbolic.svg">symbolic/tags/tag-remove.svg</file>
-		<file alias="scalable/actions/tag-multiple-symbolic.svg">symbolic/tags/tag-multiple.svg</file>
-		<file alias="scalable/actions/tag-favorites-symbolic.svg">symbolic/tags/tag-favorites.svg</file>
-		<file alias="scalable/actions/tag-hidden-symbolic.svg">symbolic/tags/tag-hidden.svg</file>
+		<file alias="scalable/actions/gh-tag-symbolic.svg">symbolic/tags/tag.svg</file>
+		<file alias="scalable/actions/gh-tag-add-symbolic.svg">symbolic/tags/tag-add.svg</file>
+		<file alias="scalable/actions/gh-tag-remove-symbolic.svg">symbolic/tags/tag-remove.svg</file>
+		<file alias="scalable/actions/gh-tag-multiple-symbolic.svg">symbolic/tags/tag-multiple.svg</file>
+		<file alias="scalable/actions/gh-tag-favorites-symbolic.svg">symbolic/tags/tag-favorites.svg</file>
+		<file alias="scalable/actions/gh-tag-hidden-symbolic.svg">symbolic/tags/tag-hidden.svg</file>
 	</gresource>
 </gresources>

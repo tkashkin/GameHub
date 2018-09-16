@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<id>com.github.tkashkin.gamehub.desktop</id>
+	<id>com.github.tkashkin.gamehub</id>
 
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>WTFPL</project_license>
@@ -14,7 +14,7 @@
 
 	<developer_name>Anatoliy Kashkin</developer_name>
 	​<update_contact>tkashkin@gmail.com</update_contact>
-	<url type="homepage">https://github.com/tkashkin/GameHub</url>
+	<url type="homepage">https://tkashkin.tk/projects/gamehub</url>
 	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
 
 	<provides>

@@ -55,9 +55,12 @@ namespace GameHub.Data
 			{
 				tags.add(tag);
 			}
-			Tables.Games.add(this);
-			status_change(_status);
-			tags_update();
+			if(tag != Tables.Tags.BUILTIN_INSTALLED)
+			{
+				Tables.Games.add(this);
+				status_change(_status);
+				tags_update();
+			}
 		}
 		public void remove_tag(Tables.Tags.Tag tag)
 		{
@@ -65,9 +68,12 @@ namespace GameHub.Data
 			{
 				tags.remove(tag);
 			}
-			Tables.Games.add(this);
-			status_change(_status);
-			tags_update();
+			if(tag != Tables.Tags.BUILTIN_INSTALLED)
+			{
+				Tables.Games.add(this);
+				status_change(_status);
+				tags_update();
+			}
 		}
 		public void toggle_tag(Tables.Tags.Tag tag)
 		{
@@ -288,6 +294,8 @@ namespace GameHub.Data
 						var info = new Downloader.DownloadInfo(game.name, partDesc + part.id, game.icon, null, null, game.source.icon);
 						files.add(yield Downloader.download(part.remote, part.local, info));
 						Downloader.get_instance().disconnect(ds_id);
+						
+						game.update_status();
 
 						p++;
 					}
@@ -512,11 +520,11 @@ namespace GameHub.Data
 				{
 					switch(state)
 					{
-						case Game.State.INSTALLED: return _("Installed");
-						case Game.State.INSTALLING: return _("Installing");
-						case Game.State.DOWNLOADING: return download != null ? download.status.description : _("Download started");
+						case Game.State.INSTALLED: return C_("status", "Installed");
+						case Game.State.INSTALLING: return C_("status", "Installing");
+						case Game.State.DOWNLOADING: return download != null ? download.status.description : C_("status", "Download started");
 					}
-					return _("Not installed");
+					return C_("status", "Not installed");
 				}
 			}
 
@@ -526,11 +534,11 @@ namespace GameHub.Data
 				{
 					switch(state)
 					{
-						case Game.State.INSTALLED: return _("Installed:");
-						case Game.State.INSTALLING: return _("Installing:");
-						case Game.State.DOWNLOADING: return _("Downloading:");
+						case Game.State.INSTALLED: return C_("status_header", "Installed");
+						case Game.State.INSTALLING: return C_("status_header", "Installing");
+						case Game.State.DOWNLOADING: return C_("status_header", "Downloading");
 					}
-					return _("Not installed:");
+					return C_("status_header", "Not installed");
 				}
 			}
 		}

@@ -97,9 +97,16 @@ namespace GameHub.Data.Sources.Humble
 
 		public override void update_status()
 		{
-			if(status.state != Game.State.DOWNLOADING)
+			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
+
+			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			if(status.state == Game.State.INSTALLED)
 			{
-				status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+				add_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
+			else
+			{
+				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 		}
 
@@ -172,7 +179,7 @@ namespace GameHub.Data.Sources.Humble
 					{
 						foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
 						{
-							var installer = new Installer(id, platform, dls_node.get_object());
+							var installer = new Installer(this, id, platform, dls_node.get_object());
 							installers.add(installer);
 						}
 					}
@@ -240,7 +247,7 @@ namespace GameHub.Data.Sources.Humble
 
 			public override string name { get { return dl_name; } }
 
-			public Installer(string machine_name, Platform platform, Json.Object download)
+			public Installer(HumbleGame game, string machine_name, Platform platform, Json.Object download)
 			{
 				id = machine_name;
 				this.platform = platform;
@@ -249,8 +256,8 @@ namespace GameHub.Data.Sources.Humble
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
 				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
 				var remote = File.new_for_uri(url);
-				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(name);
-				var local = FSUtils.file(installers_dir, "humble_" + id);
+				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(game.name);
+				var local = FSUtils.file(installers_dir, "humble_" + game.id + "_" + id);
 				parts.add(new Game.Installer.Part(id, url, full_size, remote, local));
 			}
 		}
