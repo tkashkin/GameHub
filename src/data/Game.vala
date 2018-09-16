@@ -23,6 +23,8 @@ namespace GameHub.Data
 		public string? compat_tool { get; set; }
 		public string? compat_tool_settings { get; set; }
 
+		public string full_id { owned get { return source.id + ":" + id; } }
+
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
 		public virtual bool is_supported(Platform? platform=null, bool with_compat=true)
 		{
@@ -240,7 +242,7 @@ namespace GameHub.Data
 
 		public static uint hash(Game game)
 		{
-			return str_hash(@"$(game.source.name)/$(game.id)");
+			return str_hash(game.full_id);
 		}
 
 		public abstract class Installer

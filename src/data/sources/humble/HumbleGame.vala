@@ -127,7 +127,7 @@ namespace GameHub.Data.Sources.Humble
 
 			if(game_info_updated) return;
 
-			debug("[HumbleGame.update_game_info] %s:%s", source.id, id);
+			debug("[HumbleGame.update_game_info] %s", full_id);
 
 			if(info == null || info.length == 0)
 			{
@@ -312,9 +312,9 @@ namespace GameHub.Data.Sources.Humble
 			{
 				if(!(game.source is Trove) || !is_url_update_required()) return null;
 
-				debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s:%s)", part.url, game.source.id, game.id);
+				debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s)", part.url, game.full_id);
 				var new_url = Trove.sign_url(id, dl_id, ((Humble) game.source).user_token);
-				debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s:%s)", new_url, game.source.id, game.id);
+				debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s)", new_url, game.full_id);
 
 				if(new_url != null) part.url = new_url;
 

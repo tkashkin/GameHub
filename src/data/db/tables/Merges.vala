@@ -53,8 +53,8 @@ namespace GameHub.Data.DB.Tables
 				return false;
 			}
 
-			s.bind_text(1, @"%$(first.source.id):$(first.id)%");
-			s.bind_text(2, @"%$(second.source.id):$(second.id)%");
+			s.bind_text(1, @"%$(first.full_id)%");
+			s.bind_text(2, @"%$(second.full_id)%");
 
 			int64? row = null;
 			int merge_var = 1;
@@ -107,7 +107,7 @@ namespace GameHub.Data.DB.Tables
 					if(game.source.id == src.id)
 					{
 						if(new_merge != "") new_merge += "|";
-						new_merge += @"$(game.source.id):$(game.id)";
+						new_merge += game.full_id;
 					}
 				}
 			}
@@ -140,7 +140,7 @@ namespace GameHub.Data.DB.Tables
 				return null;
 			}
 
-			s.bind_text(1, @"$(game.source.id):$(game.id)|%");
+			s.bind_text(1, @"$(game.full_id)|%");
 
 			if((res = s.step()) == Sqlite.ROW)
 			{
@@ -184,7 +184,7 @@ namespace GameHub.Data.DB.Tables
 				return false;
 			}
 
-			s.bind_text(1, @"%|$(game.source.id):$(game.id)%");
+			s.bind_text(1, @"%|$(game.full_id)%");
 
 			return s.step() == Sqlite.ROW;
 		}
@@ -204,7 +204,7 @@ namespace GameHub.Data.DB.Tables
 				return false;
 			}
 
-			s.bind_text(1, @"$(game.source.id):$(game.id)|%");
+			s.bind_text(1, @"$(game.full_id)|%");
 
 			return s.step() == Sqlite.ROW;
 		}

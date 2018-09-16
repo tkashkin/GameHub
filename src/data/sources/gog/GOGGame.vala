@@ -137,7 +137,17 @@ namespace GameHub.Data.Sources.GOG
 				var cool = desc.get_string_member("whats_cool_about_it");
 				if(cool != null && cool.length > 0)
 				{
-					description += "<ul><li>" + cool.replace("\n", "</li><li>") + "</li></ul>";
+					description += "<ul>";
+					var cool_parts = cool.split("\n");
+					foreach(var part in cool_parts)
+					{
+						part = part.strip();
+						if(part.length > 0)
+						{
+							description += "<li>" + part + "</li>";
+						}
+					}
+					description += "</ul>";
 				}
 			}
 

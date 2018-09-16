@@ -658,7 +658,7 @@ namespace GameHub.UI.Views.GamesView
 		private void merge_game(Game game)
 		{
 			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
-			Utils.thread("Merging-" + game.source.id + ":" + game.id, () => {
+			Utils.thread("Merging-" + game.full_id, () => {
 				foreach(var src in sources)
 				{
 					foreach(var game2 in src.games)
@@ -671,7 +671,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private void merge_game_with_game(GameSource src, Game game, Game game2)
 		{
-			Utils.thread("Merging-" + game.source.id + ":" + game.id + "-" + game2.source.id + ":" + game2.id, () => {
+			Utils.thread("Merging-" + game.full_id + "-" + game2.full_id, () => {
 				if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC)
 				{
 					return;
@@ -684,7 +684,7 @@ namespace GameHub.UI.Views.GamesView
 				if(name_match_exact || name_match_fuzzy_prefix)
 				{
 					Tables.Merges.add(game, game2);
-					debug(@"[Merge] Merging '$(game.name)' ($(game.source.id):$(game.id)) with '$(game2.name)' ($(game2.source.id):$(game2.id))");
+					debug(@"[Merge] Merging '$(game.name)' ($(game.full_id)) with '$(game2.name)' ($(game2.full_id))");
 
 					Idle.add(() => {
 						remove_game(game2);

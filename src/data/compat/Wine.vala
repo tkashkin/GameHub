@@ -110,7 +110,7 @@ namespace GameHub.Data.Compat
 
 		protected virtual File get_wineprefix(Game game)
 		{
-			return FSUtils.mkdir(game.install_dir.get_path(), @"_gamehub/$(binary)");
+			return FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(binary)");
 		}
 
 		public override File get_install_root(Game game)
