@@ -25,7 +25,7 @@ namespace GameHub.Data.Sources.Steam
 
 			store_page = @"steam://store/$(id)";
 
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
 
 		public SteamGame.from_db(Steam src, Sqlite.Statement s)
@@ -72,11 +72,13 @@ namespace GameHub.Data.Sources.Steam
 
 			store_page = @"steam://store/$(id)";
 
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
 
 		public override async void update_game_info()
 		{
+			update_status();
+
 			if(image == null || image == "")
 			{
 				image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
@@ -150,6 +152,20 @@ namespace GameHub.Data.Sources.Steam
 			Tables.Games.add(this);
 
 			game_info_updated = true;
+			update_status();
+		}
+
+		public override void update_status()
+		{
+			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			if(status.state == Game.State.INSTALLED)
+			{
+				add_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
+			else
+			{
+				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
 		}
 
 		public override async void install()
@@ -160,7 +176,7 @@ namespace GameHub.Data.Sources.Steam
 		public override async void run()
 		{
 			Utils.open_uri(@"steam://rungameid/$(id)");
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
 
 		public override async void run_with_compat()
@@ -171,7 +187,7 @@ namespace GameHub.Data.Sources.Steam
 		public override async void uninstall()
 		{
 			Utils.open_uri(@"steam://uninstall/$(id)");
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
 
 		public override void import(bool update=true){}

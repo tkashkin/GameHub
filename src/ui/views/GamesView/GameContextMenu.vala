@@ -32,11 +32,11 @@ namespace GameHub.UI.Views.GamesView
 			var details = new Gtk.MenuItem.with_label(_("Details"));
 			details.activate.connect(() => new Dialogs.GameDetailsDialog(game).show_all());
 
-			var favorite = new Gtk.CheckMenuItem.with_label(_("Favorite"));
+			var favorite = new Gtk.CheckMenuItem.with_label(C_("game_context_menu", "Favorite"));
 			favorite.active = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 			favorite.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_FAVORITES));
 
-			var hidden = new Gtk.CheckMenuItem.with_label(_("Hidden"));
+			var hidden = new Gtk.CheckMenuItem.with_label(C_("game_context_menu", "Hidden"));
 			hidden.active = game.has_tag(Tables.Tags.BUILTIN_HIDDEN);
 			hidden.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_HIDDEN));
 
@@ -45,7 +45,7 @@ namespace GameHub.UI.Views.GamesView
 
 			if(game.status.state == Game.State.INSTALLED)
 			{
-				if(!game.is_supported(null, false) && game.is_supported(null, true))
+				if((!game.is_supported(null, false) && game.is_supported(null, true)) || (game.executable != null && game.executable.get_basename().has_suffix(".exe")))
 				{
 					add(run_with_compat);
 				}

@@ -90,7 +90,7 @@ namespace GameHub.UI.Dialogs
 
 			new_entry = new Entry();
 			new_entry.placeholder_text = _("Add tag");
-			new_entry.primary_icon_name = "tag-add-symbolic";
+			new_entry.primary_icon_name = "gh-tag-add-symbolic";
 			new_entry.primary_icon_activatable = false;
 			new_entry.secondary_icon_name = "list-add-symbolic";
 			new_entry.secondary_icon_activatable = true;
@@ -107,26 +107,6 @@ namespace GameHub.UI.Dialogs
 			tags_box.add(new_entry);
 
 			var properties_box = new Box(Orientation.VERTICAL, 0);
-
-			if(!(game is Data.Sources.Steam.SteamGame))
-			{
-				var executable_header = new HeaderLabel(_("Executable"));
-				executable_header.xpad = 8;
-				properties_box.add(executable_header);
-
-				var executable_button = new Button.with_label(_("Select game executable"));
-				executable_button.tooltip_text = game.executable.get_path();
-				executable_button.margin_start = executable_button.margin_end = executable_button.margin_bottom = 4;
-				executable_button.hexpand = false;
-				executable_button.clicked.connect(() => {
-					game.choose_executable();
-					executable_button.tooltip_text = game.executable.get_path();
-				});
-
-				properties_box.add(executable_button);
-
-				properties_box.add(new Separator(Orientation.HORIZONTAL));
-			}
 
 			var images_header = new HeaderLabel(_("Images"));
 			images_header.xpad = 8;
@@ -226,10 +206,30 @@ namespace GameHub.UI.Dialogs
 			Utils.load_image.begin(image_view, game.image, "image");
 			Utils.load_image.begin(icon_view, game.icon, "icon");
 
+			var space = new Box(Orientation.VERTICAL, 0);
+			space.vexpand = true;
+			properties_box.add(space);
+
+			if(!(game is Data.Sources.Steam.SteamGame))
+			{
+				var executable_header = new HeaderLabel(_("Executable"));
+				executable_header.xpad = 8;
+				properties_box.add(executable_header);
+
+				var executable_button = new Button.with_label(_("Select game executable"));
+				executable_button.tooltip_text = game.executable.get_path();
+				executable_button.margin_start = executable_button.margin_end = executable_button.margin_bottom = 4;
+				executable_button.hexpand = false;
+				executable_button.clicked.connect(() => {
+					game.choose_executable();
+					executable_button.tooltip_text = game.executable.get_path();
+				});
+
+				properties_box.add(executable_button);
+			}
+
 			if(!game.is_supported(null, false) && game.is_supported(null, true))
 			{
-				properties_box.add(new Separator(Orientation.HORIZONTAL));
-
 				var compat_header = new HeaderLabel(_("Compatibility"));
 				compat_header.xpad = 8;
 				properties_box.add(compat_header);
@@ -266,6 +266,7 @@ namespace GameHub.UI.Dialogs
 
 			foreach(var tag in Tables.Tags.TAGS)
 			{
+				if(tag == Tables.Tags.BUILTIN_INSTALLED) continue;
 				var row = new TagRow(game, tag);
 				tags_list.add(row);
 			}

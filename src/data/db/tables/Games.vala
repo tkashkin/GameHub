@@ -113,6 +113,7 @@ namespace GameHub.Data.DB.Tables
 			var tags = "";
 			foreach(var t in game.tags)
 			{
+				if(t == Tables.Tags.BUILTIN_INSTALLED) continue;
 				if(tags.length > 0) tags += ",";
 				tags += t.id;
 			}

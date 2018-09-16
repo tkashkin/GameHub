@@ -29,7 +29,7 @@ namespace GameHub.UI.Widgets
 		{
 			margin_bottom = 4;
 
-			var label = new Label(_("Compatibility tool:"));
+			var label = new Label(_("Compatibility layer:"));
 			label.hexpand = true;
 			label.xalign = 0;
 			label.margin_start = label.margin_end = 4;

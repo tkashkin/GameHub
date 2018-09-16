@@ -134,16 +134,16 @@ namespace GameHub.Utils.Downloader
 			{
 				switch(state)
 				{
-					case DownloadState.STARTING: return _("Starting download");
-					case DownloadState.STARTED: return _("Download started");
-					case DownloadState.FINISHED: return _("Download finished");
-					case DownloadState.FAILED: return _("Download failed");
+					case DownloadState.STARTING: return C_("dl_status", "Starting download");
+					case DownloadState.STARTED: return C_("dl_status", "Download started");
+					case DownloadState.FINISHED: return C_("dl_status", "Download finished");
+					case DownloadState.FAILED: return C_("dl_status", "Download failed");
 					case DownloadState.DOWNLOADING:
-						return _("Downloading: %d%% (%s / %s)").printf((int)(progress * 100), format_size(bytes_downloaded), format_size(bytes_total));
+						return C_("dl_status", "Downloading: %d%% (%s / %s)").printf((int)(progress * 100), format_size(bytes_downloaded), format_size(bytes_total));
 					case DownloadState.PAUSED:
-						return _("Paused: %d%% (%s / %s)").printf((int)(progress * 100), format_size(bytes_downloaded), format_size(bytes_total));
+						return C_("dl_status", "Paused: %d%% (%s / %s)").printf((int)(progress * 100), format_size(bytes_downloaded), format_size(bytes_total));
 				}
-				return _("Download cancelled");
+				return C_("dl_status", "Download cancelled");
 			}
 		}
 	}

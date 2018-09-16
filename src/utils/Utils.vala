@@ -220,7 +220,7 @@ namespace GameHub.Utils
 				{
 					if(k == c) break;
 				}
-				if(k == c) break;
+				if(k == c) continue;
 			}
 			n = n.replace(c.to_string(), "");
 		}

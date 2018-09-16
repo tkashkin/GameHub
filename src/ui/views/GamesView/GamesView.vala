@@ -49,6 +49,10 @@ namespace GameHub.UI.Views.GamesView
 		private Settings.UI ui_settings;
 		private Settings.SavedState saved_state;
 
+		private bool view_update_interval_started = false;
+		private bool view_update_pending = false;
+		private int view_update_no_updates_cycles = 0;
+
 		construct
 		{
 			instance = this;
@@ -115,7 +119,7 @@ namespace GameHub.UI.Views.GamesView
 			add_view_button("view-list-symbolic", _("List view"));
 
 			view.mode_changed.connect(() => {
-				update_view();
+				postpone_view_update();
 			});
 
 			titlebar.pack_start(view);
@@ -232,7 +236,7 @@ namespace GameHub.UI.Views.GamesView
 				if(prev_item != null && f == pf && (f || s == ps)) row.set_header(null);
 				else
 				{
-					var label = new HeaderLabel(f ? _("Favorites:") : item.game.status.header);
+					var label = new HeaderLabel(f ? C_("status_header", "Favorites") : item.game.status.header);
 					label.get_style_context().add_class("games-list-header");
 					label.set_size_request(1024, -1); // ugly hack
 					row.set_header(label);
@@ -244,13 +248,13 @@ namespace GameHub.UI.Views.GamesView
 				games_list_details.game = item != null ? item.game : null;
 			});
 
-			filter.mode_changed.connect(update_view);
-			search.search_changed.connect(update_view);
+			filter.mode_changed.connect(postpone_view_update);
+			search.search_changed.connect(postpone_view_update);
 
-			ui_settings.notify["show-unsupported-games"].connect(update_view);
-			ui_settings.notify["use-proton"].connect(update_view);
+			ui_settings.notify["show-unsupported-games"].connect(postpone_view_update);
+			ui_settings.notify["use-proton"].connect(postpone_view_update);
 
-			filters_popover.filters_changed.connect(update_view);
+			filters_popover.filters_changed.connect(postpone_view_update);
 
 			spinner = new Spinner();
 
@@ -300,8 +304,39 @@ namespace GameHub.UI.Views.GamesView
 			load_games();
 		}
 
+		private void postpone_view_update()
+		{
+			debug("[GamesView] postpone_view_update");
+			view_update_pending = true;
+			if(!view_update_interval_started)
+			{
+				Utils.thread("GamesViewUpdate", () => {
+					view_update_interval_started = true;
+					view_update_no_updates_cycles = 0;
+					while(view_update_no_updates_cycles < 10)
+					{
+						if(view_update_pending)
+						{
+							Idle.add(() => { update_view(); return Source.REMOVE; });
+							view_update_no_updates_cycles = 0;
+						}
+						else
+						{
+							view_update_no_updates_cycles++;
+							debug("[GamesView] postpone_view_update: %d cycles without pending update", view_update_no_updates_cycles);
+						}
+						view_update_pending = false;
+						Thread.usleep(500000);
+					}
+					view_update_interval_started = false;
+				});
+			}
+		}
+
 		private void update_view()
 		{
+			debug("[GamesView] update_view");
+
 			show_games();
 
 			games_grid.invalidate_filter();
@@ -389,7 +424,7 @@ namespace GameHub.UI.Views.GamesView
 					var card = new GameCard(g);
 					var row = new GameListRow(g);
 
-					g.tags_update.connect(update_view);
+					g.tags_update.connect(postpone_view_update);
 
 					games_grid.add(card);
 					games_list.add(row);
@@ -403,7 +438,7 @@ namespace GameHub.UI.Views.GamesView
 						new_games_added = true;
 					}
 
-					update_view();
+					postpone_view_update();
 
 					if(games_list.get_selected_row() == null)
 					{
@@ -413,7 +448,7 @@ namespace GameHub.UI.Views.GamesView
 						});
 					}
 				}, () => {
-					update_view();
+					postpone_view_update();
 				}, (obj, res) => {
 					src.load_games.end(res);
 
@@ -425,7 +460,7 @@ namespace GameHub.UI.Views.GamesView
 						if(new_games_added) merge_games();
 						update_games();
 					}
-					update_view();
+					postpone_view_update();
 
 					if(src.games_count == 0)
 					{
