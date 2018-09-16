@@ -16,6 +16,7 @@ src/data/db/tables/Games.vala
 src/data/db/tables/Tags.vala
 src/data/db/tables/Merges.vala
 src/data/CompatTool.vala
+src/data/compat/CustomScript.vala
 src/data/compat/Innoextract.vala
 src/data/compat/Proton.vala
 src/data/compat/Wine.vala

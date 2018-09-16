@@ -40,7 +40,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			ui_settings.notify["dark-theme"].connect(() => {
 				description.user_content_manager.remove_all_style_sheets();
 				var style = ui_settings.dark_theme ? CSS_DARK : CSS_LIGHT;
-				description.user_content_manager.add_style_sheet(new UserStyleSheet(@"body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; $(style)} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%;}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
+				description.user_content_manager.add_style_sheet(new UserStyleSheet(@"body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; $(style)} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%; display: block;}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
 			});
 			ui_settings.notify_property("dark-theme");
 

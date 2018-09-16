@@ -60,6 +60,7 @@ executable(
 	'data/db/tables/Merges.vala',
 
 	'data/CompatTool.vala',
+	'data/compat/CustomScript.vala',
 	'data/compat/Innoextract.vala',
 	'data/compat/Proton.vala',
 	'data/compat/Wine.vala',
