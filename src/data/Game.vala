@@ -255,7 +255,8 @@ namespace GameHub.Data
 		{
 			get
 			{
-				return install_dir.get_child(CompatTool.COMPAT_DATA_DIR).get_child("force_compat").query_exists();
+				if(this is Sources.Steam.SteamGame) return false;
+				return install_dir != null && install_dir.get_child(CompatTool.COMPAT_DATA_DIR).get_child("force_compat").query_exists();
 			}
 			set
 			{

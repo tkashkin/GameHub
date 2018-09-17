@@ -188,9 +188,10 @@ namespace GameHub.Data.Sources.Humble
 			data["machine_name"] = machine_name;
 			data["filename"] = filename;
 
-			var signed = Parser.parse_remote_json_file(Trove.SIGN_URL, "POST", null, headers, data).get_object();
+			var signed_node = Parser.parse_remote_json_file(Trove.SIGN_URL, "POST", null, headers, data);
+			var signed = signed_node != null && signed_node.get_node_type() == Json.NodeType.OBJECT ? signed_node.get_object() : null;
 
-			return signed.has_member("signed_url") ? signed.get_string_member("signed_url") : null;
+			return signed != null && signed.has_member("signed_url") ? signed.get_string_member("signed_url") : null;
 		}
 	}
 }
