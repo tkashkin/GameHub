@@ -9,6 +9,7 @@ namespace GameHub.Data.Sources.Humble
 		public string order_id;
 
 		private bool game_info_updated = false;
+		private bool game_info_refreshed = false;
 
 		public ArrayList<Game.Installer>? installers { get; protected set; default = new ArrayList<Game.Installer>(); }
 
@@ -205,9 +206,10 @@ namespace GameHub.Data.Sources.Humble
 						}
 					}
 
-					if(refresh)
+					if(refresh && !game_info_refreshed)
 					{
 						debug("[HumbleGame.update_game_info] Refreshing");
+						game_info_refreshed = true;
 						game_info_updated = false;
 						installers.clear();
 						yield update_game_info();
