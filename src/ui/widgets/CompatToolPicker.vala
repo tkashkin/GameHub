@@ -15,6 +15,7 @@ namespace GameHub.UI.Widgets
 		public bool install_mode { get; construct; }
 
 		private Gtk.ListStore model;
+		private int model_size = 0;
 		private Gtk.TreeIter iter;
 		private ComboBox combo;
 
@@ -44,6 +45,7 @@ namespace GameHub.UI.Widgets
 					model.set(iter, 0, tool.icon);
 					model.set(iter, 1, tool.name);
 					model.set(iter, 2, tool);
+					model_size++;
 				}
 			}
 
@@ -71,7 +73,10 @@ namespace GameHub.UI.Widgets
 				combo.get_active_iter(out iter);
 				model.get_value(iter, 2, out v);
 				selected = v as CompatTool;
-				combo.tooltip_text = selected != null ? selected.executable.get_path() : null;
+
+				if(selected == null) return;
+
+				combo.tooltip_text = selected.executable != null ? selected.executable.get_path() : null;
 
 				if(selected.can_run(game))
 				{
@@ -81,19 +86,18 @@ namespace GameHub.UI.Widgets
 
 				actions.foreach(w => w.destroy());
 
+				actions.hide();
 				if(selected.actions != null)
 				{
 					foreach(var action in selected.actions)
 					{
 						add_action(action);
 					}
+					actions.show_all();
 				}
-
-				actions.show_all();
 			});
 
 			int index = 0;
-
 			if(game.compat_tool != null && game.compat_tool.length > 0)
 			{
 				model.foreach((m, p, i) => {
@@ -108,8 +112,7 @@ namespace GameHub.UI.Widgets
 					return false;
 				});
 			}
-
-			combo.active = index;
+			combo.active = index < model_size ? index : 0;
 
 			add(tool_box);
 			add(actions);

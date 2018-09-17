@@ -20,6 +20,7 @@ src/data/compat/CustomScript.vala
 src/data/compat/Innoextract.vala
 src/data/compat/Proton.vala
 src/data/compat/Wine.vala
+src/data/compat/DOSBox.vala
 src/ui/windows/MainWindow.vala
 src/ui/windows/WebAuthWindow.vala
 src/ui/dialogs/SettingsDialog/SettingsDialog.vala

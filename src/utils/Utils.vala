@@ -56,9 +56,9 @@ namespace GameHub.Utils
 
 		try
 		{
-			debug("[Utils.run] Running {'%s'} in '%s'", string.joinv("' '", cmd), cdir);
-			Process.spawn_sync(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out stdout);
-			debug("[Utils.run] Output: '%s'", stdout);
+			debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
+			Process.spawn_sync(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout);
+			print(stdout.strip() + "\n");
 		}
 		catch (Error e)
 		{

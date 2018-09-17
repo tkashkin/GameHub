@@ -235,6 +235,50 @@ namespace GameHub.Data
 			}
 		}
 
+		public bool use_compat
+		{
+			get
+			{
+				return needs_compat || force_compat;
+			}
+		}
+
+		public bool needs_compat
+		{
+			get
+			{
+				return (!is_supported(null, false) && is_supported(null, true)) || (executable != null && executable.get_basename().has_suffix(".exe"));
+			}
+		}
+
+		public bool force_compat
+		{
+			get
+			{
+				return install_dir.get_child(CompatTool.COMPAT_DATA_DIR).get_child("force_compat").query_exists();
+			}
+			set
+			{
+				try
+				{
+					var flag = FSUtils.mkdir(install_dir.get_path(), CompatTool.COMPAT_DATA_DIR).get_child("force_compat");
+					if(value)
+					{
+						FileUtils.set_contents(flag.get_path(), "");
+					}
+					else
+					{
+						flag.delete();
+					}
+					notify_property("use-compat");
+				}
+				catch(Error e)
+				{
+					warning("[Game.force_compat.set] %s", e.message);
+				}
+			}
+		}
+
 		public static bool is_equal(Game first, Game second)
 		{
 			return first == second || (first.source == second.source && first.id == second.id);
@@ -380,10 +424,15 @@ namespace GameHub.Data
 							}
 						}
 
-						if(dirname != null && dirname != "_gamehub")
+						if(dirname != null && dirname != CompatTool.COMPAT_DATA_DIR)
 						{
 							Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, game.install_dir.get_path());
 							FSUtils.rm(game.install_dir.get_path(), dirname, "-rf");
+						}
+
+						if(windows_installer || platform == Platform.WINDOWS)
+						{
+							game.force_compat = true;
 						}
 					}
 					catch(Error e){}
