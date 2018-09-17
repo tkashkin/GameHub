@@ -24,6 +24,7 @@ namespace GameHub.UI.Dialogs
 		private Entry image_entry;
 		private Entry icon_entry;
 
+		private Box properties_box;
 		private Box image_search_links;
 
 		public GamePropertiesDialog(Game? game)
@@ -106,7 +107,7 @@ namespace GameHub.UI.Dialogs
 
 			tags_box.add(new_entry);
 
-			var properties_box = new Box(Orientation.VERTICAL, 0);
+			properties_box = new Box(Orientation.VERTICAL, 0);
 
 			var images_header = new HeaderLabel(_("Images"));
 			images_header.xpad = 8;
@@ -228,16 +229,26 @@ namespace GameHub.UI.Dialogs
 				properties_box.add(executable_button);
 			}
 
-			if(!game.is_supported(null, false) && game.is_supported(null, true))
-			{
-				var compat_header = new HeaderLabel(_("Compatibility"));
-				compat_header.xpad = 8;
-				properties_box.add(compat_header);
+			var compat_header = new HeaderLabel(_("Compatibility"));
+			compat_header.no_show_all = true;
+			compat_header.xpad = 8;
+			properties_box.add(compat_header);
 
-				var compat_tool = new CompatToolPicker(game, false);
-				compat_tool.margin_start = compat_tool.margin_end = 4;
-				properties_box.add(compat_tool);
-			}
+			var compat_force_switch = add_switch(_("Force compatibility mode"), game.force_compat, f => { game.force_compat = f; });
+			compat_force_switch.no_show_all = true;
+
+			var compat_tool = new CompatToolPicker(game, false);
+			compat_tool.no_show_all = true;
+			compat_tool.margin_start = compat_tool.margin_end = 4;
+			properties_box.add(compat_tool);
+
+			game.notify["use-compat"].connect(() => {
+				compat_force_switch.visible = !game.needs_compat;
+				compat_tool.visible = game.use_compat;
+				compat_header.visible = compat_force_switch.visible || compat_tool.visible;
+				game.update_status();
+			});
+			game.notify_property("use-compat");
 
 			content.add(tags_box);
 			content.add(new Separator(Orientation.VERTICAL));
@@ -322,6 +333,32 @@ namespace GameHub.UI.Dialogs
 			link.margin = 0;
 			image_search_links.add(link);
 		}
+
+		private Box add_switch(string text, bool enabled, owned SwitchAction action)
+		{
+			var sw = new Switch();
+			sw.active = enabled;
+			sw.halign = Align.END;
+			sw.notify["active"].connect(() => { action(sw.active); });
+
+			var label = new Label(text);
+			label.halign = Align.START;
+			label.hexpand = true;
+
+			var hbox = new Box(Orientation.HORIZONTAL, 12);
+			hbox.margin = 4;
+			hbox.margin_start = 8;
+
+			hbox.add(label);
+			hbox.add(sw);
+
+			hbox.show_all();
+
+			properties_box.add(hbox);
+			return hbox;
+		}
+
+		protected delegate void SwitchAction(bool active);
 
 		public class TagRow: ListBoxRow
 		{

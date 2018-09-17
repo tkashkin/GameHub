@@ -45,7 +45,7 @@ namespace GameHub.UI.Views.GamesView
 
 			if(game.status.state == Game.State.INSTALLED)
 			{
-				if((!game.is_supported(null, false) && game.is_supported(null, true)) || (game.executable != null && game.executable.get_basename().has_suffix(".exe")))
+				if(game.use_compat)
 				{
 					add(run_with_compat);
 				}

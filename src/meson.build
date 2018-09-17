@@ -64,6 +64,7 @@ executable(
 	'data/compat/Innoextract.vala',
 	'data/compat/Proton.vala',
 	'data/compat/Wine.vala',
+	'data/compat/DOSBox.vala',
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',

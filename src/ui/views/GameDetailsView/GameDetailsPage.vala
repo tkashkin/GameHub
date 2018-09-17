@@ -256,7 +256,7 @@ namespace GameHub.UI.Views.GameDetailsView
 				}
 				action_install.visible = s.state != Game.State.INSTALLED;
 				action_install.sensitive = s.state == Game.State.UNINSTALLED;
-				action_run_with_compat.visible = s.state == Game.State.INSTALLED && ((!game.is_supported(null, false) && game.is_supported(null, true)) || (game.executable != null && game.executable.get_basename().has_suffix(".exe")));
+				action_run_with_compat.visible = s.state == Game.State.INSTALLED && game.use_compat;
 				action_run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
 				action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
 				action_open_directory.visible = s.state == Game.State.INSTALLED;

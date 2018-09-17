@@ -117,7 +117,7 @@ namespace GameHub.UI.Views.GamesView
 					case 1:
 						if(game.status.state == Game.State.INSTALLED)
 						{
-							if(!game.is_supported(null, false) && game.is_supported(null, true))
+							if(game.use_compat)
 							{
 								game.run_with_compat.begin();
 							}

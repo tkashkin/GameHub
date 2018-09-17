@@ -35,6 +35,7 @@ namespace GameHub.UI.Widgets
 				overlay_image.halign = Align.END;
 				overlay_image.valign = Align.END;
 				overlay.add_overlay(overlay_image);
+				overlay.set_overlay_pass_through(overlay_image, true);
 			}
 
 			box.add(overlay);

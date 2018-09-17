@@ -127,8 +127,6 @@ namespace GameHub.Data.Sources.Humble
 
 			if(game_info_updated) return;
 
-			debug("[HumbleGame.update_game_info] %s", full_id);
-
 			if(info == null || info.length == 0)
 			{
 				var token = ((Humble) source).user_token;
