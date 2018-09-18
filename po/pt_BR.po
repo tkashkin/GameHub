@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-16 03:14+0300\n"
-"PO-Revision-Date: 2018-07-13 16:18+0300\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2018-07-18 20:03\n"
+"Last-Translator: Leandro Stanger\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -492,174 +492,166 @@ msgid "Select"
 msgstr "Selecione"
 
 #: src/data/Game.vala:119
-#, fuzzy
 msgid "Select game directory"
-msgstr "Diretório de jogo"
+msgstr "Selecione o diretório do jogo"
 
 #: src/data/Game.vala:291
 #, c-format
 msgid "Part %u of %u: "
-msgstr ""
+msgstr "Parte %u do %u: "
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:27
 msgid "Show non-native games"
-msgstr ""
+msgstr "Mostrar jogos não nativos"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:28
 msgid "Use compatibility layers and consider Windows games compatible"
-msgstr ""
+msgstr "Use camadas de compatibilidade e considere os jogos do Windows compatíveis"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:27
 msgid "Load games from Humble Trove"
-msgstr ""
+msgstr "Jogar jogos da Humble Trove"
 
 #: src/ui/dialogs/GameInstallDialog.vala:231
 msgid "Unknown"
-msgstr ""
+msgstr "Desconhecido"
 
 #: src/ui/views/GamesView/GamesView.vala:159
 #: src/ui/views/GamesView/GamesView.vala:163
 msgid "Filters"
-msgstr ""
+msgstr "Filtros"
 
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:61
 msgid "Back"
-msgstr ""
+msgstr "Voltar"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:169
 #: src/ui/dialogs/CompatRunDialog.vala:26
 #: src/ui/views/GamesView/GameContextMenu.vala:25
 msgid "Run with compatibility layer"
-msgstr ""
+msgstr "Executar camada de compatibilidade"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:170
 msgid "Game properties"
-msgstr ""
+msgstr "Propriedades do jogo"
 
 #: src/data/compat/Proton.vala:26
 msgid "Disable esync"
-msgstr ""
+msgstr "Desativar esync"
 
 #: src/data/compat/Proton.vala:27
 msgid "Disable DirectX 11 compatibility layer"
-msgstr ""
+msgstr "Desativar camada de compatibilidade do DirectX 11"
 
 #: src/data/compat/Proton.vala:28
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr ""
+msgstr "Use WineD3D11 como camada de compatibilidade DirectX 11"
 
 #: src/data/compat/Proton.vala:29
 msgid "Show DXVK info overlay"
-msgstr ""
+msgstr "Mostrar sobreposição de informações do DXVK"
 
 #: src/data/compat/Proton.vala:47 src/data/compat/Wine.vala:47
-#, fuzzy
 msgid "Open prefix directory"
 msgstr "Abra o diretório de instalação"
 
 #: src/data/compat/Proton.vala:50 src/data/compat/Wine.vala:50
 msgid "Run winecfg"
-msgstr ""
+msgstr "Executar winecfg"
 
 #: src/data/compat/Proton.vala:53 src/data/compat/Wine.vala:53
 msgid "Run winetricks"
-msgstr ""
+msgstr "Executar winetricks"
 
 #: src/data/compat/Proton.vala:56 src/data/compat/Wine.vala:56
 msgid "Run regedit"
-msgstr ""
+msgstr "Execute o regedit"
 
 #: src/data/compat/Wine.vala:38
-#, fuzzy
 msgid "Silent installation"
-msgstr "Abra o diretório de instalação"
+msgstr "Instalação silenciosa"
 
 #: src/data/compat/Wine.vala:39
 msgid "Very silent installation"
-msgstr ""
+msgstr "Instalação muito silenciosa"
 
 #: src/data/compat/Wine.vala:40
 msgid "Suppress messages"
-msgstr ""
+msgstr "Suprimir mensagens"
 
 #: src/data/compat/Wine.vala:41
 msgid "No GUI"
-msgstr ""
+msgstr "Sem GUI"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:31
 #, c-format
 msgid "%s: Properties"
-msgstr ""
+msgstr "%s: Propriedades"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:46
 #: src/ui/views/GamesView/FiltersPopover.vala:84
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:92
 msgid "Add tag"
-msgstr ""
+msgstr "Adicionar tag"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:113
 #: src/ui/dialogs/GamePropertiesDialog.vala:215
 msgid "Executable"
-msgstr ""
+msgstr "Executável"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:117
 #: src/ui/dialogs/GamePropertiesDialog.vala:219
-#, fuzzy
 msgid "Select game executable"
-msgstr "Selecione o instalador do jogo"
+msgstr "Selecione o executável do jogo"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:131
 #: src/ui/dialogs/GamePropertiesDialog.vala:111
 msgid "Images"
-msgstr ""
+msgstr "Imagens"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:166
 #: src/ui/dialogs/GamePropertiesDialog.vala:146
 msgid "Image URL"
-msgstr ""
+msgstr "Imagem URL"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:171
 #: src/ui/dialogs/GamePropertiesDialog.vala:194
 #: src/ui/dialogs/GamePropertiesDialog.vala:151
 #: src/ui/dialogs/GamePropertiesDialog.vala:174
-#, fuzzy
 msgid "Reset to default"
-msgstr "Restaurar chave de API padrão"
+msgstr "Restaurar ao padrão"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:189
 #: src/ui/dialogs/GamePropertiesDialog.vala:169
 msgid "Icon URL"
-msgstr ""
+msgstr "URL do ícone"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 #: src/ui/dialogs/GamePropertiesDialog.vala:194
-#, fuzzy
 msgid "Search images:"
-msgstr "Pesquisar"
+msgstr "Pesquisar imagens:"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:233
-#, fuzzy
 msgid "Compatibility"
-msgstr "Lista compacta"
+msgstr "Compatibilidade"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:32
 msgid "Details"
-msgstr ""
+msgstr "Detalhes"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:43
 msgid "Properties"
-msgstr ""
+msgstr "Propriedades"
 
 #: src/data/db/tables/Tags.vala:148
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "Favoritos"
 
 #: src/data/db/tables/Tags.vala:149
-#, fuzzy
 msgctxt "tag"
 msgid "Installed"
 msgstr "Instalado"
@@ -667,46 +659,41 @@ msgstr "Instalado"
 #: src/data/db/tables/Tags.vala:150
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "Escondido"
 
 #: src/utils/downloader/Downloader.vala:137
-#, fuzzy
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Iniciando download"
 
 #: src/utils/downloader/Downloader.vala:138
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Começou a baixar"
 
 #: src/utils/downloader/Downloader.vala:139
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Jogo baixado com sucesso"
 
 #: src/utils/downloader/Downloader.vala:140
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Download falhou"
 
 #: src/utils/downloader/Downloader.vala:142
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %d%% (%s / %s)"
 msgstr "Baixando: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:144
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
 msgstr "Pausado: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:146
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Download cancelado"
@@ -714,50 +701,35 @@ msgstr "Download cancelado"
 #: src/ui/views/GamesView/GameContextMenu.vala:35
 msgctxt "game_context_menu"
 msgid "Favorite"
-msgstr ""
+msgstr "Favorito"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:39
 msgctxt "game_context_menu"
 msgid "Hidden"
-msgstr ""
+msgstr "Escondido"
 
 #: src/ui/views/GamesView/GamesView.vala:235
 #: src/ui/views/GamesView/GamesView.vala:239
 msgctxt "status_header"
 msgid "Favorites"
-msgstr ""
+msgstr "Favoritos"
 
 #: src/ui/widgets/CompatToolPicker.vala:32
-#, fuzzy
 msgid "Compatibility layer:"
-msgstr "Lista compacta"
+msgstr "Camada de Compatibilidade:"
 
-#: data/com.github.tkashkin.gamehub.desktop.in:7
-msgid "Game;Hub;Steam;GOG;Humble;HumbleBundle;"
-msgstr ""
+msgctxt "status_header"
+msgid "Installing"
+msgstr "Instalando"
 
-#: data/com.github.tkashkin.gamehub.desktop.in:10
-msgid "com.github.tkashkin.gamehub"
-msgstr ""
+msgctxt "status_header"
+msgid "Not installed"
+msgstr "Não instalado"
 
-#: data/com.github.tkashkin.gamehub.appdata.xml.in:15
-msgid "Anatoliy Kashkin"
-msgstr ""
+msgctxt "status_header"
+msgid "Installed"
+msgstr "Instalado"
 
-#~ msgid "Installing"
-#~ msgstr "Instalando"
-
-#~ msgid "Not installed"
-#~ msgstr "Não instalado"
-
-#~ msgid "Installed:"
-#~ msgstr "Instalado:"
-
-#~ msgid "Installing:"
-#~ msgstr "Instalando:"
-
-#~ msgid "Downloading:"
-#~ msgstr "Baixado:"
-
-#~ msgid "Not installed:"
-#~ msgstr "Não instalado:"
+msgctxt "status_header"
+msgid "Downloading"
+msgstr "Baixado"
