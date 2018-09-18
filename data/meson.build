@@ -1,6 +1,6 @@
 install_data(
 	meson.project_name() + '.svg',
-	install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
+	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
 )
 
 install_data(
