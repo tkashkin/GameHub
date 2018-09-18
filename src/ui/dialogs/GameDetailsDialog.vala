@@ -8,9 +8,17 @@ namespace GameHub.UI.Dialogs
 {
 	public class GameDetailsDialog: Dialog
 	{
+		public Game? game { get; construct; }
+
 		public GameDetailsDialog(Game? game)
 		{
-			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: game.name);
+			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: game.name, game: game);
+		}
+
+		construct
+		{
+			get_style_context().add_class("rounded");
+			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 			gravity = Gdk.Gravity.CENTER;
 
@@ -36,7 +44,6 @@ namespace GameHub.UI.Dialogs
 			});
 			ui_settings.notify_property("dark-theme");
 
-			add_button(_("Close"), ResponseType.CLOSE).margin_end = 7;
 			show_all();
 		}
 	}

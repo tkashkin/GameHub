@@ -1,5 +1,5 @@
-using Gtk;
 using Gee;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.GOG
@@ -14,7 +14,7 @@ namespace GameHub.Data.Sources.GOG
 
 		public override string id { get { return "gog"; } }
 		public override string name { get { return "GOG"; } }
-		public override string icon { get { return "gog-symbolic"; } }
+		public override string icon { get { return "source-gog-symbolic"; } }
 
 		public override bool enabled
 		{
@@ -168,26 +168,25 @@ namespace GameHub.Data.Sources.GOG
 			Utils.thread("GOGLoading", () => {
 				_games.clear();
 
-				var cached = GamesDB.get_instance().get_games(this);
+				var cached = Tables.Games.get_all(this);
+				games_count = 0;
 				if(cached.size > 0)
 				{
 					foreach(var g in cached)
 					{
-						if(!(g.id in GAMES_BLACKLIST) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g)))
+						if(!(g.id in GAMES_BLACKLIST) && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g)))
 						{
 							//g.update_game_info.begin();
 							_games.add(g);
-							games_count = _games.size;
 							if(game_loaded != null)
 							{
 								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
 								Thread.usleep(100000);
 							}
 						}
+						games_count++;
 					}
 				}
-
-				games_count = _games.size;
 
 				if(cache_loaded != null)
 				{
@@ -216,7 +215,7 @@ namespace GameHub.Data.Sources.GOG
 							{
 								var id = t.get_object().get_string_member("id");
 								var name = t.get_object().get_string_member("name");
-								GamesDB.get_instance().add_tag(new GamesDB.Tables.Tags.Tag("gog:" + id, name, icon));
+								Tables.Tags.add(new Tables.Tags.Tag("gog:" + id, name, icon));
 								debug("[GOG] Imported tag: %s (%s)", name, id);
 							}
 						}
@@ -227,18 +226,16 @@ namespace GameHub.Data.Sources.GOG
 					foreach(var g in products.get_elements())
 					{
 						var game = new GOGGame(this, g);
-						if(!(game.id in GAMES_BLACKLIST) && !_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
+						bool is_new_game = !(game.id in GAMES_BLACKLIST) && !_games.contains(game);
+						if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
 						{
-							game.update_game_info.begin((obj, res) => {
-								game.update_game_info.end(res);
-								_games.add(game);
-								games_count = _games.size;
-								if(game_loaded != null)
-								{
-									Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
-								}
-							});
+							_games.add(game);
+							if(game_loaded != null)
+							{
+								Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
+							}
 						}
+						if(is_new_game) games_count++;
 					}
 
 					page++;

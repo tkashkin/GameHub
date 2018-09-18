@@ -32,16 +32,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			add_separator();
 
 			add_header("GOG");
-			gog_game_dir = add_entry(_("Game directory") + " ($game_dir)", gog.game_dir, v => { gog.game_dir = v; update_hints(); }, "gog-symbolic").get_children().last().data as Entry;
-			gog_installers = add_entry(_("Installers"), gog.installers, v => { gog.installers = v; update_hints(); }, "gog-symbolic").get_children().last().data as Entry;
+			gog_game_dir = add_entry(_("Game directory") + " ($game_dir)", gog.game_dir, v => { gog.game_dir = v; update_hints(); }, "source-gog-symbolic").get_children().last().data as Entry;
+			gog_installers = add_entry(_("Installers"), gog.installers, v => { gog.installers = v; update_hints(); }, "source-gog-symbolic").get_children().last().data as Entry;
 			gog_dlc = add_entry(_("DLC"), gog.dlc, v => { gog.dlc = v; update_hints(); }, "folder-download-symbolic").get_children().last().data as Entry;
 			gog_bonus = add_entry(_("Bonus content"), gog.bonus, v => { gog.bonus = v; update_hints(); }, "folder-music-symbolic").get_children().last().data as Entry;
 
 			add_separator();
 
 			add_header("Humble Bundle");
-			humble_game_dir = add_entry(_("Game directory") + " ($game_dir)", humble.game_dir, v => { humble.game_dir = v; update_hints(); }, "humble-symbolic").get_children().last().data as Entry;
-			humble_installers = add_entry(_("Installers"), humble.installers, v => { humble.installers = v; update_hints(); }, "humble-symbolic").get_children().last().data as Entry;
+			humble_game_dir = add_entry(_("Game directory") + " ($game_dir)", humble.game_dir, v => { humble.game_dir = v; update_hints(); }, "source-humble-symbolic").get_children().last().data as Entry;
+			humble_installers = add_entry(_("Installers"), humble.installers, v => { humble.installers = v; update_hints(); }, "source-humble-symbolic").get_children().last().data as Entry;
 
 			add_separator();
 

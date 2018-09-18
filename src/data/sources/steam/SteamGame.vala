@@ -1,4 +1,4 @@
-using Gtk;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Steam
@@ -25,21 +25,25 @@ namespace GameHub.Data.Sources.Steam
 
 			store_page = @"steam://store/$(id)";
 
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
 
 		public SteamGame.from_db(Steam src, Sqlite.Statement s)
 		{
 			source = src;
-			id = GamesDB.Tables.Games.ID.get(s);
-			name = GamesDB.Tables.Games.NAME.get(s);
-			icon = GamesDB.Tables.Games.ICON.get(s);
-			image = GamesDB.Tables.Games.IMAGE.get(s);
-			info = GamesDB.Tables.Games.INFO.get(s);
-			info_detailed = GamesDB.Tables.Games.INFO_DETAILED.get(s);
+			id = Tables.Games.ID.get(s);
+			name = Tables.Games.NAME.get(s);
+			info = Tables.Games.INFO.get(s);
+			info_detailed = Tables.Games.INFO_DETAILED.get(s);
+			icon = Tables.Games.ICON.get(s);
+			image = Tables.Games.IMAGE.get(s);
+			info = Tables.Games.INFO.get(s);
+			info_detailed = Tables.Games.INFO_DETAILED.get(s);
+			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
+			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 
 			platforms.clear();
-			var pls = GamesDB.Tables.Games.PLATFORMS.get(s).split(",");
+			var pls = Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
 				foreach(var p in Platforms)
@@ -53,10 +57,10 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			tags.clear();
-			var tag_ids = (GamesDB.Tables.Games.TAGS.get(s) ?? "").split(",");
+			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
 			foreach(var tid in tag_ids)
 			{
-				foreach(var t in GamesDB.Tables.Tags.TAGS)
+				foreach(var t in Tables.Tags.TAGS)
 				{
 					if(tid == t.id)
 					{
@@ -68,11 +72,25 @@ namespace GameHub.Data.Sources.Steam
 
 			store_page = @"steam://store/$(id)";
 
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
 
 		public override async void update_game_info()
 		{
+			update_status();
+
+			if(image == null || image == "")
+			{
+				image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
+			}
+
+			if((icon == null || icon == "") && (info != null && info.length > 0))
+			{
+				var i = Parser.parse_json(info).get_object();
+				var icon_hash = i.get_string_member("img_icon_url");
+				icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
+			}
+
 			if(game_info_updated) return;
 
 			if(info_detailed == null || info_detailed.length == 0)
@@ -118,7 +136,7 @@ namespace GameHub.Data.Sources.Steam
 			{
 				debug("[Steam:%s] No platform support data, %d tries failed, assuming Windows support", id, metadata_tries);
 				platforms.add(Platform.WINDOWS);
-				GamesDB.get_instance().add_game(this);
+				Tables.Games.add(this);
 				game_info_updated = true;
 				return;
 			}
@@ -131,23 +149,23 @@ namespace GameHub.Data.Sources.Steam
 				}
 			}
 
-			GamesDB.get_instance().add_game(this);
+			Tables.Games.add(this);
 
 			game_info_updated = true;
+			update_status();
 		}
 
-		public override bool is_supported(Platform? platform=null)
+		public override void update_status()
 		{
-			if(platform == null) platform = CurrentPlatform;
-			if(base.is_supported()) return true;
-			foreach(var appid in Steam.PROTON_APPIDS)
+			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			if(status.state == Game.State.INSTALLED)
 			{
-				if(Steam.is_app_installed(appid))
-				{
-					return base.is_supported(Platform.WINDOWS);
-				}
+				add_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
-			return false;
+			else
+			{
+				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
 		}
 
 		public override async void install()
@@ -158,13 +176,21 @@ namespace GameHub.Data.Sources.Steam
 		public override async void run()
 		{
 			Utils.open_uri(@"steam://rungameid/$(id)");
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
+		}
+
+		public override async void run_with_compat()
+		{
+			yield run();
 		}
 
 		public override async void uninstall()
 		{
 			Utils.open_uri(@"steam://uninstall/$(id)");
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			update_status();
 		}
+
+		public override void import(bool update=true){}
+		public override void choose_executable(bool update=true){}
 	}
 }

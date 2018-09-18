@@ -21,6 +21,7 @@ deps = [
 	dependency('gee-0.8'),
 	dependency('sqlite3'),
 	dependency('libsoup-2.4'),
+	dependency('libxml-2.0'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
@@ -31,10 +32,6 @@ if gtk322.found()
 	deps += gtk322
 else
 	deps += dependency('gtk+-3.0')
-endif
-
-if get_option('use_ivy')
-	add_global_arguments('-g', '-X', '-rdynamic', '-D', 'USE_IVY', language: 'vala')
 endif
 
 executable(
@@ -54,8 +51,20 @@ executable(
 
 	'data/sources/humble/Humble.vala',
 	'data/sources/humble/HumbleGame.vala',
+	'data/sources/humble/Trove.vala',
 
-	'data/GamesDB.vala',
+	'data/db/Database.vala',
+	'data/db/Table.vala',
+	'data/db/tables/Games.vala',
+	'data/db/tables/Tags.vala',
+	'data/db/tables/Merges.vala',
+
+	'data/CompatTool.vala',
+	'data/compat/CustomScript.vala',
+	'data/compat/Innoextract.vala',
+	'data/compat/Proton.vala',
+	'data/compat/Wine.vala',
+	'data/compat/DOSBox.vala',
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
@@ -71,8 +80,8 @@ executable(
 
 	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
-
-	'ui/dialogs/GameTagsDialog/GameTagsDialog.vala',
+	'ui/dialogs/GamePropertiesDialog.vala',
+	'ui/dialogs/CompatRunDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',
@@ -94,6 +103,7 @@ executable(
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
+	'ui/widgets/CompatToolPicker.vala',
 
 	'utils/Utils.vala',
 	'utils/FSUtils.vala',
@@ -102,11 +112,6 @@ executable(
 
 	'utils/downloader/Downloader.vala',
 	'utils/downloader/SoupDownloader.vala',
-
-	'lib/ivy/Extractor.vala',
-	'lib/ivy/Frame.vala',
-	'lib/ivy/Printer.vala',
-	'lib/ivy/Stacktrace.vala',
 
 	icons_gresource,
 	css_gresource,

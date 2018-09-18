@@ -1,6 +1,8 @@
 using Gee;
+using Gtk;
 
 using GameHub.Utils;
+using GameHub.Data.DB;
 
 namespace GameHub.Data
 {
@@ -12,21 +14,32 @@ namespace GameHub.Data
 		public string name { get; protected set; }
 		public string description { get; protected set; }
 
-		public string icon { get; protected set; }
-		public string image { get; protected set; }
+		public string icon { get; set; }
+		public string image { get; set; }
 
 		public string? info { get; protected set; }
 		public string? info_detailed { get; protected set; }
 
+		public string? compat_tool { get; set; }
+		public string? compat_tool_settings { get; set; }
+
+		public string full_id { owned get { return source.id + ":" + id; } }
+
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
-		public virtual bool is_supported(Platform? platform=null)
+		public virtual bool is_supported(Platform? platform=null, bool with_compat=true)
 		{
-			if(platform == null) platform = CurrentPlatform;
-			return platform in platforms;
+			platform = platform ?? CurrentPlatform;
+			if(platform in platforms) return true;
+			if(!with_compat) return false;
+			foreach(var tool in CompatTools)
+			{
+				if(tool.can_run(this)) return true;
+			}
+			return false;
 		}
 
-		public ArrayList<GamesDB.Tables.Tags.Tag> tags { get; protected set; default = new ArrayList<GamesDB.Tables.Tags.Tag>(GamesDB.Tables.Tags.Tag.is_equal); }
-		public bool has_tag(GamesDB.Tables.Tags.Tag tag)
+		public ArrayList<Tables.Tags.Tag> tags { get; protected set; default = new ArrayList<Tables.Tags.Tag>(Tables.Tags.Tag.is_equal); }
+		public bool has_tag(Tables.Tags.Tag tag)
 		{
 			return has_tag_id(tag.id);
 		}
@@ -38,27 +51,33 @@ namespace GameHub.Data
 			}
 			return false;
 		}
-		public void add_tag(GamesDB.Tables.Tags.Tag tag)
+		public void add_tag(Tables.Tags.Tag tag)
 		{
 			if(!tags.contains(tag))
 			{
 				tags.add(tag);
 			}
-			GamesDB.get_instance().add_game(this);
-			status_change(_status);
-			tags_update();
+			if(tag != Tables.Tags.BUILTIN_INSTALLED)
+			{
+				Tables.Games.add(this);
+				status_change(_status);
+				tags_update();
+			}
 		}
-		public void remove_tag(GamesDB.Tables.Tags.Tag tag)
+		public void remove_tag(Tables.Tags.Tag tag)
 		{
 			if(tags.contains(tag))
 			{
 				tags.remove(tag);
 			}
-			GamesDB.get_instance().add_game(this);
-			status_change(_status);
-			tags_update();
+			if(tag != Tables.Tags.BUILTIN_INSTALLED)
+			{
+				Tables.Games.add(this);
+				status_change(_status);
+				tags_update();
+			}
 		}
-		public void toggle_tag(GamesDB.Tables.Tags.Tag tag)
+		public void toggle_tag(Tables.Tags.Tag tag)
 		{
 			if(tags.contains(tag))
 			{
@@ -77,10 +96,126 @@ namespace GameHub.Data
 		public string? store_page { get; protected set; default = null; }
 
 		public abstract async void install();
-		public abstract async void run();
 		public abstract async void uninstall();
 
+		public virtual async void run()
+		{
+			if(executable.query_exists())
+			{
+				var path = executable.get_path();
+				var dir = executable.get_parent().get_path();
+				yield Utils.run_thread({path}, dir, null, true);
+			}
+		}
+
+		public virtual async void run_with_compat()
+		{
+			new UI.Dialogs.CompatRunDialog(this).show_all();
+		}
+
 		public virtual async void update_game_info(){}
+		public virtual void update_status(){}
+
+		public virtual void import(bool update=true)
+		{
+			var chooser = new FileChooserDialog(_("Select game directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER);
+
+			var games_dir = "";
+			if(this is Sources.GOG.GOGGame)
+			{
+				games_dir = FSUtils.Paths.GOG.Games;
+			}
+			else if(this is Sources.Humble.HumbleGame)
+			{
+				games_dir = FSUtils.Paths.Humble.Games;
+			}
+
+			chooser.set_current_folder(games_dir);
+
+			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
+			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
+
+			select_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+			select_btn.grab_default();
+
+			if(chooser.run() == ResponseType.ACCEPT)
+			{
+				install_dir = chooser.get_file();
+				executable = FSUtils.file(install_dir.get_path(), "start.sh");
+
+				if(!executable.query_exists())
+				{
+					choose_executable(false);
+				}
+
+				if(install_dir.query_exists())
+				{
+					Utils.run({"chmod", "-R", "+x", install_dir.get_path()});
+				}
+
+				if(update)
+				{
+					update_status();
+					Tables.Games.add(this);
+				}
+			}
+
+			chooser.destroy();
+		}
+
+		public virtual void choose_executable(bool update=true)
+		{
+			var chooser = new FileChooserDialog(_("Select main executable of the game"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN);
+			var filter = new FileFilter();
+
+			filter.add_mime_type("application/x-executable");
+			filter.add_mime_type("application/x-elf");
+			filter.add_mime_type("application/x-sh");
+			filter.add_mime_type("text/x-shellscript");
+
+			filter.add_mime_type("application/x-dosexec");
+			filter.add_mime_type("application/x-ms-dos-executable");
+			filter.add_mime_type("application/dos-exe");
+			filter.add_mime_type("application/exe");
+			filter.add_mime_type("application/msdos-windows");
+			filter.add_mime_type("application/x-exe");
+			filter.add_mime_type("application/x-msdownload");
+			filter.add_mime_type("application/x-winexe");
+
+			chooser.set_filter(filter);
+
+			try
+			{
+				chooser.set_current_folder_file(install_dir);
+			}
+			catch(Error e)
+			{
+				warning(e.message);
+			}
+
+			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
+			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
+
+			select_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+			select_btn.grab_default();
+
+			if(chooser.run() == ResponseType.ACCEPT)
+			{
+				executable = chooser.get_file();
+				if(executable.query_exists())
+				{
+					Utils.run({"chmod", "+x", executable.get_path()});
+				}
+
+				if(update)
+				{
+					update_status();
+					Tables.Games.add(this);
+				}
+			}
+
+			chooser.destroy();
+		}
 
 		protected Game.Status _status = new Game.Status();
 		public signal void status_change(Game.Status status);
@@ -92,11 +227,56 @@ namespace GameHub.Data
 			set { _status = value; status_change(_status); }
 		}
 
-		public virtual string installation_dir_name
+		public virtual string escaped_name
 		{
 			owned get
 			{
-				return name.escape().replace(" ", "_").replace(":", "");
+				return Utils.strip_name(name.replace(" ", "_"), "_'.,");
+			}
+		}
+
+		public bool use_compat
+		{
+			get
+			{
+				return needs_compat || force_compat;
+			}
+		}
+
+		public bool needs_compat
+		{
+			get
+			{
+				return (!is_supported(null, false) && is_supported(null, true)) || (executable != null && executable.get_basename().has_suffix(".exe"));
+			}
+		}
+
+		public bool force_compat
+		{
+			get
+			{
+				if(this is Sources.Steam.SteamGame) return false;
+				return install_dir != null && install_dir.get_child(CompatTool.COMPAT_DATA_DIR).get_child("force_compat").query_exists();
+			}
+			set
+			{
+				try
+				{
+					var flag = FSUtils.mkdir(install_dir.get_path(), CompatTool.COMPAT_DATA_DIR).get_child("force_compat");
+					if(value)
+					{
+						FileUtils.set_contents(flag.get_path(), "");
+					}
+					else
+					{
+						flag.delete();
+					}
+					notify_property("use-compat");
+				}
+				catch(Error e)
+				{
+					warning("[Game.force_compat.set] %s", e.message);
+				}
 			}
 		}
 
@@ -107,18 +287,18 @@ namespace GameHub.Data
 
 		public static uint hash(Game game)
 		{
-			return str_hash(@"$(game.source.name)/$(game.id)");
+			return str_hash(game.full_id);
 		}
 
 		public abstract class Installer
 		{
 			public class Part: Object
 			{
-				public string id     { get; construct; }
-				public string url    { get; construct; }
-				public int64  size   { get; construct; }
-				public File   remote { get; construct; }
-				public File   local  { get; construct; }
+				public string id     { get; construct set; }
+				public string url    { get; construct set; }
+				public int64  size   { get; construct set; }
+				public File   remote { get; construct set; }
+				public File   local  { get; construct set; }
 				public Part(string id, string url, int64 size, File remote, File local)
 				{
 					Object(id: id, url: url, size: size, remote: remote, local: local);
@@ -132,7 +312,7 @@ namespace GameHub.Data
 
 			public virtual string  name  { get { return id; } }
 
-			public async void install(Game game)
+			public async void install(Game game, CompatTool? tool=null)
 			{
 				try
 				{
@@ -162,11 +342,13 @@ namespace GameHub.Data
 						files.add(yield Downloader.download(part.remote, part.local, info));
 						Downloader.get_instance().disconnect(ds_id);
 
+						game.update_status();
+
 						p++;
 					}
 
 					uint f = 0;
-					bool gog_windows_installer = false;
+					bool windows_installer = false;
 					foreach(var file in files)
 					{
 						var path = file.get_path();
@@ -191,11 +373,8 @@ namespace GameHub.Data
 								break;
 
 							case InstallerType.WINDOWS_EXECUTABLE:
-								cmd = {"innoextract", "-e", "-m", "-d", game.install_dir.get_path(), (game is Sources.GOG.GOGGame) ? "--gog" : "", path}; // use innoextract
-								break;
-
 							case InstallerType.GOG_PART:
-								cmd = null; // do nothing, already extracted
+								cmd = null; // use compattool later
 								break;
 
 							default:
@@ -207,11 +386,15 @@ namespace GameHub.Data
 
 						if(cmd != null)
 						{
-							yield Utils.run_async(cmd, null, false, true);
+							yield Utils.run_async(cmd, null, null, false, true);
 						}
 						if(type == InstallerType.WINDOWS_EXECUTABLE)
 						{
-							gog_windows_installer = true;
+							windows_installer = true;
+							if(tool != null && tool.can_install(game))
+							{
+								yield tool.install(game, file);
+							}
 						}
 						f++;
 					}
@@ -223,7 +406,7 @@ namespace GameHub.Data
 						var enumerator = yield game.install_dir.enumerate_children_async("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
 						while((finfo = enumerator.next_file()) != null)
 						{
-							if(gog_windows_installer)
+							if(windows_installer && tool is Compat.Innoextract)
 							{
 								dirname = "app";
 								if(finfo.get_name() != "app")
@@ -242,27 +425,38 @@ namespace GameHub.Data
 							}
 						}
 
-						if(dirname != null)
+						if(dirname != null && dirname != CompatTool.COMPAT_DATA_DIR)
 						{
 							Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, game.install_dir.get_path());
 							FSUtils.rm(game.install_dir.get_path(), dirname, "-rf");
+						}
+
+						if(windows_installer || platform == Platform.WINDOWS)
+						{
+							game.force_compat = true;
 						}
 					}
 					catch(Error e){}
 
 					Utils.run({"chmod", "-R", "+x", game.install_dir.get_path()});
+
+					if(!game.executable.query_exists())
+					{
+						game.choose_executable();
+					}
 				}
 				catch(IOError.CANCELLED e){}
 				catch(Error e)
 				{
 					warning(e.message);
 				}
-				game.status = new Game.Status(game.executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+				game.update_status();
 			}
 
-			private static async InstallerType guess_type(File file, bool part=false)
+			public static async InstallerType guess_type(File file, bool part=false)
 			{
 				var type = InstallerType.UNKNOWN;
+				if(file == null) return type;
 
 				try
 				{
@@ -315,7 +509,7 @@ namespace GameHub.Data
 				return type;
 			}
 
-			private enum InstallerType
+			public enum InstallerType
 			{
 				UNKNOWN, EXECUTABLE, WINDOWS_EXECUTABLE, GOG_PART, ARCHIVE;
 
@@ -378,11 +572,11 @@ namespace GameHub.Data
 				{
 					switch(state)
 					{
-						case Game.State.INSTALLED: return _("Installed");
-						case Game.State.INSTALLING: return _("Installing");
-						case Game.State.DOWNLOADING: return download != null ? download.status.description : _("Download started");
+						case Game.State.INSTALLED: return C_("status", "Installed");
+						case Game.State.INSTALLING: return C_("status", "Installing");
+						case Game.State.DOWNLOADING: return download != null ? download.status.description : C_("status", "Download started");
 					}
-					return _("Not installed");
+					return C_("status", "Not installed");
 				}
 			}
 
@@ -392,11 +586,11 @@ namespace GameHub.Data
 				{
 					switch(state)
 					{
-						case Game.State.INSTALLED: return _("Installed:");
-						case Game.State.INSTALLING: return _("Installing:");
-						case Game.State.DOWNLOADING: return _("Downloading:");
+						case Game.State.INSTALLED: return C_("status_header", "Installed");
+						case Game.State.INSTALLING: return C_("status_header", "Installing");
+						case Game.State.DOWNLOADING: return C_("status_header", "Downloading");
 					}
-					return _("Not installed:");
+					return C_("status_header", "Not installed");
 				}
 			}
 		}

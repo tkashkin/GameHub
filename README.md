@@ -1,4 +1,4 @@
-# GameHub [![Build Status](https://travis-ci.com/tkashkin/GameHub.svg?branch=master)](https://travis-ci.com/tkashkin/GameHub)
+# [GameHub](https://tkashkin.tk/projects/gamehub) [![Build Status](https://travis-ci.com/tkashkin/GameHub.svg?branch=master)](https://travis-ci.com/tkashkin/GameHub)
 Games manager/downloader/library written in Vala for elementary OS
 
 ## Game sources
@@ -39,6 +39,7 @@ Package is maintained by [@btd1337](https://github.com/btd1337).
 * libgee-0.8-dev
 * libsoup2.4-dev
 * libsqlite3-dev
+* libxml2-dev
 
 #### Building
 ```bash

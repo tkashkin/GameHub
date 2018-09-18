@@ -12,9 +12,18 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		private Stack tabs;
 
+		private string default_tab;
+
 		public SettingsDialog(string tab="ui")
 		{
-			Object(transient_for: Windows.MainWindow.instance, deletable: false, resizable: false, title: _("Settings"));
+			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Settings"));
+			default_tab = tab;
+		}
+
+		construct
+		{
+			get_style_context().add_class("rounded");
+			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 			gravity = Gdk.Gravity.NORTH;
 			modal = true;
@@ -40,9 +49,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			tabs_switcher.margin_bottom = 8;
 
 			add_tab("ui", new Tabs.UI(this), _("Interface"));
-			add_tab("gs/steam", new Tabs.Steam(this), "Steam", "steam-symbolic");
-			add_tab("gs/gog", new Tabs.GOG(this), "GOG", "gog-symbolic");
-			add_tab("gs/humble", new Tabs.Humble(this), "Humble Bundle", "humble-symbolic");
+			add_tab("gs/steam", new Tabs.Steam(this), "Steam", "source-steam-symbolic");
+			add_tab("gs/gog", new Tabs.GOG(this), "GOG", "source-gog-symbolic");
+			add_tab("gs/humble", new Tabs.Humble(this), "Humble Bundle", "source-humble-symbolic");
 			add_tab("collection", new Tabs.Collection(this), _("Collection"));
 
 			content.pack_start(restart_msg, false, false, 0);
@@ -58,10 +67,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 				}
 			});
 
-			add_button(_("Close"), ResponseType.CLOSE).margin_end = 7;
 			show_all();
 
-			tabs.visible_child_name = tab;
+			tabs.visible_child_name = default_tab;
 		}
 
 		private void add_tab(string id, SettingsDialogTab tab, string title, string? icon=null)
