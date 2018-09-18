@@ -1,28 +1,18 @@
----
-
-language: node_js
-
-node_js:
-  - lts/*
-
-sudo: required
-
-services:
-  - docker
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - libstdc++-5-dev
-
-cache:
-  directories:
-    - /tmp/liftoff
+language: vala
+compiler: gcc
+sudo: require
+dist: bionic
 
 install:
-  - npm install @elementaryos/houston
+  - bash appimage/build.sh deps
 
 script:
-  - houston ci
+  - bash appimage/build.sh build
+  - bash appimage/build.sh appimage
+
+after_success:
+  - bash appimage/build.sh upload
+
+branches:
+  except:
+    - /^(?i:continuous)/

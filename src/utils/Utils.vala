@@ -130,8 +130,12 @@ namespace GameHub.Utils
 
 	public static string get_distro()
 	{
-		#if FLATPAK
+		#if APPIMAGE
+		return "appimage";
+		#elif FLATPAK
 		return "flatpak";
+		#elif SNAP
+		return "snap";
 		#else
 		return Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
 		#endif
@@ -144,7 +148,7 @@ namespace GameHub.Utils
 
 	public static bool is_package_installed(string package)
 	{
-		#if FLATPAK || SNAP
+		#if APPIMAGE || FLATPAK || SNAP
 		return false;
 		#elif PM_APT
 		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package});
