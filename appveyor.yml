@@ -8,6 +8,7 @@ image:
 clone_folder: ~/GameHub
 
 build_script:
+  - sh: dpkg-buildpackage -b -us -uc
   - sh: bash appimage/build.sh build && bash appimage/build.sh appimage
 
 install:
@@ -16,5 +17,9 @@ install:
 test: off
 
 artifacts:
+  - path: ~/com.github.tkashkin.gamehub*.deb
+    name: deb
+  - path: ~/com.github.tkashkin.gamehub*.ddeb
+    name: deb-dbgsym
   - path: build/appimage/GameHub*.AppImage*
     name: AppImage

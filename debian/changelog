@@ -1,3 +1,11 @@
+com.github.tkashkin.gamehub (0.11.0) xenial; urgency=low
+
+  * Humble Trove support
+  * Additional compat tools (CustomScript, DOSBox)
+  * AppImage version
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 18 Sep 2018 09:18:25 +0300
+
 com.github.tkashkin.gamehub (0.10.0) xenial; urgency=low
 
   * Compatibility tools support for non-native games:
