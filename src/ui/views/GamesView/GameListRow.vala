@@ -2,6 +2,7 @@ using Gtk;
 using Gdk;
 using Granite;
 using GameHub.Data;
+using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -46,10 +47,10 @@ namespace GameHub.UI.Views.GamesView
 			hbox.add(vbox);
 
 			game.status_change.connect(s => {
-				label.label = (game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
+				label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
 				state_label.label = s.description;
 				update_icon();
-				changed();
+				Idle.add(() => { changed(); return Source.REMOVE; });
 			});
 			game.status_change(game.status);
 

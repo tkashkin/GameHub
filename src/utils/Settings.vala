@@ -10,7 +10,7 @@ namespace GameHub.Settings
 		MAXIMIZED = 1,
 		FULLSCREEN = 2
 	}
-	
+
 	public enum GamesView
 	{
 		GRID = 0,
@@ -31,7 +31,7 @@ namespace GameHub.Settings
 		{
 			base(ProjectConfig.PROJECT_NAME + ".saved-state");
 		}
-		
+
 		private static SavedState? instance;
 		public static unowned SavedState get_instance()
 		{
@@ -42,7 +42,7 @@ namespace GameHub.Settings
 			return instance;
 		}
 	}
-	
+
 	public class UI: Granite.Services.Settings
 	{
 		public bool dark_theme { get; set; }
@@ -51,12 +51,13 @@ namespace GameHub.Settings
 		public bool merge_games { get; set; }
 
 		public bool show_unsupported_games { get; set; }
+		public bool use_compat { get; set; }
 
 		public UI()
 		{
 			base(ProjectConfig.PROJECT_NAME + ".ui");
 		}
-		
+
 		private static UI? instance;
 		public static unowned UI get_instance()
 		{
@@ -67,9 +68,9 @@ namespace GameHub.Settings
 			return instance;
 		}
 	}
-	
+
 	namespace Auth
-	{		
+	{
 		public class Steam: Granite.Services.Settings
 		{
 			public bool enabled { get; set; }
@@ -105,7 +106,7 @@ namespace GameHub.Settings
 				return instance;
 			}
 		}
-		
+
 		public class GOG: Granite.Services.Settings
 		{
 			public bool enabled { get; set; }
@@ -117,7 +118,7 @@ namespace GameHub.Settings
 			{
 				base(ProjectConfig.PROJECT_NAME + ".auth.gog");
 			}
-		
+
 			private static GOG? instance;
 			public static unowned GOG get_instance()
 			{
@@ -128,18 +129,20 @@ namespace GameHub.Settings
 				return instance;
 			}
 		}
-		
+
 		public class Humble: Granite.Services.Settings
 		{
 			public bool enabled { get; set; }
 			public bool authenticated { get; set; }
 			public string access_token { get; set; }
 
+			public bool load_trove_games { get; set; }
+
 			public Humble()
 			{
 				base(ProjectConfig.PROJECT_NAME + ".auth.humble");
 			}
-		
+
 			private static Humble? instance;
 			public static unowned Humble get_instance()
 			{

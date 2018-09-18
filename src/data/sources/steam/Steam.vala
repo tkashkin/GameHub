@@ -1,5 +1,5 @@
-using Gtk;
 using Gee;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Steam
@@ -8,11 +8,9 @@ namespace GameHub.Data.Sources.Steam
 	{
 		private string api_key;
 
-		public static string[] PROTON_APPIDS = {"858280", "930400"};
-
 		public override string id { get { return "steam"; } }
 		public override string name { get { return "Steam"; } }
-		public override string icon { get { return "steam-symbolic"; } }
+		public override string icon { get { return "source-steam-symbolic"; } }
 		public override string auth_description
 		{
 			owned get
@@ -165,26 +163,25 @@ namespace GameHub.Data.Sources.Steam
 			Utils.thread("SteamLoading", () => {
 				_games.clear();
 
-				var cached = GamesDB.get_instance().get_games(this);
+				var cached = Tables.Games.get_all(this);
+				games_count = 0;
 				if(cached.size > 0)
 				{
 					foreach(var g in cached)
 					{
-						if(!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(g))
+						if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
 						{
 							//g.update_game_info.begin();
 							_games.add(g);
-							games_count = _games.size;
 							if(game_loaded != null)
 							{
 								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
 								Thread.usleep(100000);
 							}
 						}
+						games_count++;
 					}
 				}
-
-				games_count = _games.size;
 
 				if(cache_loaded != null)
 				{
@@ -215,17 +212,16 @@ namespace GameHub.Data.Sources.Steam
 				foreach(var g in json_games.get_elements())
 				{
 					var game = new SteamGame(this, g);
-					if(!_games.contains(game) && (!Settings.UI.get_instance().merge_games || !GamesDB.get_instance().is_game_merged(game)))
+					bool is_new_game = !_games.contains(game);
+					if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
 					{
-						yield game.update_game_info();
 						_games.add(game);
-						games_count = _games.size;
 						if(game_loaded != null)
 						{
 							Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
-							Thread.usleep(100000);
 						}
 					}
+					if(is_new_game) games_count++;
 				}
 			}
 		}

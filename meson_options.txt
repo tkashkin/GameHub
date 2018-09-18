@@ -1,8 +1,7 @@
 option('distro', type: 'combo', choices: ['generic', 'debian', 'arch'], value: 'generic')
 
+option('appimage', type: 'boolean', value: false)
 option('flatpak', type: 'boolean', value: false)
 option('snap', type: 'boolean', value: false)
 
 option('runtime', type: 'string', value: '')
-
-option('use_ivy', type: 'boolean', value: true)

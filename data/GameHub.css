@@ -12,7 +12,7 @@
 	border-radius: 4px;
 }
 
-.gamecard.installed
+.gamecard.installed, .gamecard.static
 {
 	opacity: 1;
 }
@@ -72,7 +72,7 @@
 	transition: 100ms;
 }
 
-.gamecard.installed .actions
+.gamecard.installed .actions, .gamecard.static .actions
 {
 	background-color: rgba(0, 0, 0, 0);
 }

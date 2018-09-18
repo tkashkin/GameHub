@@ -19,9 +19,10 @@ namespace GameHub.Utils
 		}
 		public void run()
 		{
-			debug("[Worker] %s started", name);
+			bool dbg = !name.has_prefix("Merging-");
+			if(dbg) debug("[Worker] %s started", name);
 			worker();
-			debug("[Worker] %s finished", name);
+			if(dbg) debug("[Worker] %s finished", name);
 		}
 	}
 
@@ -39,13 +40,12 @@ namespace GameHub.Utils
 		}
 	}
 
-	public static string run(string[] cmd, string? dir=null, bool override_runtime=false)
+	public static string run(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false)
 	{
 		string stdout;
 
 		var cdir = dir ?? Environment.get_home_dir();
-		var cenv = Environ.get();
-		var ccmd = cmd;
+		var cenv = env ?? Environ.get();
 
 		#if FLATPAK
 		if(override_runtime && ProjectConfig.RUNTIME.length > 0)
@@ -56,23 +56,23 @@ namespace GameHub.Utils
 
 		try
 		{
-			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL, null, out stdout);
+			debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
+			Process.spawn_sync(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout);
+			print(stdout.strip() + "\n");
 		}
 		catch (Error e)
 		{
-			warning(e.message);
+			warning("[Utils.run] %s", e.message);
 		}
 		return stdout;
 	}
 
-	public static async void run_async(string[] cmd, string? dir=null, bool override_runtime=false, bool wait=true)
+	public static async void run_async(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool wait=true)
 	{
 		Pid pid;
 
 		var cdir = dir ?? Environment.get_home_dir();
-		var cenv = Environ.get();
-		var ccmd = cmd;
-		var cwait = wait;
+		var cenv = env ?? Environ.get();
 
 		#if FLATPAK
 		if(override_runtime && ProjectConfig.RUNTIME.length > 0)
@@ -83,7 +83,8 @@ namespace GameHub.Utils
 
 		try
 		{
-			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
+			debug("[Utils.run_async] Running {'%s'} in '%s'", string.joinv("' '", cmd), cdir);
+			Process.spawn_async(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
 
 			ChildWatch.add(pid, (pid, status) => {
 				Process.close_pid(pid);
@@ -92,18 +93,18 @@ namespace GameHub.Utils
 		}
 		catch (Error e)
 		{
-			warning(e.message);
+			warning("[Utils.run_async] %s", e.message);
 		}
 
-		if(cwait) yield;
+		if(wait) yield;
 	}
 
-	public static async string run_thread(string[] cmd, string? dir=null, bool override_runtime=false)
+	public static async string run_thread(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false)
 	{
 		string stdout = "";
 
-		Utils.thread("Utils.run", () => {
-			stdout = Utils.run(cmd, dir, override_runtime);
+		Utils.thread("Utils.run_thread", () => {
+			stdout = Utils.run(cmd, dir, env, override_runtime);
 			Idle.add(run_thread.callback);
 		});
 
@@ -129,8 +130,12 @@ namespace GameHub.Utils
 
 	public static string get_distro()
 	{
-		#if FLATPAK
+		#if APPIMAGE
+		return "appimage";
+		#elif FLATPAK
 		return "flatpak";
+		#elif SNAP
+		return "snap";
 		#else
 		return Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
 		#endif
@@ -143,7 +148,7 @@ namespace GameHub.Utils
 
 	public static bool is_package_installed(string package)
 	{
-		#if FLATPAK || SNAP
+		#if APPIMAGE || FLATPAK || SNAP
 		return false;
 		#elif PM_APT
 		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package});
@@ -219,7 +224,7 @@ namespace GameHub.Utils
 				{
 					if(k == c) break;
 				}
-				if(k == c) break;
+				if(k == c) continue;
 			}
 			n = n.replace(c.to_string(), "");
 		}

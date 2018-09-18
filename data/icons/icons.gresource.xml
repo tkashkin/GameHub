@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
 	<gresource prefix="/com/github/tkashkin/gamehub/icons">
-		<file alias="scalable/actions/sources-all-symbolic.svg">sources-all.svg</file>
-		<file alias="scalable/actions/steam-symbolic.svg">steam.svg</file>
-		<file alias="scalable/actions/gog-symbolic.svg">gog.svg</file>
-		<file alias="scalable/actions/humble-symbolic.svg">humble.svg</file>
+		<file alias="scalable/actions/sources-all-symbolic.svg">symbolic/sources/sources-all.svg</file>
+		<file alias="scalable/actions/source-steam-symbolic.svg">symbolic/sources/steam.svg</file>
+		<file alias="scalable/actions/source-gog-symbolic.svg">symbolic/sources/gog.svg</file>
+		<file alias="scalable/actions/source-humble-symbolic.svg">symbolic/sources/humble.svg</file>
+		<file alias="scalable/actions/source-humble-trove-symbolic.svg">symbolic/sources/humble-trove.svg</file>
 
-		<file alias="scalable/actions/platform-linux-symbolic.svg">platform-linux.svg</file>
-		<file alias="scalable/actions/platform-windows-symbolic.svg">platform-windows.svg</file>
-		<file alias="scalable/actions/platform-macos-symbolic.svg">platform-macos.svg</file>
+		<file alias="scalable/actions/platform-linux-symbolic.svg">symbolic/platforms/linux.svg</file>
+		<file alias="scalable/actions/platform-windows-symbolic.svg">symbolic/platforms/windows.svg</file>
+		<file alias="scalable/actions/platform-macos-symbolic.svg">symbolic/platforms/macos.svg</file>
+
+		<file alias="scalable/actions/tool-wine-symbolic.svg">symbolic/tools/wine.svg</file>
+		<file alias="scalable/actions/tool-dosbox-symbolic.svg">symbolic/tools/dosbox.svg</file>
+
+		<file alias="scalable/actions/tag.svg">normal/tags/tag.svg</file>
+
+		<file alias="scalable/actions/gh-tag-symbolic.svg">symbolic/tags/tag.svg</file>
+		<file alias="scalable/actions/gh-tag-add-symbolic.svg">symbolic/tags/tag-add.svg</file>
+		<file alias="scalable/actions/gh-tag-remove-symbolic.svg">symbolic/tags/tag-remove.svg</file>
+		<file alias="scalable/actions/gh-tag-multiple-symbolic.svg">symbolic/tags/tag-multiple.svg</file>
+		<file alias="scalable/actions/gh-tag-favorites-symbolic.svg">symbolic/tags/tag-favorites.svg</file>
+		<file alias="scalable/actions/gh-tag-hidden-symbolic.svg">symbolic/tags/tag-hidden.svg</file>
 	</gresource>
 </gresources>

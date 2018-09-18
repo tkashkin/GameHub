@@ -3,6 +3,7 @@ using GLib;
 using Gee;
 using Granite;
 using GameHub.Data;
+using GameHub.Data.DB;
 using GameHub.Utils;
 
 namespace GameHub.UI.Views.GamesView
@@ -33,6 +34,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private Spinner spinner;
 		private int loading_sources = 0;
+		private bool new_games_added = false;
 
 		private Button settings;
 
@@ -46,6 +48,10 @@ namespace GameHub.UI.Views.GamesView
 
 		private Settings.UI ui_settings;
 		private Settings.SavedState saved_state;
+
+		private bool view_update_interval_started = false;
+		private bool view_update_pending = false;
+		private int view_update_no_updates_cycles = 0;
 
 		construct
 		{
@@ -113,7 +119,7 @@ namespace GameHub.UI.Views.GamesView
 			add_view_button("view-list-symbolic", _("List view"));
 
 			view.mode_changed.connect(() => {
-				update_view();
+				postpone_view_update();
 			});
 
 			titlebar.pack_start(view);
@@ -191,8 +197,8 @@ namespace GameHub.UI.Views.GamesView
 					var s1 = item1.game.status.state;
 					var s2 = item2.game.status.state;
 
-					var f1 = item1.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
-					var f2 = item2.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
+					var f1 = item1.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+					var f2 = item2.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 
 					if(f1 && !f2) return -1;
 					if(f2 && !f1) return 1;
@@ -224,13 +230,13 @@ namespace GameHub.UI.Views.GamesView
 				var prev_item = prev as GameListRow;
 				var s = item.game.status.state;
 				var ps = prev_item != null ? prev_item.game.status.state : s;
-				var f = item.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES);
-				var pf = prev_item != null ? prev_item.game.has_tag(GamesDB.Tables.Tags.BUILTIN_FAVORITES) : f;
+				var f = item.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+				var pf = prev_item != null ? prev_item.game.has_tag(Tables.Tags.BUILTIN_FAVORITES) : f;
 
 				if(prev_item != null && f == pf && (f || s == ps)) row.set_header(null);
 				else
 				{
-					var label = new HeaderLabel(f ? _("Favorites:") : item.game.status.header);
+					var label = new HeaderLabel(f ? C_("status_header", "Favorites") : item.game.status.header);
 					label.get_style_context().add_class("games-list-header");
 					label.set_size_request(1024, -1); // ugly hack
 					row.set_header(label);
@@ -242,16 +248,13 @@ namespace GameHub.UI.Views.GamesView
 				games_list_details.game = item != null ? item.game : null;
 			});
 
-			filter.mode_changed.connect(() => {
-				update_view();
+			filter.mode_changed.connect(postpone_view_update);
+			search.search_changed.connect(postpone_view_update);
 
-				Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
-			});
-			search.search_changed.connect(() => filter.mode_changed(filter));
+			ui_settings.notify["show-unsupported-games"].connect(postpone_view_update);
+			ui_settings.notify["use-proton"].connect(postpone_view_update);
 
-			ui_settings.notify["show-unsupported-games"].connect(() => filter.mode_changed(filter));
-
-			filters_popover.filters_changed.connect(() => filter.mode_changed(filter));
+			filters_popover.filters_changed.connect(postpone_view_update);
 
 			spinner = new Spinner();
 
@@ -301,6 +304,33 @@ namespace GameHub.UI.Views.GamesView
 			load_games();
 		}
 
+		private void postpone_view_update()
+		{
+			view_update_pending = true;
+			if(!view_update_interval_started)
+			{
+				Utils.thread("GamesViewUpdate", () => {
+					view_update_interval_started = true;
+					view_update_no_updates_cycles = 0;
+					while(view_update_no_updates_cycles < 10)
+					{
+						if(view_update_pending)
+						{
+							Idle.add(() => { update_view(); return Source.REMOVE; });
+							view_update_no_updates_cycles = 0;
+						}
+						else
+						{
+							view_update_no_updates_cycles++;
+						}
+						view_update_pending = false;
+						Thread.usleep(500000);
+					}
+					view_update_interval_started = false;
+				});
+			}
+		}
+
 		private void update_view()
 		{
 			show_games();
@@ -312,7 +342,6 @@ namespace GameHub.UI.Views.GamesView
 			GameSource? src = null;
 			if(f > 0) src = sources[f - 1];
 			var games = src == null ? games_grid.get_children().length() : src.games_count;
-			titlebar.title = "GameHub";
 			titlebar.subtitle = (src == null ? "" : src.name + ": ") + ngettext("%u game", "%u games", games).printf(games);
 
 			games_list_details.preferred_source = src;
@@ -356,6 +385,8 @@ namespace GameHub.UI.Views.GamesView
 			var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
 			stack.set_visible_child(tab);
 			saved_state.games_view = view.selected == 0 ? Settings.GamesView.GRID : Settings.GamesView.LIST;
+
+			Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
 		}
 
 		private void show_games()
@@ -388,7 +419,7 @@ namespace GameHub.UI.Views.GamesView
 					var card = new GameCard(g);
 					var row = new GameListRow(g);
 
-					g.tags_update.connect(() => filter.mode_changed(filter));
+					g.tags_update.connect(postpone_view_update);
 
 					games_grid.add(card);
 					games_list.add(row);
@@ -396,9 +427,13 @@ namespace GameHub.UI.Views.GamesView
 					card.show();
 					row.show();
 
-					if(!cached) merge_game(g);
+					if(!cached)
+					{
+						merge_game(g);
+						new_games_added = true;
+					}
 
-					update_view();
+					postpone_view_update();
 
 					if(games_list.get_selected_row() == null)
 					{
@@ -408,7 +443,7 @@ namespace GameHub.UI.Views.GamesView
 						});
 					}
 				}, () => {
-					update_view();
+					postpone_view_update();
 				}, (obj, res) => {
 					src.load_games.end(res);
 
@@ -417,8 +452,10 @@ namespace GameHub.UI.Views.GamesView
 
 					if(loading_sources == 0)
 					{
-						merge_games();
+						if(new_games_added) merge_games();
+						update_games();
 					}
+					postpone_view_update();
 
 					if(src.games_count == 0)
 					{
@@ -473,7 +510,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private bool games_filter(Game game)
 		{
-			if(!ui_settings.show_unsupported_games && !game.is_supported()) return false;
+			if(!ui_settings.show_unsupported_games && !game.is_supported(null, ui_settings.use_compat)) return false;
 
 			var f = filter.selected;
 			GameSource? src = null;
@@ -486,7 +523,7 @@ namespace GameHub.UI.Views.GamesView
 
 			if(ui_settings.merge_games)
 			{
-				merges = GamesDB.get_instance().get_merged_games(game);
+				merges = Tables.Merges.get(game);
 				if(!same_src && merges != null && merges.size > 0)
 				{
 					foreach(var g in merges)
@@ -501,8 +538,8 @@ namespace GameHub.UI.Views.GamesView
 			}
 
 			var tags = filters_popover.selected_tags;
-			bool tags_all_enabled = tags == null || tags.size == 0 || tags.size == GamesDB.Tables.Tags.TAGS.size;
-			bool tags_all_except_hidden_enabled = tags != null && tags.size == GamesDB.Tables.Tags.TAGS.size - 1 && !(GamesDB.Tables.Tags.BUILTIN_HIDDEN in tags);
+			bool tags_all_enabled = tags == null || tags.size == 0 || tags.size == Tables.Tags.TAGS.size;
+			bool tags_all_except_hidden_enabled = tags != null && tags.size == Tables.Tags.TAGS.size - 1 && !(Tables.Tags.BUILTIN_HIDDEN in tags);
 			bool tags_match = false;
 			bool tags_match_merged = false;
 
@@ -526,7 +563,7 @@ namespace GameHub.UI.Views.GamesView
 				}
 			}
 
-			bool hidden = game.has_tag(GamesDB.Tables.Tags.BUILTIN_HIDDEN) && (tags == null || tags.size == 0 || !(GamesDB.Tables.Tags.BUILTIN_HIDDEN in tags));
+			bool hidden = game.has_tag(Tables.Tags.BUILTIN_HIDDEN) && (tags == null || tags.size == 0 || !(Tables.Tags.BUILTIN_HIDDEN in tags));
 
 			return (same_src || merged_src) && (tags_all_enabled || tags_all_except_hidden_enabled || tags_match || tags_match_merged) && !hidden && Utils.strip_name(search.text).casefold() in Utils.strip_name(game.name).casefold();
 		}
@@ -582,6 +619,21 @@ namespace GameHub.UI.Views.GamesView
 			});
 		}
 
+		private void update_games()
+		{
+			if(in_destruction()) return;
+			Utils.thread("Updating", () => {
+				foreach(var src in sources)
+				{
+					foreach(var game in src.games)
+					{
+						game.update_game_info.begin();
+						Thread.usleep(50000);
+					}
+				}
+			});
+		}
+
 		private void merge_games()
 		{
 			if(!ui_settings.merge_games || in_destruction()) return;
@@ -595,7 +647,6 @@ namespace GameHub.UI.Views.GamesView
 
 		private void merge_games_from(GameSource src)
 		{
-			if(!ui_settings.merge_games || in_destruction() || src == null) return;
 			Utils.thread("Merging-" + src.id, () => {
 				foreach(var game in src.games)
 				{
@@ -607,29 +658,40 @@ namespace GameHub.UI.Views.GamesView
 		private void merge_game(Game game)
 		{
 			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
-			Utils.thread("Merging-" + game.source.id + ":" + game.id, () => {
+			Utils.thread("Merging-" + game.full_id, () => {
 				foreach(var src in sources)
 				{
 					foreach(var game2 in src.games)
 					{
-						if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC) continue;
-						bool name_match_exact = Utils.strip_name(game.name).casefold() == Utils.strip_name(game2.name).casefold();
-						bool name_match_fuzzy_prefix = game.source != src
-						                  && (Utils.strip_name(game.name, ":").casefold().has_prefix(Utils.strip_name(game2.name).casefold() + ":")
-						                  || Utils.strip_name(game2.name, ":").casefold().has_prefix(Utils.strip_name(game.name).casefold() + ":"));
-						if(name_match_exact || name_match_fuzzy_prefix)
-						{
-							GamesDB.get_instance().merge(game, game2);
-							debug(@"[Merge] Merging '$(game.name)' ($(game.source.id):$(game.id)) with '$(game2.name)' ($(game2.source.id):$(game2.id))");
-
-							Idle.add(() => {
-								remove_game(game2);
-								games_list.foreach(r => { (r as GameListRow).update(); });
-								games_grid.foreach(c => { (c as GameCard).update(); });
-								return Source.REMOVE;
-							});
-						}
+						merge_game_with_game(src, game, game2);
 					}
+				}
+			});
+		}
+
+		private void merge_game_with_game(GameSource src, Game game, Game game2)
+		{
+			Utils.thread("Merging-" + game.full_id + "-" + game2.full_id, () => {
+				if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC)
+				{
+					return;
+				}
+
+				bool name_match_exact = Utils.strip_name(game.name).casefold() == Utils.strip_name(game2.name).casefold();
+				bool name_match_fuzzy_prefix = game.source != src
+				                  && (Utils.strip_name(game.name, ":").casefold().has_prefix(Utils.strip_name(game2.name).casefold() + ":")
+				                  || Utils.strip_name(game2.name, ":").casefold().has_prefix(Utils.strip_name(game.name).casefold() + ":"));
+				if(name_match_exact || name_match_fuzzy_prefix)
+				{
+					Tables.Merges.add(game, game2);
+					debug(@"[Merge] Merging '$(game.name)' ($(game.full_id)) with '$(game2.name)' ($(game2.full_id))");
+
+					Idle.add(() => {
+						remove_game(game2);
+						games_list.foreach(r => { (r as GameListRow).update(); });
+						games_grid.foreach(c => { (c as GameCard).update(); });
+						return Source.REMOVE;
+					});
 				}
 			});
 		}
