@@ -1,11 +1,14 @@
-project('com.github.tkashkin.gamehub', 'vala', 'c', version: '0.10.0')
+project('com.github.tkashkin.gamehub', 'vala', 'c', version: '0.11.0')
 
 i18n = import('i18n')
 gnome = import('gnome')
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()), language: 'c')
 
-if get_option('flatpak')
+if get_option('appimage')
+	add_global_arguments('-D', 'APPIMAGE', language: 'vala')
+	subdir('appimage')
+elif get_option('flatpak')
 	add_global_arguments('-D', 'FLATPAK', language: 'vala')
 elif get_option('snap')
 	add_global_arguments('-D', 'SNAP', language: 'vala')
