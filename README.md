@@ -39,7 +39,7 @@ Package is maintained by [@btd1337](https://github.com/btd1337).
 * libgee-0.8-dev
 * libsoup2.4-dev
 * libsqlite3-dev
-* libxml-2.0
+* libxml2-dev
 
 #### Building
 ```bash
