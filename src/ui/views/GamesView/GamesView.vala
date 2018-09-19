@@ -149,6 +149,8 @@ namespace GameHub.UI.Views.GamesView
 			downloads_scrolled.propagate_natural_width = true;
 			downloads_scrolled.propagate_natural_height = true;
 			downloads_scrolled.max_content_height = 440;
+			#else
+			downloads_scrolled.min_content_height = 440;
 			#endif
 			downloads_scrolled.add(downloads_list);
 			downloads_scrolled.show_all();
