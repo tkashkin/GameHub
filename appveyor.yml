@@ -16,6 +16,7 @@ clone_folder: ~/build/GameHub
 clone_depth: 1
 
 build_script:
+  - sh: mkdir -p build/appimage/
   - sh: dpkg-buildpackage -b -us -uc
   - sh: mv ../com.github.tkashkin.gamehub*.{deb,ddeb} build/
   - sh: bash appimage/build.sh build && bash appimage/build.sh appimage
