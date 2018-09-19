@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 _ROOT="`pwd`"
 _SCRIPTROOT="$(dirname "$(readlink -f "$0")")"
 _LINUXDEPLOYQT="linuxdeployqt-continuous-x86_64.AppImage"
@@ -42,12 +44,12 @@ appimage()
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
 	export VERSION="$_VERSION"
 	export LD_LIBRARY_PATH=$APPDIR/usr/lib:$LD_LIBRARY_PATH
-	"./$_LINUXDEPLOYQT" "$APPDIR/usr/share/applications/com.github.tkashkin.gamehub.desktop" -appimage -bundle-non-qt-libs -verbose=2
+	"./$_LINUXDEPLOYQT" "$APPDIR/usr/share/applications/com.github.tkashkin.gamehub.desktop" -appimage -verbose=2
 	rm -f "$APPDIR/AppRun"
 	cp -f "$_SCRIPTROOT/AppRun" "$APPDIR/AppRun"
 	glib-compile-schemas "$APPDIR/usr/share/glib-2.0/schemas"
 	"./$_LINUXDEPLOYQT" --appimage-extract
-	PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool "$APPDIR"
+	PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool --no-appstream "$APPDIR"
 }
 
 upload()

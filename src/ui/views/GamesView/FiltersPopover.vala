@@ -67,6 +67,8 @@ namespace GameHub.UI.Views.GamesView
 			tags_scrolled.propagate_natural_width = true;
 			tags_scrolled.propagate_natural_height = true;
 			tags_scrolled.max_content_height = 440;
+			#else
+			tags_scrolled.min_content_height = 320;
 			#endif
 			tags_scrolled.add(tags_list);
 			tags_scrolled.show_all();
