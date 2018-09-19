@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.11.1) xenial; urgency=low
+
+  * Updated pt_BR localization
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 19 Sep 2018 03:19:47 +0300
+
 com.github.tkashkin.gamehub (0.11.0) xenial; urgency=low
 
   * Humble Trove support
