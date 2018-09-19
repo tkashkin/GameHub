@@ -4,6 +4,9 @@ _ROOT="`pwd`"
 _SCRIPTROOT="$(dirname "$(readlink -f "$0")")"
 _LINUXDEPLOYQT="linuxdeployqt-continuous-x86_64.AppImage"
 
+_SOURCE="${APPVEYOR_BUILD_VERSION:-local}"
+_VERSION="$_SOURCE-$(git rev-parse --short HEAD)"
+
 BUILDROOT="$_ROOT/build/appimage"
 BUILDDIR="$BUILDROOT/build"
 APPDIR="$BUILDROOT/appdir"
@@ -37,7 +40,7 @@ appimage()
 	wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/$_LINUXDEPLOYQT"
 	chmod a+x linuxdeployqt-continuous-x86_64.AppImage
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
-	export VERSION=$(git rev-parse --short HEAD)
+	export VERSION="$_VERSION"
 	export LD_LIBRARY_PATH=$APPDIR/usr/lib:$LD_LIBRARY_PATH
 	"./$_LINUXDEPLOYQT" "$APPDIR/usr/share/applications/com.github.tkashkin.gamehub.desktop" -appimage -bundle-non-qt-libs -verbose=2
 	rm -f "$APPDIR/AppRun"
