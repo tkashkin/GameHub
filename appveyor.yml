@@ -10,7 +10,7 @@ branches:
     - flatpak
 
 image:
-  - Ubuntu1804
+  - Ubuntu1604
 
 clone_folder: ~/build/GameHub
 clone_depth: 1
