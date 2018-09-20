@@ -1,9 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-export LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}"
-export PATH="${APPDIR}/usr/bin:${PATH}"
-export XDG_DATA_DIRS="${APPDIR}/usr/share:${XDG_DATA_DIRS}"
+echo "[AppRun ] GameHub AppImage"
+echo "[AppRun ] AppDir: $APPDIR"
 
-export GSETTINGS_SCHEMA_DIR="${APPDIR}/usr/share/glib-2.0/schemas/:${GSETTINGS_SCHEMA_DIR}"
+export LD_LIBRARY_PATH="$APPDIR/usr/lib:$LD_LIBRARY_PATH"
+export PATH="$APPDIR/usr/bin:$PATH"
+export XDG_DATA_DIRS="$APPDIR/usr/share:$XDG_DATA_DIRS"
 
-"${APPDIR}/usr/bin/com.github.tkashkin.gamehub" "$@"
+export GSETTINGS_SCHEMA_DIR="$APPDIR/usr/share/glib-2.0/schemas/:$GSETTINGS_SCHEMA_DIR"
+
+export LD_LIBRARY_PATH="$APPDIR/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0:$LD_LIBRARY_PATH"
+
+[ -e "$APPDIR/checkrt.sh" ] && . "$APPDIR/checkrt.sh" || echo "[AppRun] Skipping CheckRT"
+
+echo "[AppRun ] Starting GameHub"
+
+cd "$APPDIR/usr"
+"$APPDIR/usr/bin/com.github.tkashkin.gamehub" "$@"
