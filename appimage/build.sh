@@ -6,6 +6,14 @@ _LINUXDEPLOYQT="linuxdeployqt-continuous-x86_64.AppImage"
 
 _SOURCE="${APPVEYOR_BUILD_VERSION:-local}"
 _VERSION="$_SOURCE-$(git rev-parse --short HEAD)"
+_BUILD_IMAGE="local"
+
+if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
+	_VERSION="xenial-$_VERSION"
+	_BUILD_IMAGE="xenial"
+elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
+	_BUILD_IMAGE="bionic"
+fi
 
 BUILDROOT="$_ROOT/build/appimage"
 BUILDDIR="$BUILDROOT/build"
@@ -45,12 +53,26 @@ deps()
 {
 	set +e
 	echo "[appimage/build.sh] Installing dependencies"
+	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
+		sudo dpkg -i "$_SCRIPTROOT/deps/xenial/*.dpkg"
+	fi
 	sudo add-apt-repository ppa:elementary-os/stable -y
 	sudo add-apt-repository ppa:elementary-os/os-patches -y
 	sudo add-apt-repository ppa:elementary-os/daily -y
 	sudo apt update -qq
 	sudo apt install -y meson valac checkinstall build-essential elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev
 	sudo apt full-upgrade -y
+}
+
+build_deb()
+{
+	set -e
+	echo "[appimage/build.sh] Building deb package"
+	cd "$_ROOT"
+	export DEB_BUILD_OPTIONS="nostrip,nocheck"
+	dpkg-buildpackage -b -us -uc
+	mv ../*.deb "build/$_BUILD_IMAGE/GameHub-$_VERSION-amd64.deb"
+	cd "$_ROOT"
 }
 
 build()
@@ -72,7 +94,7 @@ appimage()
 	echo "[appimage/build.sh] Preparing AppImage"
 	cd "$BUILDROOT"
 	wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/$_LINUXDEPLOYQT"
-	chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+	chmod a+x "./$_LINUXDEPLOYQT"
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
 	export VERSION="$_VERSION"
 	export LD_LIBRARY_PATH=$APPDIR/usr/lib:$LD_LIBRARY_PATH
@@ -116,7 +138,7 @@ appimage_checkrt()
 	cp -f "$_SCRIPTROOT/checkrt.sh" "$APPDIR/checkrt.sh"
 	cp -rf "$_SCRIPTROOT/optlib" "$APPDIR/usr/"
 
-	echo "[appimage/build.sh] Moving GTK+3 and its dependencies"
+	echo "[appimage/build.sh] Moving GTK and its dependencies"
 	mkdir -p "$APPDIR/usr/optlib/libgtk-3.so.0/"
 	_mv_deps "libgtk-3.so.0" "$APPDIR/usr/lib" "$APPDIR/usr/optlib/libgtk-3.so.0/"
 
@@ -124,6 +146,11 @@ appimage_checkrt()
 	find "$APPDIR/usr/lib/" -maxdepth 1 -type f -not -name "libgranite.so.*" -not -name "libwebkit2gtk-4.0.so.*" -print0 | while read -d $'\0' dep; do
 		_mv_deps "$(basename $dep)" "$APPDIR/usr/optlib/libgtk-3.so.0" "$APPDIR/usr/lib/" "false"
 	done
+
+	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
+		echo "[appimage/build.sh] Removing GTK and its dependencies"
+		rm -rf "$APPDIR/usr/optlib/libgtk-3.so.0"
+	fi
 
 	for lib in 'libstdc++.so.6' 'libgcc_s.so.1'; do
 		echo "[appimage/build.sh] Bundling $lib"
@@ -150,10 +177,15 @@ upload()
 	echo "[appimage/build.sh] Uploading AppImage"
 	cd "$BUILDROOT"
 	wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-	bash upload.sh GameHub*.AppImage*
+	bash upload.sh "$_ROOT/build/$_BUILD_IMAGE/*.deb" GameHub*.AppImage*
 }
 
+mkdir -p "$BUILDROOT"
+
 if [[ "$ACTION" = "deps" ]]; then deps; fi
+
+if [[ "$ACTION" = "build_deb" ]]; then build_deb; fi
+
 if [[ "$ACTION" = "build" || "$ACTION" = "build_local" ]]; then build; fi
 
 if [[ "$ACTION" = "appimage" || "$ACTION" = "build_local" ]]; then appimage; fi
