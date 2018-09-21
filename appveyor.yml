@@ -10,8 +10,8 @@ branches:
     - flatpak
 
 image:
-  - Ubuntu1804
   - Ubuntu1604
+  - Ubuntu1804
 
 clone_folder: ~/build/GameHub
 clone_depth: 1
@@ -41,7 +41,7 @@ deploy:
     description: |
         CI build
 
-        * Use default packages for recent distros (>= Ubuntu 18.04)
+        * Use `bionic` packages for recent distros (>= Ubuntu 18.04)
         * Use `xenial` packages for older distros (>= Ubuntu 16.04)
     auth_token:
         secure: J2LCcNeVYvzbvHRa/LChp+SmN6UKbg1ELsA4jmxnObCbX+ZyZ9DFH+S2aQIoA3dG
