@@ -170,6 +170,9 @@ appimage_pack()
 	set -e
 	echo "[appimage/build.sh] Packing AppImage"
 	cd "$BUILDROOT"
+	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
+	export VERSION="$_VERSION"
+	export LD_LIBRARY_PATH=$APPDIR/usr/lib:$LD_LIBRARY_PATH
 	"./$_LINUXDEPLOYQT" --appimage-extract
 	PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool --no-appstream "$APPDIR"
 }
