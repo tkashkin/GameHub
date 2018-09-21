@@ -71,6 +71,7 @@ build_deb()
 	cd "$_ROOT"
 	export DEB_BUILD_OPTIONS="nostrip,nocheck"
 	dpkg-buildpackage -b -us -uc
+	mkdir -p "build/$_BUILD_IMAGE"
 	mv ../*.deb "build/$_BUILD_IMAGE/GameHub-$_VERSION-amd64.deb"
 	cd "$_ROOT"
 }
