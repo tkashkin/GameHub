@@ -40,7 +40,7 @@ for lib in ${_CRT_LIBS_PREFER_SYSTEM[@]}; do
 		if [ -z "$sym_sys" ]; then
 			_CRT_LIB_PATH="$lib_dir:$_CRT_LIB_PATH"
 		else
-			echo "[CheckRT] Using system version of GTK+3"
+			echo "[CheckRT] Using system version of $lib_filename"
 		fi
 	fi
 done
