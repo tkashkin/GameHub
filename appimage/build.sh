@@ -12,6 +12,7 @@ if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_VERSION="xenial-$_VERSION"
 	_BUILD_IMAGE="xenial"
 elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
+	_VERSION="bionic-$_VERSION"
 	_BUILD_IMAGE="bionic"
 fi
 
