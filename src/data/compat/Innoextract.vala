@@ -18,19 +18,9 @@ namespace GameHub.Data.Compat
 			id = @"innoextract";
 			name = @"Innoextract";
 			icon = "package-x-generic-symbolic";
-			installed = false;
 
-			var which = Utils.run({"which", binary}).strip();
-
-			if("not found" in which)
-			{
-				installed = false;
-			}
-			else
-			{
-				executable = FSUtils.file(which);
-				installed = executable.query_exists();
-			}
+			executable = Utils.find_executable(binary);
+			installed = executable != null && executable.query_exists();
 		}
 
 		public override bool can_install(Game game)

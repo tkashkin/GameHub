@@ -160,10 +160,12 @@ namespace GameHub.Data.Sources.Steam
 			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			if(status.state == Game.State.INSTALLED)
 			{
+				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				add_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 			else
 			{
+				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 		}

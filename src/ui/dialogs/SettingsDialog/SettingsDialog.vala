@@ -90,6 +90,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			restart_msg.revealed = restart_msg_shown;
 			#else
 			restart_msg.visible = restart_msg_shown;
+			restart_msg.no_show_all = !restart_msg_shown;
 			#endif
 		}
 	}

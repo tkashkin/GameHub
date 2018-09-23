@@ -21,19 +21,9 @@ namespace GameHub.Data.Compat
 			id = @"dosbox";
 			name = @"DOSBox";
 			icon = "tool-dosbox-symbolic";
-			installed = false;
 
-			var which = Utils.run({"which", binary}).strip();
-
-			if("not found" in which)
-			{
-				installed = false;
-			}
-			else
-			{
-				executable = FSUtils.file(which);
-				installed = executable.query_exists();
-			}
+			executable = Utils.find_executable(binary);
+			installed = executable != null && executable.query_exists();
 
 			conf_windowed = FSUtils.file(ProjectConfig.DATADIR + "/" + ProjectConfig.PROJECT_NAME, "compat/dosbox/windowed.conf");
 			if(conf_windowed.query_exists())
@@ -43,9 +33,14 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		private static ArrayList<string> find_configs(File dir)
+		private static ArrayList<string> find_configs(File? dir)
 		{
 			var configs = new ArrayList<string>();
+
+			if(dir == null || !dir.query_exists())
+			{
+				return configs;
+			}
 
 			try
 			{

@@ -58,7 +58,8 @@ namespace GameHub.Utils
 		{
 			debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
 			Process.spawn_sync(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout);
-			print(stdout.strip() + "\n");
+			stdout = stdout.strip();
+			if(stdout.length > 0) print(stdout + "\n");
 		}
 		catch (Error e)
 		{
@@ -112,6 +113,17 @@ namespace GameHub.Utils
 		return stdout;
 	}
 
+	public static File? find_executable(string? name)
+	{
+		if(name == null || name.length == 0) return null;
+		var which = run({"which", name});
+		if(which.length == 0 || !which.has_prefix("/"))
+		{
+			return null;
+		}
+		return File.new_for_path(which);
+	}
+
 	public static void thread(string name, owned Future worker)
 	{
 		try
@@ -137,7 +149,9 @@ namespace GameHub.Utils
 		#elif SNAP
 		return "snap";
 		#else
-		return Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
+		if(distro != null) return distro;
+		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
+		return distro;
 		#endif
 	}
 
@@ -235,4 +249,6 @@ namespace GameHub.Utils
 		catch(Error e){}
 		return n.strip();
 	}
+
+	private static string? distro;
 }

@@ -262,6 +262,18 @@ namespace GameHub.UI.Views.GameDetailsView
 				action_open_directory.visible = s.state == Game.State.INSTALLED;
 				action_open_store_page.visible = game.store_page != null;
 				action_uninstall.visible = s.state == Game.State.INSTALLED;
+
+				if(action_run_with_compat.visible && game.compat_tool != null)
+				{
+					foreach(var tool in CompatTools)
+					{
+						if(tool.id == game.compat_tool)
+						{
+							action_run_with_compat.icon_overlay = tool.icon;
+							break;
+						}
+					}
+				}
 			});
 			game.status_change(game.status);
 

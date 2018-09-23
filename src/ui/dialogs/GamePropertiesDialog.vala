@@ -37,7 +37,7 @@ namespace GameHub.UI.Dialogs
 			get_style_context().add_class("rounded");
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
-			gravity = Gdk.Gravity.CENTER;
+			gravity = Gdk.Gravity.NORTH;
 
 			content = new Box(Orientation.HORIZONTAL, 8);
 			content.margin_start = content.margin_end = 6;
@@ -79,11 +79,10 @@ namespace GameHub.UI.Dialogs
 
 			tags_scrolled = new ScrolledWindow(null, null);
 			tags_scrolled.vexpand = true;
-			tags_scrolled.margin_bottom = 8;
 			#if GTK_3_22
 			tags_scrolled.propagate_natural_width = true;
 			tags_scrolled.propagate_natural_height = true;
-			tags_scrolled.max_content_height = 380;
+			tags_scrolled.max_content_height = 320;
 			#endif
 			tags_scrolled.add(tags_list);
 
@@ -189,7 +188,7 @@ namespace GameHub.UI.Dialogs
 
 			properties_box.add(icon_entry);
 
-			image_search_links = new Box(Orientation.HORIZONTAL, 0);
+			image_search_links = new Box(Orientation.HORIZONTAL, 8);
 			image_search_links.margin = 8;
 
 			var image_search_links_label = new Label(_("Search images:"));
@@ -277,7 +276,7 @@ namespace GameHub.UI.Dialogs
 
 			foreach(var tag in Tables.Tags.TAGS)
 			{
-				if(tag == Tables.Tags.BUILTIN_INSTALLED) continue;
+				if(tag in Tables.Tags.DYNAMIC_TAGS) continue;
 				var row = new TagRow(game, tag);
 				tags_list.add(row);
 			}
