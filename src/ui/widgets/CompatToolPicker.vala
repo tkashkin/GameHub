@@ -82,6 +82,7 @@ namespace GameHub.UI.Widgets
 				{
 					game.compat_tool = selected.id;
 					Tables.Games.add(game);
+					game.update_status();
 				}
 
 				actions.foreach(w => w.destroy());

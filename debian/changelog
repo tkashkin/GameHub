@@ -1,3 +1,9 @@
+com.github.tkashkin.gamehub (0.11.2) xenial; urgency=low
+
+  * Fixes for CompatTools
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 23 Sep 2018 08:55:24 +0300
+
 com.github.tkashkin.gamehub (0.11.1) xenial; urgency=low
 
   * Updated pt_BR localization

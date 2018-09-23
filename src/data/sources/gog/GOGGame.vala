@@ -309,10 +309,12 @@ namespace GameHub.Data.Sources.GOG
 			status = new Game.Status(state);
 			if(state == Game.State.INSTALLED)
 			{
+				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				add_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 			else
 			{
+				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 		}

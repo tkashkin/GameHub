@@ -57,7 +57,7 @@ namespace GameHub.Data
 			{
 				tags.add(tag);
 			}
-			if(tag != Tables.Tags.BUILTIN_INSTALLED)
+			if(!(tag in Tables.Tags.DYNAMIC_TAGS))
 			{
 				Tables.Games.add(this);
 				status_change(_status);
@@ -70,7 +70,7 @@ namespace GameHub.Data
 			{
 				tags.remove(tag);
 			}
-			if(tag != Tables.Tags.BUILTIN_INSTALLED)
+			if(!(tag in Tables.Tags.DYNAMIC_TAGS))
 			{
 				Tables.Games.add(this);
 				status_change(_status);

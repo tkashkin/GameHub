@@ -6,8 +6,8 @@ namespace GameHub.Data.Compat
 {
 	public class Wine: CompatTool
 	{
-		public string binary { get; construct; default = "wine"; }
-		public File wine_binary { get; protected set; }
+		public string? binary { get; construct; default = "wine"; }
+		public File? wine_binary { get; protected set; }
 
 		public Wine(string binary="wine")
 		{
@@ -19,20 +19,9 @@ namespace GameHub.Data.Compat
 			id = @"wine_$(binary)";
 			name = @"Wine ($(binary))";
 			icon = "tool-wine-symbolic";
-			installed = false;
 
-			var which = Utils.run({"which", binary}).strip();
-
-			if("not found" in which)
-			{
-				installed = false;
-			}
-			else
-			{
-				executable = FSUtils.file(which);
-				installed = executable.query_exists();
-				wine_binary = executable;
-			}
+			executable = wine_binary = Utils.find_executable(binary);
+			installed = executable != null && executable.query_exists();
 
 			install_options = {
 				new CompatTool.Option("/SILENT", _("Silent installation"), false),

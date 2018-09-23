@@ -658,6 +658,10 @@ msgctxt "tag"
 msgid "Installed"
 msgstr "Установленные"
 
+msgctxt "tag"
+msgid "Not installed"
+msgstr "Не установленные"
+
 #: src/data/db/tables/Tags.vala:150
 msgctxt "tag"
 msgid "Hidden"
@@ -719,3 +723,39 @@ msgstr "Избранные"
 #: src/ui/widgets/CompatToolPicker.vala:32
 msgid "Compatibility layer:"
 msgstr "Слой совместимости:"
+
+msgctxt "status_header"
+msgid "Installing"
+msgstr "Установка"
+
+msgctxt "status_header"
+msgid "Not installed"
+msgstr "Не установленные"
+
+msgctxt "status_header"
+msgid "Installed"
+msgstr "Установленные"
+
+msgctxt "status_header"
+msgid "Downloading"
+msgstr "Загрузка"
+
+msgctxt "status"
+msgid "Installing"
+msgstr "Установка"
+
+msgctxt "status"
+msgid "Not installed"
+msgstr "Не установлена"
+
+msgctxt "status"
+msgid "Installed"
+msgstr "Установлена"
+
+msgctxt "status"
+msgid "Downloading"
+msgstr "Загрузка"
+
+msgctxt "status"
+msgid "Download started"
+msgstr "Загрузка начата"

@@ -558,7 +558,7 @@ namespace GameHub.UI.Views.GamesView
 					{
 						foreach(var tag in tags)
 						{
-							tags_match = g.has_tag(tag);
+							tags_match_merged = g.has_tag(tag);
 							if(tags_match_merged) break;
 						}
 					}

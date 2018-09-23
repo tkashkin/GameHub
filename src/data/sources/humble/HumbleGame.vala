@@ -103,10 +103,12 @@ namespace GameHub.Data.Sources.Humble
 			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			if(status.state == Game.State.INSTALLED)
 			{
+				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				add_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 			else
 			{
+				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 		}

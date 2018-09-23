@@ -4,9 +4,9 @@ namespace GameHub.UI.Widgets
 {
 	class ActionButton: Gtk.Button
 	{
-		public string icon { get; construct; }
-		public string? icon_overlay { get; construct; }
-		public string text { get; construct; }
+		public string icon { get; construct set; }
+		public string? icon_overlay { get; construct set; }
+		public string text { get; construct set; }
 		public bool show_text { get; construct; default = true; }
 
 		public ActionButton(string icon, string? icon_overlay, string text, bool show_text=true)
@@ -27,6 +27,10 @@ namespace GameHub.UI.Widgets
 			var image = new Image.from_icon_name(icon, IconSize.DIALOG);
 			image.set_size_request(48, 48);
 			overlay.add(image);
+			
+			notify["icon"].connect(() => {
+				image.icon_name = icon;
+			});
 
 			if(icon_overlay != null)
 			{
@@ -36,6 +40,9 @@ namespace GameHub.UI.Widgets
 				overlay_image.valign = Align.END;
 				overlay.add_overlay(overlay_image);
 				overlay.set_overlay_pass_through(overlay_image, true);
+				notify["icon-overlay"].connect(() => {
+					overlay_image.icon_name = icon_overlay;
+				});
 			}
 
 			box.add(overlay);
@@ -47,10 +54,16 @@ namespace GameHub.UI.Widgets
 				label.halign = Align.START;
 				label.valign = Align.CENTER;
 				box.add(label);
+				notify["text"].connect(() => {
+					label.label = text;
+				});
 			}
 			else
 			{
 				tooltip_text = text;
+				notify["text"].connect(() => {
+					tooltip_text = text;
+				});
 			}
 
 			child = box;

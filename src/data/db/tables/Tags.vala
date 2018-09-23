@@ -19,8 +19,10 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field SELECTED;
 
 		public static ArrayList<Tag> TAGS;
+		public static ArrayList<Tag> DYNAMIC_TAGS;
 
 		public static Tag BUILTIN_FAVORITES;
+		public static Tag BUILTIN_UNINSTALLED;
 		public static Tag BUILTIN_INSTALLED;
 		public static Tag BUILTIN_HIDDEN;
 
@@ -36,6 +38,7 @@ namespace GameHub.Data.DB.Tables
 			SELECTED = f(3);
 
 			TAGS = new ArrayList<Tag>(Tag.is_equal);
+			DYNAMIC_TAGS = new ArrayList<Tag>(Tag.is_equal);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -66,11 +69,12 @@ namespace GameHub.Data.DB.Tables
 				if(!TAGS.contains(tag)) TAGS.add(tag);
 
 				if(BUILTIN_FAVORITES == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.FAVORITES.id()) BUILTIN_FAVORITES = tag;
+				if(BUILTIN_UNINSTALLED == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.UNINSTALLED.id()) BUILTIN_UNINSTALLED = tag;
 				if(BUILTIN_INSTALLED == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.INSTALLED.id()) BUILTIN_INSTALLED = tag;
 				if(BUILTIN_HIDDEN == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.HIDDEN.id()) BUILTIN_HIDDEN = tag;
 			}
 
-			Tag.Builtin[] builtin = { Tag.Builtin.FAVORITES, Tag.Builtin.INSTALLED, Tag.Builtin.HIDDEN };
+			Tag.Builtin[] builtin = { Tag.Builtin.FAVORITES, Tag.Builtin.UNINSTALLED, Tag.Builtin.INSTALLED, Tag.Builtin.HIDDEN };
 
 			foreach(var bt in builtin)
 			{
@@ -78,9 +82,13 @@ namespace GameHub.Data.DB.Tables
 				Tags.add(tag);
 
 				if(BUILTIN_FAVORITES == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.FAVORITES.id()) BUILTIN_FAVORITES = tag;
+				if(BUILTIN_UNINSTALLED == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.UNINSTALLED.id()) BUILTIN_UNINSTALLED = tag;
 				if(BUILTIN_INSTALLED == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.INSTALLED.id()) BUILTIN_INSTALLED = tag;
 				if(BUILTIN_HIDDEN == null && tag.id == Tag.BUILTIN_PREFIX + Tag.Builtin.HIDDEN.id()) BUILTIN_HIDDEN = tag;
 			}
+
+			DYNAMIC_TAGS.add(BUILTIN_UNINSTALLED);
+			DYNAMIC_TAGS.add(BUILTIN_INSTALLED);
 
 			tags_updated();
 		}
@@ -128,15 +136,16 @@ namespace GameHub.Data.DB.Tables
 
 			public enum Builtin
 			{
-				FAVORITES, INSTALLED, HIDDEN;
+				FAVORITES, UNINSTALLED, INSTALLED, HIDDEN;
 
 				public string id()
 				{
 					switch(this)
 					{
-						case Builtin.FAVORITES: return "favorites";
-						case Builtin.INSTALLED: return "installed";
-						case Builtin.HIDDEN:    return "hidden";
+						case Builtin.FAVORITES:   return "favorites";
+						case Builtin.UNINSTALLED: return "uninstalled";
+						case Builtin.INSTALLED:   return "installed";
+						case Builtin.HIDDEN:      return "hidden";
 					}
 					assert_not_reached();
 				}
@@ -145,9 +154,10 @@ namespace GameHub.Data.DB.Tables
 				{
 					switch(this)
 					{
-						case Builtin.FAVORITES: return C_("tag", "Favorites");
-						case Builtin.INSTALLED: return C_("tag", "Installed");
-						case Builtin.HIDDEN:    return C_("tag", "Hidden");
+						case Builtin.FAVORITES:   return C_("tag", "Favorites");
+						case Builtin.UNINSTALLED: return C_("tag", "Not installed");
+						case Builtin.INSTALLED:   return C_("tag", "Installed");
+						case Builtin.HIDDEN:      return C_("tag", "Hidden");
 					}
 					assert_not_reached();
 				}
@@ -156,9 +166,10 @@ namespace GameHub.Data.DB.Tables
 				{
 					switch(this)
 					{
-						case Builtin.FAVORITES: return "gh-tag-favorites-symbolic";
-						case Builtin.INSTALLED: return "gh-tag-symbolic";
-						case Builtin.HIDDEN:    return "gh-tag-hidden-symbolic";
+						case Builtin.FAVORITES:   return "gh-tag-favorites-symbolic";
+						case Builtin.UNINSTALLED: return "gh-tag-symbolic";
+						case Builtin.INSTALLED:   return "gh-tag-symbolic";
+						case Builtin.HIDDEN:      return "gh-tag-hidden-symbolic";
 					}
 					assert_not_reached();
 				}
