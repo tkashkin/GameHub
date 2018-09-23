@@ -80,7 +80,7 @@ namespace GameHub.UI.Views.GamesView
 			#if GTK_3_22
 			popup_at_pointer(e);
 			#else
-			popup(null, null, null, e.button, e.time);
+			popup(null, null, null, 0, ((EventButton) e).time);
 			#endif
 		}
 	}
