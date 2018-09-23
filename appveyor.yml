@@ -1,15 +1,29 @@
+version: 0.11.1-{build}-{branch}
+
+pull_requests:
+  do_not_increment_build_number: true
+
+skip_tags: true
+
 branches:
   except:
     - flatpak
 
 image:
   - Ubuntu1804
+  - Ubuntu1604
 
-clone_folder: ~/GameHub
+clone_folder: ~/build/GameHub
+clone_depth: 1
 
 build_script:
-  - sh: dpkg-buildpackage -b -us -uc
-  - sh: bash appimage/build.sh build && bash appimage/build.sh appimage
+  - sh: bash appimage/build.sh build_deb
+  - sh: bash appimage/build.sh build
+  - sh: bash appimage/build.sh appimage
+  - sh: bash appimage/build.sh appimage_tweak
+  - sh: bash appimage/build.sh appimage_bundle_libs
+  - sh: bash appimage/build.sh appimage_checkrt
+  - sh: bash appimage/build.sh appimage_pack
 
 install:
   - sh: bash appimage/build.sh deps
@@ -17,9 +31,20 @@ install:
 test: off
 
 artifacts:
-  - path: ~/com.github.tkashkin.gamehub*.deb
+  - path: build/*/*.deb
     name: deb
-  - path: ~/com.github.tkashkin.gamehub*.ddeb
-    name: deb-dbgsym
   - path: build/appimage/GameHub*.AppImage*
     name: AppImage
+
+deploy:
+  - provider: GitHub
+    description: |
+        CI build
+
+        * Use `bionic` packages for recent distros (>= Ubuntu 18.04)
+        * Use `xenial` packages for older distros (>= Ubuntu 16.04)
+    auth_token:
+        secure: J2LCcNeVYvzbvHRa/LChp+SmN6UKbg1ELsA4jmxnObCbX+ZyZ9DFH+S2aQIoA3dG
+    artifact: deb,AppImage
+    draft: false
+    prerelease: true
