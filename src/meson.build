@@ -53,6 +53,9 @@ executable(
 	'data/sources/humble/HumbleGame.vala',
 	'data/sources/humble/Trove.vala',
 
+	'data/sources/user/User.vala',
+	'data/sources/user/UserGame.vala',
+
 	'data/db/Database.vala',
 	'data/db/Table.vala',
 	'data/db/tables/Games.vala',
@@ -91,6 +94,7 @@ executable(
 	'ui/views/GamesView/GameListRow.vala',
 	'ui/views/GamesView/DownloadProgressView.vala',
 	'ui/views/GamesView/FiltersPopover.vala',
+	'ui/views/GamesView/AddGamePopover.vala',
 	'ui/views/GamesView/GameContextMenu.vala',
 
 	'ui/views/GameDetailsView/GameDetailsView.vala',

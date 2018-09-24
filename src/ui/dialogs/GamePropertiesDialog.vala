@@ -173,6 +173,7 @@ namespace GameHub.UI.Dialogs
 			icon_entry.secondary_icon_activatable = true;
 			icon_entry.secondary_icon_tooltip_text = _("Reset to default");
 			icon_entry.margin = 4;
+			icon_entry.margin_top = 0;
 
 			icon_entry.icon_press.connect((icon, event) => {
 				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
@@ -210,44 +211,53 @@ namespace GameHub.UI.Dialogs
 			space.vexpand = true;
 			properties_box.add(space);
 
-			if(!(game is Data.Sources.Steam.SteamGame))
+			if(!(game is Data.Sources.Steam.SteamGame) && game.install_dir != null && game.install_dir.query_exists())
 			{
 				var executable_header = new HeaderLabel(_("Executable"));
 				executable_header.xpad = 8;
 				properties_box.add(executable_header);
 
-				var executable_button = new Button.with_label(_("Select game executable"));
-				executable_button.tooltip_text = game.executable.get_path();
-				executable_button.margin_start = executable_button.margin_end = executable_button.margin_bottom = 4;
-				executable_button.hexpand = false;
-				executable_button.clicked.connect(() => {
-					game.choose_executable();
-					executable_button.tooltip_text = game.executable.get_path();
+				var executable_picker = new FileChooserButton.with_dialog(game.setup_executable_chooser());
+				executable_picker.set_file(game.executable);
+				executable_picker.margin_start = executable_picker.margin_end = 4;
+				properties_box.add(executable_picker);
+
+				var args_entry = new Entry();
+				args_entry.text = game.arguments;
+				args_entry.placeholder_text = args_entry.primary_icon_tooltip_text = _("Arguments");
+				args_entry.primary_icon_name = "utilities-terminal-symbolic";
+				args_entry.primary_icon_activatable = false;
+				args_entry.margin = 4;
+
+				args_entry.changed.connect(() => {
+					game.arguments = args_entry.text.strip();
+					game.update_status();
+					Tables.Games.add(game);
 				});
 
-				properties_box.add(executable_button);
+				properties_box.add(args_entry);
+
+				var compat_header = new HeaderLabel(_("Compatibility"));
+				compat_header.no_show_all = true;
+				compat_header.xpad = 8;
+				properties_box.add(compat_header);
+
+				var compat_force_switch = add_switch(_("Force compatibility mode"), game.force_compat, f => { game.force_compat = f; });
+				compat_force_switch.no_show_all = true;
+
+				var compat_tool = new CompatToolPicker(game, false);
+				compat_tool.no_show_all = true;
+				compat_tool.margin_start = compat_tool.margin_end = 4;
+				properties_box.add(compat_tool);
+
+				game.notify["use-compat"].connect(() => {
+					compat_force_switch.visible = !game.needs_compat;
+					compat_tool.visible = game.use_compat;
+					compat_header.visible = compat_force_switch.visible || compat_tool.visible;
+					game.update_status();
+				});
+				game.notify_property("use-compat");
 			}
-
-			var compat_header = new HeaderLabel(_("Compatibility"));
-			compat_header.no_show_all = true;
-			compat_header.xpad = 8;
-			properties_box.add(compat_header);
-
-			var compat_force_switch = add_switch(_("Force compatibility mode"), game.force_compat, f => { game.force_compat = f; });
-			compat_force_switch.no_show_all = true;
-
-			var compat_tool = new CompatToolPicker(game, false);
-			compat_tool.no_show_all = true;
-			compat_tool.margin_start = compat_tool.margin_end = 4;
-			properties_box.add(compat_tool);
-
-			game.notify["use-compat"].connect(() => {
-				compat_force_switch.visible = !game.needs_compat;
-				compat_tool.visible = game.use_compat;
-				compat_header.visible = compat_force_switch.visible || compat_tool.visible;
-				game.update_status();
-			});
-			game.notify_property("use-compat");
 
 			content.add(tags_box);
 			content.add(new Separator(Orientation.VERTICAL));

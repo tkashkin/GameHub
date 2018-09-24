@@ -11,7 +11,7 @@ namespace GameHub.Data.DB
 {
 	public class Database
 	{
-		public const int VERSION = 1;
+		public const int VERSION = 2;
 		public static Table[] TABLES;
 
 		public static Database instance;

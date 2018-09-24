@@ -7,6 +7,7 @@ using GameHub.Data.DB;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
+using GameHub.Data.Sources.User;
 using GameHub.Utils;
 
 namespace GameHub
@@ -32,7 +33,7 @@ namespace GameHub
 			Platforms = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS };
 			CurrentPlatform = Platform.LINUX;
 
-			GameSources = { new Steam(), new GOG(), new Humble(), new Trove() };
+			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new User() };
 
 			CompatTool[] tools = { new Compat.CustomScript(), new Compat.Innoextract(), new Compat.DOSBox() };
 			foreach(var appid in Compat.Proton.APPIDS)
