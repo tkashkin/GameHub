@@ -23,6 +23,8 @@ namespace GameHub.Data
 		public string? compat_tool { get; set; }
 		public string? compat_tool_settings { get; set; }
 
+		public string? arguments { get; set; }
+
 		public string full_id { owned get { return source.id + ":" + id; } }
 
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
@@ -102,9 +104,25 @@ namespace GameHub.Data
 		{
 			if(executable.query_exists())
 			{
-				var path = executable.get_path();
-				var dir = executable.get_parent().get_path();
-				yield Utils.run_thread({path}, dir, null, true);
+				string[] cmd = { executable.get_path() };
+
+				if(arguments != null && arguments.length > 0)
+				{
+					var variables = new HashMap<string, string>();
+					variables.set("game", name.replace(": ", " - ").replace(":", ""));
+					variables.set("game_dir", install_dir.get_path());
+					var args = arguments.split(" ");
+					foreach(var arg in args)
+					{
+						if("$" in arg)
+						{
+							arg = FSUtils.expand(arg, null, variables);
+						}
+						cmd += arg;
+					}
+				}
+
+				yield Utils.run_thread(cmd, executable.get_parent().get_path(), null, true);
 			}
 		}
 
@@ -163,7 +181,7 @@ namespace GameHub.Data
 			chooser.destroy();
 		}
 
-		public virtual void choose_executable(bool update=true)
+		public virtual FileChooserDialog setup_executable_chooser()
 		{
 			var chooser = new FileChooserDialog(_("Select main executable of the game"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN);
 			var filter = new FileFilter();
@@ -186,7 +204,7 @@ namespace GameHub.Data
 
 			try
 			{
-				chooser.set_current_folder_file(install_dir);
+				chooser.set_file(executable);
 			}
 			catch(Error e)
 			{
@@ -199,22 +217,34 @@ namespace GameHub.Data
 			select_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
 			select_btn.grab_default();
 
+			return chooser;
+		}
+
+		public virtual void choose_executable(bool update=true)
+		{
+			var chooser = setup_executable_chooser();
+
 			if(chooser.run() == ResponseType.ACCEPT)
 			{
-				executable = chooser.get_file();
-				if(executable.query_exists())
-				{
-					Utils.run({"chmod", "+x", executable.get_path()});
-				}
-
-				if(update)
-				{
-					update_status();
-					Tables.Games.add(this);
-				}
+				set_chosen_executable(chooser, update);
 			}
 
 			chooser.destroy();
+		}
+
+		public virtual void set_chosen_executable(FileChooserDialog chooser, bool update=true)
+		{
+			executable = chooser.get_file();
+			if(executable.query_exists())
+			{
+				Utils.run({"chmod", "+x", executable.get_path()});
+			}
+
+			if(update)
+			{
+				update_status();
+				Tables.Games.add(this);
+			}
 		}
 
 		protected Game.Status _status = new Game.Status();

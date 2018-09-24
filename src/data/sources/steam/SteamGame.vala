@@ -41,6 +41,7 @@ namespace GameHub.Data.Sources.Steam
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
+			arguments = Tables.Games.ARGUMENTS.get(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");

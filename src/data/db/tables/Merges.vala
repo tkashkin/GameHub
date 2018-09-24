@@ -24,15 +24,16 @@ namespace GameHub.Data.DB.Tables
 
 		public override void migrate(Sqlite.Database db, int version)
 		{
-			switch(version)
+			for(int ver = version; ver < Database.VERSION; ver++)
 			{
-				case 0:
-					debug("%d", version);
-					db.exec("CREATE TABLE `merges`(
-						`merge` string not null,
-					PRIMARY KEY(`merge`))");
-					migrate(db, 1);
-					break;
+				switch(ver)
+				{
+					case 0:
+						db.exec("CREATE TABLE `merges`(
+							`merge` string not null,
+						PRIMARY KEY(`merge`))");
+						break;
+				}
 			}
 		}
 
