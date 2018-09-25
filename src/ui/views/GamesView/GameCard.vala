@@ -133,7 +133,7 @@ namespace GameHub.UI.Views.GamesView
 						break;
 
 					case 3:
-						new GameContextMenu(game).open(this, e);
+						new GameContextMenu(game, this).open(e);
 						break;
 				}
 				return true;

@@ -450,6 +450,13 @@ namespace GameHub.UI.Views.GamesView
 					return Source.REMOVE;
 				});
 			}
+
+			if(g is Sources.User.UserGame)
+			{
+				((Sources.User.UserGame) g).removed.connect(() => {
+					remove_game(g);
+				});
+			}
 		}
 
 		private void load_games()

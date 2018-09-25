@@ -19,6 +19,7 @@ namespace GameHub.UI.Dialogs
 		private ScrolledWindow tags_scrolled;
 		private Entry new_entry;
 
+		private Entry name_entry;
 		private AutoSizeImage image_view;
 		private AutoSizeImage icon_view;
 		private Entry image_entry;
@@ -107,6 +108,25 @@ namespace GameHub.UI.Dialogs
 			tags_box.add(new_entry);
 
 			properties_box = new Box(Orientation.VERTICAL, 0);
+
+			var name_header = new HeaderLabel(_("Name"));
+			name_header.xpad = 8;
+			properties_box.add(name_header);
+
+			name_entry = new Entry();
+			name_entry.placeholder_text = name_entry.primary_icon_tooltip_text = _("Name");
+			name_entry.primary_icon_name = "insert-text-symbolic";
+			name_entry.primary_icon_activatable = false;
+			name_entry.margin = 4;
+			name_entry.margin_top = 0;
+			properties_box.add(name_entry);
+
+			name_entry.text = game.name;
+			name_entry.changed.connect(() => {
+				game.name = name_entry.text.strip();
+				game.update_status();
+				game.save();
+			});
 
 			var images_header = new HeaderLabel(_("Images"));
 			images_header.xpad = 8;
@@ -223,7 +243,7 @@ namespace GameHub.UI.Dialogs
 				properties_box.add(executable_picker);
 
 				var args_entry = new Entry();
-				args_entry.text = game.arguments;
+				args_entry.text = game.arguments ?? "";
 				args_entry.placeholder_text = args_entry.primary_icon_tooltip_text = _("Arguments");
 				args_entry.primary_icon_name = "utilities-terminal-symbolic";
 				args_entry.primary_icon_activatable = false;
@@ -232,7 +252,7 @@ namespace GameHub.UI.Dialogs
 				args_entry.changed.connect(() => {
 					game.arguments = args_entry.text.strip();
 					game.update_status();
-					Tables.Games.add(game);
+					game.save();
 				});
 
 				properties_box.add(args_entry);
@@ -269,7 +289,7 @@ namespace GameHub.UI.Dialogs
 			delete_event.connect(() => {
 				set_image_url(true);
 				set_icon_url(true);
-				Tables.Games.add(game);
+				game.save();
 				destroy();
 			});
 

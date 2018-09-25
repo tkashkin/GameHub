@@ -81,7 +81,7 @@ namespace GameHub.UI.Widgets
 				if(selected.can_run(game))
 				{
 					game.compat_tool = selected.id;
-					Tables.Games.add(game);
+					game.save();
 					game.update_status();
 				}
 

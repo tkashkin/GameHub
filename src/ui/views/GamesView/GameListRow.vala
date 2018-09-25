@@ -73,7 +73,7 @@ namespace GameHub.UI.Views.GamesView
 						break;
 
 					case 3:
-						new GameContextMenu(game).open(this, e);
+						new GameContextMenu(game, image).open(e);
 						break;
 				}
 				return true;

@@ -170,7 +170,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_properties = add_action("system-run", null, _("Game properties"), game_properties);
 			action_open_directory = add_action("folder", null, _("Open installation directory"), open_game_directory);
 			action_open_store_page = add_action("web-browser", null, _("Open store page"), open_game_store_page);
-			action_uninstall = add_action("edit-delete", null, _("Uninstall"), uninstall_game);
+			action_uninstall = add_action("edit-delete", null, (game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"), uninstall_game);
 
 			action_cancel.clicked.connect(() => {
 				if(download != null) download.cancel();
