@@ -76,6 +76,9 @@ namespace GameHub.Data.Sources.User
 							{
 								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
 							}
+							((UserGame) g).removed.connect(() => {
+								_games.remove(g);
+							});
 						}
 						games_count++;
 					}

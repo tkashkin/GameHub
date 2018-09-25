@@ -12,9 +12,11 @@ namespace GameHub.UI.Views.GamesView
 	{
 		public Game game { get; construct; }
 
-		public GameContextMenu(Game game)
+		public Widget target { get; construct; }
+
+		public GameContextMenu(Game game, Widget target)
 		{
-			Object(game: game);
+			Object(game: game, target: target);
 		}
 
 		construct
@@ -68,6 +70,14 @@ namespace GameHub.UI.Views.GamesView
 			add(favorite);
 			add(hidden);
 
+			if(game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame)
+			{
+				var uninstall = new Gtk.MenuItem.with_label((game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"));
+				uninstall.activate.connect(() => game.uninstall.begin());
+				add(new Gtk.SeparatorMenuItem());
+				add(uninstall);
+			}
+
 			add(new Gtk.SeparatorMenuItem());
 
 			add(properties);
@@ -75,7 +85,7 @@ namespace GameHub.UI.Views.GamesView
 			show_all();
 		}
 
-		public void open(Widget widget, Event e)
+		public void open(Event e)
 		{
 			#if GTK_3_22
 			popup_at_pointer(e);

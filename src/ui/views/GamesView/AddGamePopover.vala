@@ -34,11 +34,11 @@ namespace GameHub.UI.Views.GamesView
 			grid = new Grid();
 			grid.margin = 8;
 			grid.row_spacing = 4;
-			grid.column_spacing = 12;
+			grid.column_spacing = 4;
 
 			name = add_entry(_("Name"), "insert-text-symbolic");
-			gamedir = add_filechooser(_("Directory"), _("Select game directory"), FileChooserAction.SELECT_FOLDER);
 			executable = add_filechooser(_("Executable"), _("Select game executable"));
+			gamedir = add_filechooser(_("Directory"), _("Select game directory"), FileChooserAction.SELECT_FOLDER);
 			arguments = add_entry(_("Arguments"), "utilities-terminal-symbolic");
 
 			add = new Button.with_label(_("Add game"));
@@ -49,8 +49,8 @@ namespace GameHub.UI.Views.GamesView
 			grid.attach(add, 0, rows, 2, 1);
 
 			name.changed.connect(update);
-			gamedir.file_set.connect(update);
 			executable.file_set.connect(update);
+			gamedir.file_set.connect(update);
 			arguments.changed.connect(update);
 
 			update();
@@ -64,19 +64,24 @@ namespace GameHub.UI.Views.GamesView
 		private void update()
 		{
 			add.sensitive = name.text.strip().length > 0
-				&& gamedir.get_file() != null && gamedir.get_file().query_exists()
-				&& executable.get_file() != null && executable.get_file().query_exists();
+				&& executable.get_file() != null && executable.get_file().query_exists()
+				&& gamedir.get_file() != null && gamedir.get_file().query_exists();
+
+			if(executable.get_file() != null && gamedir.get_file() == null)
+			{
+				gamedir.select_file(executable.get_file().get_parent());
+			}
 		}
 
 		private void add_game()
 		{
 			var game = new UserGame(name.text.strip(), gamedir.get_file(), executable.get_file(), arguments.text.strip());
 			name.text = "";
-			gamedir.unselect_all();
 			executable.unselect_all();
+			gamedir.unselect_all();
 			arguments.text = "";
 			update();
-			Tables.Games.add(game);
+			game.save();
 			game_added(game);
 			#if GTK_3_22
 			popdown();
@@ -90,6 +95,7 @@ namespace GameHub.UI.Views.GamesView
 			var label = new Label(text);
 			label.halign = Align.END;
 			label.xalign = 1;
+			label.margin = 4;
 			var entry = new Entry();
 			entry.primary_icon_name = icon;
 			entry.primary_icon_activatable = false;
@@ -105,6 +111,7 @@ namespace GameHub.UI.Views.GamesView
 			var label = new Label(text);
 			label.halign = Align.END;
 			label.xalign = 1;
+			label.margin = 4;
 			var button = new FileChooserButton(title, action);
 			button.set_size_request(220, -1);
 			grid.attach(label, 0, rows);

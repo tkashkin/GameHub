@@ -221,7 +221,7 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			Tables.Games.add(this);
+			save();
 
 			update_status();
 
@@ -271,7 +271,7 @@ namespace GameHub.Data.Sources.Humble
 			{
 				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
 				executable = FSUtils.file(install_dir.get_path(), "start.sh");
-				Tables.Games.add(this);
+				save();
 				update_status();
 			}
 		}

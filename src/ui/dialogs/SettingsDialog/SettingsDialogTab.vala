@@ -53,6 +53,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		{
 			var chooser = new FileChooserButton(text, mode);
 			chooser.create_folders = create;
+			chooser.show_hidden = true;
 			chooser.select_filename(FSUtils.expand(val));
 			chooser.file_set.connect(() => { action(chooser.get_filename()); });
 			chooser.set_size_request(280, -1);
