@@ -6,11 +6,14 @@ namespace GameHub.Data.Sources.User
 {
 	public class UserGame: Game
 	{
+		private bool is_removed = false;
+		public signal void removed();
+
 		public UserGame(string name, File dir, File exec, string args)
 		{
 			source = User.instance;
 
-			this.id = Utils.md5(name);
+			this.id = Utils.md5(name + Random.next_int().to_string());
 			this.name = name;
 
 			platforms.clear();
@@ -71,12 +74,30 @@ namespace GameHub.Data.Sources.User
 		public override async void update_game_info()
 		{
 			update_status();
-			Tables.Games.add(this);
+			save();
 		}
 
 		public override async void install(){}
 
-		public override async void uninstall(){}
+		public override async void uninstall()
+		{
+			remove();
+		}
+
+		public void remove()
+		{
+			is_removed = true;
+			removed();
+			Tables.Games.remove(this);
+		}
+
+		public override void save()
+		{
+			if(!is_removed)
+			{
+				base.save();
+			}
+		}
 
 		public override void update_status()
 		{

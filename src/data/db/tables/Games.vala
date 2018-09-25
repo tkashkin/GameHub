@@ -152,6 +152,34 @@ namespace GameHub.Data.DB.Tables
 			return true;
 		}
 
+		public static bool remove(Game game)
+		{
+			unowned Sqlite.Database? db = Database.instance.db;
+			if(db == null) return false;
+
+			Statement s;
+			int res = db.prepare_v2("DELETE FROM `games` WHERE `source` = ? AND `id` = ?", -1, out s);
+
+			if(res != Sqlite.OK)
+			{
+				warning("[Database.Games.remove] Can't prepare DELETE query (%d): %s", db.errcode(), db.errmsg());
+				return false;
+			}
+
+			res = s.bind_text(1, game.source.id);
+			res = s.bind_text(2, game.id);
+
+			res = s.step();
+
+			if(res != Sqlite.DONE)
+			{
+				warning("[Database.Games.remove] Error (%d): %s", db.errcode(), db.errmsg());
+				return false;
+			}
+
+			return true;
+		}
+
 		public static new Game? get(string src, string id)
 		{
 			if(src == null || id == null) return null;

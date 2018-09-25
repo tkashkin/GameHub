@@ -137,7 +137,7 @@ namespace GameHub.Data.Sources.Steam
 			{
 				debug("[Steam:%s] No platform support data, %d tries failed, assuming Windows support", id, metadata_tries);
 				platforms.add(Platform.WINDOWS);
-				Tables.Games.add(this);
+				save();
 				game_info_updated = true;
 				return;
 			}
@@ -150,7 +150,7 @@ namespace GameHub.Data.Sources.Steam
 				}
 			}
 
-			Tables.Games.add(this);
+			save();
 
 			game_info_updated = true;
 			update_status();

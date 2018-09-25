@@ -11,7 +11,7 @@ namespace GameHub.Data
 		public GameSource source { get; protected set; }
 
 		public string id { get; protected set; }
-		public string name { get; protected set; }
+		public string name { get; set; }
 		public string description { get; protected set; }
 
 		public string icon { get; set; }
@@ -61,7 +61,7 @@ namespace GameHub.Data
 			}
 			if(!(tag in Tables.Tags.DYNAMIC_TAGS))
 			{
-				Tables.Games.add(this);
+				save();
 				status_change(_status);
 				tags_update();
 			}
@@ -74,7 +74,7 @@ namespace GameHub.Data
 			}
 			if(!(tag in Tables.Tags.DYNAMIC_TAGS))
 			{
-				Tables.Games.add(this);
+				save();
 				status_change(_status);
 				tags_update();
 			}
@@ -89,6 +89,11 @@ namespace GameHub.Data
 			{
 				add_tag(tag);
 			}
+		}
+
+		public virtual void save()
+		{
+			Tables.Games.add(this);
 		}
 
 		public bool is_installable { get; protected set; default = false; }
@@ -174,7 +179,7 @@ namespace GameHub.Data
 				if(update)
 				{
 					update_status();
-					Tables.Games.add(this);
+					save();
 				}
 			}
 
@@ -243,7 +248,7 @@ namespace GameHub.Data
 			if(update)
 			{
 				update_status();
-				Tables.Games.add(this);
+				save();
 			}
 		}
 
