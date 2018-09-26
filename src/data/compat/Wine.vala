@@ -116,7 +116,7 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
-			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mscoree,mshtml=");
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
 
 			return env;
 		}
@@ -130,6 +130,8 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
+			
 			yield Utils.run_thread({ wine_binary.get_path(), util }, game.install_dir.get_path(), env);
 		}
 
@@ -142,6 +144,8 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
+			
 			yield Utils.run_thread({ "winetricks" }, game.install_dir.get_path(), env);
 		}
 
@@ -154,6 +158,8 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
+			
 			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, game.install_dir.get_path(), env)).strip();
 			debug("'%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
