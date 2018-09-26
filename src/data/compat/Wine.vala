@@ -7,6 +7,7 @@ namespace GameHub.Data.Compat
 	public class Wine: CompatTool
 	{
 		public string? binary { get; construct; default = "wine"; }
+                protected virtual string install_postfix() { return "/_gamehub/"+binary+"/drive_c/Game"; }
 		public File? wine_binary { get; protected set; }
 
 		public Wine(string binary="wine")
@@ -61,7 +62,7 @@ namespace GameHub.Data.Compat
 
 		protected virtual async string[] prepare_installer_args(Game game)
 		{
-			var win_path = yield convert_path(game, game.install_dir);
+			var win_path = yield convert_path(game, game.install_dir, install_postfix() );
 			string[] opts = { "/SP-", "/NOCANCEL", "/NOGUI", "/NOICONS", @"/DIR=$(win_path)", "/LOG=C:\\install.log" };
 
 			foreach(var opt in install_options)
@@ -78,23 +79,23 @@ namespace GameHub.Data.Compat
 		public override async void install(Game game, File installer)
 		{
 			if(!can_install(game) || (yield Game.Installer.guess_type(installer)) != Game.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
-			yield exec(game, installer, installer.get_parent(), yield prepare_installer_args(game));
+			yield exec(game, installer, installer.get_parent(), "", yield prepare_installer_args(game));
 		}
 
 		public override async void run(Game game)
 		{
 			if(!can_run(game)) return;
-			yield exec(game, game.executable, game.install_dir);
+			yield exec(game, game.executable, game.install_dir, install_postfix() );
 		}
 
-		protected virtual async void exec(Game game, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected virtual async void exec(Game game, File file, File dir, string s="", string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), file.get_path() };
 			if(args != null)
 			{
 				foreach(var arg in args) cmd += arg;
 			}
-			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(game));
+			yield Utils.run_thread(cmd, dir.get_path() + s , prepare_env(game));
 		}
 
 		protected virtual File get_wineprefix(Game game)
@@ -131,7 +132,7 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			
+
 			yield Utils.run_thread({ wine_binary.get_path(), util }, game.install_dir.get_path(), env);
 		}
 
@@ -145,11 +146,11 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			
+
 			yield Utils.run_thread({ "winetricks" }, game.install_dir.get_path(), env);
 		}
 
-		public async string convert_path(Game game, File path)
+		public async string convert_path(Game game, File path, string s)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());

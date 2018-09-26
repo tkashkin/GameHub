@@ -7,6 +7,7 @@ namespace GameHub.Data.Compat
 	public class Proton: Wine
 	{
 		public const string[] APPIDS = {"930400", "858280"}; // 3.7 Beta, 3.7
+		protected override string install_postfix() { return @"/$(COMPAT_DATA_DIR)/proton_$(name)/pfx/drive_c/Game"; } 
 
 		public string appid { get; construct; }
 
@@ -60,14 +61,14 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		protected override async void exec(Game game, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected override async void exec(Game game, File file, File dir, string s="", string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), "run", file.get_path() };
 			if(args != null)
 			{
 				foreach(var arg in args) cmd += arg;
 			}
-			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(game, parse_opts));
+			yield Utils.run_thread(cmd, dir.get_path() + s, prepare_env(game, parse_opts));
 		}
 
 		protected override File get_wineprefix(Game game)
@@ -101,5 +102,8 @@ namespace GameHub.Data.Compat
 
 			return env;
 		}
+
 	}
+	
+
 }
