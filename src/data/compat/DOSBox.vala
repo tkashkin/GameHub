@@ -59,6 +59,20 @@ namespace GameHub.Data.Compat
 			{
 				warning("[DOSBox.find_configs] %s", e.message);
 			}
+                        if (configs.size == 1)
+                        {
+				return configs;
+                        }
+
+                        foreach (string s in configs)
+                        {
+				if (s.contains("_single.conf")) {
+					configs.clear();
+					configs.add(s);
+					configs.add(s.replace("_single",""));
+					return configs;
+                                }
+                        }
 
 			return configs;
 		}
