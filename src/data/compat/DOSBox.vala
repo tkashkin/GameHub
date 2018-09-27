@@ -78,6 +78,20 @@ namespace GameHub.Data.Compat
 
 			var configs = find_configs(game.install_dir);
 
+			if(configs.size > 2 && game is GameHub.Data.Sources.GOG.GOGGame)
+			{
+				foreach(var conf in configs)
+				{
+					if(conf.has_suffix("_single.conf"))
+					{
+						configs.clear();
+						configs.add(conf.replace("_single.conf", ".conf"));
+						configs.add(conf);
+						break;
+					}
+				}
+			}
+
 			foreach(var conf in configs)
 			{
 				cmd += "-conf";
