@@ -137,7 +137,15 @@ namespace GameHub.Data.Sources.GOG
 			debug("[Auth] Refreshing GOG access token with refresh token: %s", user_refresh_token);
 
 			var url = @"https://auth.gog.com/token?client_id=$(CLIENT_ID)&client_secret=$(CLIENT_SECRET)&grant_type=refresh_token&refresh_token=$(user_refresh_token)";
-			var root = (yield Parser.parse_remote_json_file_async(url)).get_object();
+			var root_node = yield Parser.parse_remote_json_file_async(url);
+			var root = root_node != null && root_node.get_node_type() == Json.NodeType.OBJECT ? root_node.get_object() : null;
+
+			if(root == null)
+			{
+				token_needs_refresh = false;
+				return false;
+			}
+
 			user_token = root.get_string_member("access_token");
 			user_refresh_token = root.get_string_member("refresh_token");
 			user_id = root.get_string_member("user_id");
@@ -160,7 +168,7 @@ namespace GameHub.Data.Sources.GOG
 
 		public override async ArrayList<Game> load_games(Utils.FutureResult2<Game, bool>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
-			if(user_id == null || user_token == null || _games.size > 0)
+			if(((user_id == null || user_token == null) && token_needs_refresh) || _games.size > 0)
 			{
 				return _games;
 			}
@@ -199,7 +207,10 @@ namespace GameHub.Data.Sources.GOG
 				while(page <= pages)
 				{
 					var url = @"https://embed.gog.com/account/getFilteredProducts?mediaType=1&page=$(page)";
-					var root = Parser.parse_remote_json_file(url, "GET", user_token).get_object();
+					var root_node = Parser.parse_remote_json_file(url, "GET", user_token);
+					var root = root_node != null && root_node.get_node_type() == Json.NodeType.OBJECT ? root_node.get_object() : null;
+
+					if(root == null) break;
 
 					page = (int) root.get_int_member("page");
 					pages = (int) root.get_int_member("totalPages");
