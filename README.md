@@ -45,7 +45,7 @@ Package is maintained by [@btd1337](https://github.com/btd1337).
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
 cd GameHub
-debuild -uc -us
+DEB_BUILD_OPTIONS="nostrip nocheck" dpkg-buildpackage -b -us -uc
 ```
 
 ### Any distro, without package manager
