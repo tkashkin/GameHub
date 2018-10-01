@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-16 03:14+0300\n"
-"PO-Revision-Date: 2018-07-23 18:31+0700\n"
+"PO-Revision-Date: 2018-10-01 11:52+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: \n"
 "Language: id\n"
@@ -441,9 +441,8 @@ msgstr "Unduhan dibatalkan"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:46
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:55
-#, fuzzy
 msgid "Collection"
-msgstr "Direktori koleksi"
+msgstr "Koleksi"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:30
 #: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:49
@@ -491,221 +490,210 @@ msgid "Select"
 msgstr "Memilih"
 
 #: src/data/Game.vala:119
-#, fuzzy
 msgid "Select game directory"
-msgstr "Direktori permainan"
+msgstr "Pilih direktori permainan"
 
 #: src/data/Game.vala:291
 #, c-format
 msgid "Part %u of %u: "
-msgstr ""
+msgstr "Bagian %u dari %u: "
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:27
 msgid "Show non-native games"
-msgstr ""
+msgstr "Tampilkan game non-native"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:28
 msgid "Use compatibility layers and consider Windows games compatible"
 msgstr ""
+"Gunakan lapisan kompatibilitas dan pertimbangkan permainan Windows yang "
+"kompatibel"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:27
 msgid "Load games from Humble Trove"
-msgstr ""
+msgstr "Muat permainan dari Humble Trove"
 
 #: src/ui/dialogs/GameInstallDialog.vala:231
 msgid "Unknown"
-msgstr ""
+msgstr "Tak Dikenal"
 
 #: src/ui/views/GamesView/GamesView.vala:159
 #: src/ui/views/GamesView/GamesView.vala:163
 msgid "Filters"
-msgstr ""
+msgstr "Penyaring"
 
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:61
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:169
 #: src/ui/dialogs/CompatRunDialog.vala:26
 #: src/ui/views/GamesView/GameContextMenu.vala:25
 msgid "Run with compatibility layer"
-msgstr ""
+msgstr "Jalankan dengan lapisan kompatibilitas"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:170
 msgid "Game properties"
-msgstr ""
+msgstr "Properti permainan"
 
 #: src/data/compat/Proton.vala:26
 msgid "Disable esync"
-msgstr ""
+msgstr "Nonaktifkan esync"
 
 #: src/data/compat/Proton.vala:27
 msgid "Disable DirectX 11 compatibility layer"
-msgstr ""
+msgstr "Nonaktifkan lapisan kompatibilitas DirectX 11"
 
 #: src/data/compat/Proton.vala:28
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr ""
+msgstr "Gunakan WineD3D11 sebagai lapisan kompatibilitas DirectX 11"
 
 #: src/data/compat/Proton.vala:29
 msgid "Show DXVK info overlay"
-msgstr ""
+msgstr "Tampilkan info overlay DXVK"
 
 #: src/data/compat/Proton.vala:47 src/data/compat/Wine.vala:47
-#, fuzzy
 msgid "Open prefix directory"
-msgstr "Buka direktori pemasangan"
+msgstr "Buka direktori prefiks"
 
 #: src/data/compat/Proton.vala:50 src/data/compat/Wine.vala:50
 msgid "Run winecfg"
-msgstr ""
+msgstr "Jalankan winecfg"
 
 #: src/data/compat/Proton.vala:53 src/data/compat/Wine.vala:53
 msgid "Run winetricks"
-msgstr ""
+msgstr "Jalankan winetricks"
 
 #: src/data/compat/Proton.vala:56 src/data/compat/Wine.vala:56
 msgid "Run regedit"
-msgstr ""
+msgstr "Jalankan regedit"
 
 #: src/data/compat/Wine.vala:38
-#, fuzzy
 msgid "Silent installation"
-msgstr "Buka direktori pemasangan"
+msgstr "Pemasangan senyap"
 
 #: src/data/compat/Wine.vala:39
 msgid "Very silent installation"
-msgstr ""
+msgstr "Pemasangan sangat senyap"
 
 #: src/data/compat/Wine.vala:40
 msgid "Suppress messages"
-msgstr ""
+msgstr "Menekan pesan"
 
 #: src/data/compat/Wine.vala:41
 msgid "No GUI"
-msgstr ""
+msgstr "Tidak ada GUI"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:31
 #, c-format
 msgid "%s: Properties"
-msgstr ""
+msgstr "%s: Properti"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:46
 #: src/ui/views/GamesView/FiltersPopover.vala:84
 msgid "Tags"
-msgstr ""
+msgstr "Tanda"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:92
 msgid "Add tag"
-msgstr ""
+msgstr "Tambahkan tanda"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:113
 #: src/ui/dialogs/GamePropertiesDialog.vala:215
 msgid "Executable"
-msgstr ""
+msgstr "Dapat dieksekusi"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:117
 #: src/ui/dialogs/GamePropertiesDialog.vala:219
-#, fuzzy
 msgid "Select game executable"
-msgstr "Pilih pemasang permainan"
+msgstr "Pilih permainan yang dapat dieksekusi"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:131
 #: src/ui/dialogs/GamePropertiesDialog.vala:111
 msgid "Images"
-msgstr ""
+msgstr "Gambar"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:166
 #: src/ui/dialogs/GamePropertiesDialog.vala:146
 msgid "Image URL"
-msgstr ""
+msgstr "URL gambar"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:171
 #: src/ui/dialogs/GamePropertiesDialog.vala:194
 #: src/ui/dialogs/GamePropertiesDialog.vala:151
 #: src/ui/dialogs/GamePropertiesDialog.vala:174
-#, fuzzy
 msgid "Reset to default"
-msgstr "Kembalikan kunci API default"
+msgstr "Atur ulang ke bawaan"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:189
 #: src/ui/dialogs/GamePropertiesDialog.vala:169
 msgid "Icon URL"
-msgstr ""
+msgstr "URL ikon"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 #: src/ui/dialogs/GamePropertiesDialog.vala:194
-#, fuzzy
 msgid "Search images:"
-msgstr "Cari"
+msgstr "Cari gambar:"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:233
-#, fuzzy
 msgid "Compatibility"
-msgstr "Daftar kompak"
+msgstr "Kompatibilitas"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:32
 msgid "Details"
-msgstr ""
+msgstr "Detail"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:43
 msgid "Properties"
-msgstr ""
+msgstr "Properti"
 
 #: src/data/db/tables/Tags.vala:148
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "Favorit"
 
 #: src/data/db/tables/Tags.vala:149
-#, fuzzy
 msgctxt "tag"
 msgid "Installed"
-msgstr "Dipasang"
+msgstr "Terpasang"
 
 #: src/data/db/tables/Tags.vala:150
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "Tersembunyi"
 
 #: src/utils/downloader/Downloader.vala:137
-#, fuzzy
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Mulai mengunduh"
 
 #: src/utils/downloader/Downloader.vala:138
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Unduhan dimulai"
 
 #: src/utils/downloader/Downloader.vala:139
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Unduhan selesai"
 
 #: src/utils/downloader/Downloader.vala:140
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Unduhan gagal"
 
 #: src/utils/downloader/Downloader.vala:142
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %d%% (%s / %s)"
 msgstr "Mengunduh: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:144
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
 msgstr "Dijeda: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:146
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Unduhan dibatalkan"
@@ -713,35 +701,34 @@ msgstr "Unduhan dibatalkan"
 #: src/ui/views/GamesView/GameContextMenu.vala:35
 msgctxt "game_context_menu"
 msgid "Favorite"
-msgstr ""
+msgstr "Favorit"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:39
 msgctxt "game_context_menu"
 msgid "Hidden"
-msgstr ""
+msgstr "Tersembunyi"
 
 #: src/ui/views/GamesView/GamesView.vala:235
 #: src/ui/views/GamesView/GamesView.vala:239
 msgctxt "status_header"
 msgid "Favorites"
-msgstr ""
+msgstr "Favorit"
 
 #: src/ui/widgets/CompatToolPicker.vala:32
-#, fuzzy
 msgid "Compatibility layer:"
-msgstr "Daftar kompak"
+msgstr "Lapisan kompatibilitas:"
 
 #: data/com.github.tkashkin.gamehub.desktop.in:7
 msgid "Game;Hub;Steam;GOG;Humble;HumbleBundle;"
-msgstr ""
+msgstr "Permainan;Hub;Steam;GOG;Humble;HumbleBundle;"
 
 #: data/com.github.tkashkin.gamehub.desktop.in:10
 msgid "com.github.tkashkin.gamehub"
-msgstr ""
+msgstr "com.github.tkashkin.gamehub"
 
 #: data/com.github.tkashkin.gamehub.appdata.xml.in:15
 msgid "Anatoliy Kashkin"
-msgstr ""
+msgstr "Anatoliy Kashkin"
 
 #~ msgid "Installing"
 #~ msgstr "Memasang"
