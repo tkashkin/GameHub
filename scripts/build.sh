@@ -104,8 +104,8 @@ build_deb()
 	cd "$_ROOT"
 	sed "s/\$VERSION/$_DEB_VERSION/g; s/\$DISTRO/$_DEB_TARGET_DISTRO/g; s/\$DATE/`date -R`/g" "debian/changelog.in" > "debian/changelog"
 	export DEB_BUILD_OPTIONS="nostrip nocheck"
-	dpkg-buildpackage -us -uc
 	if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
+		dpkg-buildpackage -S -sa -us -uc
 		set +e
 		debsign -p"gpg1 --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
 		rm "$_SCRIPTROOT/launchpad/passphrase"
@@ -113,6 +113,7 @@ build_deb()
 		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
 		set -e
 	fi
+	dpkg-buildpackage -us -uc
 	mkdir -p "build/$_BUILD_IMAGE"
 	cp ../*.deb "build/$_BUILD_IMAGE/GameHub-$_VERSION-amd64.deb"
 	cd "$_ROOT"
