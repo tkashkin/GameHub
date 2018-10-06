@@ -60,7 +60,7 @@ _mv_deps()
 
 import_keys()
 {
-	set -e
+	set +e
 	cd "$_ROOT"
 	if [[ -n "$keys_enc_secret" ]]; then
 		echo "[scripts/build.sh] Importing keys"
