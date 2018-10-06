@@ -86,11 +86,12 @@ deps()
 	sudo add-apt-repository ppa:elementary-os/daily -y
 	sudo add-apt-repository ppa:vala-team/next -y
 	sudo apt update -qq
-	webkit="libwebkit2gtk-4.0-dev"
 	if [[ "$_BUILD_IMAGE" = "bionic" ]]; then
-		webkit="$webkit=2.20.1-1"
+		sudo apt install -y libwebkit2gtk-4.0-\*=2.20.1-1 libjavascriptcoregtk-4.0-\*=2.20.1-1 gir1.2-webkit2-4.0=2.20.1-1 gir1.2-javascriptcoregtk-4.0=2.20.1-1
+	else
+		sudo apt install -y libwebkit2gtk-4.0-dev
 	fi
-	sudo apt install -y meson valac checkinstall build-essential dput elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev $webkit libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev
+	sudo apt install -y meson valac checkinstall build-essential dput elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev
 	#sudo apt full-upgrade -y
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sudo dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
