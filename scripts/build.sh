@@ -225,7 +225,7 @@ build_flatpak()
 	mkdir -p "$_ROOT/build/flatpak"
 	cd "$_ROOT/build/flatpak"
 	sudo apt install -y flatpak flatpak-builder
-	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	git clone https://github.com/tkashkin/GameHub.git --branch flatpak --recursive --depth=1 "manifest"
 	cd "manifest"
 	sudo flatpak-builder -y --install-deps-from=flathub --install-deps-only build com.github.tkashkin.gamehub.json
