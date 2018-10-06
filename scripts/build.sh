@@ -68,8 +68,9 @@ import_keys()
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/key_pub.gpg.enc" -secret $keys_enc_secret
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/key_sec.gpg.enc" -secret $keys_enc_secret
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/passphrase.enc" -secret $keys_enc_secret
-		gpg --import "$_SCRIPTROOT/launchpad/key_pub.gpg"
-		gpg --allow-secret-key-import --import "$_SCRIPTROOT/launchpad/key_sec.gpg"
+		echo "\nallow-loopback-pinentry\n" >> ~/.gnupg/gpg-agent.conf
+		gpg --pinentry-mode loopback --import "$_SCRIPTROOT/launchpad/key_pub.gpg"
+		gpg --pinentry-mode loopback --allow-secret-key-import --import "$_SCRIPTROOT/launchpad/key_sec.gpg"
 		rm "$_SCRIPTROOT/launchpad/key_pub.gpg" "$_SCRIPTROOT/launchpad/key_sec.gpg"
 	fi
 }
@@ -99,7 +100,7 @@ build_deb()
 	export DEB_BUILD_OPTIONS="nostrip nocheck"
 	dpkg-buildpackage -us -uc
 	if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
-		debsign -p"gpg --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
+		debsign -p"gpg --pinentry-mode loopback --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
 		rm "$_SCRIPTROOT/launchpad/passphrase"
 		dput -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
 	fi
