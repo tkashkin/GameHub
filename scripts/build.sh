@@ -220,7 +220,7 @@ appimage_pack()
 
 build_flatpak()
 {
-	set -e
+	set +e
 	echo "[scripts/build.sh] Building flatpak package"
 	mkdir -p "$_ROOT/build/flatpak"
 	cd "$_ROOT/build/flatpak"
