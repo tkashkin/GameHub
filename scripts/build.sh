@@ -69,6 +69,8 @@ import_keys()
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/key_sec.gpg.enc" -secret $keys_enc_secret
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/passphrase.enc" -secret $keys_enc_secret
 		echo "\nallow-loopback-pinentry\n" >> ~/.gnupg/gpg-agent.conf
+		pkill -9 gpg-agent
+		gpg-agent --daemon
 		gpg --pinentry-mode loopback --import "$_SCRIPTROOT/launchpad/key_pub.gpg"
 		gpg --pinentry-mode loopback --allow-secret-key-import --import "$_SCRIPTROOT/launchpad/key_sec.gpg"
 		rm "$_SCRIPTROOT/launchpad/key_pub.gpg" "$_SCRIPTROOT/launchpad/key_sec.gpg"
