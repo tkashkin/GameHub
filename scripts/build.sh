@@ -228,9 +228,9 @@ build_flatpak()
 	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	git clone https://github.com/tkashkin/GameHub.git --branch flatpak --recursive --depth=1 "manifest"
 	cd "manifest"
-	flatpak-builder --install-deps-from=flathub --install-deps-only --user "build" com.github.tkashkin.gamehub.json
-	flatpak update --user
-	flatpak-builder --install --user --ccache --repo="repo" --force-clean "build" com.github.tkashkin.gamehub.json
+	flatpak-builder -y --install-deps-from=flathub --install-deps-only --user "build" com.github.tkashkin.gamehub.json
+	flatpak update -y --user
+	flatpak-builder -y --user --ccache --repo="repo" --force-clean "build" com.github.tkashkin.gamehub.json
 	flatpak build-bundle "repo" "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" com.github.tkashkin.gamehub
 }
 
