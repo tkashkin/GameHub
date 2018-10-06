@@ -110,9 +110,7 @@ build_deb()
 		debsign -p"gpg1 --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
 		rm "$_SCRIPTROOT/launchpad/passphrase"
 		echo "[scripts/build.sh] Uploading package to launchpad"
-		alias gpg="gpg1"
-		dput -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
-		unalias gpg
+		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
 		set -e
 	fi
 	mkdir -p "build/$_BUILD_IMAGE"
