@@ -71,6 +71,7 @@ import_keys()
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/passphrase.enc" -secret $keys_enc_secret
 		gpg1 --no-use-agent --import "$_SCRIPTROOT/launchpad/key_pub.gpg"
 		gpg1 --no-use-agent --allow-secret-key-import --import "$_SCRIPTROOT/launchpad/key_sec.gpg"
+		sudo apt-key add "$_SCRIPTROOT/launchpad/key_pub.gpg"
 		rm "$_SCRIPTROOT/launchpad/key_pub.gpg" "$_SCRIPTROOT/launchpad/key_sec.gpg"
 	fi
 }
@@ -108,7 +109,10 @@ build_deb()
 		set +e
 		debsign -p"gpg1 --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
 		rm "$_SCRIPTROOT/launchpad/passphrase"
+		echo "[scripts/build.sh] Uploading package to launchpad"
+		alias gpg="gpg1"
 		dput -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
+		unalias gpg
 		set -e
 	fi
 	mkdir -p "build/$_BUILD_IMAGE"
