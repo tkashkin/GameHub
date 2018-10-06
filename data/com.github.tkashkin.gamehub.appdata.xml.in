@@ -3,7 +3,7 @@
 	<id>com.github.tkashkin.gamehub</id>
 
 	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>WTFPL</project_license>
+	<project_license>GPL-3.0+</project_license>
 
 	<name>GameHub</name>
 	<summary>All your games in one place</summary>
@@ -41,6 +41,11 @@
 	</screenshots>
 
 	<releases>
+		<release type="development" version="0.11.3" date="2018-10-06">
+			<description>
+				<p>User-added games</p>
+			</description>
+		</release>
 		<release type="development" version="0.11.2" date="2018-09-23">
 			<description>
 				<p>Fixes for CompatTools</p>

@@ -1,18 +1,26 @@
 #!/bin/bash
 
+_GH_VERSION="0.11.3"
+
 _ROOT="`pwd`"
 _SCRIPTROOT="$(dirname "$(readlink -f "$0")")"
 _LINUXDEPLOYQT="linuxdeployqt-continuous-x86_64.AppImage"
 
-_SOURCE="${APPVEYOR_BUILD_VERSION:-local}"
+_SOURCE="${APPVEYOR_BUILD_VERSION:-$_GH_VERSION-local}"
 _VERSION="$_SOURCE-$(git rev-parse --short HEAD)"
+_DEB_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
+_DEB_TARGET_DISTRO="bionic"
 _BUILD_IMAGE="local"
 
 if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_VERSION="xenial-$_VERSION"
+	_DEB_VERSION="$_DEB_VERSION~ubuntu16.04"
+	_DEB_TARGET_DISTRO="xenial"
 	_BUILD_IMAGE="xenial"
 elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
 	_VERSION="bionic-$_VERSION"
+	_DEB_VERSION="$_DEB_VERSION~ubuntu18.04"
+	_DEB_TARGET_DISTRO="bionic"
 	_BUILD_IMAGE="bionic"
 fi
 
@@ -27,7 +35,7 @@ _usr_patch()
 {
 	set +e
 	file="$1"
-	echo "[appimage/build.sh] Patching $file"
+	echo "[scripts/build.sh] Patching $file"
 	sed -i -e 's#/usr#././#g' "$file"
 }
 
@@ -38,10 +46,10 @@ _mv_deps()
 	src="$2"
 	dest="$3"
 	recursive=${4:-true}
-	echo "[appimage/build.sh] Moving $lib"
+	echo "[scripts/build.sh] Moving $lib"
 	[ -e "$src/$lib" ] && mv -f "$src/$lib" "$dest"
 	[ -e "$dest/$lib" ] && ldd "$dest/$lib" | awk '{print $1}' | while read dep; do
-		[ -e "$src/$dep" ] && echo "[appimage/build.sh] $dep <- $lib"
+		[ -e "$src/$dep" ] && echo "[scripts/build.sh] $dep <- $lib"
 		if [ "$recursive" = "true" ]; then
 			[ -e "$src/$dep" ] && _mv_deps "$dep" "$src" "$dest" "$recursive"
 		else
@@ -50,17 +58,33 @@ _mv_deps()
 	done
 }
 
+import_keys()
+{
+	set -e
+	cd "$_ROOT"
+	if [[ -n "$keys_enc_secret" ]]; then
+		echo "[scripts/build.sh] Importing keys"
+		curl -sflL "https://raw.githubusercontent.com/appveyor/secure-file/master/install.sh" | bash -e -
+		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/key_pub.gpg.enc" -secret $keys_enc_secret
+		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/key_sec.gpg.enc" -secret $keys_enc_secret
+		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/passphrase.enc" -secret $keys_enc_secret
+		gpg --import "$_SCRIPTROOT/launchpad/key_pub.gpg"
+		gpg --allow-secret-key-import --import "$_SCRIPTROOT/launchpad/key_sec.gpg"
+		rm "$_SCRIPTROOT/launchpad/key_pub.gpg" "$_SCRIPTROOT/launchpad/key_sec.gpg"
+	fi
+}
+
 deps()
 {
 	set +e
-	echo "[appimage/build.sh] Installing dependencies"
+	echo "[scripts/build.sh] Installing dependencies"
 	sudo add-apt-repository ppa:elementary-os/stable -y
 	sudo add-apt-repository ppa:elementary-os/os-patches -y
 	sudo add-apt-repository ppa:elementary-os/daily -y
 	sudo add-apt-repository ppa:vala-team/next -y
 	sudo apt update -qq
-	sudo apt install -y meson valac checkinstall build-essential elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev
-	sudo apt full-upgrade -y
+	sudo apt install -y meson valac checkinstall build-essential dput elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev
+	#sudo apt full-upgrade -y
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sudo dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
 	fi
@@ -69,19 +93,25 @@ deps()
 build_deb()
 {
 	set -e
-	echo "[appimage/build.sh] Building deb package"
+	echo "[scripts/build.sh] Building deb package"
 	cd "$_ROOT"
+	sed "s/\$VERSION/$_DEB_VERSION/g; s/\$DISTRO/$_DEB_TARGET_DISTRO/g; s/\$DATE/`date -R`/g" "debian/changelog.in" > "debian/changelog"
 	export DEB_BUILD_OPTIONS="nostrip nocheck"
-	dpkg-buildpackage -b -us -uc
+	dpkg-buildpackage -us -uc
+	if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
+		debsign -p"gpg --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
+		rm "$_SCRIPTROOT/launchpad/passphrase"
+		dput -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
+	fi
 	mkdir -p "build/$_BUILD_IMAGE"
-	mv ../*.deb "build/$_BUILD_IMAGE/GameHub-$_VERSION-amd64.deb"
+	cp ../*.deb "build/$_BUILD_IMAGE/GameHub-$_VERSION-amd64.deb"
 	cd "$_ROOT"
 }
 
 build()
 {
 	set -e
-	echo "[appimage/build.sh] Building"
+	echo "[scripts/build.sh] Building"
 	cd "$_ROOT"
 	mkdir -p "$BUILDROOT"
 	meson "$BUILDDIR" --prefix=/usr --buildtype=debugoptimized -Ddistro=generic -Dappimage=true
@@ -94,7 +124,7 @@ build()
 appimage()
 {
 	set -e
-	echo "[appimage/build.sh] Preparing AppImage"
+	echo "[scripts/build.sh] Preparing AppImage"
 	cd "$BUILDROOT"
 	wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/$_LINUXDEPLOYQT"
 	chmod a+x "./$_LINUXDEPLOYQT"
@@ -107,7 +137,7 @@ appimage()
 appimage_tweak()
 {
 	set -e
-	echo "[appimage/build.sh] Tweaking AppImage"
+	echo "[scripts/build.sh] Tweaking AppImage"
 	cd "$BUILDROOT"
 	rm -f "$APPDIR/AppRun"
 	cp -f "$_SCRIPTROOT/AppRun" "$APPDIR/AppRun"
@@ -117,7 +147,7 @@ appimage_tweak()
 appimage_bundle_libs()
 {
 	set +e
-	echo "[appimage/build.sh] Bundling additional libs"
+	echo "[scripts/build.sh] Bundling additional libs"
 	cd "$BUILDROOT"
 
 	mkdir -p "$APPDIR/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0/"
@@ -136,27 +166,27 @@ appimage_bundle_libs()
 appimage_checkrt()
 {
 	set +e
-	echo "[appimage/build.sh] Bundling checkrt libs"
+	echo "[scripts/build.sh] Bundling checkrt libs"
 	cd "$BUILDROOT"
 	cp -f "$_SCRIPTROOT/checkrt.sh" "$APPDIR/checkrt.sh"
 	cp -rf "$_SCRIPTROOT/optlib" "$APPDIR/usr/"
 
-	echo "[appimage/build.sh] Moving GTK and its dependencies"
+	echo "[scripts/build.sh] Moving GTK and its dependencies"
 	mkdir -p "$APPDIR/usr/optlib/libgtk-3.so.0/"
 	_mv_deps "libgtk-3.so.0" "$APPDIR/usr/lib" "$APPDIR/usr/optlib/libgtk-3.so.0/"
 
-	echo "[appimage/build.sh] Moving back non-GTK-specific dependencies"
+	echo "[scripts/build.sh] Moving back non-GTK-specific dependencies"
 	find "$APPDIR/usr/lib/" -maxdepth 1 -type f -not -name "libgranite.so.*" -not -name "libwebkit2gtk-4.0.so.*" -print0 | while read -d $'\0' dep; do
 		_mv_deps "$(basename $dep)" "$APPDIR/usr/optlib/libgtk-3.so.0" "$APPDIR/usr/lib/" "false"
 	done
 
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
-		echo "[appimage/build.sh] Removing GTK and its dependencies"
+		echo "[scripts/build.sh] Removing GTK and its dependencies"
 		rm -rf "$APPDIR/usr/optlib/libgtk-3.so.0"
 	fi
 
 	for lib in 'libstdc++.so.6' 'libgcc_s.so.1'; do
-		echo "[appimage/build.sh] Bundling $lib"
+		echo "[scripts/build.sh] Bundling $lib"
 		mkdir -p "$APPDIR/usr/optlib/$lib"
 		for dir in "/lib" "/usr/lib"; do
 			libfile="$dir/x86_64-linux-gnu/$lib"
@@ -168,7 +198,7 @@ appimage_checkrt()
 appimage_pack()
 {
 	set -e
-	echo "[appimage/build.sh] Packing AppImage"
+	echo "[scripts/build.sh] Packing AppImage"
 	cd "$BUILDROOT"
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
 	export VERSION="$_VERSION"
@@ -180,13 +210,15 @@ appimage_pack()
 upload()
 {
 	set -e
-	echo "[appimage/build.sh] Uploading AppImage"
+	echo "[scripts/build.sh] Uploading AppImage"
 	cd "$BUILDROOT"
 	wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
 	bash upload.sh "$_ROOT/build/$_BUILD_IMAGE/*.deb" GameHub*.AppImage*
 }
 
 mkdir -p "$BUILDROOT"
+
+if [[ "$ACTION" = "import_keys" ]]; then import_keys; fi
 
 if [[ "$ACTION" = "deps" ]]; then deps; fi
 
