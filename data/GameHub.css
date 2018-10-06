@@ -346,3 +346,8 @@ list.tags-list row:hover
 {
 	padding: 0;
 }
+
+button.file label
+{
+	padding: 0 2px;
+}

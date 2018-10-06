@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 using Gdk;
 
@@ -6,19 +24,19 @@ namespace GameHub.UI.Widgets
 	public class AutoSizeImage: DrawingArea
 	{
 		private Pixbuf? src;
-		
+
 		private int cmin = 0;
 		private int cmax = 0;
 		private float ratio = 1;
 		private Orientation constraint = Orientation.HORIZONTAL;
-		
+
 		public void set_constraint(int min, int max, float ratio = 1, Orientation orientation = Orientation.HORIZONTAL)
 		{
 			this.constraint = orientation;
 			this.ratio = ratio;
 			this.cmin = min;
 			this.cmax = max;
-			
+
 			switch(constraint)
 			{
 				case Orientation.HORIZONTAL:
@@ -30,12 +48,12 @@ namespace GameHub.UI.Widgets
 					break;
 			}
 		}
-		
+
 		public void set_source(Pixbuf? buf)
 		{
 			src = buf;
 		}
-		
+
 		public override bool draw(Cairo.Context ctx)
 		{
 			Allocation rect;
@@ -43,7 +61,7 @@ namespace GameHub.UI.Widgets
 
 			int new_width = 0;
 			int new_height = 0;
-			
+
 			switch(constraint)
 			{
 				case Orientation.HORIZONTAL:
@@ -82,7 +100,7 @@ namespace GameHub.UI.Widgets
 					set_size_request(new_width, cmin);
 					break;
 			}
-			
+
 			return false;
 		}
 	}

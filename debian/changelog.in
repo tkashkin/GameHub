@@ -1,8 +1,8 @@
-com.github.tkashkin.gamehub (0.11.3-local-e943ed5) bionic; urgency=low
+com.github.tkashkin.gamehub ($VERSION) $DISTRO; urgency=low
 
   * CI update
 
- -- tkashkin <tkashkin@gmail.com>  Sat, 06 Oct 2018 03:19:37 +0300
+ -- tkashkin <tkashkin@gmail.com>  $DATE
 
 com.github.tkashkin.gamehub (0.11.3) bionic; urgency=low
 
