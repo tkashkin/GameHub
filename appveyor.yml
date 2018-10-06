@@ -28,6 +28,7 @@ build_script:
   - sh: bash scripts/build.sh appimage_bundle_libs
   - sh: bash scripts/build.sh appimage_checkrt
   - sh: bash scripts/build.sh appimage_pack
+  - sh: bash scripts/build.sh build_flatpak
 
 install:
   - sh: bash scripts/build.sh import_keys
@@ -40,6 +41,8 @@ artifacts:
     name: deb
   - path: build/appimage/GameHub*.AppImage*
     name: AppImage
+  - path: build/flatpak/GameHub*.flatpak
+    name: flatpak
 
 deploy:
   - provider: GitHub
@@ -50,6 +53,6 @@ deploy:
         * Use `xenial` packages for older distros (>= Ubuntu 16.04)
     auth_token:
         secure: J2LCcNeVYvzbvHRa/LChp+SmN6UKbg1ELsA4jmxnObCbX+ZyZ9DFH+S2aQIoA3dG
-    artifact: deb,AppImage
+    artifact: deb,AppImage,flatpak
     draft: false
     prerelease: true

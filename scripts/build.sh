@@ -218,13 +218,20 @@ appimage_pack()
 	PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool --no-appstream "$APPDIR"
 }
 
-upload()
+build_flatpak()
 {
 	set -e
-	echo "[scripts/build.sh] Uploading AppImage"
-	cd "$BUILDROOT"
-	wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-	bash upload.sh "$_ROOT/build/$_BUILD_IMAGE/*.deb" GameHub*.AppImage*
+	echo "[scripts/build.sh] Building flatpak package"
+	mkdir -p "$_ROOT/build/flatpak"
+	cd "$_ROOT/build/flatpak"
+	sudo apt install -y flatpak flatpak-builder
+	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	git clone https://github.com/tkashkin/GameHub.git --branch flatpak --recursive --depth=1 "manifest"
+	cd "manifest"
+	flatpak-builder --install-deps-from=flathub --install-deps-only --user "build" com.github.tkashkin.gamehub.json
+	flatpak update --user
+	flatpak-builder --install --user --ccache --repo="repo" --force-clean "build" com.github.tkashkin.gamehub.json
+	flatpak build-bundle "repo" "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" com.github.tkashkin.gamehub
 }
 
 mkdir -p "$BUILDROOT"
@@ -243,4 +250,4 @@ if [[ "$ACTION" = "appimage_bundle_libs" || "$ACTION" = "build_local" ]]; then a
 if [[ "$ACTION" = "appimage_checkrt" || ( "$ACTION" = "build_local" && "$CHECKRT" = "--checkrt" ) ]]; then appimage_checkrt; fi
 if [[ "$ACTION" = "appimage_pack" || "$ACTION" = "build_local" ]]; then appimage_pack; fi
 
-if [[ "$ACTION" = "upload" ]]; then upload; fi
+if [[ "$ACTION" = "build_flatpak" && "$_BUILD_IMAGE" = "bionic" ]]; then build_flatpak; fi
