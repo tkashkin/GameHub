@@ -72,7 +72,6 @@ import_keys()
 		gpg1 --no-use-agent --import "$_SCRIPTROOT/launchpad/key_pub.gpg"
 		gpg1 --no-use-agent --allow-secret-key-import --import "$_SCRIPTROOT/launchpad/key_sec.gpg"
 		sudo apt-key add "$_SCRIPTROOT/launchpad/key_pub.gpg"
-		rm "$_SCRIPTROOT/launchpad/key_pub.gpg" "$_SCRIPTROOT/launchpad/key_sec.gpg"
 	fi
 }
 
@@ -95,19 +94,20 @@ deps()
 build_deb()
 {
 	set -e
-	echo "[scripts/build.sh] Building deb package"
 	cd "$_ROOT"
 	sed "s/\$VERSION/$_DEB_VERSION/g; s/\$DISTRO/$_DEB_TARGET_DISTRO/g; s/\$DATE/`date -R`/g" "debian/changelog.in" > "debian/changelog"
 	export DEB_BUILD_OPTIONS="nostrip nocheck"
 	if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
+		echo "[scripts/build.sh] Building source package for launchpad"
 		dpkg-buildpackage -S -sa -us -uc
 		set +e
+		echo "[scripts/build.sh] Signing source package"
 		debsign -p"gpg1 --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
-		rm "$_SCRIPTROOT/launchpad/passphrase"
 		echo "[scripts/build.sh] Uploading package to launchpad"
 		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
 		set -e
 	fi
+	echo "[scripts/build.sh] Building deb package"
 	dpkg-buildpackage -us -uc
 	mkdir -p "build/$_BUILD_IMAGE"
 	cp ../*.deb "build/$_BUILD_IMAGE/GameHub-$_VERSION-amd64.deb"
@@ -219,14 +219,19 @@ build_flatpak()
 	echo "[scripts/build.sh] Building flatpak package"
 	mkdir -p "$_ROOT/build/flatpak"
 	cd "$_ROOT/build/flatpak"
+	echo "[scripts/build.sh] Installing flatpak"
 	sudo apt install -y flatpak flatpak-builder
 	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	echo "[scripts/build.sh] Cloning flatpak manifest"
 	git clone https://github.com/tkashkin/GameHub.git --branch flatpak --recursive --depth=1 "manifest"
 	cd "manifest"
-	sudo flatpak-builder -y --install-deps-from=flathub --install-deps-only build com.github.tkashkin.gamehub.json
-	sudo flatpak update -y
-	sudo flatpak-builder -y --repo=repo --force-clean build com.github.tkashkin.gamehub.json
-	sudo flatpak build-bundle repo "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" com.github.tkashkin.gamehub
+	echo "[scripts/build.sh] Autoinstalling dependencies"
+	flatpak-builder -y --user --install-deps-from=flathub --install-deps-only build com.github.tkashkin.gamehub.json
+	echo "[scripts/build.sh] Installing dependencies"
+	flatpak install --user flathub org.gnome.Platform//3.28 org.freedesktop.Platform//1.6 org.freedesktop.Platform.GL org.freedesktop.Platform.GL32 io.elementary.Loki.BaseApp//stable org.gnome.Sdk//3.28
+	flatpak-builder -y --user --repo=repo --force-clean build com.github.tkashkin.gamehub.json
+	flatpak build-bundle repo "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" com.github.tkashkin.gamehub
+	return 0
 }
 
 mkdir -p "$BUILDROOT"
