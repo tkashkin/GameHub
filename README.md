@@ -17,8 +17,17 @@ It also allows to download bonus content for GOG games.
 ## Installation
 Prebuilt releases can be found on [releases page](https://github.com/tkashkin/GameHub/releases).
 
+### Ubuntu-based distros
+Use prebuilt deb packages from [releases page](https://github.com/tkashkin/GameHub/releases) or add a [PPA](https://launchpad.net/~tkashkin/+archive/ubuntu/gamehub) and install with `apt`:
+```bash
+sudo apt install software-properties-common # install if `add-apt-repository` is not available
+sudo add-apt-repository ppa:tkashkin/gamehub
+sudo apt update
+sudo apt install com.github.tkashkin.gamehub
+```
+
 ### Arch Linux
-Arch Linux users can find GameHub under the name [gamehub-git](https://aur.archlinux.org/packages/gamehub-git/) in the **AUR**:
+[gamehub-git](https://aur.archlinux.org/packages/gamehub-git/) is available in AUR:
 ```bash
 aurman -S gamehub-git
 ```
