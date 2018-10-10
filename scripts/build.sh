@@ -221,14 +221,14 @@ build_flatpak()
 	cd "$_ROOT/build/flatpak"
 	echo "[scripts/build.sh] Installing flatpak"
 	sudo apt install -y flatpak flatpak-builder
-	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	echo "[scripts/build.sh] Cloning flatpak manifest"
 	git clone https://github.com/tkashkin/GameHub.git --branch flatpak --recursive --depth=1 "manifest"
 	cd "manifest"
 	echo "[scripts/build.sh] Autoinstalling dependencies"
 	flatpak-builder -y --user --install-deps-from=flathub --install-deps-only build com.github.tkashkin.gamehub.json
 	echo "[scripts/build.sh] Installing dependencies"
-	flatpak install --user flathub org.gnome.Platform//3.28 org.freedesktop.Platform//1.6 org.freedesktop.Platform.GL org.freedesktop.Platform.GL32 io.elementary.Loki.BaseApp//stable org.gnome.Sdk//3.28
+	flatpak install -y --user flathub org.gnome.Platform//3.28 org.freedesktop.Platform//1.6 org.freedesktop.Platform.GL org.freedesktop.Platform.GL32 io.elementary.Loki.BaseApp//stable org.gnome.Sdk//3.28
 	flatpak-builder -y --user --repo=repo --force-clean build com.github.tkashkin.gamehub.json
 	flatpak build-bundle repo "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" com.github.tkashkin.gamehub
 	return 0
