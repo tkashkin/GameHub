@@ -11,17 +11,23 @@ _VERSION="$_SOURCE-$(git rev-parse --short HEAD)"
 _DEB_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
 _DEB_TARGET_DISTRO="bionic"
 _BUILD_IMAGE="local"
+_GPG_BINARY="gpg1"
+_GPG_PACKAGE="gnupg1"
 
 if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_VERSION="xenial-$_VERSION"
 	_DEB_VERSION="$_DEB_VERSION~ubuntu16.04"
 	_DEB_TARGET_DISTRO="xenial"
 	_BUILD_IMAGE="xenial"
+	_GPG_BINARY="gpg"
+	_GPG_PACKAGE="gnupg"
 elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
 	_VERSION="bionic-$_VERSION"
 	_DEB_VERSION="$_DEB_VERSION~ubuntu18.04"
 	_DEB_TARGET_DISTRO="bionic"
 	_BUILD_IMAGE="bionic"
+	_GPG_BINARY="gpg1"
+	_GPG_PACKAGE="gnupg1"
 fi
 
 BUILDROOT="$_ROOT/build/appimage"
@@ -64,14 +70,15 @@ import_keys()
 	cd "$_ROOT"
 	if [[ -n "$keys_enc_secret" ]]; then
 		echo "[scripts/build.sh] Importing keys"
-		sudo apt install -y gnupg1
+		sudo apt install -y "$_GPG_PACKAGE"
 		curl -sflL "https://raw.githubusercontent.com/appveyor/secure-file/master/install.sh" | bash -e -
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/key_pub.gpg.enc" -secret $keys_enc_secret
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/key_sec.gpg.enc" -secret $keys_enc_secret
 		./appveyor-tools/secure-file -decrypt "$_SCRIPTROOT/launchpad/passphrase.enc" -secret $keys_enc_secret
-		gpg1 --no-use-agent --import "$_SCRIPTROOT/launchpad/key_pub.gpg"
-		gpg1 --no-use-agent --allow-secret-key-import --import "$_SCRIPTROOT/launchpad/key_sec.gpg"
+		"$_GPG_BINARY" --no-use-agent --import "$_SCRIPTROOT/launchpad/key_pub.gpg"
+		"$_GPG_BINARY" --no-use-agent --allow-secret-key-import --import "$_SCRIPTROOT/launchpad/key_sec.gpg"
 		sudo apt-key add "$_SCRIPTROOT/launchpad/key_pub.gpg"
+		rm -f "$_SCRIPTROOT/launchpad/key_pub.gpg" "$_SCRIPTROOT/launchpad/key_sec.gpg"
 	fi
 }
 
@@ -102,7 +109,8 @@ build_deb()
 		dpkg-buildpackage -S -sa -us -uc
 		set +e
 		echo "[scripts/build.sh] Signing source package"
-		debsign -p"gpg1 --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
+		debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
+		rm -f "$_SCRIPTROOT/launchpad/passphrase"
 		echo "[scripts/build.sh] Uploading package to launchpad"
 		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
 		set -e
