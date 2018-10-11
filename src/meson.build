@@ -20,7 +20,6 @@ deps = [
 	dependency('json-glib-1.0'),
 	dependency('gee-0.8'),
 	dependency('sqlite3'),
-	dependency('libsoup-2.4'),
 	dependency('libxml-2.0'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
@@ -32,6 +31,15 @@ if gtk322.found()
 	deps += gtk322
 else
 	deps += dependency('gtk+-3.0')
+endif
+
+# not sure which version fixed Message.response_headers.get_content_range(), 2.60+ should work
+soup260 = dependency('libsoup-2.4', version: '>=2.60', required: false)
+if soup260.found()
+	add_global_arguments('-D', 'SOUP_2_60', language: 'vala')
+	deps += soup260
+else
+	deps += dependency('libsoup-2.4')
 endif
 
 executable(

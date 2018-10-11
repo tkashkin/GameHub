@@ -30,7 +30,7 @@ namespace GameHub.Data.Compat
 
 		public Proton(string appid)
 		{
-			Object(appid: appid, binary: "");
+			Object(appid: appid, binary: "", arch: "");
 		}
 
 		construct
