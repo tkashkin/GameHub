@@ -1,0 +1,13 @@
+[gamehub_bionic]
+fqdn = ppa.launchpad.net
+method = ftp
+incoming = ~tkashkin/ubuntu/gamehub/bionic
+login = anonymous
+allow_unsigned_uploads = 1
+
+[gamehub_xenial]
+fqdn = ppa.launchpad.net
+method = ftp
+incoming = ~tkashkin/ubuntu/gamehub/xenial
+login = anonymous
+allow_unsigned_uploads = 1

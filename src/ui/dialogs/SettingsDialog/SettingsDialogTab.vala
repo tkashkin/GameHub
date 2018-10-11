@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 using Granite;
 using GameHub.Utils;
@@ -53,6 +71,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		{
 			var chooser = new FileChooserButton(text, mode);
 			chooser.create_folders = create;
+			chooser.show_hidden = true;
 			chooser.select_filename(FSUtils.expand(val));
 			chooser.file_set.connect(() => { action(chooser.get_filename()); });
 			chooser.set_size_request(280, -1);

@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 using Granite;
 
@@ -58,7 +76,8 @@ namespace GameHub.Utils
 		{
 			debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
 			Process.spawn_sync(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout);
-			print(stdout.strip() + "\n");
+			stdout = stdout.strip();
+			if(stdout.length > 0) print(stdout + "\n");
 		}
 		catch (Error e)
 		{
@@ -112,6 +131,17 @@ namespace GameHub.Utils
 		return stdout;
 	}
 
+	public static File? find_executable(string? name)
+	{
+		if(name == null || name.length == 0) return null;
+		var which = run({"which", name});
+		if(which.length == 0 || !which.has_prefix("/"))
+		{
+			return null;
+		}
+		return File.new_for_path(which);
+	}
+
 	public static void thread(string name, owned Future worker)
 	{
 		try
@@ -137,7 +167,9 @@ namespace GameHub.Utils
 		#elif SNAP
 		return "snap";
 		#else
-		return Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
+		if(distro != null) return distro;
+		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
+		return distro;
 		#endif
 	}
 
@@ -235,4 +267,6 @@ namespace GameHub.Utils
 		catch(Error e){}
 		return n.strip();
 	}
+
+	private static string? distro;
 }

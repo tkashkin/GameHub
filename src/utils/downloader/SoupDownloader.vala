@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using GLib;
 using Soup;
 
@@ -119,7 +137,8 @@ namespace GameHub.Utils.Downloader.Soup
 
 			int64 dl_bytes = 0;
 			int64 dl_bytes_total = 0;
-
+			
+			#if SOUP_2_60
 			int64 resume_from = 0;
 			var resume_dl = false;
 
@@ -134,6 +153,7 @@ namespace GameHub.Utils.Downloader.Soup
 					debug(@"[SoupDownloader] Download part found, size: $(resume_from)");
 				}
 			}
+			#endif
 
 			msg.got_headers.connect(() => {
 				dl_bytes_total = msg.response_headers.get_content_length();
@@ -180,6 +200,7 @@ namespace GameHub.Utils.Downloader.Soup
 						}
 					}
 
+					#if SOUP_2_60
 					int64 rstart = -1, rend = -1;
 					if(resume_dl && msg.response_headers.get_content_range(out rstart, out rend, out dl_bytes_total))
 					{
@@ -189,6 +210,7 @@ namespace GameHub.Utils.Downloader.Soup
 						local_stream = download.local_tmp.append_to(FileCreateFlags.NONE);
 					}
 					else
+					#endif
 					{
 						local_stream = download.local_tmp.replace(null, false, FileCreateFlags.REPLACE_DESTINATION);
 					}

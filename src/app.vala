@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 using Gdk;
 using Granite;
@@ -7,6 +25,7 @@ using GameHub.Data.DB;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
+using GameHub.Data.Sources.User;
 using GameHub.Utils;
 
 namespace GameHub
@@ -32,15 +51,26 @@ namespace GameHub
 			Platforms = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS };
 			CurrentPlatform = Platform.LINUX;
 
-			GameSources = { new Steam(), new GOG(), new Humble(), new Trove() };
+			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new User() };
 
 			CompatTool[] tools = { new Compat.CustomScript(), new Compat.Innoextract(), new Compat.DOSBox() };
 			foreach(var appid in Compat.Proton.APPIDS)
 			{
 				tools += new Compat.Proton(appid);
 			}
-			tools += new Compat.Wine("wine64");
-			tools += new Compat.Wine("wine");
+
+			string[] wine_binaries = { "wine"/*, "wine64", "wine32"*/ };
+			string[] wine_arches = { "win64", "win32" };
+
+			foreach(var wine_binary in wine_binaries)
+			{
+				foreach(var wine_arch in wine_arches)
+				{
+					if(wine_binary == "wine32" && wine_arch == "win64") continue;
+					tools += new Compat.Wine(wine_binary, wine_arch);
+				}
+			}
+
 			CompatTools = tools;
 
 			weak IconTheme default_theme = IconTheme.get_default();

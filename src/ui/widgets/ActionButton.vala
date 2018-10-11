@@ -1,12 +1,30 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 
 namespace GameHub.UI.Widgets
 {
 	class ActionButton: Gtk.Button
 	{
-		public string icon { get; construct; }
-		public string? icon_overlay { get; construct; }
-		public string text { get; construct; }
+		public string icon { get; construct set; }
+		public string? icon_overlay { get; construct set; }
+		public string text { get; construct set; }
 		public bool show_text { get; construct; default = true; }
 
 		public ActionButton(string icon, string? icon_overlay, string text, bool show_text=true)
@@ -28,6 +46,10 @@ namespace GameHub.UI.Widgets
 			image.set_size_request(48, 48);
 			overlay.add(image);
 
+			notify["icon"].connect(() => {
+				image.icon_name = icon;
+			});
+
 			if(icon_overlay != null)
 			{
 				var overlay_image = new Image.from_icon_name(icon_overlay, IconSize.LARGE_TOOLBAR);
@@ -36,6 +58,9 @@ namespace GameHub.UI.Widgets
 				overlay_image.valign = Align.END;
 				overlay.add_overlay(overlay_image);
 				overlay.set_overlay_pass_through(overlay_image, true);
+				notify["icon-overlay"].connect(() => {
+					overlay_image.icon_name = icon_overlay;
+				});
 			}
 
 			box.add(overlay);
@@ -47,10 +72,16 @@ namespace GameHub.UI.Widgets
 				label.halign = Align.START;
 				label.valign = Align.CENTER;
 				box.add(label);
+				notify["text"].connect(() => {
+					label.label = text;
+				});
 			}
 			else
 			{
 				tooltip_text = text;
+				notify["text"].connect(() => {
+					tooltip_text = text;
+				});
 			}
 
 			child = box;

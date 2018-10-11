@@ -1,4 +1,4 @@
-version: 0.11.1-{build}-{branch}
+version: 0.11.4-{build}-{branch}
 
 pull_requests:
   do_not_increment_build_number: true
@@ -16,17 +16,23 @@ image:
 clone_folder: ~/build/GameHub
 clone_depth: 1
 
+environment:
+  keys_enc_secret:
+    secure: VBUP6GQXENGa7E+H90WDhA==
+
 build_script:
-  - sh: bash appimage/build.sh build_deb
-  - sh: bash appimage/build.sh build
-  - sh: bash appimage/build.sh appimage
-  - sh: bash appimage/build.sh appimage_tweak
-  - sh: bash appimage/build.sh appimage_bundle_libs
-  - sh: bash appimage/build.sh appimage_checkrt
-  - sh: bash appimage/build.sh appimage_pack
+  - sh: bash scripts/build.sh build_deb
+  - sh: bash scripts/build.sh build
+  - sh: bash scripts/build.sh appimage
+  - sh: bash scripts/build.sh appimage_tweak
+  - sh: bash scripts/build.sh appimage_bundle_libs
+  - sh: bash scripts/build.sh appimage_checkrt
+  - sh: bash scripts/build.sh appimage_pack
+  - sh: bash scripts/build.sh build_flatpak
 
 install:
-  - sh: bash appimage/build.sh deps
+  - sh: bash scripts/build.sh import_keys
+  - sh: bash scripts/build.sh deps
 
 test: off
 
@@ -35,6 +41,8 @@ artifacts:
     name: deb
   - path: build/appimage/GameHub*.AppImage*
     name: AppImage
+  - path: build/flatpak/GameHub*.flatpak
+    name: flatpak
 
 deploy:
   - provider: GitHub
@@ -45,6 +53,6 @@ deploy:
         * Use `xenial` packages for older distros (>= Ubuntu 16.04)
     auth_token:
         secure: J2LCcNeVYvzbvHRa/LChp+SmN6UKbg1ELsA4jmxnObCbX+ZyZ9DFH+S2aQIoA3dG
-    artifact: deb,AppImage
+    artifact: deb,AppImage,flatpak
     draft: false
     prerelease: true

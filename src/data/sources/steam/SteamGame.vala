@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using GameHub.Data.DB;
 using GameHub.Utils;
 
@@ -41,6 +59,7 @@ namespace GameHub.Data.Sources.Steam
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
+			arguments = Tables.Games.ARGUMENTS.get(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -136,7 +155,7 @@ namespace GameHub.Data.Sources.Steam
 			{
 				debug("[Steam:%s] No platform support data, %d tries failed, assuming Windows support", id, metadata_tries);
 				platforms.add(Platform.WINDOWS);
-				Tables.Games.add(this);
+				save();
 				game_info_updated = true;
 				return;
 			}
@@ -149,7 +168,7 @@ namespace GameHub.Data.Sources.Steam
 				}
 			}
 
-			Tables.Games.add(this);
+			save();
 
 			game_info_updated = true;
 			update_status();
@@ -160,10 +179,12 @@ namespace GameHub.Data.Sources.Steam
 			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			if(status.state == Game.State.INSTALLED)
 			{
+				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				add_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 			else
 			{
+				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 		}

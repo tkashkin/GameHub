@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 using Gdk;
 using Gee;
@@ -170,7 +188,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_properties = add_action("system-run", null, _("Game properties"), game_properties);
 			action_open_directory = add_action("folder", null, _("Open installation directory"), open_game_directory);
 			action_open_store_page = add_action("web-browser", null, _("Open store page"), open_game_store_page);
-			action_uninstall = add_action("edit-delete", null, _("Uninstall"), uninstall_game);
+			action_uninstall = add_action("edit-delete", null, (game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"), uninstall_game);
 
 			action_cancel.clicked.connect(() => {
 				if(download != null) download.cancel();
@@ -262,6 +280,18 @@ namespace GameHub.UI.Views.GameDetailsView
 				action_open_directory.visible = s.state == Game.State.INSTALLED;
 				action_open_store_page.visible = game.store_page != null;
 				action_uninstall.visible = s.state == Game.State.INSTALLED;
+
+				if(action_run_with_compat.visible && game.compat_tool != null)
+				{
+					foreach(var tool in CompatTools)
+					{
+						if(tool.id == game.compat_tool)
+						{
+							action_run_with_compat.icon_overlay = tool.icon;
+							break;
+						}
+					}
+				}
 			});
 			game.status_change(game.status);
 
