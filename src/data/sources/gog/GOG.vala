@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gee;
 using GameHub.Data.DB;
 using GameHub.Utils;
@@ -137,7 +155,15 @@ namespace GameHub.Data.Sources.GOG
 			debug("[Auth] Refreshing GOG access token with refresh token: %s", user_refresh_token);
 
 			var url = @"https://auth.gog.com/token?client_id=$(CLIENT_ID)&client_secret=$(CLIENT_SECRET)&grant_type=refresh_token&refresh_token=$(user_refresh_token)";
-			var root = (yield Parser.parse_remote_json_file_async(url)).get_object();
+			var root_node = yield Parser.parse_remote_json_file_async(url);
+			var root = root_node != null && root_node.get_node_type() == Json.NodeType.OBJECT ? root_node.get_object() : null;
+
+			if(root == null)
+			{
+				token_needs_refresh = false;
+				return false;
+			}
+
 			user_token = root.get_string_member("access_token");
 			user_refresh_token = root.get_string_member("refresh_token");
 			user_id = root.get_string_member("user_id");
@@ -160,7 +186,7 @@ namespace GameHub.Data.Sources.GOG
 
 		public override async ArrayList<Game> load_games(Utils.FutureResult2<Game, bool>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
-			if(user_id == null || user_token == null || _games.size > 0)
+			if(((user_id == null || user_token == null) && token_needs_refresh) || _games.size > 0)
 			{
 				return _games;
 			}
@@ -199,7 +225,10 @@ namespace GameHub.Data.Sources.GOG
 				while(page <= pages)
 				{
 					var url = @"https://embed.gog.com/account/getFilteredProducts?mediaType=1&page=$(page)";
-					var root = Parser.parse_remote_json_file(url, "GET", user_token).get_object();
+					var root_node = Parser.parse_remote_json_file(url, "GET", user_token);
+					var root = root_node != null && root_node.get_node_type() == Json.NodeType.OBJECT ? root_node.get_object() : null;
+
+					if(root == null) break;
 
 					page = (int) root.get_int_member("page");
 					pages = (int) root.get_int_member("totalPages");

@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gee;
 using Sqlite;
 
@@ -6,6 +24,7 @@ using GameHub.Utils;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
+using GameHub.Data.Sources.User;
 
 namespace GameHub.Data.DB.Tables
 {
@@ -26,6 +45,7 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field PLATFORMS;
 		public static Table.Field COMPAT_TOOL;
 		public static Table.Field COMPAT_TOOL_SETTINGS;
+		public static Table.Field ARGUMENTS;
 
 		public Games()
 		{
@@ -44,38 +64,43 @@ namespace GameHub.Data.DB.Tables
 			PLATFORMS            = f(10);
 			COMPAT_TOOL          = f(11);
 			COMPAT_TOOL_SETTINGS = f(12);
+			ARGUMENTS            = f(13);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
 		{
-			switch(version)
+			for(int ver = version; ver < Database.VERSION; ver++)
 			{
-				case 0:
-					debug("%d", version);
-					db.exec("CREATE TABLE `games`(
-						`source`               string not null,
-						`id`                   string not null,
-						`name`                 string not null,
-						`info`                 string,
-						`info_detailed`        string,
-						`icon`                 string,
-						`image`                string,
-						`tags`                 string,
-						`install_path`         string,
-						`executable`           string,
-						`platforms`            string,
-						`compat_tool`          string,
-						`compat_tool_settings` string,
-					PRIMARY KEY(`source`, `id`))");
-					migrate(db, 1);
-					break;
+				switch(ver)
+				{
+					case 0:
+						db.exec("CREATE TABLE `games`(
+							`source`               string not null,
+							`id`                   string not null,
+							`name`                 string not null,
+							`info`                 string,
+							`info_detailed`        string,
+							`icon`                 string,
+							`image`                string,
+							`tags`                 string,
+							`install_path`         string,
+							`executable`           string,
+							`platforms`            string,
+							`compat_tool`          string,
+							`compat_tool_settings` string,
+						PRIMARY KEY(`source`, `id`))");
+						break;
+
+					case 1:
+						db.exec("ALTER TABLE `games` ADD `arguments` string");
+						break;
+				}
 			}
 		}
 
 		public static bool add(Game game)
 		{
 			if(game is Sources.GOG.GOGGame.DLC) return false;
-			//if(game is Sources.Humble.HumbleGame && ((Sources.Humble.HumbleGame) game).order_id == Sources.Humble.Trove.FAKE_ORDER) return false;
 
 			unowned Sqlite.Database? db = Database.instance.db;
 			if(db == null) return false;
@@ -94,8 +119,9 @@ namespace GameHub.Data.DB.Tables
 					`executable`,
 					`platforms`,
 					`compat_tool`,
-					`compat_tool_settings`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`compat_tool_settings`,
+					`arguments`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -131,12 +157,41 @@ namespace GameHub.Data.DB.Tables
 			PLATFORMS.bind(s, platforms);
 			COMPAT_TOOL.bind(s, game.compat_tool);
 			COMPAT_TOOL_SETTINGS.bind(s, game.compat_tool_settings);
+			ARGUMENTS.bind(s, game.arguments);
 
 			res = s.step();
 
 			if(res != Sqlite.DONE)
 			{
 				warning("[Database.Games.add] Error (%d): %s", db.errcode(), db.errmsg());
+				return false;
+			}
+
+			return true;
+		}
+
+		public static bool remove(Game game)
+		{
+			unowned Sqlite.Database? db = Database.instance.db;
+			if(db == null) return false;
+
+			Statement s;
+			int res = db.prepare_v2("DELETE FROM `games` WHERE `source` = ? AND `id` = ?", -1, out s);
+
+			if(res != Sqlite.OK)
+			{
+				warning("[Database.Games.remove] Can't prepare DELETE query (%d): %s", db.errcode(), db.errmsg());
+				return false;
+			}
+
+			res = s.bind_text(1, game.source.id);
+			res = s.bind_text(2, game.id);
+
+			res = s.step();
+
+			if(res != Sqlite.DONE)
+			{
+				warning("[Database.Games.remove] Error (%d): %s", db.errcode(), db.errmsg());
 				return false;
 			}
 
@@ -178,6 +233,10 @@ namespace GameHub.Data.DB.Tables
 				else if(s is Humble)
 				{
 					return new HumbleGame.from_db((Humble) s, st);
+				}
+				else if(s is User)
+				{
+					return new UserGame.from_db((User) s, st);
 				}
 			}
 
@@ -225,6 +284,10 @@ namespace GameHub.Data.DB.Tables
 				else if(s is Humble)
 				{
 					games.add(new HumbleGame.from_db((Humble) s, st));
+				}
+				else if(s is User)
+				{
+					games.add(new UserGame.from_db((User) s, st));
 				}
 			}
 

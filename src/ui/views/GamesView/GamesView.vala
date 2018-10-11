@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 using GLib;
 using Gee;
@@ -45,6 +63,9 @@ namespace GameHub.UI.Views.GamesView
 
 		private MenuButton filters;
 		private FiltersPopover filters_popover;
+
+		private MenuButton add_game_button;
+		private AddGamePopover add_game_popover;
 
 		private Settings.UI ui_settings;
 		private Settings.SavedState saved_state;
@@ -168,6 +189,13 @@ namespace GameHub.UI.Views.GamesView
 			filters_popover.position = PositionType.BOTTOM;
 			filters.popover = filters_popover;
 
+			add_game_button = new MenuButton();
+			add_game_button.tooltip_text = _("Add game");
+			add_game_button.image = new Image.from_icon_name("list-add", IconSize.LARGE_TOOLBAR);
+			add_game_popover = new AddGamePopover(add_game_button);
+			add_game_popover.position = PositionType.BOTTOM;
+			add_game_button.popover = add_game_popover;
+
 			search = new SearchEntry();
 			search.placeholder_text = _("Search");
 			search.halign = Align.CENTER;
@@ -258,12 +286,15 @@ namespace GameHub.UI.Views.GamesView
 
 			filters_popover.filters_changed.connect(postpone_view_update);
 
+			add_game_popover.game_added.connect(g => add_game(g));
+
 			spinner = new Spinner();
 
 			titlebar.pack_start(filters);
 			titlebar.pack_end(settings);
 			titlebar.pack_end(downloads);
 			titlebar.pack_end(search);
+			titlebar.pack_end(add_game_button);
 			titlebar.pack_end(spinner);
 
 			show_all();
@@ -409,6 +440,43 @@ namespace GameHub.UI.Views.GamesView
 			filters.sensitive = true;
 		}
 
+		private void add_game(Game g, bool cached=false)
+		{
+			var card = new GameCard(g);
+			var row = new GameListRow(g);
+
+			g.tags_update.connect(postpone_view_update);
+
+			games_grid.add(card);
+			games_list.add(row);
+
+			card.show();
+			row.show();
+
+			if(!cached)
+			{
+				merge_game(g);
+				new_games_added = true;
+			}
+
+			postpone_view_update();
+
+			if(games_list.get_selected_row() == null)
+			{
+				Idle.add(() => {
+					games_list.select_row(games_list.get_row_at_index(0));
+					return Source.REMOVE;
+				});
+			}
+
+			if(g is Sources.User.UserGame)
+			{
+				((Sources.User.UserGame) g).removed.connect(() => {
+					remove_game(g);
+				});
+			}
+		}
+
 		private void load_games()
 		{
 			messages.get_children().foreach(c => messages.remove(c));
@@ -417,36 +485,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				loading_sources++;
 				spinner.active = loading_sources > 0;
-				src.load_games.begin((g, cached) => {
-					var card = new GameCard(g);
-					var row = new GameListRow(g);
-
-					g.tags_update.connect(postpone_view_update);
-
-					games_grid.add(card);
-					games_list.add(row);
-
-					card.show();
-					row.show();
-
-					if(!cached)
-					{
-						merge_game(g);
-						new_games_added = true;
-					}
-
-					postpone_view_update();
-
-					if(games_list.get_selected_row() == null)
-					{
-						Idle.add(() => {
-							games_list.select_row(games_list.get_row_at_index(0));
-							return Source.REMOVE;
-						});
-					}
-				}, () => {
-					postpone_view_update();
-				}, (obj, res) => {
+				src.load_games.begin(add_game, postpone_view_update, (obj, res) => {
 					src.load_games.end(res);
 
 					loading_sources--;
@@ -558,7 +597,7 @@ namespace GameHub.UI.Views.GamesView
 					{
 						foreach(var tag in tags)
 						{
-							tags_match = g.has_tag(tag);
+							tags_match_merged = g.has_tag(tag);
 							if(tags_match_merged) break;
 						}
 					}

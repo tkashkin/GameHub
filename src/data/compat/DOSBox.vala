@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gee;
 
 using GameHub.Utils;
@@ -21,19 +39,9 @@ namespace GameHub.Data.Compat
 			id = @"dosbox";
 			name = @"DOSBox";
 			icon = "tool-dosbox-symbolic";
-			installed = false;
 
-			var which = Utils.run({"which", binary}).strip();
-
-			if("not found" in which)
-			{
-				installed = false;
-			}
-			else
-			{
-				executable = FSUtils.file(which);
-				installed = executable.query_exists();
-			}
+			executable = Utils.find_executable(binary);
+			installed = executable != null && executable.query_exists();
 
 			conf_windowed = FSUtils.file(ProjectConfig.DATADIR + "/" + ProjectConfig.PROJECT_NAME, "compat/dosbox/windowed.conf");
 			if(conf_windowed.query_exists())
@@ -43,9 +51,14 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		private static ArrayList<string> find_configs(File dir)
+		private static ArrayList<string> find_configs(File? dir)
 		{
 			var configs = new ArrayList<string>();
+
+			if(dir == null || !dir.query_exists())
+			{
+				return configs;
+			}
 
 			try
 			{
@@ -82,6 +95,20 @@ namespace GameHub.Data.Compat
 			var wdir = game.install_dir;
 
 			var configs = find_configs(game.install_dir);
+
+			if(configs.size > 2 && game is GameHub.Data.Sources.GOG.GOGGame)
+			{
+				foreach(var conf in configs)
+				{
+					if(conf.has_suffix("_single.conf"))
+					{
+						configs.clear();
+						configs.add(conf.replace("_single.conf", ".conf"));
+						configs.add(conf);
+						break;
+					}
+				}
+			}
 
 			foreach(var conf in configs)
 			{

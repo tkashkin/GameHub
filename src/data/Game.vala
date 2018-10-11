@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gee;
 using Gtk;
 
@@ -11,7 +29,7 @@ namespace GameHub.Data
 		public GameSource source { get; protected set; }
 
 		public string id { get; protected set; }
-		public string name { get; protected set; }
+		public string name { get; set; }
 		public string description { get; protected set; }
 
 		public string icon { get; set; }
@@ -22,6 +40,8 @@ namespace GameHub.Data
 
 		public string? compat_tool { get; set; }
 		public string? compat_tool_settings { get; set; }
+
+		public string? arguments { get; set; }
 
 		public string full_id { owned get { return source.id + ":" + id; } }
 
@@ -57,9 +77,9 @@ namespace GameHub.Data
 			{
 				tags.add(tag);
 			}
-			if(tag != Tables.Tags.BUILTIN_INSTALLED)
+			if(!(tag in Tables.Tags.DYNAMIC_TAGS))
 			{
-				Tables.Games.add(this);
+				save();
 				status_change(_status);
 				tags_update();
 			}
@@ -70,9 +90,9 @@ namespace GameHub.Data
 			{
 				tags.remove(tag);
 			}
-			if(tag != Tables.Tags.BUILTIN_INSTALLED)
+			if(!(tag in Tables.Tags.DYNAMIC_TAGS))
 			{
-				Tables.Games.add(this);
+				save();
 				status_change(_status);
 				tags_update();
 			}
@@ -89,6 +109,11 @@ namespace GameHub.Data
 			}
 		}
 
+		public virtual void save()
+		{
+			Tables.Games.add(this);
+		}
+
 		public bool is_installable { get; protected set; default = false; }
 
 		public File executable { get; protected set; }
@@ -102,9 +127,25 @@ namespace GameHub.Data
 		{
 			if(executable.query_exists())
 			{
-				var path = executable.get_path();
-				var dir = executable.get_parent().get_path();
-				yield Utils.run_thread({path}, dir, null, true);
+				string[] cmd = { executable.get_path() };
+
+				if(arguments != null && arguments.length > 0)
+				{
+					var variables = new HashMap<string, string>();
+					variables.set("game", name.replace(": ", " - ").replace(":", ""));
+					variables.set("game_dir", install_dir.get_path());
+					var args = arguments.split(" ");
+					foreach(var arg in args)
+					{
+						if("$" in arg)
+						{
+							arg = FSUtils.expand(arg, null, variables);
+						}
+						cmd += arg;
+					}
+				}
+
+				yield Utils.run_thread(cmd, executable.get_parent().get_path(), null, true);
 			}
 		}
 
@@ -156,14 +197,14 @@ namespace GameHub.Data
 				if(update)
 				{
 					update_status();
-					Tables.Games.add(this);
+					save();
 				}
 			}
 
 			chooser.destroy();
 		}
 
-		public virtual void choose_executable(bool update=true)
+		public virtual FileChooserDialog setup_executable_chooser()
 		{
 			var chooser = new FileChooserDialog(_("Select main executable of the game"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN);
 			var filter = new FileFilter();
@@ -186,7 +227,7 @@ namespace GameHub.Data
 
 			try
 			{
-				chooser.set_current_folder_file(install_dir);
+				chooser.set_file(executable);
 			}
 			catch(Error e)
 			{
@@ -199,22 +240,34 @@ namespace GameHub.Data
 			select_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
 			select_btn.grab_default();
 
+			return chooser;
+		}
+
+		public virtual void choose_executable(bool update=true)
+		{
+			var chooser = setup_executable_chooser();
+
 			if(chooser.run() == ResponseType.ACCEPT)
 			{
-				executable = chooser.get_file();
-				if(executable.query_exists())
-				{
-					Utils.run({"chmod", "+x", executable.get_path()});
-				}
-
-				if(update)
-				{
-					update_status();
-					Tables.Games.add(this);
-				}
+				set_chosen_executable(chooser, update);
 			}
 
 			chooser.destroy();
+		}
+
+		public virtual void set_chosen_executable(FileChooserDialog chooser, bool update=true)
+		{
+			executable = chooser.get_file();
+			if(executable.query_exists())
+			{
+				Utils.run({"chmod", "+x", executable.get_path()});
+			}
+
+			if(update)
+			{
+				update_status();
+				save();
+			}
 		}
 
 		protected Game.Status _status = new Game.Status();

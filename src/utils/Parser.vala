@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using GLib;
 using Gee;
 using Soup;
@@ -6,6 +24,8 @@ namespace GameHub.Utils
 {
 	public class Parser
 	{
+		private static Session? session = null;
+
 		public static string load_file(string path, string file="")
 		{
 			var f = FSUtils.file(path, file);
@@ -22,8 +42,14 @@ namespace GameHub.Utils
 			return data;
 		}
 
-		private static Message prepare_message(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
+		private static Message? prepare_message(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
+			if(session == null)
+			{
+				session = new Session();
+				session.timeout = 5;
+			}
+
 			var message = new Message(method, url);
 
 			if(auth != null)
@@ -54,7 +80,6 @@ namespace GameHub.Utils
 
 		public static string load_remote_file(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
-			var session = new Session();
 			var message = prepare_message(url, method, auth, headers, data);
 
 			var status = session.send_message(message);
@@ -65,7 +90,6 @@ namespace GameHub.Utils
 		public static async string load_remote_file_async(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
 			var result = "";
-			var session = new Session();
 			var message = prepare_message(url, method, auth, headers, data);
 
 			session.queue_message(message, (s, m) => {

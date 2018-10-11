@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 using Gdk;
 using Granite;
@@ -12,9 +30,11 @@ namespace GameHub.UI.Views.GamesView
 	{
 		public Game game { get; construct; }
 
-		public GameContextMenu(Game game)
+		public Widget target { get; construct; }
+
+		public GameContextMenu(Game game, Widget target)
 		{
-			Object(game: game);
+			Object(game: game, target: target);
 		}
 
 		construct
@@ -68,6 +88,14 @@ namespace GameHub.UI.Views.GamesView
 			add(favorite);
 			add(hidden);
 
+			if(game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame)
+			{
+				var uninstall = new Gtk.MenuItem.with_label((game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"));
+				uninstall.activate.connect(() => game.uninstall.begin());
+				add(new Gtk.SeparatorMenuItem());
+				add(uninstall);
+			}
+
 			add(new Gtk.SeparatorMenuItem());
 
 			add(properties);
@@ -75,7 +103,7 @@ namespace GameHub.UI.Views.GamesView
 			show_all();
 		}
 
-		public void open(Widget widget, Event e)
+		public void open(Event e)
 		{
 			#if GTK_3_22
 			popup_at_pointer(e);

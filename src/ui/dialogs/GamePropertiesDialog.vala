@@ -1,3 +1,21 @@
+/*
+This file is part of GameHub.
+Copyright (C) 2018 Anatoliy Kashkin
+
+GameHub is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GameHub is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using Gtk;
 using Gdk;
 using Gee;
@@ -19,6 +37,7 @@ namespace GameHub.UI.Dialogs
 		private ScrolledWindow tags_scrolled;
 		private Entry new_entry;
 
+		private Entry name_entry;
 		private AutoSizeImage image_view;
 		private AutoSizeImage icon_view;
 		private Entry image_entry;
@@ -37,7 +56,7 @@ namespace GameHub.UI.Dialogs
 			get_style_context().add_class("rounded");
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
-			gravity = Gdk.Gravity.CENTER;
+			gravity = Gdk.Gravity.NORTH;
 
 			content = new Box(Orientation.HORIZONTAL, 8);
 			content.margin_start = content.margin_end = 6;
@@ -79,11 +98,10 @@ namespace GameHub.UI.Dialogs
 
 			tags_scrolled = new ScrolledWindow(null, null);
 			tags_scrolled.vexpand = true;
-			tags_scrolled.margin_bottom = 8;
 			#if GTK_3_22
 			tags_scrolled.propagate_natural_width = true;
 			tags_scrolled.propagate_natural_height = true;
-			tags_scrolled.max_content_height = 380;
+			tags_scrolled.max_content_height = 320;
 			#endif
 			tags_scrolled.add(tags_list);
 
@@ -108,6 +126,25 @@ namespace GameHub.UI.Dialogs
 			tags_box.add(new_entry);
 
 			properties_box = new Box(Orientation.VERTICAL, 0);
+
+			var name_header = new HeaderLabel(_("Name"));
+			name_header.xpad = 8;
+			properties_box.add(name_header);
+
+			name_entry = new Entry();
+			name_entry.placeholder_text = name_entry.primary_icon_tooltip_text = _("Name");
+			name_entry.primary_icon_name = "insert-text-symbolic";
+			name_entry.primary_icon_activatable = false;
+			name_entry.margin = 4;
+			name_entry.margin_top = 0;
+			properties_box.add(name_entry);
+
+			name_entry.text = game.name;
+			name_entry.changed.connect(() => {
+				game.name = name_entry.text.strip();
+				game.update_status();
+				game.save();
+			});
 
 			var images_header = new HeaderLabel(_("Images"));
 			images_header.xpad = 8;
@@ -174,6 +211,7 @@ namespace GameHub.UI.Dialogs
 			icon_entry.secondary_icon_activatable = true;
 			icon_entry.secondary_icon_tooltip_text = _("Reset to default");
 			icon_entry.margin = 4;
+			icon_entry.margin_top = 0;
 
 			icon_entry.icon_press.connect((icon, event) => {
 				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
@@ -189,7 +227,7 @@ namespace GameHub.UI.Dialogs
 
 			properties_box.add(icon_entry);
 
-			image_search_links = new Box(Orientation.HORIZONTAL, 0);
+			image_search_links = new Box(Orientation.HORIZONTAL, 8);
 			image_search_links.margin = 8;
 
 			var image_search_links_label = new Label(_("Search images:"));
@@ -211,44 +249,53 @@ namespace GameHub.UI.Dialogs
 			space.vexpand = true;
 			properties_box.add(space);
 
-			if(!(game is Data.Sources.Steam.SteamGame))
+			if(!(game is Data.Sources.Steam.SteamGame) && game.install_dir != null && game.install_dir.query_exists())
 			{
 				var executable_header = new HeaderLabel(_("Executable"));
 				executable_header.xpad = 8;
 				properties_box.add(executable_header);
 
-				var executable_button = new Button.with_label(_("Select game executable"));
-				executable_button.tooltip_text = game.executable.get_path();
-				executable_button.margin_start = executable_button.margin_end = executable_button.margin_bottom = 4;
-				executable_button.hexpand = false;
-				executable_button.clicked.connect(() => {
-					game.choose_executable();
-					executable_button.tooltip_text = game.executable.get_path();
+				var executable_picker = new FileChooserButton.with_dialog(game.setup_executable_chooser());
+				executable_picker.set_file(game.executable);
+				executable_picker.margin_start = executable_picker.margin_end = 4;
+				properties_box.add(executable_picker);
+
+				var args_entry = new Entry();
+				args_entry.text = game.arguments ?? "";
+				args_entry.placeholder_text = args_entry.primary_icon_tooltip_text = _("Arguments");
+				args_entry.primary_icon_name = "utilities-terminal-symbolic";
+				args_entry.primary_icon_activatable = false;
+				args_entry.margin = 4;
+
+				args_entry.changed.connect(() => {
+					game.arguments = args_entry.text.strip();
+					game.update_status();
+					game.save();
 				});
 
-				properties_box.add(executable_button);
+				properties_box.add(args_entry);
+
+				var compat_header = new HeaderLabel(_("Compatibility"));
+				compat_header.no_show_all = true;
+				compat_header.xpad = 8;
+				properties_box.add(compat_header);
+
+				var compat_force_switch = add_switch(_("Force compatibility mode"), game.force_compat, f => { game.force_compat = f; });
+				compat_force_switch.no_show_all = true;
+
+				var compat_tool = new CompatToolPicker(game, false);
+				compat_tool.no_show_all = true;
+				compat_tool.margin_start = compat_tool.margin_end = 4;
+				properties_box.add(compat_tool);
+
+				game.notify["use-compat"].connect(() => {
+					compat_force_switch.visible = !game.needs_compat;
+					compat_tool.visible = game.use_compat;
+					compat_header.visible = compat_force_switch.visible || compat_tool.visible;
+					game.update_status();
+				});
+				game.notify_property("use-compat");
 			}
-
-			var compat_header = new HeaderLabel(_("Compatibility"));
-			compat_header.no_show_all = true;
-			compat_header.xpad = 8;
-			properties_box.add(compat_header);
-
-			var compat_force_switch = add_switch(_("Force compatibility mode"), game.force_compat, f => { game.force_compat = f; });
-			compat_force_switch.no_show_all = true;
-
-			var compat_tool = new CompatToolPicker(game, false);
-			compat_tool.no_show_all = true;
-			compat_tool.margin_start = compat_tool.margin_end = 4;
-			properties_box.add(compat_tool);
-
-			game.notify["use-compat"].connect(() => {
-				compat_force_switch.visible = !game.needs_compat;
-				compat_tool.visible = game.use_compat;
-				compat_header.visible = compat_force_switch.visible || compat_tool.visible;
-				game.update_status();
-			});
-			game.notify_property("use-compat");
 
 			content.add(tags_box);
 			content.add(new Separator(Orientation.VERTICAL));
@@ -260,7 +307,7 @@ namespace GameHub.UI.Dialogs
 			delete_event.connect(() => {
 				set_image_url(true);
 				set_icon_url(true);
-				Tables.Games.add(game);
+				game.save();
 				destroy();
 			});
 
@@ -277,7 +324,7 @@ namespace GameHub.UI.Dialogs
 
 			foreach(var tag in Tables.Tags.TAGS)
 			{
-				if(tag == Tables.Tags.BUILTIN_INSTALLED) continue;
+				if(tag in Tables.Tags.DYNAMIC_TAGS) continue;
 				var row = new TagRow(game, tag);
 				tags_list.add(row);
 			}
