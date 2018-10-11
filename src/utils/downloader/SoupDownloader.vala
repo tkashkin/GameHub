@@ -137,7 +137,8 @@ namespace GameHub.Utils.Downloader.Soup
 
 			int64 dl_bytes = 0;
 			int64 dl_bytes_total = 0;
-
+			
+			#if SOUP_2_60
 			int64 resume_from = 0;
 			var resume_dl = false;
 
@@ -152,6 +153,7 @@ namespace GameHub.Utils.Downloader.Soup
 					debug(@"[SoupDownloader] Download part found, size: $(resume_from)");
 				}
 			}
+			#endif
 
 			msg.got_headers.connect(() => {
 				dl_bytes_total = msg.response_headers.get_content_length();
@@ -198,6 +200,7 @@ namespace GameHub.Utils.Downloader.Soup
 						}
 					}
 
+					#if SOUP_2_60
 					int64 rstart = -1, rend = -1;
 					if(resume_dl && msg.response_headers.get_content_range(out rstart, out rend, out dl_bytes_total))
 					{
@@ -207,6 +210,7 @@ namespace GameHub.Utils.Downloader.Soup
 						local_stream = download.local_tmp.append_to(FileCreateFlags.NONE);
 					}
 					else
+					#endif
 					{
 						local_stream = download.local_tmp.replace(null, false, FileCreateFlags.REPLACE_DESTINATION);
 					}

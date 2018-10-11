@@ -4,6 +4,12 @@ com.github.tkashkin.gamehub ($VERSION) $DISTRO; urgency=low
 
  -- tkashkin <tkashkin@gmail.com>  $DATE
 
+com.github.tkashkin.gamehub (0.11.4) bionic; urgency=low
+
+  * 0.11.4
+
+  -- tkashkin <tkashkin@gmail.com>  Thu, 11 Oct 2018 23:57:59 +0300
+
 com.github.tkashkin.gamehub (0.11.3) bionic; urgency=low
 
   * User-added games

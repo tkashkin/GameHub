@@ -41,6 +41,7 @@
 	</screenshots>
 
 	<releases>
+		<release type="development" version="0.11.4" date="2018-10-11" />
 		<release type="development" version="0.11.3" date="2018-10-06">
 			<description>
 				<p>User-added games</p>
