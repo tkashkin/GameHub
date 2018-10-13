@@ -103,10 +103,17 @@ namespace GameHub.UI.Views.GamesView
 			show_all();
 		}
 
-		public void open(Event e)
+		public void open(Event e, bool at_pointer=true)
 		{
 			#if GTK_3_22
-			popup_at_pointer(e);
+			if(at_pointer)
+			{
+				popup_at_pointer(e);
+			}
+			else
+			{
+				popup_at_widget(target, Gravity.SOUTH, Gravity.NORTH, e);
+			}
 			#else
 			popup(null, null, null, 0, ((EventButton) e).time);
 			#endif

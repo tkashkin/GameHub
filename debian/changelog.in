@@ -4,6 +4,14 @@ com.github.tkashkin.gamehub ($VERSION) $DISTRO; urgency=low
 
  -- tkashkin <tkashkin@gmail.com>  $DATE
 
+com.github.tkashkin.gamehub (0.11.5) bionic; urgency=low
+
+  * UI tweaks
+  * Proton 3.16 support
+  * Basic keyboard/gamepad navigation in grid view (#75)
+
+  -- tkashkin <tkashkin@gmail.com>  Sun, 14 Oct 2018 01:27:49 +0300
+
 com.github.tkashkin.gamehub (0.11.4) bionic; urgency=low
 
   * 0.11.4

@@ -91,7 +91,7 @@ namespace GameHub.UI.Views.GamesView
 						break;
 
 					case 3:
-						new GameContextMenu(game, image).open(e);
+						new GameContextMenu(game, image).open(e, true);
 						break;
 				}
 				return true;

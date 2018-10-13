@@ -80,6 +80,10 @@ namespace GameHub
 			provider.load_from_resource("/com/github/tkashkin/gamehub/GameHub.css");
 			StyleContext.add_provider_for_screen(Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+			#if MANETTE
+			GameHub.Utils.Gamepad.init();
+			#endif
+
 			new GameHub.UI.Windows.MainWindow(this).show_all();
 		}
 
