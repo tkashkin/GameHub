@@ -17,6 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using Gdk;
 using GLib;
 using Gee;
 using Granite;
@@ -31,6 +32,7 @@ namespace GameHub.UI.Views.GamesView
 		public static GamesView instance;
 
 		private ArrayList<GameSource> sources = new ArrayList<GameSource>();
+		private ArrayList<GameSource> loading_sources = new ArrayList<GameSource>();
 
 		private Box messages;
 
@@ -50,8 +52,9 @@ namespace GameHub.UI.Views.GamesView
 		private Granite.Widgets.ModeButton filter;
 		private SearchEntry search;
 
-		private Spinner spinner;
-		private int loading_sources = 0;
+		private Granite.Widgets.OverlayBar status_overlay;
+		private string? status_text;
+
 		private bool new_games_added = false;
 
 		private Button settings;
@@ -74,6 +77,10 @@ namespace GameHub.UI.Views.GamesView
 		private bool view_update_pending = false;
 		private int view_update_no_updates_cycles = 0;
 
+		#if MANETTE
+		private Manette.Monitor manette_monitor = new Manette.Monitor();
+		#endif
+
 		construct
 		{
 			instance = this;
@@ -85,6 +92,8 @@ namespace GameHub.UI.Views.GamesView
 			{
 				if(src.enabled && src.is_authenticated()) sources.add(src);
 			}
+
+			var overlay = new Overlay();
 
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
@@ -99,7 +108,7 @@ namespace GameHub.UI.Views.GamesView
 			games_grid.activate_on_single_click = false;
 			games_grid.homogeneous = false;
 			games_grid.min_children_per_line = 2;
-			games_grid.selection_mode = SelectionMode.NONE;
+			games_grid.selection_mode = SelectionMode.BROWSE;
 			games_grid.valign = Align.START;
 
 			games_grid_scrolled = new ScrolledWindow(null, null);
@@ -127,10 +136,12 @@ namespace GameHub.UI.Views.GamesView
 			stack.add(games_grid_scrolled);
 			stack.add(games_list_paned);
 
+			overlay.add(stack);
+
 			messages = new Box(Orientation.VERTICAL, 0);
 
 			attach(messages, 0, 0);
-			attach(stack, 0, 1);
+			attach(overlay, 0, 1);
 
 			view = new Granite.Widgets.ModeButton();
 			view.halign = Align.CENTER;
@@ -154,6 +165,7 @@ namespace GameHub.UI.Views.GamesView
 			foreach(var src in sources)
 			{
 				add_filter_button(src.icon, _("%s games").printf(src.name));
+				filter.set_item_visible((int) filter.n_items - 1, src.games_count > 0);
 			}
 
 			filter.set_active(sources.size > 1 ? 0 : 1);
@@ -288,14 +300,13 @@ namespace GameHub.UI.Views.GamesView
 
 			add_game_popover.game_added.connect(g => add_game(g));
 
-			spinner = new Spinner();
-
 			titlebar.pack_start(filters);
 			titlebar.pack_end(settings);
 			titlebar.pack_end(downloads);
 			titlebar.pack_end(search);
 			titlebar.pack_end(add_game_button);
-			titlebar.pack_end(spinner);
+
+			status_overlay = new Granite.Widgets.OverlayBar(overlay);
 
 			show_all();
 			games_grid_scrolled.show_all();
@@ -333,6 +344,16 @@ namespace GameHub.UI.Views.GamesView
 					#endif
 				}
 			});
+
+			#if MANETTE
+			var manette_iterator = manette_monitor.iterate();
+			Manette.Device manette_device = null;
+			while(manette_iterator.next(out manette_device))
+			{
+				on_gamepad_connected(manette_device);
+			}
+			manette_monitor.device_connected.connect(on_gamepad_connected);
+			#endif
 
 			load_games();
 		}
@@ -377,12 +398,47 @@ namespace GameHub.UI.Views.GamesView
 			var games = src == null ? games_grid.get_children().length() : src.games_count;
 			titlebar.subtitle = (src == null ? "" : src.name + ": ") + ngettext("%u game", "%u games", games).printf(games);
 
+			if(loading_sources.size > 0)
+			{
+				string[] src_names = {};
+				foreach(var s in loading_sources)
+				{
+					src_names += s.name;
+				}
+				status_text = _("Loading games from %s").printf(string.joinv(", ", src_names));
+			}
+
+			if(status_text != null)
+			{
+				status_overlay.label = status_text;
+				status_overlay.active = true;
+				status_overlay.show();
+			}
+			else
+			{
+				status_overlay.active = false;
+				status_overlay.hide();
+			}
+
+			foreach(var s in sources)
+			{
+				filter.set_item_visible(sources.index_of(s) + 1, s.games_count > 0);
+			}
+
 			games_list_details.preferred_source = src;
 
 			if(src != null && src.games_count == 0)
 			{
-				empty_alert.title = _("No %s games").printf(src.name);
-				empty_alert.description = _("Get some Linux-compatible games");
+				if(src is GameHub.Data.Sources.User.User)
+				{
+					empty_alert.title = _("No user-added games");
+					empty_alert.description = _("Add some games using plus button");
+				}
+				else
+				{
+					empty_alert.title = _("No %s games").printf(src.name);
+					empty_alert.description = _("Get some Linux-compatible games");
+				}
 				empty_alert.icon_name = src.icon;
 				stack.set_visible_child(empty_alert);
 				return;
@@ -419,7 +475,7 @@ namespace GameHub.UI.Views.GamesView
 			stack.set_visible_child(tab);
 			saved_state.games_view = view.selected == 0 ? Settings.GamesView.GRID : Settings.GamesView.LIST;
 
-			Timeout.add(100, () => { games_list_select_first_visible_row(); return false; });
+			Timeout.add(100, () => { select_first_visible_game(); return Source.REMOVE; });
 		}
 
 		private void show_games()
@@ -442,16 +498,30 @@ namespace GameHub.UI.Views.GamesView
 
 		private void add_game(Game g, bool cached=false)
 		{
-			var card = new GameCard(g);
-			var row = new GameListRow(g);
+			Idle.add(() => {
+				var card = new GameCard(g);
+				var row = new GameListRow(g);
+
+				games_grid.add(card);
+				games_list.add(row);
+
+				card.show();
+				row.show();
+
+				if(games_grid.get_children().length() == 0)
+				{
+					card.grab_focus();
+				}
+
+				if(games_list.get_selected_row() == null)
+				{
+					games_list.select_row(games_list.get_row_at_index(0));
+				}
+
+				return Source.REMOVE;
+			});
 
 			g.tags_update.connect(postpone_view_update);
-
-			games_grid.add(card);
-			games_list.add(row);
-
-			card.show();
-			row.show();
 
 			if(!cached)
 			{
@@ -460,14 +530,6 @@ namespace GameHub.UI.Views.GamesView
 			}
 
 			postpone_view_update();
-
-			if(games_list.get_selected_row() == null)
-			{
-				Idle.add(() => {
-					games_list.select_row(games_list.get_row_at_index(0));
-					return Source.REMOVE;
-				});
-			}
 
 			if(g is Sources.User.UserGame)
 			{
@@ -483,15 +545,13 @@ namespace GameHub.UI.Views.GamesView
 
 			foreach(var src in sources)
 			{
-				loading_sources++;
-				spinner.active = loading_sources > 0;
+				loading_sources.add(src);
 				src.load_games.begin(add_game, postpone_view_update, (obj, res) => {
 					src.load_games.end(res);
 
-					loading_sources--;
-					spinner.active = loading_sources > 0;
+					loading_sources.remove(src);
 
-					if(loading_sources == 0)
+					if(loading_sources.size == 0)
 					{
 						if(new_games_added) merge_games();
 						update_games();
@@ -609,12 +669,22 @@ namespace GameHub.UI.Views.GamesView
 			return (same_src || merged_src) && (tags_all_enabled || tags_all_except_hidden_enabled || tags_match || tags_match_merged) && !hidden && Utils.strip_name(search.text).casefold() in Utils.strip_name(game.name).casefold();
 		}
 
-		private void games_list_select_first_visible_row()
+		private void select_first_visible_game()
 		{
 			var row = games_list.get_selected_row() as GameListRow?;
 			if(row != null && games_filter(row.game)) return;
 			row = games_list.get_row_at_y(32) as GameListRow?;
-			games_list.select_row(row);
+			if(row != null) games_list.select_row(row);
+
+			var cards = games_grid.get_selected_children();
+			var card = cards != null && cards.length() > 0 ? cards.first().data as GameCard? : null;
+			if(card != null && games_filter(card.game)) return;
+			card = games_grid.get_child_at_pos(0, 0) as GameCard?;
+			if(card != null)
+			{
+				games_grid.select_child(card);
+				card.grab_focus();
+			}
 		}
 
 		private InfoBar message(string text, MessageType type=MessageType.OTHER)
@@ -642,27 +712,33 @@ namespace GameHub.UI.Views.GamesView
 
 		private void remove_game(Game game)
 		{
-			games_list.foreach(r => {
-				var gr = r as GameListRow;
-				if(gr.game == game)
-				{
-					games_list.remove(gr);
-					return;
-				}
-			});
-			games_grid.foreach(c => {
-				var gc = c as GameCard;
-				if(gc.game == game)
-				{
-					games_grid.remove(gc);
-					return;
-				}
+			Idle.add(() => {
+				games_list.foreach(r => {
+					var gr = r as GameListRow;
+					if(gr.game == game)
+					{
+						games_list.remove(gr);
+						return;
+					}
+				});
+				games_grid.foreach(c => {
+					var gc = c as GameCard;
+					if(gc.game == game)
+					{
+						games_grid.remove(gc);
+						return;
+					}
+				});
+				postpone_view_update();
+				return Source.REMOVE;
 			});
 		}
 
 		private void update_games()
 		{
 			if(in_destruction()) return;
+			status_text = _("Updating game info");
+			postpone_view_update();
 			Utils.thread("Updating", () => {
 				foreach(var src in sources)
 				{
@@ -672,33 +748,45 @@ namespace GameHub.UI.Views.GamesView
 						Thread.usleep(50000);
 					}
 				}
+				status_text = null;
+				postpone_view_update();
 			});
 		}
 
 		private void merge_games()
 		{
 			if(!ui_settings.merge_games || in_destruction()) return;
+			status_text = _("Merging games");
+			postpone_view_update();
 			Utils.thread("Merging", () => {
 				foreach(var src in sources)
 				{
 					merge_games_from(src);
 				}
+				status_text = null;
+				postpone_view_update();
 			});
 		}
 
 		private void merge_games_from(GameSource src)
 		{
+			status_text = _("Merging games from %s").printf(src.name);
+			postpone_view_update();
 			Utils.thread("Merging-" + src.id, () => {
 				foreach(var game in src.games)
 				{
 					merge_game(game);
 				}
+				status_text = null;
+				postpone_view_update();
 			});
 		}
 
 		private void merge_game(Game game)
 		{
 			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
+			status_text = _("Merging %s (%s)").printf(game.name, game.full_id);
+			postpone_view_update();
 			Utils.thread("Merging-" + game.full_id, () => {
 				foreach(var src in sources)
 				{
@@ -707,6 +795,8 @@ namespace GameHub.UI.Views.GamesView
 						merge_game_with_game(src, game, game2);
 					}
 				}
+				status_text = null;
+				postpone_view_update();
 			});
 		}
 
@@ -725,7 +815,7 @@ namespace GameHub.UI.Views.GamesView
 				if(name_match_exact || name_match_fuzzy_prefix)
 				{
 					Tables.Merges.add(game, game2);
-					debug(@"[Merge] Merging '$(game.name)' ($(game.full_id)) with '$(game2.name)' ($(game2.full_id))");
+					debug("[Merge] Merging '%s' (%s) with '%s' (%s)", game.name, game.full_id, game2.name, game2.full_id);
 
 					Idle.add(() => {
 						remove_game(game2);
@@ -736,5 +826,44 @@ namespace GameHub.UI.Views.GamesView
 				}
 			});
 		}
+
+		#if MANETTE
+		private void on_gamepad_connected(Manette.Device device)
+		{
+			debug("[Gamepad] '%s' connected", device.get_name());
+			device.button_press_event.connect(on_gamepad_button_press_event);
+			device.button_release_event.connect(on_gamepad_button_release_event);
+			device.absolute_axis_event.connect(on_gamepad_absolute_axis_event);
+		}
+
+		private void on_gamepad_button_press_event(Manette.Device device, Manette.Event e)
+		{
+			uint16 btn;
+			if(!e.get_button(out btn)) return;
+			on_gamepad_button(btn, EventType.KEY_PRESS);
+		}
+
+		private void on_gamepad_button_release_event(Manette.Event e)
+		{
+			uint16 btn;
+			if(!e.get_button(out btn)) return;
+			on_gamepad_button(btn, EventType.KEY_RELEASE);
+		}
+
+		private void on_gamepad_button(uint16 btn, EventType type)
+		{
+			if(Gamepad.Buttons.has_key(btn))
+			{
+				var b = Gamepad.Buttons.get(btn);
+				b.emit_kb_event(type);
+				debug("[Gamepad] Button %s: %s (%s) [%d]", (type == EventType.KEY_PRESS ? "pressed" : "released"), b.name, b.long_name, btn);
+			}
+		}
+
+		private void on_gamepad_absolute_axis_event(Manette.Event e)
+		{
+
+		}
+		#endif
 	}
 }

@@ -4,6 +4,7 @@
 	transition: 100ms;
 	background-color: alpha(#999, 0.5);
 	color: white;
+	-gtk-icon-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .gamecard, .gamecard border
@@ -17,7 +18,9 @@
 	opacity: 1;
 }
 
-.gamecard.hover:not(.installed)
+.gamecard.hover:not(.installed),
+.games-grid flowboxchild:focus .gamecard:not(.installed),
+.games-grid flowboxchild:selected .gamecard:not(.installed)
 {
 	opacity: 0.8;
 }
@@ -42,7 +45,9 @@
 }
 
 .gamecard.installing GtkLabel.status, .gamecard.installing label.status,
-.gamecard.hover GtkLabel.status, .gamecard.hover label.status
+.gamecard.hover GtkLabel.status, .gamecard.hover label.status,
+.games-grid flowboxchild:focus .gamecard GtkLabel.status, .games-grid flowboxchild:focus .gamecard label.status,
+.games-grid flowboxchild:selected .gamecard GtkLabel.status, .games-grid flowboxchild:selected .gamecard label.status
 {
 	margin-bottom: 0px;
 	opacity: 1;
@@ -77,12 +82,16 @@
 	background-color: rgba(0, 0, 0, 0);
 }
 
-.gamecard.hover .actions
+.gamecard.hover .actions,
+.games-grid flowboxchild:focus .gamecard .actions,
+.games-grid flowboxchild:selected .gamecard .actions
 {
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
-.gamecard.installed.hover .actions
+.gamecard.installed.hover .actions,
+.games-grid flowboxchild:focus .gamecard.installed .actions,
+.games-grid flowboxchild:selected .gamecard.installed .actions
 {
 	background-color: rgba(255, 255, 255, 0.2);
 }
@@ -100,6 +109,17 @@
 {
 	margin-bottom: 0;
 	opacity: 1;
+}
+
+.games-grid flowboxchild
+{
+	border-radius: 4px;
+	padding: 0;
+}
+
+.games-grid flowboxchild:focus
+{
+	background: @theme_selected_bg_color;
 }
 
 /* Some granite styles */

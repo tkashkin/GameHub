@@ -13,7 +13,8 @@ Build-Depends: meson (>= 0.40),
                libgee-0.8-dev,
                libsoup2.4-dev,
                libsqlite3-dev,
-               libxml2-dev
+               libxml2-dev,
+               libmanette-0.2-dev
 Standards-Version: 4.1.4
 
 Package: com.github.tkashkin.gamehub

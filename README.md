@@ -38,17 +38,18 @@ Package is maintained by [@btd1337](https://github.com/btd1337).
 ### Debian/Ubuntu-based distros
 
 #### Build dependencies
-* meson
-* valac
-* libgranite-dev
-* libgtk-3-dev
-* libglib2.0-dev
-* libwebkit2gtk-4.0-dev
-* libjson-glib-dev
-* libgee-0.8-dev
-* libsoup2.4-dev
-* libsqlite3-dev
-* libxml2-dev
+* `meson`
+* `valac`
+* `libgranite-dev`
+* `libgtk-3-dev`
+* `libglib2.0-dev`
+* `libwebkit2gtk-4.0-dev`
+* `libjson-glib-dev`
+* `libgee-0.8-dev`
+* `libsoup2.4-dev`
+* `libsqlite3-dev`
+* `libxml2-dev`
+* `libmanette-0.2-dev` (optional for gamepad support)
 
 #### Building
 ```bash

@@ -40,6 +40,8 @@ namespace GameHub.Data.Sources.User
 			install_dir = dir;
 			executable = exec;
 			arguments = args;
+
+			((User) source).add_game(this);
 			update_status();
 		}
 
@@ -105,8 +107,8 @@ namespace GameHub.Data.Sources.User
 		public void remove()
 		{
 			is_removed = true;
+			((User) source).remove_game(this);
 			removed();
-			Tables.Games.remove(this);
 		}
 
 		public override void save()

@@ -133,28 +133,30 @@ namespace GameHub.UI.Views.GamesView
 				switch(e.button)
 				{
 					case 1:
-						if(game.status.state == Game.State.INSTALLED)
-						{
-							if(game.use_compat)
-							{
-								game.run_with_compat.begin();
-							}
-							else
-							{
-								game.run.begin();
-							}
-						}
-						else if(game.status.state == Game.State.UNINSTALLED)
-						{
-							game.install.begin();
-						}
+						run_game();
 						break;
 
 					case 3:
-						new GameContextMenu(game, this).open(e);
+						open_context_menu(e, true);
 						break;
 				}
 				return true;
+			});
+			key_release_event.connect(e => {
+				switch(((EventKey) e).keyval)
+				{
+					case Key.Return:
+					case Key.space:
+					case Key.KP_Space:
+						run_game();
+						break;
+
+					case Key.Control_L:
+					case Key.Control_R:
+					case Key.Menu:
+						open_context_menu(e, false);
+						break;
+				}
 			});
 
 			show_all();
@@ -214,6 +216,30 @@ namespace GameHub.UI.Views.GamesView
 				Utils.load_image.begin(image, game.image, "image");
 			});
 			game.notify_property("image");
+		}
+
+		private void run_game()
+		{
+			if(game.status.state == Game.State.INSTALLED)
+			{
+				if(game.use_compat)
+				{
+					game.run_with_compat.begin();
+				}
+				else
+				{
+					game.run.begin();
+				}
+			}
+			else if(game.status.state == Game.State.UNINSTALLED)
+			{
+				game.install.begin();
+			}
+		}
+
+		private void open_context_menu(Event e, bool at_pointer=true)
+		{
+			new GameContextMenu(game, this).open(e, at_pointer);
 		}
 
 		public void update()
