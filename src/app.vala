@@ -89,6 +89,10 @@ namespace GameHub
 
 		public static int main(string[] args)
 		{
+			#if MANETTE
+			X.init_threads();
+			#endif
+
 			var app = new Application();
 
 			var lang = Environment.get_variable("LC_ALL") ?? "";
