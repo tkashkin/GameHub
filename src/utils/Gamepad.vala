@@ -105,14 +105,14 @@ namespace GameHub.Utils.Gamepad
 		AXIS_RS_Y = a(0x3, "RS Y", "Right Stick Y");
 	}
 
-	private static Button b(uint16 code, string name, string? long_name=null, int key=0)
+	private static Button b(uint16 code, string name, string? long_name=null, uint key=0)
 	{
 		var btn = new Button(code, name, long_name, key);
 		Buttons.set(code, btn);
 		return btn;
 	}
 
-	private static Axis a(uint16 code, string name, string? long_name=null, int negative_key=0, int positive_key=0, double key_threshold=0.5)
+	private static Axis a(uint16 code, string name, string? long_name=null, uint negative_key=0, uint positive_key=0, double key_threshold=0.5)
 	{
 		var axis = new Axis(code, name, long_name, negative_key, positive_key, key_threshold);
 		Axes.set(code, axis);
@@ -124,9 +124,9 @@ namespace GameHub.Utils.Gamepad
 		public uint16 code { get; construct; }
 		public string name { get; construct; }
 		public string long_name { get; construct; }
-		public int key { get; construct; }
+		public uint key { get; construct; }
 
-		public Button(uint16 code, string name, string? long_name=null, int key=0)
+		public Button(uint16 code, string name, string? long_name=null, uint key=0)
 		{
 			Object(code: code, name: name, long_name: long_name ?? name, key: key);
 		}
@@ -142,8 +142,8 @@ namespace GameHub.Utils.Gamepad
 		public uint16 code { get; construct; }
 		public string name { get; construct; }
 		public string long_name { get; construct; }
-		public int negative_key { get; construct; }
-		public int positive_key { get; construct; }
+		public uint negative_key { get; construct; }
+		public uint positive_key { get; construct; }
 		public double key_threshold { get; construct; }
 
 		private double _value = 0;
@@ -168,7 +168,7 @@ namespace GameHub.Utils.Gamepad
 			}
 		}
 
-		public Axis(uint16 code, string name, string? long_name=null, int negative_key=0, int positive_key=0, double key_threshold=0.5)
+		public Axis(uint16 code, string name, string? long_name=null, uint negative_key=0, uint positive_key=0, double key_threshold=0.5)
 		{
 			Object(code: code, name: name, long_name: long_name ?? name, negative_key: negative_key, positive_key: positive_key, key_threshold: key_threshold);
 		}
@@ -218,7 +218,7 @@ namespace GameHub.Utils.Gamepad
 	}
 
 	// hack, but works (on X11)
-	private static void emit_key_event(int key_code, bool press)
+	private static void emit_key_event(uint key_code, bool press)
 	{
 		if(key_code == 0) return;
 		bool active = false;
@@ -232,6 +232,6 @@ namespace GameHub.Utils.Gamepad
 		}
 		if(!active) return;
 		unowned X.Display xdisplay = (Gdk.Display.get_default() as Gdk.X11.Display).get_xdisplay();
-		XTest.fake_key_event(xdisplay, xdisplay.keysym_to_keycode(key_code), press, X.CURRENT_TIME);
+		XTest.fake_key_event(xdisplay, xdisplay.keysym_to_keycode((ulong) key_code), press, X.CURRENT_TIME);
 	}
 }
