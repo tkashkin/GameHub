@@ -21,7 +21,11 @@ using Gee;
 
 namespace GameHub.Utils.Gamepad
 {
+	public const int KEY_EVENT_EMIT_INTERVAL = 50000;
+	public const int KEY_UP_EMIT_TIMEOUT = 50000;
+
 	public static HashMap<uint16, Button> Buttons;
+	public static HashMap<uint16, Axis> Axes;
 
 	public static Button BTN_A;
 	public static Button BTN_B;
@@ -54,9 +58,15 @@ namespace GameHub.Utils.Gamepad
 	public static Button SC_GRIP_LEFT;
 	public static Button SC_GRIP_RIGHT;
 
+	public static Axis AXIS_LS_X;
+	public static Axis AXIS_LS_Y;
+	public static Axis AXIS_RS_X;
+	public static Axis AXIS_RS_Y;
+
 	public static void init()
 	{
-		Buttons = new Gee.HashMap<uint16, Button>();
+		Buttons = new HashMap<uint16, Button>();
+		Axes = new HashMap<uint16, Axis>();
 
 		BTN_A = b(0x130, "A", null, "Return");
 		BTN_B = b(0x131, "B", null, "Escape");
@@ -88,6 +98,11 @@ namespace GameHub.Utils.Gamepad
 
 		SC_GRIP_LEFT  = b(0x150, "LG", "Left Grip");
 		SC_GRIP_RIGHT = b(0x151, "RG", "Right Grip");
+
+		AXIS_LS_X = a(0x0, "LS X", "Left Stick X", "Left", "Right");
+		AXIS_LS_Y = a(0x1, "LS Y", "Left Stick Y", "Up", "Down");
+		AXIS_RS_X = a(0x2, "RS X", "Right Stick X");
+		AXIS_RS_Y = a(0x3, "RS Y", "Right Stick Y");
 	}
 
 	private static Button b(uint16 code, string name, string? long_name=null, string? key_name=null)
@@ -95,6 +110,13 @@ namespace GameHub.Utils.Gamepad
 		var btn = new Button(code, name, long_name, key_name);
 		Buttons.set(code, btn);
 		return btn;
+	}
+
+	private static Axis a(uint16 code, string name, string? long_name=null, string? negative_key_name=null, string? positive_key_name=null, double key_threshold=0.5)
+	{
+		var axis = new Axis(code, name, long_name, negative_key_name, positive_key_name, key_threshold);
+		Axes.set(code, axis);
+		return axis;
 	}
 
 	public class Button: Object
@@ -109,12 +131,110 @@ namespace GameHub.Utils.Gamepad
 			Object(code: code, name: name, long_name: long_name ?? name, key_name: key_name);
 		}
 
-		// hack, but works (on X11)
-		public void emit_kb_event(EventType type)
+		public void emit_key_event(EventType type)
 		{
-			if(key_name == null) return;
-			var event = type == EventType.KEY_RELEASE ? "keyup" : "keydown";
-			Utils.run({ "xdotool", event, key_name });
+			Gamepad.emit_key_event(key_name, type);
 		}
+	}
+
+	public class Axis: Object
+	{
+		public uint16 code { get; construct; }
+		public string name { get; construct; }
+		public string long_name { get; construct; }
+		public string? negative_key_name { get; construct; }
+		public string? positive_key_name { get; construct; }
+		public double key_threshold { get; construct; }
+
+		private double _value = 0;
+		private int _value_sign = 0;
+		private int _pressed_sign = 0;
+		private bool _sign_changed = false;
+
+		private Timer timer = new Timer();
+
+		public double value
+		{
+			get
+			{
+				return _value;
+			}
+			set
+			{
+				int sign = value < -key_threshold ? -1 : (value > key_threshold ? 1 : 0);
+				_sign_changed = _value_sign == sign;
+				_value_sign = sign;
+				_value = value;
+			}
+		}
+
+		public Axis(uint16 code, string name, string? long_name=null, string? negative_key_name=null, string? positive_key_name=null, double key_threshold=0.5)
+		{
+			Object(code: code, name: name, long_name: long_name ?? name, negative_key_name: negative_key_name, positive_key_name: positive_key_name, key_threshold: key_threshold);
+		}
+
+		public void emit_key_event()
+		{
+			if(negative_key_name == null && positive_key_name == null) return;
+
+			ulong last_update;
+			timer.elapsed(out last_update);
+			if(_value_sign == 0 && last_update >= Gamepad.KEY_UP_EMIT_TIMEOUT)
+			{
+				if(_pressed_sign < 0) Gamepad.emit_key_event(negative_key_name, EventType.KEY_RELEASE);
+				if(_pressed_sign > 0) Gamepad.emit_key_event(positive_key_name, EventType.KEY_RELEASE);
+				timer.stop();
+				_value = 0;
+				_value_sign = 0;
+				_pressed_sign = 0;
+				_sign_changed = false;
+				return;
+			}
+
+			if(!_sign_changed) return;
+
+			if(_value_sign < 0)
+			{
+				Gamepad.emit_key_event(positive_key_name, EventType.KEY_RELEASE);
+				Gamepad.emit_key_event(negative_key_name, EventType.KEY_PRESS);
+				_pressed_sign = -1;
+			}
+			else if(_value_sign > 0)
+			{
+				Gamepad.emit_key_event(negative_key_name, EventType.KEY_RELEASE);
+				Gamepad.emit_key_event(positive_key_name, EventType.KEY_PRESS);
+				_pressed_sign = 1;
+			}
+			else
+			{
+				if(_pressed_sign < 0) Gamepad.emit_key_event(negative_key_name, EventType.KEY_RELEASE);
+				if(_pressed_sign > 0) Gamepad.emit_key_event(positive_key_name, EventType.KEY_RELEASE);
+				_pressed_sign = 0;
+			}
+
+			_sign_changed = false;
+			timer.start();
+		}
+	}
+
+	// hack, but works (on X11)
+	private static void emit_key_event(string? key_name, EventType type)
+	{
+		if(key_name == null) return;
+
+		bool active = false;
+
+		foreach(var wnd in Gtk.Window.list_toplevels())
+		{
+			if(wnd.is_active)
+			{
+				active = true;
+				break;
+			}
+		}
+
+		if(!active) return;
+
+		Utils.run({ "xdotool", type == EventType.KEY_RELEASE ? "keyup" : "keydown", key_name }, null, null, false, false);
 	}
 }

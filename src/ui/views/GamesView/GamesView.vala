@@ -79,6 +79,8 @@ namespace GameHub.UI.Views.GamesView
 
 		#if MANETTE
 		private Manette.Monitor manette_monitor = new Manette.Monitor();
+		private bool gamepad_connected = false;
+		private bool gamepad_axes_to_keys_thread_running = false;
 		#endif
 
 		construct
@@ -353,6 +355,7 @@ namespace GameHub.UI.Views.GamesView
 				on_gamepad_connected(manette_device);
 			}
 			manette_monitor.device_connected.connect(on_gamepad_connected);
+			manette_monitor.device_disconnected.connect(on_gamepad_disconnected);
 			#endif
 
 			load_games();
@@ -834,6 +837,14 @@ namespace GameHub.UI.Views.GamesView
 			device.button_press_event.connect(on_gamepad_button_press_event);
 			device.button_release_event.connect(on_gamepad_button_release_event);
 			device.absolute_axis_event.connect(on_gamepad_absolute_axis_event);
+			gamepad_connected = true;
+			gamepad_axes_to_keys_thread();
+		}
+
+		private void on_gamepad_disconnected(Manette.Device device)
+		{
+			debug("[Gamepad] '%s' disconnected", device.get_name());
+			gamepad_connected = false;
 		}
 
 		private void on_gamepad_button_press_event(Manette.Device device, Manette.Event e)
@@ -855,14 +866,38 @@ namespace GameHub.UI.Views.GamesView
 			if(Gamepad.Buttons.has_key(btn))
 			{
 				var b = Gamepad.Buttons.get(btn);
-				b.emit_kb_event(type);
+				b.emit_key_event(type);
 				debug("[Gamepad] Button %s: %s (%s) [%d]", (type == EventType.KEY_PRESS ? "pressed" : "released"), b.name, b.long_name, btn);
 			}
 		}
 
 		private void on_gamepad_absolute_axis_event(Manette.Event e)
 		{
+			uint16 axis;
+			double value;
+			if(!e.get_absolute(out axis, out value)) return;
 
+			if(Gamepad.Axes.has_key(axis))
+			{
+				Gamepad.Axes.get(axis).value = value;
+			}
+		}
+
+		private void gamepad_axes_to_keys_thread()
+		{
+			if(gamepad_axes_to_keys_thread_running) return;
+			Utils.thread("GamepadAxesToKeysThread", () => {
+				gamepad_axes_to_keys_thread_running = true;
+				while(gamepad_connected)
+				{
+					foreach(var axis in Gamepad.Axes.values)
+					{
+						axis.emit_key_event();
+					}
+					Thread.usleep(Gamepad.KEY_EVENT_EMIT_INTERVAL);
+				}
+				gamepad_axes_to_keys_thread_running = false;
+			});
 		}
 		#endif
 	}
