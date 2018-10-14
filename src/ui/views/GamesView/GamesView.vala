@@ -81,6 +81,8 @@ namespace GameHub.UI.Views.GamesView
 		private Manette.Monitor manette_monitor = new Manette.Monitor();
 		private bool gamepad_connected = false;
 		private bool gamepad_axes_to_keys_thread_running = false;
+		private ArrayList<Widget> gamepad_mode_visible_widgets = new ArrayList<Widget>();
+		private ArrayList<Widget> gamepad_mode_hidden_widgets = new ArrayList<Widget>();
 		#endif
 
 		construct
@@ -156,8 +158,6 @@ namespace GameHub.UI.Views.GamesView
 				postpone_view_update();
 			});
 
-			titlebar.pack_start(view);
-
 			filter = new Granite.Widgets.ModeButton();
 			filter.halign = Align.CENTER;
 			filter.valign = Align.CENTER;
@@ -220,8 +220,6 @@ namespace GameHub.UI.Views.GamesView
 			settings.image = new Image.from_icon_name("open-menu", IconSize.LARGE_TOOLBAR);
 
 			settings.clicked.connect(() => new Dialogs.SettingsDialog.SettingsDialog());
-
-			if(sources.size > 1) titlebar.pack_start(filter);
 
 			games_grid.set_sort_func((child1, child2) => {
 				var item1 = child1 as GameCard;
@@ -302,11 +300,33 @@ namespace GameHub.UI.Views.GamesView
 
 			add_game_popover.game_added.connect(g => add_game(g));
 
+			titlebar.pack_start(view);
+
+			if(sources.size > 1)
+			{
+				#if MANETTE
+				titlebar.pack_start(gamepad_image("bumper-left"));
+				#endif
+
+				titlebar.pack_start(filter);
+
+				#if MANETTE
+				titlebar.pack_start(gamepad_image("bumper-right"));
+				#endif
+			}
+
 			titlebar.pack_start(filters);
+
 			titlebar.pack_end(settings);
 			titlebar.pack_end(downloads);
 			titlebar.pack_end(search);
 			titlebar.pack_end(add_game_button);
+
+			#if MANETTE
+			titlebar.pack_end(gamepad_image("x", _("Menu")));
+			titlebar.pack_end(gamepad_image("b", _("Back")));
+			titlebar.pack_end(gamepad_image("a", _("Select")));
+			#endif
 
 			status_overlay = new Granite.Widgets.OverlayBar(overlay);
 
@@ -348,6 +368,13 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			#if MANETTE
+			gamepad_mode_hidden_widgets.add(view);
+			gamepad_mode_hidden_widgets.add(filters);
+			gamepad_mode_hidden_widgets.add(settings);
+			gamepad_mode_hidden_widgets.add(downloads);
+			gamepad_mode_hidden_widgets.add(search);
+			gamepad_mode_hidden_widgets.add(add_game_button);
+
 			var manette_iterator = manette_monitor.iterate();
 			Manette.Device manette_device = null;
 			while(manette_iterator.next(out manette_device))
@@ -357,6 +384,20 @@ namespace GameHub.UI.Views.GamesView
 			manette_monitor.device_connected.connect(on_gamepad_connected);
 			manette_monitor.device_disconnected.connect(on_gamepad_disconnected);
 			#endif
+
+			add_events(EventMask.KEY_RELEASE_MASK);
+			key_release_event.connect(e => {
+				switch(((EventKey) e).keyval)
+				{
+					case Key.F1:
+					case Key.F2:
+						var tab = filter.selected + (((EventKey) e).keyval == Key.F1 ? -1 : 1);
+						if(tab < 0) tab = (int) filter.n_items - 1;
+						else if(tab >= filter.n_items) tab = 0;
+						filter.selected = tab;
+						break;
+				}
+			});
 
 			load_games();
 		}
@@ -839,12 +880,38 @@ namespace GameHub.UI.Views.GamesView
 			device.absolute_axis_event.connect(on_gamepad_absolute_axis_event);
 			gamepad_connected = true;
 			gamepad_axes_to_keys_thread();
+
+			Idle.add(() => {
+				view.selected = 0;
+				foreach(var widget in gamepad_mode_visible_widgets)
+				{
+					widget.show();
+				}
+				foreach(var widget in gamepad_mode_hidden_widgets)
+				{
+					widget.hide();
+				}
+				games_grid.grab_focus();
+				return Source.REMOVE;
+			});
 		}
 
 		private void on_gamepad_disconnected(Manette.Device device)
 		{
 			debug("[Gamepad] '%s' disconnected", device.get_name());
 			gamepad_connected = false;
+
+			Idle.add(() => {
+				foreach(var widget in gamepad_mode_visible_widgets)
+				{
+					widget.hide();
+				}
+				foreach(var widget in gamepad_mode_hidden_widgets)
+				{
+					widget.show();
+				}
+				return Source.REMOVE;
+			});
 		}
 
 		private void on_gamepad_button_press_event(Manette.Device device, Manette.Event e)
@@ -898,6 +965,34 @@ namespace GameHub.UI.Views.GamesView
 				}
 				gamepad_axes_to_keys_thread_running = false;
 			});
+		}
+
+		private Widget gamepad_image(string icon, string? text=null)
+		{
+			Widget widget;
+
+			var image = new Image.from_icon_name("controller-button-" + icon, IconSize.LARGE_TOOLBAR);
+
+			if(text != null)
+			{
+				var label = new HeaderLabel(text);
+				var box = new Box(Orientation.HORIZONTAL, 8);
+				box.margin_start = box.margin_end = 4;
+				box.add(image);
+				box.add(label);
+				box.show_all();
+				widget = box;
+			}
+			else
+			{
+				widget = image;
+			}
+
+			widget.visible = false;
+			widget.no_show_all = true;
+
+			gamepad_mode_visible_widgets.add(widget);
+			return widget;
 		}
 		#endif
 	}

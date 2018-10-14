@@ -75,15 +75,15 @@ namespace GameHub.Utils.Gamepad
 		BTN_Y = b(0x134, "Y");
 		BTN_Z = b(0x135, "Z");
 
-		BUMPER_LEFT  = b(0x136, "LB", "Left Bumper");
-		BUMPER_RIGHT = b(0x137, "RB", "Right Bumper");
+		BUMPER_LEFT  = b(0x136, "LB", "Left Bumper", Key.F1);
+		BUMPER_RIGHT = b(0x137, "RB", "Right Bumper", Key.F2);
 
-		TRIGGER_LEFT  = b(0x138, "LT", "Left Trigger");
-		TRIGGER_RIGHT = b(0x139, "RT", "Right Trigger");
+		TRIGGER_LEFT  = b(0x138, "LT", "Left Trigger", Key.F3);
+		TRIGGER_RIGHT = b(0x139, "RT", "Right Trigger", Key.F4);
 
-		BTN_SELECT = b(0x13a, "Select");
-		BTN_START  = b(0x13b, "Start");
-		BTN_HOME   = b(0x13c, "Home");
+		BTN_SELECT = b(0x13a, "Select", null, Key.F5);
+		BTN_START  = b(0x13b, "Start", null, Key.F6);
+		BTN_HOME   = b(0x13c, "Home", null, Key.F7);
 
 		STICK_LEFT  = b(0x13d, "LS", "Left Stick");
 		STICK_RIGHT = b(0x13e, "RS", "Right Stick");
@@ -93,8 +93,8 @@ namespace GameHub.Utils.Gamepad
 		DPAD_LEFT  = b(0x222, "Left", "D-Pad Left", Key.Left);
 		DPAD_RIGHT = b(0x223, "Right", "D-Pad Right", Key.Right);
 
-		SC_PAD_TAP_LEFT  = b(0x121, "L", "Left Touchpad Tap");
-		SC_PAD_TAP_RIGHT = b(0x122, "R", "Right Touchpad Tap");
+		SC_PAD_TAP_LEFT  = b(0x121, "L", "Left Trackpad Touch");
+		SC_PAD_TAP_RIGHT = b(0x122, "R", "Right Trackpad Touch");
 
 		SC_GRIP_LEFT  = b(0x150, "LG", "Left Grip");
 		SC_GRIP_RIGHT = b(0x151, "RG", "Right Grip");
