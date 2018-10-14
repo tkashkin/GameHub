@@ -149,14 +149,15 @@ namespace GameHub.UI.Views.GamesView
 					case Key.space:
 					case Key.KP_Space:
 						run_game();
-						break;
+						return true;
 
 					case Key.Control_L:
 					case Key.Control_R:
 					case Key.Menu:
 						open_context_menu(e, false);
-						break;
+						return true;
 				}
+				return false;
 			});
 
 			show_all();
