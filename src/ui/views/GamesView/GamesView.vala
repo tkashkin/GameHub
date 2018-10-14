@@ -851,23 +851,23 @@ namespace GameHub.UI.Views.GamesView
 		{
 			uint16 btn;
 			if(!e.get_button(out btn)) return;
-			on_gamepad_button(btn, EventType.KEY_PRESS);
+			on_gamepad_button(btn, true);
 		}
 
 		private void on_gamepad_button_release_event(Manette.Event e)
 		{
 			uint16 btn;
 			if(!e.get_button(out btn)) return;
-			on_gamepad_button(btn, EventType.KEY_RELEASE);
+			on_gamepad_button(btn, false);
 		}
 
-		private void on_gamepad_button(uint16 btn, EventType type)
+		private void on_gamepad_button(uint16 btn, bool press)
 		{
 			if(Gamepad.Buttons.has_key(btn))
 			{
 				var b = Gamepad.Buttons.get(btn);
-				b.emit_key_event(type);
-				debug("[Gamepad] Button %s: %s (%s) [%d]", (type == EventType.KEY_PRESS ? "pressed" : "released"), b.name, b.long_name, btn);
+				b.emit_key_event(press);
+				debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
 			}
 		}
 

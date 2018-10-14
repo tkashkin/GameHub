@@ -68,12 +68,12 @@ namespace GameHub.Utils.Gamepad
 		Buttons = new HashMap<uint16, Button>();
 		Axes = new HashMap<uint16, Axis>();
 
-		BTN_A = b(0x130, "A", null, "Return");
-		BTN_B = b(0x131, "B", null, "Escape");
-		BTN_C = b(0x132, "C", null);
-		BTN_X = b(0x133, "X", null, "Menu");
-		BTN_Y = b(0x134, "Y", null);
-		BTN_Z = b(0x135, "Z", null);
+		BTN_A = b(0x130, "A", null, Key.Return);
+		BTN_B = b(0x131, "B", null, Key.Escape);
+		BTN_C = b(0x132, "C");
+		BTN_X = b(0x133, "X", null, Key.Menu);
+		BTN_Y = b(0x134, "Y");
+		BTN_Z = b(0x135, "Z");
 
 		BUMPER_LEFT  = b(0x136, "LB", "Left Bumper");
 		BUMPER_RIGHT = b(0x137, "RB", "Right Bumper");
@@ -81,17 +81,17 @@ namespace GameHub.Utils.Gamepad
 		TRIGGER_LEFT  = b(0x138, "LT", "Left Trigger");
 		TRIGGER_RIGHT = b(0x139, "RT", "Right Trigger");
 
-		BTN_SELECT = b(0x13a, "Select", null);
-		BTN_START  = b(0x13b, "Start", null);
-		BTN_HOME   = b(0x13c, "Home", null);
+		BTN_SELECT = b(0x13a, "Select");
+		BTN_START  = b(0x13b, "Start");
+		BTN_HOME   = b(0x13c, "Home");
 
 		STICK_LEFT  = b(0x13d, "LS", "Left Stick");
 		STICK_RIGHT = b(0x13e, "RS", "Right Stick");
 
-		DPAD_UP    = b(0x220, "Up", "D-Pad Up", "Up");
-		DPAD_DOWN  = b(0x221, "Down", "D-Pad Down", "Down");
-		DPAD_LEFT  = b(0x222, "Left", "D-Pad Left", "Left");
-		DPAD_RIGHT = b(0x223, "Right", "D-Pad Right", "Right");
+		DPAD_UP    = b(0x220, "Up", "D-Pad Up", Key.Up);
+		DPAD_DOWN  = b(0x221, "Down", "D-Pad Down", Key.Down);
+		DPAD_LEFT  = b(0x222, "Left", "D-Pad Left", Key.Left);
+		DPAD_RIGHT = b(0x223, "Right", "D-Pad Right", Key.Right);
 
 		SC_PAD_TAP_LEFT  = b(0x121, "L", "Left Touchpad Tap");
 		SC_PAD_TAP_RIGHT = b(0x122, "R", "Right Touchpad Tap");
@@ -99,22 +99,22 @@ namespace GameHub.Utils.Gamepad
 		SC_GRIP_LEFT  = b(0x150, "LG", "Left Grip");
 		SC_GRIP_RIGHT = b(0x151, "RG", "Right Grip");
 
-		AXIS_LS_X = a(0x0, "LS X", "Left Stick X", "Left", "Right");
-		AXIS_LS_Y = a(0x1, "LS Y", "Left Stick Y", "Up", "Down");
+		AXIS_LS_X = a(0x0, "LS X", "Left Stick X", Key.Left, Key.Right);
+		AXIS_LS_Y = a(0x1, "LS Y", "Left Stick Y", Key.Up, Key.Down);
 		AXIS_RS_X = a(0x2, "RS X", "Right Stick X");
 		AXIS_RS_Y = a(0x3, "RS Y", "Right Stick Y");
 	}
 
-	private static Button b(uint16 code, string name, string? long_name=null, string? key_name=null)
+	private static Button b(uint16 code, string name, string? long_name=null, int key=0)
 	{
-		var btn = new Button(code, name, long_name, key_name);
+		var btn = new Button(code, name, long_name, key);
 		Buttons.set(code, btn);
 		return btn;
 	}
 
-	private static Axis a(uint16 code, string name, string? long_name=null, string? negative_key_name=null, string? positive_key_name=null, double key_threshold=0.5)
+	private static Axis a(uint16 code, string name, string? long_name=null, int negative_key=0, int positive_key=0, double key_threshold=0.5)
 	{
-		var axis = new Axis(code, name, long_name, negative_key_name, positive_key_name, key_threshold);
+		var axis = new Axis(code, name, long_name, negative_key, positive_key, key_threshold);
 		Axes.set(code, axis);
 		return axis;
 	}
@@ -124,16 +124,16 @@ namespace GameHub.Utils.Gamepad
 		public uint16 code { get; construct; }
 		public string name { get; construct; }
 		public string long_name { get; construct; }
-		public string? key_name { get; construct; }
+		public int key { get; construct; }
 
-		public Button(uint16 code, string name, string? long_name=null, string? key_name=null)
+		public Button(uint16 code, string name, string? long_name=null, int key=0)
 		{
-			Object(code: code, name: name, long_name: long_name ?? name, key_name: key_name);
+			Object(code: code, name: name, long_name: long_name ?? name, key: key);
 		}
 
-		public void emit_key_event(EventType type)
+		public void emit_key_event(bool press)
 		{
-			Gamepad.emit_key_event(key_name, type);
+			Gamepad.emit_key_event(key, press);
 		}
 	}
 
@@ -142,8 +142,8 @@ namespace GameHub.Utils.Gamepad
 		public uint16 code { get; construct; }
 		public string name { get; construct; }
 		public string long_name { get; construct; }
-		public string? negative_key_name { get; construct; }
-		public string? positive_key_name { get; construct; }
+		public int negative_key { get; construct; }
+		public int positive_key { get; construct; }
 		public double key_threshold { get; construct; }
 
 		private double _value = 0;
@@ -168,21 +168,21 @@ namespace GameHub.Utils.Gamepad
 			}
 		}
 
-		public Axis(uint16 code, string name, string? long_name=null, string? negative_key_name=null, string? positive_key_name=null, double key_threshold=0.5)
+		public Axis(uint16 code, string name, string? long_name=null, int negative_key=0, int positive_key=0, double key_threshold=0.5)
 		{
-			Object(code: code, name: name, long_name: long_name ?? name, negative_key_name: negative_key_name, positive_key_name: positive_key_name, key_threshold: key_threshold);
+			Object(code: code, name: name, long_name: long_name ?? name, negative_key: negative_key, positive_key: positive_key, key_threshold: key_threshold);
 		}
 
 		public void emit_key_event()
 		{
-			if(negative_key_name == null && positive_key_name == null) return;
+			if(negative_key == 0 && positive_key == 0) return;
 
 			ulong last_update;
 			timer.elapsed(out last_update);
 			if(_value_sign == 0 && last_update >= Gamepad.KEY_UP_EMIT_TIMEOUT)
 			{
-				if(_pressed_sign < 0) Gamepad.emit_key_event(negative_key_name, EventType.KEY_RELEASE);
-				if(_pressed_sign > 0) Gamepad.emit_key_event(positive_key_name, EventType.KEY_RELEASE);
+				if(_pressed_sign < 0) Gamepad.emit_key_event(negative_key, false);
+				if(_pressed_sign > 0) Gamepad.emit_key_event(positive_key, false);
 				timer.stop();
 				_value = 0;
 				_value_sign = 0;
@@ -195,20 +195,20 @@ namespace GameHub.Utils.Gamepad
 
 			if(_value_sign < 0)
 			{
-				Gamepad.emit_key_event(positive_key_name, EventType.KEY_RELEASE);
-				Gamepad.emit_key_event(negative_key_name, EventType.KEY_PRESS);
+				Gamepad.emit_key_event(positive_key, false);
+				Gamepad.emit_key_event(negative_key, true);
 				_pressed_sign = -1;
 			}
 			else if(_value_sign > 0)
 			{
-				Gamepad.emit_key_event(negative_key_name, EventType.KEY_RELEASE);
-				Gamepad.emit_key_event(positive_key_name, EventType.KEY_PRESS);
+				Gamepad.emit_key_event(negative_key, false);
+				Gamepad.emit_key_event(positive_key, true);
 				_pressed_sign = 1;
 			}
 			else
 			{
-				if(_pressed_sign < 0) Gamepad.emit_key_event(negative_key_name, EventType.KEY_RELEASE);
-				if(_pressed_sign > 0) Gamepad.emit_key_event(positive_key_name, EventType.KEY_RELEASE);
+				if(_pressed_sign < 0) Gamepad.emit_key_event(negative_key, false);
+				if(_pressed_sign > 0) Gamepad.emit_key_event(positive_key, false);
 				_pressed_sign = 0;
 			}
 
@@ -218,12 +218,10 @@ namespace GameHub.Utils.Gamepad
 	}
 
 	// hack, but works (on X11)
-	private static void emit_key_event(string? key_name, EventType type)
+	private static void emit_key_event(int key_code, bool press)
 	{
-		if(key_name == null) return;
-
+		if(key_code == 0) return;
 		bool active = false;
-
 		foreach(var wnd in Gtk.Window.list_toplevels())
 		{
 			if(wnd.is_active)
@@ -232,9 +230,8 @@ namespace GameHub.Utils.Gamepad
 				break;
 			}
 		}
-
 		if(!active) return;
-
-		Utils.run({ "xdotool", type == EventType.KEY_RELEASE ? "keyup" : "keydown", key_name }, null, null, false, false);
+		unowned X.Display xdisplay = (Gdk.Display.get_default() as Gdk.X11.Display).get_xdisplay();
+		XTest.fake_key_event(xdisplay, xdisplay.keysym_to_keycode(key_code), press, X.CURRENT_TIME);
 	}
 }

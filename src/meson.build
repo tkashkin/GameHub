@@ -127,6 +127,9 @@ manette = dependency('manette-0.2', required: false)
 if manette.found()
 	add_global_arguments('-D', 'MANETTE', language: 'vala')
 	deps += manette
+	deps += dependency('x11')
+	deps += dependency('gdk-x11-3.0')
+	deps += dependency('xtst')
 	sources += 'utils/Gamepad.vala'
 endif
 
