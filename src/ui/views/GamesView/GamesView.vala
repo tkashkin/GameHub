@@ -727,7 +727,10 @@ namespace GameHub.UI.Views.GamesView
 			if(card != null)
 			{
 				games_grid.select_child(card);
-				card.grab_focus();
+				if(!search.has_focus)
+				{
+					card.grab_focus();
+				}
 			}
 		}
 
