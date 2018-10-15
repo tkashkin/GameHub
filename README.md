@@ -49,7 +49,7 @@ Package is maintained by [@btd1337](https://github.com/btd1337).
 * `libsoup2.4-dev`
 * `libsqlite3-dev`
 * `libxml2-dev`
-* `libmanette-0.2-dev` (optional for gamepad support)
+* `libmanette-0.2-dev`, `libx11-dev`, `libxtst-dev` (optional for gamepad support)
 
 #### Building
 ```bash
@@ -73,3 +73,6 @@ flatpak manifest and build instructions are in the [flatpak branch](https://gith
 
 ## Screenshots
 <p align="center"><img src="data/screenshots/1.png?raw=true" width="49%" /> <img src="data/screenshots/1_dark.png?raw=true" width="49%" /><img src="data/screenshots/2.png?raw=true" width="49%" /> <img src="data/screenshots/2_dark.png?raw=true" width="49%" /><img src="data/screenshots/3.png?raw=true" width="49%" /> <img src="data/screenshots/3_dark.png?raw=true" width="49%" /><img src="data/screenshots/3_dialog.png?raw=true" width="49%" /> <img src="data/screenshots/3_dialog_dark.png?raw=true" width="49%" /><img src="data/screenshots/4.png?raw=true" width="49%" /> <img src="data/screenshots/4_dark.png?raw=true" width="49%" /></p>
+
+## Donate
+[![Patreon](https://img.shields.io/badge/donate-patreon-F96854.svg?logo=patreon)](https://www.patreon.com/tkashkin) [![Liberapay](https://img.shields.io/badge/donate-liberapay-F6C915.svg?logo=liberapay)](https://liberapay.com/tkashkin/)
