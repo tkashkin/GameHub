@@ -126,6 +126,8 @@ namespace GameHub.Utils.Gamepad
 		public string long_name { get; construct; }
 		public uint key { get; construct; }
 
+		private bool pressed = false;
+
 		public Button(uint16 code, string name, string? long_name=null, uint key=0)
 		{
 			Object(code: code, name: name, long_name: long_name ?? name, key: key);
@@ -134,6 +136,15 @@ namespace GameHub.Utils.Gamepad
 		public void emit_key_event(bool press)
 		{
 			Gamepad.emit_key_event(key, press);
+			pressed = press;
+		}
+
+		public void reset()
+		{
+			if(pressed)
+			{
+				emit_key_event(false);
+			}
 		}
 	}
 
@@ -215,23 +226,38 @@ namespace GameHub.Utils.Gamepad
 			_sign_changed = false;
 			timer.start();
 		}
+
+		public void reset()
+		{
+			value = 0;
+			emit_key_event();
+		}
+	}
+
+	public static void reset()
+	{
+		foreach(var button in Gamepad.Buttons.values)
+		{
+			button.reset();
+		}
+		foreach(var axis in Gamepad.Axes.values)
+		{
+			axis.reset();
+		}
 	}
 
 	// hack, but works (on X11)
 	private static void emit_key_event(uint key_code, bool press)
 	{
 		if(key_code == 0) return;
-		bool active = false;
 		foreach(var wnd in Gtk.Window.list_toplevels())
 		{
 			if(wnd.is_active)
 			{
-				active = true;
+				unowned X.Display xdisplay = (wnd.screen.get_display() as Gdk.X11.Display).get_xdisplay();
+				XTest.fake_key_event(xdisplay, xdisplay.keysym_to_keycode((ulong) key_code), press, X.CURRENT_TIME);
 				break;
 			}
 		}
-		if(!active) return;
-		unowned X.Display xdisplay = (Gdk.Display.get_default() as Gdk.X11.Display).get_xdisplay();
-		XTest.fake_key_event(xdisplay, xdisplay.keysym_to_keycode((ulong) key_code), press, X.CURRENT_TIME);
 	}
 }

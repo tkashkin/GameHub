@@ -966,6 +966,7 @@ namespace GameHub.UI.Views.GamesView
 					}
 					Thread.usleep(Gamepad.KEY_EVENT_EMIT_INTERVAL);
 				}
+				Gamepad.reset();
 				gamepad_axes_to_keys_thread_running = false;
 			});
 		}
