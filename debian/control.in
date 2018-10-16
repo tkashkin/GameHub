@@ -14,9 +14,7 @@ Build-Depends: meson (>= 0.40),
                libsoup2.4-dev,
                libsqlite3-dev,
                libxml2-dev,
-               libmanette-0.2-dev,
-               libxtst-dev,
-               libx11-dev
+               libx11-dev, libmanette-0.2-dev, libxtst-dev
 Standards-Version: 4.1.4
 
 Package: com.github.tkashkin.gamehub
