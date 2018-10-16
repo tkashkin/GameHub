@@ -1,6 +1,6 @@
 #!/bin/bash
 
-_GH_VERSION="0.11.3"
+_GH_VERSION="0.11.5"
 
 _ROOT="`pwd`"
 _SCRIPTROOT="$(dirname "$(readlink -f "$0")")"
@@ -240,6 +240,7 @@ build_flatpak()
 	echo "[scripts/build.sh] Cloning flatpak manifest"
 	git clone https://github.com/tkashkin/GameHub.git --branch flatpak --recursive --depth=1 "manifest"
 	cd "manifest"
+	sed -i "s/\$BRANCH/$APPVEYOR_REPO_BRANCH/g" com.github.tkashkin.gamehub.json
 	echo "[scripts/build.sh] Autoinstalling dependencies"
 	flatpak-builder -y --user --install-deps-from=flathub --install-deps-only build com.github.tkashkin.gamehub.json
 	echo "[scripts/build.sh] Installing dependencies"

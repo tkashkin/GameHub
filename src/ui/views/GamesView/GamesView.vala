@@ -723,7 +723,11 @@ namespace GameHub.UI.Views.GamesView
 			var cards = games_grid.get_selected_children();
 			var card = cards != null && cards.length() > 0 ? cards.first().data as GameCard? : null;
 			if(card != null && games_filter(card.game)) return;
+			#if GTK_3_22
 			card = games_grid.get_child_at_pos(0, 0) as GameCard?;
+			#else
+			card = null;
+			#endif
 			if(card != null)
 			{
 				games_grid.select_child(card);
