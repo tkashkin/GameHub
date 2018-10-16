@@ -4,7 +4,7 @@ debian/*
 !debian/source/
 !debian/changelog.in
 !debian/compat
-!debian/control
+!debian/control.in
 !debian/copyright
 !debian/rules
 
