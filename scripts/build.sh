@@ -243,10 +243,8 @@ build_flatpak()
 	sed -i "s/\$BRANCH/$APPVEYOR_REPO_BRANCH/g" com.github.tkashkin.gamehub.json
 	echo "[scripts/build.sh] Autoinstalling dependencies"
 	flatpak-builder -y --user --install-deps-from=flathub --install-deps-only build com.github.tkashkin.gamehub.json
-	echo "[scripts/build.sh] Installing dependencies"
-	flatpak install -y --user flathub org.gnome.Platform//3.30 org.freedesktop.Platform//1.6 io.elementary.Loki.BaseApp//stable org.gnome.Sdk//3.30
 	flatpak-builder -y --user --repo=repo --force-clean build com.github.tkashkin.gamehub.json
-	flatpak build-bundle repo "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" com.github.tkashkin.gamehub
+	flatpak build-bundle repo "$_ROOT/build/GameHub-$_VERSION.flatpak" com.github.tkashkin.gamehub
 	return 0
 }
 

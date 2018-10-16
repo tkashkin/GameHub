@@ -41,7 +41,7 @@ artifacts:
     name: deb
   - path: build/appimage/GameHub*.AppImage*
     name: AppImage
-  - path: build/flatpak/GameHub*.flatpak
+  - path: build/GameHub*.flatpak
     name: flatpak
 
 deploy:
