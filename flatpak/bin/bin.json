@@ -1,0 +1,34 @@
+{
+	"name": "bin",
+	"buildsystem": "simple",
+	"sources": [
+		{
+			"type": "file",
+			"path": "addr2line"
+		},
+		{
+			"type": "file",
+			"path": "libbfd-2.27.0.20160806.so"
+		},
+		{
+			"type": "file",
+			"path": "nm"
+		},
+		{
+			"type": "file",
+			"path": "file-roller"
+		},
+		{
+			"type": "file",
+			"path": "org.gnome.FileRoller.gschema.xml"
+		}
+	],
+	"build-commands": [
+		"install -Dm755 addr2line /app/bin/addr2line",
+		"install -Dm644 libbfd-2.27.0.20160806.so /app/lib/libbfd-2.27.0.20160806.so",
+		"install -Dm755 nm /app/bin/nm",
+		"install -Dm755 file-roller /app/bin/file-roller",
+		"install -Dm644 org.gnome.FileRoller.gschema.xml /app/share/glib-2.0/schemas/org.gnome.FileRoller.gschema.xml",
+		"glib-compile-schemas /app/share/glib-2.0/schemas/"
+	]
+}

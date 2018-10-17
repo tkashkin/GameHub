@@ -8,6 +8,9 @@ debian/*
 !debian/copyright
 !debian/rules
 
+flatpak/com.github.tkashkin.gamehub.json
+flatpak/.flatpak-builder/
+
 *~
 
 .buildconfig
