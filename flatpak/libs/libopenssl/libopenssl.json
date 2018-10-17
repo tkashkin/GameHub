@@ -1,0 +1,25 @@
+{
+	"name": "libopenssl",
+	"no-autogen": true,
+	"sources": [
+		{
+			"type": "archive",
+			"url": "https://www.openssl.org/source/old/1.0.0/openssl-1.0.0k.tar.gz",
+			"sha256": "2982b2e9697a857b336c5c1b1b7b463747e5c1d560f25f6ace95365791b1efd1"
+		},
+		{
+			"type": "file",
+			"only-arches": ["i386"],
+			"path": "configure_i386",
+			"dest-filename": "configure",
+			"sha256": "f2dc21cb3749c3e751a0989490287cce151071220fe4a0d2817d9ad360f394f1"
+		},
+		{
+			"type": "file",
+			"only-arches": ["x86_64"],
+			"path": "configure_x86_64",
+			"dest-filename": "configure",
+			"sha256": "cd578ac0a2096e95ce323cd4143cca0bd422423f29abba33fbae208583604c6c"
+		}
+	]
+}

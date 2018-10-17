@@ -1,12 +1,15 @@
 #!/bin/bash
 
+_GH_RDNN="com.github.tkashkin.gamehub"
 _GH_VERSION="0.11.5"
+
+_GH_BRANCH="${APPVEYOR_REPO_BRANCH:-$(git symbolic-ref --short -q HEAD)}"
 
 _ROOT="`pwd`"
 _SCRIPTROOT="$(dirname "$(readlink -f "$0")")"
 _LINUXDEPLOYQT="linuxdeployqt-continuous-x86_64.AppImage"
 
-_SOURCE="${APPVEYOR_BUILD_VERSION:-$_GH_VERSION-local}"
+_SOURCE="${APPVEYOR_BUILD_VERSION:-$_GH_VERSION-$_GH_BRANCH-local}"
 _VERSION="$_SOURCE-$(git rev-parse --short HEAD)"
 _DEB_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
 _DEB_TARGET_DISTRO="bionic"
@@ -152,7 +155,7 @@ appimage()
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
 	export VERSION="$_VERSION"
 	export LD_LIBRARY_PATH=$APPDIR/usr/lib:$LD_LIBRARY_PATH
-	"./$_LINUXDEPLOYQT" "$APPDIR/usr/share/applications/com.github.tkashkin.gamehub.desktop" -appimage -no-plugins -no-copy-copyright-files -verbose=2
+	"./$_LINUXDEPLOYQT" "$APPDIR/usr/share/applications/$_GH_RDNN.desktop" -appimage -no-plugins -no-copy-copyright-files -verbose=2
 }
 
 appimage_tweak()
@@ -233,18 +236,18 @@ build_flatpak()
 	set +e
 	echo "[scripts/build.sh] Building flatpak package"
 	mkdir -p "$_ROOT/build/flatpak"
-	cd "$_ROOT/build/flatpak"
+	cd "$_ROOT/flatpak"
 	echo "[scripts/build.sh] Installing flatpak"
 	sudo apt install -y flatpak flatpak-builder
 	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-	echo "[scripts/build.sh] Cloning flatpak manifest"
-	git clone https://github.com/tkashkin/GameHub.git --branch flatpak --recursive --depth=1 "manifest"
-	cd "manifest"
-	sed -i "s/\$BRANCH/$APPVEYOR_REPO_BRANCH/g" com.github.tkashkin.gamehub.json
+	sed "s/\$BRANCH/$_GH_BRANCH/g" "$_GH_RDNN.json.in" > "$_GH_RDNN.json"
 	echo "[scripts/build.sh] Autoinstalling dependencies"
-	flatpak-builder -y --user --install-deps-from=flathub --install-deps-only build com.github.tkashkin.gamehub.json
-	flatpak-builder -y --user --repo=repo --force-clean build com.github.tkashkin.gamehub.json
-	flatpak build-bundle repo "$_ROOT/build/GameHub-$_VERSION.flatpak" com.github.tkashkin.gamehub
+	flatpak-builder -y --user --install-deps-from=flathub --install-deps-only "$_ROOT/build/flatpak/build" "$_GH_RDNN.json"
+	echo "[scripts/build.sh] Building"
+	flatpak-builder -y --user --repo="$_ROOT/build/flatpak/repo" --force-clean "$_ROOT/build/flatpak/build" "$_GH_RDNN.json"
+	echo "[scripts/build.sh] Building bundle"
+	flatpak build-bundle "$_ROOT/build/flatpak/repo" "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" "$_GH_RDNN"
+	rm -rf "$_ROOT/build/flatpak/build"
 	return 0
 }
 
@@ -264,4 +267,4 @@ if [[ "$ACTION" = "appimage_bundle_libs" || "$ACTION" = "build_local" ]]; then a
 if [[ "$ACTION" = "appimage_checkrt" || ( "$ACTION" = "build_local" && "$CHECKRT" = "--checkrt" ) ]]; then appimage_checkrt; fi
 if [[ "$ACTION" = "appimage_pack" || "$ACTION" = "build_local" ]]; then appimage_pack; fi
 
-if [[ "$ACTION" = "build_flatpak" && "$_BUILD_IMAGE" = "bionic" ]]; then build_flatpak; fi
+if [[ "$ACTION" = "build_flatpak" && ! "$_BUILD_IMAGE" = "xenial" ]]; then build_flatpak; fi
