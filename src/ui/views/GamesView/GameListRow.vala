@@ -65,10 +65,13 @@ namespace GameHub.UI.Views.GamesView
 			hbox.add(vbox);
 
 			game.status_change.connect(s => {
-				label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
-				state_label.label = s.description;
-				update_icon();
-				Idle.add(() => { changed(); return Source.REMOVE; });
+				Idle.add(() => {
+					label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
+					state_label.label = s.description;
+					update_icon();
+					changed();
+					return Source.REMOVE;
+				});
 			});
 			game.status_change(game.status);
 
