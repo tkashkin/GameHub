@@ -247,10 +247,14 @@ build_flatpak()
 	flatpak-builder -y --user --repo="$_ROOT/build/flatpak/repo" --force-clean "$_ROOT/build/flatpak/build" "$_GH_RDNN.json"
 	echo "[scripts/build.sh] Building bundle"
 	flatpak build-bundle "$_ROOT/build/flatpak/repo" "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" "$_GH_RDNN"
+	echo "[scripts/build.sh] Removing flatpak build and repo directories"
 	rm -rf ".flatpak-builder" "$_ROOT/build/flatpak/build" "$_ROOT/build/flatpak/repo"
 	return 0
 }
 
+set +e
+cd "$_ROOT"
+git submodule update --init
 mkdir -p "$BUILDROOT"
 
 if [[ "$ACTION" = "import_keys" ]]; then import_keys; fi

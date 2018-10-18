@@ -8,6 +8,7 @@
 		}
 	],
 	"build-commands": [
+		"mkdir -p /app/lib/32bit/",
 		"ln -s /app/lib/32bit/lib/ld-linux.so.2 /app/lib/ld-linux.so.2",
 		"install -Dm644 ld.so.conf /app/etc/ld.so.conf"
 	],
