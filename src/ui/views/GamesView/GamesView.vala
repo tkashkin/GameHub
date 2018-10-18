@@ -226,7 +226,7 @@ namespace GameHub.UI.Views.GamesView
 				var item2 = child2 as GameCard;
 				if(item1 != null && item2 != null)
 				{
-					return item1.game.name.collate(item2.game.name);
+					return games_sort(item1.game, item2.game);
 				}
 				return 0;
 			});
@@ -236,23 +236,7 @@ namespace GameHub.UI.Views.GamesView
 				var item2 = row2 as GameListRow;
 				if(item1 != null && item2 != null)
 				{
-					var s1 = item1.game.status.state;
-					var s2 = item2.game.status.state;
-
-					var f1 = item1.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
-					var f2 = item2.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
-
-					if(f1 && !f2) return -1;
-					if(f2 && !f1) return 1;
-
-					if(s1 == Game.State.DOWNLOADING && s2 != Game.State.DOWNLOADING) return -1;
-					if(s1 != Game.State.DOWNLOADING && s2 == Game.State.DOWNLOADING) return 1;
-					if(s1 == Game.State.INSTALLING && s2 != Game.State.INSTALLING) return -1;
-					if(s1 != Game.State.INSTALLING && s2 == Game.State.INSTALLING) return 1;
-					if(s1 == Game.State.INSTALLED && s2 != Game.State.INSTALLED) return -1;
-					if(s1 != Game.State.INSTALLED && s2 == Game.State.INSTALLED) return 1;
-
-					return item1.game.name.collate(item2.game.name);
+					return games_sort(item1.game, item2.game);
 				}
 				return 0;
 			});
@@ -711,6 +695,31 @@ namespace GameHub.UI.Views.GamesView
 			bool hidden = game.has_tag(Tables.Tags.BUILTIN_HIDDEN) && (tags == null || tags.size == 0 || !(Tables.Tags.BUILTIN_HIDDEN in tags));
 
 			return (same_src || merged_src) && (tags_all_enabled || tags_all_except_hidden_enabled || tags_match || tags_match_merged) && !hidden && Utils.strip_name(search.text).casefold() in Utils.strip_name(game.name).casefold();
+		}
+
+		private int games_sort(Game game1, Game game2)
+		{
+			if(game1 != null && game2 != null)
+			{
+				var s1 = game1.status.state;
+				var s2 = game2.status.state;
+
+				var f1 = game1.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+				var f2 = game2.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+
+				if(f1 && !f2) return -1;
+				if(f2 && !f1) return 1;
+
+				if(s1 == Game.State.DOWNLOADING && s2 != Game.State.DOWNLOADING) return -1;
+				if(s1 != Game.State.DOWNLOADING && s2 == Game.State.DOWNLOADING) return 1;
+				if(s1 == Game.State.INSTALLING && s2 != Game.State.INSTALLING) return -1;
+				if(s1 != Game.State.INSTALLING && s2 == Game.State.INSTALLING) return 1;
+				if(s1 == Game.State.INSTALLED && s2 != Game.State.INSTALLED) return -1;
+				if(s1 != Game.State.INSTALLED && s2 == Game.State.INSTALLED) return 1;
+
+				return game1.name.collate(game2.name);
+			}
+			return 0;
 		}
 
 		private void select_first_visible_game()

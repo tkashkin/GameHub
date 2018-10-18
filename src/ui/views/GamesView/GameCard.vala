@@ -167,49 +167,54 @@ namespace GameHub.UI.Views.GamesView
 		{
 			Object(game: game);
 
-			label.label = game.name;
-
-			src_icon.icon_name = game.source.icon;
+			Idle.add(() => {
+				label.label = game.name;
+				src_icon.icon_name = game.source.icon;
+				return Source.REMOVE;
+			});
 
 			update();
 
 			card.get_style_context().add_class("installed");
 
 			game.status_change.connect(s => {
-				label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
-				status_label.label = s.description;
-				switch(s.state)
-				{
-					case Game.State.UNINSTALLED:
-						card.get_style_context().remove_class("installed");
-						card.get_style_context().remove_class("downloading");
-						card.get_style_context().remove_class("installing");
-						break;
+				Idle.add(() => {
+					label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
+					status_label.label = s.description;
+					switch(s.state)
+					{
+						case Game.State.UNINSTALLED:
+							card.get_style_context().remove_class("installed");
+							card.get_style_context().remove_class("downloading");
+							card.get_style_context().remove_class("installing");
+							break;
 
-					case Game.State.INSTALLED:
-						card.get_style_context().add_class("installed");
-						card.get_style_context().remove_class("downloading");
-						card.get_style_context().remove_class("installing");
-						break;
+						case Game.State.INSTALLED:
+							card.get_style_context().add_class("installed");
+							card.get_style_context().remove_class("downloading");
+							card.get_style_context().remove_class("installing");
+							break;
 
-					case Game.State.DOWNLOADING:
-						card.get_style_context().remove_class("installed");
-						card.get_style_context().add_class("downloading");
-						card.get_style_context().remove_class("installing");
-						Allocation alloc;
-						card.get_allocation(out alloc);
-						if(s.download != null)
-						{
-							progress_bar.set_size_request((int) (s.download.status.progress * alloc.width), 8);
-						}
-						break;
+						case Game.State.DOWNLOADING:
+							card.get_style_context().remove_class("installed");
+							card.get_style_context().add_class("downloading");
+							card.get_style_context().remove_class("installing");
+							Allocation alloc;
+							card.get_allocation(out alloc);
+							if(s.download != null)
+							{
+								progress_bar.set_size_request((int) (s.download.status.progress * alloc.width), 8);
+							}
+							break;
 
-					case Game.State.INSTALLING:
-						card.get_style_context().remove_class("installed");
-						card.get_style_context().remove_class("downloading");
-						card.get_style_context().add_class("installing");
-						break;
-				}
+						case Game.State.INSTALLING:
+							card.get_style_context().remove_class("installed");
+							card.get_style_context().remove_class("downloading");
+							card.get_style_context().add_class("installing");
+							break;
+					}
+					return Source.REMOVE;
+				});
 			});
 			game.status_change(game.status);
 
