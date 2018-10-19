@@ -14,13 +14,6 @@
 	],
 
 	"modules": [
-		/* disable libs
-		"steamrt/steamrt.json",
-
-		"shared/udev/udev-175.json",
-		"shared/glu/glu-9.0.0.json",
-		*/
-
 		{
 			"name": "manette",
 			"buildsystem": "meson",
@@ -32,57 +25,5 @@
 				}
 			]
 		}
-		/*,
-		{
-			"name": "libopenal",
-			"buildsystem": "cmake-ninja",
-			"config-opts": ["-DALSOFT_UTILS=OFF", "-DALSOFT_NO_CONFIG_UTIL=ON", "-DALSOFT_EXAMPLES=OFF", "-DALSOFT_TESTS=OFF"],
-			"cleanup": [
-				"/bin",
-				"/share"
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "https://github.com/kcat/openal-soft/archive/openal-soft-1.19.1.tar.gz",
-					"sha256": "9f3536ab2bb7781dbafabc6a61e0b34b17edd16bd6c2eaf2ae71bc63078f98c7"
-				}
-			]
-		},
-		{
-			"name": "libCgGL",
-			"only-arches": ["i386"],
-			"buildsystem": "simple",
-			"build-commands": [
-				"install -Dm644 usr/lib/libCgGL.so /app/lib/",
-				"install -Dm644 usr/lib/libCg.so /app/lib/"
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "http://developer.download.nvidia.com/cg/Cg_3.1/Cg-3.1_April2012_x86.tgz",
-					"sha256": "cef3591e436f528852db0e8c145d3842f920e0c89bcfb219c466797cb7b18879"
-				}
-			]
-		},
-
-		{
-			"name": "libcaca",
-			"config-opts": [
-				"--enable-ncurses", "--enable-x11", "--disable-doc",
-				"--enable-csharp=no", "--enable-java=no", "--enable-python=no", "--enable-ruby=no"
-			],
-			"cleanup": [
-				"/bin",
-				"/share"
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "http://caca.zoy.org/files/libcaca/libcaca-0.99.beta19.tar.gz",
-					"sha256": "128b467c4ed03264c187405172a4e83049342cc8cc2f655f53a2d0ee9d3772f4"
-				}
-			]
-		}*/
 	]
 }
