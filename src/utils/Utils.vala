@@ -70,12 +70,19 @@ namespace GameHub.Utils
 		{
 			cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
 		}
+		string[] ccmd = { "flatpak-spawn", "--host" };
+		foreach(var arg in cmd)
+		{
+			ccmd += arg;
+		}
+		#else
+		string[] ccmd = cmd;
 		#endif
 
 		try
 		{
 			if(log) debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
-			Process.spawn_sync(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout);
+			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout);
 			stdout = stdout.strip();
 			if(stdout.length > 0) print(stdout + "\n");
 		}
@@ -98,12 +105,19 @@ namespace GameHub.Utils
 		{
 			cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
 		}
+		string[] ccmd = { "flatpak-spawn", "--host" };
+		foreach(var arg in cmd)
+		{
+			ccmd += arg;
+		}
+		#else
+		string[] ccmd = cmd;
 		#endif
 
 		try
 		{
 			if(log) debug("[Utils.run_async] Running {'%s'} in '%s'", string.joinv("' '", cmd), cdir);
-			Process.spawn_async(cdir, cmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
+			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
 
 			ChildWatch.add(pid, (pid, status) => {
 				Process.close_pid(pid);

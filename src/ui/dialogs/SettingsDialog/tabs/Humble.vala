@@ -44,10 +44,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			add_switch(_("Load games from Humble Trove"), humble_auth.load_trove_games, v => { humble_auth.load_trove_games = v; update(); dialog.show_restart_message(); });
 
-			#if !FLATPAK
 			add_separator();
 			add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; dialog.show_restart_message(); });
-			#endif
+
 			//add_cache_directory(_("Installers cache"), FSUtils.Paths.Humble.Installers);
 
 			update();

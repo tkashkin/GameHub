@@ -324,7 +324,7 @@ namespace GameHub.UI.Dialogs
 
 			foreach(var tag in Tables.Tags.TAGS)
 			{
-				if(tag in Tables.Tags.DYNAMIC_TAGS) continue;
+				if(tag in Tables.Tags.DYNAMIC_TAGS || !tag.enabled) continue;
 				var row = new TagRow(game, tag);
 				tags_list.add(row);
 			}

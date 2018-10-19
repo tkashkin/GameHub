@@ -281,6 +281,13 @@ namespace GameHub.UI.Views.GamesView
 			ui_settings.notify["use-proton"].connect(postpone_view_update);
 
 			filters_popover.filters_changed.connect(postpone_view_update);
+			filters_popover.sort_mode_changed.connect(() => {
+				Idle.add(() => {
+					games_list.invalidate_sort();
+					games_grid.invalidate_sort();
+					return Source.REMOVE;
+				});
+			});
 
 			add_game_popover.game_added.connect(g => add_game(g));
 
@@ -716,6 +723,11 @@ namespace GameHub.UI.Views.GamesView
 				if(s1 != Game.State.INSTALLING && s2 == Game.State.INSTALLING) return 1;
 				if(s1 == Game.State.INSTALLED && s2 != Game.State.INSTALLED) return -1;
 				if(s1 != Game.State.INSTALLED && s2 == Game.State.INSTALLED) return 1;
+
+				if(filters_popover.sort_mode == Settings.SortMode.LAST_LAUNCH)
+				{
+					return (int) (game1.last_launch - game2.last_launch);
+				}
 
 				return game1.name.collate(game2.name);
 			}

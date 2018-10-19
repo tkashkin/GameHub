@@ -24,6 +24,7 @@ using GameHub.Data;
 using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
+using GameHub.Settings;
 
 namespace GameHub.UI.Views.GamesView
 {
@@ -31,6 +32,11 @@ namespace GameHub.UI.Views.GamesView
 	{
 		public ArrayList<Tables.Tags.Tag> selected_tags { get; private set; }
 		public signal void filters_changed(ArrayList<Tables.Tags.Tag> selected_tags);
+
+		public SortMode sort_mode { get; private set; default = SortMode.NAME; }
+		public signal void sort_mode_changed(SortMode sort_mode);
+
+		private Granite.Widgets.ModeButton sort_mode_button;
 
 		private CheckButton tags_header_check;
 		private ListBox tags_list;
@@ -50,6 +56,41 @@ namespace GameHub.UI.Views.GamesView
 			set_size_request(220, -1);
 
 			var vbox = new Box(Orientation.VERTICAL, 0);
+
+			var sort_hbox = new Box(Orientation.HORIZONTAL, 6);
+			sort_hbox.margin_start = sort_hbox.margin_end = 8;
+			sort_hbox.margin_top = 4;
+			sort_hbox.margin_bottom = 2;
+
+			var sort_image = new Image.from_icon_name("view-sort-descending-symbolic", IconSize.BUTTON);
+			sort_hbox.add(sort_image);
+
+			var sort_label = new HeaderLabel(_("Sort by:"));
+			sort_label.xpad = 0;
+			sort_label.halign = Align.START;
+			sort_label.xalign = 0;
+			sort_label.hexpand = true;
+			sort_hbox.add(sort_label);
+
+			sort_mode_button = new Granite.Widgets.ModeButton();
+			sort_mode_button.halign = Align.END;
+			sort_mode_button.valign = Align.CENTER;
+			add_sort_mode(SortMode.NAME);
+			add_sort_mode(SortMode.LAST_LAUNCH);
+			sort_hbox.add(sort_mode_button);
+
+			var saved_state = Settings.SavedState.get_instance();
+
+			sort_mode_button.set_active(saved_state.sort_mode == SortMode.NAME ? 0 : 1);
+			sort_mode_button.mode_changed.connect(() => {
+				saved_state.sort_mode = sort_mode_button.selected == 0 ? SortMode.NAME : SortMode.LAST_LAUNCH;
+				sort_mode = saved_state.sort_mode;
+				sort_mode_changed(sort_mode);
+			});
+
+			vbox.add(sort_hbox);
+
+			vbox.add(new Separator(Orientation.HORIZONTAL));
 
 			tags_list = new ListBox();
 			tags_list.get_style_context().add_class("tags-list");
@@ -150,6 +191,7 @@ namespace GameHub.UI.Views.GamesView
 
 			foreach(var tag in Tables.Tags.TAGS)
 			{
+				if(!tag.enabled) continue;
 				tags_list.add(new TagRow(tag));
 				tag.notify["selected"].connect(update);
 			}
@@ -178,6 +220,13 @@ namespace GameHub.UI.Views.GamesView
 			filters_changed(selected_tags);
 
 			is_updating = false;
+		}
+
+		private void add_sort_mode(SortMode mode)
+		{
+			var image = new Image.from_icon_name(mode.icon(), IconSize.MENU);
+			image.tooltip_text = mode.name();
+			sort_mode_button.append(image);
 		}
 
 		public class TagRow: ListBoxRow

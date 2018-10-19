@@ -45,10 +45,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			add_steam_apikey_entry();
 			add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey");
 
-			#if !FLATPAK
 			add_separator();
 			add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; dialog.show_restart_message(); }, false);
-			#endif
 
 			update();
 		}

@@ -22,6 +22,7 @@
 		"--talk-name=org.gnome.SettingsDaemon",
 		"--talk-name=org.freedesktop.NetworkManager",
 		"--talk-name=org.kde.StatusNotifierWatcher",
+		"--talk-name=org.freedesktop.Flatpak",
 		"--socket=session-bus",
 
 		"--persist=.",
@@ -49,7 +50,7 @@
 
 		"--filesystem=host",
 		"--filesystem=home",
-		"--filesystem=~/.var/app/com.valvesoftware.Steam:ro"
+		"--filesystem=~/.var/app/com.valvesoftware.Steam"
 	],
 	"cleanup": [
 		"/include",
