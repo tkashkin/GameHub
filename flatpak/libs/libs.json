@@ -15,6 +15,15 @@
 
 	"modules": [
 		{
+			"name": "libevdev",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://gitlab.freedesktop.org/libevdev/libevdev.git"
+				}
+			]
+		},
+		{
 			"name": "manette",
 			"buildsystem": "meson",
 			"config-opts": ["--libdir=lib"],
