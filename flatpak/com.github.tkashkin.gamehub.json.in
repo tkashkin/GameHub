@@ -63,6 +63,8 @@
 		"/share/gtk-doc"
 	],
 	"modules": [
+		"libs/libs.json",
+
 		{
 			"name": "gamehub",
 			"buildsystem": "meson",
@@ -80,7 +82,6 @@
 			]
 		},
 
-		"bin/bin.json",
-		"libs/libs.json"
+		"bin/bin.json"
 	]
 }
