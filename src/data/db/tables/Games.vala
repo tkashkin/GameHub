@@ -46,6 +46,7 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field COMPAT_TOOL;
 		public static Table.Field COMPAT_TOOL_SETTINGS;
 		public static Table.Field ARGUMENTS;
+		public static Table.Field LAST_LAUNCH;
 
 		public Games()
 		{
@@ -65,6 +66,7 @@ namespace GameHub.Data.DB.Tables
 			COMPAT_TOOL          = f(11);
 			COMPAT_TOOL_SETTINGS = f(12);
 			ARGUMENTS            = f(13);
+			LAST_LAUNCH          = f(14);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -94,6 +96,10 @@ namespace GameHub.Data.DB.Tables
 					case 1:
 						db.exec("ALTER TABLE `games` ADD `arguments` string");
 						break;
+
+					case 2:
+						db.exec("ALTER TABLE `games` ADD `last_launch` integer not null default 0");
+						break;
 				}
 			}
 		}
@@ -120,8 +126,9 @@ namespace GameHub.Data.DB.Tables
 					`platforms`,
 					`compat_tool`,
 					`compat_tool_settings`,
-					`arguments`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`arguments`,
+					`last_launch`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -158,6 +165,7 @@ namespace GameHub.Data.DB.Tables
 			COMPAT_TOOL.bind(s, game.compat_tool);
 			COMPAT_TOOL_SETTINGS.bind(s, game.compat_tool_settings);
 			ARGUMENTS.bind(s, game.arguments);
+			LAST_LAUNCH.bind_int64(s, game.last_launch);
 
 			res = s.step();
 

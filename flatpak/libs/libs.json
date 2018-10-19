@@ -14,11 +14,25 @@
 	],
 
 	"modules": [
+		/* disable libs
 		"steamrt/steamrt.json",
 
 		"shared/udev/udev-175.json",
 		"shared/glu/glu-9.0.0.json",
+		*/
 
+		{
+			"name": "manette",
+			"buildsystem": "meson",
+			"config-opts": ["--libdir=lib"],
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://gitlab.gnome.org/aplazas/libmanette.git"
+				}
+			]
+		}
+		/*,
 		{
 			"name": "libopenal",
 			"buildsystem": "cmake-ninja",
@@ -69,6 +83,6 @@
 					"sha256": "128b467c4ed03264c187405172a4e83049342cc8cc2f655f53a2d0ee9d3772f4"
 				}
 			]
-		}
+		}*/
 	]
 }

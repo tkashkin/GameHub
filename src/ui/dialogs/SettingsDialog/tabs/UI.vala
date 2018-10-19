@@ -44,7 +44,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			add_switch(_("Show non-native games"), ui.show_unsupported_games, v => { ui.show_unsupported_games = v; });
 			add_switch(_("Use compatibility layers and consider Windows games compatible"), ui.use_compat, v => { ui.use_compat = v; });
-		}
 
+			add_separator();
+
+			add_switch(_("Use imported tags"), ui.use_imported_tags, v => { ui.use_imported_tags = v; });
+		}
 	}
 }

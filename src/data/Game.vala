@@ -120,6 +120,8 @@ namespace GameHub.Data
 		public File install_dir { get; protected set; }
 		public string? store_page { get; protected set; default = null; }
 
+		public int64 last_launch { get; protected set; default = 0; }
+
 		public abstract async void install();
 		public abstract async void uninstall();
 
@@ -145,6 +147,8 @@ namespace GameHub.Data
 					}
 				}
 
+				last_launch = get_real_time() / 1000;
+				save();
 				yield Utils.run_thread(cmd, executable.get_parent().get_path(), null, true);
 			}
 		}

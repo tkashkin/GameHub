@@ -60,6 +60,7 @@ namespace GameHub.Data.Sources.Steam
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
+			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -196,6 +197,8 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async void run()
 		{
+			last_launch = get_real_time() / 1000;
+			save();
 			Utils.open_uri(@"steam://rungameid/$(id)");
 			update_status();
 		}
