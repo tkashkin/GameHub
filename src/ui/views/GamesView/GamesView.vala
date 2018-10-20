@@ -589,7 +589,7 @@ namespace GameHub.UI.Views.GamesView
 					src.load_games.end(res);
 
 					loading_sources.remove(src);
-					
+
 					status_changed = true;
 
 					if(loading_sources.size == 0)
@@ -732,7 +732,8 @@ namespace GameHub.UI.Views.GamesView
 
 				if(filters_popover.sort_mode == Settings.SortMode.LAST_LAUNCH)
 				{
-					return (int) (game1.last_launch - game2.last_launch);
+					if(game1.last_launch > game2.last_launch) return -1;
+					if(game1.last_launch < game2.last_launch) return 1;
 				}
 
 				return game1.name.collate(game2.name);
