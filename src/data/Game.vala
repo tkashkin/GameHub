@@ -127,8 +127,10 @@ namespace GameHub.Data
 
 		public virtual async void run()
 		{
-			if(executable.query_exists())
+			if(!GameIsLaunched && executable.query_exists())
 			{
+				GameIsLaunched = true;
+
 				string[] cmd = { executable.get_path() };
 
 				if(arguments != null && arguments.length > 0)
@@ -150,6 +152,8 @@ namespace GameHub.Data
 				last_launch = get_real_time() / 1000;
 				save();
 				yield Utils.run_thread(cmd, executable.get_parent().get_path(), null, true);
+
+				GameIsLaunched = false;
 			}
 		}
 
@@ -697,4 +701,5 @@ namespace GameHub.Data
 	}
 	public static Platform[] Platforms;
 	public static Platform CurrentPlatform;
+	public static bool GameIsLaunched = false;
 }

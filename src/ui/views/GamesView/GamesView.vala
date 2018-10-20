@@ -54,6 +54,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private Granite.Widgets.OverlayBar status_overlay;
 		private string? status_text;
+		private bool status_changed = false;
 
 		private bool new_games_added = false;
 
@@ -433,7 +434,7 @@ namespace GameHub.UI.Views.GamesView
 			var games = src == null ? games_grid.get_children().length() : src.games_count;
 			titlebar.subtitle = (src == null ? "" : src.name + ": ") + ngettext("%u game", "%u games", games).printf(games);
 
-			if(loading_sources.size > 0)
+			if(status_changed && loading_sources.size > 0)
 			{
 				string[] src_names = {};
 				foreach(var s in loading_sources)
@@ -454,6 +455,8 @@ namespace GameHub.UI.Views.GamesView
 				status_overlay.active = false;
 				status_overlay.hide();
 			}
+
+			status_changed = false;
 
 			foreach(var s in sources)
 			{
@@ -581,10 +584,13 @@ namespace GameHub.UI.Views.GamesView
 			foreach(var src in sources)
 			{
 				loading_sources.add(src);
+				status_changed = true;
 				src.load_games.begin(add_game, postpone_view_update, (obj, res) => {
 					src.load_games.end(res);
 
 					loading_sources.remove(src);
+					
+					status_changed = true;
 
 					if(loading_sources.size == 0)
 					{
@@ -810,6 +816,7 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(in_destruction()) return;
 			status_text = _("Updating game info");
+			status_changed = true;
 			postpone_view_update();
 			Utils.thread("Updating", () => {
 				foreach(var src in sources)
@@ -821,6 +828,7 @@ namespace GameHub.UI.Views.GamesView
 					}
 				}
 				status_text = null;
+				status_changed = true;
 				postpone_view_update();
 			});
 		}
@@ -829,6 +837,7 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(!ui_settings.merge_games || in_destruction()) return;
 			status_text = _("Merging games");
+			status_changed = true;
 			postpone_view_update();
 			Utils.thread("Merging", () => {
 				foreach(var src in sources)
@@ -836,6 +845,7 @@ namespace GameHub.UI.Views.GamesView
 					merge_games_from(src);
 				}
 				status_text = null;
+				status_changed = true;
 				postpone_view_update();
 			});
 		}
@@ -843,6 +853,7 @@ namespace GameHub.UI.Views.GamesView
 		private void merge_games_from(GameSource src)
 		{
 			status_text = _("Merging games from %s").printf(src.name);
+			status_changed = true;
 			postpone_view_update();
 			Utils.thread("Merging-" + src.id, () => {
 				foreach(var game in src.games)
@@ -850,6 +861,7 @@ namespace GameHub.UI.Views.GamesView
 					merge_game(game);
 				}
 				status_text = null;
+				status_changed = true;
 				postpone_view_update();
 			});
 		}
@@ -858,6 +870,7 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
 			status_text = _("Merging %s (%s)").printf(game.name, game.full_id);
+			status_changed = true;
 			postpone_view_update();
 			Utils.thread("Merging-" + game.full_id, () => {
 				foreach(var src in sources)
@@ -868,6 +881,7 @@ namespace GameHub.UI.Views.GamesView
 					}
 				}
 				status_text = null;
+				status_changed = true;
 				postpone_view_update();
 			});
 		}
