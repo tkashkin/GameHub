@@ -111,6 +111,19 @@
 	opacity: 1;
 }
 
+.gamecard image
+{
+	opacity: 0.6;
+	transition: 100ms;
+}
+
+.gamecard.hover image,
+.games-grid flowboxchild:focus image,
+.games-grid flowboxchild:selected image
+{
+	opacity: 0.8;
+}
+
 .games-grid flowboxchild
 {
 	border-radius: 4px;

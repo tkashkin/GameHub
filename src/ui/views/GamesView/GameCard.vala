@@ -83,7 +83,6 @@ namespace GameHub.UI.Views.GamesView
 
 			src_icon = new Image();
 			src_icon.icon_size = IconSize.LARGE_TOOLBAR;
-			src_icon.opacity = 0.6;
 
 			label = new Label("");
 			label.xpad = 8;
@@ -265,7 +264,6 @@ namespace GameHub.UI.Views.GamesView
 					var icon = new Image();
 					icon.icon_name = icon_name;
 					icon.icon_size = IconSize.LARGE_TOOLBAR;
-					icon.opacity = 0.6;
 					src_icons.add(icon);
 				}
 			}
@@ -277,7 +275,6 @@ namespace GameHub.UI.Views.GamesView
 				var icon = new Image();
 				icon.icon_name = p.icon();
 				icon.icon_size = IconSize.LARGE_TOOLBAR;
-				icon.opacity = 0.6;
 				platform_icons.add(icon);
 			}
 			platform_icons.show_all();
