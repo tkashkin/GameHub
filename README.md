@@ -62,17 +62,18 @@ scripts/build.sh build_deb
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
 cd GameHub
-meson build --prefix=/usr -Ddistro=generic
+meson build --prefix=/usr -Ddistro=generic --buildtype=debug
 cd build
 ninja
 sudo ninja install
 ```
 
 ### flatpak
-flatpak manifest and build instructions are in the [flatpak branch](https://github.com/tkashkin/GameHub/tree/flatpak).
+```bash
+git clone https://github.com/tkashkin/GameHub.git
+cd GameHub
+scripts/build.sh build_flatpak
+```
 
 ## Screenshots
 <p align="center"><img src="data/screenshots/1.png?raw=true" width="49%" /> <img src="data/screenshots/1_dark.png?raw=true" width="49%" /><img src="data/screenshots/2.png?raw=true" width="49%" /> <img src="data/screenshots/2_dark.png?raw=true" width="49%" /><img src="data/screenshots/3.png?raw=true" width="49%" /> <img src="data/screenshots/3_dark.png?raw=true" width="49%" /><img src="data/screenshots/3_dialog.png?raw=true" width="49%" /> <img src="data/screenshots/3_dialog_dark.png?raw=true" width="49%" /><img src="data/screenshots/4.png?raw=true" width="49%" /> <img src="data/screenshots/4_dark.png?raw=true" width="49%" /></p>
-
-## Donate
-[![Patreon](https://img.shields.io/badge/donate-patreon-F96854.svg?logo=patreon)](https://www.patreon.com/tkashkin) [![Liberapay](https://img.shields.io/badge/donate-liberapay-F6C915.svg?logo=liberapay)](https://liberapay.com/tkashkin/)
