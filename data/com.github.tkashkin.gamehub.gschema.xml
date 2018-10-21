@@ -114,6 +114,12 @@
 		<key name="humble-games" type="s">
 			<default>'~/Games/HumbleBundle'</default>
 		</key>
+		<key name="libretro-core-dir" type="s">
+			<default>'/usr/lib/libretro'</default>
+		</key>
+		<key name="libretro-core-info-dir" type="s">
+			<default>'/usr/share/libretro/info'</default>
+		</key>
 	</schema>
 
 	<schema path="/com/github/tkashkin/gamehub/paths/collection/" id="com.github.tkashkin.gamehub.paths.collection" gettext-domain="com.github.tkashkin.gamehub">

@@ -35,7 +35,7 @@ namespace GameHub.UI.Dialogs
 
 		private Box content;
 		private Label title_label;
-		private ListBox opts_list;
+		private CompatToolOptions opts_list;
 
 		private CompatToolPicker compat_tool_picker;
 
@@ -72,13 +72,7 @@ namespace GameHub.UI.Dialogs
 			compat_tool_picker.margin_start = 4;
 			content.add(compat_tool_picker);
 
-			opts_list = new ListBox();
-			opts_list.visible = false;
-			opts_list.get_style_context().add_class("tags-list");
-			opts_list.selection_mode = SelectionMode.NONE;
-
-			update_options();
-			compat_tool_picker.notify["selected"].connect(update_options);
+			opts_list = new CompatToolOptions(game, compat_tool_picker, false);
 
 			content.add(opts_list);
 
@@ -106,74 +100,13 @@ namespace GameHub.UI.Dialogs
 			show_all();
 		}
 
-		private void update_options()
-		{
-			opts_list.foreach(r => r.destroy());
-			opts_list.visible = false;
-
-			if(compat_tool_picker == null || compat_tool_picker.selected == null
-				|| compat_tool_picker.selected.options == null) return;
-
-			foreach(var opt in compat_tool_picker.selected.options)
-			{
-				opts_list.add(new OptionRow(opt));
-			}
-
-			opts_list.show_all();
-		}
-
 		private void run_with_compat()
 		{
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 
 			compat_tool_picker.selected.run.begin(game);
-		}
 
-		private class OptionRow: ListBoxRow
-		{
-			public CompatTool.Option option { get; construct; }
-
-			public OptionRow(CompatTool.Option option)
-			{
-				Object(option: option);
-			}
-
-			construct
-			{
-				var ebox = new EventBox();
-				ebox.above_child = true;
-
-				var box = new Box(Orientation.HORIZONTAL, 8);
-				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 6;
-
-				var check = new CheckButton();
-				check.active = option.enabled;
-
-				var name = new Label(option.name);
-				name.halign = Align.START;
-				name.xalign = 0;
-				name.hexpand = true;
-
-				ebox.tooltip_text = option.description;
-
-				box.add(check);
-				box.add(name);
-
-				ebox.add_events(EventMask.ALL_EVENTS_MASK);
-				ebox.button_release_event.connect(e => {
-					if(e.button == 1)
-					{
-						check.active = !check.active;
-						option.enabled = check.active;
-					}
-					return true;
-				});
-
-				ebox.add(box);
-
-				child = ebox;
-			}
+			opts_list.save_options();
 		}
 	}
 }

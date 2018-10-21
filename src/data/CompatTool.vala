@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Gee;
+
 using GameHub.Utils;
 
 namespace GameHub.Data
@@ -42,14 +44,46 @@ namespace GameHub.Data
 		public virtual async void install(Game game, File installer){}
 		public virtual async void run(Game game){}
 
-		public class Option: Object
+		public abstract class Option: Object
 		{
 			public string name { get; construct; }
 			public string description { get; construct; }
+		}
+
+		public class BoolOption: Option
+		{
 			public bool enabled { get; construct set; }
-			public Option(string name, string description, bool enabled)
+			public BoolOption(string name, string description, bool enabled)
 			{
 				Object(name: name, description: description, enabled: enabled);
+			}
+		}
+
+		public class StringOption: Option
+		{
+			public string? value { get; construct set; }
+			public StringOption(string name, string description, string? value)
+			{
+				Object(name: name, description: description, value: value);
+			}
+		}
+
+		public class FileOption: Option
+		{
+			public File? directory { get; construct set; }
+			public File? file { get; construct set; }
+			public FileOption(string name, string description, File? directory, File? file)
+			{
+				Object(name: name, description: description, directory: directory, file: file);
+			}
+		}
+
+		public class ComboOption: StringOption
+		{
+			public ArrayList<string> options { get; construct set; }
+			public ComboOption(string name, string description, ArrayList<string> options, string? value)
+			{
+				Object(name: name, description: description, options: options, value: value);
 			}
 		}
 

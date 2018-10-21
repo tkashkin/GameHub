@@ -7,6 +7,8 @@
 		<file alias="scalable/actions/source-humble-symbolic.svg">symbolic/sources/humble.svg</file>
 		<file alias="scalable/actions/source-humble-trove-symbolic.svg">symbolic/sources/humble-trove.svg</file>
 
+		<file alias="scalable/actions/emu-retroarch-symbolic.svg">symbolic/emu/retroarch.svg</file>
+
 		<file alias="scalable/actions/platform-linux-symbolic.svg">symbolic/platforms/linux.svg</file>
 		<file alias="scalable/actions/platform-windows-symbolic.svg">symbolic/platforms/windows.svg</file>
 		<file alias="scalable/actions/platform-macos-symbolic.svg">symbolic/platforms/macos.svg</file>

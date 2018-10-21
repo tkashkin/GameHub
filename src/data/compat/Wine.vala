@@ -43,10 +43,10 @@ namespace GameHub.Data.Compat
 			installed = executable != null && executable.query_exists();
 
 			install_options = {
-				new CompatTool.Option("/SILENT", _("Silent installation"), false),
-				new CompatTool.Option("/VERYSILENT", _("Very silent installation"), true),
-				new CompatTool.Option("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
-				new CompatTool.Option("/NOGUI", _("No GUI"), true)
+				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
+				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), true),
+				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
+				new CompatTool.BoolOption("/NOGUI", _("No GUI"), true)
 			};
 
 			if(installed)
@@ -85,7 +85,7 @@ namespace GameHub.Data.Compat
 
 			foreach(var opt in install_options)
 			{
-				if(opt.enabled)
+				if(opt is CompatTool.BoolOption && ((CompatTool.BoolOption) opt).enabled)
 				{
 					opts += opt.name;
 				}

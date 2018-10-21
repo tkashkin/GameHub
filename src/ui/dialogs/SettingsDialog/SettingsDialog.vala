@@ -64,13 +64,14 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var tabs_switcher = new StackSwitcher();
 			tabs_switcher.stack = tabs;
 			tabs_switcher.halign = Align.CENTER;
-			tabs_switcher.margin_bottom = 8;
+			tabs_switcher.margin_bottom = 16;
 
 			add_tab("ui", new Tabs.UI(this), _("Interface"));
+			add_tab("collection", new Tabs.Collection(this), _("Collection"));
 			add_tab("gs/steam", new Tabs.Steam(this), "Steam", "source-steam-symbolic");
 			add_tab("gs/gog", new Tabs.GOG(this), "GOG", "source-gog-symbolic");
 			add_tab("gs/humble", new Tabs.Humble(this), "Humble Bundle", "source-humble-symbolic");
-			add_tab("collection", new Tabs.Collection(this), _("Collection"));
+			add_tab("emu/retroarch", new Tabs.RetroArch(this), "RetroArch", "emu-retroarch-symbolic");
 
 			content.pack_start(restart_msg, false, false, 0);
 			content.pack_start(tabs_switcher, false, false, 0);
