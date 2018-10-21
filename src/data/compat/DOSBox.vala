@@ -27,7 +27,7 @@ namespace GameHub.Data.Compat
 		public string binary { get; construct; default = "dosbox"; }
 
 		private File conf_windowed;
-		private CompatTool.Option? opt_windowed;
+		private CompatTool.BoolOption? opt_windowed;
 
 		public DOSBox(string binary="dosbox")
 		{
@@ -46,7 +46,7 @@ namespace GameHub.Data.Compat
 			conf_windowed = FSUtils.file(ProjectConfig.DATADIR + "/" + ProjectConfig.PROJECT_NAME, "compat/dosbox/windowed.conf");
 			if(conf_windowed.query_exists())
 			{
-				opt_windowed = new CompatTool.Option(_("Windowed"), _("Disable fullscreen"), true);
+				opt_windowed = new CompatTool.BoolOption(_("Windowed"), _("Disable fullscreen"), true);
 				options = { opt_windowed };
 			}
 		}

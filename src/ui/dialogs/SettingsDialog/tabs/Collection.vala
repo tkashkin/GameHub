@@ -75,8 +75,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 		{
 			var game = "VVVVVV";
 
-			collection_root.tooltip_text = FSUtils.Paths.Collection.expand_root();
-
 			gog_game_dir.tooltip_text = FSUtils.Paths.Collection.GOG.expand_game_dir(game);
 			gog_installers.tooltip_text = FSUtils.Paths.Collection.GOG.expand_installers(game);
 			gog_dlc.tooltip_text = FSUtils.Paths.Collection.GOG.expand_dlc(game);

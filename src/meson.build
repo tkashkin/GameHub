@@ -56,6 +56,7 @@ sources = [
 	'data/compat/Proton.vala',
 	'data/compat/Wine.vala',
 	'data/compat/DOSBox.vala',
+	'data/compat/RetroArch.vala',
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
@@ -64,10 +65,11 @@ sources = [
 	'ui/dialogs/SettingsDialog/SettingsDialogTab.vala',
 
 	'ui/dialogs/SettingsDialog/tabs/UI.vala',
+	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
 	'ui/dialogs/SettingsDialog/tabs/Steam.vala',
 	'ui/dialogs/SettingsDialog/tabs/GOG.vala',
 	'ui/dialogs/SettingsDialog/tabs/Humble.vala',
-	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
+	'ui/dialogs/SettingsDialog/tabs/RetroArch.vala',
 
 	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
@@ -95,6 +97,7 @@ sources = [
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
+	'ui/widgets/CompatToolOptions.vala',
 	'ui/widgets/CompatToolPicker.vala',
 
 	'utils/Utils.vala',

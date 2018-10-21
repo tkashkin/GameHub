@@ -46,7 +46,7 @@ namespace GameHub.UI.Dialogs
 		private bool is_finished = false;
 
 		private CompatToolPicker compat_tool_picker;
-		private ListBox opts_list;
+		private CompatToolOptions opts_list;
 
 		public GameInstallDialog(Game game, ArrayList<Game.Installer> installers)
 		{
@@ -174,13 +174,7 @@ namespace GameHub.UI.Dialogs
 
 				content.add(compat_tool_revealer);
 
-				opts_list = new ListBox();
-				opts_list.visible = false;
-				opts_list.get_style_context().add_class("tags-list");
-				opts_list.selection_mode = SelectionMode.NONE;
-
-				update_options();
-				compat_tool_picker.notify["selected"].connect(update_options);
+				opts_list = new CompatToolOptions(game, compat_tool_picker, true);
 				compat_tool_box.add(opts_list);
 			}
 
@@ -207,6 +201,10 @@ namespace GameHub.UI.Dialogs
 							installer = row.installer;
 						}
 						is_finished = true;
+						if(opts_list != null)
+						{
+							opts_list.save_options();
+						}
 						install(installer, compat_tool_picker != null ? compat_tool_picker.selected : null);
 						destroy();
 						break;
@@ -222,22 +220,6 @@ namespace GameHub.UI.Dialogs
 			get_content_area().add(hbox);
 			get_content_area().set_size_request(380, 96);
 			show_all();
-		}
-
-		private void update_options()
-		{
-			opts_list.foreach(r => r.destroy());
-			opts_list.visible = false;
-
-			if(compat_tool_picker == null || compat_tool_picker.selected == null
-				|| compat_tool_picker.selected.install_options == null) return;
-
-			foreach(var opt in compat_tool_picker.selected.install_options)
-			{
-				opts_list.add(new OptionRow(opt));
-			}
-
-			opts_list.show_all();
 		}
 
 		public static string fsize(int64 size)
@@ -276,53 +258,6 @@ namespace GameHub.UI.Dialogs
 				box.add(name);
 				box.add(size);
 				child = box;
-			}
-		}
-
-		private class OptionRow: ListBoxRow
-		{
-			public CompatTool.Option option { get; construct; }
-
-			public OptionRow(CompatTool.Option option)
-			{
-				Object(option: option);
-			}
-
-			construct
-			{
-				var ebox = new EventBox();
-				ebox.above_child = true;
-
-				var box = new Box(Orientation.HORIZONTAL, 8);
-				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 6;
-
-				var check = new CheckButton();
-				check.active = option.enabled;
-
-				var name = new Label(option.name);
-				name.halign = Align.START;
-				name.xalign = 0;
-				name.hexpand = true;
-
-				ebox.tooltip_text = option.description;
-
-				box.add(check);
-				box.add(name);
-
-				ebox.add_events(EventMask.ALL_EVENTS_MASK);
-				ebox.button_release_event.connect(e => {
-					if(e.button == 1)
-					{
-						check.active = !check.active;
-						option.enabled = check.active;
-					}
-					return true;
-				});
-
-				ebox.add(box);
-
-				child = ebox;
 			}
 		}
 	}

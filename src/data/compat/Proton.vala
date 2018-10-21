@@ -41,10 +41,10 @@ namespace GameHub.Data.Compat
 			installed = false;
 
 			options = {
-				new CompatTool.Option("PROTON_NO_ESYNC", _("Disable esync"), false),
-				new CompatTool.Option("PROTON_NO_D3D11", _("Disable DirectX 11 compatibility layer"), false),
-				new CompatTool.Option("PROTON_USE_WINED3D11", _("Use WineD3D11 as DirectX 11 compatibility layer"), false),
-				new CompatTool.Option("DXVK_HUD", _("Show DXVK info overlay"), true)
+				new CompatTool.BoolOption("PROTON_NO_ESYNC", _("Disable esync"), false),
+				new CompatTool.BoolOption("PROTON_NO_D3D11", _("Disable DirectX 11 compatibility layer"), false),
+				new CompatTool.BoolOption("PROTON_USE_WINED3D11", _("Use WineD3D11 as DirectX 11 compatibility layer"), false),
+				new CompatTool.BoolOption("DXVK_HUD", _("Show DXVK info overlay"), true)
 			};
 
 			File? proton_dir = null;
@@ -110,7 +110,7 @@ namespace GameHub.Data.Compat
 			{
 				foreach(var opt in options)
 				{
-					if(opt.enabled)
+					if(opt is CompatTool.BoolOption && ((CompatTool.BoolOption) opt).enabled)
 					{
 						env = Environ.set_variable(env, opt.name, "1");
 					}

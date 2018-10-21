@@ -317,28 +317,77 @@ namespace GameHub.Data
 			get
 			{
 				if(this is Sources.Steam.SteamGame) return false;
+				if(compat_tool_settings != null && compat_tool_settings.length > 0)
+				{
+					var root = Parser.parse_json(compat_tool_settings);
+					if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
+					{
+						var obj = root.get_object();
+						return obj.has_member("force_compat") && obj.get_boolean_member("force_compat");
+					}
+				}
 				return install_dir != null && install_dir.get_child(CompatTool.COMPAT_DATA_DIR).get_child("force_compat").query_exists();
 			}
 			set
 			{
-				try
+				if(this is Sources.Steam.SteamGame) return;
+				var root_object = new Json.Object();
+				if(compat_tool_settings != null && compat_tool_settings.length > 0)
 				{
-					var flag = FSUtils.mkdir(install_dir.get_path(), CompatTool.COMPAT_DATA_DIR).get_child("force_compat");
-					if(value)
+					var root = Parser.parse_json(compat_tool_settings);
+					if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
 					{
-						FileUtils.set_contents(flag.get_path(), "");
+						root_object = root.get_object();
 					}
-					else
-					{
-						flag.delete();
-					}
-					notify_property("use-compat");
 				}
-				catch(Error e)
+				root_object.set_boolean_member("force_compat", value);
+				var root_node = new Json.Node(Json.NodeType.OBJECT);
+				root_node.set_object(root_object);
+				compat_tool_settings = Json.to_string(root_node, false);
+				save();
+				notify_property("use-compat");
+			}
+		}
+
+		public Json.Object get_compat_settings(CompatTool tool)
+		{
+			if(compat_tool_settings != null && compat_tool_settings.length > 0)
+			{
+				var root = Parser.parse_json(compat_tool_settings);
+				var settings = Parser.json_object(root, { tool.id });
+				if(settings != null)
 				{
-					warning("[Game.force_compat.set] %s", e.message);
+					return settings;
 				}
 			}
+			return new Json.Object();
+		}
+
+		public void set_compat_settings(CompatTool tool, Json.Object? settings)
+		{
+			var root_object = new Json.Object();
+			if(compat_tool_settings != null && compat_tool_settings.length > 0)
+			{
+				var root = Parser.parse_json(compat_tool_settings);
+				if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
+				{
+					root_object = root.get_object();
+				}
+			}
+
+			if(settings == null)
+			{
+				root_object.remove_member(tool.id);
+			}
+			else
+			{
+				root_object.set_object_member(tool.id, settings);
+			}
+
+			var root_node = new Json.Node(Json.NodeType.OBJECT);
+			root_node.set_object(root_object);
+			compat_tool_settings = Json.to_string(root_node, false);
+			save();
 		}
 
 		public static bool is_equal(Game first, Game second)

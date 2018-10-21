@@ -73,7 +73,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			chooser.create_folders = create;
 			chooser.show_hidden = true;
 			chooser.select_filename(FSUtils.expand(val));
-			chooser.file_set.connect(() => { action(chooser.get_filename()); });
+			chooser.tooltip_text = chooser.get_filename();
+			chooser.file_set.connect(() => { chooser.tooltip_text = chooser.get_filename(); action(chooser.get_filename()); });
 			chooser.set_size_request(280, -1);
 
 			var label = new Label(text);
