@@ -80,7 +80,7 @@ namespace GameHub.UI.Views.GamesView
 
 		#if MANETTE
 		private Manette.Monitor manette_monitor = new Manette.Monitor();
-		private bool gamepad_connected = false;
+		private ArrayList<Manette.Device> connected_gamepads = new ArrayList<Manette.Device>();
 		private bool gamepad_axes_to_keys_thread_running = false;
 		private ArrayList<Widget> gamepad_mode_visible_widgets = new ArrayList<Widget>();
 		private ArrayList<Widget> gamepad_mode_hidden_widgets = new ArrayList<Widget>();
@@ -915,46 +915,39 @@ namespace GameHub.UI.Views.GamesView
 		}
 
 		#if MANETTE
+		private void ui_update_gamepad_mode()
+		{
+			Idle.add(() => {
+				var is_gamepad_connected = connected_gamepads.size > 0;
+				var widgets_to_show = is_gamepad_connected ? gamepad_mode_visible_widgets : gamepad_mode_hidden_widgets;
+				var widgets_to_hide = is_gamepad_connected ? gamepad_mode_hidden_widgets : gamepad_mode_visible_widgets;
+				foreach(var w in widgets_to_show) w.show();
+				foreach(var w in widgets_to_hide) w.hide();
+				if(is_gamepad_connected)
+				{
+					view.selected = 0;
+					games_grid.grab_focus();
+				}
+				return Source.REMOVE;
+			});
+		}
+
 		private void on_gamepad_connected(Manette.Device device)
 		{
 			debug("[Gamepad] '%s' connected", device.get_name());
 			device.button_press_event.connect(on_gamepad_button_press_event);
 			device.button_release_event.connect(on_gamepad_button_release_event);
 			device.absolute_axis_event.connect(on_gamepad_absolute_axis_event);
-			gamepad_connected = true;
+			connected_gamepads.add(device);
 			gamepad_axes_to_keys_thread();
-
-			Idle.add(() => {
-				view.selected = 0;
-				foreach(var widget in gamepad_mode_visible_widgets)
-				{
-					widget.show();
-				}
-				foreach(var widget in gamepad_mode_hidden_widgets)
-				{
-					widget.hide();
-				}
-				games_grid.grab_focus();
-				return Source.REMOVE;
-			});
+			ui_update_gamepad_mode();
 		}
 
 		private void on_gamepad_disconnected(Manette.Device device)
 		{
 			debug("[Gamepad] '%s' disconnected", device.get_name());
-			gamepad_connected = false;
-
-			Idle.add(() => {
-				foreach(var widget in gamepad_mode_visible_widgets)
-				{
-					widget.hide();
-				}
-				foreach(var widget in gamepad_mode_hidden_widgets)
-				{
-					widget.show();
-				}
-				return Source.REMOVE;
-			});
+			connected_gamepads.remove(device);
+			ui_update_gamepad_mode();
 		}
 
 		private void on_gamepad_button_press_event(Manette.Device device, Manette.Event e)
@@ -998,7 +991,7 @@ namespace GameHub.UI.Views.GamesView
 			if(gamepad_axes_to_keys_thread_running) return;
 			Utils.thread("GamepadAxesToKeysThread", () => {
 				gamepad_axes_to_keys_thread_running = true;
-				while(gamepad_connected)
+				while(connected_gamepads.size > 0)
 				{
 					foreach(var axis in Gamepad.Axes.values)
 					{

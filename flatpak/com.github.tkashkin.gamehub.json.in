@@ -69,7 +69,7 @@
 			"name": "gamehub",
 			"buildsystem": "meson",
 			"config-opts": [
-				"--buildtype=debugoptimized",
+				"--buildtype=debug",
 				"-Dflatpak=true",
 				"-Druntime=/app/lib/steamrt:/app/lib/32bit/steamrt"
 			],

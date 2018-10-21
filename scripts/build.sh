@@ -17,6 +17,10 @@ _BUILD_IMAGE="local"
 _GPG_BINARY="gpg1"
 _GPG_PACKAGE="gnupg1"
 
+export CFLAGS=-O0
+export CPPFLAGS=-O0
+export CXXFLAGS=-O0
+
 if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_VERSION="xenial-$_VERSION"
 	_DEB_VERSION="$_DEB_VERSION~ubuntu16.04"
@@ -113,7 +117,7 @@ build_deb()
 	else
 		cp -f "debian/control.in" "debian/control"
 	fi
-	export DEB_BUILD_OPTIONS="nostrip nocheck"
+	export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
 	if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
 		echo "[scripts/build.sh] Building source package for launchpad"
 		dpkg-buildpackage -S -sa -us -uc
@@ -138,7 +142,7 @@ build()
 	echo "[scripts/build.sh] Building"
 	cd "$_ROOT"
 	mkdir -p "$BUILDROOT"
-	meson "$BUILDDIR" --prefix=/usr --buildtype=debugoptimized -Ddistro=generic -Dappimage=true
+	meson "$BUILDDIR" --prefix=/usr --buildtype=debug -Ddistro=generic -Dappimage=true
 	cd "$BUILDDIR"
 	ninja
 	DESTDIR="$APPDIR" ninja install

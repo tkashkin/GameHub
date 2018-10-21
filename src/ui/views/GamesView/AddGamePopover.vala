@@ -81,14 +81,14 @@ namespace GameHub.UI.Views.GamesView
 
 		private void update()
 		{
-			add.sensitive = name.text.strip().length > 0
-				&& executable.get_file() != null && executable.get_file().query_exists()
-				&& gamedir.get_file() != null && gamedir.get_file().query_exists();
-
 			if(executable.get_file() != null && gamedir.get_file() == null)
 			{
 				gamedir.select_file(executable.get_file().get_parent());
 			}
+
+			add.sensitive = name.text.strip().length > 0
+				&& executable.get_file() != null && executable.get_file().query_exists()
+				&& gamedir.get_file() != null && gamedir.get_file().query_exists();
 		}
 
 		private void add_game()
