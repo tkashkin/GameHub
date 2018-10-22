@@ -137,7 +137,7 @@ namespace GameHub.Data.Compat
 			}
 			if(arch != null)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
 			return env;
