@@ -173,7 +173,7 @@ namespace GameHub.Data.Compat
 			}
 			if(arch != null)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
 			yield Utils.run_thread({ "winetricks" }, game.install_dir.get_path(), env);
