@@ -26,6 +26,7 @@ namespace GameHub.Utils.Gamepad
 
 	public static HashMap<uint16, Button> Buttons;
 	public static HashMap<uint16, Axis> Axes;
+	public static bool ButtonPressed = false;
 
 	public static Button BTN_A;
 	public static Button BTN_B;
@@ -68,30 +69,30 @@ namespace GameHub.Utils.Gamepad
 		Buttons = new HashMap<uint16, Button>();
 		Axes = new HashMap<uint16, Axis>();
 
-		BTN_A = b(0x130, "A", null, Key.Return);
-		BTN_B = b(0x131, "B", null, Key.Escape);
+		BTN_A = b(0x130, "A", null, { Key.Return });
+		BTN_B = b(0x131, "B", null, { Key.Escape });
 		BTN_C = b(0x132, "C");
-		BTN_X = b(0x133, "X", null, Key.Menu);
+		BTN_X = b(0x133, "X", null, { Key.Menu });
 		BTN_Y = b(0x134, "Y");
 		BTN_Z = b(0x135, "Z");
 
-		BUMPER_LEFT  = b(0x136, "LB", "Left Bumper", Key.F1);
-		BUMPER_RIGHT = b(0x137, "RB", "Right Bumper", Key.F2);
+		BUMPER_LEFT  = b(0x136, "LB", "Left Bumper", { Key.F1 });
+		BUMPER_RIGHT = b(0x137, "RB", "Right Bumper", { Key.F2 });
 
-		TRIGGER_LEFT  = b(0x138, "LT", "Left Trigger", Key.F3);
-		TRIGGER_RIGHT = b(0x139, "RT", "Right Trigger", Key.F4);
+		TRIGGER_LEFT  = b(0x138, "LT", "Left Trigger", { Key.Shift_L, Key.Tab });
+		TRIGGER_RIGHT = b(0x139, "RT", "Right Trigger", { Key.Tab });
 
-		BTN_SELECT = b(0x13a, "Select", null, Key.F5);
-		BTN_START  = b(0x13b, "Start", null, Key.F6);
-		BTN_HOME   = b(0x13c, "Home", null, Key.F7);
+		BTN_SELECT = b(0x13a, "Select", null, { Key.F5 });
+		BTN_START  = b(0x13b, "Start", null, { Key.F6 });
+		BTN_HOME   = b(0x13c, "Home", null, { Key.F7 });
 
 		STICK_LEFT  = b(0x13d, "LS", "Left Stick");
 		STICK_RIGHT = b(0x13e, "RS", "Right Stick");
 
-		DPAD_UP    = b(0x220, "Up", "D-Pad Up", Key.Up);
-		DPAD_DOWN  = b(0x221, "Down", "D-Pad Down", Key.Down);
-		DPAD_LEFT  = b(0x222, "Left", "D-Pad Left", Key.Left);
-		DPAD_RIGHT = b(0x223, "Right", "D-Pad Right", Key.Right);
+		DPAD_UP    = b(0x220, "Up", "D-Pad Up", { Key.Up });
+		DPAD_DOWN  = b(0x221, "Down", "D-Pad Down", { Key.Down });
+		DPAD_LEFT  = b(0x222, "Left", "D-Pad Left", { Key.Left });
+		DPAD_RIGHT = b(0x223, "Right", "D-Pad Right", { Key.Right });
 
 		SC_PAD_TAP_LEFT  = b(0x121, "L", "Left Trackpad Touch");
 		SC_PAD_TAP_RIGHT = b(0x122, "R", "Right Trackpad Touch");
@@ -105,9 +106,9 @@ namespace GameHub.Utils.Gamepad
 		AXIS_RS_Y = a(0x3, "RS Y", "Right Stick Y");
 	}
 
-	private static Button b(uint16 code, string name, string? long_name=null, uint key=0)
+	private static Button b(uint16 code, string name, string? long_name=null, uint[] keys={})
 	{
-		var btn = new Button(code, name, long_name, key);
+		var btn = new Button(code, name, long_name, keys);
 		Buttons.set(code, btn);
 		return btn;
 	}
@@ -124,18 +125,22 @@ namespace GameHub.Utils.Gamepad
 		public uint16 code { get; construct; }
 		public string name { get; construct; }
 		public string long_name { get; construct; }
-		public uint key { get; construct; }
+		public uint[] keys;
 
 		private bool pressed = false;
 
-		public Button(uint16 code, string name, string? long_name=null, uint key=0)
+		public Button(uint16 code, string name, string? long_name=null, uint[] keys={})
 		{
-			Object(code: code, name: name, long_name: long_name ?? name, key: key);
+			Object(code: code, name: name, long_name: long_name ?? name);
+			this.keys = keys;
 		}
 
 		public void emit_key_event(bool press)
 		{
-			Gamepad.emit_key_event(key, press);
+			foreach(var key in keys)
+			{
+				Gamepad.emit_key_event(key, press);
+			}
 			pressed = press;
 		}
 
@@ -256,6 +261,7 @@ namespace GameHub.Utils.Gamepad
 			{
 				unowned X.Display xdisplay = (wnd.screen.get_display() as Gdk.X11.Display).get_xdisplay();
 				XTest.fake_key_event(xdisplay, xdisplay.keysym_to_keycode((ulong) key_code), press, X.CURRENT_TIME);
+				Gamepad.ButtonPressed = true;
 				break;
 			}
 		}
