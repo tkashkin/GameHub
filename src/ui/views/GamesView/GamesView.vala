@@ -309,12 +309,27 @@ namespace GameHub.UI.Views.GamesView
 
 			titlebar.pack_start(filters);
 
-			titlebar.pack_end(settings);
+			var settings_overlay = new Overlay();
+			settings_overlay.add(settings);
+
+			#if MANETTE
+			var settings_gamepad_shortcut = gamepad_image("select");
+			settings_gamepad_shortcut.halign = Align.CENTER;
+			settings_gamepad_shortcut.valign = Align.END;
+			settings_overlay.add_overlay(settings_gamepad_shortcut);
+			settings_overlay.set_overlay_pass_through(settings_gamepad_shortcut, true);
+			#endif
+
+			titlebar.pack_end(settings_overlay);
+
 			titlebar.pack_end(downloads);
 			titlebar.pack_end(search);
 			titlebar.pack_end(add_game_button);
 
 			#if MANETTE
+			var gamepad_shortcuts_separator = new Separator(Orientation.VERTICAL);
+			gamepad_mode_visible_widgets.add(gamepad_shortcuts_separator);
+			titlebar.pack_end(gamepad_shortcuts_separator);
 			titlebar.pack_end(gamepad_image("x", _("Menu")));
 			titlebar.pack_end(gamepad_image("b", _("Back")));
 			titlebar.pack_end(gamepad_image("a", _("Select")));
@@ -362,7 +377,6 @@ namespace GameHub.UI.Views.GamesView
 			#if MANETTE
 			gamepad_mode_hidden_widgets.add(view);
 			gamepad_mode_hidden_widgets.add(filters);
-			gamepad_mode_hidden_widgets.add(settings);
 			gamepad_mode_hidden_widgets.add(downloads);
 			gamepad_mode_hidden_widgets.add(search);
 			gamepad_mode_hidden_widgets.add(add_game_button);
@@ -381,12 +395,16 @@ namespace GameHub.UI.Views.GamesView
 			key_release_event.connect(e => {
 				switch(((EventKey) e).keyval)
 				{
-					case Key.F1:
-					case Key.F2:
+					case Key.F1: // LB
+					case Key.F2: // RB
 						var tab = filter.selected + (((EventKey) e).keyval == Key.F1 ? -1 : 1);
 						if(tab < 0) tab = (int) filter.n_items - 1;
 						else if(tab >= filter.n_items) tab = 0;
 						filter.selected = tab;
+						break;
+
+					case Key.F5: // Select
+						settings.clicked();
 						break;
 				}
 			});
@@ -918,7 +936,7 @@ namespace GameHub.UI.Views.GamesView
 		private void ui_update_gamepad_mode()
 		{
 			Idle.add(() => {
-				var is_gamepad_connected = connected_gamepads.size > 0;
+				var is_gamepad_connected = connected_gamepads.size > 0 && Gamepad.ButtonPressed;
 				var widgets_to_show = is_gamepad_connected ? gamepad_mode_visible_widgets : gamepad_mode_hidden_widgets;
 				var widgets_to_hide = is_gamepad_connected ? gamepad_mode_hidden_widgets : gamepad_mode_visible_widgets;
 				foreach(var w in widgets_to_show) w.show();
@@ -971,6 +989,7 @@ namespace GameHub.UI.Views.GamesView
 				var b = Gamepad.Buttons.get(btn);
 				b.emit_key_event(press);
 				debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
+				ui_update_gamepad_mode();
 			}
 		}
 
@@ -998,6 +1017,7 @@ namespace GameHub.UI.Views.GamesView
 						axis.emit_key_event();
 					}
 					Thread.usleep(Gamepad.KEY_EVENT_EMIT_INTERVAL);
+					ui_update_gamepad_mode();
 				}
 				Gamepad.reset();
 				gamepad_axes_to_keys_thread_running = false;
