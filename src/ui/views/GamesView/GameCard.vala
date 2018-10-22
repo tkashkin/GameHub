@@ -229,7 +229,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				if(game.use_compat)
 				{
-					game.run_with_compat.begin();
+					game.run_with_compat.begin(false);
 				}
 				else
 				{

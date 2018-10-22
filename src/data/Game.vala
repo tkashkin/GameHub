@@ -157,9 +157,12 @@ namespace GameHub.Data
 			}
 		}
 
-		public virtual async void run_with_compat()
+		public virtual async void run_with_compat(bool is_opened_from_menu=false)
 		{
-			new UI.Dialogs.CompatRunDialog(this).show_all();
+			if(!GameIsLaunched)
+			{
+				new UI.Dialogs.CompatRunDialog(this, is_opened_from_menu);
+			}
 		}
 
 		public virtual async void update_game_info(){}
@@ -317,35 +320,28 @@ namespace GameHub.Data
 			get
 			{
 				if(this is Sources.Steam.SteamGame) return false;
-				if(compat_tool_settings != null && compat_tool_settings.length > 0)
-				{
-					var root = Parser.parse_json(compat_tool_settings);
-					if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
-					{
-						var obj = root.get_object();
-						return obj.has_member("force_compat") && obj.get_boolean_member("force_compat");
-					}
-				}
-				return install_dir != null && install_dir.get_child(CompatTool.COMPAT_DATA_DIR).get_child("force_compat").query_exists();
+				if(get_compat_option_bool("force_compat") == true) return true;
+				return false;
 			}
 			set
 			{
 				if(this is Sources.Steam.SteamGame) return;
-				var root_object = new Json.Object();
-				if(compat_tool_settings != null && compat_tool_settings.length > 0)
-				{
-					var root = Parser.parse_json(compat_tool_settings);
-					if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
-					{
-						root_object = root.get_object();
-					}
-				}
-				root_object.set_boolean_member("force_compat", value);
-				var root_node = new Json.Node(Json.NodeType.OBJECT);
-				root_node.set_object(root_object);
-				compat_tool_settings = Json.to_string(root_node, false);
-				save();
+				set_compat_option_bool("force_compat", value);
 				notify_property("use-compat");
+			}
+		}
+
+		public bool compat_options_saved
+		{
+			get
+			{
+				if(this is Sources.Steam.SteamGame) return false;
+				return get_compat_option_bool("compat_options_saved") == true;
+			}
+			set
+			{
+				if(this is Sources.Steam.SteamGame) return;
+				set_compat_option_bool("compat_options_saved", value);
 			}
 		}
 
@@ -384,6 +380,46 @@ namespace GameHub.Data
 				root_object.set_object_member(tool.id, settings);
 			}
 
+			var root_node = new Json.Node(Json.NodeType.OBJECT);
+			root_node.set_object(root_object);
+			compat_tool_settings = Json.to_string(root_node, false);
+			compat_options_saved = true;
+			save();
+		}
+
+		public bool? get_compat_option_bool(string key)
+		{
+			if(compat_tool_settings != null && compat_tool_settings.length > 0)
+			{
+				var root = Parser.parse_json(compat_tool_settings);
+				if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
+				{
+					var obj = root.get_object();
+					if(obj.has_member(key)) return obj.get_boolean_member(key);
+				}
+			}
+			return null;
+		}
+
+		public void set_compat_option_bool(string key, bool? value)
+		{
+			var root_object = new Json.Object();
+			if(compat_tool_settings != null && compat_tool_settings.length > 0)
+			{
+				var root = Parser.parse_json(compat_tool_settings);
+				if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
+				{
+					root_object = root.get_object();
+				}
+			}
+			if(value != null)
+			{
+				root_object.set_boolean_member(key, value);
+			}
+			else
+			{
+				root_object.remove_member(key);
+			}
 			var root_node = new Json.Node(Json.NodeType.OBJECT);
 			root_node.set_object(root_object);
 			compat_tool_settings = Json.to_string(root_node, false);

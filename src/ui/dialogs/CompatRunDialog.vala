@@ -31,6 +31,8 @@ namespace GameHub.UI.Dialogs
 {
 	public class CompatRunDialog: Dialog
 	{
+		public bool is_opened_from_menu { get; construct; default = false; }
+
 		public Game game { get; construct; }
 
 		private Box content;
@@ -39,9 +41,9 @@ namespace GameHub.UI.Dialogs
 
 		private CompatToolPicker compat_tool_picker;
 
-		public CompatRunDialog(Game game)
+		public CompatRunDialog(Game game, bool is_opened_from_menu=false)
 		{
-			Object(game: game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"));
+			Object(game: game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
 		}
 
 		construct
@@ -97,6 +99,19 @@ namespace GameHub.UI.Dialogs
 
 			get_content_area().add(hbox);
 			get_content_area().set_size_request(340, 96);
+
+			var tool = game.compat_tool;
+
+			if(!is_opened_from_menu && tool != null && compat_tool_picker.selected != null && compat_tool_picker.selected.id == tool && game.compat_options_saved)
+			{
+				Idle.add(() => {
+					run_with_compat();
+					destroy();
+					return Source.REMOVE;
+				});
+				return;
+			}
+
 			show_all();
 		}
 
@@ -104,7 +119,11 @@ namespace GameHub.UI.Dialogs
 		{
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 
-			compat_tool_picker.selected.run.begin(game);
+			GameIsLaunched = true;
+			compat_tool_picker.selected.run.begin(game, (obj, res) => {
+				compat_tool_picker.selected.run.end(res);
+				GameIsLaunched = false;
+			});
 
 			opts_list.save_options();
 		}

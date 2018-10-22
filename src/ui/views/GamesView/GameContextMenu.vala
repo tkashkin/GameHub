@@ -44,7 +44,7 @@ namespace GameHub.UI.Views.GamesView
 
 			var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
 			run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
-			run_with_compat.activate.connect(() => game.run_with_compat.begin());
+			run_with_compat.activate.connect(() => game.run_with_compat.begin(true));
 
 			var install = new Gtk.MenuItem.with_label(_("Install"));
 			install.activate.connect(() => game.install.begin());
