@@ -344,7 +344,7 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
-				game.run_with_compat.begin();
+				game.run_with_compat.begin(false);
 			}
 		}
 

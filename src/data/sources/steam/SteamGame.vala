@@ -203,7 +203,7 @@ namespace GameHub.Data.Sources.Steam
 			update_status();
 		}
 
-		public override async void run_with_compat()
+		public override async void run_with_compat(bool is_opened_from_menu=false)
 		{
 			yield run();
 		}
