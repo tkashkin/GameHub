@@ -325,7 +325,7 @@ namespace GameHub.UI.Dialogs
 			foreach(var tag in Tables.Tags.TAGS)
 			{
 				if(tag in Tables.Tags.DYNAMIC_TAGS || !tag.enabled) continue;
-				var row = new TagRow(game, tag);
+				var row = new TagRow(tag, game);
 				tags_list.add(row);
 			}
 
@@ -406,52 +406,5 @@ namespace GameHub.UI.Dialogs
 		}
 
 		protected delegate void SwitchAction(bool active);
-
-		public class TagRow: ListBoxRow
-		{
-			public Game game;
-			public Tables.Tags.Tag tag;
-
-			public TagRow(Game game, Tables.Tags.Tag tag)
-			{
-				this.game = game;
-				this.tag = tag;
-
-				var ebox = new EventBox();
-				ebox.above_child = true;
-
-				var box = new Box(Orientation.HORIZONTAL, 8);
-				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 6;
-
-				var check = new CheckButton();
-				check.active = game.has_tag(tag);
-
-				var name = new Label(tag.name);
-				name.halign = Align.START;
-				name.xalign = 0;
-				name.hexpand = true;
-
-				var icon = new Image.from_icon_name(tag.icon, IconSize.BUTTON);
-
-				box.add(check);
-				box.add(name);
-				box.add(icon);
-
-				ebox.add_events(EventMask.ALL_EVENTS_MASK);
-				ebox.button_release_event.connect(e => {
-					if(e.button == 1)
-					{
-						game.toggle_tag(tag);
-						check.active = game.has_tag(tag);
-					}
-					return true;
-				});
-
-				ebox.add(box);
-
-				child = ebox;
-			}
-		}
 	}
 }

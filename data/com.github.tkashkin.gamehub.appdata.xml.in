@@ -41,6 +41,13 @@
 	</screenshots>
 
 	<releases>
+		<release type="development" version="0.11.6" date="2018-10-23">
+			<description>
+				<ul>
+					<li>Gamepad support</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.11.5" date="2018-10-14">
 			<description>
 				<ul>

@@ -90,14 +90,14 @@ namespace GameHub.Data.Compat
 
 		protected override File get_wineprefix(Game game)
 		{
-			return FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/proton_$(name)/pfx");
+			return FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)/pfx");
 		}
 
 		protected override string[] prepare_env(Game game, bool parse_opts=true)
 		{
 			var env = Environ.get();
 
-			var compatdata = FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/proton_$(name)");
+			var compatdata = FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)");
 			if(compatdata != null && compatdata.query_exists())
 			{
 				env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.Paths.Steam.Home);
