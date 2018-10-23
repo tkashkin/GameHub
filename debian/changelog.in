@@ -4,6 +4,12 @@ com.github.tkashkin.gamehub ($VERSION) $DISTRO; urgency=low
 
  -- tkashkin <tkashkin@gmail.com>  $DATE
 
+com.github.tkashkin.gamehub (0.11.6) bionic; urgency=low
+
+  * Gamepad support
+
+  -- tkashkin <tkashkin@gmail.com>  Tue, 23 Oct 2018 15:15:24 +0300
+
 com.github.tkashkin.gamehub (0.11.5) bionic; urgency=low
 
   * UI tweaks

@@ -73,7 +73,7 @@ namespace GameHub.Utils.Gamepad
 		BTN_B = b(0x131, "B", null, { Key.Escape });
 		BTN_C = b(0x132, "C");
 		BTN_X = b(0x133, "X", null, { Key.Menu });
-		BTN_Y = b(0x134, "Y");
+		BTN_Y = b(0x134, "Y", null, { Key.Alt_L });
 		BTN_Z = b(0x135, "Z");
 
 		BUMPER_LEFT  = b(0x136, "LB", "Left Bumper", { Key.F1 });

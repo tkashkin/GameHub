@@ -75,7 +75,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_run(Game game)
 		{
-			return installed && Platform.WINDOWS in game.platforms;
+			return installed && (game is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in game.platforms);
 		}
 
 		protected virtual async string[] prepare_installer_args(Game game)
@@ -135,9 +135,9 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
-			if(arch != null)
+			if(arch != null && arch.length > 0)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
 			return env;
@@ -153,9 +153,9 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
-			if(arch != null)
+			if(arch != null && arch.length > 0)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
 			yield Utils.run_thread({ wine_binary.get_path(), util }, game.install_dir.get_path(), env);
@@ -171,9 +171,9 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
-			if(arch != null)
+			if(arch != null && arch.length > 0)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
 			yield Utils.run_thread({ "winetricks" }, game.install_dir.get_path(), env);
@@ -189,9 +189,9 @@ namespace GameHub.Data.Compat
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
-			if(arch != null)
+			if(arch != null && arch.length > 0)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
 			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, game.install_dir.get_path(), env)).strip();

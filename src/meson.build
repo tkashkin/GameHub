@@ -99,6 +99,7 @@ sources = [
 	'ui/widgets/ActionButton.vala',
 	'ui/widgets/CompatToolOptions.vala',
 	'ui/widgets/CompatToolPicker.vala',
+	'ui/widgets/TagRow.vala',
 
 	'utils/Utils.vala',
 	'utils/FSUtils.vala',

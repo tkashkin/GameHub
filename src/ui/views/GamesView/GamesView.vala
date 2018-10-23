@@ -307,7 +307,18 @@ namespace GameHub.UI.Views.GamesView
 				#endif
 			}
 
+			#if MANETTE
+			var gamepad_filters_separator = new Separator(Orientation.VERTICAL);
+			gamepad_filters_separator.no_show_all = true;
+			gamepad_mode_visible_widgets.add(gamepad_filters_separator);
+			titlebar.pack_start(gamepad_filters_separator);
+			#endif
+
 			titlebar.pack_start(filters);
+
+			#if MANETTE
+			titlebar.pack_start(gamepad_image("y"));
+			#endif
 
 			var settings_overlay = new Overlay();
 			settings_overlay.add(settings);
@@ -328,6 +339,7 @@ namespace GameHub.UI.Views.GamesView
 
 			#if MANETTE
 			var gamepad_shortcuts_separator = new Separator(Orientation.VERTICAL);
+			gamepad_shortcuts_separator.no_show_all = true;
 			gamepad_mode_visible_widgets.add(gamepad_shortcuts_separator);
 			titlebar.pack_end(gamepad_shortcuts_separator);
 			titlebar.pack_end(gamepad_image("x", _("Menu")));
@@ -376,7 +388,6 @@ namespace GameHub.UI.Views.GamesView
 
 			#if MANETTE
 			gamepad_mode_hidden_widgets.add(view);
-			gamepad_mode_hidden_widgets.add(filters);
 			gamepad_mode_hidden_widgets.add(downloads);
 			gamepad_mode_hidden_widgets.add(search);
 			gamepad_mode_hidden_widgets.add(add_game_button);
@@ -405,6 +416,11 @@ namespace GameHub.UI.Views.GamesView
 
 					case Key.F5: // Select
 						settings.clicked();
+						break;
+
+					case Key.Alt_L: // Y
+					case Key.Alt_R:
+						filters.clicked();
 						break;
 				}
 			});

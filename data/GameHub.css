@@ -344,6 +344,11 @@ list.tags-list row
 	margin: 0;
 	border-radius: 2px;
 }
+GtkListBox.tags-list.not-rounded .list-row,
+list.tags-list.not-rounded row
+{
+	border-radius: 0;
+}
 GtkListBox.tags-list .list-row:last-child,
 list.tags-list row:last-child
 {
@@ -357,13 +362,19 @@ list.tags-list row:selected
 GtkListBox.tags-list .list-row:focus,
 list.tags-list row:focus
 {
-	background: transparent;
+	background: @theme_selected_bg_color;
+	color: @theme_selected_fg_color;
 	outline: none;
 }
 GtkListBox.tags-list .list-row:hover,
 list.tags-list row:hover
 {
 	background: alpha(#888, 0.1);
+}
+GtkListBox.tags-list .list-row:focus:hover,
+list.tags-list row:focus:hover
+{
+	background: shade(@theme_selected_bg_color, 0.9);
 }
 
 .tags-list-header.hover
@@ -374,6 +385,19 @@ list.tags-list row:hover
 {
 	padding: 2px 0;
 }
+.tags-list-header:focus
+{
+	background: @theme_selected_bg_color;
+	color: @theme_selected_fg_color;
+}
+.tags-list-header.hover:focus
+{
+	background: shade(@theme_selected_bg_color, 0.9);
+}
+.tags-list-header:focus label
+{
+	color: @theme_selected_fg_color;
+}
 
 .link, .link label
 {
@@ -383,4 +407,10 @@ list.tags-list row:hover
 button.file label
 {
 	padding: 0 2px;
+}
+
+checkbutton, checkbutton check
+{
+	padding: 0;
+	margin: 0;
 }

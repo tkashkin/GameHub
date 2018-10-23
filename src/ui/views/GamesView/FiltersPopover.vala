@@ -75,6 +75,7 @@ namespace GameHub.UI.Views.GamesView
 			sort_mode_button = new Granite.Widgets.ModeButton();
 			sort_mode_button.halign = Align.END;
 			sort_mode_button.valign = Align.CENTER;
+			sort_mode_button.can_focus = true;
 			add_sort_mode(SortMode.NAME);
 			add_sort_mode(SortMode.LAST_LAUNCH);
 			sort_hbox.add(sort_mode_button);
@@ -94,6 +95,7 @@ namespace GameHub.UI.Views.GamesView
 
 			tags_list = new ListBox();
 			tags_list.get_style_context().add_class("tags-list");
+			tags_list.get_style_context().add_class("not-rounded");
 			tags_list.selection_mode = SelectionMode.NONE;
 
 			tags_list.set_sort_func((row1, row2) => {
@@ -135,12 +137,14 @@ namespace GameHub.UI.Views.GamesView
 			var tebox = new EventBox();
 			tebox.get_style_context().add_class("tags-list-header");
 			tebox.above_child = true;
+			tebox.can_focus = true;
 
 			var tbox = new Box(Orientation.HORIZONTAL, 8);
 			tbox.margin_start = tbox.margin_end = 8;
 			tbox.margin_top = tbox.margin_bottom = 6;
 
 			tags_header_check = new CheckButton();
+			tags_header_check.can_focus = false;
 
 			var header = new HeaderLabel(_("Tags"));
 			header.halign = Align.START;
@@ -156,18 +160,20 @@ namespace GameHub.UI.Views.GamesView
 			tebox.button_release_event.connect(e => {
 				if(e.button == 1)
 				{
-					tags_header_check.inconsistent = false;
-					tags_header_check.active = !tags_header_check.active;
-
-					is_toggling_all = true;
-					foreach(var tag in Tables.Tags.TAGS)
-					{
-						tag.selected = tags_header_check.active;
-					}
-					is_toggling_all = false;
-					update();
+					toggle_all_tags();
 				}
 				return true;
+			});
+			tebox.key_release_event.connect(e => {
+				switch(((EventKey) e).keyval)
+				{
+					case Key.Return:
+					case Key.space:
+					case Key.KP_Space:
+						toggle_all_tags();
+						return true;
+				}
+				return false;
 			});
 
 			tebox.add(tbox);
@@ -183,6 +189,20 @@ namespace GameHub.UI.Views.GamesView
 			Tables.Tags.instance.tags_updated.connect(load_tags);
 
 			vbox.show_all();
+		}
+
+		private void toggle_all_tags()
+		{
+			tags_header_check.inconsistent = false;
+			tags_header_check.active = !tags_header_check.active;
+
+			is_toggling_all = true;
+			foreach(var tag in Tables.Tags.TAGS)
+			{
+				tag.selected = tags_header_check.active;
+			}
+			is_toggling_all = false;
+			update();
 		}
 
 		private void load_tags()
@@ -227,55 +247,6 @@ namespace GameHub.UI.Views.GamesView
 			var image = new Image.from_icon_name(mode.icon(), IconSize.MENU);
 			image.tooltip_text = mode.name();
 			sort_mode_button.append(image);
-		}
-
-		public class TagRow: ListBoxRow
-		{
-			public Tables.Tags.Tag tag;
-
-			public TagRow(Tables.Tags.Tag tag)
-			{
-				this.tag = tag;
-
-				var ebox = new EventBox();
-				ebox.above_child = true;
-
-				var box = new Box(Orientation.HORIZONTAL, 8);
-				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 6;
-
-				var check = new CheckButton();
-				check.active = tag.selected;
-
-				var name = new Label(tag.name);
-				name.halign = Align.START;
-				name.xalign = 0;
-				name.hexpand = true;
-
-				var icon = new Image.from_icon_name(tag.icon, IconSize.BUTTON);
-
-				box.add(check);
-				box.add(name);
-				box.add(icon);
-
-				tag.notify["selected"].connect(() => {
-					check.active = tag.selected;
-				});
-
-				ebox.add_events(EventMask.ALL_EVENTS_MASK);
-				ebox.button_release_event.connect(e => {
-					if(e.button == 1)
-					{
-						check.active = !check.active;
-						tag.selected = check.active;
-					}
-					return true;
-				});
-
-				ebox.add(box);
-
-				child = ebox;
-			}
 		}
 	}
 }
