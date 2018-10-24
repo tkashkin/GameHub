@@ -255,10 +255,15 @@ namespace GameHub.UI.Dialogs
 				executable_header.xpad = 8;
 				properties_box.add(executable_header);
 
-				var executable_picker = new FileChooserButton.with_dialog(game.setup_executable_chooser());
+				var executable_picker_dialog = game.setup_executable_chooser();
+				var executable_picker = new FileChooserButton.with_dialog(executable_picker_dialog);
 				executable_picker.set_file(game.executable);
 				executable_picker.margin_start = executable_picker.margin_end = 4;
 				properties_box.add(executable_picker);
+
+				executable_picker.file_set.connect(() => {
+					game.set_chosen_executable(executable_picker_dialog);
+				});
 
 				var args_entry = new Entry();
 				args_entry.text = game.arguments ?? "";
