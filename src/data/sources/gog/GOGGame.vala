@@ -462,7 +462,7 @@ namespace GameHub.Data.Sources.GOG
 				file = json.get_array_member("files").get_object_element(0).get_string_member("downlink");
 				size = json.get_int_member("total_size");
 
-				dl_info = new Downloader.DownloadInfo(game.name + ": " + text, game.icon, null, null, icon);
+				dl_info = new Downloader.DownloadInfo(text, game.name, game.icon, null, null, icon);
 			}
 
 			public async File? download()
