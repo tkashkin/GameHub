@@ -409,8 +409,14 @@ button.file label
 	padding: 0 2px;
 }
 
-checkbutton, checkbutton check
+checkbutton:not(.default-padding), checkbutton:not(.default-padding) check
 {
 	padding: 0;
 	margin: 0;
+}
+
+dialog .sidebar,
+dialog .sidebar list
+{
+	background: transparent;
 }

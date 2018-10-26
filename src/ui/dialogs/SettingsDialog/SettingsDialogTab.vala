@@ -31,6 +31,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			Object(orientation: Orientation.VERTICAL, dialog: dlg);
 		}
 
+		construct
+		{
+			margin_start = margin_end = 8;
+		}
+
 		protected Box add_switch(string text, bool enabled, owned SwitchAction action)
 		{
 			var sw = new Switch();
@@ -226,8 +231,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			return widget;
 		}
 
-		protected delegate void SwitchAction(bool active);
-		protected delegate void EntryAction(string val);
-		protected delegate void ButtonAction();
+		public delegate void SwitchAction(bool active);
+		public delegate void EntryAction(string val);
+		public delegate void ButtonAction();
 	}
 }

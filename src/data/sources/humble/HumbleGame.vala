@@ -131,6 +131,8 @@ namespace GameHub.Data.Sources.Humble
 				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
+
+			installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(name));
 		}
 
 		public override async void update_game_info()
@@ -257,11 +259,11 @@ namespace GameHub.Data.Sources.Humble
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
-			wnd.install.connect((installer, tool) => {
+			wnd.install.connect((installer, dl_only, tool) => {
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
 				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
 
-				installer.install.begin(this, tool, (obj, res) => {
+				installer.install.begin(this, dl_only, tool, (obj, res) => {
 					installer.install.end(res);
 					update_status();
 					Idle.add(install.callback);
@@ -312,9 +314,9 @@ namespace GameHub.Data.Sources.Humble
 				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
 				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
+				if(game.installers_dir == null) return;
 				var remote = File.new_for_uri(url);
-				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(game.name);
-				var local = FSUtils.file(installers_dir, "humble_" + game.id + "_" + id);
+				var local = game.installers_dir.get_child("humble_" + game.id + "_" + id);
 				part = new Game.Installer.Part(id, url, full_size, remote, local);
 				parts.add(part);
 			}

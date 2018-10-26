@@ -81,12 +81,12 @@ namespace GameHub.Data.Compat
 			return configs;
 		}
 
-		public override bool can_run(Game game)
+		public override bool can_run(Runnable game)
 		{
-			return installed && find_configs(game.install_dir).size > 0;
+			return installed && game is Game && find_configs(game.install_dir).size > 0;
 		}
 
-		public override async void run(Game game)
+		public override async void run(Runnable game)
 		{
 			if(!can_run(game)) return;
 

@@ -78,7 +78,7 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		protected override async void exec(Game game, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected override async void exec(Runnable game, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), "run", file.get_path() };
 			if(args != null)
@@ -88,12 +88,12 @@ namespace GameHub.Data.Compat
 			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(game, parse_opts));
 		}
 
-		protected override File get_wineprefix(Game game)
+		protected override File get_wineprefix(Runnable game)
 		{
 			return FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)/pfx");
 		}
 
-		protected override string[] prepare_env(Game game, bool parse_opts=true)
+		protected override string[] prepare_env(Runnable game, bool parse_opts=true)
 		{
 			var env = Environ.get();
 

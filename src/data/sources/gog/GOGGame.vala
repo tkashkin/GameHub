@@ -28,6 +28,8 @@ namespace GameHub.Data.Sources.GOG
 		public ArrayList<BonusContent>? bonus_content { get; protected set; default = new ArrayList<BonusContent>(); }
 		public ArrayList<DLC>? dlc { get; protected set; default = new ArrayList<DLC>(); }
 
+		public File? bonus_content_dir { get; protected set; default = null; }
+
 		private bool game_info_updated = false;
 
 		public GOGGame.default(){}
@@ -243,7 +245,7 @@ namespace GameHub.Data.Sources.GOG
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
-			wnd.install.connect((installer, tool) => {
+			wnd.install.connect((installer, dl_only, tool) => {
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 
 				if(installer.parts.size > 0)
@@ -251,7 +253,7 @@ namespace GameHub.Data.Sources.GOG
 					FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
 				}
 
-				installer.install.begin(this, tool, (obj, res) => {
+				installer.install.begin(this, dl_only, tool, (obj, res) => {
 					installer.install.end(res);
 					Idle.add(install.callback);
 				});
@@ -337,6 +339,16 @@ namespace GameHub.Data.Sources.GOG
 				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
+
+			string g = name;
+			string? d = null;
+			if(this is DLC)
+			{
+				g = (this as DLC).game.name;
+				d = name;
+			}
+			installers_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_installers(g, d));
+			bonus_content_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_bonus(g, d));
 		}
 
 		public class Installer: Game.Installer
@@ -367,6 +379,8 @@ namespace GameHub.Data.Sources.GOG
 
 				if(!json.has_member("files") || json.get_member("files").get_node_type() != Json.NodeType.ARRAY) return;
 
+				if(game.installers_dir == null) return;
+
 				foreach(var file_node in json.get_array_member("files").get_elements())
 				{
 					var file = file_node != null && file_node.get_node_type() == Json.NodeType.OBJECT ? file_node.get_object() : null;
@@ -385,16 +399,7 @@ namespace GameHub.Data.Sources.GOG
 						var url = root.get_string_member("downlink");
 						var remote = File.new_for_uri(url);
 
-						string g = game.name;
-						string? d = null;
-						if(game is DLC)
-						{
-							g = (game as DLC).game.name;
-							d = game.name;
-						}
-
-						var installers_dir = FSUtils.Paths.Collection.GOG.expand_installers(g, d);
-						var local = FSUtils.file(installers_dir, "gog_" + game.id + "_" + this.id + "_" + id);
+						var local = game.installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
 
 						parts.add(new Game.Installer.Part(id, url, size, remote, local));
 					}
@@ -475,19 +480,12 @@ namespace GameHub.Data.Sources.GOG
 				var link = root.get_string_member("downlink");
 				var remote = File.new_for_uri(link);
 
-				string g = game.name;
-				string? d = null;
-				if(game is DLC)
-				{
-					g = (this as DLC).game.name;
-					d = game.name;
-				}
-				var bonus_dir = FSUtils.Paths.Collection.GOG.expand_bonus(g, d);
+				if(game.bonus_content_dir == null) return null;
 
-				var local = FSUtils.file(bonus_dir, "gog_" + game.id + "_bonus_" + id);
+				var local = game.bonus_content_dir.get_child("gog_" + game.id + "_bonus_" + id);
 
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-				FSUtils.mkdir(bonus_dir);
+				FSUtils.mkdir(game.bonus_content_dir.get_path());
 
 				status = new BonusContent.Status(BonusContent.State.DOWNLOADING, null);
 				var ds_id = Downloader.get_instance().download_started.connect(dl => {

@@ -34,7 +34,7 @@ namespace GameHub.UI.Dialogs
 		private const int RESPONSE_IMPORT = 123;
 
 		public signal void import();
-		public signal void install(Game.Installer installer, CompatTool? tool);
+		public signal void install(Game.Installer installer, bool dl_only, CompatTool? tool);
 		public signal void cancelled();
 
 		private Box content;
@@ -138,9 +138,11 @@ namespace GameHub.UI.Dialogs
 				subtitle_label.label = _("Installer size: %s").printf(fsize(compatible_installers[0].full_size));
 			}
 
+			Revealer? compat_tool_revealer = null;
+
 			if(Settings.UI.get_instance().show_unsupported_games || Settings.UI.get_instance().use_compat)
 			{
-				var compat_tool_revealer = new Revealer();
+				compat_tool_revealer = new Revealer();
 
 				var compat_tool_box = new Box(Orientation.VERTICAL, 4);
 
@@ -178,7 +180,31 @@ namespace GameHub.UI.Dialogs
 				compat_tool_box.add(opts_list);
 			}
 
-			destroy.connect(() => { if(!is_finished) cancelled(); });
+			add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
+
+			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
+			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
+			install_btn.grab_default();
+
+			var dl_only_check = new CheckButton.with_label(_("Download only"));
+			dl_only_check.get_style_context().add_class("default-padding");
+			dl_only_check.margin_start = 5;
+			dl_only_check.valign = Align.CENTER;
+
+			var bbox = install_btn.get_parent() as ButtonBox;
+			if(bbox != null)
+			{
+				bbox.add(dl_only_check);
+				bbox.set_child_secondary(dl_only_check, true);
+				bbox.set_child_non_homogeneous(dl_only_check, true);
+			}
+
+			if(compat_tool_revealer != null)
+			{
+				dl_only_check.toggled.connect(() => {
+					compat_tool_revealer.sensitive = !dl_only_check.active;
+				});
+			}
 
 			response.connect((source, response_id) => {
 				switch(response_id)
@@ -205,17 +231,13 @@ namespace GameHub.UI.Dialogs
 						{
 							opts_list.save_options();
 						}
-						install(installer, compat_tool_picker != null ? compat_tool_picker.selected : null);
+						install(installer, dl_only_check.active, compat_tool_picker != null ? compat_tool_picker.selected : null);
 						destroy();
 						break;
 				}
 			});
 
-			add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
-
-			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
-			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
-			install_btn.grab_default();
+			destroy.connect(() => { if(!is_finished) cancelled(); });
 
 			get_content_area().add(hbox);
 			get_content_area().set_size_request(380, 96);

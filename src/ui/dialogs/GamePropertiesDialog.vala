@@ -257,7 +257,14 @@ namespace GameHub.UI.Dialogs
 
 				var executable_picker_dialog = game.setup_executable_chooser();
 				var executable_picker = new FileChooserButton.with_dialog(executable_picker_dialog);
-				executable_picker.set_file(game.executable);
+				try
+				{
+					executable_picker.set_file(game.executable);
+				}
+				catch(Error e)
+				{
+					warning(e.message);
+				}
 				executable_picker.margin_start = executable_picker.margin_end = 4;
 				properties_box.add(executable_picker);
 
