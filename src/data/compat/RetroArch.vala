@@ -92,12 +92,12 @@ namespace GameHub.Data.Compat
 			return has_cores;
 		}
 
-		public override bool can_run(Game game)
+		public override bool can_run(Runnable game)
 		{
-			return installed && has_cores;
+			return installed && game is Game && has_cores;
 		}
 
-		public override async void run(Game game)
+		public override async void run(Runnable game)
 		{
 			if(!can_run(game)) return;
 			var core = core_option.value;

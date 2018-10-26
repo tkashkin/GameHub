@@ -33,7 +33,8 @@ namespace GameHub.UI.Dialogs
 	{
 		public bool is_opened_from_menu { get; construct; default = false; }
 
-		public Game game { get; construct; }
+		public Runnable game { get; construct; }
+		public Game? emulated_game { get; construct; }
 
 		private Box content;
 		private Label title_label;
@@ -41,9 +42,9 @@ namespace GameHub.UI.Dialogs
 
 		private CompatToolPicker compat_tool_picker;
 
-		public CompatRunDialog(Game game, bool is_opened_from_menu=false)
+		public CompatRunDialog(Runnable game, bool is_opened_from_menu=false, Game? emulated_game=null)
 		{
-			Object(game: game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
+			Object(game: game, emulated_game: emulated_game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
 		}
 
 		construct
@@ -78,7 +79,10 @@ namespace GameHub.UI.Dialogs
 
 			content.add(opts_list);
 
-			Utils.load_image.begin(icon, game.icon, "icon");
+			if(game is Game)
+			{
+				Utils.load_image.begin(icon, (game as Game).icon, "icon");
+			}
 
 			response.connect((source, response_id) => {
 				switch(response_id)
@@ -119,11 +123,22 @@ namespace GameHub.UI.Dialogs
 		{
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 
-			GameIsLaunched = true;
-			compat_tool_picker.selected.run.begin(game, (obj, res) => {
-				compat_tool_picker.selected.run.end(res);
-				GameIsLaunched = false;
-			});
+			RunnableIsLaunched = true;
+
+			if(game is Emulator && emulated_game != null)
+			{
+				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, (obj, res) => {
+					compat_tool_picker.selected.run_emulator.end(res);
+					RunnableIsLaunched = false;
+				});
+			}
+			else
+			{
+				compat_tool_picker.selected.run.begin(game, (obj, res) => {
+					compat_tool_picker.selected.run.end(res);
+					RunnableIsLaunched = false;
+				});
+			}
 
 			opts_list.save_options();
 		}

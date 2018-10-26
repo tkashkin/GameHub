@@ -65,6 +65,8 @@ namespace GameHub.UI.Views.GameDetailsView
 		private ActionButton action_run_with_compat;
 		private ActionButton action_properties;
 		private ActionButton action_open_directory;
+		private ActionButton action_open_installer_collection_directory;
+		private ActionButton action_open_bonus_collection_directory;
 		private ActionButton action_open_store_page;
 		private ActionButton action_uninstall;
 
@@ -185,10 +187,12 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_install = add_action("go-down", null, _("Install"), install_game, true);
 			action_run = add_action("media-playback-start", null, _("Run"), run_game, true);
 			action_run_with_compat = add_action("media-playback-start", "platform-windows-symbolic", _("Run with compatibility layer"), run_game_with_compat, true);
-			action_properties = add_action("system-run", null, _("Game properties"), game_properties);
 			action_open_directory = add_action("folder", null, _("Open installation directory"), open_game_directory);
+			action_open_installer_collection_directory = add_action("folder-download", null, _("Open installers collection directory"), open_installer_collection_directory);
+			action_open_bonus_collection_directory = add_action("folder-documents", null, _("Open bonus collection directory"), open_bonus_collection_directory);
 			action_open_store_page = add_action("web-browser", null, _("Open store page"), open_game_store_page);
 			action_uninstall = add_action("edit-delete", null, (game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"), uninstall_game);
+			action_properties = add_action("system-run", null, _("Game properties"), game_properties);
 
 			action_cancel.clicked.connect(() => {
 				if(download != null) download.cancel();
@@ -278,6 +282,8 @@ namespace GameHub.UI.Views.GameDetailsView
 				action_run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
 				action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
 				action_open_directory.visible = s.state == Game.State.INSTALLED;
+				action_open_installer_collection_directory.visible = game.installers_dir != null && game.installers_dir.query_exists();
+				action_open_bonus_collection_directory.visible = game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists();
 				action_open_store_page.visible = game.store_page != null;
 				action_uninstall.visible = s.state == Game.State.INSTALLED;
 
@@ -321,6 +327,26 @@ namespace GameHub.UI.Views.GameDetailsView
 			if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
 				Utils.open_uri(game.install_dir.get_uri());
+			}
+		}
+
+		private void open_installer_collection_directory()
+		{
+			if(_game != null && game.installers_dir != null && game.installers_dir.query_exists())
+			{
+				Utils.open_uri(game.installers_dir.get_uri());
+			}
+		}
+
+		private void open_bonus_collection_directory()
+		{
+			if(_game != null && game is GameHub.Data.Sources.GOG.GOGGame)
+			{
+				var gog_game = game as GameHub.Data.Sources.GOG.GOGGame;
+				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
+				{
+					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
+				}
 			}
 		}
 

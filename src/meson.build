@@ -28,8 +28,10 @@ deps = [
 sources = [
 	'app.vala',
 
+	'data/Runnable.vala',
 	'data/Game.vala',
 	'data/GameSource.vala',
+	'data/Emulator.vala',
 
 	'data/sources/steam/Steam.vala',
 	'data/sources/steam/SteamGame.vala',
@@ -49,6 +51,7 @@ sources = [
 	'data/db/tables/Games.vala',
 	'data/db/tables/Tags.vala',
 	'data/db/tables/Merges.vala',
+	'data/db/tables/Emulators.vala',
 
 	'data/CompatTool.vala',
 	'data/compat/CustomScript.vala',
@@ -57,6 +60,7 @@ sources = [
 	'data/compat/Wine.vala',
 	'data/compat/DOSBox.vala',
 	'data/compat/RetroArch.vala',
+	'data/compat/CustomEmulator.vala',
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
@@ -70,6 +74,7 @@ sources = [
 	'ui/dialogs/SettingsDialog/tabs/GOG.vala',
 	'ui/dialogs/SettingsDialog/tabs/Humble.vala',
 	'ui/dialogs/SettingsDialog/tabs/RetroArch.vala',
+	'ui/dialogs/SettingsDialog/tabs/Emulators.vala',
 
 	'ui/dialogs/GameInstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',

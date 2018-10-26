@@ -83,7 +83,14 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(executable.get_file() != null && gamedir.get_file() == null)
 			{
-				gamedir.select_file(executable.get_file().get_parent());
+				try
+				{
+					gamedir.select_file(executable.get_file().get_parent());
+				}
+				catch(Error e)
+				{
+					warning(e.message);
+				}
 			}
 
 			add.sensitive = name.text.strip().length > 0

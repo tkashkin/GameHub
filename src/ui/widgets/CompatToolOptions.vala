@@ -28,11 +28,11 @@ namespace GameHub.UI.Widgets
 	public class CompatToolOptions: ListBox
 	{
 		private CompatToolPicker compat_tool_picker;
-		private Game game;
+		private Runnable game;
 		private bool install;
 		private string settings_key;
 
-		public CompatToolOptions(Game game, CompatToolPicker picker, bool install = false)
+		public CompatToolOptions(Runnable game, CompatToolPicker picker, bool install = false)
 		{
 			this.game = game;
 			this.compat_tool_picker = picker;
@@ -206,8 +206,15 @@ namespace GameHub.UI.Widgets
 					chooser.set_size_request(170, -1);
 					if(file_option.file != null || file_option.directory != null)
 					{
-						chooser.select_file(file_option.file ?? file_option.directory);
-						chooser.tooltip_text = chooser.get_filename();
+						try
+						{
+							chooser.select_file(file_option.file ?? file_option.directory);
+							chooser.tooltip_text = chooser.get_filename();
+						}
+						catch(Error e)
+						{
+							warning(e.message);
+						}
 					}
 					chooser.file_set.connect(() => {
 						file_option.file = chooser.get_file();

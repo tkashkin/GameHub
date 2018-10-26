@@ -29,7 +29,7 @@ namespace GameHub.UI.Widgets
 	{
 		public CompatTool? selected { get; private set; default = null; }
 
-		public Game game { get; construct; }
+		public Runnable game { get; construct; }
 		public bool install_mode { get; construct; }
 
 		private Gtk.ListStore model;
@@ -39,9 +39,13 @@ namespace GameHub.UI.Widgets
 
 		private Box actions;
 
-		public CompatToolPicker(Game game, bool install_mode)
+		public CompatToolPicker(Runnable game, bool install_mode)
 		{
 			Object(orientation: Orientation.VERTICAL, spacing: 4, game: game, install_mode: install_mode);
+			if(install_mode && !(game is Game))
+			{
+				error("[CompatToolPicker] Install mode requested for non-game runnable");
+			}
 		}
 
 		construct
@@ -57,7 +61,7 @@ namespace GameHub.UI.Widgets
 
 			foreach(var tool in CompatTools)
 			{
-				if(tool.installed && ((install_mode && tool.can_install(game)) || (!install_mode && tool.can_run(game))))
+				if(tool.installed && ((install_mode && tool.can_install(game as Game)) || (!install_mode && tool.can_run(game))))
 				{
 					model.append(out iter);
 					model.set(iter, 0, tool.icon);

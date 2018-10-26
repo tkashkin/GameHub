@@ -73,9 +73,9 @@ namespace GameHub.Data.Compat
 			return installed && Platform.WINDOWS in game.platforms;
 		}
 
-		public override bool can_run(Game game)
+		public override bool can_run(Runnable game)
 		{
-			return installed && (game is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in game.platforms);
+			return installed && ((game is Game && (game is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in game.platforms)) || game is Emulator);
 		}
 
 		protected virtual async string[] prepare_installer_args(Game game)
@@ -100,13 +100,19 @@ namespace GameHub.Data.Compat
 			yield exec(game, installer, installer.get_parent(), yield prepare_installer_args(game));
 		}
 
-		public override async void run(Game game)
+		public override async void run(Runnable game)
 		{
 			if(!can_run(game)) return;
 			yield exec(game, game.executable, game.install_dir);
 		}
 
-		protected virtual async void exec(Game game, File file, File dir, string[]? args=null, bool parse_opts=true)
+		public override async void run_emulator(Emulator emu, Game game)
+		{
+			if(!can_run(emu)) return;
+			yield exec(emu, emu.executable, emu.install_dir, emu.get_args(game));
+		}
+
+		protected virtual async void exec(Runnable game, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), file.get_path() };
 			if(args != null)
@@ -116,17 +122,17 @@ namespace GameHub.Data.Compat
 			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(game));
 		}
 
-		protected virtual File get_wineprefix(Game game)
+		protected virtual File get_wineprefix(Runnable game)
 		{
 			return FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(binary)_$(arch)");
 		}
 
-		public override File get_install_root(Game game)
+		public override File get_install_root(Runnable game)
 		{
 			return get_wineprefix(game).get_child("drive_c");
 		}
 
-		protected virtual string[] prepare_env(Game game, bool parse_opts=true)
+		protected virtual string[] prepare_env(Runnable game, bool parse_opts=true)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
@@ -143,7 +149,7 @@ namespace GameHub.Data.Compat
 			return env;
 		}
 
-		protected async void wineutil(File? wineprefix, Game game, string util="winecfg")
+		protected async void wineutil(File? wineprefix, Runnable game, string util="winecfg")
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
@@ -161,7 +167,7 @@ namespace GameHub.Data.Compat
 			yield Utils.run_thread({ wine_binary.get_path(), util }, game.install_dir.get_path(), env);
 		}
 
-		protected async void winetricks(File? wineprefix, Game game)
+		protected async void winetricks(File? wineprefix, Runnable game)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
@@ -179,7 +185,7 @@ namespace GameHub.Data.Compat
 			yield Utils.run_thread({ "winetricks" }, game.install_dir.get_path(), env);
 		}
 
-		public async string convert_path(Game game, File path)
+		public async string convert_path(Runnable game, File path)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
