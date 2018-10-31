@@ -24,6 +24,9 @@ namespace GameHub.Data.Compat
 {
 	public class DOSBox: CompatTool
 	{
+		private static string[] DOSBOX_WIN_EXECUTABLE_NAMES = {"DOSBox", "dosbox", "DOSBOX"};
+		private static string[] DOSBOX_WIN_EXECUTABLE_EXTENSIONS = {".exe", ".EXE"};
+
 		public string binary { get; construct; default = "dosbox"; }
 
 		private File conf_windowed;
@@ -122,9 +125,23 @@ namespace GameHub.Data.Compat
 				cmd += conf_windowed.get_path();
 			}
 
-			if(game.install_dir.get_child("DOSBOX").get_child("DOSBox.exe").query_exists())
+			bool bundled_win_dosbox_found = false;
+			foreach(var dirname in DOSBOX_WIN_EXECUTABLE_NAMES)
 			{
-				wdir = game.install_dir.get_child("DOSBOX");
+				foreach(var exename in DOSBOX_WIN_EXECUTABLE_NAMES)
+				{
+					foreach(var exeext in DOSBOX_WIN_EXECUTABLE_EXTENSIONS)
+					{
+						if(game.install_dir.get_child(dirname).get_child(exename + exeext).query_exists())
+						{
+							wdir = game.install_dir.get_child(dirname);
+							bundled_win_dosbox_found = true;
+							break;
+						}
+					}
+					if(bundled_win_dosbox_found) break;
+				}
+				if(bundled_win_dosbox_found) break;
 			}
 
 			yield Utils.run_thread(cmd, wdir.get_path());
