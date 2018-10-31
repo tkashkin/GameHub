@@ -26,6 +26,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 	{
 		private Settings.Auth.Humble humble_auth;
 		private Box enabled_box;
+		private Button logout_btn;
 
 		public Humble(SettingsDialog dlg)
 		{
@@ -49,6 +50,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			//add_cache_directory(_("Installers cache"), FSUtils.Paths.Humble.Installers);
 
+			add_separator();
+
+			logout_btn = new Button.with_label(_("Logout"));
+			logout_btn.halign = Align.END;
+			add_widget(logout_btn);
+
+			logout_btn.clicked.connect(() => {
+				humble_auth.authenticated = false;
+				humble_auth.access_token = "";
+				update();
+				dialog.show_restart_message();
+			});
+
 			update();
 		}
 
@@ -57,6 +71,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			this.foreach(w => {
 				if(w != enabled_box) w.sensitive = humble_auth.enabled;
 			});
+			logout_btn.sensitive = humble_auth.enabled && humble_auth.authenticated && humble_auth.access_token.length > 0;
 		}
 
 	}

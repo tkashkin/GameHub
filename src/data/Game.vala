@@ -168,6 +168,8 @@ namespace GameHub.Data
 
 		public abstract class Installer
 		{
+			private static string NSIS_INSTALLER_DESCRIPTION = "Nullsoft Installer";
+
 			public class Part: Object
 			{
 				public string id     { get; construct set; }
@@ -228,6 +230,7 @@ namespace GameHub.Data
 
 					uint f = 0;
 					bool windows_installer = false;
+					bool nsis_installer = false;
 					foreach(var file in files)
 					{
 						var path = file.get_path();
@@ -236,6 +239,15 @@ namespace GameHub.Data
 						FSUtils.mkdir(game.install_dir.get_path());
 
 						var type = yield guess_type(file, f > 0);
+
+						if(type == InstallerType.WINDOWS_EXECUTABLE)
+						{
+							var desc = yield Utils.run_thread({"file", "-b", path});
+							if(desc != null && desc.length > 0 && NSIS_INSTALLER_DESCRIPTION in desc)
+							{
+								type = InstallerType.WINDOWS_NSIS_INSTALLER;
+							}
+						}
 
 						string[]? cmd = null;
 
@@ -248,6 +260,7 @@ namespace GameHub.Data
 								break;
 
 							case InstallerType.ARCHIVE:
+							case InstallerType.WINDOWS_NSIS_INSTALLER:
 								cmd = {"file-roller", path, "-e", game.install_dir.get_path()}; // extract with file-roller
 								break;
 
@@ -275,11 +288,20 @@ namespace GameHub.Data
 								yield tool.install(game, file);
 							}
 						}
+						else if(type == InstallerType.WINDOWS_NSIS_INSTALLER)
+						{
+							nsis_installer = true;
+						}
 						f++;
 					}
 
 					try
 					{
+						if(nsis_installer)
+						{
+							FSUtils.rm(game.install_dir.get_path(), "\\$*DIR", "-rf"); // remove anything like $PLUGINSDIR
+						}
+
 						string? dirname = null;
 						FileInfo? finfo = null;
 						var enumerator = yield game.install_dir.enumerate_children_async("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
@@ -390,7 +412,7 @@ namespace GameHub.Data
 
 			public enum InstallerType
 			{
-				UNKNOWN, EXECUTABLE, WINDOWS_EXECUTABLE, GOG_PART, ARCHIVE;
+				UNKNOWN, EXECUTABLE, WINDOWS_EXECUTABLE, GOG_PART, ARCHIVE, WINDOWS_NSIS_INSTALLER;
 
 				public static InstallerType from_mime(string type)
 				{
