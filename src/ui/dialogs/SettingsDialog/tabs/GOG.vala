@@ -26,6 +26,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 	{
 		private Settings.Auth.GOG gog_auth;
 		private Box enabled_box;
+		private Button logout_btn;
 
 		public GOG(SettingsDialog dlg)
 		{
@@ -42,10 +43,23 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			add_separator();
 
-
 			add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; dialog.show_restart_message(); });
 
 			//add_cache_directory(_("Installers cache"), FSUtils.Paths.GOG.Installers);
+
+			add_separator();
+
+			logout_btn = new Button.with_label(_("Logout"));
+			logout_btn.halign = Align.END;
+			add_widget(logout_btn);
+
+			logout_btn.clicked.connect(() => {
+				gog_auth.authenticated = false;
+				gog_auth.access_token = "";
+				gog_auth.refresh_token = "";
+				update();
+				dialog.show_restart_message();
+			});
 
 			update();
 		}
@@ -55,6 +69,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			this.foreach(w => {
 				if(w != enabled_box) w.sensitive = gog_auth.enabled;
 			});
+			logout_btn.sensitive = gog_auth.enabled && gog_auth.authenticated && gog_auth.access_token.length > 0;
 		}
 
 	}
