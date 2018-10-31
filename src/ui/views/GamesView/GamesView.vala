@@ -423,6 +423,23 @@ namespace GameHub.UI.Views.GamesView
 						settings.clicked();
 						break;
 
+					case Key.R:
+					case Key.r:
+						int index = Random.int_range(0, (int32) games_grid.get_children().length());
+						var card = games_grid.get_child_at_index(index);
+						if(card != null)
+						{
+							games_grid.select_child(card);
+							card.grab_focus();
+						}
+						var row = games_list.get_row_at_index(index);
+						if(row != null)
+						{
+							games_list.select_row(row);
+							row.grab_focus();
+						}
+						break;
+
 					case Key.Alt_L: // Y
 					case Key.Alt_R:
 						filters.clicked();
