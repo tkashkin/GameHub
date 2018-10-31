@@ -152,7 +152,7 @@ namespace GameHub.Data
 		{
 			owned get
 			{
-				return Utils.strip_name(name.replace(" ", "_"), "_'.,");
+				return Utils.strip_name(name.replace(" ", "_"), "_.,");
 			}
 		}
 

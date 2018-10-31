@@ -265,7 +265,12 @@ namespace GameHub.UI.Views.GamesView
 				{
 					var label = new HeaderLabel(f ? C_("status_header", "Favorites") : item.game.status.header);
 					label.get_style_context().add_class("games-list-header");
-					label.set_size_request(1024, -1); // ugly hack
+					games_list.size_allocate.connect(alloc => {
+						label.set_size_request(alloc.width, -1);
+					});
+					Allocation alloc;
+					games_list.get_allocation(out alloc);
+					label.set_size_request(alloc.width, -1);
 					row.set_header(label);
 				}
 			});
