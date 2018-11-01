@@ -1,0 +1,16 @@
+To create an RPM for fedora.
+
+If you haven't created an RPM build environment before: dnf install rpmdevtools mock && rpmdev-setuptree
+
+This creates an rpmbuild environment in ~/rpmbuild
+
+Copy the spec into ~/rpmbuild/SPECS (editing the versions and githash in define if required)
+
+Then, updating to the correct versions where required:
+```
+cd ~/rpmbuild
+spectool -R -g SPECS/gamehub.spec # Downloads the tarball from releases to the SOURCES directory
+rpmbuild -bs SPECS/gamehub.spec # Create the SRPM to build from
+mock SRPMS/gamehub-0.11.6-1.9.7e443e4.fc29.src.rpm
+```
+
