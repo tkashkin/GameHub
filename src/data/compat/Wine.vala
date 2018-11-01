@@ -28,6 +28,8 @@ namespace GameHub.Data.Compat
 		public string arch { get; construct; default = "win64"; }
 		public File? wine_binary { get; protected set; }
 
+		public CompatTool.BoolOption install_opt_innosetup_args;
+
 		public Wine(string binary="wine", string arch="win64")
 		{
 			Object(binary: binary, arch: arch);
@@ -42,7 +44,10 @@ namespace GameHub.Data.Compat
 			executable = wine_binary = Utils.find_executable(binary);
 			installed = executable != null && executable.query_exists();
 
+			install_opt_innosetup_args = new CompatTool.BoolOption("InnoSetup", _("InnoSetup default options"), true);
+
 			install_options = {
+				install_opt_innosetup_args,
 				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
 				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), true),
 				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
@@ -81,11 +86,17 @@ namespace GameHub.Data.Compat
 		protected virtual async string[] prepare_installer_args(Game game)
 		{
 			var win_path = yield convert_path(game, game.install_dir);
-			string[] opts = { "/SP-", "/NOCANCEL", "/NOGUI", "/NOICONS", @"/DIR=$(win_path)", "/LOG=C:\\install.log" };
+
+			string[] opts = {};
+
+			if(install_opt_innosetup_args.enabled)
+			{
+				opts = { "/SP-", "/NOCANCEL", "/NOGUI", "/NOICONS", @"/DIR=$(win_path)", "/LOG=C:\\install.log" };
+			}
 
 			foreach(var opt in install_options)
 			{
-				if(opt is CompatTool.BoolOption && ((CompatTool.BoolOption) opt).enabled)
+				if(opt.name.has_prefix("/") && opt is CompatTool.BoolOption && ((CompatTool.BoolOption) opt).enabled)
 				{
 					opts += opt.name;
 				}

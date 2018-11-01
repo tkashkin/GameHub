@@ -240,7 +240,7 @@ namespace GameHub.Data
 
 						var type = yield guess_type(file, f > 0);
 
-						if(type == InstallerType.WINDOWS_EXECUTABLE)
+						if(type == InstallerType.WINDOWS_EXECUTABLE && tool is Compat.Innoextract)
 						{
 							var desc = yield Utils.run_thread({"file", "-b", path});
 							if(desc != null && desc.length > 0 && NSIS_INSTALLER_DESCRIPTION in desc)

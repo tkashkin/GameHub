@@ -62,29 +62,34 @@ namespace GameHub.UI.Dialogs
 
 			content = new Box(Orientation.VERTICAL, 0);
 
-			var icon = new AutoSizeImage();
-			icon.set_constraint(48, 48, 1);
-			icon.set_size_request(48, 48);
-
 			title_label = new Label(null);
-			title_label.margin_start = title_label.margin_end = 8;
+			title_label.margin_start = title_label.margin_end = 4;
 			title_label.halign = Align.START;
 			title_label.hexpand = true;
 			title_label.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
 			subtitle_label = new Label(null);
-			subtitle_label.margin_start = subtitle_label.margin_end = 8;
+			subtitle_label.margin_start = subtitle_label.margin_end = 4;
 			subtitle_label.halign = Align.START;
 			subtitle_label.hexpand = true;
 
-			hbox.add(icon);
+			if(game.icon != null)
+			{
+				var icon = new AutoSizeImage();
+				icon.set_constraint(48, 48, 1);
+				icon.set_size_request(48, 48);
+				Utils.load_image.begin(icon, game.icon, "icon");
+				hbox.add(icon);
+				title_label.margin_start = title_label.margin_end = 8;
+				subtitle_label.margin_start = subtitle_label.margin_end = 8;
+			}
+
 			hbox.add(content);
 
 			content.add(title_label);
 			content.add(subtitle_label);
 
 			title_label.label = game.name;
-			Utils.load_image.begin(icon, game.icon, "icon");
 
 			installers_list = new ListBox();
 			installers_list.margin_top = 4;
@@ -147,7 +152,7 @@ namespace GameHub.UI.Dialogs
 				var compat_tool_box = new Box(Orientation.VERTICAL, 4);
 
 				compat_tool_picker = new CompatToolPicker(game, true);
-				compat_tool_picker.margin_start = 4;
+				compat_tool_picker.margin_start = game.icon != null ? 4 : 0;
 				compat_tool_picker.margin_top = 8;
 
 				compat_tool_box.add(compat_tool_picker);
@@ -180,7 +185,7 @@ namespace GameHub.UI.Dialogs
 				compat_tool_box.add(opts_list);
 			}
 
-			add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
+			var import_btn = add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
 
 			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
 			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
@@ -197,6 +202,16 @@ namespace GameHub.UI.Dialogs
 				bbox.add(dl_only_check);
 				bbox.set_child_secondary(dl_only_check, true);
 				bbox.set_child_non_homogeneous(dl_only_check, true);
+			}
+
+			if(game is GameHub.Data.Sources.User.UserGame)
+			{
+				subtitle_label.no_show_all = true;
+				subtitle_label.visible = false;
+				dl_only_check.no_show_all = true;
+				dl_only_check.visible = false;
+				import_btn.no_show_all = true;
+				import_btn.visible = false;
 			}
 
 			if(compat_tool_revealer != null)
