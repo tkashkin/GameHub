@@ -99,7 +99,7 @@ namespace GameHub.Data
 
 		public string? store_page { get; protected set; default = null; }
 
-		public int64 last_launch { get; protected set; default = 0; }
+		public int64 last_launch { get; set; default = 0; }
 
 		public abstract async void install();
 		public abstract async void uninstall();
