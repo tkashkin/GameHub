@@ -59,10 +59,6 @@ namespace GameHub.UI.Dialogs
 
 			content = new Box(Orientation.VERTICAL, 0);
 
-			var icon = new AutoSizeImage();
-			icon.set_constraint(48, 48, 1);
-			icon.set_size_request(48, 48);
-
 			title_label = new Label(game.name);
 			title_label.margin_start = 8;
 			title_label.halign = Align.START;
@@ -79,10 +75,16 @@ namespace GameHub.UI.Dialogs
 
 			content.add(opts_list);
 
-			if(game is Game)
+			if(game is Game && (game as Game).icon != null)
 			{
+				var icon = new AutoSizeImage();
+				icon.set_constraint(48, 48, 1);
+				icon.set_size_request(48, 48);
 				Utils.load_image.begin(icon, (game as Game).icon, "icon");
+				hbox.add(icon);
 			}
+
+			hbox.add(content);
 
 			response.connect((source, response_id) => {
 				switch(response_id)
@@ -97,9 +99,6 @@ namespace GameHub.UI.Dialogs
 			var run_btn = add_button(_("Run"), ResponseType.ACCEPT);
 			run_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
 			run_btn.grab_default();
-
-			hbox.add(icon);
-			hbox.add(content);
 
 			get_content_area().add(hbox);
 			get_content_area().set_size_request(340, 96);

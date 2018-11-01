@@ -27,7 +27,9 @@ namespace GameHub.Data.Sources.User
 		private bool is_removed = false;
 		public signal void removed();
 
-		public UserGame(string name, File dir, File exec, string args)
+		private Installer? installer;
+
+		public UserGame(string name, File dir, File exec, string args, bool is_installer)
 		{
 			source = User.instance;
 
@@ -35,11 +37,26 @@ namespace GameHub.Data.Sources.User
 			this.name = name;
 
 			platforms.clear();
-			platforms.add(Platform.LINUX);
+			platforms.add(exec.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX);
 
 			install_dir = dir;
-			executable = exec;
+
 			arguments = args;
+
+			if(!is_installer)
+			{
+				executable = exec;
+			}
+			else
+			{
+				installer = new Installer(this, exec);
+				var root_object = new Json.Object();
+				root_object.set_string_member("installer", exec.get_path());
+				var root_node = new Json.Node(Json.NodeType.OBJECT);
+				root_node.set_object(root_object);
+				info = Json.to_string(root_node, false);
+				save();
+			}
 
 			((User) source).add_game(this);
 			update_status();
@@ -95,10 +112,39 @@ namespace GameHub.Data.Sources.User
 		public override async void update_game_info()
 		{
 			update_status();
+			if(installer == null && info != null && info.length > 0)
+			{
+				var i = Parser.parse_json(info).get_object();
+				installer = new Installer(this, File.new_for_path(i.get_string_member("installer")));
+			}
 			save();
 		}
 
-		public override async void install(){}
+		public override async void install()
+		{
+			yield update_game_info();
+
+			if(installer == null) return;
+
+			var installers = new ArrayList<Game.Installer>();
+			installers.add(installer);
+
+			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
+
+			wnd.cancelled.connect(() => Idle.add(install.callback));
+
+			wnd.install.connect((installer, dl_only, tool) => {
+				installer.install.begin(this, dl_only, tool, (obj, res) => {
+					installer.install.end(res);
+					Idle.add(install.callback);
+				});
+			});
+
+			wnd.show_all();
+			wnd.present();
+
+			yield;
+		}
 
 		public override async void uninstall()
 		{
@@ -122,7 +168,7 @@ namespace GameHub.Data.Sources.User
 
 		public override void update_status()
 		{
-			var state = executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED;
+			var state = executable != null && executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED;
 			status = new Game.Status(state);
 			if(state == Game.State.INSTALLED)
 			{
@@ -133,6 +179,20 @@ namespace GameHub.Data.Sources.User
 			{
 				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
+		}
+
+		public class Installer: Game.Installer
+		{
+			private string game_name;
+			public override string name { get { return game_name; } }
+
+			public Installer(UserGame game, File installer)
+			{
+				game_name = game.name;
+				id = "installer";
+				platform = installer.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
+				parts.add(new Game.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
 			}
 		}
 	}

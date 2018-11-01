@@ -31,6 +31,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 	public class Emulators: SettingsDialogTab
 	{
 		private Stack stack;
+		private Button add_btn;
+		private Button remove_btn;
+
 		private EmulatorPage? previous_page;
 
 		public Emulators(SettingsDialog dlg)
@@ -62,10 +65,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			actionbar.vexpand = false;
 			actionbar.get_style_context().add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR);
 
-			var add_btn = new Button.from_icon_name("list-add-symbolic", IconSize.MENU);
+			add_btn = new Button.from_icon_name("list-add-symbolic", IconSize.MENU);
 			add_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
-			var remove_btn = new Button.from_icon_name("list-remove-symbolic", IconSize.MENU);
+			remove_btn = new Button.from_icon_name("list-remove-symbolic", IconSize.MENU);
 			remove_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 			actionbar.pack_start(add_btn);
@@ -98,6 +101,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				add_emu_page();
 			});
 
+			remove_btn.clicked.connect(() => {
+				remove_emu_page();
+			});
+
 			var emulators = Tables.Emulators.get_all();
 			foreach(var emu in emulators)
 			{
@@ -115,6 +122,20 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			{
 				stack.set_visible_child(page);
 			}
+			page.emulator.removed.connect(() => {
+				stack.remove(page);
+				remove_btn.sensitive = stack.get_children().length() > 0;
+			});
+			remove_btn.sensitive = stack.get_children().length() > 0;
+		}
+
+		private void remove_emu_page()
+		{
+			var page = stack.visible_child as EmulatorPage;
+			if(page != null)
+			{
+				page.remove();
+			}
 		}
 
 		private class EmulatorPage: Box
@@ -129,7 +150,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				set
 				{
 					_title = value.strip();
-					stack.child_set(this, title: _title);
+					if(parent == stack)
+					{
+						stack.child_set(this, title: _title);
+					}
 				}
 			}
 			public Stack stack { get; construct; }
@@ -240,6 +264,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			public void save()
 			{
 				emulator.save();
+			}
+
+			public new void remove()
+			{
+				emulator.remove();
 			}
 
 			private Box add_switch(string text, bool enabled, owned SettingsDialogTab.SwitchAction action)

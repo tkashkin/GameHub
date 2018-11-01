@@ -371,6 +371,8 @@ namespace GameHub.UI.Views.GamesView
 			downloads.opacity = 0;
 			filters.opacity = 0;
 			filters.sensitive = false;
+			add_game_button.opacity = 0;
+			add_game_button.sensitive = false;
 
 			Downloader.get_instance().dl_started.connect(dl => {
 				downloads_list.add(new DownloadProgressView(dl));
@@ -588,6 +590,8 @@ namespace GameHub.UI.Views.GamesView
 			downloads.opacity = 1;
 			filters.opacity = 1;
 			filters.sensitive = true;
+			add_game_button.opacity = 1;
+			add_game_button.sensitive = true;
 		}
 
 		private void add_game(Game g, bool cached=false)
