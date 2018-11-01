@@ -134,6 +134,8 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
+				(game as Game).last_launch = get_real_time() / 1000;
+				game.save();
 				compat_tool_picker.selected.run.begin(game, (obj, res) => {
 					compat_tool_picker.selected.run.end(res);
 					RunnableIsLaunched = false;

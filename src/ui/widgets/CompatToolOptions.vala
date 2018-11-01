@@ -90,6 +90,8 @@ namespace GameHub.UI.Widgets
 
 		public void save_options()
 		{
+			game.compat_options_saved = true;
+
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 			var options = install ? compat_tool_picker.selected.install_options : compat_tool_picker.selected.options;
 			if(options == null) return;
