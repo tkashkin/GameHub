@@ -43,7 +43,7 @@ namespace GameHub.Data
 
 		public virtual async void install(Runnable runnable, File installer){}
 		public virtual async void run(Runnable game){}
-		public virtual async void run_emulator(Emulator emu, Game game){}
+		public virtual async void run_emulator(Emulator emu, Game? game){}
 
 		public abstract class Option: Object
 		{

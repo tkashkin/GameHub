@@ -175,6 +175,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			private Entry arguments;
 			private Label arguments_label;
 
+			private Button run_btn;
+			private Button save_btn;
+
 			public EmulatorPage(Stack stack, Emulator? emulator=null)
 			{
 				Object(orientation: Orientation.VERTICAL, stack: stack, emulator: emulator ?? new Emulator.empty());
@@ -193,6 +196,18 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				mode.selected = 0;
 				attach(mode, 0, rows, 2, 1);
 				rows++;
+
+				save_btn = new Button.with_label(_("Save"));
+				save_btn.halign = Align.END;
+				save_btn.valign = Align.END;
+				save_btn.margin_top = 4;
+				save_btn.sensitive = false;
+
+				run_btn = new Button.with_label(_("Run"));
+				run_btn.halign = Align.START;
+				run_btn.valign = Align.END;
+				run_btn.margin_top = 4;
+				run_btn.sensitive = false;
 
 				name = add_entry(_("Name"), "insert-text-symbolic", true);
 
@@ -233,6 +248,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 					update();
 				});
 
+				if(emulator.install_dir != null && emulator.install_dir.query_exists())
+				{
+					try
+					{
+						emudir.set_file(emulator.install_dir);
+						emudir.file_set();
+					}
+					catch(Error e)
+					{
+						warning(e.message);
+					}
+				}
+
 				if(emulator.executable != null && emulator.executable.query_exists())
 				{
 					try
@@ -261,6 +289,18 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 					compat_tool.visible = emulator.use_compat;
 				});
 
+				var btn_box = new Box(Orientation.HORIZONTAL, 0);
+				btn_box.expand = true;
+
+				btn_box.pack_start(run_btn);
+				btn_box.pack_end(save_btn);
+
+				attach(btn_box, 0, rows, 2, 1);
+				rows++;
+
+				run_btn.clicked.connect(run);
+				save_btn.clicked.connect(save);
+
 				mode.mode_changed.connect(update);
 
 				update();
@@ -287,6 +327,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 				executable_label.label = mode.selected == 0 ? _("Executable") : _("Installer");
 				arguments.sensitive = arguments_label.sensitive = mode.selected == 0;
+
+				run_btn.sensitive = emulator.name.length > 0 && executable.get_file() != null && mode.selected == 0 && emudir.get_file() != null;
+				save_btn.sensitive = emulator.name.length > 0 && executable.get_file() != null && ((mode.selected == 0 && emudir.get_file() != null) || mode.selected == 1);
 
 				emulator.notify_property("use-compat");
 			}
@@ -323,6 +366,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				emulator.save();
 			}
 
+			public void run()
+			{
+				save();
+				emulator.run_game.begin(null);
+			}
+
 			public new void remove()
 			{
 				emulator.remove();
@@ -334,6 +383,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				label.halign = Align.START;
 				label.xalign = 1;
 				label.margin = 4;
+				label.hexpand = true;
 				if(required)
 				{
 					label.get_style_context().add_class("category-label");
@@ -341,7 +391,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				var entry = new Entry();
 				entry.primary_icon_name = icon;
 				entry.primary_icon_activatable = false;
-				entry.set_size_request(220, -1);
+				entry.set_size_request(180, -1);
 				attach(label, 0, rows);
 				attach(entry, 1, rows);
 				rows++;
@@ -354,12 +404,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				label.halign = Align.START;
 				label.xalign = 1;
 				label.margin = 4;
+				label.hexpand = true;
 				if(required)
 				{
 					label.get_style_context().add_class("category-label");
 				}
 				var button = new FileChooserButton(title, action);
-				button.set_size_request(220, -1);
+				button.set_size_request(180, -1);
 				attach(label, 0, rows);
 				attach(button, 1, rows);
 				rows++;

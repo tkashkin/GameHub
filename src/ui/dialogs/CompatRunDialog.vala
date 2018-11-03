@@ -124,7 +124,7 @@ namespace GameHub.UI.Dialogs
 
 			RunnableIsLaunched = true;
 
-			if(game is Emulator && emulated_game != null)
+			if(game is Emulator)
 			{
 				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, (obj, res) => {
 					compat_tool_picker.selected.run_emulator.end(res);
