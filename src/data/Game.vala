@@ -95,7 +95,7 @@ namespace GameHub.Data
 		}
 
 		public File? installers_dir { get; protected set; default = null; }
-		public bool is_installable { get; protected set; default = false; }
+		public bool is_installable { get; protected set; default = true; }
 
 		public string? store_page { get; protected set; default = null; }
 
@@ -217,7 +217,11 @@ namespace GameHub.Data
 						}
 
 						var info = new Downloader.DownloadInfo(game.name, partDesc + part.id, game.icon, null, null, game.source.icon);
-						files.add(yield Downloader.download(part.remote, part.local, info));
+						var file = yield Downloader.download(part.remote, part.local, info);
+						if(file != null && file.query_exists())
+						{
+							files.add(file);
+						}
 						Downloader.get_instance().disconnect(ds_id);
 
 						p++;
@@ -226,7 +230,7 @@ namespace GameHub.Data
 					game.status = new Game.Status(Game.State.UNINSTALLED);
 					game.update_status();
 
-					if(dl_only) return;
+					if(dl_only || files.size == 0) return;
 
 					uint f = 0;
 					bool windows_installer = false;
@@ -316,7 +320,7 @@ namespace GameHub.Data
 								}
 								continue;
 							}
-							if(dirname == null)
+							if(dirname == null && finfo.get_file_type() == FileType.DIRECTORY)
 							{
 								dirname = finfo.get_name();
 							}
@@ -328,6 +332,7 @@ namespace GameHub.Data
 
 						if(dirname != null && dirname != CompatTool.COMPAT_DATA_DIR)
 						{
+							dirname = dirname.replace(" ", "\\ ");
 							Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, game.install_dir.get_path());
 							FSUtils.rm(game.install_dir.get_path(), dirname, "-rf");
 						}

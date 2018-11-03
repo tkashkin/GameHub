@@ -277,7 +277,7 @@ namespace GameHub.UI.Views.GameDetailsView
 					action_resume.visible = false;
 				}
 				action_install.visible = s.state != Game.State.INSTALLED;
-				action_install.sensitive = s.state == Game.State.UNINSTALLED;
+				action_install.sensitive = s.state == Game.State.UNINSTALLED && game.is_installable;
 				action_run_with_compat.visible = s.state == Game.State.INSTALLED && game.use_compat;
 				action_run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
 				action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
