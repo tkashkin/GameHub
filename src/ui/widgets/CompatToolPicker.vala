@@ -91,6 +91,8 @@ namespace GameHub.UI.Widgets
 			actions = new Box(Orientation.HORIZONTAL, 4);
 
 			combo.changed.connect(() => {
+				if(model_size == 0) return;
+
 				Value v;
 				combo.get_active_iter(out iter);
 				model.get_value(iter, 2, out v);
@@ -124,6 +126,8 @@ namespace GameHub.UI.Widgets
 			if(game.compat_tool != null && game.compat_tool.length > 0)
 			{
 				model.foreach((m, p, i) => {
+					if(model_size == 0) return false;
+
 					Value v;
 					m.get_value(i, 2, out v);
 					var tool = v as CompatTool;
@@ -135,7 +139,10 @@ namespace GameHub.UI.Widgets
 					return false;
 				});
 			}
-			combo.active = index < model_size ? index : 0;
+			if(model_size > 0)
+			{
+				combo.active = index < model_size ? index : 0;
+			}
 
 			add(tool_box);
 			add(actions);

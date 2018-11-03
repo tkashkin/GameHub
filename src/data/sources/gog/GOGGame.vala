@@ -42,15 +42,19 @@ namespace GameHub.Data.Sources.GOG
 
 			id = json_obj.get_int_member("id").to_string();
 			name = json_obj.get_string_member("title");
-			image = "https:" + json_obj.get_string_member("image") + "_392.jpg";
 			icon = "";
+
+			if(json_obj.has_member("image"))
+			{
+				image = "https:" + json_obj.get_string_member("image") + "_392.jpg";
+			}
 
 			info = Json.to_string(json_node, false);
 
-			platforms.clear();
-			if(json_obj.get_object_member("worksOn").get_boolean_member("Linux")) platforms.add(Platform.LINUX);
-			if(json_obj.get_object_member("worksOn").get_boolean_member("Windows")) platforms.add(Platform.WINDOWS);
-			if(json_obj.get_object_member("worksOn").get_boolean_member("Mac")) platforms.add(Platform.MACOS);
+			var worksOn = json_obj != null && json_obj.has_member("worksOn") ? json_obj.get_object_member("worksOn") : null;
+			if(worksOn != null && worksOn.get_boolean_member("Linux")) platforms.add(Platform.LINUX);
+			if(worksOn != null && worksOn.get_boolean_member("Windows")) platforms.add(Platform.WINDOWS);
+			if(worksOn != null && worksOn.get_boolean_member("Mac")) platforms.add(Platform.MACOS);
 
 			var tags_json = !json_obj.has_member("tags") ? null : json_obj.get_array_member("tags");
 			if(tags_json != null)
@@ -153,6 +157,9 @@ namespace GameHub.Data.Sources.GOG
 
 			if(game_info_updated) return;
 
+			is_installable = root != null && root.get_node_type() == Json.NodeType.OBJECT
+				&& root.get_object().has_member("is_installable") && root.get_object().get_boolean_member("is_installable");
+
 			if(desc != null)
 			{
 				description = desc.get_string_member("full");
@@ -188,6 +195,11 @@ namespace GameHub.Data.Sources.GOG
 					var installer = new Installer(this, installer_json.get_object());
 					installers.add(installer);
 				}
+			}
+
+			if(installers.size == 0)
+			{
+				is_installable = false;
 			}
 
 			var bonuses_json = downloads == null || !downloads.has_member("bonus_content") ? null : downloads.get_array_member("bonus_content");
@@ -551,26 +563,49 @@ namespace GameHub.Data.Sources.GOG
 
 			public DLC(GOGGame game, Json.Node json_node)
 			{
-				base.default();
-				this.game = game;
-				source = game.source;
+				base(game.source as GOG, json_node);
 
-				var json_obj = json_node.get_object();
-
-				id = json_obj.get_int_member("id").to_string();
-				name = json_obj.get_string_member("title");
 				image = game.image;
-				icon = "https:" + json_obj.get_object_member("images").get_string_member("icon");
-
-				info_detailed = Json.to_string(json_node, false);
-
-				platforms.clear();
-
-				is_installable = false;
 
 				install_dir = game.install_dir;
 				executable = game.executable;
+
+				this.game = game;
 				update_status();
+			}
+
+			public override void update_status()
+			{
+				if(game == null) return;
+
+				if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
+
+				var files = new ArrayList<File>();
+				files.add(FSUtils.file(install_dir.get_path(), @"goggame-$(id).info"));
+				var state = Game.State.UNINSTALLED;
+				foreach(var file in files)
+				{
+					if(file.query_exists())
+					{
+						warning(file.get_path());
+						state = Game.State.INSTALLED;
+						break;
+					}
+				}
+				status = new Game.Status(state);
+				if(state == Game.State.INSTALLED)
+				{
+					remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
+					add_tag(Tables.Tags.BUILTIN_INSTALLED);
+				}
+				else
+				{
+					add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
+					remove_tag(Tables.Tags.BUILTIN_INSTALLED);
+				}
+
+				installers_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_installers(game.name, name));
+				bonus_content_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_bonus(game.name, name));
 			}
 		}
 	}
