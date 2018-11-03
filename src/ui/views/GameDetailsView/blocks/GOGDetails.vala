@@ -193,7 +193,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				});
 				bonus.status_change(bonus.status);
 
-				content.add_events(EventMask.BUTTON_RELEASE_MASK);
+				content.add_events(EventMask.ALL_EVENTS_MASK);
 				content.button_release_event.connect(e => {
 					if(e.button == 1)
 					{

@@ -76,7 +76,7 @@ sources = [
 	'ui/dialogs/SettingsDialog/tabs/RetroArch.vala',
 	'ui/dialogs/SettingsDialog/tabs/Emulators.vala',
 
-	'ui/dialogs/GameInstallDialog.vala',
+	'ui/dialogs/InstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
 	'ui/dialogs/GamePropertiesDialog.vala',
 	'ui/dialogs/CompatRunDialog.vala',

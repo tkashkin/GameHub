@@ -146,7 +146,6 @@ namespace GameHub.Data.DB.Tables
 			var tags = "";
 			foreach(var t in game.tags)
 			{
-				if(t == Tables.Tags.BUILTIN_INSTALLED) continue;
 				if(tags.length > 0) tags += ",";
 				tags += t.id;
 			}
@@ -261,12 +260,14 @@ namespace GameHub.Data.DB.Tables
 
 			if(src != null)
 			{
-				res = db.prepare_v2("SELECT * FROM `games` WHERE `source` = ? ORDER BY `name` ASC", -1, out st);
+				res = db.prepare_v2("SELECT * FROM `games` WHERE `source` = ? ORDER BY (CASE WHEN `tags` LIKE ? THEN 1 ELSE 2 END), `name` ASC", -1, out st);
 				res = st.bind_text(1, src.id);
+				res = st.bind_text(2, "%" + Tags.BUILTIN_INSTALLED.id + "%");
 			}
 			else
 			{
-				res = db.prepare_v2("SELECT * FROM `games` ORDER BY `name` ASC", -1, out st);
+				res = db.prepare_v2("SELECT * FROM `games` ORDER BY (CASE WHEN `tags` LIKE ? THEN 1 ELSE 2 END), `name` ASC", -1, out st);
+				res = st.bind_text(1, "%" + Tags.BUILTIN_INSTALLED.id + "%");
 			}
 
 			if(res != Sqlite.OK)

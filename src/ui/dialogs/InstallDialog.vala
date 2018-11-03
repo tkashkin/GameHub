@@ -29,12 +29,12 @@ using GameHub.Data.Sources.Humble;
 
 namespace GameHub.UI.Dialogs
 {
-	public class GameInstallDialog: Dialog
+	public class InstallDialog: Dialog
 	{
 		private const int RESPONSE_IMPORT = 123;
 
 		public signal void import();
-		public signal void install(Game.Installer installer, bool dl_only, CompatTool? tool);
+		public signal void install(Runnable.Installer installer, bool dl_only, CompatTool? tool);
 		public signal void cancelled();
 
 		private Box content;
@@ -48,9 +48,16 @@ namespace GameHub.UI.Dialogs
 		private CompatToolPicker compat_tool_picker;
 		private CompatToolOptions opts_list;
 
-		public GameInstallDialog(Game game, ArrayList<Game.Installer> installers)
+		public InstallDialog(Runnable runnable, ArrayList<Runnable.Installer> installers)
 		{
 			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Install"));
+
+			Game? game = null;
+
+			if(runnable is Game)
+			{
+				game = runnable as Game;
+			}
 
 			get_style_context().add_class("rounded");
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
@@ -65,7 +72,9 @@ namespace GameHub.UI.Dialogs
 			title_label = new Label(null);
 			title_label.margin_start = title_label.margin_end = 4;
 			title_label.halign = Align.START;
-			title_label.hexpand = true;
+			title_label.xalign = 0;
+			title_label.wrap = true;
+			title_label.max_width_chars = 36;
 			title_label.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
 			subtitle_label = new Label(null);
@@ -73,7 +82,7 @@ namespace GameHub.UI.Dialogs
 			subtitle_label.halign = Align.START;
 			subtitle_label.hexpand = true;
 
-			if(game.icon != null)
+			if(game != null && game.icon != null)
 			{
 				var icon = new AutoSizeImage();
 				icon.set_constraint(48, 48, 1);
@@ -89,7 +98,7 @@ namespace GameHub.UI.Dialogs
 			content.add(title_label);
 			content.add(subtitle_label);
 
-			title_label.label = game.name;
+			title_label.label = runnable.name;
 
 			installers_list = new ListBox();
 			installers_list.margin_top = 4;
@@ -113,14 +122,14 @@ namespace GameHub.UI.Dialogs
 
 			var sys_langs = Intl.get_language_names();
 
-			var compatible_installers = new ArrayList<Game.Installer>();
+			var compatible_installers = new ArrayList<Runnable.Installer>();
 
 			foreach(var installer in installers)
 			{
 				if(installer.platform.id() != CurrentPlatform.id() && !Settings.UI.get_instance().show_unsupported_games && !Settings.UI.get_instance().use_compat) continue;
 
 				compatible_installers.add(installer);
-				var row = new InstallerRow(game, installer);
+				var row = new InstallerRow(runnable, installer);
 				installers_list.add(row);
 
 				if(installer is GOGGame.Installer && (installer as GOGGame.Installer).lang in sys_langs)
@@ -135,7 +144,7 @@ namespace GameHub.UI.Dialogs
 
 			if(compatible_installers.size > 1)
 			{
-				subtitle_label.label = _("Select game installer");
+				subtitle_label.label = _("Select installer");
 				content.add(installers_list);
 			}
 			else
@@ -151,8 +160,8 @@ namespace GameHub.UI.Dialogs
 
 				var compat_tool_box = new Box(Orientation.VERTICAL, 4);
 
-				compat_tool_picker = new CompatToolPicker(game, true);
-				compat_tool_picker.margin_start = game.icon != null ? 4 : 0;
+				compat_tool_picker = new CompatToolPicker(runnable, true);
+				compat_tool_picker.margin_start = game != null && game.icon != null ? 4 : 0;
 				compat_tool_picker.margin_top = 8;
 
 				compat_tool_box.add(compat_tool_picker);
@@ -176,16 +185,16 @@ namespace GameHub.UI.Dialogs
 				}
 				else
 				{
-					compat_tool_revealer.reveal_child = !game.is_supported(null, false) && game.is_supported(null, true);
+					compat_tool_revealer.reveal_child = !runnable.is_supported(null, false) && runnable.is_supported(null, true);
 				}
 
 				content.add(compat_tool_revealer);
 
-				opts_list = new CompatToolOptions(game, compat_tool_picker, true);
+				opts_list = new CompatToolOptions(runnable, compat_tool_picker, true);
 				compat_tool_box.add(opts_list);
 			}
 
-			var import_btn = add_button(_("Import"), GameInstallDialog.RESPONSE_IMPORT);
+			var import_btn = add_button(_("Import"), InstallDialog.RESPONSE_IMPORT);
 
 			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
 			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
@@ -204,7 +213,7 @@ namespace GameHub.UI.Dialogs
 				bbox.set_child_non_homogeneous(dl_only_check, true);
 			}
 
-			if(game is GameHub.Data.Sources.User.UserGame)
+			if(game is GameHub.Data.Sources.User.UserGame || runnable is GameHub.Data.Emulator)
 			{
 				subtitle_label.no_show_all = true;
 				subtitle_label.visible = false;
@@ -228,7 +237,7 @@ namespace GameHub.UI.Dialogs
 						destroy();
 						break;
 
-					case GameInstallDialog.RESPONSE_IMPORT:
+					case InstallDialog.RESPONSE_IMPORT:
 						is_finished = true;
 						import();
 						destroy();
@@ -270,12 +279,12 @@ namespace GameHub.UI.Dialogs
 
 		private class InstallerRow: ListBoxRow
 		{
-			public Game game;
-			public Game.Installer installer;
+			public Runnable runnable;
+			public Runnable.Installer installer;
 
-			public InstallerRow(Game game, Game.Installer installer)
+			public InstallerRow(Runnable runnable, Runnable.Installer installer)
 			{
-				this.game = game;
+				this.runnable = runnable;
 				this.installer = installer;
 
 				var box = new Box(Orientation.HORIZONTAL, 8);

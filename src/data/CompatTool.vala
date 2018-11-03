@@ -36,12 +36,12 @@ namespace GameHub.Data
 		public Option[]? install_options = null;
 		public Action[]? actions = null;
 
-		public virtual bool can_install(Game game) { return false; }
-		public virtual bool can_run(Runnable game) { return false; }
+		public virtual bool can_install(Runnable runnable) { return false; }
+		public virtual bool can_run(Runnable runnable) { return false; }
 
-		public virtual File get_install_root(Runnable game) { return game.install_dir; }
+		public virtual File get_install_root(Runnable runnable) { return runnable.install_dir; }
 
-		public virtual async void install(Game game, File installer){}
+		public virtual async void install(Runnable runnable, File installer){}
 		public virtual async void run(Runnable game){}
 		public virtual async void run_emulator(Emulator emu, Game game){}
 
@@ -90,7 +90,7 @@ namespace GameHub.Data
 
 		public class Action: Object
 		{
-			public delegate void Delegate(Runnable game);
+			public delegate void Delegate(Runnable runnable);
 			public string name { get; construct; }
 			public string description { get; construct; }
 			private Delegate action;
@@ -99,9 +99,9 @@ namespace GameHub.Data
 				Object(name: name, description: description);
 				this.action = (owned) action;
 			}
-			public void invoke(Runnable game)
+			public void invoke(Runnable runnable)
 			{
-				action(game);
+				action(runnable);
 			}
 		}
 	}

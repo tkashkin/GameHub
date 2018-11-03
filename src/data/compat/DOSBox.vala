@@ -84,22 +84,22 @@ namespace GameHub.Data.Compat
 			return configs;
 		}
 
-		public override bool can_run(Runnable game)
+		public override bool can_run(Runnable runnable)
 		{
-			return installed && game is Game && find_configs(game.install_dir).size > 0;
+			return installed && runnable is Game && find_configs(runnable.install_dir).size > 0;
 		}
 
-		public override async void run(Runnable game)
+		public override async void run(Runnable runnable)
 		{
-			if(!can_run(game)) return;
+			if(!can_run(runnable)) return;
 
 			string[] cmd = { executable.get_path() };
 
-			var wdir = game.install_dir;
+			var wdir = runnable.install_dir;
 
-			var configs = find_configs(game.install_dir);
+			var configs = find_configs(runnable.install_dir);
 
-			if(configs.size > 2 && game is GameHub.Data.Sources.GOG.GOGGame)
+			if(configs.size > 2 && runnable is GameHub.Data.Sources.GOG.GOGGame)
 			{
 				foreach(var conf in configs)
 				{
@@ -132,9 +132,9 @@ namespace GameHub.Data.Compat
 				{
 					foreach(var exeext in DOSBOX_WIN_EXECUTABLE_EXTENSIONS)
 					{
-						if(game.install_dir.get_child(dirname).get_child(exename + exeext).query_exists())
+						if(runnable.install_dir.get_child(dirname).get_child(exename + exeext).query_exists())
 						{
-							wdir = game.install_dir.get_child(dirname);
+							wdir = runnable.install_dir.get_child(dirname);
 							bundled_win_dosbox_found = true;
 							break;
 						}

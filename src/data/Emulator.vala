@@ -27,6 +27,8 @@ namespace GameHub.Data
 		private bool is_removed = false;
 		public signal void removed();
 
+		public Installer? installer;
+
 		public Emulator.empty(){}
 
 		public Emulator(string name, File exec, string args, string? compat=null)
@@ -81,6 +83,32 @@ namespace GameHub.Data
 			platforms.add(Platform.LINUX);
 
 			install_dir = executable.get_parent();
+		}
+
+		public override async void install()
+		{
+			update_status();
+
+			if(installer == null || install_dir == null) return;
+
+			var installers = new ArrayList<Runnable.Installer>();
+			installers.add(installer);
+
+			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers);
+
+			wnd.cancelled.connect(() => Idle.add(install.callback));
+
+			wnd.install.connect((installer, dl_only, tool) => {
+				installer.install.begin(this, dl_only, tool, (obj, res) => {
+					installer.install.end(res);
+					Idle.add(install.callback);
+				});
+			});
+
+			wnd.show_all();
+			wnd.present();
+
+			yield;
 		}
 
 		public string[] get_args(Game? game=null, File? exec=null)
@@ -162,6 +190,20 @@ namespace GameHub.Data
 		public static uint hash(Emulator emu)
 		{
 			return str_hash(emu.id);
+		}
+
+		public class Installer: Runnable.Installer
+		{
+			private string emu_name;
+			public override string name { get { return emu_name; } }
+
+			public Installer(Emulator emu, File installer)
+			{
+				emu_name = emu.name;
+				id = "installer";
+				platform = installer.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
+				parts.add(new Runnable.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
+			}
 		}
 	}
 }

@@ -57,35 +57,35 @@ namespace GameHub.Data.Compat
 			if(installed)
 			{
 				actions = {
-					new CompatTool.Action("prefix", _("Open prefix directory"), game => {
-						Utils.open_uri(get_wineprefix(game).get_uri());
+					new CompatTool.Action("prefix", _("Open prefix directory"), r => {
+						Utils.open_uri(get_wineprefix(r).get_uri());
 					}),
-					new CompatTool.Action("winecfg", _("Run winecfg"), game => {
-						wineutil.begin(null, game, "winecfg");
+					new CompatTool.Action("winecfg", _("Run winecfg"), r => {
+						wineutil.begin(null, r, "winecfg");
 					}),
-					new CompatTool.Action("winetricks", _("Run winetricks"), game => {
-						winetricks.begin(null, game);
+					new CompatTool.Action("winetricks", _("Run winetricks"), r => {
+						winetricks.begin(null, r);
 					}),
-					new CompatTool.Action("regedit", _("Run regedit"), game => {
-						wineutil.begin(null, game, "regedit");
+					new CompatTool.Action("regedit", _("Run regedit"), r => {
+						wineutil.begin(null, r, "regedit");
 					})
 				};
 			}
 		}
 
-		public override bool can_install(Game game)
+		public override bool can_install(Runnable runnable)
 		{
-			return installed && Platform.WINDOWS in game.platforms;
+			return installed && runnable != null && Platform.WINDOWS in runnable.platforms;
 		}
 
-		public override bool can_run(Runnable game)
+		public override bool can_run(Runnable runnable)
 		{
-			return installed && ((game is Game && (game is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in game.platforms)) || game is Emulator);
+			return installed && runnable != null && ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms)) || runnable is Emulator);
 		}
 
-		protected virtual async string[] prepare_installer_args(Game game)
+		protected virtual async string[] prepare_installer_args(Runnable runnable)
 		{
-			var win_path = yield convert_path(game, game.install_dir);
+			var win_path = yield convert_path(runnable, runnable.install_dir);
 
 			string[] opts = {};
 
@@ -105,49 +105,49 @@ namespace GameHub.Data.Compat
 			return opts;
 		}
 
-		public override async void install(Game game, File installer)
+		public override async void install(Runnable runnable, File installer)
 		{
-			if(!can_install(game) || (yield Game.Installer.guess_type(installer)) != Game.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
-			yield exec(game, installer, installer.get_parent(), yield prepare_installer_args(game));
+			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
+			yield exec(runnable, installer, installer.get_parent(), yield prepare_installer_args(runnable));
 		}
 
-		public override async void run(Runnable game)
+		public override async void run(Runnable runnable)
 		{
-			if(!can_run(game)) return;
-			yield exec(game, game.executable, game.install_dir);
+			if(!can_run(runnable)) return;
+			yield exec(runnable, runnable.executable, runnable.install_dir);
 		}
 
-		public override async void run_emulator(Emulator emu, Game game)
+		public override async void run_emulator(Emulator emu, Game runnable)
 		{
 			if(!can_run(emu)) return;
-			yield exec(emu, emu.executable, emu.install_dir, emu.get_args(game));
+			yield exec(emu, emu.executable, emu.install_dir, emu.get_args(runnable));
 		}
 
-		protected virtual async void exec(Runnable game, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected virtual async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), file.get_path() };
 			if(args != null)
 			{
 				foreach(var arg in args) cmd += arg;
 			}
-			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(game));
+			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(runnable));
 		}
 
-		protected virtual File get_wineprefix(Runnable game)
+		protected virtual File get_wineprefix(Runnable runnable)
 		{
-			return FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(binary)_$(arch)");
+			return FSUtils.mkdir(runnable.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(binary)_$(arch)");
 		}
 
-		public override File get_install_root(Runnable game)
+		public override File get_install_root(Runnable runnable)
 		{
-			return get_wineprefix(game).get_child("drive_c");
+			return get_wineprefix(runnable).get_child("drive_c");
 		}
 
-		protected virtual string[] prepare_env(Runnable game, bool parse_opts=true)
+		protected virtual string[] prepare_env(Runnable runnable, bool parse_opts=true)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = get_wineprefix(game);
+			var prefix = get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
@@ -160,12 +160,12 @@ namespace GameHub.Data.Compat
 			return env;
 		}
 
-		protected async void wineutil(File? wineprefix, Runnable game, string util="winecfg")
+		protected async void wineutil(File? wineprefix, Runnable runnable, string util="winecfg")
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = wineprefix ?? get_wineprefix(game);
+			var prefix = wineprefix ?? get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
@@ -175,15 +175,15 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
-			yield Utils.run_thread({ wine_binary.get_path(), util }, game.install_dir.get_path(), env);
+			yield Utils.run_thread({ wine_binary.get_path(), util }, runnable.install_dir.get_path(), env);
 		}
 
-		protected async void winetricks(File? wineprefix, Runnable game)
+		protected async void winetricks(File? wineprefix, Runnable runnable)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = wineprefix ?? get_wineprefix(game);
+			var prefix = wineprefix ?? get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
@@ -193,15 +193,15 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
-			yield Utils.run_thread({ "winetricks" }, game.install_dir.get_path(), env);
+			yield Utils.run_thread({ "winetricks" }, runnable.install_dir.get_path(), env);
 		}
 
-		public async string convert_path(Runnable game, File path)
+		public async string convert_path(Runnable runnable, File path)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = get_wineprefix(game);
+			var prefix = get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
@@ -211,7 +211,7 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
-			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, game.install_dir.get_path(), env)).strip();
+			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, runnable.install_dir.get_path(), env)).strip();
 			debug("'%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
 		}

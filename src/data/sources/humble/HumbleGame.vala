@@ -29,7 +29,7 @@ namespace GameHub.Data.Sources.Humble
 		private bool game_info_updated = false;
 		private bool game_info_refreshed = false;
 
-		public ArrayList<Game.Installer>? installers { get; protected set; default = new ArrayList<Game.Installer>(); }
+		public ArrayList<Runnable.Installer>? installers { get; protected set; default = new ArrayList<Runnable.Installer>(); }
 
 		public HumbleGame(Humble src, string order, Json.Node json_node)
 		{
@@ -255,7 +255,7 @@ namespace GameHub.Data.Sources.Humble
 
 			if(installers.size < 1) return;
 
-			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
+			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers);
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
@@ -297,11 +297,11 @@ namespace GameHub.Data.Sources.Humble
 			}
 		}
 
-		public class Installer: Game.Installer
+		public class Installer: Runnable.Installer
 		{
 			public string dl_name;
 			public string? dl_id;
-			public Game.Installer.Part part;
+			public Runnable.Installer.Part part;
 
 			public override string name { get { return dl_name; } }
 
@@ -317,7 +317,7 @@ namespace GameHub.Data.Sources.Humble
 				if(game.installers_dir == null) return;
 				var remote = File.new_for_uri(url);
 				var local = game.installers_dir.get_child("humble_" + game.id + "_" + id);
-				part = new Game.Installer.Part(id, url, full_size, remote, local);
+				part = new Runnable.Installer.Part(id, url, full_size, remote, local);
 				parts.add(part);
 			}
 

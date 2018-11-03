@@ -60,7 +60,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 			};
 		}
 
-		public override bool can_run(Runnable game)
+		public override bool can_run(Runnable runnable)
 		{
 			return true;
 		}
@@ -109,19 +109,19 @@ GH_GAME_NAME_ESCAPED="${10}"
 			}
 		}
 
-		public void edit_script(Runnable game)
+		public void edit_script(Runnable runnable)
 		{
-			var gh_dir = FSUtils.mkdir(game.install_dir.get_path(), COMPAT_DATA_DIR);
+			var gh_dir = FSUtils.mkdir(runnable.install_dir.get_path(), COMPAT_DATA_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(!script.query_exists())
 			{
 				try
 				{
-					if(game is Game)
+					if(runnable is Game)
 					{
 						FileUtils.set_contents(script.get_path(), SCRIPT_TEMPLATE, SCRIPT_TEMPLATE.length);
 					}
-					else if(game is Emulator)
+					else if(runnable is Emulator)
 					{
 						FileUtils.set_contents(script.get_path(), EMU_SCRIPT_TEMPLATE, EMU_SCRIPT_TEMPLATE.length);
 					}

@@ -138,6 +138,8 @@ namespace GameHub.UI.Views.GamesView
 			#else
 			hide();
 			#endif
+			executable.unselect_all();
+			gamedir.unselect_all();
 			if(mode.selected != 0)
 			{
 				game.install.begin();
