@@ -73,6 +73,9 @@ namespace GameHub.Data.Compat
 					}),
 					new CompatTool.Action("regedit", _("Run regedit"), r => {
 						wineutil.begin(null, r, "regedit");
+					}),
+					new CompatTool.Action("kill", _("Kill apps in prefix"), r => {
+						wineboot.begin(null, r, {"-k"});
 					})
 				};
 			}
@@ -90,7 +93,13 @@ namespace GameHub.Data.Compat
 
 		protected override File get_wineprefix(Runnable runnable)
 		{
-			return FSUtils.mkdir(runnable.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)/pfx");
+			var prefix = FSUtils.mkdir(runnable.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)/pfx");
+			var dosdevices = prefix.get_child("dosdevices");
+			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists())
+			{
+				Utils.run({"ln", "-nsf", "../../../../", "d:"}, dosdevices.get_path());
+			}
+			return prefix;
 		}
 
 		protected override string[] prepare_env(Runnable runnable, bool parse_opts=true)
@@ -118,6 +127,39 @@ namespace GameHub.Data.Compat
 			}
 
 			return env;
+		}
+
+		protected override async void wineboot(File? wineprefix, Runnable runnable, string[]? args=null)
+		{
+			yield wineutil_proton(wineprefix, runnable, "wineboot", args);
+		}
+
+		protected async void wineutil_proton(File? wineprefix, Runnable runnable, string util="winecfg", string[]? args=null)
+		{
+			var env = prepare_env(runnable, false);
+			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
+			var prefix = wineprefix ?? get_wineprefix(runnable);
+			if(prefix != null && prefix.query_exists())
+			{
+				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
+			}
+			if(arch != null && arch.length > 0)
+			{
+				env = Environ.set_variable(env, "WINEARCH", arch);
+			}
+
+			string[] cmd = { executable.get_path(), "run", "wine", util };
+
+			if(args != null)
+			{
+				foreach(var arg in args)
+				{
+					cmd += arg;
+				}
+			}
+
+			yield Utils.run_thread(cmd, runnable.install_dir.get_path(), env);
 		}
 	}
 }

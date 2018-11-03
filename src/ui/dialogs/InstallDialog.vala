@@ -221,6 +221,7 @@ namespace GameHub.UI.Dialogs
 				dl_only_check.visible = false;
 				import_btn.no_show_all = true;
 				import_btn.visible = false;
+				compat_tool_revealer.reveal_child = true;
 			}
 
 			if(compat_tool_revealer != null)
