@@ -71,18 +71,18 @@ namespace GameHub.UI.Widgets
 				label.get_style_context().add_class(Granite.STYLE_CLASS_H3_LABEL);
 				label.halign = Align.START;
 				label.valign = Align.CENTER;
+				label.xalign = 0;
+				label.ellipsize = Pango.EllipsizeMode.END;
 				box.add(label);
 				notify["text"].connect(() => {
 					label.label = text;
 				});
 			}
-			else
-			{
+
+			tooltip_text = text;
+			notify["text"].connect(() => {
 				tooltip_text = text;
-				notify["text"].connect(() => {
-					tooltip_text = text;
-				});
-			}
+			});
 
 			child = box;
 		}

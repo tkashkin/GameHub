@@ -111,6 +111,10 @@ namespace GameHub.Data.Sources.Steam
 				icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
 			}
 
+			File? dir;
+			Steam.find_app_install_dir(id, out dir);
+			install_dir = dir;
+
 			if(game_info_updated) return;
 
 			if(info_detailed == null || info_detailed.length == 0)

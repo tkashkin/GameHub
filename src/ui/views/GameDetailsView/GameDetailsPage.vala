@@ -23,6 +23,7 @@ using Granite;
 using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
+using GameHub.UI.Views.GamesView;
 using WebKit;
 
 namespace GameHub.UI.Views.GameDetailsView
@@ -53,6 +54,8 @@ namespace GameHub.UI.Views.GameDetailsView
 		private ProgressBar download_progress;
 		private AutoSizeImage icon;
 		private Image src_icon;
+
+		private Box platform_icons;
 
 		private Downloader.Download? download;
 
@@ -93,8 +96,16 @@ namespace GameHub.UI.Views.GameDetailsView
 			content = new Box(Orientation.VERTICAL, 0);
 			content.margin_start = content.margin_end = 8;
 
+			var title_hbox_eventbox = new EventBox();
+
+			var title_overlay = new Overlay();
+			title_overlay.margin_start = title_overlay.margin_end = 7;
+
+			var title_icons = new Box(Orientation.HORIZONTAL, 15);
+			title_icons.valign = Align.END;
+			title_icons.halign = Align.END;
+
 			var title_hbox = new Box(Orientation.HORIZONTAL, 15);
-			title_hbox.margin_start = title_hbox.margin_end = 7;
 
 			icon = new AutoSizeImage();
 			icon.set_constraint(48, 48, 1);
@@ -120,6 +131,8 @@ namespace GameHub.UI.Views.GameDetailsView
 			src_icon = new Image();
 			src_icon.icon_size = IconSize.DIALOG;
 			src_icon.opacity = 0.1;
+
+			platform_icons = new Box(Orientation.HORIZONTAL, 15);
 
 			var title_vbox = new Box(Orientation.VERTICAL, 0);
 			var vbox_labels = new Box(Orientation.VERTICAL, 0);
@@ -163,7 +176,16 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			title_hbox.add(icon);
 			title_hbox.add(title_vbox);
-			title_hbox.add(src_icon);
+
+			title_icons.add(platform_icons);
+			title_icons.add(src_icon);
+
+			title_overlay.add(title_hbox);
+			title_overlay.add_overlay(title_icons);
+
+			title_hbox_eventbox.add(title_overlay);
+
+			content.add(title_hbox_eventbox);
 
 			blocks = new Box(Orientation.VERTICAL, 0);
 			blocks.hexpand = false;
@@ -171,7 +193,6 @@ namespace GameHub.UI.Views.GameDetailsView
 			actions = new Box(Orientation.HORIZONTAL, 0);
 			actions.margin_top = actions.margin_bottom = 16;
 
-			content.add(title_hbox);
 			content.add(actions);
 			content.add(blocks);
 
@@ -211,6 +232,17 @@ namespace GameHub.UI.Views.GameDetailsView
 					((Downloader.PausableDownload) download).resume();
 				}
 			});
+
+			title_hbox_eventbox.add_events(EventMask.BUTTON_RELEASE_MASK);
+			title_hbox_eventbox.button_release_event.connect(e => {
+				switch(e.button)
+				{
+					case 3:
+						open_context_menu(e, true);
+						break;
+				}
+				return true;
+			});
 		}
 
 		public void update()
@@ -240,6 +272,17 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			title.label = game.name;
 			src_icon.icon_name = game.source.icon;
+
+			platform_icons.foreach(w => platform_icons.remove(w));
+			foreach(var p in game.platforms)
+			{
+				var icon = new Image();
+				icon.icon_name = p.icon();
+				icon.icon_size = IconSize.DIALOG;
+				icon.opacity = 0.1;
+				platform_icons.add(icon);
+			}
+			platform_icons.show_all();
 
 			blocks.foreach(b => blocks.remove(b));
 
@@ -281,11 +324,12 @@ namespace GameHub.UI.Views.GameDetailsView
 				action_run_with_compat.visible = s.state == Game.State.INSTALLED && game.use_compat;
 				action_run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
 				action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
-				action_open_directory.visible = s.state == Game.State.INSTALLED;
+				action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
 				action_open_installer_collection_directory.visible = game.installers_dir != null && game.installers_dir.query_exists();
 				action_open_bonus_collection_directory.visible = game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists();
 				action_open_store_page.visible = game.store_page != null;
-				action_uninstall.visible = s.state == Game.State.INSTALLED;
+				action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
+				action_properties.visible = !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
 
 				if(action_run_with_compat.visible && game.compat_tool != null)
 				{
@@ -379,6 +423,14 @@ namespace GameHub.UI.Views.GameDetailsView
 			if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
 				game.uninstall.begin();
+			}
+		}
+
+		private void open_context_menu(Event e, bool at_pointer=true)
+		{
+			if(_game != null)
+			{
+				new GameContextMenu(game, this).open(e, at_pointer);
 			}
 		}
 

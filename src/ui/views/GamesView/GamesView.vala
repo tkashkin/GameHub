@@ -882,6 +882,9 @@ namespace GameHub.UI.Views.GamesView
 			Utils.thread("Updating", () => {
 				foreach(var src in sources)
 				{
+					status_text = _("Updating %s game info").printf(src.name);
+					status_changed = true;
+					postpone_view_update();
 					foreach(var game in src.games)
 					{
 						game.update_game_info.begin();
