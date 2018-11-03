@@ -24,7 +24,7 @@ namespace GameHub.Data.Sources.GOG
 {
 	public class GOGGame: Game
 	{
-		public ArrayList<Game.Installer>? installers { get; protected set; default = new ArrayList<Game.Installer>(); }
+		public ArrayList<Runnable.Installer>? installers { get; protected set; default = new ArrayList<Runnable.Installer>(); }
 		public ArrayList<BonusContent>? bonus_content { get; protected set; default = new ArrayList<BonusContent>(); }
 		public ArrayList<DLC>? dlc { get; protected set; default = new ArrayList<DLC>(); }
 
@@ -253,7 +253,7 @@ namespace GameHub.Data.Sources.GOG
 
 			if(installers == null || installers.size < 1) return;
 
-			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
+			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers);
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
@@ -363,7 +363,7 @@ namespace GameHub.Data.Sources.GOG
 			bonus_content_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_bonus(g, d));
 		}
 
-		public class Installer: Game.Installer
+		public class Installer: Runnable.Installer
 		{
 			public string lang;
 			public string lang_full;
@@ -413,7 +413,7 @@ namespace GameHub.Data.Sources.GOG
 
 						var local = game.installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
 
-						parts.add(new Game.Installer.Part(id, url, size, remote, local));
+						parts.add(new Runnable.Installer.Part(id, url, size, remote, local));
 					}
 				}
 			}

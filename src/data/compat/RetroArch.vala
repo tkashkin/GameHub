@@ -92,14 +92,14 @@ namespace GameHub.Data.Compat
 			return has_cores;
 		}
 
-		public override bool can_run(Runnable game)
+		public override bool can_run(Runnable runnable)
 		{
-			return installed && game is Game && has_cores;
+			return installed && runnable is Game && has_cores;
 		}
 
-		public override async void run(Runnable game)
+		public override async void run(Runnable runnable)
 		{
-			if(!can_run(game)) return;
+			if(!can_run(runnable)) return;
 			var core = core_option.value;
 			if(core == null) return;
 
@@ -112,9 +112,9 @@ namespace GameHub.Data.Compat
 				core += LIBRETRO_CORE_SUFFIX;
 			}
 
-			string[] cmd = { executable.get_path(), "-L", core, game.executable.get_path() };
+			string[] cmd = { executable.get_path(), "-L", core, runnable.executable.get_path() };
 
-			yield Utils.run_thread(cmd, game.install_dir.get_path());
+			yield Utils.run_thread(cmd, runnable.install_dir.get_path());
 		}
 	}
 }

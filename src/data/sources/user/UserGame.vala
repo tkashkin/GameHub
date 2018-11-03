@@ -126,10 +126,10 @@ namespace GameHub.Data.Sources.User
 
 			if(installer == null) return;
 
-			var installers = new ArrayList<Game.Installer>();
+			var installers = new ArrayList<Runnable.Installer>();
 			installers.add(installer);
 
-			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
+			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers);
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
@@ -182,7 +182,7 @@ namespace GameHub.Data.Sources.User
 			}
 		}
 
-		public class Installer: Game.Installer
+		public class Installer: Runnable.Installer
 		{
 			private string game_name;
 			public override string name { get { return game_name; } }
@@ -192,7 +192,7 @@ namespace GameHub.Data.Sources.User
 				game_name = game.name;
 				id = "installer";
 				platform = installer.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
-				parts.add(new Game.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
+				parts.add(new Runnable.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
 			}
 		}
 	}

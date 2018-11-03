@@ -62,42 +62,42 @@ namespace GameHub.Data.Compat
 			if(installed)
 			{
 				actions = {
-					new CompatTool.Action("prefix", _("Open prefix directory"), game => {
-						Utils.open_uri(get_wineprefix(game).get_uri());
+					new CompatTool.Action("prefix", _("Open prefix directory"), r => {
+						Utils.open_uri(get_wineprefix(r).get_uri());
 					}),
-					new CompatTool.Action("winecfg", _("Run winecfg"), game => {
-						wineutil.begin(null, game, "winecfg");
+					new CompatTool.Action("winecfg", _("Run winecfg"), r => {
+						wineutil.begin(null, r, "winecfg");
 					}),
-					new CompatTool.Action("winetricks", _("Run winetricks"), game => {
-						winetricks.begin(null, game);
+					new CompatTool.Action("winetricks", _("Run winetricks"), r => {
+						winetricks.begin(null, r);
 					}),
-					new CompatTool.Action("regedit", _("Run regedit"), game => {
-						wineutil.begin(null, game, "regedit");
+					new CompatTool.Action("regedit", _("Run regedit"), r => {
+						wineutil.begin(null, r, "regedit");
 					})
 				};
 			}
 		}
 
-		protected override async void exec(Runnable game, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected override async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), "run", file.get_path() };
 			if(args != null)
 			{
 				foreach(var arg in args) cmd += arg;
 			}
-			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(game, parse_opts));
+			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(runnable, parse_opts));
 		}
 
-		protected override File get_wineprefix(Runnable game)
+		protected override File get_wineprefix(Runnable runnable)
 		{
-			return FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)/pfx");
+			return FSUtils.mkdir(runnable.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)/pfx");
 		}
 
-		protected override string[] prepare_env(Runnable game, bool parse_opts=true)
+		protected override string[] prepare_env(Runnable runnable, bool parse_opts=true)
 		{
 			var env = Environ.get();
 
-			var compatdata = FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)");
+			var compatdata = FSUtils.mkdir(runnable.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(id)");
 			if(compatdata != null && compatdata.query_exists())
 			{
 				env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.Paths.Steam.Home);

@@ -65,20 +65,20 @@ namespace GameHub.Data.Compat
 			emu_option.options = emulator_names;
 		}
 
-		public override bool can_run(Runnable game)
+		public override bool can_run(Runnable runnable)
 		{
 			update_emulators();
-			return installed && game is Game && emulator_names.size > 0;
+			return installed && runnable is Game && emulator_names.size > 0;
 		}
 
-		public override async void run(Runnable game)
+		public override async void run(Runnable runnable)
 		{
-			if(!can_run(game)) return;
+			if(!can_run(runnable)) return;
 
 			var emu = Tables.Emulators.by_name(emu_option.value);
 			if(emu == null) return;
 
-			yield emu.run_game(game as Game);
+			yield emu.run_game(runnable as Game);
 		}
 	}
 }

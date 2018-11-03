@@ -30,7 +30,7 @@ src/ui/dialogs/SettingsDialog/tabs/Steam.vala
 src/ui/dialogs/SettingsDialog/tabs/GOG.vala
 src/ui/dialogs/SettingsDialog/tabs/Humble.vala
 src/ui/dialogs/SettingsDialog/tabs/Collection.vala
-src/ui/dialogs/GameInstallDialog.vala
+src/ui/dialogs/InstallDialog.vala
 src/ui/dialogs/GameDetailsDialog.vala
 src/ui/dialogs/GamePropertiesDialog.vala
 src/ui/dialogs/CompatRunDialog.vala

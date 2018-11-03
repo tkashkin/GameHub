@@ -41,17 +41,17 @@ namespace GameHub.Data.Compat
 			installed = executable != null && executable.query_exists();
 		}
 
-		public override bool can_install(Game game)
+		public override bool can_install(Runnable runnable)
 		{
-			return installed && Platform.WINDOWS in game.platforms;
+			return installed && runnable != null && Platform.WINDOWS in runnable.platforms;
 		}
 
-		public override async void install(Game game, File installer)
+		public override async void install(Runnable runnable, File installer)
 		{
-			if(!can_install(game) || (yield Game.Installer.guess_type(installer)) != Game.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
+			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
 
-			string[] cmd = { executable.get_path(), "-e", "-m", "-d", game.install_dir.get_path() };
-			if(game is Sources.GOG.GOGGame) cmd += "--gog";
+			string[] cmd = { executable.get_path(), "-e", "-m", "-d", runnable.install_dir.get_path() };
+			if(runnable is Sources.GOG.GOGGame) cmd += "--gog";
 			cmd += installer.get_path();
 			yield Utils.run_thread(cmd, installer.get_parent().get_path());
 		}
