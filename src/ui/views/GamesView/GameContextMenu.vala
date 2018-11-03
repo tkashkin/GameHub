@@ -47,6 +47,7 @@ namespace GameHub.UI.Views.GamesView
 			run_with_compat.activate.connect(() => game.run_with_compat.begin(true));
 
 			var install = new Gtk.MenuItem.with_label(_("Install"));
+			install.sensitive = game.is_installable;
 			install.activate.connect(() => game.install.begin());
 
 			var details = new Gtk.MenuItem.with_label(_("Details"));
@@ -63,7 +64,7 @@ namespace GameHub.UI.Views.GamesView
 			var properties = new Gtk.MenuItem.with_label(_("Properties"));
 			properties.activate.connect(() => new Dialogs.GamePropertiesDialog(game).show_all());
 
-			if(game.status.state == Game.State.INSTALLED)
+			if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
 			{
 				if(game.use_compat)
 				{
@@ -83,14 +84,16 @@ namespace GameHub.UI.Views.GamesView
 
 			add(details);
 
-			add(new Gtk.SeparatorMenuItem());
-
-			add(favorite);
-			add(hidden);
+			if(!(game is Sources.GOG.GOGGame.DLC))
+			{
+				add(new Gtk.SeparatorMenuItem());
+				add(favorite);
+				add(hidden);
+			}
 
 			bool add_dirs_separator = true;
 
-			if(game.status.state == Game.State.INSTALLED)
+			if(game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;
@@ -115,7 +118,7 @@ namespace GameHub.UI.Views.GamesView
 				add(open_bonuses_directory);
 			}
 
-			if(game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame)
+			if((game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame) && !(game is Sources.GOG.GOGGame.DLC))
 			{
 				var uninstall = new Gtk.MenuItem.with_label((game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"));
 				uninstall.activate.connect(() => game.uninstall.begin());
@@ -123,9 +126,11 @@ namespace GameHub.UI.Views.GamesView
 				add(uninstall);
 			}
 
-			add(new Gtk.SeparatorMenuItem());
-
-			add(properties);
+			if(!(game is Sources.GOG.GOGGame.DLC))
+			{
+				add(new Gtk.SeparatorMenuItem());
+				add(properties);
+			}
 
 			show_all();
 		}
