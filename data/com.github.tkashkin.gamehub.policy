@@ -5,8 +5,8 @@
 	<vendor_url>https://tkashkin.tk/projects/gamehub</vendor_url>
 
 	<action id="com.github.tkashkin.gamehub.polkit.overlayfs.mount">
-		<description gettext-domain="com.github.tkashkin.gamehub">Mount overlays</description>
-		<message gettext-domain="com.github.tkashkin.gamehub">Authentication is required to mount overlays</message>
+		<description>Mount overlays</description>
+		<message>Authentication is required to mount overlays</message>
 		<icon_name>drive-removable-media</icon_name>
 		<defaults>
 			<allow_any>yes</allow_any>
@@ -17,8 +17,8 @@
 	</action>
 
 	<action id="com.github.tkashkin.gamehub.polkit.overlayfs.umount">
-		<description gettext-domain="com.github.tkashkin.gamehub">Unmount overlays</description>
-		<message gettext-domain="com.github.tkashkin.gamehub">Authentication is required to unmount overlays</message>
+		<description>Unmount overlays</description>
+		<message>Authentication is required to unmount overlays</message>
 		<icon_name>drive-removable-media</icon_name>
 		<defaults>
 			<allow_any>yes</allow_any>
