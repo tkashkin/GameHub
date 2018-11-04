@@ -15,6 +15,7 @@
 	],
 
 	"modules": [
+		"polkit/polkit.json",
 		{
 			"name": "libevdev",
 			"sources": [
