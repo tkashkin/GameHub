@@ -21,6 +21,7 @@ deps = [
 	dependency('gee-0.8'),
 	dependency('sqlite3'),
 	dependency('libxml-2.0'),
+	dependency('polkit-gobject-1'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
@@ -108,6 +109,7 @@ sources = [
 
 	'utils/Utils.vala',
 	'utils/FSUtils.vala',
+	'utils/FSOverlay.vala',
 	'utils/Parser.vala',
 	'utils/Settings.vala',
 

@@ -14,6 +14,7 @@ Build-Depends: meson (>= 0.40),
                libsoup2.4-dev,
                libsqlite3-dev,
                libxml2-dev,
+               libpolkit-gobject-1-dev,
                libx11-dev, libmanette-0.2-dev, libxtst-dev
 Standards-Version: 4.1.4
 
