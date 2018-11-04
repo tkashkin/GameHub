@@ -27,6 +27,14 @@ i18n.merge_file(
 	install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
+i18n.merge_file(
+	input: meson.project_name() + '.policy.in',
+	output: meson.project_name() + '.policy',
+	po_dir: join_paths(meson.source_root(), 'po'),
+	install: true,
+	install_dir: join_paths(get_option('datadir'), 'polkit-1', 'actions')
+)
+
 icons_gresource = gnome.compile_resources(
 	'gresource_icons',
 	'icons/icons.gresource.xml',
