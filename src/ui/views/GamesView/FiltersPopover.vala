@@ -83,6 +83,7 @@ namespace GameHub.UI.Views.GamesView
 			var saved_state = Settings.SavedState.get_instance();
 
 			sort_mode_button.set_active(saved_state.sort_mode == SortMode.NAME ? 0 : 1);
+			sort_mode = saved_state.sort_mode;
 			sort_mode_button.mode_changed.connect(() => {
 				saved_state.sort_mode = sort_mode_button.selected == 0 ? SortMode.NAME : SortMode.LAST_LAUNCH;
 				sort_mode = saved_state.sort_mode;

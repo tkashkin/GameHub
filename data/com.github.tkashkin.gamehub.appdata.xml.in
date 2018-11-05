@@ -41,6 +41,13 @@
 	</screenshots>
 
 	<releases>
+		<release type="development" version="0.11.7" date="2018-11-05">
+			<description>
+				<ul>
+					<li>Overlays</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.11.6" date="2018-10-23">
 			<description>
 				<ul>

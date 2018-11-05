@@ -139,6 +139,8 @@ namespace GameHub.Data.Sources.Humble
 		{
 			update_status();
 
+			mount_overlays();
+
 			if((icon == null || icon == "") && (info != null && info.length > 0))
 			{
 				var i = Parser.parse_json(info).get_object();
@@ -283,11 +285,9 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void uninstall()
 		{
-			if(executable.query_exists())
-			{
-				FSUtils.rm(install_dir.get_path(), "", "-rf");
-				update_status();
-			}
+			yield umount_overlays();
+			FSUtils.rm(install_dir.get_path(), "", "-rf");
+			update_status();
 			if(!install_dir.query_exists() && !executable.query_exists())
 			{
 				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);

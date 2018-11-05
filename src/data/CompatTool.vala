@@ -24,8 +24,6 @@ namespace GameHub.Data
 {
 	public abstract class CompatTool: Object
 	{
-		public const string COMPAT_DATA_DIR = "_gamehub";
-
 		public string id { get; protected set; default = "null"; }
 		public string name { get; protected set; default = ""; }
 		public string icon { get; protected set; default = "application-x-executable-symbolic"; }
