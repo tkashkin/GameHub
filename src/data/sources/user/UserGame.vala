@@ -112,6 +112,9 @@ namespace GameHub.Data.Sources.User
 		public override async void update_game_info()
 		{
 			update_status();
+
+			mount_overlays();
+
 			if(installer == null && info != null && info.length > 0)
 			{
 				var i = Parser.parse_json(info).get_object();
@@ -148,6 +151,7 @@ namespace GameHub.Data.Sources.User
 
 		public override async void uninstall()
 		{
+			yield umount_overlays();
 			remove();
 		}
 

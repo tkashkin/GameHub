@@ -61,6 +61,9 @@ namespace GameHub.UI.Views.GamesView
 			hidden.active = game.has_tag(Tables.Tags.BUILTIN_HIDDEN);
 			hidden.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_HIDDEN));
 
+			var fs_overlays = new Gtk.MenuItem.with_label(_("Overlays"));
+			fs_overlays.activate.connect(() => new Dialogs.GameFSOverlaysDialog(game).show_all());
+
 			var properties = new Gtk.MenuItem.with_label(_("Properties"));
 			properties.activate.connect(() => new Dialogs.GamePropertiesDialog(game).show_all());
 
@@ -97,7 +100,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;
-				var open_directory = new Gtk.CheckMenuItem.with_label(_("Open installation directory"));
+				var open_directory = new Gtk.MenuItem.with_label(_("Open installation directory"));
 				open_directory.activate.connect(open_game_directory);
 				add(open_directory);
 			}
@@ -105,7 +108,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;
-				var open_installers_directory = new Gtk.CheckMenuItem.with_label(_("Open installers collection directory"));
+				var open_installers_directory = new Gtk.MenuItem.with_label(_("Open installers collection directory"));
 				open_installers_directory.activate.connect(open_installer_collection_directory);
 				add(open_installers_directory);
 			}
@@ -113,7 +116,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;
-				var open_bonuses_directory = new Gtk.CheckMenuItem.with_label(_("Open bonus collection directory"));
+				var open_bonuses_directory = new Gtk.MenuItem.with_label(_("Open bonus collection directory"));
 				open_bonuses_directory.activate.connect(open_bonus_collection_directory);
 				add(open_bonuses_directory);
 			}
@@ -124,6 +127,9 @@ namespace GameHub.UI.Views.GamesView
 				uninstall.activate.connect(() => game.uninstall.begin());
 				add(new Gtk.SeparatorMenuItem());
 				add(uninstall);
+
+				add(new Gtk.SeparatorMenuItem());
+				add(fs_overlays);
 			}
 
 			if(!(game is Sources.GOG.GOGGame.DLC))

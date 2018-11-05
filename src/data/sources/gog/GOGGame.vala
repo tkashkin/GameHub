@@ -129,6 +129,8 @@ namespace GameHub.Data.Sources.GOG
 		{
 			update_status();
 
+			mount_overlays();
+
 			if(info_detailed == null || info_detailed.length == 0)
 			{
 				var lang = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
@@ -301,6 +303,8 @@ namespace GameHub.Data.Sources.GOG
 					}
 				}
 				catch(Error e){}
+
+				yield umount_overlays();
 
 				if(uninstaller != null)
 				{
@@ -606,6 +610,27 @@ namespace GameHub.Data.Sources.GOG
 
 				installers_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_installers(game.name, name));
 				bonus_content_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_bonus(game.name, name));
+			}
+
+			public override async void install()
+			{
+				yield game.umount_overlays();
+				game.enable_overlays();
+				var dlc_overlay = new Game.Overlay(game, "dlc_" + id, "DLC: " + name, true);
+
+				game.mount_overlays(dlc_overlay.directory);
+
+				install_dir = game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
+
+				yield base.install();
+
+				debug("[GOGGame.DLC.install] before umount");
+				yield game.umount_overlays();
+				debug("[GOGGame.DLC.install] after umount");
+
+				game.overlays.add(dlc_overlay);
+				game.save_overlays();
+				game.mount_overlays();
 			}
 		}
 	}

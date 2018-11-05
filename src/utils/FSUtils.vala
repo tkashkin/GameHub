@@ -26,6 +26,11 @@ namespace GameHub.Utils
 {
 	public class FSUtils
 	{
+		public const string GAMEHUB_DIR = "_gamehub";
+		public const string COMPAT_DATA_DIR = "compat";
+		public const string OVERLAYS_DIR = "overlays";
+		public const string OVERLAYS_LIST = "overlays.json";
+
 		public class Paths
 		{
 			public class Settings: Granite.Services.Settings

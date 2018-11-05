@@ -51,30 +51,56 @@ namespace GameHub.Utils
 			}
 		}
 
+		private string? _options;
+		public string options
+		{
+			get
+			{
+				if(_options != null) return _options;
+
+				string[] options_arr = {};
+
+				string[] overlay_dirs = {};
+
+				for(var i = overlays.size - 1; i >= 0; i--)
+				{
+					overlay_dirs += overlays.get(i).get_path();
+				}
+
+				options_arr += "lowerdir=" + string.joinv(":", overlay_dirs);
+
+				if(persist != null && workdir != null)
+				{
+					options_arr += "upperdir=" + persist.get_path();
+					options_arr += "workdir=" + workdir.get_path();
+					try
+					{
+						if(!persist.query_exists()) persist.make_directory_with_parents();
+						if(!workdir.query_exists()) workdir.make_directory_with_parents();
+					}
+					catch(Error e)
+					{
+						warning("[FSOverlay.mount] Error while creating directories: %s", e.message);
+					}
+				}
+
+				_options = string.joinv(",", options_arr);
+				return _options;
+			}
+		}
+
 		public async void mount()
 		{
-			string[] options_arr = {};
+			yield umount();
 
-			string[] overlay_dirs = {};
-
-			for(var i = overlays.size - 1; i >= 0; i--)
+			try
 			{
-				overlay_dirs += overlays.get(i).get_path();
+				if(!target.query_exists()) target.make_directory_with_parents();
 			}
-
-			options_arr += "lowerdir=" + string.joinv(":", overlay_dirs);
-
-			if(persist != null && workdir != null)
+			catch(Error e)
 			{
-				options_arr += "upperdir=" + persist.get_path();
-				options_arr += "workdir=" + workdir.get_path();
-				if(!persist.query_exists()) persist.make_directory_with_parents();
-				if(!workdir.query_exists()) workdir.make_directory_with_parents();
+				warning("[FSOverlay.mount] Error while creating target directory: %s", e.message);
 			}
-
-			string options = string.joinv(",", options_arr);
-
-			if(!target.query_exists()) target.make_directory_with_parents();
 
 			yield polkit_authenticate(POLKIT_ACTION_MOUNT);
 
@@ -85,7 +111,11 @@ namespace GameHub.Utils
 		{
 			yield polkit_authenticate(POLKIT_ACTION_UMOUNT);
 
-			yield Utils.run_thread({"pkexec", "umount", id});
+			while(id in (yield Utils.run_thread({"mount"}, null, null, false, false)))
+			{
+				yield Utils.run_thread({"pkexec", "umount", id});
+				yield Utils.sleep_async(500);
+			}
 
 			if(workdir != null && !workdir.query_exists())
 			{
@@ -105,10 +135,17 @@ namespace GameHub.Utils
 
 			if(permission == null)
 			{
-				permission = yield new Polkit.Permission(action, null);
+				try
+				{
+					permission = yield new Polkit.Permission(action, null);
+				}
+				catch(Error e)
+				{
+					warning("[FSOverlay.polkit_authenticate] %s", e.message);
+				}
 			}
 
-			if(!permission.allowed && permission.can_acquire)
+			if(permission != null && !permission.allowed && permission.can_acquire)
 			{
 				try
 				{

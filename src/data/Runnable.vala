@@ -478,7 +478,7 @@ namespace GameHub.Data
 							}
 						}
 
-						if(dirname != null && dirname != CompatTool.COMPAT_DATA_DIR)
+						if(dirname != null && dirname != FSUtils.GAMEHUB_DIR && !(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC))
 						{
 							dirname = dirname.replace(" ", "\\ ");
 							Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, runnable.install_dir.get_path());
@@ -492,9 +492,9 @@ namespace GameHub.Data
 					}
 					catch(Error e){}
 
-					Utils.run({"chmod", "-R", "+x", runnable.install_dir.get_path()});
+					//Utils.run({"chmod", "-R", "+x", runnable.install_dir.get_path()});
 
-					if(!runnable.executable.query_exists())
+					if(!(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC) && !runnable.executable.query_exists())
 					{
 						runnable.choose_executable();
 					}

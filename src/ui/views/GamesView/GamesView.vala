@@ -1035,6 +1035,11 @@ namespace GameHub.UI.Views.GamesView
 				b.emit_key_event(press);
 				debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
 				ui_update_gamepad_mode();
+
+				if(!press && b == Gamepad.BTN_HOME && !window.has_focus && !RunnableIsLaunched)
+				{
+					window.get_window().focus(Gdk.CURRENT_TIME);
+				}
 			}
 		}
 

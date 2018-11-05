@@ -80,6 +80,7 @@ sources = [
 	'ui/dialogs/InstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
 	'ui/dialogs/GamePropertiesDialog.vala',
+	'ui/dialogs/GameFSOverlaysDialog.vala',
 	'ui/dialogs/CompatRunDialog.vala',
 
 	'ui/views/BaseView.vala',

@@ -84,7 +84,7 @@ namespace GameHub.Utils
 			if(log) debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
 			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout);
 			stdout = stdout.strip();
-			if(stdout.length > 0) print(stdout + "\n");
+			if(log && stdout.length > 0) print(stdout + "\n");
 		}
 		catch (Error e)
 		{
