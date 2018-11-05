@@ -8,16 +8,22 @@ GameHub supports multiple game sources and services:
 * Humble Bundle
 * Humble Trove
 
+Locally installed games can also be added to GameHub.
+
 ### Features
 GameHub allows to view, download, install, run and uninstall games from supported sources.
+
 It also allows to download bonus content and DLCs for GOG games.
 
 ### Games
 GameHub supports non-native games as well as native games for Linux.
+
 It supports multiple [compatibility layers](https://github.com/tkashkin/GameHub/wiki/Compatibility-layers) for non-native games:
 * Wine / Proton
 * DOSBox
 * RetroArch
+
+It also allows to add custom emulators.
 
 ## Installation
 Prebuilt releases can be found on [releases page](https://github.com/tkashkin/GameHub/releases).
