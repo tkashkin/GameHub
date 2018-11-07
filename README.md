@@ -86,5 +86,5 @@ cd GameHub
 scripts/build.sh build_flatpak
 ```
 
-## Screenshots
-<p align="center"><img src="data/screenshots/1.png?raw=true" width="49%" /> <img src="data/screenshots/1_dark.png?raw=true" width="49%" /><img src="data/screenshots/2.png?raw=true" width="49%" /> <img src="data/screenshots/2_dark.png?raw=true" width="49%" /><img src="data/screenshots/3.png?raw=true" width="49%" /> <img src="data/screenshots/3_dark.png?raw=true" width="49%" /><img src="data/screenshots/3_dialog.png?raw=true" width="49%" /> <img src="data/screenshots/3_dialog_dark.png?raw=true" width="49%" /><img src="data/screenshots/4.png?raw=true" width="49%" /> <img src="data/screenshots/4_dark.png?raw=true" width="49%" /></p>
+## [Screenshots](https://tkashkin.tk/projects/gamehub/#/screenshots)
+<p align="center"><img src="data/screenshots/light/welcome@2x.png?raw=true" width="49%" /> <img src="data/screenshots/dark/grid@2x.png?raw=true" width="49%" /><img src="data/screenshots/dark/list@2x.png?raw=true" width="49%" /> <img src="data/screenshots/light/grid_gamepad@2x.png?raw=true" width="49%" /><img src="data/screenshots/light/details@2x.png?raw=true" width="49%" /> <img src="data/screenshots/dark/settings_collection@2x.png?raw=true" width="49%" /><img src="data/screenshots/light/overlays@2x.png?raw=true" width="49%" /> <img src="data/screenshots/light/install@2x.png?raw=true" width="49%" /><img src="data/screenshots/light/properties@2x.png?raw=true" width="49%" /> <img src="data/screenshots/light/install_compat@2x.png?raw=true" width="49%" /></p>
