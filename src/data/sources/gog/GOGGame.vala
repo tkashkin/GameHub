@@ -74,7 +74,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 
 			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
-			executable = FSUtils.file(install_dir.get_path(), "start.sh");
+			executable_path = "$game_dir/start.sh";
 			update_status();
 		}
 
@@ -88,7 +88,7 @@ namespace GameHub.Data.Sources.GOG
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
 			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
-			executable = FSUtils.file(Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
+			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
@@ -150,7 +150,7 @@ namespace GameHub.Data.Sources.GOG
 				image = "https:" + i.get_string_member("image") + "_392.jpg";
 			}
 
-			if(icon == null || icon == "" && (images != null))
+			if((icon == null || icon == "") && (images != null && images.has_member("icon")))
 			{
 				icon = images.get_string_member("icon");
 				if(icon != null) icon = "https:" + icon;
@@ -213,7 +213,7 @@ namespace GameHub.Data.Sources.GOG
 				}
 			}
 
-			var dlcs_json = !root.get_object().has_member("expanded_dlcs") ? null : root.get_object().get_array_member("expanded_dlcs");
+			var dlcs_json = root == null || root.get_node_type() != Json.NodeType.OBJECT || !root.get_object().has_member("expanded_dlcs") ? null : root.get_object().get_array_member("expanded_dlcs");
 			if(dlcs_json != null && dlc.size == 0)
 			{
 				foreach(var dlc_json in dlcs_json.get_elements())
@@ -338,7 +338,7 @@ namespace GameHub.Data.Sources.GOG
 			var state = Game.State.UNINSTALLED;
 			foreach(var file in files)
 			{
-				if(file.query_exists())
+				if(file != null && file.query_exists())
 				{
 					state = Game.State.INSTALLED;
 					break;

@@ -62,7 +62,7 @@ namespace GameHub.Data.Sources.Humble
 			}
 
 			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
-			executable = FSUtils.file(install_dir.get_path(), "start.sh");
+			executable_path = "$game_dir/start.sh";
 			info_detailed = @"{\"order\":\"$(order_id)\"}";
 			update_status();
 		}
@@ -77,7 +77,7 @@ namespace GameHub.Data.Sources.Humble
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
 			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
-			executable = FSUtils.file(Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
+			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
@@ -111,8 +111,16 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			var json = Parser.parse_json(info_detailed).get_object();
-			order_id = json.get_string_member("order");
+			var json_node = Parser.parse_json(info_detailed);
+			if(json_node != null && json_node.get_node_type() == Json.NodeType.OBJECT)
+			{
+				var json = json_node.get_object();
+				if(json.has_member("order"))
+				{
+					order_id = json.get_string_member("order");
+				}
+			}
+
 			update_status();
 		}
 
@@ -120,7 +128,8 @@ namespace GameHub.Data.Sources.Humble
 		{
 			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
 
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			var exec = executable;
+			status = new Game.Status(exec != null && exec.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			if(status.state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);

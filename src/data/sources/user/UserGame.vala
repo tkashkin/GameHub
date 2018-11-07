@@ -72,7 +72,7 @@ namespace GameHub.Data.Sources.User
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
 			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
-			executable = FSUtils.file(Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
+			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
@@ -172,9 +172,9 @@ namespace GameHub.Data.Sources.User
 
 		public override void update_status()
 		{
-			var state = executable != null && executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED;
-			status = new Game.Status(state);
-			if(state == Game.State.INSTALLED)
+			var exec = executable;
+			status = new Game.Status(exec != null && exec.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			if(status.state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				add_tag(Tables.Tags.BUILTIN_INSTALLED);
