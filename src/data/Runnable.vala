@@ -47,8 +47,8 @@ namespace GameHub.Data
 			return false;
 		}
 
-		public File executable { get; set; }
-		public File install_dir { get; set; }
+		public abstract File? executable { owned get; set; }
+		public File? install_dir { get; set; }
 
 		public abstract async void install();
 		public abstract async void run();

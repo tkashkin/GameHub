@@ -27,6 +27,7 @@ namespace GameHub.Data
 		private bool is_removed = false;
 		public signal void removed();
 
+		public override File? executable { owned get; set; }
 		public Installer? installer;
 
 		public Emulator.empty(){}

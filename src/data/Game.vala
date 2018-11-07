@@ -159,6 +159,70 @@ namespace GameHub.Data
 		private FSOverlay? fs_overlay;
 		private string? fs_overlay_last_options;
 
+		private File? get_executable_from(File dir)
+		{
+			if(executable_path == null || executable_path.length == 0) return null;
+			var variables = new HashMap<string, string>();
+			variables.set("game_dir", dir.get_path());
+			return FSUtils.file(executable_path, null, variables);
+		}
+
+		public string? executable_path;
+		public override File? executable
+		{
+			owned get
+			{
+				if(executable_path == null || executable_path.length == 0 || install_dir == null) return null;
+				File[] dirs = { install_dir };
+				if(overlays_enabled)
+				{
+					dirs = {
+						install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged"),
+						install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE),
+						install_dir
+					};
+					mount_overlays();
+				}
+				foreach(var dir in dirs)
+				{
+					var file = get_executable_from(dir);
+					if(file != null && file.query_exists())
+					{
+						return file;
+					}
+				}
+				return null;
+			}
+			set
+			{
+				if(value != null && value.query_exists())
+				{
+					File[] dirs = { install_dir };
+					if(overlays_enabled)
+					{
+						dirs = {
+							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged"),
+							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE),
+							install_dir
+						};
+					}
+					foreach(var dir in dirs)
+					{
+						if(value.get_path().has_prefix(dir.get_path()))
+						{
+							executable_path = value.get_path().replace(dir.get_path(), "$game_dir");
+							break;
+						}
+					}
+				}
+				else
+				{
+					executable_path = null;
+				}
+				save();
+			}
+		}
+
 		public bool overlays_enabled
 		{
 			get
@@ -191,12 +255,6 @@ namespace GameHub.Data
 			catch(Error e)
 			{
 				warning("[Game.enable_overlays] Error while moving game files to `base` overlay: %s", e.message);
-			}
-
-			if(executable != null)
-			{
-				var executable_path = executable.get_path().replace(install_dir.get_path(), merged_dir.get_path());
-				executable = FSUtils.file(executable_path);
 			}
 
 			overlays.add(base_overlay);
