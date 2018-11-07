@@ -362,7 +362,11 @@ namespace GameHub.UI.Dialogs
 			entry.icon_press.connect((icon, event) => {
 				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
 				{
+					#if GTK_3_22
 					var chooser = new FileChooserNative(_("Select file"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));
+					#else
+					var chooser = new FileChooserDialog(_("Select file"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
+					#endif
 					var filter = new FileFilter();
 					filter.add_mime_type("image/*");
 					chooser.set_filter(filter);
