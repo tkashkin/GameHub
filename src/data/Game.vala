@@ -237,8 +237,6 @@ namespace GameHub.Data
 		{
 			if(this is Sources.Steam.SteamGame || install_dir == null || !install_dir.query_exists() || overlays_enabled) return;
 
-			var merged_dir = install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
-
 			var base_overlay = new Overlay(this);
 
 			try

@@ -71,7 +71,7 @@ namespace GameHub.Data.Sources.User
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s));
 			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
