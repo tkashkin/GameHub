@@ -2,19 +2,27 @@ com.github.tkashkin.gamehub ($VERSION) $DISTRO; urgency=low
 
   * CI update
 
- -- tkashkin <tkashkin@gmail.com>  $DATE
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  $DATE
+
+com.github.tkashkin.gamehub (0.12.0) bionic; urgency=low
+
+  * Fixes and improvements
+  * Gamepad support
+  * Overlays
+
+  -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 09 Nov 2018 01:27:12 +0300
 
 com.github.tkashkin.gamehub (0.11.7) bionic; urgency=low
 
   * Overlays
 
-  -- tkashkin <tkashkin@gmail.com>  Mon, 05 Nov 2018 05:46:22 +0300
+  -- Anatoliy Kashkin <tkashkin@gmail.com>  Mon, 05 Nov 2018 05:46:22 +0300
 
 com.github.tkashkin.gamehub (0.11.6) bionic; urgency=low
 
   * Gamepad support
 
-  -- tkashkin <tkashkin@gmail.com>  Tue, 23 Oct 2018 15:15:24 +0300
+  -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 23 Oct 2018 15:15:24 +0300
 
 com.github.tkashkin.gamehub (0.11.5) bionic; urgency=low
 
@@ -22,31 +30,31 @@ com.github.tkashkin.gamehub (0.11.5) bionic; urgency=low
   * Proton 3.16 support
   * Basic keyboard/gamepad navigation in grid view (#75)
 
-  -- tkashkin <tkashkin@gmail.com>  Sun, 14 Oct 2018 01:27:49 +0300
+  -- Anatoliy Kashkin <tkashkin@gmail.com>  Sun, 14 Oct 2018 01:27:49 +0300
 
 com.github.tkashkin.gamehub (0.11.4) bionic; urgency=low
 
   * 0.11.4
 
-  -- tkashkin <tkashkin@gmail.com>  Thu, 11 Oct 2018 23:57:59 +0300
+  -- Anatoliy Kashkin <tkashkin@gmail.com>  Thu, 11 Oct 2018 23:57:59 +0300
 
 com.github.tkashkin.gamehub (0.11.3) bionic; urgency=low
 
   * User-added games
 
- -- tkashkin <tkashkin@gmail.com>  Sat, 06 Oct 2018 00:28:26 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Sat, 06 Oct 2018 00:28:26 +0300
 
 com.github.tkashkin.gamehub (0.11.2) xenial; urgency=low
 
   * Fixes for CompatTools
 
- -- tkashkin <tkashkin@gmail.com>  Sun, 23 Sep 2018 08:55:24 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Sun, 23 Sep 2018 08:55:24 +0300
 
 com.github.tkashkin.gamehub (0.11.1) xenial; urgency=low
 
   * Updated pt_BR localization
 
- -- tkashkin <tkashkin@gmail.com>  Wed, 19 Sep 2018 03:19:47 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Wed, 19 Sep 2018 03:19:47 +0300
 
 com.github.tkashkin.gamehub (0.11.0) xenial; urgency=low
 
@@ -54,7 +62,7 @@ com.github.tkashkin.gamehub (0.11.0) xenial; urgency=low
   * Additional compat tools (CustomScript, DOSBox)
   * AppImage version
 
- -- tkashkin <tkashkin@gmail.com>  Tue, 18 Sep 2018 09:18:25 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 18 Sep 2018 09:18:25 +0300
 
 com.github.tkashkin.gamehub (0.10.0) xenial; urgency=low
 
@@ -66,7 +74,7 @@ com.github.tkashkin.gamehub (0.10.0) xenial; urgency=low
   * Performance improvements
   * Bugfixes
 
- -- tkashkin <tkashkin@gmail.com>  Fri, 14 Sep 2018 13:37:12 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 14 Sep 2018 13:37:12 +0300
 
 com.github.tkashkin.gamehub (0.9.0) xenial; urgency=low
 
@@ -77,38 +85,38 @@ com.github.tkashkin.gamehub (0.9.0) xenial; urgency=low
   * Non-native games can now be shown and installed
   * Bugfixes
 
- -- tkashkin <tkashkin@gmail.com>  Tue, 04 Sep 2018 09:47:25 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 04 Sep 2018 09:47:25 +0300
 
 com.github.tkashkin.gamehub (0.8.0) xenial; urgency=low
 
   * Option to merge games from different sources
 
- -- tkashkin <tkashkin@gmail.com>  Wed, 15 Aug 2018 16:25:54 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Wed, 15 Aug 2018 16:25:54 +0300
 
 com.github.tkashkin.gamehub (0.7.0) xenial; urgency=low
 
   * Settings dialog rework
   * Compact games list
 
- -- tkashkin <tkashkin@gmail.com>  Thu, 09 Aug 2018 20:27:23 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Thu, 09 Aug 2018 20:27:23 +0300
 
 com.github.tkashkin.gamehub (0.6.3) xenial; urgency=low
 
   * Trying to fix Humble Bundle access token extraction
 
- -- tkashkin <tkashkin@gmail.com>  Mon, 06 Aug 2018 12:20:11 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Mon, 06 Aug 2018 12:20:11 +0300
 
 com.github.tkashkin.gamehub (0.6.2) xenial; urgency=low
 
   * Search crash fix and UI improvements
 
- -- tkashkin <tkashkin@gmail.com>  Wed, 25 Jul 2018 20:04:18 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Wed, 25 Jul 2018 20:04:18 +0300
 
 com.github.tkashkin.gamehub (0.6.1) xenial; urgency=low
 
   * UI improvements
 
- -- tkashkin <tkashkin@gmail.com>  Tue, 24 Jul 2018 08:01:37 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 24 Jul 2018 08:01:37 +0300
 
 com.github.tkashkin.gamehub (0.6.0) xenial; urgency=low
 
@@ -116,21 +124,21 @@ com.github.tkashkin.gamehub (0.6.0) xenial; urgency=low
   * Downloads can be resumed after interruption
   * UI improvements
 
- -- tkashkin <tkashkin@gmail.com>  Sun, 22 Jul 2018 16:18:24 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Sun, 22 Jul 2018 16:18:24 +0300
 
 com.github.tkashkin.gamehub (0.5.7) xenial; urgency=low
 
   * Yet another locale fix
   * Installers cache management
 
- -- tkashkin <tkashkin@gmail.com>  Sat, 21 Jul 2018 02:39:34 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Sat, 21 Jul 2018 02:39:34 +0300
 
 com.github.tkashkin.gamehub (0.5.6) xenial; urgency=low
 
   * Fix crash for GOG "games" like Hotline Miami 2 Digital Comics
   * Fix building with GTK+3 < 3.22
 
- -- tkashkin <tkashkin@gmail.com>  Fri, 20 Jul 2018 19:01:45 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 20 Jul 2018 19:01:45 +0300
 
 com.github.tkashkin.gamehub (0.5.5) xenial; urgency=low
 
@@ -138,19 +146,19 @@ com.github.tkashkin.gamehub (0.5.5) xenial; urgency=low
   * Design changes
   * Compatibility
 
- -- tkashkin <tkashkin@gmail.com>  Fri, 20 Jul 2018 17:15:34 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 20 Jul 2018 17:15:34 +0300
 
 com.github.tkashkin.gamehub (0.5.4) xenial; urgency=low
 
   * Icon fixes
 
- -- tkashkin <tkashkin@gmail.com>  Mon, 16 Jul 2018 05:52:48 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Mon, 16 Jul 2018 05:52:48 +0300
 
 com.github.tkashkin.gamehub (0.5.3) xenial; urgency=low
 
   * Runtime injection support
 
- -- tkashkin <tkashkin@gmail.com>  Sun, 15 Jul 2018 11:55:24 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Sun, 15 Jul 2018 11:55:24 +0300
 
 com.github.tkashkin.gamehub (0.5.2) xenial; urgency=low
 
@@ -160,13 +168,13 @@ com.github.tkashkin.gamehub (0.5.2) xenial; urgency=low
   * * uk
   * * de
 
- -- tkashkin <tkashkin@gmail.com>  Sat, 14 Jul 2018 02:56:19 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Sat, 14 Jul 2018 02:56:19 +0300
 
 com.github.tkashkin.gamehub (0.5.1) xenial; urgency=low
 
   * Fixes for flatpak packaging
 
- -- tkashkin <tkashkin@gmail.com>  Fri, 13 Jul 2018 05:28:15 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 13 Jul 2018 05:28:15 +0300
 
 com.github.tkashkin.gamehub (0.5.0) xenial; urgency=low
 
@@ -175,62 +183,62 @@ com.github.tkashkin.gamehub (0.5.0) xenial; urgency=low
   * Games grid improvements
   * Bug fixes
 
- -- tkashkin <tkashkin@gmail.com>  Mon, 09 Jul 2018 11:44:33 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Mon, 09 Jul 2018 11:44:33 +0300
 
 com.github.tkashkin.gamehub (0.4.1) xenial; urgency=low
 
   * Small features
 
- -- tkashkin <tkashkin@gmail.com>  Tue, 07 Jul 2018 09:40:55 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 07 Jul 2018 09:40:55 +0300
 
 com.github.tkashkin.gamehub (0.4.0) xenial; urgency=low
 
   * Unneeded game sources now can be disabled
   * Bug fixes
 
- -- tkashkin <tkashkin@gmail.com>  Tue, 03 Jul 2018 04:51:10 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 03 Jul 2018 04:51:10 +0300
 
 com.github.tkashkin.gamehub (0.3.1) xenial; urgency=low
 
   * Humble Bundle authentication fix
   * Humble Bundle game icons fix
 
- -- tkashkin <tkashkin@gmail.com>  Fri, 22 Jun 2018 18:03:16 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 22 Jun 2018 18:03:16 +0300
 
 com.github.tkashkin.gamehub (0.3.0) xenial; urgency=low
 
   * Humble Bundle support
 
- -- tkashkin <tkashkin@gmail.com>  Sun, 17 Jun 2018 04:57:12 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Sun, 17 Jun 2018 04:57:12 +0300
 
 com.github.tkashkin.gamehub (0.2.5) xenial; urgency=low
 
   * Bug fixes
 
- -- tkashkin <tkashkin@gmail.com>  Tue, 12 Jun 2018 01:18:28 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 12 Jun 2018 01:18:28 +0300
 
 com.github.tkashkin.gamehub (0.2.4) xenial; urgency=low
 
   * Settings dialog
 
- -- tkashkin <tkashkin@gmail.com>  Fri, 01 Jun 2018 23:20:42 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 01 Jun 2018 23:20:42 +0300
 
 com.github.tkashkin.gamehub (0.2.3) xenial; urgency=low
 
   * GOG games installation and running
   * Various improvements
 
- -- tkashkin <tkashkin@gmail.com>  Fri, 01 Jun 2018 14:36:24 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 01 Jun 2018 14:36:24 +0300
 
 com.github.tkashkin.gamehub (0.1.3) xenial; urgency=low
 
   * Fix Steam config path
 
- -- tkashkin <tkashkin@gmail.com>  Mon, 28 May 2018 02:28:30 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Mon, 28 May 2018 02:28:30 +0300
 
 com.github.tkashkin.gamehub (0.1.2) xenial; urgency=low
 
   * Initial release
   * Steam and GOG linux-compatible games fetching
 
- -- tkashkin <tkashkin@gmail.com>  Mon, 28 May 2018 00:15:21 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Mon, 28 May 2018 00:15:21 +0300
