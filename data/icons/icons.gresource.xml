@@ -7,6 +7,8 @@
 		<file alias="scalable/actions/source-humble-symbolic.svg">symbolic/sources/humble.svg</file>
 		<file alias="scalable/actions/source-humble-trove-symbolic.svg">symbolic/sources/humble-trove.svg</file>
 
+		<file alias="scalable/actions/emu-retroarch-symbolic.svg">symbolic/emu/retroarch.svg</file>
+
 		<file alias="scalable/actions/platform-linux-symbolic.svg">symbolic/platforms/linux.svg</file>
 		<file alias="scalable/actions/platform-windows-symbolic.svg">symbolic/platforms/windows.svg</file>
 		<file alias="scalable/actions/platform-macos-symbolic.svg">symbolic/platforms/macos.svg</file>
@@ -22,5 +24,18 @@
 		<file alias="scalable/actions/gh-tag-multiple-symbolic.svg">symbolic/tags/tag-multiple.svg</file>
 		<file alias="scalable/actions/gh-tag-favorites-symbolic.svg">symbolic/tags/tag-favorites.svg</file>
 		<file alias="scalable/actions/gh-tag-hidden-symbolic.svg">symbolic/tags/tag-hidden.svg</file>
+
+		<file alias="scalable/actions/controller-button-a.svg">normal/controller/a.svg</file>
+		<file alias="scalable/actions/controller-button-b.svg">normal/controller/b.svg</file>
+		<file alias="scalable/actions/controller-button-x.svg">normal/controller/x.svg</file>
+		<file alias="scalable/actions/controller-button-y.svg">normal/controller/y.svg</file>
+		<file alias="scalable/actions/controller-button-start.svg">normal/controller/start.svg</file>
+		<file alias="scalable/actions/controller-button-select.svg">normal/controller/select.svg</file>
+		<file alias="scalable/actions/controller-button-bumper-left.svg">normal/controller/bumper-left.svg</file>
+		<file alias="scalable/actions/controller-button-bumper-right.svg">normal/controller/bumper-right.svg</file>
+		<file alias="scalable/actions/controller-button-trigger-left.svg">normal/controller/trigger-left.svg</file>
+		<file alias="scalable/actions/controller-button-trigger-right.svg">normal/controller/trigger-right.svg</file>
+		<file alias="scalable/actions/controller-button-grip-left.svg">normal/controller/grip-left.svg</file>
+		<file alias="scalable/actions/controller-button-grip-right.svg">normal/controller/grip-right.svg</file>
 	</gresource>
 </gresources>

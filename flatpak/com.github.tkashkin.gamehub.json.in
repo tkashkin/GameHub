@@ -1,0 +1,89 @@
+{
+	"app-id": "com.github.tkashkin.gamehub",
+	"base": "io.elementary.BaseApp",
+	"base-version": "juno",
+	"runtime": "org.gnome.Platform",
+	"runtime-version": "3.28",
+	"sdk": "org.gnome.Sdk",
+	"command": "com.github.tkashkin.gamehub",
+	"separate-locales": false,
+	"build-options": {
+		"env": {
+			"PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_GIRDIR": "/app/share/gir-1.0",
+			"PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_TYPELIBDIR": "/app/lib/girepository-1.0"
+		}
+	},
+	"finish-args": [
+		"--allow=devel",
+		"--share=ipc", "--socket=x11",
+		"--socket=pulseaudio",
+		"--device=dri",
+		"--socket=wayland",
+		"--share=network",
+		"--talk-name=org.gnome.SettingsDaemon",
+		"--talk-name=org.freedesktop.NetworkManager",
+		"--talk-name=org.kde.StatusNotifierWatcher",
+		"--talk-name=org.freedesktop.Flatpak",
+		"--system-talk-name=org.freedesktop.PolicyKit1",
+		"--socket=session-bus",
+
+		"--persist=.",
+		"--device=all",
+		"--allow=multiarch",
+
+		"--extension=org.freedesktop.Platform.Compat32=directory=lib/32bit",
+		"--extension=org.freedesktop.Platform.Compat32=version=1.6",
+		"--extension=org.freedesktop.Platform.GL32=directory=lib/32bit/lib/GL",
+		"--extension=org.freedesktop.Platform.GL32=version=1.4",
+		"--extension=org.freedesktop.Platform.GL32=versions=1.6;1.4",
+		"--extension=org.freedesktop.Platform.GL32=subdirectories=true",
+		"--extension=org.freedesktop.Platform.GL32=no-autodownload=true",
+		"--extension=org.freedesktop.Platform.GL32=autodelete=false",
+		"--extension=org.freedesktop.Platform.GL32=add-ld-path=lib",
+		"--extension=org.freedesktop.Platform.GL32=merge-dirs=vulkan/icd.d;glvnd/egl_vendor.d",
+		"--extension=org.freedesktop.Platform.GL32=download-if=active-gl-driver",
+		"--extension=org.freedesktop.Platform.GL32=enable-if=active-gl-driver",
+		"--filesystem=/sys/module/nvidia:ro",
+
+		"--talk-name=ca.desrt.dconf",
+		"--filesystem=xdg-run/dconf",
+		"--filesystem=~/.config/dconf:ro",
+		"--env=DCONF_USER_CONFIG_DIR=.config/dconf",
+
+		"--filesystem=host",
+		"--filesystem=home",
+		"--filesystem=~/.var/app/com.valvesoftware.Steam"
+	],
+	"cleanup": [
+		"/include",
+		"/lib/pkgconfig",
+		"/lib/*.la",
+		"/lib/*.a",
+		"/share/gir-1.0",
+		"/lib/girepository-1.0",
+		"/share/vala",
+		"/share/gtk-doc"
+	],
+	"modules": [
+		"libs/libs.json",
+
+		{
+			"name": "gamehub",
+			"buildsystem": "meson",
+			"config-opts": [
+				"--buildtype=debug",
+				"-Dflatpak=true",
+				"-Druntime=/app/lib/steamrt:/app/lib/32bit/steamrt"
+			],
+			"sources": [
+				{
+					"type": "git",
+					"path": "../",
+					"branch": "$BRANCH"
+				}
+			]
+		},
+
+		"bin/bin.json"
+	]
+}

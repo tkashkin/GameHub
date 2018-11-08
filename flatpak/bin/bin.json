@@ -1,0 +1,19 @@
+{
+	"name": "bin",
+	"buildsystem": "simple",
+	"sources": [
+		{
+			"type": "file",
+			"path": "file-roller"
+		},
+		{
+			"type": "file",
+			"path": "org.gnome.FileRoller.gschema.xml"
+		}
+	],
+	"build-commands": [
+		"install -Dm755 file-roller /app/bin/file-roller",
+		"install -Dm644 org.gnome.FileRoller.gschema.xml /app/share/glib-2.0/schemas/org.gnome.FileRoller.gschema.xml",
+		"glib-compile-schemas /app/share/glib-2.0/schemas/"
+	]
+}

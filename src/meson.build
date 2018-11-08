@@ -21,35 +21,18 @@ deps = [
 	dependency('gee-0.8'),
 	dependency('sqlite3'),
 	dependency('libxml-2.0'),
+	dependency('polkit-gobject-1'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
 
-gtk322 = dependency('gtk+-3.0', version: '>=3.22', required: false)
-if gtk322.found()
-	add_global_arguments('-D', 'GTK_3_22', language: 'vala')
-	deps += gtk322
-else
-	deps += dependency('gtk+-3.0')
-endif
-
-# not sure which version fixed Message.response_headers.get_content_range(), 2.60+ should work
-soup260 = dependency('libsoup-2.4', version: '>=2.60', required: false)
-if soup260.found()
-	add_global_arguments('-D', 'SOUP_2_60', language: 'vala')
-	deps += soup260
-else
-	deps += dependency('libsoup-2.4')
-endif
-
-executable(
-	meson.project_name(),
-	project_config,
-
+sources = [
 	'app.vala',
 
+	'data/Runnable.vala',
 	'data/Game.vala',
 	'data/GameSource.vala',
+	'data/Emulator.vala',
 
 	'data/sources/steam/Steam.vala',
 	'data/sources/steam/SteamGame.vala',
@@ -69,6 +52,7 @@ executable(
 	'data/db/tables/Games.vala',
 	'data/db/tables/Tags.vala',
 	'data/db/tables/Merges.vala',
+	'data/db/tables/Emulators.vala',
 
 	'data/CompatTool.vala',
 	'data/compat/CustomScript.vala',
@@ -76,6 +60,8 @@ executable(
 	'data/compat/Proton.vala',
 	'data/compat/Wine.vala',
 	'data/compat/DOSBox.vala',
+	'data/compat/RetroArch.vala',
+	'data/compat/CustomEmulator.vala',
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
@@ -84,14 +70,17 @@ executable(
 	'ui/dialogs/SettingsDialog/SettingsDialogTab.vala',
 
 	'ui/dialogs/SettingsDialog/tabs/UI.vala',
+	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
 	'ui/dialogs/SettingsDialog/tabs/Steam.vala',
 	'ui/dialogs/SettingsDialog/tabs/GOG.vala',
 	'ui/dialogs/SettingsDialog/tabs/Humble.vala',
-	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
+	'ui/dialogs/SettingsDialog/tabs/RetroArch.vala',
+	'ui/dialogs/SettingsDialog/tabs/Emulators.vala',
 
-	'ui/dialogs/GameInstallDialog.vala',
+	'ui/dialogs/InstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
 	'ui/dialogs/GamePropertiesDialog.vala',
+	'ui/dialogs/GameFSOverlaysDialog.vala',
 	'ui/dialogs/CompatRunDialog.vala',
 
 	'ui/views/BaseView.vala',
@@ -115,15 +104,52 @@ executable(
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
+	'ui/widgets/CompatToolOptions.vala',
 	'ui/widgets/CompatToolPicker.vala',
+	'ui/widgets/TagRow.vala',
 
 	'utils/Utils.vala',
 	'utils/FSUtils.vala',
+	'utils/FSOverlay.vala',
 	'utils/Parser.vala',
 	'utils/Settings.vala',
 
 	'utils/downloader/Downloader.vala',
-	'utils/downloader/SoupDownloader.vala',
+	'utils/downloader/SoupDownloader.vala'
+]
+
+gtk322 = dependency('gtk+-3.0', version: '>=3.22', required: false)
+if gtk322.found()
+	add_global_arguments('-D', 'GTK_3_22', language: 'vala')
+	deps += gtk322
+else
+	deps += dependency('gtk+-3.0')
+endif
+
+# not sure which version fixed Message.response_headers.get_content_range(), 2.60+ should work
+soup260 = dependency('libsoup-2.4', version: '>=2.60', required: false)
+if soup260.found()
+	add_global_arguments('-D', 'SOUP_2_60', language: 'vala')
+	deps += soup260
+else
+	deps += dependency('libsoup-2.4')
+endif
+
+manette = dependency('manette-0.2', required: false)
+if manette.found()
+	add_global_arguments('-D', 'MANETTE', language: 'vala')
+	deps += manette
+	deps += dependency('x11')
+	deps += dependency('gdk-x11-3.0')
+	deps += dependency('xtst')
+	sources += 'utils/Gamepad.vala'
+endif
+
+executable(
+	meson.project_name(),
+	project_config,
+
+	sources,
 
 	icons_gresource,
 	css_gresource,

@@ -24,6 +24,8 @@ using Granite;
 using GameHub.Data;
 using GameHub.Data.Sources.GOG;
 
+using GameHub.UI.Views.GamesView;
+
 using GameHub.Utils;
 
 namespace GameHub.UI.Views.GameDetailsView.Blocks
@@ -94,6 +96,11 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			if(gog_game.dlc != null && gog_game.dlc.size > 0)
 			{
+				if(downloads_visible)
+				{
+					dlbox.add(new Separator(Orientation.VERTICAL));
+				}
+
 				var dlcbox = new Box(Orientation.VERTICAL, 0);
 				var dlclist = new ListBox();
 				dlclist.selection_mode = SelectionMode.NONE;
@@ -146,8 +153,10 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				var icon = new Image.from_icon_name(bonus.icon, IconSize.BUTTON);
 
 				var name = new Label(bonus.text);
+				name.ellipsize = Pango.EllipsizeMode.END;
 				name.hexpand = true;
 				name.halign = Align.START;
+				name.xalign = 0;
 
 				var size = new Label(format_size(bonus.size));
 				size.halign = Align.END;
@@ -217,14 +226,22 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				box.margin_top = box.margin_bottom = 4;
 
 				var name = new Label(dlc.name);
+				name.ellipsize = Pango.EllipsizeMode.END;
 				name.hexpand = true;
 				name.halign = Align.START;
+				name.xalign = 0;
 
-				box.add_events(EventMask.ALL_EVENTS_MASK);
+				box.add_events(EventMask.BUTTON_RELEASE_MASK);
 				box.button_release_event.connect(e => {
-					if(e.button == 1)
+					switch(e.button)
 					{
-						details_page.details_view.navigate(dlc);
+						case 1:
+							details_page.details_view.navigate(dlc);
+							break;
+
+						case 3:
+							new GameContextMenu(dlc, this).open(e, true);
+							break;
 					}
 					return true;
 				});

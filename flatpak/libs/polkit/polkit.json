@@ -1,0 +1,29 @@
+{
+	"name": "polkit",
+	"config-opts": ["--disable-polkitd", "--disable-man-pages", "--disable-introspection"],
+	"rm-configure": true,
+	"cleanup": [
+		"/bin/*",
+		"/etc/pam.d",
+		"/etc/dbus-1",
+		"/share/dbus-1/system-services/*",
+		"/share/polkit-1/actions/*",
+		"/lib/polkit-1"
+	],
+	"sources": [
+		{
+			"type": "archive",
+			"url": "https://www.freedesktop.org/software/polkit/releases/polkit-0.113.tar.gz",
+			"sha256": "e1c095093c654951f78f8618d427faf91cf62abdefed98de40ff65eca6413c81"
+		},
+		{
+			"type": "patch",
+			"path": "polkit-build-Add-option-to-build-without-polkitd.patch"
+		},
+		{
+			"type": "file",
+			"path": "polkit-autogen",
+			"dest-filename": "autogen.sh"
+		}
+	]
+}

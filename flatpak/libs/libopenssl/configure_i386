@@ -1,0 +1,23 @@
+#!/bin/bash
+
+echo "OPENSSL CONFIGURE"
+./Configure \
+    $@ zlib enable-camellia enable-seed enable-rfc3779 enable-sctp enable-cms enable-md2 enable-rc5 enable-ssl3 enable-ssl3-method no-mdc2 no-ec2m no-gost no-srp shared linux-elf
+echo "OPENSSL MAKE DEPEND"
+make depend
+echo "OPENSSL MAKE BUILD_LIBS"
+make build_libs
+echo "OPENSSL COPY STUFF"
+cp libssl.so /app/lib/
+cp libcrypto.so /app/lib/
+cd /app/lib
+ln -s libssl.so libssl.so.1.0.0
+ln -s libcrypto.so libcrypto.so.1.0.0
+cd -
+echo "OPENSSL END"
+cat <<EOF > Makefile
+install:
+	true
+all:
+	true
+EOF

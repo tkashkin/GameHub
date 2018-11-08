@@ -60,6 +60,7 @@ namespace GameHub.Data.Sources.Steam
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
+			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -109,6 +110,10 @@ namespace GameHub.Data.Sources.Steam
 				var icon_hash = i.get_string_member("img_icon_url");
 				icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
 			}
+
+			File? dir;
+			Steam.find_app_install_dir(id, out dir);
+			install_dir = dir;
 
 			if(game_info_updated) return;
 
@@ -196,11 +201,13 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async void run()
 		{
+			last_launch = get_real_time() / 1000;
+			save();
 			Utils.open_uri(@"steam://rungameid/$(id)");
 			update_status();
 		}
 
-		public override async void run_with_compat()
+		public override async void run_with_compat(bool is_opened_from_menu=false)
 		{
 			yield run();
 		}

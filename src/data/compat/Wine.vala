@@ -28,6 +28,10 @@ namespace GameHub.Data.Compat
 		public string arch { get; construct; default = "win64"; }
 		public File? wine_binary { get; protected set; }
 
+		public CompatTool.StringOption opt_env;
+
+		public CompatTool.BoolOption install_opt_innosetup_args;
+
 		public Wine(string binary="wine", string arch="win64")
 		{
 			Object(binary: binary, arch: arch);
@@ -42,50 +46,69 @@ namespace GameHub.Data.Compat
 			executable = wine_binary = Utils.find_executable(binary);
 			installed = executable != null && executable.query_exists();
 
+			opt_env = new CompatTool.StringOption("env", _("Environment variables"), null);
+
+			options = {
+				opt_env
+			};
+
+			install_opt_innosetup_args = new CompatTool.BoolOption("InnoSetup", _("InnoSetup default options"), true);
+
 			install_options = {
-				new CompatTool.Option("/SILENT", _("Silent installation"), false),
-				new CompatTool.Option("/VERYSILENT", _("Very silent installation"), true),
-				new CompatTool.Option("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
-				new CompatTool.Option("/NOGUI", _("No GUI"), true)
+				install_opt_innosetup_args,
+				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
+				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), true),
+				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
+				new CompatTool.BoolOption("/NOGUI", _("No GUI"), true)
 			};
 
 			if(installed)
 			{
 				actions = {
-					new CompatTool.Action("prefix", _("Open prefix directory"), game => {
-						Utils.open_uri(get_wineprefix(game).get_uri());
+					new CompatTool.Action("prefix", _("Open prefix directory"), r => {
+						Utils.open_uri(get_wineprefix(r).get_uri());
 					}),
-					new CompatTool.Action("winecfg", _("Run winecfg"), game => {
-						wineutil.begin(null, game, "winecfg");
+					new CompatTool.Action("winecfg", _("Run winecfg"), r => {
+						wineutil.begin(null, r, "winecfg");
 					}),
-					new CompatTool.Action("winetricks", _("Run winetricks"), game => {
-						winetricks.begin(null, game);
+					new CompatTool.Action("winetricks", _("Run winetricks"), r => {
+						winetricks.begin(null, r);
 					}),
-					new CompatTool.Action("regedit", _("Run regedit"), game => {
-						wineutil.begin(null, game, "regedit");
+					new CompatTool.Action("taskmgr", _("Run taskmgr"), r => {
+						wineutil.begin(null, r, "taskmgr");
+					}),
+					new CompatTool.Action("kill", _("Kill apps in prefix"), r => {
+						wineboot.begin(null, r, {"-k"});
 					})
 				};
 			}
 		}
 
-		public override bool can_install(Game game)
+		public override bool can_install(Runnable runnable)
 		{
-			return installed && Platform.WINDOWS in game.platforms;
+			return can_run(runnable);
 		}
 
-		public override bool can_run(Game game)
+		public override bool can_run(Runnable runnable)
 		{
-			return installed && Platform.WINDOWS in game.platforms;
+			return installed && runnable != null && ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms)) || runnable is Emulator);
 		}
 
-		protected virtual async string[] prepare_installer_args(Game game)
+		protected virtual async string[] prepare_installer_args(Runnable runnable)
 		{
-			var win_path = yield convert_path(game, game.install_dir);
-			string[] opts = { "/SP-", "/NOCANCEL", "/NOGUI", "/NOICONS", @"/DIR=$(win_path)", "/LOG=C:\\install.log" };
+			var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
+			var win_path = yield convert_path(runnable, runnable.install_dir.get_child(tmp_root));
+
+			string[] opts = {};
+
+			if(install_opt_innosetup_args.enabled)
+			{
+				opts = { "/SP-", "/NOCANCEL", "/NOGUI", "/NOICONS", @"/DIR=$(win_path)", "/LOG=D:\\install.log" };
+			}
 
 			foreach(var opt in install_options)
 			{
-				if(opt.enabled)
+				if(opt.name.has_prefix("/") && opt is CompatTool.BoolOption && ((CompatTool.BoolOption) opt).enabled)
 				{
 					opts += opt.name;
 				}
@@ -94,107 +117,156 @@ namespace GameHub.Data.Compat
 			return opts;
 		}
 
-		public override async void install(Game game, File installer)
+		public override async void install(Runnable runnable, File installer)
 		{
-			if(!can_install(game) || (yield Game.Installer.guess_type(installer)) != Game.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
-			yield exec(game, installer, installer.get_parent(), yield prepare_installer_args(game));
+			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
+			yield wineboot(null, runnable);
+			yield exec(runnable, installer, installer.get_parent(), yield prepare_installer_args(runnable));
 		}
 
-		public override async void run(Game game)
+		public override async void run(Runnable runnable)
 		{
-			if(!can_run(game)) return;
-			yield exec(game, game.executable, game.install_dir);
+			if(!can_run(runnable)) return;
+			yield wineboot(null, runnable);
+			yield exec(runnable, runnable.executable, runnable.install_dir);
 		}
 
-		protected virtual async void exec(Game game, File file, File dir, string[]? args=null, bool parse_opts=true)
+		public override async void run_emulator(Emulator emu, Game? runnable)
+		{
+			if(!can_run(emu)) return;
+			yield exec(emu, emu.executable, emu.install_dir, emu.get_args(runnable));
+		}
+
+		protected virtual async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), file.get_path() };
 			if(args != null)
 			{
 				foreach(var arg in args) cmd += arg;
 			}
-			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(game));
+			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(runnable));
 		}
 
-		protected virtual File get_wineprefix(Game game)
+		protected virtual File get_wineprefix(Runnable runnable)
 		{
-			return FSUtils.mkdir(game.install_dir.get_path(), @"$(COMPAT_DATA_DIR)/$(binary)_$(arch)");
+			var prefix = FSUtils.mkdir(runnable.install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(binary)_$(arch)");
+			var dosdevices = prefix.get_child("dosdevices");
+
+			if(FSUtils.file(runnable.install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
+			{
+				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(binary)_$(arch)"}, runnable.install_dir.get_path());
+				FSUtils.rm(dosdevices.get_child("d:").get_path());
+			}
+
+			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists())
+			{
+				Utils.run({"ln", "-nsf", "../../../../", "d:"}, dosdevices.get_path());
+			}
+			return prefix;
 		}
 
-		public override File get_install_root(Game game)
+		public override File get_install_root(Runnable runnable)
 		{
-			return get_wineprefix(game).get_child("drive_c");
+			return get_wineprefix(runnable).get_child("drive_c");
 		}
 
-		protected virtual string[] prepare_env(Game game, bool parse_opts=true)
+		protected virtual string[] prepare_env(Runnable runnable, bool parse_opts=true)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = get_wineprefix(game);
+			var prefix = get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
-			if(arch != null)
+			if(arch != null && arch.length > 0)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
+			}
+
+			if(parse_opts)
+			{
+				if(opt_env.value != null && opt_env.value.length > 0)
+				{
+					var evars = opt_env.value.split(" ");
+					foreach(var ev in evars)
+					{
+						var v = ev.split("=");
+						env = Environ.set_variable(env, v[0], v[1]);
+					}
+				}
 			}
 
 			return env;
 		}
 
-		protected async void wineutil(File? wineprefix, Game game, string util="winecfg")
+		protected virtual async void wineboot(File? wineprefix, Runnable runnable, string[]? args=null)
 		{
-			var env = Environ.get();
-			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
-			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = wineprefix ?? get_wineprefix(game);
-			if(prefix != null && prefix.query_exists())
-			{
-				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
-			}
-			if(arch != null)
-			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
-			}
-
-			yield Utils.run_thread({ wine_binary.get_path(), util }, game.install_dir.get_path(), env);
+			yield wineutil(wineprefix, runnable, "wineboot", args);
 		}
 
-		protected async void winetricks(File? wineprefix, Game game)
+		protected async void wineutil(File? wineprefix, Runnable runnable, string util="winecfg", string[]? args=null)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = wineprefix ?? get_wineprefix(game);
+			var prefix = wineprefix ?? get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
-			if(arch != null)
+			if(arch != null && arch.length > 0)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
-			yield Utils.run_thread({ "winetricks" }, game.install_dir.get_path(), env);
+			string[] cmd = { wine_binary.get_path(), util };
+
+			if(args != null)
+			{
+				foreach(var arg in args)
+				{
+					cmd += arg;
+				}
+			}
+
+			yield Utils.run_thread(cmd, runnable.install_dir.get_path(), env);
 		}
 
-		public async string convert_path(Game game, File path)
+		protected async void winetricks(File? wineprefix, Runnable runnable)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = get_wineprefix(game);
+			var prefix = wineprefix ?? get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())
 			{
 				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
 			}
-			if(arch != null)
+			if(arch != null && arch.length > 0)
 			{
-				env = Environ.set_variable(env, "WINEARCH", "mshtml=d");
+				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
-			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, game.install_dir.get_path(), env)).strip();
+			yield Utils.run_thread({ "winetricks" }, runnable.install_dir.get_path(), env);
+		}
+
+		public async string convert_path(Runnable runnable, File path)
+		{
+			var env = Environ.get();
+			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
+			var prefix = get_wineprefix(runnable);
+			if(prefix != null && prefix.query_exists())
+			{
+				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
+			}
+			if(arch != null && arch.length > 0)
+			{
+				env = Environ.set_variable(env, "WINEARCH", arch);
+			}
+
+			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, runnable.install_dir.get_path(), env)).strip();
 			debug("'%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
 		}
