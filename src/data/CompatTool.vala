@@ -16,14 +16,14 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Gee;
+
 using GameHub.Utils;
 
 namespace GameHub.Data
 {
 	public abstract class CompatTool: Object
 	{
-		public const string COMPAT_DATA_DIR = "_gamehub";
-
 		public string id { get; protected set; default = "null"; }
 		public string name { get; protected set; default = ""; }
 		public string icon { get; protected set; default = "application-x-executable-symbolic"; }
@@ -34,28 +34,61 @@ namespace GameHub.Data
 		public Option[]? install_options = null;
 		public Action[]? actions = null;
 
-		public virtual bool can_install(Game game) { return false; }
-		public virtual bool can_run(Game game) { return false; }
+		public virtual bool can_install(Runnable runnable) { return false; }
+		public virtual bool can_run(Runnable runnable) { return false; }
 
-		public virtual File get_install_root(Game game) { return game.install_dir; }
+		public virtual File get_install_root(Runnable runnable) { return runnable.install_dir; }
 
-		public virtual async void install(Game game, File installer){}
-		public virtual async void run(Game game){}
+		public virtual async void install(Runnable runnable, File installer){}
+		public virtual async void run(Runnable game){}
+		public virtual async void run_emulator(Emulator emu, Game? game){}
 
-		public class Option: Object
+		public abstract class Option: Object
 		{
 			public string name { get; construct; }
 			public string description { get; construct; }
+		}
+
+		public class BoolOption: Option
+		{
 			public bool enabled { get; construct set; }
-			public Option(string name, string description, bool enabled)
+			public BoolOption(string name, string description, bool enabled)
 			{
 				Object(name: name, description: description, enabled: enabled);
 			}
 		}
 
+		public class StringOption: Option
+		{
+			public string? value { get; construct set; }
+			public StringOption(string name, string description, string? value)
+			{
+				Object(name: name, description: description, value: value);
+			}
+		}
+
+		public class FileOption: Option
+		{
+			public File? directory { get; construct set; }
+			public File? file { get; construct set; }
+			public FileOption(string name, string description, File? directory, File? file)
+			{
+				Object(name: name, description: description, directory: directory, file: file);
+			}
+		}
+
+		public class ComboOption: StringOption
+		{
+			public ArrayList<string> options { get; construct set; }
+			public ComboOption(string name, string description, ArrayList<string> options, string? value)
+			{
+				Object(name: name, description: description, options: options, value: value);
+			}
+		}
+
 		public class Action: Object
 		{
-			public delegate void Delegate(Game game);
+			public delegate void Delegate(Runnable runnable);
 			public string name { get; construct; }
 			public string description { get; construct; }
 			private Delegate action;
@@ -64,11 +97,12 @@ namespace GameHub.Data
 				Object(name: name, description: description);
 				this.action = (owned) action;
 			}
-			public void invoke(Game game)
+			public void invoke(Runnable runnable)
 			{
-				action(game);
+				action(runnable);
 			}
 		}
 	}
+
 	public static CompatTool[] CompatTools;
 }

@@ -31,17 +31,20 @@ namespace GameHub.UI.Dialogs
 {
 	public class CompatRunDialog: Dialog
 	{
-		public Game game { get; construct; }
+		public bool is_opened_from_menu { get; construct; default = false; }
+
+		public Runnable game { get; construct; }
+		public Game? emulated_game { get; construct; }
 
 		private Box content;
 		private Label title_label;
-		private ListBox opts_list;
+		private CompatToolOptions opts_list;
 
 		private CompatToolPicker compat_tool_picker;
 
-		public CompatRunDialog(Game game)
+		public CompatRunDialog(Runnable game, bool is_opened_from_menu=false, Game? emulated_game=null)
 		{
-			Object(game: game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"));
+			Object(game: game, emulated_game: emulated_game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
 		}
 
 		construct
@@ -56,10 +59,6 @@ namespace GameHub.UI.Dialogs
 
 			content = new Box(Orientation.VERTICAL, 0);
 
-			var icon = new AutoSizeImage();
-			icon.set_constraint(48, 48, 1);
-			icon.set_size_request(48, 48);
-
 			title_label = new Label(game.name);
 			title_label.margin_start = 8;
 			title_label.halign = Align.START;
@@ -72,17 +71,20 @@ namespace GameHub.UI.Dialogs
 			compat_tool_picker.margin_start = 4;
 			content.add(compat_tool_picker);
 
-			opts_list = new ListBox();
-			opts_list.visible = false;
-			opts_list.get_style_context().add_class("tags-list");
-			opts_list.selection_mode = SelectionMode.NONE;
-
-			update_options();
-			compat_tool_picker.notify["selected"].connect(update_options);
+			opts_list = new CompatToolOptions(game, compat_tool_picker, false);
 
 			content.add(opts_list);
 
-			Utils.load_image.begin(icon, game.icon, "icon");
+			if(game is Game && (game as Game).icon != null)
+			{
+				var icon = new AutoSizeImage();
+				icon.set_constraint(48, 48, 1);
+				icon.set_size_request(48, 48);
+				Utils.load_image.begin(icon, (game as Game).icon, "icon");
+				hbox.add(icon);
+			}
+
+			hbox.add(content);
 
 			response.connect((source, response_id) => {
 				switch(response_id)
@@ -98,82 +100,48 @@ namespace GameHub.UI.Dialogs
 			run_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
 			run_btn.grab_default();
 
-			hbox.add(icon);
-			hbox.add(content);
-
 			get_content_area().add(hbox);
 			get_content_area().set_size_request(340, 96);
-			show_all();
-		}
 
-		private void update_options()
-		{
-			opts_list.foreach(r => r.destroy());
-			opts_list.visible = false;
+			var tool = game.compat_tool;
 
-			if(compat_tool_picker == null || compat_tool_picker.selected == null
-				|| compat_tool_picker.selected.options == null) return;
-
-			foreach(var opt in compat_tool_picker.selected.options)
+			if(!is_opened_from_menu && tool != null && compat_tool_picker.selected != null && compat_tool_picker.selected.id == tool && game.compat_options_saved)
 			{
-				opts_list.add(new OptionRow(opt));
+				Idle.add(() => {
+					run_with_compat();
+					destroy();
+					return Source.REMOVE;
+				});
+				return;
 			}
 
-			opts_list.show_all();
+			show_all();
 		}
 
 		private void run_with_compat()
 		{
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 
-			compat_tool_picker.selected.run.begin(game);
-		}
+			RunnableIsLaunched = true;
 
-		private class OptionRow: ListBoxRow
-		{
-			public CompatTool.Option option { get; construct; }
-
-			public OptionRow(CompatTool.Option option)
+			if(game is Emulator)
 			{
-				Object(option: option);
-			}
-
-			construct
-			{
-				var ebox = new EventBox();
-				ebox.above_child = true;
-
-				var box = new Box(Orientation.HORIZONTAL, 8);
-				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 6;
-
-				var check = new CheckButton();
-				check.active = option.enabled;
-
-				var name = new Label(option.name);
-				name.halign = Align.START;
-				name.xalign = 0;
-				name.hexpand = true;
-
-				ebox.tooltip_text = option.description;
-
-				box.add(check);
-				box.add(name);
-
-				ebox.add_events(EventMask.ALL_EVENTS_MASK);
-				ebox.button_release_event.connect(e => {
-					if(e.button == 1)
-					{
-						check.active = !check.active;
-						option.enabled = check.active;
-					}
-					return true;
+				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, (obj, res) => {
+					compat_tool_picker.selected.run_emulator.end(res);
+					RunnableIsLaunched = false;
 				});
-
-				ebox.add(box);
-
-				child = ebox;
 			}
+			else
+			{
+				(game as Game).last_launch = get_real_time() / 1000;
+				game.save();
+				compat_tool_picker.selected.run.begin(game, (obj, res) => {
+					compat_tool_picker.selected.run.end(res);
+					RunnableIsLaunched = false;
+				});
+			}
+
+			opts_list.save_options();
 		}
 	}
 }

@@ -27,7 +27,9 @@ namespace GameHub.Data.Sources.User
 		private bool is_removed = false;
 		public signal void removed();
 
-		public UserGame(string name, File dir, File exec, string args)
+		private Installer? installer;
+
+		public UserGame(string name, File dir, File exec, string args, bool is_installer)
 		{
 			source = User.instance;
 
@@ -35,11 +37,28 @@ namespace GameHub.Data.Sources.User
 			this.name = name;
 
 			platforms.clear();
-			platforms.add(Platform.LINUX);
+			platforms.add(exec.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX);
 
 			install_dir = dir;
-			executable = exec;
+
 			arguments = args;
+
+			if(!is_installer)
+			{
+				executable = exec;
+			}
+			else
+			{
+				installer = new Installer(this, exec);
+				var root_object = new Json.Object();
+				root_object.set_string_member("installer", exec.get_path());
+				var root_node = new Json.Node(Json.NodeType.OBJECT);
+				root_node.set_object(root_object);
+				info = Json.to_string(root_node, false);
+				save();
+			}
+
+			((User) source).add_game(this);
 			update_status();
 		}
 
@@ -52,11 +71,12 @@ namespace GameHub.Data.Sources.User
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
-			executable = FSUtils.file(Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
+			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s));
+			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
+			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -92,21 +112,54 @@ namespace GameHub.Data.Sources.User
 		public override async void update_game_info()
 		{
 			update_status();
+
+			mount_overlays();
+
+			if(installer == null && info != null && info.length > 0)
+			{
+				var i = Parser.parse_json(info).get_object();
+				installer = new Installer(this, File.new_for_path(i.get_string_member("installer")));
+			}
 			save();
 		}
 
-		public override async void install(){}
+		public override async void install()
+		{
+			yield update_game_info();
+
+			if(installer == null) return;
+
+			var installers = new ArrayList<Runnable.Installer>();
+			installers.add(installer);
+
+			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers);
+
+			wnd.cancelled.connect(() => Idle.add(install.callback));
+
+			wnd.install.connect((installer, dl_only, tool) => {
+				installer.install.begin(this, dl_only, tool, (obj, res) => {
+					installer.install.end(res);
+					Idle.add(install.callback);
+				});
+			});
+
+			wnd.show_all();
+			wnd.present();
+
+			yield;
+		}
 
 		public override async void uninstall()
 		{
+			yield umount_overlays();
 			remove();
 		}
 
 		public void remove()
 		{
 			is_removed = true;
+			((User) source).remove_game(this);
 			removed();
-			Tables.Games.remove(this);
 		}
 
 		public override void save()
@@ -119,9 +172,9 @@ namespace GameHub.Data.Sources.User
 
 		public override void update_status()
 		{
-			var state = executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED;
-			status = new Game.Status(state);
-			if(state == Game.State.INSTALLED)
+			var exec = executable;
+			status = new Game.Status(exec != null && exec.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			if(status.state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				add_tag(Tables.Tags.BUILTIN_INSTALLED);
@@ -130,6 +183,20 @@ namespace GameHub.Data.Sources.User
 			{
 				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
+		}
+
+		public class Installer: Runnable.Installer
+		{
+			private string game_name;
+			public override string name { get { return game_name; } }
+
+			public Installer(UserGame game, File installer)
+			{
+				game_name = game.name;
+				id = "installer";
+				platform = installer.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
+				parts.add(new Runnable.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
 			}
 		}
 	}

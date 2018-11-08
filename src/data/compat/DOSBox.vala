@@ -24,10 +24,13 @@ namespace GameHub.Data.Compat
 {
 	public class DOSBox: CompatTool
 	{
+		private static string[] DOSBOX_WIN_EXECUTABLE_NAMES = {"DOSBox", "dosbox", "DOSBOX"};
+		private static string[] DOSBOX_WIN_EXECUTABLE_EXTENSIONS = {".exe", ".EXE"};
+
 		public string binary { get; construct; default = "dosbox"; }
 
 		private File conf_windowed;
-		private CompatTool.Option? opt_windowed;
+		private CompatTool.BoolOption? opt_windowed;
 
 		public DOSBox(string binary="dosbox")
 		{
@@ -46,7 +49,7 @@ namespace GameHub.Data.Compat
 			conf_windowed = FSUtils.file(ProjectConfig.DATADIR + "/" + ProjectConfig.PROJECT_NAME, "compat/dosbox/windowed.conf");
 			if(conf_windowed.query_exists())
 			{
-				opt_windowed = new CompatTool.Option(_("Windowed"), _("Disable fullscreen"), true);
+				opt_windowed = new CompatTool.BoolOption(_("Windowed"), _("Disable fullscreen"), true);
 				options = { opt_windowed };
 			}
 		}
@@ -81,22 +84,22 @@ namespace GameHub.Data.Compat
 			return configs;
 		}
 
-		public override bool can_run(Game game)
+		public override bool can_run(Runnable runnable)
 		{
-			return installed && find_configs(game.install_dir).size > 0;
+			return installed && runnable is Game && find_configs(runnable.install_dir).size > 0;
 		}
 
-		public override async void run(Game game)
+		public override async void run(Runnable runnable)
 		{
-			if(!can_run(game)) return;
+			if(!can_run(runnable)) return;
 
 			string[] cmd = { executable.get_path() };
 
-			var wdir = game.install_dir;
+			var wdir = runnable.install_dir;
 
-			var configs = find_configs(game.install_dir);
+			var configs = find_configs(runnable.install_dir);
 
-			if(configs.size > 2 && game is GameHub.Data.Sources.GOG.GOGGame)
+			if(configs.size > 2 && runnable is GameHub.Data.Sources.GOG.GOGGame)
 			{
 				foreach(var conf in configs)
 				{
@@ -122,9 +125,23 @@ namespace GameHub.Data.Compat
 				cmd += conf_windowed.get_path();
 			}
 
-			if(game.install_dir.get_child("DOSBOX").get_child("DOSBox.exe").query_exists())
+			bool bundled_win_dosbox_found = false;
+			foreach(var dirname in DOSBOX_WIN_EXECUTABLE_NAMES)
 			{
-				wdir = game.install_dir.get_child("DOSBOX");
+				foreach(var exename in DOSBOX_WIN_EXECUTABLE_NAMES)
+				{
+					foreach(var exeext in DOSBOX_WIN_EXECUTABLE_EXTENSIONS)
+					{
+						if(runnable.install_dir.get_child(dirname).get_child(exename + exeext).query_exists())
+						{
+							wdir = runnable.install_dir.get_child(dirname);
+							bundled_win_dosbox_found = true;
+							break;
+						}
+					}
+					if(bundled_win_dosbox_found) break;
+				}
+				if(bundled_win_dosbox_found) break;
 			}
 
 			yield Utils.run_thread(cmd, wdir.get_path());

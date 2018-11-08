@@ -16,7 +16,7 @@ i18n.merge_file(
 	po_dir: join_paths(meson.source_root(), 'po'),
 	type: 'desktop',
 	install: true,
-	install_dir: join_paths(get_option('datadir'), 'applications')
+	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'applications')
 )
 
 i18n.merge_file(
@@ -24,7 +24,12 @@ i18n.merge_file(
 	output: meson.project_name() + '.appdata.xml',
 	po_dir: join_paths(meson.source_root(), 'po'),
 	install: true,
-	install_dir: join_paths(get_option('datadir'), 'metainfo')
+	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'metainfo')
+)
+
+install_data(
+	meson.project_name() + '.policy',
+	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'polkit-1', 'actions')
 )
 
 icons_gresource = gnome.compile_resources(

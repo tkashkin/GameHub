@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -eu
+
+echo "OPENSSL CONFIGURE"
+./config $@ shared
+echo "OPENSSL MAKE DEPEND"
+make depend
+echo "OPENSSL MAKE BUILD_LIBS"
+make build_libs
+echo "OPENSSL COPY STUFF"
+cp libssl.so /app/lib/
+cp libcrypto.so /app/lib/
+cd /app/lib
+ln -s libssl.so libssl.so.1.0.0
+ln -s libcrypto.so libcrypto.so.1.0.0
+cd -
+echo "OPENSSL END"
+cat <<EOF > Makefile
+install:
+	true
+all:
+	true
+EOF

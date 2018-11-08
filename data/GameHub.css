@@ -4,6 +4,7 @@
 	transition: 100ms;
 	background-color: alpha(#999, 0.5);
 	color: white;
+	-gtk-icon-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .gamecard, .gamecard border
@@ -17,7 +18,9 @@
 	opacity: 1;
 }
 
-.gamecard.hover:not(.installed)
+.gamecard.hover:not(.installed),
+.games-grid flowboxchild:focus .gamecard:not(.installed),
+.games-grid flowboxchild:selected .gamecard:not(.installed)
 {
 	opacity: 0.8;
 }
@@ -42,7 +45,9 @@
 }
 
 .gamecard.installing GtkLabel.status, .gamecard.installing label.status,
-.gamecard.hover GtkLabel.status, .gamecard.hover label.status
+.gamecard.hover GtkLabel.status, .gamecard.hover label.status,
+.games-grid flowboxchild:focus .gamecard GtkLabel.status, .games-grid flowboxchild:focus .gamecard label.status,
+.games-grid flowboxchild:selected .gamecard GtkLabel.status, .games-grid flowboxchild:selected .gamecard label.status
 {
 	margin-bottom: 0px;
 	opacity: 1;
@@ -77,12 +82,16 @@
 	background-color: rgba(0, 0, 0, 0);
 }
 
-.gamecard.hover .actions
+.gamecard.hover .actions,
+.games-grid flowboxchild:focus .gamecard .actions,
+.games-grid flowboxchild:selected .gamecard .actions
 {
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
-.gamecard.installed.hover .actions
+.gamecard.installed.hover .actions,
+.games-grid flowboxchild:focus .gamecard.installed .actions,
+.games-grid flowboxchild:selected .gamecard.installed .actions
 {
 	background-color: rgba(255, 255, 255, 0.2);
 }
@@ -100,6 +109,30 @@
 {
 	margin-bottom: 0;
 	opacity: 1;
+}
+
+.gamecard image
+{
+	opacity: 0.6;
+	transition: 100ms;
+}
+
+.gamecard.hover image,
+.games-grid flowboxchild:focus image,
+.games-grid flowboxchild:selected image
+{
+	opacity: 0.8;
+}
+
+.games-grid flowboxchild
+{
+	border-radius: 4px;
+	padding: 0;
+}
+
+.games-grid flowboxchild:focus
+{
+	background: @theme_selected_bg_color;
 }
 
 /* Some granite styles */
@@ -311,6 +344,11 @@ list.tags-list row
 	margin: 0;
 	border-radius: 2px;
 }
+GtkListBox.tags-list.not-rounded .list-row,
+list.tags-list.not-rounded row
+{
+	border-radius: 0;
+}
 GtkListBox.tags-list .list-row:last-child,
 list.tags-list row:last-child
 {
@@ -324,13 +362,19 @@ list.tags-list row:selected
 GtkListBox.tags-list .list-row:focus,
 list.tags-list row:focus
 {
-	background: transparent;
+	background: @theme_selected_bg_color;
+	color: @theme_selected_fg_color;
 	outline: none;
 }
 GtkListBox.tags-list .list-row:hover,
 list.tags-list row:hover
 {
 	background: alpha(#888, 0.1);
+}
+GtkListBox.tags-list .list-row:focus:hover,
+list.tags-list row:focus:hover
+{
+	background: shade(@theme_selected_bg_color, 0.9);
 }
 
 .tags-list-header.hover
@@ -341,6 +385,50 @@ list.tags-list row:hover
 {
 	padding: 2px 0;
 }
+.tags-list-header:focus
+{
+	background: @theme_selected_bg_color;
+	color: @theme_selected_fg_color;
+}
+.tags-list-header.hover:focus
+{
+	background: shade(@theme_selected_bg_color, 0.9);
+}
+.tags-list-header:focus label
+{
+	color: @theme_selected_fg_color;
+}
+
+GtkListBox.overlays-list,
+list.overlays-list
+{
+	background: transparent;
+}
+GtkListBox.overlays-list .list-row,
+list.overlays-list row
+{
+	background: transparent;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	border-radius: 2px;
+	border-bottom: 1px alpha(#888, 0.2) solid;
+}
+GtkListBox.overlays-list .list-row:last-child,
+list.overlays-list row:last-child
+{
+	border-bottom: none;
+}
+GtkListBox.overlays-list .list-row:selected,
+list.overlays-list row:selected
+{
+	outline: none;
+}
+GtkListBox.overlays-list .list-row:hover,
+list.overlays-list row:hover
+{
+	background: alpha(#888, 0.1);
+}
 
 .link, .link label
 {
@@ -350,4 +438,16 @@ list.tags-list row:hover
 button.file label
 {
 	padding: 0 2px;
+}
+
+checkbutton:not(.default-padding), checkbutton:not(.default-padding) check
+{
+	padding: 0;
+	margin: 0;
+}
+
+dialog .sidebar,
+dialog .sidebar list
+{
+	background: transparent;
 }

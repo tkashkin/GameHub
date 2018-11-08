@@ -114,5 +114,19 @@ namespace GameHub.Data.Sources.User
 
 			return _games;
 		}
+
+		public void add_game(UserGame game)
+		{
+			if(_games.contains(game)) return;
+			_games.add(game);
+			games_count++;
+		}
+
+		public void remove_game(UserGame game)
+		{
+			_games.remove(game);
+			games_count--;
+			Tables.Games.remove(game);
+		}
 	}
 }

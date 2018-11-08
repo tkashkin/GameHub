@@ -1,0 +1,53 @@
+{
+	"name": "steamrt",
+	"buildsystem": "simple",
+	"sources": [
+		{
+			"type": "file",
+			"path": "etc.tar.gz"
+		}
+	],
+	"build-commands": [
+		"mkdir -p $FLATPAK_DEST/etc",
+		"tar -xzf etc.tar.gz -C $FLATPAK_DEST/etc"
+	],
+	
+	"modules": [
+		{
+			"name": "steamrt_x86_64",
+			"buildsystem": "simple",
+			"only-arches": ["x86_64"],
+			"sources": [
+				{
+					"type": "file",
+					"path": "x86_64.tar.gz"
+				},
+				{
+					"type": "file",
+					"path": "i386.tar.gz"
+				} 
+			],
+			"build-commands": [
+				"mkdir -p $FLATPAK_DEST/lib/steamrt",
+				"mkdir -p $FLATPAK_DEST/lib/32bit/steamrt",
+				"tar -xzf x86_64.tar.gz -C $FLATPAK_DEST/lib/steamrt",
+				"tar -xzf i386.tar.gz -C $FLATPAK_DEST/lib/32bit/steamrt"
+			]
+		},
+		{
+			"name": "steamrt_i386",
+			"buildsystem": "simple",
+			"only-arches": ["i386"],
+			"sources": [
+				{
+					"type": "file",
+					"path": "i386.tar.gz"
+				}
+			],
+			"build-commands": [
+				"mkdir -p $FLATPAK_DEST/lib/steamrt",
+				"tar -xzf i386.tar.gz -C $FLATPAK_DEST/lib/steamrt"
+			]
+		}
+	]
+}

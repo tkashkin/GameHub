@@ -4,9 +4,12 @@ debian/*
 !debian/source/
 !debian/changelog.in
 !debian/compat
-!debian/control
+!debian/control.in
 !debian/copyright
 !debian/rules
+
+flatpak/com.github.tkashkin.gamehub.json
+flatpak/.flatpak-builder/
 
 *~
 

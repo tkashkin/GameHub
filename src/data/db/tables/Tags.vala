@@ -109,7 +109,18 @@ namespace GameHub.Data.DB.Tables
 			DYNAMIC_TAGS.add(BUILTIN_UNINSTALLED);
 			DYNAMIC_TAGS.add(BUILTIN_INSTALLED);
 
-			tags_updated();
+			var ui_settings = GameHub.Settings.UI.get_instance();
+			ui_settings.notify["use-imported-tags"].connect(() => {
+				foreach(var tag in TAGS)
+				{
+					if(tag.id.has_prefix(Tag.IMPORTED_GOG_PREFIX))
+					{
+						tag.enabled = ui_settings.use_imported_tags;
+					}
+				}
+				tags_updated();
+			});
+			ui_settings.notify_property("use-imported-tags");
 		}
 
 		public static bool add(Tag tag, bool replace=false)
@@ -136,6 +147,10 @@ namespace GameHub.Data.DB.Tables
 			if(!TAGS.contains(tag))
 			{
 				TAGS.add(tag);
+				if(tag.id.has_prefix(Tag.IMPORTED_GOG_PREFIX))
+				{
+					tag.enabled = GameHub.Settings.UI.get_instance().use_imported_tags;
+				}
 				instance.tags_updated();
 			}
 
@@ -150,8 +165,9 @@ namespace GameHub.Data.DB.Tables
 
 		public class Tag: Object
 		{
-			public const string BUILTIN_PREFIX = "builtin:";
-			public const string USER_PREFIX    = "user:";
+			public const string BUILTIN_PREFIX      = "builtin:";
+			public const string USER_PREFIX         = "user:";
+			public const string IMPORTED_GOG_PREFIX = "gog:";
 
 			public enum Builtin
 			{
@@ -198,6 +214,7 @@ namespace GameHub.Data.DB.Tables
 			public string? name { get; construct set; }
 			public string icon { get; construct set; }
 			public bool selected { get; construct set; default = true; }
+			public bool enabled { get; construct set; default = true; }
 
 			public Tag(string? id, string? name, string icon="gh-tag-symbolic", bool selected=true)
 			{

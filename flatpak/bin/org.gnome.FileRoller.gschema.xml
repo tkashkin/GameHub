@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  File-Roller
+
+  Copyright © 2010 Free Software Foundation, Inc.
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<schemalist>
+
+  <enum id="org.gnome.FileRoller.SortMethod">
+    <value nick="name" value="0"/>
+    <value nick="size" value="1"/>
+    <value nick="type" value="2"/>
+    <value nick="time" value="3"/>
+    <value nick="path" value="4"/>
+  </enum>
+
+  <enum id="org.gnome.FileRoller.SortType">
+    <value nick="ascending" value="0"/>
+    <value nick="descending" value="1"/>
+  </enum>
+
+  <enum id="org.gnome.FileRoller.ListMode">
+    <value nick="all-files" value="0"/>
+    <value nick="as-folder" value="1"/>
+  </enum>
+
+  <enum id="org.gnome.FileRoller.CompressionLevel">
+    <value nick="very-fast" value="0"/>
+    <value nick="fast" value="1"/>
+    <value nick="normal" value="2"/>
+    <value nick="maximum" value="3"/>
+  </enum>
+
+  <schema id="org.gnome.FileRoller" path="/org/gnome/file-roller/">
+    <child name="listing" schema="org.gnome.FileRoller.Listing"/>
+    <child name="ui" schema="org.gnome.FileRoller.UI"/>
+    <child name="file-selector" schema="org.gnome.FileRoller.FileSelector"/>
+    <child name="general" schema="org.gnome.FileRoller.General"/>
+    <child name="dialogs" schema="org.gnome.FileRoller.Dialogs"/>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.Listing" path="/org/gnome/file-roller/listing/" gettext-domain="file-roller">
+    <key name="sort-method" enum="org.gnome.FileRoller.SortMethod">
+      <default>'name'</default>
+      <summary>How to sort files</summary>
+      <description>What criteria must be used to arrange files. Possible values: name, size, type, time, path.</description>
+    </key>
+    <key name="sort-type" enum="org.gnome.FileRoller.SortType">
+      <default>'ascending'</default>
+      <summary>Sort type</summary>
+      <description>Whether to sort in ascending or descending direction. Possible values: ascending, descending.</description>
+    </key>
+    <key name="list-mode" enum="org.gnome.FileRoller.ListMode">
+      <default>'as-folder'</default>
+      <summary>List Mode</summary>
+      <description>Use “all-files” to view all the files in the archive in a single list, use “as-folder” to navigate the archive as a folder.</description>
+    </key>
+    <key name="show-type" type="b">
+      <default>true</default>
+      <summary>Display type</summary>
+      <description>Display the type column in the main window.</description>
+    </key>
+    <key name="show-size" type="b">
+      <default>true</default>
+      <summary>Display size</summary>
+      <description>Display the size column in the main window.</description>
+    </key>
+    <key name="show-time" type="b">
+      <default>true</default>
+      <summary>Display time</summary>
+      <description>Display the time column in the main window.</description>
+    </key>
+    <key name="show-path" type="b">
+      <default>true</default>
+      <summary>Display path</summary>
+      <description>Display the path column in the main window.</description>
+    </key>
+    <key name="name-column-width" type="i">
+      <default>250</default>
+      <summary>Name column width</summary>
+      <description>The default width of the name column in the file list.</description>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.UI" path="/org/gnome/file-roller/ui/" gettext-domain="file-roller">
+    <key name="window-width" type="i">
+      <default>600</default>
+    </key>
+    <key name="window-height" type="i">
+      <default>480</default>
+    </key>
+    <key name="sidebar-width" type="i">
+      <default>200</default>
+    </key>
+    <key name="view-sidebar" type="b">
+      <default>false</default>
+      <summary>View the sidebar</summary>
+      <description>Whether to display the sidebar.</description>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.FileSelector" path="/org/gnome/file-roller/file-selector/" gettext-domain="file-roller">
+    <key name='window-size' type='(ii)'>
+      <default>(-1, -1)</default>
+    </key>
+    <key name="show-hidden" type="b">
+      <default>false</default>
+    </key>
+    <key name="sidebar-size" type="i">
+      <default>-1</default>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.General" path="/org/gnome/file-roller/general/" gettext-domain="file-roller">
+    <key name="editors" type="as">
+      <default>[]</default>
+      <summary>Editors</summary>
+      <description>List of applications entered in the “Open File” dialog and not associated with the file type.</description>
+    </key>
+    <key name="compression-level" enum="org.gnome.FileRoller.CompressionLevel">
+      <default>'normal'</default>
+      <summary>Compression level</summary>
+      <description>Compression level used when adding files to an archive. Possible values: very-fast, fast, normal, maximum.</description>
+    </key>
+    <key name="encrypt-header" type="b">
+      <default>false</default>
+      <summary>Encrypt the archive header</summary>
+      <description>Whether to encrypt the archive header.  If the header is encrypted the password will be required to list the archive content as well.</description>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.Dialogs" path="/org/gnome/file-roller/dialogs/">
+    <child name="extract" schema="org.gnome.FileRoller.Dialogs.Extract"/>
+    <child name="new" schema="org.gnome.FileRoller.Dialogs.New"/>
+    <child name="add" schema="org.gnome.FileRoller.Dialogs.Add"/>
+    <child name="last-output" schema="org.gnome.FileRoller.Dialogs.LastOutput"/>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.Dialogs.Extract" path="/org/gnome/file-roller/dialogs/extract/" gettext-domain="file-roller">
+    <key name="skip-newer" type="b">
+      <default>false</default>
+      <summary>Do not overwrite newer files</summary>
+    </key>
+    <key name="recreate-folders" type="b">
+      <default>true</default>
+      <summary>Recreate the folders stored in the archive</summary>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.Dialogs.New" path="/org/gnome/file-roller/dialogs/new/" gettext-domain="file-roller">
+    <key name="default-extension" type="s">
+      <default>'.tar.gz'</default>
+    </key>
+    <key name="other-options" type="b">
+      <default>false</default>
+    </key>
+    <key name="encrypt-header" type="b">
+      <default>false</default>
+      <summary>Encrypt the archive header</summary>
+      <description>Whether to encrypt the archive header.  If the header is encrypted the password will be required to list the archive content as well.</description>
+    </key>
+    <key name="volume-size" type="i">
+      <default>0</default>
+      <summary>Default volume size</summary>
+      <description>The default size for volumes.</description>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.Dialogs.Add" path="/org/gnome/file-roller/dialogs/add/" gettext-domain="file-roller">
+    <key name="current-folder" type="s">
+      <default>''</default>
+    </key>
+    <key name="selected-files" type="as">
+      <default>[]</default>
+    </key>
+    <key name="filename" type="s">
+      <default>''</default>
+    </key>
+    <key name="include-files" type="s">
+      <default>''</default>
+    </key>
+    <key name="exclude-files" type="s">
+      <default>''</default>
+    </key>
+    <key name="exclude-folders" type="s">
+      <default>''</default>
+    </key>
+    <key name="update" type="b">
+      <default>false</default>
+    </key>
+    <key name="recursive" type="b">
+      <default>true</default>
+    </key>
+    <key name="no-symlinks" type="b">
+      <default>true</default>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.FileRoller.Dialogs.LastOutput" path="/org/gnome/file-roller/dialogs/last-output/" gettext-domain="file-roller">
+    <key name="width" type="i">
+      <default>-1</default>
+    </key>
+    <key name="height" type="i">
+      <default>-1</default>
+    </key>
+  </schema>
+
+</schemalist>

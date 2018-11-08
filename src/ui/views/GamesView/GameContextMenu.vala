@@ -44,9 +44,10 @@ namespace GameHub.UI.Views.GamesView
 
 			var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
 			run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
-			run_with_compat.activate.connect(() => game.run_with_compat.begin());
+			run_with_compat.activate.connect(() => game.run_with_compat.begin(true));
 
 			var install = new Gtk.MenuItem.with_label(_("Install"));
+			install.sensitive = game.is_installable;
 			install.activate.connect(() => game.install.begin());
 
 			var details = new Gtk.MenuItem.with_label(_("Details"));
@@ -60,10 +61,13 @@ namespace GameHub.UI.Views.GamesView
 			hidden.active = game.has_tag(Tables.Tags.BUILTIN_HIDDEN);
 			hidden.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_HIDDEN));
 
+			var fs_overlays = new Gtk.MenuItem.with_label(_("Overlays"));
+			fs_overlays.activate.connect(() => new Dialogs.GameFSOverlaysDialog(game).show_all());
+
 			var properties = new Gtk.MenuItem.with_label(_("Properties"));
 			properties.activate.connect(() => new Dialogs.GamePropertiesDialog(game).show_all());
 
-			if(game.status.state == Game.State.INSTALLED)
+			if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
 			{
 				if(game.use_compat)
 				{
@@ -83,33 +87,102 @@ namespace GameHub.UI.Views.GamesView
 
 			add(details);
 
-			add(new Gtk.SeparatorMenuItem());
+			if(!(game is Sources.GOG.GOGGame.DLC))
+			{
+				add(new Gtk.SeparatorMenuItem());
+				add(favorite);
+				add(hidden);
+			}
 
-			add(favorite);
-			add(hidden);
+			bool add_dirs_separator = true;
 
-			if(game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame)
+			if(game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
+			{
+				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
+				add_dirs_separator = false;
+				var open_directory = new Gtk.MenuItem.with_label(_("Open installation directory"));
+				open_directory.activate.connect(open_game_directory);
+				add(open_directory);
+			}
+			if(game.installers_dir != null && game.installers_dir.query_exists())
+			{
+				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
+				add_dirs_separator = false;
+				var open_installers_directory = new Gtk.MenuItem.with_label(_("Open installers collection directory"));
+				open_installers_directory.activate.connect(open_installer_collection_directory);
+				add(open_installers_directory);
+			}
+			if(game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists())
+			{
+				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
+				add_dirs_separator = false;
+				var open_bonuses_directory = new Gtk.MenuItem.with_label(_("Open bonus collection directory"));
+				open_bonuses_directory.activate.connect(open_bonus_collection_directory);
+				add(open_bonuses_directory);
+			}
+
+			if((game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame) && !(game is Sources.GOG.GOGGame.DLC))
 			{
 				var uninstall = new Gtk.MenuItem.with_label((game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"));
 				uninstall.activate.connect(() => game.uninstall.begin());
 				add(new Gtk.SeparatorMenuItem());
 				add(uninstall);
+
+				add(new Gtk.SeparatorMenuItem());
+				add(fs_overlays);
 			}
 
-			add(new Gtk.SeparatorMenuItem());
-
-			add(properties);
+			if(!(game is Sources.GOG.GOGGame.DLC))
+			{
+				add(new Gtk.SeparatorMenuItem());
+				add(properties);
+			}
 
 			show_all();
 		}
 
-		public void open(Event e)
+		public void open(Event e, bool at_pointer=true)
 		{
 			#if GTK_3_22
-			popup_at_pointer(e);
+			if(at_pointer)
+			{
+				popup_at_pointer(e);
+			}
+			else
+			{
+				popup_at_widget(target, Gravity.SOUTH, Gravity.NORTH, e);
+			}
 			#else
 			popup(null, null, null, 0, ((EventButton) e).time);
 			#endif
+		}
+
+		private void open_game_directory()
+		{
+			if(game != null && game.status.state == Game.State.INSTALLED)
+			{
+				Utils.open_uri(game.install_dir.get_uri());
+			}
+		}
+
+		private void open_installer_collection_directory()
+		{
+			if(game != null && game.installers_dir != null && game.installers_dir.query_exists())
+			{
+				Utils.open_uri(game.installers_dir.get_uri());
+			}
+		}
+
+		private void open_bonus_collection_directory()
+		{
+			if(game != null && game is GameHub.Data.Sources.GOG.GOGGame)
+			{
+				var gog_game = game as GameHub.Data.Sources.GOG.GOGGame;
+				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
+				{
+					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
+				}
+			}
 		}
 	}
 }

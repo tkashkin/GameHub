@@ -29,7 +29,7 @@ namespace GameHub.Data.Sources.Humble
 		private bool game_info_updated = false;
 		private bool game_info_refreshed = false;
 
-		public ArrayList<Game.Installer>? installers { get; protected set; default = new ArrayList<Game.Installer>(); }
+		public ArrayList<Runnable.Installer>? installers { get; protected set; default = new ArrayList<Runnable.Installer>(); }
 
 		public HumbleGame(Humble src, string order, Json.Node json_node)
 		{
@@ -62,7 +62,7 @@ namespace GameHub.Data.Sources.Humble
 			}
 
 			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
-			executable = FSUtils.file(install_dir.get_path(), "start.sh");
+			executable_path = "$game_dir/start.sh";
 			info_detailed = @"{\"order\":\"$(order_id)\"}";
 			update_status();
 		}
@@ -76,11 +76,12 @@ namespace GameHub.Data.Sources.Humble
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) ?? FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
-			executable = FSUtils.file(Tables.Games.EXECUTABLE.get(s)) ?? FSUtils.file(install_dir.get_path(), "start.sh");
+			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
+			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
+			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -110,8 +111,16 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			var json = Parser.parse_json(info_detailed).get_object();
-			order_id = json.get_string_member("order");
+			var json_node = Parser.parse_json(info_detailed);
+			if(json_node != null && json_node.get_node_type() == Json.NodeType.OBJECT)
+			{
+				var json = json_node.get_object();
+				if(json.has_member("order"))
+				{
+					order_id = json.get_string_member("order");
+				}
+			}
+
 			update_status();
 		}
 
@@ -119,7 +128,8 @@ namespace GameHub.Data.Sources.Humble
 		{
 			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
 
-			status = new Game.Status(executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			var exec = executable;
+			status = new Game.Status(exec != null && exec.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
 			if(status.state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
@@ -130,11 +140,15 @@ namespace GameHub.Data.Sources.Humble
 				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
+
+			installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(name));
 		}
 
 		public override async void update_game_info()
 		{
 			update_status();
+
+			mount_overlays();
 
 			if((icon == null || icon == "") && (info != null && info.length > 0))
 			{
@@ -229,7 +243,7 @@ namespace GameHub.Data.Sources.Humble
 
 					if(refresh && !game_info_refreshed)
 					{
-						debug("[HumbleGame.update_game_info] Refreshing");
+						//debug("[HumbleGame.update_game_info] Refreshing");
 						game_info_refreshed = true;
 						game_info_updated = false;
 						installers.clear();
@@ -252,15 +266,15 @@ namespace GameHub.Data.Sources.Humble
 
 			if(installers.size < 1) return;
 
-			var wnd = new GameHub.UI.Dialogs.GameInstallDialog(this, installers);
+			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers);
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
-			wnd.install.connect((installer, tool) => {
+			wnd.install.connect((installer, dl_only, tool) => {
 				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
 				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
 
-				installer.install.begin(this, tool, (obj, res) => {
+				installer.install.begin(this, dl_only, tool, (obj, res) => {
 					installer.install.end(res);
 					update_status();
 					Idle.add(install.callback);
@@ -280,11 +294,9 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void uninstall()
 		{
-			if(executable.query_exists())
-			{
-				FSUtils.rm(install_dir.get_path(), "", "-rf");
-				update_status();
-			}
+			yield umount_overlays();
+			FSUtils.rm(install_dir.get_path(), "", "-rf");
+			update_status();
 			if(!install_dir.query_exists() && !executable.query_exists())
 			{
 				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
@@ -294,11 +306,11 @@ namespace GameHub.Data.Sources.Humble
 			}
 		}
 
-		public class Installer: Game.Installer
+		public class Installer: Runnable.Installer
 		{
 			public string dl_name;
 			public string? dl_id;
-			public Game.Installer.Part part;
+			public Runnable.Installer.Part part;
 
 			public override string name { get { return dl_name; } }
 
@@ -311,10 +323,10 @@ namespace GameHub.Data.Sources.Humble
 				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
 				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
+				if(game.installers_dir == null) return;
 				var remote = File.new_for_uri(url);
-				var installers_dir = FSUtils.Paths.Collection.Humble.expand_installers(game.name);
-				var local = FSUtils.file(installers_dir, "humble_" + game.id + "_" + id);
-				part = new Game.Installer.Part(id, url, full_size, remote, local);
+				var local = game.installers_dir.get_child("humble_" + game.id + "_" + id);
+				part = new Runnable.Installer.Part(id, url, full_size, remote, local);
 				parts.add(part);
 			}
 
@@ -333,9 +345,9 @@ namespace GameHub.Data.Sources.Humble
 			{
 				if(!(game.source is Trove) || !is_url_update_required()) return null;
 
-				debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s)", part.url, game.full_id);
+				//debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s)", part.url, game.full_id);
 				var new_url = Trove.sign_url(id, dl_id, ((Humble) game.source).user_token);
-				debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s)", new_url, game.full_id);
+				//debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s)", new_url, game.full_id);
 
 				if(new_url != null) part.url = new_url;
 

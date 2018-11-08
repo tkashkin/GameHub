@@ -180,50 +180,12 @@ namespace GameHub.UI.Dialogs
 			images_card.add(images_overlay);
 			properties_box.add(images_card);
 
-			image_entry = new Entry();
-			image_entry.placeholder_text = image_entry.primary_icon_tooltip_text = _("Image URL");
-			image_entry.primary_icon_name = "image-x-generic";
-			image_entry.primary_icon_activatable = false;
-			image_entry.secondary_icon_name = "edit-clear-symbolic";
-			image_entry.secondary_icon_activatable = true;
-			image_entry.secondary_icon_tooltip_text = _("Reset to default");
-			image_entry.margin = 4;
-
-			image_entry.icon_press.connect((icon, event) => {
-				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
-				{
-					game.image = null;
-					game.update_game_info.begin();
-					Utils.load_image.begin(image_view, game.image, "image");
-				}
-			});
-
-			image_entry.activate.connect(() => { set_image_url(false); });
-			image_entry.focus_out_event.connect(() => { set_image_url(); return false; });
+			image_entry = add_image_entry(_("Image URL"), "image-x-generic");
 
 			properties_box.add(image_entry);
 
-			icon_entry = new Entry();
-			icon_entry.placeholder_text = icon_entry.primary_icon_tooltip_text = _("Icon URL");
-			icon_entry.primary_icon_name = "image-x-generic-symbolic";
-			icon_entry.primary_icon_activatable = false;
-			icon_entry.secondary_icon_name = "edit-clear-symbolic";
-			icon_entry.secondary_icon_activatable = true;
-			icon_entry.secondary_icon_tooltip_text = _("Reset to default");
-			icon_entry.margin = 4;
+			icon_entry = add_image_entry(_("Icon URL"), "image-x-generic-symbolic");
 			icon_entry.margin_top = 0;
-
-			icon_entry.icon_press.connect((icon, event) => {
-				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
-				{
-					game.icon = null;
-					game.update_game_info.begin();
-					Utils.load_image.begin(icon_view, game.icon, "icon");
-				}
-			});
-
-			icon_entry.activate.connect(() => { set_icon_url(false); });
-			icon_entry.focus_out_event.connect(() => { set_icon_url(); return false; });
 
 			properties_box.add(icon_entry);
 
@@ -255,10 +217,22 @@ namespace GameHub.UI.Dialogs
 				executable_header.xpad = 8;
 				properties_box.add(executable_header);
 
-				var executable_picker = new FileChooserButton.with_dialog(game.setup_executable_chooser());
-				executable_picker.set_file(game.executable);
+				var executable_picker_dialog = game.setup_executable_chooser();
+				var executable_picker = new FileChooserButton.with_dialog(executable_picker_dialog);
+				try
+				{
+					executable_picker.set_file(game.executable);
+				}
+				catch(Error e)
+				{
+					warning(e.message);
+				}
 				executable_picker.margin_start = executable_picker.margin_end = 4;
 				properties_box.add(executable_picker);
+
+				executable_picker.file_set.connect(() => {
+					game.set_chosen_executable(executable_picker_dialog);
+				});
 
 				var args_entry = new Entry();
 				args_entry.text = game.arguments ?? "";
@@ -324,8 +298,8 @@ namespace GameHub.UI.Dialogs
 
 			foreach(var tag in Tables.Tags.TAGS)
 			{
-				if(tag in Tables.Tags.DYNAMIC_TAGS) continue;
-				var row = new TagRow(game, tag);
+				if(tag in Tables.Tags.DYNAMIC_TAGS || !tag.enabled) continue;
+				var row = new TagRow(tag, game);
 				tags_list.add(row);
 			}
 
@@ -373,6 +347,39 @@ namespace GameHub.UI.Dialogs
 			}
 		}
 
+		private Entry add_image_entry(string text, string icon)
+		{
+			var entry = new Entry();
+			entry.placeholder_text = entry.primary_icon_tooltip_text = text;
+			entry.primary_icon_name = icon;
+			entry.primary_icon_activatable = false;
+			entry.secondary_icon_name = "folder-symbolic";
+			entry.secondary_icon_activatable = true;
+			entry.secondary_icon_tooltip_text = _("Select file");
+			entry.margin = 4;
+			entry.activate.connect(() => { set_image_url(false); set_icon_url(false); });
+			entry.focus_out_event.connect(() => { set_image_url(); set_icon_url(); return false; });
+			entry.icon_press.connect((icon, event) => {
+				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
+				{
+					#if GTK_3_22
+					var chooser = new FileChooserNative(_("Select file"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));
+					#else
+					var chooser = new FileChooserDialog(_("Select file"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
+					#endif
+					var filter = new FileFilter();
+					filter.add_mime_type("image/*");
+					chooser.set_filter(filter);
+					if(chooser.run() == ResponseType.ACCEPT)
+					{
+						entry.text = chooser.get_uri();
+						entry.activate();
+					}
+				}
+			});
+			return entry;
+		}
+
 		private void add_image_search_link(string text, string url)
 		{
 			var link = new LinkButton.with_label(url, text);
@@ -406,52 +413,5 @@ namespace GameHub.UI.Dialogs
 		}
 
 		protected delegate void SwitchAction(bool active);
-
-		public class TagRow: ListBoxRow
-		{
-			public Game game;
-			public Tables.Tags.Tag tag;
-
-			public TagRow(Game game, Tables.Tags.Tag tag)
-			{
-				this.game = game;
-				this.tag = tag;
-
-				var ebox = new EventBox();
-				ebox.above_child = true;
-
-				var box = new Box(Orientation.HORIZONTAL, 8);
-				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 6;
-
-				var check = new CheckButton();
-				check.active = game.has_tag(tag);
-
-				var name = new Label(tag.name);
-				name.halign = Align.START;
-				name.xalign = 0;
-				name.hexpand = true;
-
-				var icon = new Image.from_icon_name(tag.icon, IconSize.BUTTON);
-
-				box.add(check);
-				box.add(name);
-				box.add(icon);
-
-				ebox.add_events(EventMask.ALL_EVENTS_MASK);
-				ebox.button_release_event.connect(e => {
-					if(e.button == 1)
-					{
-						game.toggle_tag(tag);
-						check.active = game.has_tag(tag);
-					}
-					return true;
-				});
-
-				ebox.add(box);
-
-				child = ebox;
-			}
-		}
 	}
 }

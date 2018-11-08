@@ -11,6 +11,11 @@
 		<value nick="List" value="1" />
 	</enum>
 
+	<enum id="com.github.tkashkin.gamehub.games-sort-mode">
+		<value nick="Name" value="0" />
+		<value nick="Last launch" value="1" />
+	</enum>
+
 	<schema path="/com/github/tkashkin/gamehub/saved-state/" id="com.github.tkashkin.gamehub.saved-state" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="window-state" enum="com.github.tkashkin.gamehub.window-states">
 			<default>"Normal"</default>
@@ -31,6 +36,9 @@
 		<key name="games-view" enum="com.github.tkashkin.gamehub.games-view">
 			<default>"Grid"</default>
 		</key>
+		<key name="sort-mode" enum="com.github.tkashkin.gamehub.games-sort-mode">
+			<default>"Name"</default>
+		</key>
 	</schema>
 
 	<schema path="/com/github/tkashkin/gamehub/ui/" id="com.github.tkashkin.gamehub.ui" gettext-domain="com.github.tkashkin.gamehub">
@@ -47,6 +55,9 @@
 			<default>false</default>
 		</key>
 		<key name="use-compat" type="b">
+			<default>true</default>
+		</key>
+		<key name="use-imported-tags" type="b">
 			<default>true</default>
 		</key>
 	</schema>
@@ -102,6 +113,12 @@
 		</key>
 		<key name="humble-games" type="s">
 			<default>'~/Games/HumbleBundle'</default>
+		</key>
+		<key name="libretro-core-dir" type="s">
+			<default>'/usr/lib/libretro'</default>
+		</key>
+		<key name="libretro-core-info-dir" type="s">
+			<default>'/usr/share/libretro/info'</default>
 		</key>
 	</schema>
 

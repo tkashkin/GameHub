@@ -29,7 +29,7 @@ namespace GameHub.UI.Widgets
 	{
 		public CompatTool? selected { get; private set; default = null; }
 
-		public Game game { get; construct; }
+		public Runnable runnable { get; construct; }
 		public bool install_mode { get; construct; }
 
 		private Gtk.ListStore model;
@@ -39,9 +39,9 @@ namespace GameHub.UI.Widgets
 
 		private Box actions;
 
-		public CompatToolPicker(Game game, bool install_mode)
+		public CompatToolPicker(Runnable runnable, bool install_mode)
 		{
-			Object(orientation: Orientation.VERTICAL, spacing: 4, game: game, install_mode: install_mode);
+			Object(orientation: Orientation.VERTICAL, spacing: 4, runnable: runnable, install_mode: install_mode);
 		}
 
 		construct
@@ -57,7 +57,7 @@ namespace GameHub.UI.Widgets
 
 			foreach(var tool in CompatTools)
 			{
-				if(tool.installed && ((install_mode && tool.can_install(game)) || (!install_mode && tool.can_run(game))))
+				if(tool.installed && ((install_mode && tool.can_install(runnable)) || (!install_mode && tool.can_run(runnable))))
 				{
 					model.append(out iter);
 					model.set(iter, 0, tool.icon);
@@ -87,6 +87,8 @@ namespace GameHub.UI.Widgets
 			actions = new Box(Orientation.HORIZONTAL, 4);
 
 			combo.changed.connect(() => {
+				if(model_size == 0) return;
+
 				Value v;
 				combo.get_active_iter(out iter);
 				model.get_value(iter, 2, out v);
@@ -96,11 +98,11 @@ namespace GameHub.UI.Widgets
 
 				combo.tooltip_text = selected.executable != null ? selected.executable.get_path() : null;
 
-				if(selected.can_run(game))
+				if(selected.can_run(runnable))
 				{
-					game.compat_tool = selected.id;
-					game.save();
-					game.update_status();
+					runnable.compat_tool = selected.id;
+					runnable.save();
+					runnable.update_status();
 				}
 
 				actions.foreach(w => w.destroy());
@@ -117,13 +119,15 @@ namespace GameHub.UI.Widgets
 			});
 
 			int index = 0;
-			if(game.compat_tool != null && game.compat_tool.length > 0)
+			if(runnable.compat_tool != null && runnable.compat_tool.length > 0)
 			{
 				model.foreach((m, p, i) => {
+					if(model_size == 0) return false;
+
 					Value v;
 					m.get_value(i, 2, out v);
 					var tool = v as CompatTool;
-					if(game.compat_tool == tool.id)
+					if(runnable.compat_tool == tool.id)
 					{
 						return true;
 					}
@@ -131,7 +135,10 @@ namespace GameHub.UI.Widgets
 					return false;
 				});
 			}
-			combo.active = index < model_size ? index : 0;
+			if(model_size > 0)
+			{
+				combo.active = index < model_size ? index : 0;
+			}
 
 			add(tool_box);
 			add(actions);
@@ -144,7 +151,7 @@ namespace GameHub.UI.Widgets
 			var btn = new Button.with_label(action.name);
 			btn.tooltip_text = action.description;
 			btn.hexpand = true;
-			btn.clicked.connect(() => action.invoke(game));
+			btn.clicked.connect(() => action.invoke(runnable));
 			actions.add(btn);
 		}
 	}
