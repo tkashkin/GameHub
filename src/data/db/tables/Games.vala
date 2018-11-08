@@ -159,7 +159,7 @@ namespace GameHub.Data.DB.Tables
 			IMAGE.bind(s, game.image);
 			TAGS.bind(s, tags);
 			EXECUTABLE.bind(s, game.executable_path == null ? null : game.executable_path);
-			INSTALL_PATH.bind(s, game.install_dir == null || !game.install_dir.query_exists() ? null : game.install_dir.get_path());
+			INSTALL_PATH.bind(s, game.install_dir == null ? null : game.install_dir.get_path());
 			PLATFORMS.bind(s, platforms);
 			COMPAT_TOOL.bind(s, game.compat_tool);
 			COMPAT_TOOL_SETTINGS.bind(s, game.compat_tool_settings);
