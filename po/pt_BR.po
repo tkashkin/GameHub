@@ -848,15 +848,15 @@ msgstr "Não instalado"
 
 #: src/data/compat/CustomScript.vala:46
 msgid "Edit script"
-msgstr ""
+msgstr "Editar script"
 
 #: src/data/compat/CustomScript.vala:46
 msgid "Edit custom script"
-msgstr ""
+msgstr "Editar script personalizado"
 
 #: src/data/compat/DOSBox.vala:49
 msgid "Windowed"
-msgstr ""
+msgstr "Windowed"
 
 #: src/data/compat/DOSBox.vala:49
 #, fuzzy
@@ -866,11 +866,11 @@ msgstr "Desativar esync"
 #: src/ui/dialogs/GamePropertiesDialog.vala:130
 #: src/ui/dialogs/GamePropertiesDialog.vala:135
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:265
 msgid "Arguments"
-msgstr ""
+msgstr "Argumentos"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:283
 #, fuzzy
@@ -885,7 +885,7 @@ msgstr "Todos os jogos"
 #: src/ui/views/GamesView/GameContextMenu.vala:93
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:191
 msgid "Remove"
-msgstr ""
+msgstr "Remover"
 
 msgctxt "status_header"
 msgid "Installing"
