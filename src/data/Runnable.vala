@@ -459,15 +459,6 @@ namespace GameHub.Data
 						var enumerator = yield runnable.install_dir.enumerate_children_async("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
 						while((finfo = enumerator.next_file()) != null)
 						{
-							if(windows_installer && tool is Compat.Innoextract)
-							{
-								dirname = "app";
-								if(finfo.get_name() != "app")
-								{
-									FSUtils.rm(runnable.install_dir.get_path(), finfo.get_name(), "-rf");
-								}
-								continue;
-							}
 							if(dirname == null && finfo.get_file_type() == FileType.DIRECTORY)
 							{
 								dirname = finfo.get_name();
