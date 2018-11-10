@@ -24,6 +24,7 @@ src/data/compat/Innoextract.vala
 src/data/compat/Proton.vala
 src/data/compat/Wine.vala
 src/data/compat/DOSBox.vala
+src/data/compat/ScummVM.vala
 src/data/compat/RetroArch.vala
 src/data/compat/CustomEmulator.vala
 src/ui/windows/MainWindow.vala
