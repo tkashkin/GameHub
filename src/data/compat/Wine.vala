@@ -131,10 +131,11 @@ namespace GameHub.Data.Compat
 			yield exec(runnable, runnable.executable, runnable.install_dir);
 		}
 
-		public override async void run_emulator(Emulator emu, Game? runnable)
+		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
 		{
 			if(!can_run(emu)) return;
-			yield exec(emu, emu.executable, emu.install_dir, emu.get_args(runnable));
+			var dir = game != null && launch_in_game_dir ? game.install_dir : emu.install_dir;
+			yield exec(emu, emu.executable, dir, emu.get_args(game));
 		}
 
 		protected virtual async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)

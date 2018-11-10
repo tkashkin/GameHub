@@ -91,7 +91,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 			}
 		}
 
-		public override async void run_emulator(Emulator emu, Game? game)
+		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
 		{
 			var gh_dir = FSUtils.mkdir(emu.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
@@ -101,7 +101,8 @@ GH_GAME_NAME_ESCAPED="${10}"
 				var executable_path = emu.executable != null ? emu.executable.get_path() : "null";
 				var game_executable_path = game != null && game.executable != null ? game.executable.get_path() : "null";
 				string[] cmd = { script.get_path(), executable_path, emu.id, emu.name, game_executable_path, game.id, game.full_id, game.name, game.escaped_name };
-				yield Utils.run_thread(cmd, emu.install_dir.get_path());
+				var dir = game != null && launch_in_game_dir ? game.install_dir : emu.install_dir;
+				yield Utils.run_thread(cmd, dir.get_path());
 			}
 			else
 			{
