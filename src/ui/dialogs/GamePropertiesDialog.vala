@@ -278,6 +278,8 @@ namespace GameHub.UI.Dialogs
 			get_content_area().set_size_request(640, -1);
 
 			delete_event.connect(() => {
+				image_entry.activate();
+				icon_entry.activate();
 				set_image_url(true);
 				set_icon_url(true);
 				game.save();
