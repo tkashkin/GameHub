@@ -176,23 +176,24 @@ namespace GameHub.Data
 			}
 		}
 
-		public async void run_game(Game? game)
+		public async void run_game(Game? game, bool launch_in_game_dir=false)
 		{
 			if(use_compat)
 			{
-				yield run_game_compat(game);
+				yield run_game_compat(game, launch_in_game_dir);
 				return;
 			}
 
 			if(executable.query_exists())
 			{
-				yield Utils.run_thread(get_args(game, executable), executable.get_parent().get_path(), null, true);
+				var dir = game != null && launch_in_game_dir ? game.install_dir : install_dir;
+				yield Utils.run_thread(get_args(game, executable), dir.get_path(), null, true);
 			}
 		}
 
-		public async void run_game_compat(Game? game)
+		public async void run_game_compat(Game? game, bool launch_in_game_dir=false)
 		{
-			new UI.Dialogs.CompatRunDialog(this, false, game);
+			new UI.Dialogs.CompatRunDialog(this, false, game, launch_in_game_dir);
 		}
 
 		public static bool is_equal(Emulator first, Emulator second)

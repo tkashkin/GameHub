@@ -35,6 +35,7 @@ namespace GameHub.UI.Dialogs
 
 		public Runnable game { get; construct; }
 		public Game? emulated_game { get; construct; }
+		public bool launch_in_game_dir { get; construct; }
 
 		private Box content;
 		private Label title_label;
@@ -42,9 +43,9 @@ namespace GameHub.UI.Dialogs
 
 		private CompatToolPicker compat_tool_picker;
 
-		public CompatRunDialog(Runnable game, bool is_opened_from_menu=false, Game? emulated_game=null)
+		public CompatRunDialog(Runnable game, bool is_opened_from_menu=false, Game? emulated_game=null, bool launch_in_game_dir=false)
 		{
-			Object(game: game, emulated_game: emulated_game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
+			Object(game: game, emulated_game: emulated_game, launch_in_game_dir: launch_in_game_dir, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
 		}
 
 		construct
@@ -126,7 +127,7 @@ namespace GameHub.UI.Dialogs
 
 			if(game is Emulator)
 			{
-				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, (obj, res) => {
+				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, launch_in_game_dir, (obj, res) => {
 					compat_tool_picker.selected.run_emulator.end(res);
 					RunnableIsLaunched = false;
 				});
