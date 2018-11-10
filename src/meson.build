@@ -60,6 +60,7 @@ sources = [
 	'data/compat/Proton.vala',
 	'data/compat/Wine.vala',
 	'data/compat/DOSBox.vala',
+	'data/compat/ScummVM.vala',
 	'data/compat/RetroArch.vala',
 	'data/compat/CustomEmulator.vala',
 
