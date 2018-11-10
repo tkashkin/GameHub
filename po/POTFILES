@@ -59,6 +59,7 @@ src/ui/views/GameDetailsView/blocks/GOGDetails.vala
 src/ui/views/GameDetailsView/blocks/SteamDetails.vala
 src/ui/widgets/AutoSizeImage.vala
 src/ui/widgets/ActionButton.vala
+src/ui/widgets/FileChooserEntry.vala
 src/ui/widgets/CompatToolOptions.vala
 src/ui/widgets/CompatToolPicker.vala
 src/ui/widgets/TagRow.vala

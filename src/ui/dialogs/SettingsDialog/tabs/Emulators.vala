@@ -169,8 +169,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			private Granite.Widgets.ModeButton mode;
 
 			private new Entry name;
-			private FileChooserButton emudir;
-			private FileChooserButton executable;
+			private FileChooserEntry emudir;
+			private FileChooserEntry executable;
 			private Label executable_label;
 			private Entry arguments;
 			private Label arguments_label;
@@ -240,10 +240,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				emudir = add_filechooser(_("Directory"), _("Select emulator directory"), FileChooserAction.SELECT_FOLDER, true);
 
 				executable.file_set.connect(() => {
-					emulator.executable = executable.get_file();
-					if(name.text.strip().length == 0)
+					emulator.executable = executable.file;
+					if(name.text.strip().length == 0 && executable.file != null)
 					{
-						name.text = executable.get_file().get_basename();
+						name.text = executable.file.get_basename();
 					}
 					update();
 				});
@@ -252,8 +252,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				{
 					try
 					{
-						emudir.set_file(emulator.install_dir);
-						emudir.file_set();
+						emudir.select_file(emulator.install_dir);
 					}
 					catch(Error e)
 					{
@@ -265,8 +264,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				{
 					try
 					{
-						executable.set_file(emulator.executable);
-						executable.file_set();
+						executable.select_file(emulator.executable);
 					}
 					catch(Error e)
 					{
@@ -308,28 +306,21 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			private void update()
 			{
-				if(mode.selected == 0 && executable.get_file() != null && emudir.get_file() == null)
+				if(mode.selected == 0 && executable.file != null && emudir.file == null)
 				{
-					try
-					{
-						emudir.select_file(executable.get_file().get_parent());
-					}
-					catch(Error e)
-					{
-						warning(e.message);
-					}
+					emudir.select_file(executable.file.get_parent());
 				}
 
 				emulator.name = title;
 				emulator.arguments = arguments.text.strip();
 
-				emulator.install_dir = emudir.get_file();
+				emulator.install_dir = emudir.file;
 
 				executable_label.label = mode.selected == 0 ? _("Executable") : _("Installer");
 				arguments.sensitive = arguments_label.sensitive = mode.selected == 0;
 
-				run_btn.sensitive = emulator.name.length > 0 && executable.get_file() != null && mode.selected == 0 && emudir.get_file() != null;
-				save_btn.sensitive = emulator.name.length > 0 && executable.get_file() != null && ((mode.selected == 0 && emudir.get_file() != null) || mode.selected == 1);
+				run_btn.sensitive = emulator.name.length > 0 && executable.file != null && mode.selected == 0 && emudir.file != null;
+				save_btn.sensitive = emulator.name.length > 0 && executable.file != null && ((mode.selected == 0 && emudir.file != null) || mode.selected == 1);
 
 				emulator.notify_property("use-compat");
 			}
@@ -338,7 +329,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			{
 				update();
 
-				if(mode.selected == 1 && executable.get_file() != null && emudir.get_file() != null)
+				if(mode.selected == 1 && executable.file != null && emudir.file != null)
 				{
 					sensitive = false;
 
@@ -349,14 +340,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 						emulator.install.end(res);
 						sensitive = true;
 						mode.selected = 0;
-						try
-						{
-							executable.select_file(emulator.executable);
-						}
-						catch(Error e)
-						{
-							warning(e.message);
-						}
+						executable.select_file(emulator.executable);
 						emulator.save();
 					});
 
@@ -398,7 +382,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				return entry;
 			}
 
-			private FileChooserButton add_filechooser(string text, string title, FileChooserAction action=FileChooserAction.OPEN, bool required=true, out Label label=null)
+			private FileChooserEntry add_filechooser(string text, string title, FileChooserAction action=FileChooserAction.OPEN, bool required=true, out Label label=null)
 			{
 				label = new Label(text);
 				label.halign = Align.START;
@@ -409,12 +393,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				{
 					label.get_style_context().add_class("category-label");
 				}
-				var button = new FileChooserButton(title, action);
-				button.set_size_request(180, -1);
+				var entry = new FileChooserEntry(title, action, null, null, false, action == FileChooserAction.OPEN);
+				entry.set_size_request(180, -1);
 				attach(label, 0, rows);
-				attach(button, 1, rows);
+				attach(entry, 1, rows);
 				rows++;
-				return button;
+				return entry;
 			}
 
 			private void add_separator()

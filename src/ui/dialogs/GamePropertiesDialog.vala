@@ -40,8 +40,8 @@ namespace GameHub.UI.Dialogs
 		private Entry name_entry;
 		private AutoSizeImage image_view;
 		private AutoSizeImage icon_view;
-		private Entry image_entry;
-		private Entry icon_entry;
+		private FileChooserEntry image_entry;
+		private FileChooserEntry icon_entry;
 
 		private Box properties_box;
 		private Box image_search_links;
@@ -217,11 +217,10 @@ namespace GameHub.UI.Dialogs
 				executable_header.xpad = 8;
 				properties_box.add(executable_header);
 
-				var executable_picker_dialog = game.setup_executable_chooser();
-				var executable_picker = new FileChooserButton.with_dialog(executable_picker_dialog);
+				var executable_picker = new FileChooserEntry(_("Select executable"), FileChooserAction.OPEN, "application-x-executable", _("Executable"), false, true);
 				try
 				{
-					executable_picker.set_file(game.executable);
+					executable_picker.select_file(game.executable);
 				}
 				catch(Error e)
 				{
@@ -231,7 +230,7 @@ namespace GameHub.UI.Dialogs
 				properties_box.add(executable_picker);
 
 				executable_picker.file_set.connect(() => {
-					game.set_chosen_executable(executable_picker_dialog);
+					game.set_chosen_executable(executable_picker.file);
 				});
 
 				var args_entry = new Entry();
@@ -321,8 +320,8 @@ namespace GameHub.UI.Dialogs
 
 		private void set_image_url(bool replace=false)
 		{
-			var url = image_entry.text.strip();
-			if(url.length == 0) url = game.image;
+			var url = image_entry.uri;
+			if(url == null || url.length == 0) url = game.image;
 			if(replace)
 			{
 				game.image = url;
@@ -335,8 +334,8 @@ namespace GameHub.UI.Dialogs
 
 		private void set_icon_url(bool replace=false)
 		{
-			var url = icon_entry.text.strip();
-			if(url.length == 0) url = game.icon;
+			var url = icon_entry.uri;
+			if(url == null || url.length == 0) url = game.icon;
 			if(replace)
 			{
 				game.icon = url;
@@ -347,36 +346,17 @@ namespace GameHub.UI.Dialogs
 			}
 		}
 
-		private Entry add_image_entry(string text, string icon)
+		private FileChooserEntry add_image_entry(string text, string icon)
 		{
-			var entry = new Entry();
-			entry.placeholder_text = entry.primary_icon_tooltip_text = text;
-			entry.primary_icon_name = icon;
-			entry.primary_icon_activatable = false;
-			entry.secondary_icon_name = "folder-symbolic";
-			entry.secondary_icon_activatable = true;
-			entry.secondary_icon_tooltip_text = _("Select file");
+			var entry = new FileChooserEntry(text, FileChooserAction.OPEN, icon, text, true);
 			entry.margin = 4;
-			entry.activate.connect(() => { set_image_url(false); set_icon_url(false); });
-			entry.focus_out_event.connect(() => { set_image_url(); set_icon_url(); return false; });
-			entry.icon_press.connect((icon, event) => {
-				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
-				{
-					#if GTK_3_22
-					var chooser = new FileChooserNative(_("Select file"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));
-					#else
-					var chooser = new FileChooserDialog(_("Select file"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
-					#endif
-					var filter = new FileFilter();
-					filter.add_mime_type("image/*");
-					chooser.set_filter(filter);
-					if(chooser.run() == ResponseType.ACCEPT)
-					{
-						entry.text = chooser.get_uri();
-						entry.activate();
-					}
-				}
-			});
+
+			var filter = new FileFilter();
+			filter.add_mime_type("image/*");
+			entry.chooser.set_filter(filter);
+
+			entry.uri_set.connect(() => { set_image_url(false); set_icon_url(false); });
+
 			return entry;
 		}
 

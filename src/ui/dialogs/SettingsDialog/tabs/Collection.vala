@@ -18,13 +18,15 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Granite;
+
 using GameHub.Utils;
+using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 {
 	public class Collection: SettingsDialogTab
 	{
-		private FileChooserButton collection_root;
+		private FileChooserEntry collection_root;
 
 		private Entry gog_game_dir;
 		private Entry gog_installers;
@@ -45,7 +47,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			var gog = FSUtils.Paths.Collection.GOG.get_instance();
 			var humble = FSUtils.Paths.Collection.Humble.get_instance();
 
-			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update_hints(); }).get_children().last().data as FileChooserButton;
+			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update_hints(); }).get_children().last().data as FileChooserEntry;
 
 			add_separator();
 
