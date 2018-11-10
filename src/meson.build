@@ -104,6 +104,7 @@ sources = [
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
+	'ui/widgets/FileChooserEntry.vala',
 	'ui/widgets/CompatToolOptions.vala',
 	'ui/widgets/CompatToolPicker.vala',
 	'ui/widgets/TagRow.vala',

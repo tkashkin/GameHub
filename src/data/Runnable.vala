@@ -61,26 +61,13 @@ namespace GameHub.Data
 			}
 		}
 
-		public virtual FileChooserDialog setup_executable_chooser()
+		public virtual FileChooser setup_executable_chooser()
 		{
-			var chooser = new FileChooserDialog(_("Select executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN);
-			var filter = new FileFilter();
-
-			filter.add_mime_type("application/x-executable");
-			filter.add_mime_type("application/x-elf");
-			filter.add_mime_type("application/x-sh");
-			filter.add_mime_type("text/x-shellscript");
-
-			filter.add_mime_type("application/x-dosexec");
-			filter.add_mime_type("application/x-ms-dos-executable");
-			filter.add_mime_type("application/dos-exe");
-			filter.add_mime_type("application/exe");
-			filter.add_mime_type("application/msdos-windows");
-			filter.add_mime_type("application/x-exe");
-			filter.add_mime_type("application/x-msdownload");
-			filter.add_mime_type("application/x-winexe");
-
-			chooser.set_filter(filter);
+			#if GTK_3_22
+			var chooser = new FileChooserNative(_("Select executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));
+			#else
+			var chooser = new FileChooserDialog(_("Select executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
+			#endif
 
 			try
 			{
@@ -91,31 +78,32 @@ namespace GameHub.Data
 				warning(e.message);
 			}
 
-			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
-			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
-
-			select_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
-			select_btn.grab_default();
-
 			return chooser;
+		}
+
+		private int run_executable_chooser(FileChooser chooser)
+		{
+			#if GTK_3_22
+			return (chooser as FileChooserNative).run();
+			#else
+			return (chooser as FileChooserDialog).run();
+			#endif
 		}
 
 		public virtual void choose_executable(bool update=true)
 		{
 			var chooser = setup_executable_chooser();
 
-			if(chooser.run() == ResponseType.ACCEPT)
+			if(run_executable_chooser(chooser) == ResponseType.ACCEPT)
 			{
-				set_chosen_executable(chooser, update);
+				set_chosen_executable(chooser.get_file(), update);
 			}
-
-			chooser.destroy();
 		}
 
-		public virtual void set_chosen_executable(FileChooserDialog chooser, bool update=true)
+		public virtual void set_chosen_executable(File? file, bool update=true)
 		{
-			executable = chooser.get_file();
-			if(executable.query_exists())
+			executable = file;
+			if(executable != null && executable.query_exists())
 			{
 				Utils.run({"chmod", "+x", executable.get_path()});
 			}
