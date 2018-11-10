@@ -55,124 +55,108 @@ namespace GameHub.UI.Widgets
 			chooser = new FileChooserDialog(title ?? _("Select file"), GameHub.UI.Windows.MainWindow.instance, action, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
 			#endif
 
-			activate.connect(() => update(false));
-			focus_out_event.connect(() => { update(false); return false; });
-			chooser.selection_changed.connect(() => update(true));
+			activate.connect(() => {
+				select_file_path(text);
+			});
+			focus_out_event.connect(() => {
+				select_file_path(text);
+				return false;
+			});
 
 			icon_press.connect((icon, event) => {
 				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
 				{
 					if(run_chooser() == ResponseType.ACCEPT)
 					{
-						update(true);
+						select_file(chooser.get_file());
 					}
 				}
 			});
 		}
 
-		private void update(bool from_chooser)
+		public void select_file_path(string? path_or_uri)
 		{
-			try
+			if(path_or_uri == null || path_or_uri.strip().length == 0)
 			{
-				if(!from_chooser)
+				text = "";
+				chooser.unselect_all();
+				file = null;
+				uri = null;
+				file_set();
+				uri_set();
+				return;
+			}
+
+			var path = path_or_uri.strip();
+
+			if(allow_url && (path.has_prefix("file://") || path.has_prefix("https://") || path.has_prefix("http://") || path.has_prefix("ftp://")))
+			{
+				uri = path;
+				if(text.has_prefix("file://"))
 				{
-					text = text.strip();
-					scroll_to_end();
-					if(allow_url)
-					{
-						if(text.has_prefix("file://"))
-						{
-							chooser.select_uri(text);
-						}
-						uri = text;
-						uri_set();
-					}
-					else if(text.has_prefix("/"))
-					{
-						chooser.select_filename(text);
-						file = chooser.get_file();
-						file_set();
-					}
-					else if(allow_executable && text.length > 0)
-					{
-						var executable = Utils.find_executable(text);
-						if(executable != null && executable.query_exists())
-						{
-							chooser.select_file(executable);
-						}
-						else
-						{
-							chooser.select_filename("/usr/bin/" + text);
-						}
-						file = chooser.get_file();
-						file_set();
-					}
+					file = File.new_for_uri(uri);
+				}
+			}
+			else if(path.has_prefix("/"))
+			{
+				file = File.new_for_path(path);
+				uri = file.get_uri();
+			}
+			else if(allow_executable && path.length > 0)
+			{
+				var executable = Utils.find_executable(path);
+				if(executable != null && executable.query_exists())
+				{
+					file = executable;
 				}
 				else
 				{
-					var f = chooser.get_file();
-
-					if(f != null)
-					{
-						text = allow_url ? f.get_uri() : f.get_path();
-						scroll_to_end();
-					}
-
-					file = f;
-					file_set();
-
-					if(allow_url && f != null)
-					{
-						uri = f.get_uri();
-						uri_set();
-					}
+					file = File.new_for_path("/usr/bin/" + text);
 				}
+				uri = file.get_uri();
 			}
-			catch(Error e)
-			{
-				warning("[FileChooserEntry.update] %s", e.message);
-			}
-		}
 
-		public void select_file(File? f)
-		{
-			try
+			text = "";
+
+			if(file != null)
 			{
-				if(f != null)
+				if(file.query_exists())
 				{
-					chooser.select_file(f);
-					text = allow_url ? f.get_uri() : f.get_path();
-					scroll_to_end();
+					try
+					{
+						chooser.select_file(file);
+					}
+					catch(Error e)
+					{
+						warning("[FileChooserEntry.select_file_path] %s", e.message);
+					}
 				}
 				else
 				{
 					chooser.unselect_all();
 				}
-			}
-			catch(Error e)
-			{
-				warning("[FileChooserEntry.select_file] %s", e.message);
+				text = file.get_path();
 			}
 
-			update(true);
-			file = f;
-			file_set();
-			if(allow_url && f != null)
+			if(allow_url)
 			{
-				uri = f.get_uri();
-				uri_set();
+				text = uri ?? "";
 			}
+
+			scroll_to_end();
+
+			file_set();
+			uri_set();
+		}
+
+		public void select_file(File? f)
+		{
+			select_file_path(f != null ? f.get_path() : null);
 		}
 
 		public void reset()
 		{
-			chooser.unselect_all();
-			text = "";
-			update(false);
-			file = null;
-			uri = null;
-			file_set();
-			uri_set();
+			select_file_path(null);
 		}
 
 		private int run_chooser()
