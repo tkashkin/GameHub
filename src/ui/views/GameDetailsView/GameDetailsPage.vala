@@ -286,7 +286,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			blocks.foreach(b => blocks.remove(b));
 
-			GameDetailsBlock[] blk = { new Blocks.Achievements(game, is_dialog), new Blocks.GOGDetails(game, this, is_dialog), new Blocks.SteamDetails(game, is_dialog), new Blocks.Description(game, is_dialog) };
+			GameDetailsBlock[] blk = { new Blocks.Playtime(game, is_dialog), new Blocks.Achievements(game, is_dialog), new Blocks.GOGDetails(game, this, is_dialog), new Blocks.SteamDetails(game, is_dialog), new Blocks.Description(game, is_dialog) };
 			foreach(var b in blk)
 			{
 				if(b.supports_game)

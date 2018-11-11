@@ -246,7 +246,14 @@ namespace GameHub.Data.Sources.Steam
 							Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
 						}
 					}
-					if(is_new_game) games_count++;
+					if(is_new_game)
+					{
+						games_count++;
+					}
+					else if(g != null && g.get_node_type() == Json.NodeType.OBJECT)
+					{
+						_games.get(_games.index_of(game)).playtime_source = g.get_object().get_int_member("playtime_forever");
+					}
 				}
 			}
 		}

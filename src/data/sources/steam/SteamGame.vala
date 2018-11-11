@@ -63,6 +63,8 @@ namespace GameHub.Data.Sources.Steam
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
 			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
+			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
+			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -106,11 +108,18 @@ namespace GameHub.Data.Sources.Steam
 				image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
 			}
 
-			if((icon == null || icon == "") && (info != null && info.length > 0))
+			if((info != null && info.length > 0))
 			{
 				var i = Parser.parse_json(info).get_object();
-				var icon_hash = i.get_string_member("img_icon_url");
-				icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
+				if((icon == null || icon == ""))
+				{
+					var icon_hash = i.get_string_member("img_icon_url");
+					icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
+				}
+				if(playtime_source == 0)
+				{
+					playtime_source = i.get_int_member("playtime_forever");
+				}
 			}
 
 			File? dir;
@@ -183,7 +192,7 @@ namespace GameHub.Data.Sources.Steam
 
 		public override void update_status()
 		{
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED, this);
 			if(status.state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
@@ -203,7 +212,7 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async void run()
 		{
-			last_launch = get_real_time() / 1000;
+			last_launch = get_real_time() / 1000000;
 			save();
 			Utils.open_uri(@"steam://rungameid/$(id)");
 			update_status();

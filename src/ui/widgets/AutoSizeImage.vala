@@ -58,6 +58,8 @@ namespace GameHub.UI.Widgets
 
 		public override bool draw(Cairo.Context ctx)
 		{
+			ctx.scale(1.0 / scale_factor, 1.0 / scale_factor);
+
 			Allocation rect;
 			get_allocation(out rect);
 
@@ -77,6 +79,9 @@ namespace GameHub.UI.Widgets
 					break;
 			}
 
+			new_width  *= scale_factor;
+			new_height *= scale_factor;
+
 			if(src != null)
 			{
 				Pixbuf pixbuf = src;
@@ -85,8 +90,7 @@ namespace GameHub.UI.Widgets
 				{
 					pixbuf = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
 				}
-
-				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, new_width, new_height, corner_radius);
+				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, new_width, new_height, corner_radius * scale_factor);
 				cairo_set_source_pixbuf(ctx, pixbuf, (new_width - pixbuf.width) / 2, (new_height - pixbuf.height) / 2);
 				ctx.clip();
 				ctx.paint();
@@ -95,11 +99,11 @@ namespace GameHub.UI.Widgets
 			switch(constraint)
 			{
 				case Orientation.HORIZONTAL:
-					set_size_request(cmin, new_height);
+					set_size_request(cmin, new_height / scale_factor);
 					break;
 
 				case Orientation.VERTICAL:
-					set_size_request(new_width, cmin);
+					set_size_request(new_width / scale_factor, cmin);
 					break;
 			}
 

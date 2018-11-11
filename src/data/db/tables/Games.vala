@@ -47,6 +47,8 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field COMPAT_TOOL_SETTINGS;
 		public static Table.Field ARGUMENTS;
 		public static Table.Field LAST_LAUNCH;
+		public static Table.Field PLAYTIME_SOURCE;
+		public static Table.Field PLAYTIME_TRACKED;
 
 		public Games()
 		{
@@ -67,6 +69,8 @@ namespace GameHub.Data.DB.Tables
 			COMPAT_TOOL_SETTINGS = f(12);
 			ARGUMENTS            = f(13);
 			LAST_LAUNCH          = f(14);
+			PLAYTIME_SOURCE      = f(15);
+			PLAYTIME_TRACKED     = f(16);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -100,6 +104,11 @@ namespace GameHub.Data.DB.Tables
 					case 2:
 						db.exec("ALTER TABLE `games` ADD `last_launch` integer not null default 0");
 						break;
+
+					case 4:
+						db.exec("ALTER TABLE `games` ADD `playtime_source` integer not null default 0");
+						db.exec("ALTER TABLE `games` ADD `playtime_tracked` integer not null default 0");
+						break;
 				}
 			}
 		}
@@ -127,8 +136,10 @@ namespace GameHub.Data.DB.Tables
 					`compat_tool`,
 					`compat_tool_settings`,
 					`arguments`,
-					`last_launch`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`last_launch`,
+					`playtime_source`,
+					`playtime_tracked`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -165,6 +176,8 @@ namespace GameHub.Data.DB.Tables
 			COMPAT_TOOL_SETTINGS.bind(s, game.compat_tool_settings);
 			ARGUMENTS.bind(s, game.arguments);
 			LAST_LAUNCH.bind_int64(s, game.last_launch);
+			PLAYTIME_SOURCE.bind_int64(s, game.playtime_source);
+			PLAYTIME_TRACKED.bind_int64(s, game.playtime_tracked);
 
 			res = s.step();
 

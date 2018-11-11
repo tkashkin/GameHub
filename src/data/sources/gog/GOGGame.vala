@@ -93,6 +93,8 @@ namespace GameHub.Data.Sources.GOG
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
 			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
+			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
+			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -331,10 +333,13 @@ namespace GameHub.Data.Sources.GOG
 		{
 			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
 
+			var gameinfo = get_file("gameinfo", false);
+			var goggame = get_file(@"goggame-$(id).info", false);
+
 			var files = new ArrayList<File>();
 			files.add(executable);
-			files.add(FSUtils.file(install_dir.get_path(), "gameinfo"));
-			files.add(FSUtils.file(install_dir.get_path(), @"goggame-$(id).info"));
+			files.add(gameinfo);
+			files.add(goggame);
 			var state = Game.State.UNINSTALLED;
 			foreach(var file in files)
 			{
@@ -344,7 +349,7 @@ namespace GameHub.Data.Sources.GOG
 					break;
 				}
 			}
-			status = new Game.Status(state);
+			status = new Game.Status(state, this);
 			if(state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
@@ -354,6 +359,24 @@ namespace GameHub.Data.Sources.GOG
 			{
 				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
+			}
+
+			if(gameinfo != null && gameinfo.query_exists())
+			{
+				try
+				{
+					string info;
+					FileUtils.get_contents(gameinfo.get_path(), out info);
+					var lines = info.split("\n");
+					if(lines.length >= 2)
+					{
+						version = lines[1];
+					}
+				}
+				catch(Error e)
+				{
+					warning("[GOGGame.update_status] Error while reading gameinfo: %s", e.message);
+				}
 			}
 
 			string g = name;
@@ -691,7 +714,7 @@ namespace GameHub.Data.Sources.GOG
 						break;
 					}
 				}
-				status = new Game.Status(state);
+				status = new Game.Status(state, this);
 				if(state == Game.State.INSTALLED)
 				{
 					remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);

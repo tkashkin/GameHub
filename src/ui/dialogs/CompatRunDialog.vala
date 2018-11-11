@@ -134,11 +134,13 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				(game as Game).last_launch = get_real_time() / 1000;
+				(game as Game).last_launch = get_real_time() / 1000000;
 				game.save();
 				compat_tool_picker.selected.run.begin(game, (obj, res) => {
 					compat_tool_picker.selected.run.end(res);
 					RunnableIsLaunched = false;
+					(game as Game).playtime_tracked += ((get_real_time() / 1000000) - (game as Game).last_launch) / 60;
+					game.save();
 				});
 			}
 

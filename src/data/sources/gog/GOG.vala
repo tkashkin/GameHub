@@ -184,6 +184,55 @@ namespace GameHub.Data.Sources.GOG
 			return user_token != null;
 		}
 
+		private HashMap<string, PlayerStatItem> load_player_stats()
+		{
+			var player_stats = new HashMap<string, PlayerStatItem>();
+
+			if(user_name == null)
+			{
+				var userdata_node = Parser.parse_remote_json_file(@"https://embed.gog.com/userData.json", "GET", user_token);
+				var userdata = userdata_node != null && userdata_node.get_node_type() == Json.NodeType.OBJECT ? userdata_node.get_object() : null;
+				user_name = userdata != null && userdata.has_member("username") ? userdata.get_string_member("username") : null;
+			}
+
+			if(user_name == null) return player_stats;
+
+			var page = 1;
+			var pages = 1;
+
+			while(page <= pages)
+			{
+				var url = @"https://embed.gog.com/u/$(user_name)/games/stats?sort=total_playtime&order=desc&page=$(page)";
+				var root_node = Parser.parse_remote_json_file(url, "GET", user_token);
+				var root = root_node != null && root_node.get_node_type() == Json.NodeType.OBJECT ? root_node.get_object() : null;
+
+				if(root == null) break;
+
+				page = (int) root.get_int_member("page");
+				pages = (int) root.get_int_member("pages");
+
+				debug("[GOG] Loading player stats: page %d of %d", page, pages);
+
+				var items = root.get_object_member("_embedded").get_array_member("items");
+
+				foreach(var i in items.get_elements())
+				{
+					var game = Parser.json_object(i, {"game"});
+					var stats = Parser.json_object(i, {"stats", user_id});
+					if(game == null) continue;
+					var id = game.get_string_member("id");
+					var image = game.get_string_member("image");
+					var playtime = stats != null ? stats.get_int_member("playtime") : 0;
+					var last_launch = stats != null ? new DateTime.from_iso8601(stats.get_string_member("lastSession"), new TimeZone.utc()).to_unix() : 0;
+					player_stats.set(id, new PlayerStatItem(id, playtime, last_launch, image));
+				}
+
+				page++;
+			}
+
+			return player_stats;
+		}
+
 		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
 
 		public override ArrayList<Game> games { get { return _games; } }
@@ -198,6 +247,8 @@ namespace GameHub.Data.Sources.GOG
 			Utils.thread("GOGLoading", () => {
 				_games.clear();
 
+				var stats = load_player_stats();
+
 				var cached = Tables.Games.get_all(this);
 				games_count = 0;
 				if(cached.size > 0)
@@ -208,6 +259,13 @@ namespace GameHub.Data.Sources.GOG
 						{
 							//g.update_game_info.begin();
 							_games.add(g);
+							if(stats.has_key(g.id))
+							{
+								var s = stats.get(g.id);
+								//g.image = s.image;
+								g.last_launch = int64.max(g.last_launch, s.last_launch);
+								g.playtime_source = s.playtime;
+							}
 							if(game_loaded != null)
 							{
 								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
@@ -263,6 +321,13 @@ namespace GameHub.Data.Sources.GOG
 						if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
 						{
 							_games.add(game);
+							if(stats.has_key(game.id))
+							{
+								var s = stats.get(game.id);
+								//game.image = s.image;
+								game.last_launch = int64.max(game.last_launch, s.last_launch);
+								game.playtime_source = s.playtime;
+							}
 							if(game_loaded != null)
 							{
 								Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
@@ -280,6 +345,22 @@ namespace GameHub.Data.Sources.GOG
 			yield;
 
 			return _games;
+		}
+
+		private class PlayerStatItem
+		{
+			public string id;
+			public int64  playtime;
+			public int64  last_launch;
+			public string image;
+
+			public PlayerStatItem(string id, int64 playtime, int64 last_launch, string image)
+			{
+				this.id = id;
+				this.playtime = playtime;
+				this.last_launch = last_launch;
+				this.image = image;
+			}
 		}
 	}
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-11 06:14+0300\n"
+"POT-Creation-Date: 2018-11-12 02:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,42 +46,42 @@ msgstr ""
 msgid "Part %u of %u: "
 msgstr ""
 
-#: src/data/Game.vala:408
-msgctxt "status"
-msgid "Installed"
-msgstr ""
-
-#: src/data/Game.vala:409
-msgctxt "status"
-msgid "Installing"
-msgstr ""
-
-#: src/data/Game.vala:410
-msgctxt "status"
-msgid "Download started"
-msgstr ""
-
-#: src/data/Game.vala:412
-msgctxt "status"
-msgid "Not installed"
-msgstr ""
-
 #: src/data/Game.vala:422
-msgctxt "status_header"
+msgctxt "status"
 msgid "Installed"
 msgstr ""
 
 #: src/data/Game.vala:423
-msgctxt "status_header"
+msgctxt "status"
 msgid "Installing"
 msgstr ""
 
 #: src/data/Game.vala:424
+msgctxt "status"
+msgid "Download started"
+msgstr ""
+
+#: src/data/Game.vala:426
+msgctxt "status"
+msgid "Not installed"
+msgstr ""
+
+#: src/data/Game.vala:436
+msgctxt "status_header"
+msgid "Installed"
+msgstr ""
+
+#: src/data/Game.vala:437
+msgctxt "status_header"
+msgid "Installing"
+msgstr ""
+
+#: src/data/Game.vala:438
 msgctxt "status_header"
 msgid "Downloading"
 msgstr ""
 
-#: src/data/Game.vala:426
+#: src/data/Game.vala:440
 msgctxt "status_header"
 msgid "Not installed"
 msgstr ""
@@ -787,6 +787,31 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:108
 #, c-format
 msgid "Global percentage: %g%%"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:47
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:61
+msgid "Playtime"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:53
+msgid "Playtime (tracked)"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:70
+msgid "Last launch"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:82
+#, c-format
+msgctxt "time"
+msgid "%dh"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:82
+#, c-format
+msgctxt "time"
+msgid "%dm"
 msgstr ""
 
 #: src/ui/views/GameDetailsView/blocks/Description.vala:49
