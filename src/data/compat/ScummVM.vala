@@ -43,35 +43,43 @@ namespace GameHub.Data.Compat
 			installed = executable != null && executable.query_exists();
 		}
 
-		private bool scummvm_detect(File? dir)
+		private string scummvm_detect(File? dir)
 		{
 			if(dir != null && dir.query_exists())
 			{
-				var output = Utils.run({ executable.get_path(), "--detect" }, dir.get_path(), null, false, false);
-				return !(SCUMMVM_NO_GAMES_WARNING in output);
+				var output = Utils.run({ executable.get_path(), "--recursive", "--detect" }, dir.get_path(), null, false, false);
+                                if (SCUMMVM_NO_GAMES_WARNING in output)
+                                    return "";
+
+                                string detected = output.split("\n")[2];
+                                string[] words = detected.split(" ");
+
+	                        foreach (unowned string str in words) {
+                                    if (str != "" && str[0] == '/')
+		                        return str;
+	                        }
 			}
-			return false;
+			return "";
 		}
 
 		public override bool can_run(Runnable runnable)
 		{
 			return installed && runnable is Game && runnable.install_dir != null
-				&& (scummvm_detect(runnable.install_dir) || scummvm_detect(runnable.install_dir.get_child("data")));
+				&& (scummvm_detect(runnable.install_dir) != "" 
+                                ||  scummvm_detect(runnable.install_dir.get_child("data")) != "" );
 		}
 
 		public override async void run(Runnable runnable)
 		{
 			if(!can_run(runnable)) return;
 
-			var dir = runnable.install_dir;
 			var data_dir = runnable.install_dir.get_child("data");
 
-			if(!scummvm_detect(dir) && scummvm_detect(data_dir))
-			{
-				dir = data_dir;
-			}
+                        var dir = scummvm_detect(runnable.install_dir); 
+                        if (dir == "")
+                            dir = scummvm_detect(data_dir);
 
-			yield Utils.run_thread({ executable.get_path(), "--auto-detect" }, dir.get_path());
+			yield Utils.run_thread({ executable.get_path(), "--auto-detect" }, dir);
 		}
 	}
 }
