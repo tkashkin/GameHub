@@ -24,7 +24,14 @@ namespace GameHub.Data.Sources.Steam
 {
 	public class Steam: GameSource
 	{
-		private string api_key;
+		public static Steam instance;
+
+		public Steam()
+		{
+			instance = this;
+		}
+
+		public string api_key;
 
 		public override string id { get { return "steam"; } }
 		public override string name { get { return "Steam"; } }

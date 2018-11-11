@@ -30,6 +30,8 @@ namespace GameHub.Data.Sources.GOG
 
 		private const string[] GAMES_BLACKLIST = {"1424856371" /* Hotline Miami 2: Wrong Number - Digital Comics */};
 
+		public static GOG instance;
+
 		public override string id { get { return "gog"; } }
 		public override string name { get { return "GOG"; } }
 		public override string icon { get { return "source-gog-symbolic"; } }
@@ -52,6 +54,8 @@ namespace GameHub.Data.Sources.GOG
 
 		public GOG()
 		{
+			instance = this;
+
 			settings = Settings.Auth.GOG.get_instance();
 			var access_token = settings.access_token;
 			var refresh_token = settings.refresh_token;

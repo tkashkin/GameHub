@@ -347,6 +347,9 @@ namespace GameHub.Data
 			yield fs_overlay.umount();
 		}
 
+		public ArrayList<Achievement>? achievements { get; protected set; default = null; }
+		public virtual async ArrayList<Achievement>? load_achievements() { return null; }
+
 		public static bool is_equal(Game first, Game second)
 		{
 			return first == second || (first.source == second.source && first.id == second.id);
@@ -428,6 +431,20 @@ namespace GameHub.Data
 		public enum State
 		{
 			UNINSTALLED, INSTALLED, DOWNLOADING, INSTALLING;
+		}
+
+		public abstract class Achievement
+		{
+			public string    id                { get; protected set; }
+			public string    name              { get; protected set; }
+			public string    description       { get; protected set; }
+			public bool      unlocked          { get; protected set; default = false; }
+			public DateTime? unlock_date       { get; protected set; }
+			public string?   unlock_time       { get; protected set; }
+			public float     global_percentage { get; protected set; default = 0; }
+			public string?   image_locked      { get; protected set; }
+			public string?   image_unlocked    { get; protected set; }
+			public string?   image             { get { return unlocked ? image_unlocked : image_locked; } }
 		}
 	}
 }

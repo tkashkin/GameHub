@@ -39,6 +39,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			if(!supports_game) return;
 
+			add(new Separator(Orientation.HORIZONTAL));
+
 			var root = Parser.parse_json(game.info_detailed).get_object();
 			var app = root.has_member(game.id) ? root.get_object_member(game.id) : null;
 			var data = app != null && app.has_member("data") ? app.get_object_member("data") : null;
