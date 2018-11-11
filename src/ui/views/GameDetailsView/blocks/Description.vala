@@ -44,6 +44,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			if(!supports_game) return;
 
+			add(new Separator(Orientation.HORIZONTAL));
+
 			description_header = new Granite.HeaderLabel(_("Description"));
 			description_header.margin_start = description_header.margin_end = 7;
 			description_header.get_style_context().add_class("description-header");

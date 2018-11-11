@@ -55,6 +55,7 @@ src/ui/views/GamesView/GameContextMenu.vala
 src/ui/views/GameDetailsView/GameDetailsView.vala
 src/ui/views/GameDetailsView/GameDetailsPage.vala
 src/ui/views/GameDetailsView/GameDetailsBlock.vala
+src/ui/views/GameDetailsView/blocks/Achievements.vala
 src/ui/views/GameDetailsView/blocks/Description.vala
 src/ui/views/GameDetailsView/blocks/GOGDetails.vala
 src/ui/views/GameDetailsView/blocks/SteamDetails.vala

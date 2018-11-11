@@ -30,6 +30,8 @@ namespace GameHub.UI.Widgets
 		private float ratio = 1;
 		private Orientation constraint = Orientation.HORIZONTAL;
 
+		public int corner_radius = 4;
+
 		public void set_constraint(int min, int max, float ratio = 1, Orientation orientation = Orientation.HORIZONTAL)
 		{
 			this.constraint = orientation;
@@ -84,7 +86,7 @@ namespace GameHub.UI.Widgets
 					pixbuf = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
 				}
 
-				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, new_width, new_height, 4);
+				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, new_width, new_height, corner_radius);
 				cairo_set_source_pixbuf(ctx, pixbuf, (new_width - pixbuf.width) / 2, (new_height - pixbuf.height) / 2);
 				ctx.clip();
 				ctx.paint();

@@ -43,6 +43,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			if(!supports_game) return;
 
+			add(new Separator(Orientation.HORIZONTAL));
+
 			var gog_game = game as GOGGame;
 
 			var root = Parser.parse_json(game.info_detailed);

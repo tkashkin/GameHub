@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Gee;
+
 using GameHub.Data.DB;
 using GameHub.Utils;
 
@@ -218,7 +220,136 @@ namespace GameHub.Data.Sources.Steam
 			update_status();
 		}
 
+		private bool loading_achievements = false;
+		public override async ArrayList<Game.Achievement>? load_achievements()
+		{
+			if(achievements != null || loading_achievements)
+			{
+				return achievements;
+			}
+
+			loading_achievements = true;
+
+			var lang = Utils.get_language_name().down();
+			lang = (lang != null && lang.length > 0 ? "&l=" + lang : "");
+
+			var schema_url = @"https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=$(Steam.instance.api_key)&format=json&appid=$(id)$(lang)";
+			var achievements_url = @"https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=$(Steam.instance.api_key)&steamid=$(Steam.instance.user_id)&format=json&appid=$(id)$(lang)";
+			var global_percentages_url = @"https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v2/?key=$(Steam.instance.api_key)&format=json&gameid=$(id)";
+
+			var schema_root = (yield Parser.parse_remote_json_file_async(schema_url));
+			var achievements_root = (yield Parser.parse_remote_json_file_async(achievements_url));
+			var global_percentages_root = (yield Parser.parse_remote_json_file_async(global_percentages_url));
+
+			var schema_achievements_obj = Parser.json_object(schema_root, {"game", "availableGameStats"});
+			if(schema_achievements_obj == null || !schema_achievements_obj.has_member("achievements"))
+			{
+				loading_achievements = false;
+				return null;
+			}
+			var schema_achievements = schema_achievements_obj.get_array_member("achievements");
+
+			var achievements_obj = Parser.json_object(achievements_root, {"playerstats"});
+			if(achievements_obj == null || !achievements_obj.has_member("achievements"))
+			{
+				loading_achievements = false;
+				return null;
+			}
+			var player_achievements = achievements_obj.get_array_member("achievements");
+
+			var global_percentages_obj = Parser.json_object(global_percentages_root, {"achievementpercentages"});
+			if(global_percentages_obj == null || !global_percentages_obj.has_member("achievements"))
+			{
+				loading_achievements = false;
+				return null;
+			}
+			var global_percentages = global_percentages_obj.get_array_member("achievements");
+
+			var _achievements = new ArrayList<Game.Achievement>();
+
+			foreach(var s_achievement_node in schema_achievements.get_elements())
+			{
+				var s_achievement = s_achievement_node != null && s_achievement_node.get_node_type() == Json.NodeType.OBJECT
+					? s_achievement_node.get_object() : null;
+
+				if(s_achievement == null || !s_achievement.has_member("name")) continue;
+
+				var a_id                  = s_achievement.get_string_member("name");
+				var a_name                = s_achievement.has_member("displayName") ? s_achievement.get_string_member("displayName") : a_id;
+				var a_desc                = s_achievement.has_member("description") ? s_achievement.get_string_member("description") : "";
+				var a_image_unlocked      = s_achievement.has_member("icon") ? s_achievement.get_string_member("icon") : null;
+				var a_image_locked        = s_achievement.has_member("icongray") ? s_achievement.get_string_member("icongray") : null;
+				bool a_unlocked           = false;
+				int64 a_unlock_time       = 0;
+				float a_global_percentage = 0;
+
+				foreach(var p_achievement_node in player_achievements.get_elements())
+				{
+					var p_achievement = p_achievement_node != null && p_achievement_node.get_node_type() == Json.NodeType.OBJECT
+						? p_achievement_node.get_object() : null;
+
+					if(p_achievement == null || !p_achievement.has_member("apiname")
+						|| p_achievement.get_string_member("apiname") != a_id) continue;
+
+					a_unlocked = p_achievement.has_member("achieved") && p_achievement.get_int_member("achieved") > 0;
+					a_unlock_time = p_achievement.has_member("unlocktime") ? p_achievement.get_int_member("unlocktime") : 0;
+				}
+
+				foreach(var gp_achievement_node in global_percentages.get_elements())
+				{
+					var gp_achievement = gp_achievement_node != null && gp_achievement_node.get_node_type() == Json.NodeType.OBJECT
+						? gp_achievement_node.get_object() : null;
+
+					if(gp_achievement == null || !gp_achievement.has_member("name")
+						|| gp_achievement.get_string_member("name") != a_id) continue;
+
+					a_global_percentage = (float) (gp_achievement.has_member("percent") ? gp_achievement.get_double_member("percent") : 0);
+				}
+
+				_achievements.add(new Achievement(a_id, a_name, a_desc, a_image_locked, a_image_unlocked,
+				                                  a_unlocked, a_unlock_time, a_global_percentage));
+			}
+
+			_achievements.sort((first, second) => {
+				var a1 = first as Achievement;
+				var a2 = second as Achievement;
+
+				if(a1.unlock_timestamp > 0 || a2.unlock_timestamp > 0)
+				{
+					return (int) (a2.unlock_timestamp - a1.unlock_timestamp);
+				}
+
+				if(a1.global_percentage < a2.global_percentage) return 1;
+				if(a1.global_percentage > a2.global_percentage) return -1;
+				return 0;
+			});
+
+			achievements = _achievements;
+			loading_achievements = false;
+			return achievements;
+		}
+
 		public override void import(bool update=true){}
 		public override void choose_executable(bool update=true){}
+
+		public class Achievement: Game.Achievement
+		{
+			public int64 unlock_timestamp;
+
+			public Achievement(string id, string name, string desc, string? image_locked, string? image_unlocked,
+			                   bool unlocked, int64 unlock_time, float global_percentage)
+			{
+				this.id = id;
+				this.name = name;
+				this.description = desc;
+				this.image_locked = image_locked;
+				this.image_unlocked = image_unlocked;
+				this.unlocked = unlocked;
+				this.global_percentage = global_percentage;
+				this.unlock_timestamp = unlock_time;
+				this.unlock_date = new DateTime.from_unix_utc(unlock_time);
+				this.unlock_time = Granite.DateTime.get_relative_datetime(this.unlock_date);
+			}
+		}
 	}
 }

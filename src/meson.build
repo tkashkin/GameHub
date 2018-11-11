@@ -99,6 +99,7 @@ sources = [
 	'ui/views/GameDetailsView/GameDetailsPage.vala',
 
 	'ui/views/GameDetailsView/GameDetailsBlock.vala',
+	'ui/views/GameDetailsView/blocks/Achievements.vala',
 	'ui/views/GameDetailsView/blocks/Description.vala',
 	'ui/views/GameDetailsView/blocks/GOGDetails.vala',
 	'ui/views/GameDetailsView/blocks/SteamDetails.vala',
