@@ -38,6 +38,8 @@ namespace GameHub.Data
 
 		public string full_id { owned get { return source.id + ":" + id; } }
 
+		public string? version { get; protected set; }
+
 		public ArrayList<Tables.Tags.Tag> tags { get; protected set; default = new ArrayList<Tables.Tags.Tag>(Tables.Tags.Tag.is_equal); }
 		public bool has_tag(Tables.Tags.Tag tag)
 		{
@@ -127,9 +129,11 @@ namespace GameHub.Data
 					}
 				}
 
-				last_launch = get_real_time() / 1000;
+				last_launch = get_real_time() / 1000000;
 				save();
 				yield Utils.run_thread(cmd, executable.get_parent().get_path(), null, true);
+				playtime_tracked += ((get_real_time() / 1000000) - last_launch) / 60;
+				save();
 
 				RunnableIsLaunched = false;
 			}
@@ -137,7 +141,7 @@ namespace GameHub.Data
 
 		public virtual async void update_game_info(){}
 
-		protected Game.Status _status = new Game.Status();
+		protected Game.Status _status = new Game.Status(Game.State.UNINSTALLED, null, null);
 		public signal void status_change(Game.Status status);
 		public signal void tags_update();
 
@@ -155,16 +159,43 @@ namespace GameHub.Data
 			}
 		}
 
+		public int64 playtime_source  { get; set; default = 0; }
+		public int64 playtime_tracked { get; set; default = 0; }
+
 		public ArrayList<Overlay> overlays = new ArrayList<Overlay>();
 		private FSOverlay? fs_overlay;
 		private string? fs_overlay_last_options;
 
-		private File? get_executable_from(File dir)
+		public File? get_file(string? p, bool from_all_overlays=true)
 		{
-			if(executable_path == null || executable_path.length == 0) return null;
-			var variables = new HashMap<string, string>();
-			variables.set("game_dir", dir.get_path());
-			return FSUtils.file(executable_path, null, variables);
+			if(p == null || p.length == 0 || install_dir == null) return null;
+			var path = p;
+			if(!path.has_prefix("$game_dir/") && !path.has_prefix("/"))
+			{
+				path = "$game_dir/" + path;
+			}
+			File[] dirs = { install_dir };
+			if(overlays_enabled)
+			{
+				dirs = { install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged") };
+				if(from_all_overlays)
+				{
+					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE);
+				}
+				dirs += install_dir;
+				mount_overlays();
+			}
+			foreach(var dir in dirs)
+			{
+				var variables = new HashMap<string, string>();
+				variables.set("game_dir", dir.get_path());
+				var file = FSUtils.file(path, null, variables);
+				if(file != null && file.query_exists())
+				{
+					return file;
+				}
+			}
+			return null;
 		}
 
 		public string? executable_path;
@@ -173,25 +204,7 @@ namespace GameHub.Data
 			owned get
 			{
 				if(executable_path == null || executable_path.length == 0 || install_dir == null) return null;
-				File[] dirs = { install_dir };
-				if(overlays_enabled)
-				{
-					dirs = {
-						install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged"),
-						install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE),
-						install_dir
-					};
-					mount_overlays();
-				}
-				foreach(var dir in dirs)
-				{
-					var file = get_executable_from(dir);
-					if(file != null && file.query_exists())
-					{
-						return file;
-					}
-				}
-				return null;
+				return get_file(executable_path);
 			}
 			set
 			{
@@ -390,12 +403,13 @@ namespace GameHub.Data
 		public class Status
 		{
 			public Game.State state;
-
+			public Game? game;
 			public Downloader.Download? download;
 
-			public Status(Game.State state=Game.State.UNINSTALLED, Downloader.Download? download=null)
+			public Status(Game.State state, Game? game=null, Downloader.Download? download=null)
 			{
 				this.state = state;
+				this.game = game;
 				this.download = download;
 			}
 
@@ -405,7 +419,7 @@ namespace GameHub.Data
 				{
 					switch(state)
 					{
-						case Game.State.INSTALLED: return C_("status", "Installed");
+						case Game.State.INSTALLED: return C_("status", "Installed") + (game != null && game.version != null ? @" ($(game.version))" : "");
 						case Game.State.INSTALLING: return C_("status", "Installing");
 						case Game.State.DOWNLOADING: return download != null ? download.status.description : C_("status", "Download started");
 					}
