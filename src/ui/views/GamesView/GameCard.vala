@@ -52,6 +52,8 @@ namespace GameHub.UI.Views.GamesView
 
 		private Frame progress_bar;
 
+		private Image running_indicator;
+
 		construct
 		{
 			margin = 0;
@@ -116,12 +118,18 @@ namespace GameHub.UI.Views.GamesView
 			progress_bar.valign = Align.END;
 			progress_bar.get_style_context().add_class("progress");
 
+			running_indicator = new Image.from_icon_name("system-run-symbolic", IconSize.DIALOG);
+			running_indicator.get_style_context().add_class("running-indicator");
+			running_indicator.halign = Align.CENTER;
+			running_indicator.valign = Align.CENTER;
+
 			content.add(image);
 			content.add_overlay(actions);
 			content.add_overlay(info);
 			content.add_overlay(platform_icons);
 			content.add_overlay(src_icons);
 			content.add_overlay(progress_bar);
+			content.add_overlay(running_indicator);
 
 			card.add(content);
 
@@ -211,6 +219,16 @@ namespace GameHub.UI.Views.GamesView
 							card.get_style_context().remove_class("downloading");
 							card.get_style_context().add_class("installing");
 							break;
+					}
+					if(game.is_running)
+					{
+						card.get_style_context().add_class("running");
+						running_indicator.opacity = 1;
+					}
+					else
+					{
+						card.get_style_context().remove_class("running");
+						running_indicator.opacity = 0;
 					}
 					return Source.REMOVE;
 				});

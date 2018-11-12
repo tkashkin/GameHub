@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 05:31+0300\n"
+"POT-Creation-Date: 2018-11-12 16:37+0300\n"
 "PO-Revision-Date: 2018-11-10 22:04+0300\n"
 "Last-Translator: Leandro Stanger\n"
 "Language-Team: none\n"
@@ -18,70 +18,75 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: src/data/Runnable.vala:67 src/data/Runnable.vala:69
+#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Selecione o executável"
 
-#: src/data/Runnable.vala:67 src/data/Runnable.vala:69
-#: src/data/Runnable.vala:138 src/ui/views/GamesView/GamesView.vala:352
+#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
+#: src/data/Runnable.vala:140 src/ui/views/GamesView/GamesView.vala:352
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
 msgstr "Selecione"
 
-#: src/data/Runnable.vala:67 src/data/Runnable.vala:69
-#: src/data/Runnable.vala:137 src/ui/widgets/FileChooserEntry.vala:53
+#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
+#: src/data/Runnable.vala:139 src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/data/Runnable.vala:123 src/ui/widgets/FileChooserEntry.vala:47
+#: src/data/Runnable.vala:125 src/ui/widgets/FileChooserEntry.vala:47
 msgid "Select directory"
 msgstr "Selecione o diretório"
 
-#: src/data/Runnable.vala:352
+#: src/data/Runnable.vala:354
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Parte %u de %u: "
 
 #: src/data/Game.vala:422
 msgctxt "status"
+msgid "Running"
+msgstr ""
+
+#: src/data/Game.vala:425
+msgctxt "status"
 msgid "Installed"
 msgstr "Instalado"
 
-#: src/data/Game.vala:423
+#: src/data/Game.vala:426
 msgctxt "status"
 msgid "Installing"
 msgstr "Instalando"
 
-#: src/data/Game.vala:424
+#: src/data/Game.vala:427
 msgctxt "status"
 msgid "Download started"
 msgstr "Download iniciado"
 
-#: src/data/Game.vala:426
+#: src/data/Game.vala:429
 msgctxt "status"
 msgid "Not installed"
 msgstr "Não instalado"
 
-#: src/data/Game.vala:436
+#: src/data/Game.vala:439
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Instalado"
 
-#: src/data/Game.vala:437
+#: src/data/Game.vala:440
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Instalando"
 
-#: src/data/Game.vala:438
+#: src/data/Game.vala:441
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Baixar"
 
-#: src/data/Game.vala:440
+#: src/data/Game.vala:443
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Não instalado"
