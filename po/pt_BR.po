@@ -49,7 +49,7 @@ msgstr "Parte %u de %u: "
 #: src/data/Game.vala:422
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "Correndo"
 
 #: src/data/Game.vala:425
 msgctxt "status"
@@ -224,7 +224,7 @@ msgstr "Lançamento no diretório do jogo"
 #: src/ui/views/GamesView/GamesView.vala:220
 #: src/ui/views/GamesView/GamesView.vala:674
 msgid "Settings"
-msgstr "Definições"
+msgstr "Configurações"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:54
 msgid "Some settings will be applied after application restart"
@@ -397,7 +397,7 @@ msgstr "Salve"
 #: src/ui/views/GamesView/GameContextMenu.vala:42
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Run"
-msgstr "Corre"
+msgstr "Jogar"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:212
 #: src/ui/dialogs/GamePropertiesDialog.vala:130
@@ -535,7 +535,7 @@ msgstr "Diretório aberto"
 #: src/ui/views/GamesView/GameContextMenu.vala:45
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run with compatibility layer"
-msgstr "Executar com camada de compatibilidade"
+msgstr "Jogar com camada de compatibilidade do Windows"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
@@ -808,14 +808,13 @@ msgstr "Porcentagem global: %g%%"
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:47
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:61
 msgid "Playtime"
-msgstr ""
+msgstr "Playtime"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:53
 msgid "Playtime (local)"
-msgstr ""
+msgstr "Playtime (local)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:70
-#, fuzzy
 msgid "Last launch"
 msgstr "Último lançamento"
 
@@ -823,13 +822,13 @@ msgstr "Último lançamento"
 #, c-format
 msgctxt "time"
 msgid "%dh"
-msgstr ""
+msgstr "%dh"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:82
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr ""
+msgstr "%dm"
 
 #: src/ui/views/GameDetailsView/blocks/Description.vala:49
 msgid "Description"
