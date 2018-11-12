@@ -109,7 +109,8 @@ namespace GameHub.Data
 		{
 			if(!RunnableIsLaunched && executable.query_exists())
 			{
-				RunnableIsLaunched = true;
+				RunnableIsLaunched = is_running = true;
+				update_status();
 
 				string[] cmd = { executable.get_path() };
 
@@ -135,7 +136,8 @@ namespace GameHub.Data
 				playtime_tracked += ((get_real_time() / 1000000) - last_launch) / 60;
 				save();
 
-				RunnableIsLaunched = false;
+				RunnableIsLaunched = is_running = false;
+				update_status();
 			}
 		}
 
@@ -417,6 +419,7 @@ namespace GameHub.Data
 			{
 				owned get
 				{
+					if(game != null && game.is_running) return C_("status", "Running");
 					switch(state)
 					{
 						case Game.State.INSTALLED: return C_("status", "Installed") + (game != null && game.version != null ? @" ($(game.version))" : "");

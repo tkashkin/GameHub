@@ -123,22 +123,27 @@ namespace GameHub.UI.Dialogs
 		{
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 
-			RunnableIsLaunched = true;
+			RunnableIsLaunched = game.is_running = true;
 
 			if(game is Emulator)
 			{
+				emulated_game.is_running = true;
+				emulated_game.update_status();
 				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, launch_in_game_dir, (obj, res) => {
 					compat_tool_picker.selected.run_emulator.end(res);
-					RunnableIsLaunched = false;
+					RunnableIsLaunched = game.is_running = emulated_game.is_running = false;
+					emulated_game.update_status();
 				});
 			}
 			else
 			{
+				game.update_status();
 				(game as Game).last_launch = get_real_time() / 1000000;
 				game.save();
 				compat_tool_picker.selected.run.begin(game, (obj, res) => {
 					compat_tool_picker.selected.run.end(res);
-					RunnableIsLaunched = false;
+					RunnableIsLaunched = game.is_running = false;
+					game.update_status();
 					(game as Game).playtime_tracked += ((get_real_time() / 1000000) - (game as Game).last_launch) / 60;
 					game.save();
 				});

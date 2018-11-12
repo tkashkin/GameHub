@@ -34,6 +34,8 @@ namespace GameHub.Data
 
 		public string? arguments { get; set; }
 
+		public bool is_running { get; set; default = false; }
+
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
 		public virtual bool is_supported(Platform? platform=null, bool with_compat=true)
 		{

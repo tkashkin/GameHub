@@ -46,6 +46,7 @@
 
 .gamecard.installing GtkLabel.status, .gamecard.installing label.status,
 .gamecard.hover GtkLabel.status, .gamecard.hover label.status,
+.gamecard.running GtkLabel.status, .gamecard.running label.status,
 .games-grid flowboxchild:focus .gamecard GtkLabel.status, .games-grid flowboxchild:focus .gamecard label.status,
 .games-grid flowboxchild:selected .gamecard GtkLabel.status, .games-grid flowboxchild:selected .gamecard label.status
 {
@@ -133,6 +134,18 @@
 .games-grid flowboxchild:focus
 {
 	background: @theme_selected_bg_color;
+}
+
+.gamecard.running .actions,
+.gamecard.hover.running .actions,
+.games-grid flowboxchild:focus .gamecard.running .actions,
+.games-grid flowboxchild:selected .gamecard.running .actions
+{
+	background-color: rgba(0, 0, 0, 0.6);
+}
+.gamecard .running-indicator
+{
+	opacity: 1 !important;
 }
 
 /* Some granite styles */
