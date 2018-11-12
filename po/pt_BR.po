@@ -49,7 +49,7 @@ msgstr "Parte %u de %u: "
 #: src/data/Game.vala:422
 msgctxt "status"
 msgid "Running"
-msgstr "Corrida"
+msgstr "Correndo"
 
 #: src/data/Game.vala:425
 msgctxt "status"
@@ -815,7 +815,6 @@ msgid "Playtime (local)"
 msgstr "Playtime (local)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:70
-#, fuzzy
 msgid "Last launch"
 msgstr "Último lançamento"
 
