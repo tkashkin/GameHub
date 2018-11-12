@@ -535,7 +535,7 @@ msgstr "Diretório aberto"
 #: src/ui/views/GamesView/GameContextMenu.vala:45
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run with compatibility layer"
-msgstr "Executar com camada de compatibilidade"
+msgstr "Jogar com camada de compatibilidade do Windows"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
