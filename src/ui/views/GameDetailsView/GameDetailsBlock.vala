@@ -65,7 +65,7 @@ namespace GameHub.UI.Views.GameDetailsView
 				//text_label.xalign = 1;
 			}
 
-			var box = new Box(multiline ? Orientation.VERTICAL : Orientation.HORIZONTAL, 0);
+			var box = new Box(multiline ? Orientation.VERTICAL : Orientation.HORIZONTAL, multiline ? 0 : 16);
 			box.margin_start = box.margin_end = 8;
 			box.add(title_label);
 			box.add(text_label);

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 02:20+0300\n"
+"POT-Creation-Date: 2018-11-12 05:31+0300\n"
 "PO-Revision-Date: 2018-11-10 22:04+0300\n"
 "Last-Translator: Leandro Stanger\n"
 "Language-Team: none\n"
@@ -806,7 +806,7 @@ msgid "Playtime"
 msgstr ""
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:53
-msgid "Playtime (tracked)"
+msgid "Playtime (local)"
 msgstr ""
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:70
