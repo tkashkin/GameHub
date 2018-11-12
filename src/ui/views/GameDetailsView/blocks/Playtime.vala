@@ -42,7 +42,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			if(!supports_game) return;
 
-			var hbox = new Box(Orientation.HORIZONTAL, 8);
+			var hbox = new Box(Orientation.HORIZONTAL, 0);
 
 			var header = new Granite.HeaderLabel(_("Playtime"));
 
@@ -50,7 +50,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			if(game.playtime_tracked > 0)
 			{
-				add_info_label(_("Playtime (tracked)"), minutes_to_string(game.playtime_tracked), false, false, hbox);
+				add_info_label(_("Playtime (local)"), minutes_to_string(game.playtime_tracked), false, false, hbox);
 				add_separator = true;
 			}
 

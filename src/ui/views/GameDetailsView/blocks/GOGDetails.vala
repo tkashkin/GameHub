@@ -70,7 +70,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				add_info_label(langs_label, langs_string, false, true);
 			}
 
-			var dlbox = new Box(Orientation.HORIZONTAL, 8);
+			var dlbox = new Box(Orientation.HORIZONTAL, 0);
 
 			var downloads_visible = false;
 
