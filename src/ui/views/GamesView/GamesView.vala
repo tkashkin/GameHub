@@ -796,10 +796,17 @@ namespace GameHub.UI.Views.GamesView
 				if(s1 == Game.State.INSTALLED && s2 != Game.State.INSTALLED) return -1;
 				if(s1 != Game.State.INSTALLED && s2 == Game.State.INSTALLED) return 1;
 
-				if(filters_popover.sort_mode == Settings.SortMode.LAST_LAUNCH)
+				switch(filters_popover.sort_mode)
 				{
-					if(game1.last_launch > game2.last_launch) return -1;
-					if(game1.last_launch < game2.last_launch) return 1;
+					case Settings.SortMode.LAST_LAUNCH:
+						if(game1.last_launch > game2.last_launch) return -1;
+						if(game1.last_launch < game2.last_launch) return 1;
+						break;
+
+					case Settings.SortMode.PLAYTIME:
+						if(game1.playtime > game2.playtime) return -1;
+						if(game1.playtime < game2.playtime) return 1;
+						break;
 				}
 
 				return game1.name.collate(game2.name);

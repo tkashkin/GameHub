@@ -65,7 +65,8 @@ namespace GameHub.UI.Views.GamesView
 			var sort_image = new Image.from_icon_name("view-sort-descending-symbolic", IconSize.BUTTON);
 			sort_hbox.add(sort_image);
 
-			var sort_label = new HeaderLabel(_("Sort by:"));
+			var sort_label = new HeaderLabel(_("Sort:"));
+			sort_label.margin_end = 8;
 			sort_label.xpad = 0;
 			sort_label.halign = Align.START;
 			sort_label.xalign = 0;
@@ -73,19 +74,21 @@ namespace GameHub.UI.Views.GamesView
 			sort_hbox.add(sort_label);
 
 			sort_mode_button = new Granite.Widgets.ModeButton();
+			sort_mode_button.get_style_context().add_class("filters-sort-mode");
 			sort_mode_button.halign = Align.END;
 			sort_mode_button.valign = Align.CENTER;
 			sort_mode_button.can_focus = true;
 			add_sort_mode(SortMode.NAME);
 			add_sort_mode(SortMode.LAST_LAUNCH);
+			add_sort_mode(SortMode.PLAYTIME);
 			sort_hbox.add(sort_mode_button);
 
 			var saved_state = Settings.SavedState.get_instance();
 
-			sort_mode_button.set_active(saved_state.sort_mode == SortMode.NAME ? 0 : 1);
+			sort_mode_button.set_active((int) saved_state.sort_mode);
 			sort_mode = saved_state.sort_mode;
 			sort_mode_button.mode_changed.connect(() => {
-				saved_state.sort_mode = sort_mode_button.selected == 0 ? SortMode.NAME : SortMode.LAST_LAUNCH;
+				saved_state.sort_mode = (SortMode) sort_mode_button.selected;
 				sort_mode = saved_state.sort_mode;
 				sort_mode_changed(sort_mode);
 			});
