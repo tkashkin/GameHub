@@ -34,14 +34,15 @@ namespace GameHub.Settings
 
 	public enum SortMode
 	{
-		NAME = 0, LAST_LAUNCH = 1;
+		NAME = 0, LAST_LAUNCH = 1, PLAYTIME = 2;
 
 		public string name()
 		{
 			switch(this)
 			{
-				case SortMode.NAME:        return C_("sort_mode", "Name");
-				case SortMode.LAST_LAUNCH: return C_("sort_mode", "Last launch");
+				case SortMode.NAME:        return C_("sort_mode", "By name");
+				case SortMode.LAST_LAUNCH: return C_("sort_mode", "By last launch");
+				case SortMode.PLAYTIME:    return C_("sort_mode", "By playtime");
 			}
 			assert_not_reached();
 		}
@@ -52,6 +53,7 @@ namespace GameHub.Settings
 			{
 				case SortMode.NAME:        return "insert-text-symbolic";
 				case SortMode.LAST_LAUNCH: return "document-open-recent-symbolic";
+				case SortMode.PLAYTIME:    return "preferences-system-time-symbolic";
 			}
 			assert_not_reached();
 		}

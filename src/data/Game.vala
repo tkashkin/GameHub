@@ -164,6 +164,8 @@ namespace GameHub.Data
 		public int64 playtime_source  { get; set; default = 0; }
 		public int64 playtime_tracked { get; set; default = 0; }
 
+		public int64 playtime { get { return playtime_source + playtime_tracked; } }
+
 		public ArrayList<Overlay> overlays = new ArrayList<Overlay>();
 		private FSOverlay? fs_overlay;
 		private string? fs_overlay_last_options;

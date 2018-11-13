@@ -464,3 +464,15 @@ dialog .sidebar list
 {
 	background: transparent;
 }
+
+.filters-sort-mode > *
+{
+	padding: 4px;
+	min-width: 16px;
+	min-height: 16px;
+}
+.filters-sort-mode > * > image
+{
+	padding: 0;
+	margin: 0;
+}

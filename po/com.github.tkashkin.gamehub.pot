@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 16:37+0300\n"
+"POT-Creation-Date: 2018-11-13 04:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -454,7 +454,7 @@ msgid "%s: Properties"
 msgstr ""
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:66
-#: src/ui/views/GamesView/FiltersPopover.vala:150
+#: src/ui/views/GamesView/FiltersPopover.vala:152
 msgid "Tags"
 msgstr ""
 
@@ -718,7 +718,7 @@ msgid "Cancel download"
 msgstr ""
 
 #: src/ui/views/GamesView/FiltersPopover.vala:68
-msgid "Sort by:"
+msgid "Sort:"
 msgstr ""
 
 #: src/ui/views/GamesView/AddGamePopover.vala:76
@@ -861,12 +861,17 @@ msgstr ""
 
 #: src/utils/Settings.vala:43
 msgctxt "sort_mode"
-msgid "Name"
+msgid "By name"
 msgstr ""
 
 #: src/utils/Settings.vala:44
 msgctxt "sort_mode"
-msgid "Last launch"
+msgid "By last launch"
+msgstr ""
+
+#: src/utils/Settings.vala:45
+msgctxt "sort_mode"
+msgid "By playtime"
 msgstr ""
 
 #: src/utils/downloader/Downloader.vala:155

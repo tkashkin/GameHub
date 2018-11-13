@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 16:37+0300\n"
+"POT-Creation-Date: 2018-11-13 04:37+0300\n"
 "PO-Revision-Date: 2018-11-08 23:20+0300\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: none\n"
@@ -459,7 +459,7 @@ msgid "%s: Properties"
 msgstr "%s: Свойства"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:66
-#: src/ui/views/GamesView/FiltersPopover.vala:150
+#: src/ui/views/GamesView/FiltersPopover.vala:152
 msgid "Tags"
 msgstr "Теги"
 
@@ -729,8 +729,8 @@ msgid "Cancel download"
 msgstr "Отменить загрузку"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:68
-msgid "Sort by:"
-msgstr "Сортировать по:"
+msgid "Sort:"
+msgstr "Сортировка:"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:76
 msgid "Select game executable"
@@ -872,13 +872,18 @@ msgstr "Слой совместимости:"
 
 #: src/utils/Settings.vala:43
 msgctxt "sort_mode"
-msgid "Name"
-msgstr "Имени"
+msgid "By name"
+msgstr "По названию"
 
 #: src/utils/Settings.vala:44
 msgctxt "sort_mode"
-msgid "Last launch"
-msgstr "Времени последнего запуска"
+msgid "By last launch"
+msgstr "По времени последнего запуска"
+
+#: src/utils/Settings.vala:45
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "По времени игры"
 
 #: src/utils/downloader/Downloader.vala:155
 msgctxt "dl_status"
