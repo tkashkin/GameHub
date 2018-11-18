@@ -2,14 +2,15 @@ using Gtk;
 
 namespace GameHub.ProjectConfig
 {
-	public const string GETTEXT_PACKAGE = @GETTEXT_PACKAGE@;
-	public const string GETTEXT_DIR = @GETTEXT_DIR@;
+	public const string GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@";
+	public const string GETTEXT_DIR = "@GETTEXT_DIR@";
 
-	public const string PROJECT_NAME = @PROJECT_NAME@;
-	public const string VERSION = @VERSION@;
+	public const string PROJECT_NAME = "@PROJECT_NAME@";
+	public const string VERSION = "@VERSION@";
 
-	public const string PREFIX = @PREFIX@;
-	public const string DATADIR = @DATADIR@;
+	public const string PREFIX = "@PREFIX@";
+	public const string DATADIR = "@DATADIR@";
+	public const string BINDIR = "@BINDIR@";
 
-	public const string RUNTIME = @RUNTIME@;
+	public const string RUNTIME = "@RUNTIME@";
 }

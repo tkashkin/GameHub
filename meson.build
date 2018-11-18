@@ -19,6 +19,16 @@ elif get_option('distro') == 'arch'
 	add_global_arguments('-D', 'DISTRO_ARCH', '-D', 'PM_PACMAN', language: 'vala')
 endif
 
+conf_data = configuration_data()
+conf_data.set('PROJECT_NAME', meson.project_name())
+conf_data.set('GETTEXT_PACKAGE', meson.project_name())
+conf_data.set('GETTEXT_DIR', join_paths(get_option('prefix'), get_option('localedir')))
+conf_data.set('VERSION', meson.project_version())
+conf_data.set('PREFIX', get_option('prefix'))
+conf_data.set('DATADIR', join_paths(get_option('prefix'), get_option('datadir')))
+conf_data.set('BINDIR', join_paths(get_option('prefix'), get_option('bindir')))
+conf_data.set('RUNTIME', get_option('runtime'))
+
 subdir('data')
 subdir('src')
 subdir('po')
