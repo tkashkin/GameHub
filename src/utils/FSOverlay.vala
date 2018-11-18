@@ -23,11 +23,9 @@ namespace GameHub.Utils
 {
 	public class FSOverlay: Object
 	{
-		public const string POLKIT_ACTION_MOUNT  = ProjectConfig.PROJECT_NAME + ".polkit.overlayfs.mount";
-		public const string POLKIT_ACTION_UMOUNT = ProjectConfig.PROJECT_NAME + ".polkit.overlayfs.umount";
-
-		private static Permission? permission_mount;
-		private static Permission? permission_umount;
+		private const string POLKIT_ACTION = ProjectConfig.PROJECT_NAME + ".polkit.overlayfs-helper";
+		private const string POLKIT_HELPER = ProjectConfig.BINDIR + "/" + ProjectConfig.PROJECT_NAME + "-overlayfs-helper";
+		private static Permission? permission;
 
 		public string          id       { get; construct set; }
 		public File            target   { get; construct set; }
@@ -102,18 +100,18 @@ namespace GameHub.Utils
 				warning("[FSOverlay.mount] Error while creating target directory: %s", e.message);
 			}
 
-			yield polkit_authenticate(POLKIT_ACTION_MOUNT);
+			yield polkit_authenticate();
 
-			yield Utils.run_thread({"pkexec", "mount", "-t", "overlay", id, "-o", options, target.get_path()});
+			yield Utils.run_thread({"pkexec", POLKIT_HELPER, "mount", id, options, target.get_path()});
 		}
 
 		public async void umount()
 		{
-			yield polkit_authenticate(POLKIT_ACTION_UMOUNT);
+			yield polkit_authenticate();
 
 			while(id in (yield Utils.run_thread({"mount"}, null, null, false, false)))
 			{
-				yield Utils.run_thread({"pkexec", "umount", id});
+				yield Utils.run_thread({"pkexec", POLKIT_HELPER, "umount", id});
 				yield Utils.sleep_async(500);
 			}
 
@@ -123,21 +121,13 @@ namespace GameHub.Utils
 			}
 		}
 
-		private async void polkit_authenticate(string action=POLKIT_ACTION_MOUNT)
+		private async void polkit_authenticate()
 		{
-			var permission = permission_mount;
-
-			switch(action)
-			{
-				case POLKIT_ACTION_MOUNT:  permission = permission_mount;  break;
-				case POLKIT_ACTION_UMOUNT: permission = permission_umount; break;
-			}
-
 			if(permission == null)
 			{
 				try
 				{
-					permission = yield new Polkit.Permission(action, null);
+					permission = yield new Polkit.Permission(POLKIT_ACTION, null);
 				}
 				catch(Error e)
 				{
@@ -155,12 +145,6 @@ namespace GameHub.Utils
 				{
 					warning("[FSOverlay.polkit_authenticate] %s", e.message);
 				}
-			}
-
-			switch(action)
-			{
-				case POLKIT_ACTION_MOUNT:  permission_mount  = permission; break;
-				case POLKIT_ACTION_UMOUNT: permission_umount = permission; break;
 			}
 		}
 	}
