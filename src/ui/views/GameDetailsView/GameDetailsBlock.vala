@@ -37,7 +37,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		public abstract bool supports_game { get; }
 
-		protected void add_info_label(string title, string? text, bool multiline=true, bool markup=false)
+		protected void add_info_label(string title, string? text, bool multiline=true, bool markup=false, Container? parent=null)
 		{
 			if(text == null || text == "") return;
 
@@ -58,11 +58,18 @@ namespace GameHub.UI.Views.GameDetailsView
 				text_label.get_style_context().add_class("gameinfo-singleline-value");
 			}
 
-			var box = new Box(multiline ? Orientation.VERTICAL : Orientation.HORIZONTAL, 0);
+			if(parent != null)
+			{
+				text_label.hexpand = true;
+				//text_label.halign = Align.END;
+				//text_label.xalign = 1;
+			}
+
+			var box = new Box(multiline ? Orientation.VERTICAL : Orientation.HORIZONTAL, multiline ? 0 : 16);
 			box.margin_start = box.margin_end = 8;
 			box.add(title_label);
 			box.add(text_label);
-			add(box);
+			(parent ?? this).add(box);
 		}
 	}
 }

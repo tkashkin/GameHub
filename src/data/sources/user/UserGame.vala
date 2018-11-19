@@ -77,6 +77,8 @@ namespace GameHub.Data.Sources.User
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
 			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
+			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
+			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -173,7 +175,7 @@ namespace GameHub.Data.Sources.User
 		public override void update_status()
 		{
 			var exec = executable;
-			status = new Game.Status(exec != null && exec.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED);
+			status = new Game.Status(exec != null && exec.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED, this);
 			if(status.state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [[ $EUID -ne 0 ]]; then
+	echo "This script requires root permissions"
+	exit 1
+fi
+
+ACTION="$1"
+OVERLAY_ID="$2"
+
+case "$ACTION" in
+	mount)
+		MOUNT_OPTIONS="$3"
+		TARGET="$4"
+		mount -t overlay "$OVERLAY_ID" -o "$MOUNT_OPTIONS" "$TARGET"
+		;;
+
+	umount)
+		umount "$OVERLAY_ID"
+		;;
+
+	*)
+		echo "This script only allows to (u)mount overlays"
+		exit 2
+		;;
+esac

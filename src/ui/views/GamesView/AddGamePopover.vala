@@ -36,11 +36,13 @@ namespace GameHub.UI.Views.GamesView
 		private Grid grid;
 		private int rows = 0;
 
+		private bool suppress_updates = false;
+
 		private Granite.Widgets.ModeButton mode;
 
 		private new Entry name;
-		private FileChooserButton gamedir;
-		private FileChooserButton executable;
+		private FileChooserEntry gamedir;
+		private FileChooserEntry executable;
 		private Label executable_label;
 		private Entry arguments;
 		private Label arguments_label;
@@ -103,21 +105,18 @@ namespace GameHub.UI.Views.GamesView
 
 		private void update()
 		{
-			if(mode.selected == 0 && executable.get_file() != null && gamedir.get_file() == null)
+			if(suppress_updates) return;
+
+			if(mode.selected == 0 && executable.file != null && gamedir.file == null)
 			{
-				try
-				{
-					gamedir.select_file(executable.get_file().get_parent());
-				}
-				catch(Error e)
-				{
-					warning(e.message);
-				}
+				suppress_updates = true;
+				gamedir.select_file(executable.file.get_parent());
+				suppress_updates = false;
 			}
 
 			add.sensitive = name.text.strip().length > 0
-				&& executable.get_file() != null && executable.get_file().query_exists()
-				&& gamedir.get_file() != null && gamedir.get_file().query_exists();
+				&& executable.file != null && executable.file.query_exists()
+				&& gamedir.file != null && gamedir.file.query_exists();
 
 			executable_label.label = mode.selected == 0 ? _("Executable") : _("Installer");
 			arguments.sensitive = arguments_label.sensitive = mode.selected == 0;
@@ -125,10 +124,10 @@ namespace GameHub.UI.Views.GamesView
 
 		private void add_game()
 		{
-			var game = new UserGame(name.text.strip(), gamedir.get_file(), executable.get_file(), arguments.text.strip(), mode.selected != 0);
+			var game = new UserGame(name.text.strip(), gamedir.file, executable.file, arguments.text.strip(), mode.selected != 0);
 			name.text = "";
-			executable.unselect_all();
-			gamedir.unselect_all();
+			executable.reset();
+			gamedir.reset();
 			arguments.text = "";
 			update();
 			game.save();
@@ -138,8 +137,8 @@ namespace GameHub.UI.Views.GamesView
 			#else
 			hide();
 			#endif
-			executable.unselect_all();
-			gamedir.unselect_all();
+			executable.reset();
+			gamedir.reset();
 			if(mode.selected != 0)
 			{
 				game.install.begin();
@@ -167,7 +166,7 @@ namespace GameHub.UI.Views.GamesView
 			return entry;
 		}
 
-		private FileChooserButton add_filechooser(string text, string title, FileChooserAction action=FileChooserAction.OPEN, bool required=true, out Label label=null)
+		private FileChooserEntry add_filechooser(string text, string title, FileChooserAction action=FileChooserAction.OPEN, bool required=true, out Label label=null)
 		{
 			label = new Label(text);
 			label.set_size_request(72, -1);
@@ -178,12 +177,12 @@ namespace GameHub.UI.Views.GamesView
 			{
 				label.get_style_context().add_class("category-label");
 			}
-			var button = new FileChooserButton(title, action);
-			button.set_size_request(180, -1);
+			var entry = new FileChooserEntry(title, action, null, null, false, action == FileChooserAction.OPEN);
+			entry.set_size_request(180, -1);
 			grid.attach(label, 0, rows);
-			grid.attach(button, 1, rows);
+			grid.attach(entry, 1, rows);
 			rows++;
-			return button;
+			return entry;
 		}
 
 		private void add_separator()

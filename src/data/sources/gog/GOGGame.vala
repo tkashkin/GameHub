@@ -93,6 +93,8 @@ namespace GameHub.Data.Sources.GOG
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
 			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
+			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
+			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -331,10 +333,13 @@ namespace GameHub.Data.Sources.GOG
 		{
 			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
 
+			var gameinfo = get_file("gameinfo", false);
+			var goggame = get_file(@"goggame-$(id).info", false);
+
 			var files = new ArrayList<File>();
 			files.add(executable);
-			files.add(FSUtils.file(install_dir.get_path(), "gameinfo"));
-			files.add(FSUtils.file(install_dir.get_path(), @"goggame-$(id).info"));
+			files.add(gameinfo);
+			files.add(goggame);
 			var state = Game.State.UNINSTALLED;
 			foreach(var file in files)
 			{
@@ -344,7 +349,7 @@ namespace GameHub.Data.Sources.GOG
 					break;
 				}
 			}
-			status = new Game.Status(state);
+			status = new Game.Status(state, this);
 			if(state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
@@ -356,6 +361,24 @@ namespace GameHub.Data.Sources.GOG
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 
+			if(gameinfo != null && gameinfo.query_exists())
+			{
+				try
+				{
+					string info;
+					FileUtils.get_contents(gameinfo.get_path(), out info);
+					var lines = info.split("\n");
+					if(lines.length >= 2)
+					{
+						version = lines[1];
+					}
+				}
+				catch(Error e)
+				{
+					warning("[GOGGame.update_status] Error while reading gameinfo: %s", e.message);
+				}
+			}
+
 			string g = name;
 			string? d = null;
 			if(this is DLC)
@@ -365,6 +388,101 @@ namespace GameHub.Data.Sources.GOG
 			}
 			installers_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_installers(g, d));
 			bonus_content_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_bonus(g, d));
+		}
+
+		private bool loading_achievements = false;
+		public override async ArrayList<Game.Achievement>? load_achievements()
+		{
+			if(achievements != null || loading_achievements)
+			{
+				return achievements;
+			}
+
+			loading_achievements = true;
+
+			var url = @"https://gameplay.gog.com/clients/$(id)/users/$(GOG.instance.user_id)/achievements";
+
+			var root = (yield Parser.parse_remote_json_file_async(url, "GET", GOG.instance.user_token));
+			var root_obj = root != null && root.get_node_type() == Json.NodeType.OBJECT
+				? root.get_object() : null;
+
+			if(root_obj == null || !root_obj.has_member("items"))
+			{
+				loading_achievements = false;
+				return null;
+			}
+
+			var achievements_array = root_obj.get_array_member("items");
+
+			var _achievements = new ArrayList<Game.Achievement>();
+
+			foreach(var a_node in achievements_array.get_elements())
+			{
+				var a_obj = a_node != null && a_node.get_node_type() == Json.NodeType.OBJECT
+					? a_node.get_object() : null;
+
+				if(a_obj == null || !a_obj.has_member("achievement_key")) continue;
+
+				var a_id                  = a_obj.get_string_member("achievement_key");
+				var a_name                = a_obj.has_member("name") ? a_obj.get_string_member("name") : a_id;
+				var a_desc                = a_obj.has_member("description") ? a_obj.get_string_member("description") : "";
+				var a_image_unlocked      = a_obj.has_member("image_url_unlocked") ? a_obj.get_string_member("image_url_unlocked") : null;
+				var a_image_locked        = a_obj.has_member("image_url_locked") ? a_obj.get_string_member("image_url_locked") : null;
+				string? a_unlock_date = null;
+
+				if(a_obj.has_member("date_unlocked"))
+				{
+					var date = a_obj.get_member("date_unlocked");
+					if(date.get_node_type() == Json.NodeType.VALUE)
+					{
+						a_unlock_date = date.get_string();
+					}
+				}
+
+				bool a_unlocked           = a_unlock_date != null;
+				float a_global_percentage = a_obj.has_member("rarity") ? (float) a_obj.get_double_member("rarity") : 0;
+
+				_achievements.add(new Achievement(a_id, a_name, a_desc, a_image_locked, a_image_unlocked,
+				                                  a_unlocked, a_unlock_date, a_global_percentage));
+			}
+
+			_achievements.sort((first, second) => {
+				var a1 = first as Achievement;
+				var a2 = second as Achievement;
+
+				if(a1.unlock_date != null || a2.unlock_date != null)
+				{
+					return (a2.unlock_date ?? new DateTime.from_unix_utc(0)).compare(a1.unlock_date ?? new DateTime.from_unix_utc(0));
+				}
+
+				if(a1.global_percentage < a2.global_percentage) return 1;
+				if(a1.global_percentage > a2.global_percentage) return -1;
+				return 0;
+			});
+
+			achievements = _achievements;
+			loading_achievements = false;
+			return achievements;
+		}
+
+		public class Achievement: Game.Achievement
+		{
+			public Achievement(string id, string name, string desc, string? image_locked, string? image_unlocked,
+			                   bool unlocked, string? unlock_date, float global_percentage)
+			{
+				this.id = id;
+				this.name = name;
+				this.description = desc;
+				this.image_locked = image_locked;
+				this.image_unlocked = image_unlocked;
+				this.unlocked = unlocked;
+				this.global_percentage = global_percentage;
+				if(unlock_date != null)
+				{
+					this.unlock_date = new DateTime.from_iso8601(unlock_date, new TimeZone.utc());
+					this.unlock_time = Granite.DateTime.get_relative_datetime(this.unlock_date);
+				}
+			}
 		}
 
 		public class Installer: Runnable.Installer
@@ -596,7 +714,7 @@ namespace GameHub.Data.Sources.GOG
 						break;
 					}
 				}
-				status = new Game.Status(state);
+				status = new Game.Status(state, this);
 				if(state == Game.State.INSTALLED)
 				{
 					remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);

@@ -43,6 +43,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			if(!supports_game) return;
 
+			add(new Separator(Orientation.HORIZONTAL));
+
 			var gog_game = game as GOGGame;
 
 			var root = Parser.parse_json(game.info_detailed);
@@ -68,7 +70,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				add_info_label(langs_label, langs_string, false, true);
 			}
 
-			var dlbox = new Box(Orientation.HORIZONTAL, 8);
+			var dlbox = new Box(Orientation.HORIZONTAL, 0);
 
 			var downloads_visible = false;
 
