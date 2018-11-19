@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-13 04:37+0300\n"
+"POT-Creation-Date: 2018-11-20 01:35+0300\n"
 "PO-Revision-Date: 2018-11-10 22:04+0300\n"
 "Last-Translator: Leandro Stanger\n"
 "Language-Team: none\n"
@@ -46,47 +46,47 @@ msgstr "Selecione o diretório"
 msgid "Part %u of %u: "
 msgstr "Parte %u de %u: "
 
-#: src/data/Game.vala:422
+#: src/data/Game.vala:424
 msgctxt "status"
 msgid "Running"
 msgstr "Correndo"
 
-#: src/data/Game.vala:425
+#: src/data/Game.vala:427
 msgctxt "status"
 msgid "Installed"
 msgstr "Instalado"
 
-#: src/data/Game.vala:426
+#: src/data/Game.vala:428
 msgctxt "status"
 msgid "Installing"
 msgstr "Instalando"
 
-#: src/data/Game.vala:427
+#: src/data/Game.vala:429
 msgctxt "status"
 msgid "Download started"
 msgstr "Download iniciado"
 
-#: src/data/Game.vala:429
+#: src/data/Game.vala:431
 msgctxt "status"
 msgid "Not installed"
 msgstr "Não instalado"
 
-#: src/data/Game.vala:439
+#: src/data/Game.vala:441
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Instalado"
 
-#: src/data/Game.vala:440
+#: src/data/Game.vala:442
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Instalando"
 
-#: src/data/Game.vala:441
+#: src/data/Game.vala:443
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Baixar"
 
-#: src/data/Game.vala:443
+#: src/data/Game.vala:445
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Não instalado"
@@ -459,7 +459,7 @@ msgid "%s: Properties"
 msgstr "%s: Propriedades"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:66
-#: src/ui/views/GamesView/FiltersPopover.vala:152
+#: src/ui/views/GamesView/FiltersPopover.vala:153
 msgid "Tags"
 msgstr "Tags"
 
@@ -690,25 +690,25 @@ msgstr ""
 msgid "Privacy"
 msgstr "Privacidade"
 
-#: src/ui/views/GamesView/GamesView.vala:885
+#: src/ui/views/GamesView/GamesView.vala:892
 msgid "Updating game info"
 msgstr "Atualizando informações do jogo"
 
-#: src/ui/views/GamesView/GamesView.vala:891
+#: src/ui/views/GamesView/GamesView.vala:898
 #, c-format
 msgid "Updating %s game info"
 msgstr "Atualizando as informações do jogo de %s"
 
-#: src/ui/views/GamesView/GamesView.vala:909
+#: src/ui/views/GamesView/GamesView.vala:916
 msgid "Merging games"
 msgstr "Mesclando jogos"
 
-#: src/ui/views/GamesView/GamesView.vala:925
+#: src/ui/views/GamesView/GamesView.vala:932
 #, c-format
 msgid "Merging games from %s"
 msgstr "Mesclando jogos de %s"
 
-#: src/ui/views/GamesView/GamesView.vala:942
+#: src/ui/views/GamesView/GamesView.vala:949
 #, c-format
 msgid "Merging %s (%s)"
 msgstr "Mesclando %s (%s)"
