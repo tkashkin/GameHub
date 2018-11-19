@@ -35,6 +35,7 @@ namespace GameHub.UI.Dialogs
 
 		public Runnable game { get; construct; }
 		public Game? emulated_game { get; construct; }
+		public bool launch_in_game_dir { get; construct; }
 
 		private Box content;
 		private Label title_label;
@@ -42,9 +43,9 @@ namespace GameHub.UI.Dialogs
 
 		private CompatToolPicker compat_tool_picker;
 
-		public CompatRunDialog(Runnable game, bool is_opened_from_menu=false, Game? emulated_game=null)
+		public CompatRunDialog(Runnable game, bool is_opened_from_menu=false, Game? emulated_game=null, bool launch_in_game_dir=false)
 		{
-			Object(game: game, emulated_game: emulated_game, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
+			Object(game: game, emulated_game: emulated_game, launch_in_game_dir: launch_in_game_dir, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
 		}
 
 		construct
@@ -122,22 +123,29 @@ namespace GameHub.UI.Dialogs
 		{
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 
-			RunnableIsLaunched = true;
+			RunnableIsLaunched = game.is_running = true;
 
 			if(game is Emulator)
 			{
-				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, (obj, res) => {
+				emulated_game.is_running = true;
+				emulated_game.update_status();
+				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, launch_in_game_dir, (obj, res) => {
 					compat_tool_picker.selected.run_emulator.end(res);
-					RunnableIsLaunched = false;
+					RunnableIsLaunched = game.is_running = emulated_game.is_running = false;
+					emulated_game.update_status();
 				});
 			}
 			else
 			{
-				(game as Game).last_launch = get_real_time() / 1000;
+				game.update_status();
+				(game as Game).last_launch = get_real_time() / 1000000;
 				game.save();
 				compat_tool_picker.selected.run.begin(game, (obj, res) => {
 					compat_tool_picker.selected.run.end(res);
-					RunnableIsLaunched = false;
+					RunnableIsLaunched = game.is_running = false;
+					game.update_status();
+					(game as Game).playtime_tracked += ((get_real_time() / 1000000) - (game as Game).last_launch) / 60;
+					game.save();
 				});
 			}
 

@@ -27,9 +27,20 @@ i18n.merge_file(
 	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'metainfo')
 )
 
+polkit_policy = configure_file(
+	input: meson.project_name() + '.policy.in',
+	output: meson.project_name() + '.policy',
+	configuration: conf_data
+)
+
 install_data(
-	meson.project_name() + '.policy',
+	polkit_policy,
 	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'polkit-1', 'actions')
+)
+
+install_data(
+	meson.project_name() + '-overlayfs-helper',
+	install_dir: join_paths(get_option('prefix'), get_option('bindir'))
 )
 
 icons_gresource = gnome.compile_resources(

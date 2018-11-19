@@ -164,12 +164,12 @@ namespace GameHub.UI.Widgets
 				box.margin_start = box.margin_end = 8;
 				box.margin_top = box.margin_bottom = 6;
 
-				var name = new Label(option.name);
+				var name = new Label(option.description);
 				name.halign = Align.START;
 				name.xalign = 0;
 				name.hexpand = true;
 
-				ebox.tooltip_text = option.description;
+				ebox.tooltip_text = option.name;
 
 				Widget? option_widget = null;
 

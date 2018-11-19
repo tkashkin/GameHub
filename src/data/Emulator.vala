@@ -168,31 +168,47 @@ namespace GameHub.Data
 		{
 			if(!RunnableIsLaunched && executable.query_exists())
 			{
-				RunnableIsLaunched = true;
+				RunnableIsLaunched = is_running = true;
 
 				yield Utils.run_thread(get_args(null, executable), executable.get_parent().get_path(), null, true);
 
-				RunnableIsLaunched = false;
+				RunnableIsLaunched = is_running = false;
 			}
 		}
 
-		public async void run_game(Game? game)
+		public async void run_game(Game? game, bool launch_in_game_dir=false)
 		{
 			if(use_compat)
 			{
-				yield run_game_compat(game);
+				yield run_game_compat(game, launch_in_game_dir);
 				return;
 			}
 
 			if(executable.query_exists())
 			{
-				yield Utils.run_thread(get_args(game, executable), executable.get_parent().get_path(), null, true);
+				RunnableIsLaunched = is_running = true;
+
+				if(game != null)
+				{
+					game.is_running = true;
+					game.update_status();
+				}
+
+				var dir = game != null && launch_in_game_dir ? game.install_dir : install_dir;
+				yield Utils.run_thread(get_args(game, executable), dir.get_path(), null, true);
+				RunnableIsLaunched = is_running = false;
+
+				if(game != null)
+				{
+					game.is_running = false;
+					game.update_status();
+				}
 			}
 		}
 
-		public async void run_game_compat(Game? game)
+		public async void run_game_compat(Game? game, bool launch_in_game_dir=false)
 		{
-			new UI.Dialogs.CompatRunDialog(this, false, game);
+			new UI.Dialogs.CompatRunDialog(this, false, game, launch_in_game_dir);
 		}
 
 		public static bool is_equal(Emulator first, Emulator second)

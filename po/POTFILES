@@ -24,6 +24,7 @@ src/data/compat/Innoextract.vala
 src/data/compat/Proton.vala
 src/data/compat/Wine.vala
 src/data/compat/DOSBox.vala
+src/data/compat/ScummVM.vala
 src/data/compat/RetroArch.vala
 src/data/compat/CustomEmulator.vala
 src/ui/windows/MainWindow.vala
@@ -54,11 +55,14 @@ src/ui/views/GamesView/GameContextMenu.vala
 src/ui/views/GameDetailsView/GameDetailsView.vala
 src/ui/views/GameDetailsView/GameDetailsPage.vala
 src/ui/views/GameDetailsView/GameDetailsBlock.vala
+src/ui/views/GameDetailsView/blocks/Achievements.vala
+src/ui/views/GameDetailsView/blocks/Playtime.vala
 src/ui/views/GameDetailsView/blocks/Description.vala
 src/ui/views/GameDetailsView/blocks/GOGDetails.vala
 src/ui/views/GameDetailsView/blocks/SteamDetails.vala
 src/ui/widgets/AutoSizeImage.vala
 src/ui/widgets/ActionButton.vala
+src/ui/widgets/FileChooserEntry.vala
 src/ui/widgets/CompatToolOptions.vala
 src/ui/widgets/CompatToolPicker.vala
 src/ui/widgets/TagRow.vala

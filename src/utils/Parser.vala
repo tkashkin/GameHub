@@ -48,6 +48,8 @@ namespace GameHub.Utils
 			{
 				session = new Session();
 				session.timeout = 5;
+				session.max_conns = 256;
+				session.max_conns_per_host = 256;
 			}
 
 			var message = new Message(method, url);

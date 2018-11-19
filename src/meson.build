@@ -1,11 +1,3 @@
-conf_data = configuration_data()
-conf_data.set_quoted('PROJECT_NAME', meson.project_name())
-conf_data.set_quoted('GETTEXT_PACKAGE', meson.project_name())
-conf_data.set_quoted('GETTEXT_DIR', get_option('prefix') + '/' + get_option('localedir'))
-conf_data.set_quoted('VERSION', meson.project_version())
-conf_data.set_quoted('PREFIX', get_option('prefix'))
-conf_data.set_quoted('DATADIR', get_option('prefix') + '/' + get_option('datadir'))
-conf_data.set_quoted('RUNTIME', get_option('runtime'))
 project_config = configure_file(
 	input: 'ProjectConfig.vala.in',
 	output: 'ProjectConfig.vala',
@@ -60,6 +52,7 @@ sources = [
 	'data/compat/Proton.vala',
 	'data/compat/Wine.vala',
 	'data/compat/DOSBox.vala',
+	'data/compat/ScummVM.vala',
 	'data/compat/RetroArch.vala',
 	'data/compat/CustomEmulator.vala',
 
@@ -98,12 +91,15 @@ sources = [
 	'ui/views/GameDetailsView/GameDetailsPage.vala',
 
 	'ui/views/GameDetailsView/GameDetailsBlock.vala',
+	'ui/views/GameDetailsView/blocks/Playtime.vala',
+	'ui/views/GameDetailsView/blocks/Achievements.vala',
 	'ui/views/GameDetailsView/blocks/Description.vala',
 	'ui/views/GameDetailsView/blocks/GOGDetails.vala',
 	'ui/views/GameDetailsView/blocks/SteamDetails.vala',
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
+	'ui/widgets/FileChooserEntry.vala',
 	'ui/widgets/CompatToolOptions.vala',
 	'ui/widgets/CompatToolPicker.vala',
 	'ui/widgets/TagRow.vala',

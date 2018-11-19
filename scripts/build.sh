@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _GH_RDNN="com.github.tkashkin.gamehub"
-_GH_VERSION="0.12.0"
+_GH_VERSION="0.12.1"
 
 _GH_BRANCH="${APPVEYOR_REPO_BRANCH:-$(git symbolic-ref --short -q HEAD)}"
 

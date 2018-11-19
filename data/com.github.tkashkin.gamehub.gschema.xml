@@ -14,6 +14,7 @@
 	<enum id="com.github.tkashkin.gamehub.games-sort-mode">
 		<value nick="Name" value="0" />
 		<value nick="Last launch" value="1" />
+		<value nick="Playtime" value="2" />
 	</enum>
 
 	<schema path="/com/github/tkashkin/gamehub/saved-state/" id="com.github.tkashkin.gamehub.saved-state" gettext-domain="com.github.tkashkin.gamehub">

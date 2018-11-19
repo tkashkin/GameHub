@@ -21,6 +21,7 @@ GameHub supports non-native games as well as native games for Linux.
 It supports multiple [compatibility layers](https://github.com/tkashkin/GameHub/wiki/Compatibility-layers) for non-native games:
 * Wine / Proton
 * DOSBox
+* ScummVM
 * RetroArch
 
 It also allows to add custom emulators.

@@ -30,6 +30,7 @@ namespace GameHub.Data.Compat
 		private ArrayList<string> emulator_names = new ArrayList<string>();
 
 		private CompatTool.ComboOption emu_option;
+		private CompatTool.BoolOption game_dir_option;
 
 		public CustomEmulator()
 		{
@@ -45,10 +46,11 @@ namespace GameHub.Data.Compat
 			installed = true;
 
 			emu_option = new CompatTool.ComboOption("emulator", _("Emulator"), emulator_names, null);
+			game_dir_option = new CompatTool.BoolOption("launch_in_game_dir", _("Launch in game directory"), false);
 
 			update_emulators();
 
-			options = { emu_option };
+			options = { emu_option, game_dir_option };
 		}
 
 		public void update_emulators()
@@ -78,7 +80,7 @@ namespace GameHub.Data.Compat
 			var emu = Tables.Emulators.by_name(emu_option.value);
 			if(emu == null) return;
 
-			yield emu.run_game(runnable as Game);
+			yield emu.run_game(runnable as Game, game_dir_option.enabled);
 		}
 	}
 }

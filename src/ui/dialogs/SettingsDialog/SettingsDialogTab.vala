@@ -18,7 +18,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Granite;
+
 using GameHub.Utils;
+using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog
 {
@@ -72,14 +74,14 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			return add_widget(hbox);
 		}
 
-		protected Box add_file_chooser(string text, FileChooserAction mode, string val, owned EntryAction action, bool create=true)
+		protected Box add_file_chooser(string text, FileChooserAction mode, string val, owned EntryAction action, bool create=true, string? icon=null, bool allow_url=false, bool allow_executable=false)
 		{
-			var chooser = new FileChooserButton(text, mode);
-			chooser.create_folders = create;
-			chooser.show_hidden = true;
-			chooser.select_filename(FSUtils.expand(val));
-			chooser.tooltip_text = chooser.get_filename();
-			chooser.file_set.connect(() => { chooser.tooltip_text = chooser.get_filename(); action(chooser.get_filename()); });
+			var chooser = new FileChooserEntry(text, mode, icon, null, allow_url, allow_executable);
+			chooser.chooser.create_folders = create;
+			chooser.chooser.show_hidden = true;
+			chooser.select_file(FSUtils.file(val));
+			chooser.tooltip_text = chooser.file.get_path();
+			chooser.file_set.connect(() => { chooser.tooltip_text = chooser.file != null ? chooser.file.get_path() : null; action(chooser.tooltip_text); });
 			chooser.set_size_request(280, -1);
 
 			var label = new Label(text);
