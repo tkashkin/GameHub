@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-13 04:37+0300\n"
+"POT-Creation-Date: 2018-11-20 01:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,47 +46,47 @@ msgstr ""
 msgid "Part %u of %u: "
 msgstr ""
 
-#: src/data/Game.vala:422
+#: src/data/Game.vala:424
 msgctxt "status"
 msgid "Running"
 msgstr ""
 
-#: src/data/Game.vala:425
+#: src/data/Game.vala:427
 msgctxt "status"
 msgid "Installed"
 msgstr ""
 
-#: src/data/Game.vala:426
+#: src/data/Game.vala:428
 msgctxt "status"
 msgid "Installing"
-msgstr ""
-
-#: src/data/Game.vala:427
-msgctxt "status"
-msgid "Download started"
 msgstr ""
 
 #: src/data/Game.vala:429
 msgctxt "status"
+msgid "Download started"
+msgstr ""
+
+#: src/data/Game.vala:431
+msgctxt "status"
 msgid "Not installed"
-msgstr ""
-
-#: src/data/Game.vala:439
-msgctxt "status_header"
-msgid "Installed"
-msgstr ""
-
-#: src/data/Game.vala:440
-msgctxt "status_header"
-msgid "Installing"
 msgstr ""
 
 #: src/data/Game.vala:441
 msgctxt "status_header"
-msgid "Downloading"
+msgid "Installed"
+msgstr ""
+
+#: src/data/Game.vala:442
+msgctxt "status_header"
+msgid "Installing"
 msgstr ""
 
 #: src/data/Game.vala:443
+msgctxt "status_header"
+msgid "Downloading"
+msgstr ""
+
+#: src/data/Game.vala:445
 msgctxt "status_header"
 msgid "Not installed"
 msgstr ""
@@ -454,7 +454,7 @@ msgid "%s: Properties"
 msgstr ""
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:66
-#: src/ui/views/GamesView/FiltersPopover.vala:152
+#: src/ui/views/GamesView/FiltersPopover.vala:153
 msgid "Tags"
 msgstr ""
 
@@ -679,25 +679,25 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:885
+#: src/ui/views/GamesView/GamesView.vala:892
 msgid "Updating game info"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:891
+#: src/ui/views/GamesView/GamesView.vala:898
 #, c-format
 msgid "Updating %s game info"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:909
+#: src/ui/views/GamesView/GamesView.vala:916
 msgid "Merging games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:925
+#: src/ui/views/GamesView/GamesView.vala:932
 #, c-format
 msgid "Merging games from %s"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:942
+#: src/ui/views/GamesView/GamesView.vala:949
 #, c-format
 msgid "Merging %s (%s)"
 msgstr ""
