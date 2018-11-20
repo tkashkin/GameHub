@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Automatically generated, 2018.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
+# Allan Nordhøy <epost@anotheragency.no>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-20 01:35+0300\n"
-"PO-Revision-Date: 2018-11-20 18:43+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2018-11-20 22:38+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -50,7 +51,7 @@ msgstr "Del %u av %u: "
 #: src/data/Game.vala:424
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "Kjører"
 
 #: src/data/Game.vala:427
 msgctxt "status"
@@ -146,7 +147,7 @@ msgstr "Skru av esync"
 
 #: src/data/compat/Proton.vala:48
 msgid "Disable DirectX 11 compatibility layer"
-msgstr ""
+msgstr "Skru av DirextX 11-kompabilitetslag"
 
 #: src/data/compat/Proton.vala:49
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
@@ -158,27 +159,30 @@ msgstr "Vis DXVK-infooverlag"
 
 #: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:68
 msgid "Open prefix directory"
-msgstr ""
+msgstr "Åpne prefiks-mappe"
 
 #: src/data/compat/Proton.vala:71 src/data/compat/Wine.vala:71
 msgid "Run winecfg"
-msgstr ""
+msgstr "Kjør winecfg"
 
 #: src/data/compat/Proton.vala:74 src/data/compat/Wine.vala:74
+#, fuzzy
 msgid "Run winetricks"
-msgstr ""
+msgstr "Kjør winetricks"
 
 #: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
+#, fuzzy
 msgid "Run taskmgr"
-msgstr ""
+msgstr "Kjør taskmgr"
 
 #: src/data/compat/Proton.vala:80 src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
-msgstr ""
+msgstr "Drep programmer i prefiks"
 
 #: src/data/compat/Wine.vala:55
+#, fuzzy
 msgid "InnoSetup default options"
-msgstr ""
+msgstr "Forvalgte valg for InnoSetup"
 
 #: src/data/compat/Wine.vala:59
 msgid "Silent installation"
@@ -218,7 +222,7 @@ msgstr "Emulator"
 
 #: src/data/compat/CustomEmulator.vala:49
 msgid "Launch in game directory"
-msgstr ""
+msgstr "Kjør i spillmappe"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
@@ -272,7 +276,7 @@ msgstr "Flett spill fra forskjellige kilder"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:45
 msgid "Show non-native games"
-msgstr ""
+msgstr "Vis spill som ikke er lokale for plattformen"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:46
 msgid "Use compatibility layers and consider Windows games compatible"
@@ -495,11 +499,15 @@ msgid "Overlays are disabled"
 msgstr "Overlag er avskrudd"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:68
+#, fuzzy
 msgid ""
 "Enable overlays to manage DLCs and mods\n"
 "\n"
 "Enabling will move game to the “base“ overlay"
 msgstr ""
+"Skru på overlegg for å behandle nedlastbart innhold og mod-er\n"
+"\n"
+"Å skru dette på vil flytte spillet til \"base\"-overlegget."
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 #: src/ui/views/GamesView/GameContextMenu.vala:64
@@ -561,8 +569,9 @@ msgid "Authentication required"
 msgstr "Identitetsbekreftelse kreves"
 
 #: src/ui/views/WelcomeView.vala:145
+#, fuzzy
 msgid "Authenticating..."
-msgstr ""
+msgstr "Identitetsbekrefter…"
 
 #: src/ui/views/WelcomeView.vala:156
 #, c-format
@@ -656,7 +665,7 @@ msgstr "Legg till noen spill med pluss-knappen"
 #: src/ui/views/GamesView/GamesView.vala:541
 #, c-format
 msgid "No %s games"
-msgstr ""
+msgstr "Ingen %s-spill"
 
 #: src/ui/views/GamesView/GamesView.vala:542
 msgid "Get some Linux-compatible games"
@@ -677,6 +686,8 @@ msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
+"Ingen spill ble innlastet fra Steam. Sett ditt spilllistepersonvern til \""
+"offentlig\" for å bruke din egen Steam-API-nøkkel i innstillingene."
 
 #: src/ui/views/GamesView/GamesView.vala:673
 msgid "Privacy"
@@ -722,7 +733,7 @@ msgstr "Avbryt nedlasting"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:68
 msgid "Sort:"
-msgstr ""
+msgstr "Sortering:"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:76
 msgid "Select game executable"
@@ -739,7 +750,7 @@ msgstr "Detaljer"
 #: src/ui/views/GamesView/GameContextMenu.vala:56
 msgctxt "game_context_menu"
 msgid "Favorite"
-msgstr ""
+msgstr "Favoritt"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:60
 msgctxt "game_context_menu"
@@ -785,26 +796,26 @@ msgstr "Spillegenskaper"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:55
 msgid "Achievements"
-msgstr ""
+msgstr "Prestasjoner"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:103
 #, c-format
 msgid "Unlocked: %s"
-msgstr ""
+msgstr "Opplåst: %s"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:108
-#, c-format
+#, c-format, fuzzy
 msgid "Global percentage: %g%%"
-msgstr ""
+msgstr "Global prosentsats: %g%%"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:47
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:61
 msgid "Playtime"
-msgstr ""
+msgstr "Spilltid"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:53
 msgid "Playtime (local)"
-msgstr ""
+msgstr "Spilltid (lokal)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:70
 msgid "Last launch"
@@ -814,13 +825,13 @@ msgstr "Sist kjørt"
 #, c-format
 msgctxt "time"
 msgid "%dh"
-msgstr ""
+msgstr "%dt"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:82
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr ""
+msgstr "%dm"
 
 #: src/ui/views/GameDetailsView/blocks/Description.vala:49
 msgid "Description"
@@ -865,17 +876,17 @@ msgstr "Kompabilitetslag:"
 #: src/utils/Settings.vala:43
 msgctxt "sort_mode"
 msgid "By name"
-msgstr ""
+msgstr "Etter navn"
 
 #: src/utils/Settings.vala:44
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr ""
+msgstr "Etter siste kjøring"
 
 #: src/utils/Settings.vala:45
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr ""
+msgstr "Etter spilltid"
 
 #: src/utils/downloader/Downloader.vala:155
 msgctxt "dl_status"
@@ -901,13 +912,13 @@ msgstr "Nedlasting mislyktes"
 #, c-format
 msgctxt "dl_status"
 msgid "Downloading: %d%% (%s / %s)"
-msgstr ""
+msgstr "Laster ned: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:162
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
-msgstr ""
+msgstr "Pauset: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:164
 msgctxt "dl_status"
