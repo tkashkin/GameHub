@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-20 01:35+0300\n"
-"PO-Revision-Date: 2018-11-20 22:38+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2018-11-20 22:41+0000\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -166,12 +166,10 @@ msgid "Run winecfg"
 msgstr "Kjør winecfg"
 
 #: src/data/compat/Proton.vala:74 src/data/compat/Wine.vala:74
-#, fuzzy
 msgid "Run winetricks"
 msgstr "Kjør winetricks"
 
 #: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
-#, fuzzy
 msgid "Run taskmgr"
 msgstr "Kjør taskmgr"
 
@@ -180,7 +178,6 @@ msgid "Kill apps in prefix"
 msgstr "Drep programmer i prefiks"
 
 #: src/data/compat/Wine.vala:55
-#, fuzzy
 msgid "InnoSetup default options"
 msgstr "Forvalgte valg for InnoSetup"
 
@@ -499,7 +496,6 @@ msgid "Overlays are disabled"
 msgstr "Overlag er avskrudd"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:68
-#, fuzzy
 msgid ""
 "Enable overlays to manage DLCs and mods\n"
 "\n"
@@ -507,7 +503,7 @@ msgid ""
 msgstr ""
 "Skru på overlegg for å behandle nedlastbart innhold og mod-er\n"
 "\n"
-"Å skru dette på vil flytte spillet til \"base\"-overlegget."
+"Å skru dette på vil flytte spillet til \"base\"-overlegget"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 #: src/ui/views/GamesView/GameContextMenu.vala:64
@@ -569,7 +565,6 @@ msgid "Authentication required"
 msgstr "Identitetsbekreftelse kreves"
 
 #: src/ui/views/WelcomeView.vala:145
-#, fuzzy
 msgid "Authenticating..."
 msgstr "Identitetsbekrefter…"
 
@@ -804,7 +799,7 @@ msgid "Unlocked: %s"
 msgstr "Opplåst: %s"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:108
-#, c-format, fuzzy
+#, c-format
 msgid "Global percentage: %g%%"
 msgstr "Global prosentsats: %g%%"
 
