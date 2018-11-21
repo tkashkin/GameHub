@@ -35,6 +35,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			add_switch(_("Use dark theme"), ui.dark_theme, v => { ui.dark_theme = v; });
 			add_switch(_("Compact list"), ui.compact_list, v => { ui.compact_list = v; });
+			add_switch(_("Show platform icons in grid view"), ui.show_grid_icons, v => { ui.show_grid_icons = v; });
 
 			add_separator();
 

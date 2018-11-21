@@ -28,6 +28,7 @@ namespace GameHub.Data.Sources.User
 
 		public override string id { get { return "user"; } }
 		public override string name { get { return _("User games"); } }
+		public override string name_from { owned get { return name; } }
 		public override string icon { get { return "avatar-default-symbolic"; } }
 
 		public User()

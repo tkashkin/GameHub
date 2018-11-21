@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 01:35+0300\n"
+"POT-Creation-Date: 2018-11-21 05:51+0300\n"
 "PO-Revision-Date: 2018-11-08 23:20+0300\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: none\n"
@@ -91,6 +91,11 @@ msgstr "Загрузка"
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Не установленные"
+
+#: src/data/GameSource.vala:31
+#, c-format
+msgid "%s games"
+msgstr "Игры из %s"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
@@ -267,20 +272,24 @@ msgstr "Использовать тёмную тему"
 msgid "Compact list"
 msgstr "Компактный список"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:41
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:38
+msgid "Show platform icons in grid view"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:42
 msgid "Merge games from different sources"
 msgstr "Объединять игры из разных источников"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:45
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:46
 msgid "Show non-native games"
 msgstr "Показывать ненативные игры"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:46
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:47
 msgid "Use compatibility layers and consider Windows games compatible"
 msgstr ""
 "Использовать слои совместимости и считать игры для Windows совместимыми"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:50
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:51
 msgid "Use imported tags"
 msgstr "Использовать импортированные теги"
 
@@ -601,11 +610,6 @@ msgstr "Список"
 #: src/ui/views/GamesView/GamesView.vala:166
 msgid "All games"
 msgstr "Все игры"
-
-#: src/ui/views/GamesView/GamesView.vala:170
-#, c-format
-msgid "%s games"
-msgstr "Игры из %s"
 
 #: src/ui/views/GamesView/GamesView.vala:177
 msgid "Downloads"
