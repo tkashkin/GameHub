@@ -28,6 +28,7 @@ namespace GameHub.Data
 	{
 		public virtual string id { get { return ""; } }
 		public virtual string name { get { return ""; } }
+		public virtual string name_from { owned get { return _("%s games").printf(name); } }
 		public virtual string icon { get { return ""; } }
 		public virtual string auth_description { owned get { return ""; } }
 

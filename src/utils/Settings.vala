@@ -91,6 +91,7 @@ namespace GameHub.Settings
 	{
 		public bool dark_theme { get; set; }
 		public bool compact_list { get; set; }
+		public bool show_grid_icons { get; set; }
 
 		public bool merge_games { get; set; }
 

@@ -167,7 +167,7 @@ namespace GameHub.UI.Views.GamesView
 
 			foreach(var src in sources)
 			{
-				add_filter_button(src.icon, _("%s games").printf(src.name));
+				add_filter_button(src.icon, src.name_from);
 				filter.set_item_visible((int) filter.n_items - 1, src.games_count > 0);
 			}
 

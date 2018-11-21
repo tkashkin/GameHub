@@ -168,6 +168,12 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			show_all();
+
+			var ui_settings = Settings.UI.get_instance();
+			src_icons.visible = platform_icons.visible = ui_settings.show_grid_icons;
+			ui_settings.notify["show-grid-icons"].connect(() => {
+				src_icons.visible = platform_icons.visible = ui_settings.show_grid_icons;
+			});
 		}
 
 		public GameCard(Game game)

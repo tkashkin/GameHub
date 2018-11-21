@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 01:35+0300\n"
+"POT-Creation-Date: 2018-11-21 05:51+0300\n"
 "PO-Revision-Date: 2018-11-20 01:35+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -88,6 +88,11 @@ msgstr ""
 #: src/data/Game.vala:445
 msgctxt "status_header"
 msgid "Not installed"
+msgstr ""
+
+#: src/data/GameSource.vala:31
+#, c-format
+msgid "%s games"
 msgstr ""
 
 #: src/data/sources/steam/Steam.vala:43
@@ -262,19 +267,23 @@ msgstr ""
 msgid "Compact list"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:41
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:38
+msgid "Show platform icons in grid view"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:42
 msgid "Merge games from different sources"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:45
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:46
 msgid "Show non-native games"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:46
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:47
 msgid "Use compatibility layers and consider Windows games compatible"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:50
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:51
 msgid "Use imported tags"
 msgstr ""
 
@@ -591,11 +600,6 @@ msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:166
 msgid "All games"
-msgstr ""
-
-#: src/ui/views/GamesView/GamesView.vala:170
-#, c-format
-msgid "%s games"
 msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:177
