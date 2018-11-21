@@ -168,12 +168,6 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			show_all();
-
-			var ui_settings = Settings.UI.get_instance();
-			src_icons.visible = platform_icons.visible = ui_settings.show_grid_icons;
-			ui_settings.notify["show-grid-icons"].connect(() => {
-				src_icons.visible = platform_icons.visible = ui_settings.show_grid_icons;
-			});
 		}
 
 		public GameCard(Game game)
@@ -245,6 +239,8 @@ namespace GameHub.UI.Views.GamesView
 				Utils.load_image.begin(image, game.image, "image");
 			});
 			game.notify_property("image");
+
+			Settings.UI.get_instance().notify["show-grid-icons"].connect(update);
 		}
 
 		private void run_game()
@@ -302,6 +298,8 @@ namespace GameHub.UI.Views.GamesView
 				platform_icons.add(icon);
 			}
 			platform_icons.show_all();
+
+			src_icons.visible = platform_icons.visible = Settings.UI.get_instance().show_grid_icons;
 		}
 	}
 }
