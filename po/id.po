@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Automatically generated, 2018.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
+# ditokp <ditokpl@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-21 05:51+0300\n"
-"PO-Revision-Date: 2018-11-24 09:38+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2018-11-24 17:10+0000\n"
+"Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
 "translations/id/>\n"
 "Language: id\n"
@@ -40,7 +41,7 @@ msgstr "Batal"
 
 #: src/data/Runnable.vala:125 src/ui/widgets/FileChooserEntry.vala:47
 msgid "Select directory"
-msgstr ""
+msgstr "Pilih direktori"
 
 #: src/data/Runnable.vala:354
 #, c-format
@@ -50,47 +51,47 @@ msgstr "Bagian %u dari %u: "
 #: src/data/Game.vala:424
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "Menjalankan"
 
 #: src/data/Game.vala:427
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "Terpasang"
 
 #: src/data/Game.vala:428
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "Memasang"
 
 #: src/data/Game.vala:429
 msgctxt "status"
 msgid "Download started"
-msgstr ""
+msgstr "Mengunduh dimulai"
 
 #: src/data/Game.vala:431
 msgctxt "status"
 msgid "Not installed"
-msgstr ""
+msgstr "Tidak terpasang"
 
 #: src/data/Game.vala:441
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "Terpasang"
 
 #: src/data/Game.vala:442
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "Memasang"
 
 #: src/data/Game.vala:443
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "Mengunduh"
 
 #: src/data/Game.vala:445
 msgctxt "status_header"
 msgid "Not installed"
-msgstr ""
+msgstr "Tidak terpasang"
 
 #: src/data/GameSource.vala:31
 #, c-format
@@ -111,7 +112,7 @@ msgstr ""
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr ""
+msgstr "Game pengguna"
 
 #: src/data/db/tables/Tags.vala:192
 msgctxt "tag"
@@ -175,7 +176,7 @@ msgstr "Jalankan winetricks"
 
 #: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
 msgid "Run taskmgr"
-msgstr ""
+msgstr "Jalankan taskmgr"
 
 #: src/data/compat/Proton.vala:80 src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
@@ -211,19 +212,19 @@ msgstr "Nonaktifkan layar penuh"
 
 #: src/data/compat/RetroArch.vala:51
 msgid "Libretro core file"
-msgstr ""
+msgstr "Berkas inti Libretro"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
-msgstr ""
+msgstr "Emulator kustom"
 
 #: src/data/compat/CustomEmulator.vala:48
 msgid "Emulator"
-msgstr ""
+msgstr "Emulator"
 
 #: src/data/compat/CustomEmulator.vala:49
 msgid "Launch in game directory"
-msgstr ""
+msgstr "Luncurkan di direktori game"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
@@ -246,7 +247,7 @@ msgstr "Koleksi"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:74
 msgid "Emulators"
-msgstr ""
+msgstr "Emulator"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:181
 msgid "Open"
@@ -273,7 +274,7 @@ msgstr "Daftar kompak"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:38
 msgid "Show platform icons in grid view"
-msgstr ""
+msgstr "Tampilkan ikon platform di tampilan grid"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:42
 msgid "Merge games from different sources"
@@ -365,7 +366,7 @@ msgstr "Direktori permainan"
 #: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:52
 #: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:55
 msgid "Logout"
-msgstr ""
+msgstr "Keluar"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:46
 msgid "Load games from Humble Trove"
@@ -373,11 +374,11 @@ msgstr "Muat permainan dari Humble Trove"
 
 #: src/ui/dialogs/SettingsDialog/tabs/RetroArch.vala:36
 msgid "Libretro core directory"
-msgstr ""
+msgstr "Direktori inti Libretro"
 
 #: src/ui/dialogs/SettingsDialog/tabs/RetroArch.vala:37
 msgid "Libretro core info directory"
-msgstr ""
+msgstr "Info direktori inti Libretro"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:194
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
@@ -399,7 +400,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:200
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
@@ -424,11 +425,11 @@ msgstr "Argumen"
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:240
 #: src/ui/views/GamesView/AddGamePopover.vala:81
 msgid "Directory"
-msgstr ""
+msgstr "Direktori"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:240
 msgid "Select emulator directory"
-msgstr ""
+msgstr "Pilih direktori emulator"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:277
 #: src/ui/dialogs/GamePropertiesDialog.vala:256
@@ -456,7 +457,7 @@ msgstr "Impor"
 
 #: src/ui/dialogs/InstallDialog.vala:203
 msgid "Download only"
-msgstr ""
+msgstr "Hanya mengunduh"
 
 #: src/ui/dialogs/InstallDialog.vala:278
 msgid "Unknown"
@@ -527,7 +528,7 @@ msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:106
 msgid "Add"
-msgstr ""
+msgstr "Tambahkan"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:121
 msgid "Enable overlays"
@@ -535,7 +536,7 @@ msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:211
 msgid "Open directory"
-msgstr ""
+msgstr "Buka direktori"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:45
@@ -634,7 +635,7 @@ msgstr "Favorit"
 
 #: src/ui/views/GamesView/GamesView.vala:350
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/ui/views/GamesView/GamesView.vala:351
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:79
@@ -644,7 +645,7 @@ msgstr "Kembali"
 #: src/ui/views/GamesView/GamesView.vala:492
 #, c-format
 msgid "Loading games from %s"
-msgstr ""
+msgstr "Memuat game dari %s"
 
 #: src/ui/views/GamesView/GamesView.vala:521
 #, c-format
@@ -655,11 +656,11 @@ msgstr[1] ""
 
 #: src/ui/views/GamesView/GamesView.vala:536
 msgid "No user-added games"
-msgstr ""
+msgstr "Tidak ada game yang ditambahkan pengguna"
 
 #: src/ui/views/GamesView/GamesView.vala:537
 msgid "Add some games using plus button"
-msgstr ""
+msgstr "Tambahkan beberapa game menggunakan tombol plus"
 
 #: src/ui/views/GamesView/GamesView.vala:541
 #, c-format
@@ -694,12 +695,12 @@ msgstr "Privasi"
 
 #: src/ui/views/GamesView/GamesView.vala:892
 msgid "Updating game info"
-msgstr ""
+msgstr "Memperbarui info game"
 
 #: src/ui/views/GamesView/GamesView.vala:898
 #, c-format
 msgid "Updating %s game info"
-msgstr ""
+msgstr "Memperbarui info game %s"
 
 #: src/ui/views/GamesView/GamesView.vala:916
 msgid "Merging games"
@@ -732,7 +733,7 @@ msgstr "Batalkan unduhan"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:68
 msgid "Sort:"
-msgstr ""
+msgstr "Sortir:"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:76
 msgid "Select game executable"
@@ -773,7 +774,7 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:119
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open bonus collection directory"
-msgstr ""
+msgstr "Buka direktori koleksi bonus"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
@@ -795,42 +796,42 @@ msgstr "Properti permainan"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:55
 msgid "Achievements"
-msgstr ""
+msgstr "Penghargaan"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:103
 #, c-format
 msgid "Unlocked: %s"
-msgstr ""
+msgstr "Terbuka: %s"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:108
 #, c-format
 msgid "Global percentage: %g%%"
-msgstr ""
+msgstr "Persentase global: %g%%"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:47
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:61
 msgid "Playtime"
-msgstr ""
+msgstr "Waktu main"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:53
 msgid "Playtime (local)"
-msgstr ""
+msgstr "Waktu main (lokal)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:70
 msgid "Last launch"
-msgstr ""
+msgstr "Terakhir diluncurkan"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:82
 #, c-format
 msgctxt "time"
 msgid "%dh"
-msgstr ""
+msgstr "%d j"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:82
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr ""
+msgstr "%d m"
 
 #: src/ui/views/GameDetailsView/blocks/Description.vala:49
 msgid "Description"
@@ -866,7 +867,7 @@ msgstr "Aliran"
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select file"
-msgstr ""
+msgstr "Pilih berkas"
 
 #: src/ui/widgets/CompatToolPicker.vala:51
 msgid "Compatibility layer:"
@@ -875,17 +876,17 @@ msgstr "Lapisan kompatibilitas:"
 #: src/utils/Settings.vala:43
 msgctxt "sort_mode"
 msgid "By name"
-msgstr ""
+msgstr "Berdasarkan nama"
 
 #: src/utils/Settings.vala:44
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr ""
+msgstr "Berdasarkan terakhir diluncurkan"
 
 #: src/utils/Settings.vala:45
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr ""
+msgstr "Berdasarkan waktu main"
 
 #: src/utils/downloader/Downloader.vala:155
 msgctxt "dl_status"
