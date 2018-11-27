@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # jonathanschaefer <jonathanschaefer@protonmail.com>, 2018.
 # ssantos <ssantos@web.de>, 2018.
+# Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-21 05:51+0300\n"
-"PO-Revision-Date: 2018-11-27 13:48+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2018-11-27 13:51+0000\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -95,7 +96,7 @@ msgstr "Nicht installiert"
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr "%s1 Spiele"
+msgstr "%s Spiele"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
