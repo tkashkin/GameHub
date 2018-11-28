@@ -66,21 +66,14 @@ namespace GameHub.Utils
 				public const string Images = FSUtils.Paths.Cache.Home + "/images";
 
 				public const string Database = FSUtils.Paths.Cache.Home + "/gamehub.db";
+
+				public const string Compat = FSUtils.Paths.Cache.Home + "/compat";
+				public const string WineWrap = FSUtils.Paths.Cache.Compat + "/winewrap";
 			}
 
 			public class Steam
 			{
-				public static string Home
-				{
-					owned get
-					{
-						/*#if FLATPAK
-						return "/home/" + Environment.get_user_name() + "/.var/app/com.valvesoftware.Steam/.steam";
-						#else*/
-						return FSUtils.Paths.Settings.get_instance().steam_home;
-						//#endif
-					}
-				}
+				public static string Home { owned get { return FSUtils.Paths.Settings.get_instance().steam_home; } }
 				public static string Config { owned get { return FSUtils.Paths.Steam.Home + "/steam/config"; } }
 				public static string LoginUsersVDF { owned get { return FSUtils.Paths.Steam.Config + "/loginusers.vdf"; } }
 
@@ -90,32 +83,12 @@ namespace GameHub.Utils
 
 			public class GOG
 			{
-				public static string Games
-				{
-					owned get
-					{
-						/*#if FLATPAK
-						return Environment.get_user_data_dir() + "/games/GOG";
-						#else*/
-						return FSUtils.Paths.Settings.get_instance().gog_games;
-						//#endif
-					}
-				}
+				public static string Games { owned get { return FSUtils.Paths.Settings.get_instance().gog_games; } }
 			}
 
 			public class Humble
 			{
-				public static string Games
-				{
-					owned get
-					{
-						/*#if FLATPAK
-						return Environment.get_user_data_dir() + "/games/HumbleBundle";
-						#else*/
-						return FSUtils.Paths.Settings.get_instance().humble_games;
-						//#endif
-					}
-				}
+				public static string Games { owned get { return FSUtils.Paths.Settings.get_instance().humble_games; } }
 			}
 
 			public class Collection: Granite.Services.Settings
@@ -295,7 +268,7 @@ namespace GameHub.Utils
 
 		public static void rm(string path, string? file=null, string flags="-f", HashMap<string, string>? variables=null)
 		{
-			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables)});
+			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") });
 		}
 
 		public static void make_dirs()

@@ -21,6 +21,7 @@ src/data/db/tables/Emulators.vala
 src/data/CompatTool.vala
 src/data/compat/CustomScript.vala
 src/data/compat/Innoextract.vala
+src/data/compat/WineWrap.vala
 src/data/compat/Proton.vala
 src/data/compat/Wine.vala
 src/data/compat/DOSBox.vala

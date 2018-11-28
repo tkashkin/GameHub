@@ -145,7 +145,7 @@
 }
 .gamecard .running-indicator
 {
-	opacity: 1 !important;
+	opacity: 1;
 }
 
 /* Some granite styles */

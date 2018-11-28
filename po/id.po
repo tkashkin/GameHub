@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-21 05:51+0300\n"
+"POT-Creation-Date: 2018-11-28 12:05+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -142,6 +142,23 @@ msgstr "Sunting skrip"
 msgid "Edit custom script"
 msgstr "Sunting skrip ubahan"
 
+#: src/data/compat/WineWrap.vala:57
+#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
+#: src/ui/dialogs/CompatRunDialog.vala:100
+#: src/ui/views/GamesView/GameContextMenu.vala:42
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+msgid "Run"
+msgstr "Jalankan"
+
+#: src/data/compat/WineWrap.vala:60
+msgid "Show WineWrap menu"
+msgstr ""
+
+#: src/data/compat/WineWrap.vala:63 src/data/compat/Proton.vala:80
+#: src/data/compat/Wine.vala:80
+msgid "Kill apps in prefix"
+msgstr ""
+
 #: src/data/compat/Proton.vala:43 src/data/compat/Wine.vala:49
 msgid "Environment variables"
 msgstr ""
@@ -177,10 +194,6 @@ msgstr "Jalankan winetricks"
 #: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
 msgid "Run taskmgr"
 msgstr "Jalankan taskmgr"
-
-#: src/data/compat/Proton.vala:80 src/data/compat/Wine.vala:80
-msgid "Kill apps in prefix"
-msgstr ""
 
 #: src/data/compat/Wine.vala:55
 msgid "InnoSetup default options"
@@ -401,13 +414,6 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:200
 msgid "Save"
 msgstr "Simpan"
-
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
-#: src/ui/dialogs/CompatRunDialog.vala:100
-#: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
-msgid "Run"
-msgstr "Jalankan"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:212
 #: src/ui/dialogs/GamePropertiesDialog.vala:130
