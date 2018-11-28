@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 01:35+0300\n"
+"POT-Creation-Date: 2018-11-28 12:05+0300\n"
 "PO-Revision-Date: 2018-11-23 04:07+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -142,6 +142,23 @@ msgstr "Rediger skript"
 msgid "Edit custom script"
 msgstr "Rediger egendefinert skript"
 
+#: src/data/compat/WineWrap.vala:57
+#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
+#: src/ui/dialogs/CompatRunDialog.vala:100
+#: src/ui/views/GamesView/GameContextMenu.vala:42
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+msgid "Run"
+msgstr "Kjør"
+
+#: src/data/compat/WineWrap.vala:60
+msgid "Show WineWrap menu"
+msgstr ""
+
+#: src/data/compat/WineWrap.vala:63 src/data/compat/Proton.vala:80
+#: src/data/compat/Wine.vala:80
+msgid "Kill apps in prefix"
+msgstr "Drep programmer i prefiks"
+
 #: src/data/compat/Proton.vala:43 src/data/compat/Wine.vala:49
 msgid "Environment variables"
 msgstr "Miljøvariabler"
@@ -177,10 +194,6 @@ msgstr "Kjør winetricks"
 #: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
 msgid "Run taskmgr"
 msgstr "Kjør taskmgr"
-
-#: src/data/compat/Proton.vala:80 src/data/compat/Wine.vala:80
-msgid "Kill apps in prefix"
-msgstr "Drep programmer i prefiks"
 
 #: src/data/compat/Wine.vala:55
 msgid "InnoSetup default options"
@@ -399,13 +412,6 @@ msgstr "Installasjonskandidat"
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:200
 msgid "Save"
 msgstr "Lagre"
-
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
-#: src/ui/dialogs/CompatRunDialog.vala:100
-#: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
-msgid "Run"
-msgstr "Kjør"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:212
 #: src/ui/dialogs/GamePropertiesDialog.vala:130
@@ -685,8 +691,8 @@ msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
-"Ingen spill ble innlastet fra Steam. Sett ditt spilllistepersonvern til \""
-"offentlig\" for å bruke din egen Steam-API-nøkkel i innstillingene."
+"Ingen spill ble innlastet fra Steam. Sett ditt spilllistepersonvern til "
+"\"offentlig\" for å bruke din egen Steam-API-nøkkel i innstillingene."
 
 #: src/ui/views/GamesView/GamesView.vala:673
 msgid "Privacy"

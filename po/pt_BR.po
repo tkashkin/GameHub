@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-21 05:51+0300\n"
+"POT-Creation-Date: 2018-11-28 12:05+0300\n"
 "PO-Revision-Date: 2018-11-10 22:04+0300\n"
 "Last-Translator: Leandro Stanger\n"
 "Language-Team: none\n"
@@ -140,6 +140,23 @@ msgstr "Editar script"
 msgid "Edit custom script"
 msgstr "Editar script personalizado"
 
+#: src/data/compat/WineWrap.vala:57
+#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
+#: src/ui/dialogs/CompatRunDialog.vala:100
+#: src/ui/views/GamesView/GameContextMenu.vala:42
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+msgid "Run"
+msgstr "Jogar"
+
+#: src/data/compat/WineWrap.vala:60
+msgid "Show WineWrap menu"
+msgstr ""
+
+#: src/data/compat/WineWrap.vala:63 src/data/compat/Proton.vala:80
+#: src/data/compat/Wine.vala:80
+msgid "Kill apps in prefix"
+msgstr "Mate aplicativos no prefixo"
+
 #: src/data/compat/Proton.vala:43 src/data/compat/Wine.vala:49
 msgid "Environment variables"
 msgstr "Variáveis ambientais"
@@ -175,10 +192,6 @@ msgstr "Executar winetricks"
 #: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
 msgid "Run taskmgr"
 msgstr "Executar taskmgr"
-
-#: src/data/compat/Proton.vala:80 src/data/compat/Wine.vala:80
-msgid "Kill apps in prefix"
-msgstr "Mate aplicativos no prefixo"
 
 #: src/data/compat/Wine.vala:55
 msgid "InnoSetup default options"
@@ -400,13 +413,6 @@ msgstr "Instalar"
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:200
 msgid "Save"
 msgstr "Salve"
-
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
-#: src/ui/dialogs/CompatRunDialog.vala:100
-#: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
-msgid "Run"
-msgstr "Jogar"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:212
 #: src/ui/dialogs/GamePropertiesDialog.vala:130

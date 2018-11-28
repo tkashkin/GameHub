@@ -49,6 +49,7 @@ sources = [
 	'data/CompatTool.vala',
 	'data/compat/CustomScript.vala',
 	'data/compat/Innoextract.vala',
+	'data/compat/WineWrap.vala',
 	'data/compat/Proton.vala',
 	'data/compat/Wine.vala',
 	'data/compat/DOSBox.vala',
