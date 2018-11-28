@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-28 12:05+0300\n"
-"PO-Revision-Date: 2018-11-24 17:10+0000\n"
+"PO-Revision-Date: 2018-11-30 01:08+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -150,7 +150,7 @@ msgstr "Uitvoeren"
 
 #: src/data/compat/WineWrap.vala:60
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "WineWrap-menu tonen"
 
 #: src/data/compat/WineWrap.vala:63 src/data/compat/Proton.vala:80
 #: src/data/compat/Wine.vala:80
