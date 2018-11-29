@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Heimen Stoffels <vistausss@outlook.com>, 2018.
+# Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-28 12:05+0300\n"
 "PO-Revision-Date: 2018-11-30 01:08+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
 "Language: nl\n"
@@ -517,7 +518,7 @@ msgid ""
 msgstr ""
 "Schakel overlays in om DLC's en mods te beheren\n"
 "\n"
-"Door dit in te schakelen wordt het spel verplaatst naar de \"basis\"-overlay"
+"Door dit in te schakelen wordt het spel verplaatst naar de \"base\"-overlay"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 #: src/ui/views/GamesView/GameContextMenu.vala:64
