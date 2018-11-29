@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-28 12:05+0300\n"
-"PO-Revision-Date: 2018-11-27 13:51+0000\n"
+"PO-Revision-Date: 2018-11-30 01:08+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -521,7 +521,7 @@ msgid ""
 msgstr ""
 "Aktivieren von Overlays zur Verwaltung von DLCs und Mods\n"
 "\n"
-"Durch das Aktivieren wird das Spiel auf das \"Basis\"-Overlay verschoben"
+"Durch das Aktivieren wird das Spiel auf das \"base\"-Overlay verschoben"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 #: src/ui/views/GamesView/GameContextMenu.vala:64
