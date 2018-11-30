@@ -4,13 +4,14 @@
 # jonathanschaefer <jonathanschaefer@protonmail.com>, 2018.
 # ssantos <ssantos@web.de>, 2018.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
+# Ettore Atalan <atalanttore@googlemail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-28 12:05+0300\n"
-"PO-Revision-Date: 2018-11-30 01:08+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2018-11-30 04:58+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -152,7 +153,7 @@ msgstr "Ausführen"
 
 #: src/data/compat/WineWrap.vala:60
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "WineWrap-Menü anzeigen"
 
 #: src/data/compat/WineWrap.vala:63 src/data/compat/Proton.vala:80
 #: src/data/compat/Wine.vala:80
@@ -252,7 +253,7 @@ msgstr "Einige Einstellungen werden nach dem Neustart übernommen"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:68
 msgid "Interface"
-msgstr "Interface"
+msgstr "Schnittstelle"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:69
 msgid "Collection"
