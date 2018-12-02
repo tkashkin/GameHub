@@ -30,6 +30,8 @@ namespace GameHub.Data.Sources.GOG
 
 		public File? bonus_content_dir { get; protected set; default = null; }
 
+		public bool has_updates { get; set; default = false; }
+
 		private bool game_info_updated = false;
 
 		public GOGGame.default(){}
@@ -72,6 +74,8 @@ namespace GameHub.Data.Sources.GOG
 					}
 				}
 			}
+
+			has_updates = json_obj.has_member("updates") && json_obj.get_int_member("updates") > 0;
 
 			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
 			executable_path = "$game_dir/start.sh";
@@ -378,6 +382,10 @@ namespace GameHub.Data.Sources.GOG
 					warning("[GOGGame.update_status] Error while reading gameinfo: %s", e.message);
 				}
 			}
+			else
+			{
+				update_version();
+			}
 
 			string g = name;
 			string? d = null;
@@ -490,7 +498,7 @@ namespace GameHub.Data.Sources.GOG
 			public string lang;
 			public string lang_full;
 
-			public override string name { get { return lang_full; } }
+			public override string name { owned get { return lang_full + (version != null ? " (" + version + ")" : ""); } }
 
 			public Installer(GOGGame game, Json.Object json)
 			{
@@ -510,6 +518,7 @@ namespace GameHub.Data.Sources.GOG
 				}
 
 				full_size = json.get_int_member("total_size");
+				version = json.get_string_member("version");
 
 				if(!json.has_member("files") || json.get_member("files").get_node_type() != Json.NodeType.ARRAY) return;
 

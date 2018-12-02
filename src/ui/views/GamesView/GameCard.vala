@@ -42,6 +42,9 @@ namespace GameHub.UI.Views.GamesView
 		private Box src_icons;
 		private Image src_icon;
 
+		private Image favorite_icon;
+		private Image updated_icon;
+
 		private Box platform_icons;
 
 		private Box actions;
@@ -94,6 +97,18 @@ namespace GameHub.UI.Views.GamesView
 			label.lines = 3;
 			label.set_line_wrap(true);
 
+			favorite_icon = new Image.from_icon_name("gh-game-favorite-symbolic", IconSize.BUTTON);
+			favorite_icon.valign = Align.END;
+			favorite_icon.halign = Align.START;
+			favorite_icon.margin = 6;
+
+			updated_icon = new Image.from_icon_name("gh-game-updated-symbolic", IconSize.BUTTON);
+			updated_icon.valign = Align.END;
+			updated_icon.halign = Align.END;
+			updated_icon.margin = 6;
+
+			favorite_icon.pixel_size = updated_icon.pixel_size = 12;
+
 			status_label = new Label("");
 			status_label.get_style_context().add_class("status");
 			status_label.xpad = 8;
@@ -128,6 +143,8 @@ namespace GameHub.UI.Views.GamesView
 			content.add_overlay(info);
 			content.add_overlay(platform_icons);
 			content.add_overlay(src_icons);
+			content.add_overlay(favorite_icon);
+			content.add_overlay(updated_icon);
 			content.add_overlay(progress_bar);
 			content.add_overlay(running_indicator);
 
@@ -186,8 +203,9 @@ namespace GameHub.UI.Views.GamesView
 
 			game.status_change.connect(s => {
 				Idle.add(() => {
-					label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
+					label.label = game.name;
 					status_label.label = s.description;
+					favorite_icon.visible = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 					switch(s.state)
 					{
 						case Game.State.UNINSTALLED:
@@ -239,6 +257,18 @@ namespace GameHub.UI.Views.GamesView
 				Utils.load_image.begin(image, game.image, "image");
 			});
 			game.notify_property("image");
+
+			updated_icon.visible = false;
+			if(game is GameHub.Data.Sources.GOG.GOGGame)
+			{
+				game.notify["has-updates"].connect(() => {
+					Idle.add(() => {
+						updated_icon.visible = (game as GameHub.Data.Sources.GOG.GOGGame).has_updates;
+						return Source.REMOVE;
+					});
+				});
+				game.notify_property("has-updates");
+			}
 
 			Settings.UI.get_instance().notify["show-grid-icons"].connect(update);
 		}
