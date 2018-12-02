@@ -191,7 +191,7 @@ namespace GameHub.Data.Sources.User
 		public class Installer: Runnable.Installer
 		{
 			private string game_name;
-			public override string name { get { return game_name; } }
+			public override string name { owned get { return game_name; } }
 
 			public Installer(UserGame game, File installer)
 			{

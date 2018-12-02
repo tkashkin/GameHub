@@ -143,6 +143,47 @@ namespace GameHub.Data
 
 		public virtual async void update_game_info(){}
 
+		protected void update_version()
+		{
+			if(install_dir == null || !install_dir.query_exists()) return;
+
+			var file = install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("version");
+			if(file != null && file.query_exists())
+			{
+				try
+				{
+					string ver;
+					FileUtils.get_contents(file.get_path(), out ver);
+					version = ver;
+				}
+				catch(Error e)
+				{
+					warning("[Game.update_version] Error while reading version: %s", e.message);
+				}
+			}
+		}
+
+		public void save_version(string ver)
+		{
+			version = ver;
+
+			if(install_dir == null || !install_dir.query_exists()) return;
+
+			var file = install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("version");
+			if(file != null)
+			{
+				try
+				{
+					FSUtils.mkdir(file.get_parent().get_path());
+					FileUtils.set_contents(file.get_path(), ver);
+				}
+				catch(Error e)
+				{
+					warning("[Game.update_version] Error while reading version: %s", e.message);
+				}
+			}
+		}
+
 		protected Game.Status _status = new Game.Status(Game.State.UNINSTALLED, null, null);
 		public signal void status_change(Game.Status status);
 		public signal void tags_update();

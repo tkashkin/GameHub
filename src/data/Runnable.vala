@@ -315,8 +315,9 @@ namespace GameHub.Data
 			public Platform platform     { get; protected set; default = CurrentPlatform; }
 			public ArrayList<Part> parts { get; protected set; default = new ArrayList<Part>(); }
 			public int64    full_size    { get; protected set; default = 0; }
+			public string?  version      { get; protected set; }
 
-			public virtual string  name  { get { return id; } }
+			public virtual string  name  { owned get { return id; } }
 
 			public async void install(Runnable runnable, bool dl_only, CompatTool? tool=null)
 			{
@@ -478,6 +479,11 @@ namespace GameHub.Data
 					if(!(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC) && !runnable.executable.query_exists())
 					{
 						runnable.choose_executable();
+					}
+
+					if(game != null && version != null)
+					{
+						game.save_version(version);
 					}
 				}
 				catch(IOError.CANCELLED e){}

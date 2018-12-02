@@ -52,22 +52,35 @@ namespace GameHub.UI.Views.GamesView
 
 			hbox.add(image);
 
+			var label_hbox = new Box(Orientation.HORIZONTAL, 4);
+
+			var favorite_icon = new Image.from_icon_name("gh-game-favorite-symbolic", IconSize.BUTTON);
+			var updated_icon = new Image.from_icon_name("gh-game-updated-symbolic", IconSize.BUTTON);
+			favorite_icon.margin_top = updated_icon.margin_top = 2;
+			favorite_icon.valign = updated_icon.valign = Align.CENTER;
+			favorite_icon.pixel_size = updated_icon.pixel_size = 8;
+
 			var label = new Label(game.name);
 			label.halign = Align.START;
 			label.get_style_context().add_class("category-label");
 
+			label_hbox.add(favorite_icon);
+			label_hbox.add(updated_icon);
+			label_hbox.add(label);
+
 			state_label = new Label(null);
 			state_label.halign = Align.START;
 
-			vbox.add(label);
+			vbox.add(label_hbox);
 			vbox.add(state_label);
 
 			hbox.add(vbox);
 
 			game.status_change.connect(s => {
 				Idle.add(() => {
-					label.label = (game.has_tag(Tables.Tags.BUILTIN_FAVORITES) ? "★ " : "") + game.name;
+					label.label = game.name;
 					state_label.label = s.description;
+					favorite_icon.visible = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 					update_icon();
 					changed();
 					return Source.REMOVE;
@@ -101,6 +114,18 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			show_all();
+
+			updated_icon.visible = false;
+			if(game is GameHub.Data.Sources.GOG.GOGGame)
+			{
+				game.notify["has-updates"].connect(() => {
+					Idle.add(() => {
+						updated_icon.visible = (game as GameHub.Data.Sources.GOG.GOGGame).has_updates;
+						return Source.REMOVE;
+					});
+				});
+				game.notify_property("has-updates");
+			}
 		}
 
 		public override void show_all()

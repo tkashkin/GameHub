@@ -333,6 +333,14 @@ namespace GameHub.Data.Sources.GOG
 								Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
 							}
 						}
+
+						var g_index = _games.index_of(game);
+						if(g_index >= 0 && g_index < _games.size)
+						{
+							var go = g.get_object();
+							((GOGGame) _games.get(g_index)).has_updates = go.has_member("updates") && go.get_int_member("updates") > 0;
+						}
+
 						if(is_new_game) games_count++;
 					}
 

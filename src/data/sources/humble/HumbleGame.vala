@@ -144,6 +144,8 @@ namespace GameHub.Data.Sources.Humble
 			}
 
 			installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(name));
+
+			update_version();
 		}
 
 		public override async void update_game_info()
@@ -314,7 +316,7 @@ namespace GameHub.Data.Sources.Humble
 			public string? dl_id;
 			public Runnable.Installer.Part part;
 
-			public override string name { get { return dl_name; } }
+			public override string name { owned get { return dl_name; } }
 
 			public Installer(HumbleGame game, string machine_name, string? download_identifier, Platform platform, Json.Object download)
 			{

@@ -224,7 +224,7 @@ namespace GameHub.Data
 		public class Installer: Runnable.Installer
 		{
 			private string emu_name;
-			public override string name { get { return emu_name; } }
+			public override string name { owned get { return emu_name; } }
 
 			public Installer(Emulator emu, File installer)
 			{

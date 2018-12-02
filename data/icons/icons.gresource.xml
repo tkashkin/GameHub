@@ -26,6 +26,9 @@
 		<file alias="scalable/actions/gh-tag-favorites-symbolic.svg">symbolic/tags/tag-favorites.svg</file>
 		<file alias="scalable/actions/gh-tag-hidden-symbolic.svg">symbolic/tags/tag-hidden.svg</file>
 
+		<file alias="scalable/actions/gh-game-favorite-symbolic.svg">symbolic/game-favorite.svg</file>
+		<file alias="scalable/actions/gh-game-updated-symbolic.svg">symbolic/game-updated.svg</file>
+
 		<file alias="scalable/actions/controller-button-a.svg">normal/controller/a.svg</file>
 		<file alias="scalable/actions/controller-button-b.svg">normal/controller/b.svg</file>
 		<file alias="scalable/actions/controller-button-x.svg">normal/controller/x.svg</file>
