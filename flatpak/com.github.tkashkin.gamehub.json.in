@@ -3,7 +3,7 @@
 	"base": "io.elementary.BaseApp",
 	"base-version": "juno",
 	"runtime": "org.gnome.Platform",
-	"runtime-version": "3.28",
+	"runtime-version": "3.30",
 	"sdk": "org.gnome.Sdk",
 	"command": "com.github.tkashkin.gamehub",
 	"separate-locales": false,
