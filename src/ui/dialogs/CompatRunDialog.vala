@@ -92,7 +92,7 @@ namespace GameHub.UI.Dialogs
 				{
 					case ResponseType.ACCEPT:
 						run_with_compat();
-						destroy();
+						hide();
 						break;
 				}
 			});
@@ -110,7 +110,7 @@ namespace GameHub.UI.Dialogs
 			{
 				Idle.add(() => {
 					run_with_compat();
-					destroy();
+					hide();
 					return Source.REMOVE;
 				});
 				return;
@@ -133,6 +133,7 @@ namespace GameHub.UI.Dialogs
 					compat_tool_picker.selected.run_emulator.end(res);
 					RunnableIsLaunched = game.is_running = emulated_game.is_running = false;
 					emulated_game.update_status();
+					destroy();
 				});
 			}
 			else
@@ -146,6 +147,7 @@ namespace GameHub.UI.Dialogs
 					game.update_status();
 					(game as Game).playtime_tracked += ((get_real_time() / 1000000) - (game as Game).last_launch) / 60;
 					game.save();
+					destroy();
 				});
 			}
 

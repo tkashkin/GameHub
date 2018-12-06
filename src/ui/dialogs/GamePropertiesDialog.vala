@@ -270,6 +270,29 @@ namespace GameHub.UI.Dialogs
 				game.notify_property("use-compat");
 			}
 
+			var gh_run_args_header = new HeaderLabel(_("Launch from terminal"));
+			gh_run_args_header.xpad = 8;
+			properties_box.add(gh_run_args_header);
+
+			var gh_run_args_entry = new Entry();
+			gh_run_args_entry.text = ProjectConfig.PROJECT_NAME + " --run " + game.full_id;
+			gh_run_args_entry.editable = false;
+			gh_run_args_entry.primary_icon_name = "utilities-terminal-symbolic";
+			gh_run_args_entry.primary_icon_activatable = false;
+			gh_run_args_entry.secondary_icon_name = "edit-copy-symbolic";
+			gh_run_args_entry.secondary_icon_activatable = true;
+			gh_run_args_entry.secondary_icon_tooltip_text = _("Copy to clipboard");
+			gh_run_args_entry.margin_start = gh_run_args_entry.margin_end = 4;
+			properties_box.add(gh_run_args_entry);
+
+			gh_run_args_entry.icon_press.connect((icon, event) => {
+				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
+				{
+					gh_run_args_entry.select_region(0, -1);
+					gh_run_args_entry.copy_clipboard();
+				}
+			});
+
 			content.add(tags_box);
 			content.add(new Separator(Orientation.VERTICAL));
 			content.add(properties_box);

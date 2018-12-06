@@ -59,7 +59,11 @@ namespace GameHub.Data
 		{
 			if(!RunnableIsLaunched)
 			{
-				new UI.Dialogs.CompatRunDialog(this, is_opened_from_menu);
+				var dlg = new UI.Dialogs.CompatRunDialog(this, is_opened_from_menu);
+				dlg.destroy.connect(() => {
+					Idle.add(run_with_compat.callback);
+				});
+				yield;
 			}
 		}
 

@@ -196,46 +196,44 @@ list:not(:backdrop) row:selected:focus label.category-label
 	color: alpha(#ffffff, 0.8);
 }
 
-GtkListBox.installers-list,
-list.installers-list
+.installers-list
 {
 	background: transparent;
 }
 
 
-GtkListBox.installers-list .list-row,
-list.installers-list row
+.installers-list .list-row,
+.installers-list row
 {
 	border-radius: 2px;
 }
 
-GtkListBox.downloads-list .list-row,
-list.downloads-list row
+.downloads-list .list-row,
+.downloads-list row
 {
 	background: transparent;
 	border-bottom: 1px alpha(#333, 0.3) solid;
 	outline: none;
 }
-GtkListBox.downloads-list .list-row:last-child,
-list.downloads-list row:last-child
+.downloads-list .list-row:last-child,
+.downloads-list row:last-child
 {
 	border-bottom: none;
 }
-GtkListBox.downloads-list .list-row:selected,
-list.downloads-list row:selected
+.downloads-list .list-row:selected,
+.downloads-list row:selected
 {
 	background: transparent;
 	outline: none;
 }
-GtkListBox.downloads-list .list-row:focus,
-list.downloads-list row:focus
+.downloads-list .list-row:focus,
+.downloads-list row:focus
 {
 	background: transparent;
 	outline: none;
 }
 
-GtkLabel.games-list-header,
-label.games-list-header
+.games-list-header
 {
 	background: alpha(#333, 0.1);
 	margin-top: -1px;
