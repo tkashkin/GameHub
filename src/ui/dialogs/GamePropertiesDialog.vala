@@ -282,7 +282,7 @@ namespace GameHub.UI.Dialogs
 			gh_run_args_entry.secondary_icon_name = "edit-copy-symbolic";
 			gh_run_args_entry.secondary_icon_activatable = true;
 			gh_run_args_entry.secondary_icon_tooltip_text = _("Copy to clipboard");
-			gh_run_args_entry.margin_start = gh_run_args_entry.margin_end = 4;
+			gh_run_args_entry.margin_start = gh_run_args_entry.margin_end = gh_run_args_entry.margin_bottom = 4;
 			properties_box.add(gh_run_args_entry);
 
 			gh_run_args_entry.icon_press.connect((icon, event) => {
