@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-28 12:05+0300\n"
+"POT-Creation-Date: 2018-12-06 14:52+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -20,75 +20,89 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.3-dev\n"
 
-#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
+#: src/app.vala:134
+#, fuzzy
+msgid "Run game"
+msgstr "Jalankan taskmgr"
+
+#: src/app.vala:135
+#, fuzzy
+msgid "Show compatibility options dialog"
+msgstr "Paksakan mode pengguna yang ada"
+
+#: src/app.vala:136
+msgid "Show main window"
+msgstr ""
+
+#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr ""
 
-#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
-#: src/data/Runnable.vala:140 src/ui/views/GamesView/GamesView.vala:352
+#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
+#: src/data/Runnable.vala:144 src/ui/views/GamesView/GamesView.vala:352
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
 msgstr "Memilih"
 
-#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
-#: src/data/Runnable.vala:139 src/ui/widgets/FileChooserEntry.vala:53
+#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
+#: src/data/Runnable.vala:143 src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Cancel"
 msgstr "Batal"
 
-#: src/data/Runnable.vala:125 src/ui/widgets/FileChooserEntry.vala:47
+#: src/data/Runnable.vala:129 src/ui/widgets/FileChooserEntry.vala:47
 msgid "Select directory"
 msgstr "Pilih direktori"
 
-#: src/data/Runnable.vala:354
+#: src/data/Runnable.vala:359
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Bagian %u dari %u: "
 
-#: src/data/Game.vala:424
+#: src/data/Game.vala:465
 msgctxt "status"
 msgid "Running"
 msgstr "Menjalankan"
 
-#: src/data/Game.vala:427
+#: src/data/Game.vala:468
 msgctxt "status"
 msgid "Installed"
 msgstr "Terpasang"
 
-#: src/data/Game.vala:428
+#: src/data/Game.vala:469
 msgctxt "status"
 msgid "Installing"
 msgstr "Memasang"
 
-#: src/data/Game.vala:429
+#: src/data/Game.vala:470
 msgctxt "status"
 msgid "Download started"
 msgstr "Mengunduh dimulai"
 
-#: src/data/Game.vala:431
+#: src/data/Game.vala:472
 msgctxt "status"
 msgid "Not installed"
 msgstr "Tidak terpasang"
 
-#: src/data/Game.vala:441
+#: src/data/Game.vala:482
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Terpasang"
 
-#: src/data/Game.vala:442
+#: src/data/Game.vala:483
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Memasang"
 
-#: src/data/Game.vala:443
+#: src/data/Game.vala:484
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Mengunduh"
 
-#: src/data/Game.vala:445
+#: src/data/Game.vala:486
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Tidak terpasang"
@@ -142,7 +156,7 @@ msgstr "Sunting skrip"
 msgid "Edit custom script"
 msgstr "Sunting skrip ubahan"
 
-#: src/data/compat/WineWrap.vala:57
+#: src/data/compat/WineWrap.vala:59
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
@@ -150,11 +164,11 @@ msgstr "Sunting skrip ubahan"
 msgid "Run"
 msgstr "Jalankan"
 
-#: src/data/compat/WineWrap.vala:60
+#: src/data/compat/WineWrap.vala:62
 msgid "Show WineWrap menu"
 msgstr ""
 
-#: src/data/compat/WineWrap.vala:63 src/data/compat/Proton.vala:80
+#: src/data/compat/WineWrap.vala:65 src/data/compat/Proton.vala:80
 #: src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
 msgstr ""
@@ -502,6 +516,14 @@ msgstr "Cari gambar:"
 #: src/ui/dialogs/GamePropertiesDialog.vala:251
 msgid "Compatibility"
 msgstr "Kompatibilitas"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:273
+msgid "Launch from terminal"
+msgstr ""
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:284
+msgid "Copy to clipboard"
+msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
 #, c-format

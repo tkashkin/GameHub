@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-28 12:05+0300\n"
+"POT-Creation-Date: 2018-12-06 14:52+0300\n"
 "PO-Revision-Date: 2018-11-30 01:08+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -16,79 +16,91 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.3-dev\n"
 
-#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
+#: src/app.vala:134
+msgid "Run game"
+msgstr "Запустить игру"
+
+#: src/app.vala:135
+msgid "Show compatibility options dialog"
+msgstr "Показать диалог опций совместимости"
+
+#: src/app.vala:136
+msgid "Show main window"
+msgstr "Показать главное окно"
+
+#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Выберите исполняемый файл"
 
-#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
-#: src/data/Runnable.vala:140 src/ui/views/GamesView/GamesView.vala:352
+#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
+#: src/data/Runnable.vala:144 src/ui/views/GamesView/GamesView.vala:352
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
 msgstr "Выбрать"
 
-#: src/data/Runnable.vala:69 src/data/Runnable.vala:71
-#: src/data/Runnable.vala:139 src/ui/widgets/FileChooserEntry.vala:53
+#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
+#: src/data/Runnable.vala:143 src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/data/Runnable.vala:125 src/ui/widgets/FileChooserEntry.vala:47
+#: src/data/Runnable.vala:129 src/ui/widgets/FileChooserEntry.vala:47
 msgid "Select directory"
 msgstr "Выберите папку"
 
-#: src/data/Runnable.vala:354
+#: src/data/Runnable.vala:359
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Часть %u из %u: "
 
-#: src/data/Game.vala:424
+#: src/data/Game.vala:465
 msgctxt "status"
 msgid "Running"
 msgstr "Запущена"
 
-#: src/data/Game.vala:427
+#: src/data/Game.vala:468
 msgctxt "status"
 msgid "Installed"
 msgstr "Установлена"
 
-#: src/data/Game.vala:428
+#: src/data/Game.vala:469
 msgctxt "status"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:429
+#: src/data/Game.vala:470
 msgctxt "status"
 msgid "Download started"
 msgstr "Загрузка начата"
 
-#: src/data/Game.vala:431
+#: src/data/Game.vala:472
 msgctxt "status"
 msgid "Not installed"
 msgstr "Не установлена"
 
-#: src/data/Game.vala:441
+#: src/data/Game.vala:482
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Установленные"
 
-#: src/data/Game.vala:442
+#: src/data/Game.vala:483
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:443
+#: src/data/Game.vala:484
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Загрузка"
 
-#: src/data/Game.vala:445
+#: src/data/Game.vala:486
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Не установленные"
@@ -142,7 +154,7 @@ msgstr "Редактировать скрипт"
 msgid "Edit custom script"
 msgstr "Редактировать пользовательский скрипт"
 
-#: src/data/compat/WineWrap.vala:57
+#: src/data/compat/WineWrap.vala:59
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
@@ -150,11 +162,11 @@ msgstr "Редактировать пользовательский скрипт
 msgid "Run"
 msgstr "Запустить"
 
-#: src/data/compat/WineWrap.vala:60
+#: src/data/compat/WineWrap.vala:62
 msgid "Show WineWrap menu"
 msgstr "Показать меню WineWrap"
 
-#: src/data/compat/WineWrap.vala:63 src/data/compat/Proton.vala:80
+#: src/data/compat/WineWrap.vala:65 src/data/compat/Proton.vala:80
 #: src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
 msgstr "Завершить приложения в префиксе"
@@ -502,6 +514,14 @@ msgstr "Поиск изображений:"
 #: src/ui/dialogs/GamePropertiesDialog.vala:251
 msgid "Compatibility"
 msgstr "Совместимость"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:273
+msgid "Launch from terminal"
+msgstr "Запустить из терминала"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:284
+msgid "Copy to clipboard"
+msgstr "Копировать в буфер обмена"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
 #, c-format

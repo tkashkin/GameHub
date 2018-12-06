@@ -32,17 +32,22 @@ namespace GameHub
 {
 	public class Application: Granite.Application
 	{
+		public static Application instance;
+
+		private GameHub.UI.Windows.MainWindow? main_window;
+
 		construct
 		{
 			application_id = ProjectConfig.PROJECT_NAME;
-			flags = ApplicationFlags.FLAGS_NONE;
+			flags = ApplicationFlags.HANDLES_COMMAND_LINE;
 			program_name = "GameHub";
 			build_version = ProjectConfig.VERSION;
+			instance = this;
 		}
 
-		protected override void activate()
+		private void init()
 		{
-			info("Distro: %s", Utils.get_distro());
+			if(Platforms != null && GameSources != null && CompatTools != null) return;
 
 			FSUtils.make_dirs();
 
@@ -79,12 +84,23 @@ namespace GameHub
 			var provider = new CssProvider();
 			provider.load_from_resource("/com/github/tkashkin/gamehub/GameHub.css");
 			StyleContext.add_provider_for_screen(Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+		}
 
-			#if MANETTE
-			GameHub.Utils.Gamepad.init();
-			#endif
+		protected override void activate()
+		{
+			info("Distro: %s", Utils.get_distro());
 
-			new GameHub.UI.Windows.MainWindow(this).show_all();
+			if(main_window == null)
+			{
+				init();
+
+				#if MANETTE
+				GameHub.Utils.Gamepad.init();
+				#endif
+
+				main_window = new GameHub.UI.Windows.MainWindow(this);
+				main_window.show_all();
+			}
 		}
 
 		public static int main(string[] args)
@@ -101,6 +117,102 @@ namespace GameHub
 			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);
 
 			return app.run(args);
+		}
+
+		public override int command_line(ApplicationCommandLine cmd)
+		{
+			init();
+
+			string[] oargs = cmd.get_arguments();
+			unowned string[] args = oargs;
+
+			string? opt_run = null;
+			bool opt_show_compat = false;
+			bool opt_show = false;
+
+			OptionEntry[] options = new OptionEntry[4];
+			options[0] = { "run", 'r', 0, OptionArg.STRING, out opt_run, _("Run game"), null };
+			options[1] = { "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, _("Show compatibility options dialog"), null };
+			options[2] = { "show", 's', 0, OptionArg.NONE, out opt_show, _("Show main window"), null };
+			options[3] = { null };
+
+			var ctx = new OptionContext();
+			ctx.add_main_entries(options, null);
+			try
+			{
+				ctx.parse(ref args);
+			}
+			catch(Error e)
+			{
+				warning(e.message);
+			}
+
+			Granite.Services.Logger.DisplayLevel = Granite.Services.LogLevel.INFO;
+			set_options();
+
+			if(opt_show || opt_run == null)
+			{
+				activate();
+				main_window.present();
+			}
+
+			if(opt_run != null)
+			{
+				opt_run = opt_run.strip();
+				if(opt_run.length > 0 && ":" in opt_run)
+				{
+					var id_parts = opt_run.split(":");
+					var game = GameHub.Data.DB.Tables.Games.get(id_parts[0], id_parts[1]);
+					if(game != null)
+					{
+						info("Starting `%s`", game.name);
+
+						var loop = new MainLoop();
+						game.update_game_info.begin((obj, res) => {
+							game.update_game_info.end(res);
+							// wait for winewrap index update
+							Timeout.add(game.use_compat ? 2000 : 0, () => {
+								run_game.begin(game, opt_show_compat, (obj, res) => {
+									run_game.end(res);
+									info("`%s` finished", game.name);
+									loop.quit();
+								});
+								return Source.REMOVE;
+							});
+						});
+						loop.run();
+					}
+					else
+					{
+						error("Game with id `%s` from source `%s` is not found", id_parts[1], id_parts[0]);
+					}
+				}
+				else
+				{
+					error("`%s` is not a fully-qualified game id", opt_run);
+				}
+			}
+
+			return 0;
+		}
+
+		private async void run_game(Game game, bool show_compat)
+		{
+			if(game.status.state == Game.State.INSTALLED)
+			{
+				if(game.use_compat)
+				{
+					yield game.run_with_compat(show_compat);
+				}
+				else
+				{
+					yield game.run();
+				}
+			}
+			else if(game.status.state == Game.State.UNINSTALLED)
+			{
+				yield game.install();
+			}
 		}
 	}
 }
