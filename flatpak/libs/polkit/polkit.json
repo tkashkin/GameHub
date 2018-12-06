@@ -13,8 +13,7 @@
 	"sources": [
 		{
 			"type": "archive",
-			"url": "https://www.freedesktop.org/software/polkit/releases/polkit-0.113.tar.gz",
-			"sha256": "e1c095093c654951f78f8618d427faf91cf62abdefed98de40ff65eca6413c81"
+			"path": "polkit-0.113.tar.gz"
 		},
 		{
 			"type": "patch",
