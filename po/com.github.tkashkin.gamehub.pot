@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-06 14:52+0300\n"
+"POT-Creation-Date: 2018-12-07 09:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -513,8 +513,16 @@ msgstr ""
 msgid "Launch from terminal"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:284
+#: src/ui/dialogs/GamePropertiesDialog.vala:289
 msgid "Copy to clipboard"
+msgstr ""
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:291
+msgid "Add to Steam"
+msgstr ""
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:292
+msgid "Add to the Steam library"
 msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
