@@ -274,7 +274,12 @@ namespace GameHub.UI.Dialogs
 			gh_run_args_header.xpad = 8;
 			properties_box.add(gh_run_args_header);
 
+			var gh_run_args_box = new Box(Orientation.HORIZONTAL, 0);
+			gh_run_args_box.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
+			gh_run_args_box.margin_start = gh_run_args_box.margin_end = gh_run_args_box.margin_bottom = 4;
+
 			var gh_run_args_entry = new Entry();
+			gh_run_args_entry.hexpand = true;
 			gh_run_args_entry.text = ProjectConfig.PROJECT_NAME + " --run " + game.full_id;
 			gh_run_args_entry.editable = false;
 			gh_run_args_entry.primary_icon_name = "utilities-terminal-symbolic";
@@ -282,8 +287,18 @@ namespace GameHub.UI.Dialogs
 			gh_run_args_entry.secondary_icon_name = "edit-copy-symbolic";
 			gh_run_args_entry.secondary_icon_activatable = true;
 			gh_run_args_entry.secondary_icon_tooltip_text = _("Copy to clipboard");
-			gh_run_args_entry.margin_start = gh_run_args_entry.margin_end = gh_run_args_entry.margin_bottom = 4;
-			properties_box.add(gh_run_args_entry);
+
+			var gh_add_to_steam_btn = new Button.with_label(_("Add to Steam"));
+			gh_add_to_steam_btn.tooltip_text = _("Add to the Steam library");
+
+			gh_add_to_steam_btn.clicked.connect(() => {
+				Data.Sources.Steam.Steam.add_game_shortcut(game);
+			});
+
+			gh_run_args_box.add(gh_run_args_entry);
+			gh_run_args_box.add(gh_add_to_steam_btn);
+
+			properties_box.add(gh_run_args_box);
 
 			gh_run_args_entry.icon_press.connect((icon, event) => {
 				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)

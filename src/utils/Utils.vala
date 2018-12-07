@@ -218,15 +218,21 @@ namespace GameHub.Utils
 		return Checksum.compute_for_string(ChecksumType.MD5, s, s.length);
 	}
 
-	public static async string? cache_image(string url, string prefix="remote")
+	public static File? cached_image_file(string url, string prefix="remote")
 	{
 		if(url == null || url == "") return null;
 		var parts = url.split("?")[0].split(".");
 		var ext = parts.length > 1 ? parts[parts.length - 1] : null;
 		ext = ext != null && ext.length <= 6 ? "." + ext : null;
 		var hash = md5(url);
+		return FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");;
+	}
+
+	public static async string? cache_image(string url, string prefix="remote")
+	{
+		if(url == null || url == "") return null;
 		var remote = File.new_for_uri(url);
-		var cached = FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");
+		var cached = cached_image_file(url, prefix);
 		try
 		{
 			if(!cached.query_exists())

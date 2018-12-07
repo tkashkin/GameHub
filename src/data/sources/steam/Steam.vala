@@ -283,5 +283,55 @@ namespace GameHub.Data.Sources.Steam
 				return folders;
 			}
 		}
+
+		public static uint64 communityid_to_steamid3(uint64 id)
+		{
+			return id - 76561197960265728;
+		}
+
+		public static void add_game_shortcut(Game game)
+		{
+			uint64 communityid = uint64.parse(instance.user_id);
+			uint64 steamid3 = communityid_to_steamid3(communityid);
+
+			var shortcuts = FSUtils.file(FSUtils.Paths.Steam.Home, @"steam/userdata/$(steamid3)/config/shortcuts.vdf");
+			var vdf = new BinaryVDF(shortcuts);
+
+			var root_node = vdf.read() as BinaryVDF.ListNode;
+
+			if(root_node == null)
+			{
+				root_node = new BinaryVDF.ListNode.node("shortcuts");
+			}
+
+			var game_node = new BinaryVDF.ListNode.node(root_node.nodes.size.to_string());
+
+			game_node.add_node(new BinaryVDF.StringNode.node("AppName", game.name));
+			game_node.add_node(new BinaryVDF.StringNode.node("exe", ProjectConfig.PROJECT_NAME));
+			game_node.add_node(new BinaryVDF.StringNode.node("LaunchOptions", "--run " + game.full_id));
+			game_node.add_node(new BinaryVDF.StringNode.node("ShortcutPath", ProjectConfig.DATADIR + "/applications/" + ProjectConfig.PROJECT_NAME + ".desktop"));
+			game_node.add_node(new BinaryVDF.StringNode.node("StartDir", "."));
+			game_node.add_node(new BinaryVDF.IntNode.node("IsHidden", 0));
+			game_node.add_node(new BinaryVDF.IntNode.node("OpenVR", 0));
+			game_node.add_node(new BinaryVDF.IntNode.node("AllowOverlay", 1));
+			game_node.add_node(new BinaryVDF.IntNode.node("AllowDesktopConfig", 1));
+			game_node.add_node(new BinaryVDF.IntNode.node("LastPlayTime", 1));
+
+			if(game.image != null)
+			{
+				var cached = Utils.cached_image_file(game.image, "image");
+				game_node.add_node(new BinaryVDF.StringNode.node("icon", cached.get_path()));
+			}
+
+			var tags_node = new BinaryVDF.ListNode.node("tags");
+			tags_node.add_node(new BinaryVDF.StringNode.node("0", "GameHub"));
+			game_node.add_node(tags_node);
+
+			root_node.add_node(game_node);
+
+			root_node.show();
+
+			BinaryVDF.write(shortcuts, root_node);
+		}
 	}
 }

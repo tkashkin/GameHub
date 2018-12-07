@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-06 14:52+0300\n"
+"POT-Creation-Date: 2018-12-07 09:40+0300\n"
 "PO-Revision-Date: 2018-11-23 04:07+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -519,8 +519,17 @@ msgstr "Kompabilitet"
 msgid "Launch from terminal"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:284
+#: src/ui/dialogs/GamePropertiesDialog.vala:289
 msgid "Copy to clipboard"
+msgstr ""
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:291
+#, fuzzy
+msgid "Add to Steam"
+msgstr "Legg til etikett"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:292
+msgid "Add to the Steam library"
 msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
