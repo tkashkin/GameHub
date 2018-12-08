@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-06 14:52+0300\n"
-"PO-Revision-Date: 2018-12-07 06:42+0000\n"
+"PO-Revision-Date: 2018-12-09 06:39+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -26,13 +26,12 @@ msgid "Run game"
 msgstr "Spiel starten"
 
 #: src/app.vala:135
-#, fuzzy
 msgid "Show compatibility options dialog"
-msgstr "Kompatibilitätsmodus erzwingen"
+msgstr "Kompatibilitätsoptionen-Dialog anzeigen"
 
 #: src/app.vala:136
 msgid "Show main window"
-msgstr ""
+msgstr "Hauptfenster anzeigen"
 
 #: src/data/Runnable.vala:73 src/data/Runnable.vala:75
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
@@ -520,20 +519,19 @@ msgstr "Kompatibilität"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:273
 msgid "Launch from terminal"
-msgstr ""
+msgstr "Vom Terminal starten"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:289
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "In die Zwischenablage kopieren"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:291
-#, fuzzy
 msgid "Add to Steam"
-msgstr "Tag hinzufügen"
+msgstr "Zu Steam hinzufügen"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:292
 msgid "Add to the Steam library"
-msgstr ""
+msgstr "Zur Steam-Bibliothek hinzufügen"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
 #, c-format
@@ -728,7 +726,7 @@ msgid ""
 "use your own Steam API key in settings."
 msgstr ""
 "Es wurden keine Spiele von Steam geladen. Stelle deine Spieleliste auf "
-"öffentlich oder verwende deinen eigenen Steam API-Schlüssel"
+"öffentlich oder verwende deinen eigenen Steam API-Schlüssel."
 
 #: src/ui/views/GamesView/GamesView.vala:673
 msgid "Privacy"
