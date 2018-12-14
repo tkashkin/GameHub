@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 01:30+0300\n"
-"PO-Revision-Date: 2018-11-23 04:07+0000\n"
+"POT-Creation-Date: 2018-12-06 14:52+0300\n"
+"PO-Revision-Date: 2018-12-08 11:20+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -18,21 +18,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3-dev\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #: src/app.vala:134
-#, fuzzy
 msgid "Run game"
-msgstr "Kjør taskmgr"
+msgstr "Kjør spill"
 
 #: src/app.vala:135
-#, fuzzy
 msgid "Show compatibility options dialog"
-msgstr "Tving gjennom kompabilitetsmodus"
+msgstr "Vis valg for kompabilitetsmodus"
 
 #: src/app.vala:136
 msgid "Show main window"
-msgstr ""
+msgstr "Vis hovedvindu"
 
 #: src/data/Runnable.vala:73 src/data/Runnable.vala:75
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
@@ -172,7 +170,7 @@ msgstr "Kjør"
 
 #: src/data/compat/WineWrap.vala:61
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "Vis WineWrap-meny"
 
 #: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:80
 #: src/data/compat/Wine.vala:80
@@ -523,20 +521,19 @@ msgstr "Kompabilitet"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:273
 msgid "Launch from terminal"
-msgstr ""
+msgstr "Kjør fra terminal"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:289
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Kopier til utklippstavle"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:291
-#, fuzzy
 msgid "Add to Steam"
-msgstr "Legg til etikett"
+msgstr "Legg til på Steam"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:292
 msgid "Add to the Steam library"
-msgstr ""
+msgstr "Legg til i Steam-bibliotek"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
 #, c-format
