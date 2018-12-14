@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 01:30+0300\n"
-"PO-Revision-Date: 2018-12-06 13:16+0000\n"
+"POT-Creation-Date: 2018-12-07 09:40+0300\n"
+"PO-Revision-Date: 2018-12-08 11:20+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -528,13 +528,12 @@ msgid "Copy to clipboard"
 msgstr "Kopiëren naar klembord"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:291
-#, fuzzy
 msgid "Add to Steam"
-msgstr "Label toevoegen"
+msgstr "Toevoegen aan Steam"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:292
 msgid "Add to the Steam library"
-msgstr ""
+msgstr "Toevoegen aan de Steam-bibliotheek"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
 #, c-format
