@@ -197,6 +197,12 @@ namespace GameHub.Utils
 			return "{" + json + "}";
 		}
 
+		public static unowned Xml.Doc* parse_xml(string? xml)
+		{
+			if(xml == null || xml.length == 0) return null;
+			return Xml.Parser.parse_doc(xml);
+		}
+
 		public static unowned Html.Doc* parse_html(string? html, string url)
 		{
 			if(html == null || html.length == 0) return null;
@@ -222,7 +228,7 @@ namespace GameHub.Utils
 			return obj;
 		}
 
-		public static Html.Node* html_subnode(Xml.Node* root, string name)
+		public static Xml.Node* xml_subnode(Xml.Node* root, string name)
 		{
 			for(var iter = root->children; iter != null; iter = iter->next)
 			{
@@ -230,11 +236,26 @@ namespace GameHub.Utils
 				{
 					if(iter->name == name)
 					{
-						return (Html.Node*) iter;
+						return (Xml.Node*) iter;
 					}
 				}
 			}
 			return null;
+		}
+
+		public static Html.Node* html_subnode(Xml.Node* root, string name)
+		{
+			return (Html.Node*) xml_subnode(root, name);
+		}
+
+		public static Xml.Doc* parse_xml_file(string path, string file="")
+		{
+			return parse_xml(load_file(path, file));
+		}
+
+		public static Xml.Doc* parse_remote_xml_file(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
+		{
+			return parse_xml(load_remote_file(url, method, auth, headers, data));
 		}
 
 		public static Html.Doc* parse_html_file(string path, string file="")

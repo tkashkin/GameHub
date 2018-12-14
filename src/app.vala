@@ -170,14 +170,10 @@ namespace GameHub
 						var loop = new MainLoop();
 						game.update_game_info.begin((obj, res) => {
 							game.update_game_info.end(res);
-							// wait for winewrap index update
-							Timeout.add(game.use_compat ? 2000 : 0, () => {
-								run_game.begin(game, opt_show_compat, (obj, res) => {
-									run_game.end(res);
-									info("`%s` finished", game.name);
-									loop.quit();
-								});
-								return Source.REMOVE;
+							run_game.begin(game, opt_show_compat, (obj, res) => {
+								run_game.end(res);
+								info("`%s` finished", game.name);
+								loop.quit();
 							});
 						});
 						loop.run();

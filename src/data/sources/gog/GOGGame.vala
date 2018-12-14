@@ -540,11 +540,27 @@ namespace GameHub.Data.Sources.GOG
 						if(root == null || !root.has_member("downlink")) continue;
 
 						var url = root.get_string_member("downlink");
+						var checksum_url = root.get_string_member("checksum");
 						var remote = File.new_for_uri(url);
 
 						var local = game.installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
 
-						parts.add(new Runnable.Installer.Part(id, url, size, remote, local));
+						string? hash = null;
+						var hash_type = ChecksumType.MD5;
+
+						var checksum_root = Parser.parse_remote_xml_file(checksum_url, "GET", ((GOG) game.source).user_token);
+						if(checksum_root != null)
+						{
+							var checksum_file_node = checksum_root->get_root_element();
+							if(checksum_file_node != null)
+							{
+								hash = checksum_file_node->get_prop("md5");
+							}
+
+							delete checksum_root;
+						}
+
+						parts.add(new Runnable.Installer.Part(id, url, size, remote, local, hash, hash_type));
 					}
 				}
 			}

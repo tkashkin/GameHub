@@ -330,7 +330,27 @@ namespace GameHub.Data.Sources.Humble
 				if(game.installers_dir == null) return;
 				var remote = File.new_for_uri(url);
 				var local = game.installers_dir.get_child("humble_" + game.id + "_" + id);
-				part = new Runnable.Installer.Part(id, url, full_size, remote, local);
+
+				string? hash = null;
+				ChecksumType hash_type = ChecksumType.MD5;
+
+				if(download.has_member("md5"))
+				{
+					hash = download.get_string_member("md5");
+					hash_type = ChecksumType.MD5;
+				}
+				else if(download.has_member("sha1"))
+				{
+					hash = download.get_string_member("sha1");
+					hash_type = ChecksumType.SHA1;
+				}
+				else if(download.has_member("sha256"))
+				{
+					hash = download.get_string_member("sha256");
+					hash_type = ChecksumType.SHA256;
+				}
+
+				part = new Runnable.Installer.Part(id, url, full_size, remote, local, hash, hash_type);
 				parts.add(part);
 			}
 

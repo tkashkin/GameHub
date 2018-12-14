@@ -25,16 +25,16 @@ namespace GameHub.Data.Compat
 {
 	public class WineWrap: CompatTool
 	{
-		private const string WRAPPERS_INDEX_URL = "https://gist.githubusercontent.com/tkashkin/10b55144c8bd17f76b5c14d18a658f5f/raw/adamhm_winewrap_index.json";
+		private const string WRAPPERS_INDEX_URL = "https://dropbox.com/s/dl/kw8t2b5x7b19guz/winewrap_index.json";
 
 		private HashMap<string, string> wrappers = new HashMap<string, string>();
 
 		public WineWrap()
 		{
-			id = @"winewrap";
+			id = "winewrap";
 			name = "WineWrap (by adamhm)";
 			icon = "tool-wine-symbolic";
-			installed = false;
+			installed = true;
 			update_index.begin();
 		}
 
@@ -54,7 +54,6 @@ namespace GameHub.Data.Compat
 
 			if(wrappers.size > 0)
 			{
-				installed = true;
 				actions = {
 					new CompatTool.Action("play", _("Run"), r => {
 						action.begin(r, "play");
@@ -66,6 +65,10 @@ namespace GameHub.Data.Compat
 						action.begin(r, "kill");
 					})
 				};
+			}
+			else
+			{
+				installed = false;
 			}
 
 			debug("[WineWrap] index updated");
@@ -99,6 +102,7 @@ namespace GameHub.Data.Compat
 				var winewrap_env = Environ.get();
 				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_RESPATH", installer.get_parent().get_path());
 				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_BUILDPATH", FSUtils.expand(FSUtils.Paths.GOG.Games));
+				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_SKIP_CHECKSUMS", "1");
 
 				FSUtils.rm(FSUtils.Paths.GOG.Games, (runnable as GOGGame).escaped_name, "-rf");
 
@@ -115,7 +119,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_run(Runnable runnable)
 		{
-			return can_install(runnable);
+			return can_install(runnable) || runnable.compat_tool == id;
 		}
 
 		public override async void run(Runnable runnable)
