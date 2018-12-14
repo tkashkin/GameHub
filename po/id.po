@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 09:40+0300\n"
+"POT-Creation-Date: 2018-12-15 01:30+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -57,7 +57,7 @@ msgstr "Batal"
 msgid "Select directory"
 msgstr "Pilih direktori"
 
-#: src/data/Runnable.vala:359
+#: src/data/Runnable.vala:361
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Bagian %u dari %u: "
@@ -78,31 +78,37 @@ msgid "Installing"
 msgstr "Memasang"
 
 #: src/data/Game.vala:470
+#, fuzzy
+msgctxt "status"
+msgid "Verifying installer integrity"
+msgstr "Pemasangan sangat senyap"
+
+#: src/data/Game.vala:471
 msgctxt "status"
 msgid "Download started"
 msgstr "Mengunduh dimulai"
 
-#: src/data/Game.vala:472
+#: src/data/Game.vala:473
 msgctxt "status"
 msgid "Not installed"
 msgstr "Tidak terpasang"
 
-#: src/data/Game.vala:482
+#: src/data/Game.vala:483
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Terpasang"
 
-#: src/data/Game.vala:483
+#: src/data/Game.vala:484
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Memasang"
 
-#: src/data/Game.vala:484
+#: src/data/Game.vala:486
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Mengunduh"
 
-#: src/data/Game.vala:486
+#: src/data/Game.vala:488
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Tidak terpasang"
@@ -156,7 +162,7 @@ msgstr "Sunting skrip"
 msgid "Edit custom script"
 msgstr "Sunting skrip ubahan"
 
-#: src/data/compat/WineWrap.vala:59
+#: src/data/compat/WineWrap.vala:58
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
@@ -164,11 +170,11 @@ msgstr "Sunting skrip ubahan"
 msgid "Run"
 msgstr "Jalankan"
 
-#: src/data/compat/WineWrap.vala:62
+#: src/data/compat/WineWrap.vala:61
 msgid "Show WineWrap menu"
 msgstr ""
 
-#: src/data/compat/WineWrap.vala:65 src/data/compat/Proton.vala:80
+#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:80
 #: src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
 msgstr ""

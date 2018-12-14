@@ -218,6 +218,25 @@ namespace GameHub.Utils
 		return Checksum.compute_for_string(ChecksumType.MD5, s, s.length);
 	}
 
+	public static async string? compute_file_checksum(File file, ChecksumType type=ChecksumType.MD5)
+	{
+		string? hash = null;
+		Utils.thread("Checksum-" + md5(file.get_path()), () => {
+			Checksum checksum = new Checksum(type);
+			FileStream stream = FileStream.open(file.get_path(), "rb");
+			uint8 buf[4096];
+			size_t size;
+			while((size = stream.read(buf)) > 0)
+			{
+				checksum.update(buf, size);
+			}
+			hash = checksum.get_string();
+			Idle.add(compute_file_checksum.callback);
+		});
+		yield;
+		return hash;
+	}
+
 	public static File? cached_image_file(string url, string prefix="remote")
 	{
 		if(url == null || url == "") return null;

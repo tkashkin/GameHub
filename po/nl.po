@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 09:40+0300\n"
+"POT-Creation-Date: 2018-12-15 01:30+0300\n"
 "PO-Revision-Date: 2018-12-06 13:16+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -54,7 +54,7 @@ msgstr "Annuleren"
 msgid "Select directory"
 msgstr "Kies map"
 
-#: src/data/Runnable.vala:359
+#: src/data/Runnable.vala:361
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Deel %u van %u: "
@@ -75,31 +75,37 @@ msgid "Installing"
 msgstr "Bezig met installeren"
 
 #: src/data/Game.vala:470
+#, fuzzy
+msgctxt "status"
+msgid "Verifying installer integrity"
+msgstr "Erg stille installatie"
+
+#: src/data/Game.vala:471
 msgctxt "status"
 msgid "Download started"
 msgstr "Downloaden gestart"
 
-#: src/data/Game.vala:472
+#: src/data/Game.vala:473
 msgctxt "status"
 msgid "Not installed"
 msgstr "Niet-geïnstalleerd"
 
-#: src/data/Game.vala:482
+#: src/data/Game.vala:483
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:483
+#: src/data/Game.vala:484
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:484
+#: src/data/Game.vala:486
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Bezig met downloaden"
 
-#: src/data/Game.vala:486
+#: src/data/Game.vala:488
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
@@ -153,7 +159,7 @@ msgstr "Script bewerken"
 msgid "Edit custom script"
 msgstr "Aangepast script bewerken"
 
-#: src/data/compat/WineWrap.vala:59
+#: src/data/compat/WineWrap.vala:58
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
@@ -161,11 +167,11 @@ msgstr "Aangepast script bewerken"
 msgid "Run"
 msgstr "Uitvoeren"
 
-#: src/data/compat/WineWrap.vala:62
+#: src/data/compat/WineWrap.vala:61
 msgid "Show WineWrap menu"
 msgstr "WineWrap-menu tonen"
 
-#: src/data/compat/WineWrap.vala:65 src/data/compat/Proton.vala:80
+#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:80
 #: src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
 msgstr "Wine-apps beëindigen"
