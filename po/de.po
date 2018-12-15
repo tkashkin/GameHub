@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-06 14:52+0300\n"
-"PO-Revision-Date: 2018-12-09 06:39+0000\n"
+"PO-Revision-Date: 2018-12-16 00:34+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -77,10 +77,9 @@ msgid "Installing"
 msgstr "Installiere"
 
 #: src/data/Game.vala:470
-#, fuzzy
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr "Sehr stille Instalation"
+msgstr "Überprüfe die Integrität des Installers"
 
 #: src/data/Game.vala:471
 msgctxt "status"
