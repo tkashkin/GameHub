@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-16 03:36+0300\n"
-"PO-Revision-Date: 2018-12-16 00:34+0000\n"
+"PO-Revision-Date: 2018-12-17 12:08+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -61,14 +61,14 @@ msgid "Part %u of %u: "
 msgstr "Del %u av %u: "
 
 #: src/data/Runnable.vala:383
-#, fuzzy, c-format
+#, c-format
 msgid "%s: corrupted installer"
-msgstr "Velg installasjonskandidat"
+msgstr "%s: Skadet installasjonskandidat"
 
 #: src/data/Runnable.vala:384
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr ""
+msgstr "Sjekksum stemmer ikke overens i %s"
 
 #: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
@@ -76,9 +76,8 @@ msgid "Remove"
 msgstr "Fjern"
 
 #: src/data/Runnable.vala:399
-#, fuzzy
 msgid "Backup"
-msgstr "Tilbake"
+msgstr "Sikkerhetskopi"
 
 #: src/data/Game.vala:465
 msgctxt "status"
