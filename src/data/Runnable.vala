@@ -379,6 +379,28 @@ namespace GameHub.Data
 							}
 							else
 							{
+								Utils.notify(
+									_("%s: corrupted installer").printf(runnable.name),
+									_("Checksum mismatch in %s").printf(file.get_basename()),
+									NotificationPriority.HIGH,
+									n =>
+									{
+										n.set_icon(new ThemedIcon("dialog-warning"));
+										if(game != null)
+										{
+											var icon = Utils.cached_image_file(game.icon, "icon");
+											if(icon != null && icon.query_exists())
+											{
+												n.set_icon(new FileIcon(icon));
+											}
+										}
+										n.set_default_action_and_target_value("app.installer.show", new Variant.string(file.get_path()));
+										n.add_button_with_target_value(_("Remove"), "app.installer.remove", new Variant.string(file.get_path()));
+										n.add_button_with_target_value(_("Backup"), "app.installer.backup", new Variant.string(file.get_path()));
+										return n;
+									}
+								);
+
 								warning("Checksum mismatch in `%s`, skipping; expected: `%s`, actual: `%s`", file.get_basename(), part.checksum, file_checksum);
 							}
 						}
@@ -542,28 +564,28 @@ namespace GameHub.Data
 
 					string[] gog_part_ext = {"bin"};
 					string[] exe_ext = {"sh", "elf", "bin", "run"};
-					string[] win_exe_ext = {"exe"};
+					string[] win_exe_ext = {"exe", "msi"};
 					string[] arc_ext = {"zip", "tar", "cpio", "bz2", "gz", "lz", "lzma", "7z", "rar"};
 
 					if(part)
 					{
 						foreach(var ext in gog_part_ext)
 						{
-							if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.GOG_PART;
+							if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.GOG_PART;
 						}
 					}
 
 					foreach(var ext in exe_ext)
 					{
-						if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
+						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
 					}
 					foreach(var ext in win_exe_ext)
 					{
-						if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
+						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
 					}
 					foreach(var ext in arc_ext)
 					{
-						if(file.get_basename().has_suffix(@".$(ext)")) return InstallerType.ARCHIVE;
+						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.ARCHIVE;
 					}
 				}
 				catch(Error e){}
@@ -593,6 +615,7 @@ namespace GameHub.Data
 						case "application/x-exe":
 						case "application/x-msdownload":
 						case "application/x-winexe":
+						case "application/x-msi":
 							return InstallerType.WINDOWS_EXECUTABLE;
 
 						case "application/octet-stream":

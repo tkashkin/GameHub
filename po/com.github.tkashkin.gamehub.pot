@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 01:30+0300\n"
+"POT-Creation-Date: 2018-12-16 03:36+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: src/app.vala:134
+#: src/app.vala:148
 msgid "Run game"
 msgstr ""
 
-#: src/app.vala:135
+#: src/app.vala:149
 msgid "Show compatibility options dialog"
 msgstr ""
 
-#: src/app.vala:136
+#: src/app.vala:150
 msgid "Show main window"
 msgstr ""
 
@@ -56,6 +56,25 @@ msgstr ""
 #: src/data/Runnable.vala:361
 #, c-format
 msgid "Part %u of %u: "
+msgstr ""
+
+#: src/data/Runnable.vala:383
+#, c-format
+msgid "%s: corrupted installer"
+msgstr ""
+
+#: src/data/Runnable.vala:384
+#, c-format
+msgid "Checksum mismatch in %s"
+msgstr ""
+
+#: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+msgid "Remove"
+msgstr ""
+
+#: src/data/Runnable.vala:399
+msgid "Backup"
 msgstr ""
 
 #: src/data/Game.vala:465
@@ -803,11 +822,6 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:119
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open bonus collection directory"
-msgstr ""
-
-#: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
-msgid "Remove"
 msgstr ""
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
