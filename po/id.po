@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 01:30+0300\n"
+"POT-Creation-Date: 2018-12-16 03:36+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -20,17 +20,17 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.3-dev\n"
 
-#: src/app.vala:134
+#: src/app.vala:148
 #, fuzzy
 msgid "Run game"
 msgstr "Jalankan taskmgr"
 
-#: src/app.vala:135
+#: src/app.vala:149
 #, fuzzy
 msgid "Show compatibility options dialog"
 msgstr "Paksakan mode pengguna yang ada"
 
-#: src/app.vala:136
+#: src/app.vala:150
 msgid "Show main window"
 msgstr ""
 
@@ -61,6 +61,26 @@ msgstr "Pilih direktori"
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Bagian %u dari %u: "
+
+#: src/data/Runnable.vala:383
+#, fuzzy, c-format
+msgid "%s: corrupted installer"
+msgstr "Tidak terpasang"
+
+#: src/data/Runnable.vala:384
+#, c-format
+msgid "Checksum mismatch in %s"
+msgstr ""
+
+#: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+msgid "Remove"
+msgstr "Hapus"
+
+#: src/data/Runnable.vala:399
+#, fuzzy
+msgid "Backup"
+msgstr "Kembali"
 
 #: src/data/Game.vala:465
 msgctxt "status"
@@ -818,11 +838,6 @@ msgstr ""
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open bonus collection directory"
 msgstr "Buka direktori koleksi bonus"
-
-#: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
-msgid "Remove"
-msgstr "Hapus"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:215

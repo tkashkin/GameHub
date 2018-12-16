@@ -141,6 +141,10 @@ namespace GameHub.Data.Compat
 		protected virtual async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), file.get_path() };
+			if(file.get_path().down().has_suffix(".msi"))
+			{
+				cmd = { executable.get_path(), "msiexec", "/i", file.get_path() };
+			}
 			if(args != null)
 			{
 				foreach(var arg in args) cmd += arg;

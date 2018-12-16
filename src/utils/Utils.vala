@@ -25,6 +25,7 @@ namespace GameHub.Utils
 	public delegate void FutureBoolean(bool result);
 	public delegate void FutureResult<T>(T result);
 	public delegate void FutureResult2<T, T2>(T t, T2 t2);
+	public delegate Notification NotificationConfigureDelegate(Notification notification);
 
 	private class Worker
 	{
@@ -204,7 +205,7 @@ namespace GameHub.Utils
 		#endif
 	}
 
-	public static async void sleep_async(uint interval, int priority = GLib.Priority.DEFAULT)
+	public static async void sleep_async(uint interval, int priority=GLib.Priority.DEFAULT)
 	{
 		Timeout.add(interval, () => {
 			sleep_async.callback();
@@ -277,6 +278,18 @@ namespace GameHub.Utils
 		}
 		catch(Error e){}
 		image.queue_draw();
+	}
+
+	public static void notify(string title, string? body=null, NotificationPriority priority=NotificationPriority.NORMAL, NotificationConfigureDelegate? config=null)
+	{
+		var notification = new Notification(title);
+		notification.set_body(body);
+		notification.set_priority(priority);
+		if(config != null)
+		{
+			notification = config(notification);
+		}
+		GameHub.Application.instance.send_notification(null, notification);
 	}
 
 	private const string NAME_CHARS_TO_STRIP = "!@#$%^&*()-_+=:~`;?'\"<>,./\\|’“”„«»™℠®©";

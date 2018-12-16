@@ -36,6 +36,19 @@ namespace GameHub
 
 		private GameHub.UI.Windows.MainWindow? main_window;
 
+		public const string ACTION_PREFIX = "app.";
+		public const string ACTION_SETTINGS = "settings";
+		public const string ACTION_INSTALLER_SHOW = "installer.show";
+		public const string ACTION_INSTALLER_BACKUP = "installer.backup";
+		public const string ACTION_INSTALLER_REMOVE = "installer.remove";
+
+		private const GLib.ActionEntry[] action_entries = {
+			{ ACTION_SETTINGS, action_settings },
+			{ ACTION_INSTALLER_SHOW,   action_installer, "s" },
+			{ ACTION_INSTALLER_BACKUP, action_installer, "s" },
+			{ ACTION_INSTALLER_REMOVE, action_installer, "s" }
+		};
+
 		construct
 		{
 			application_id = ProjectConfig.PROJECT_NAME;
@@ -43,6 +56,7 @@ namespace GameHub
 			program_name = "GameHub";
 			build_version = ProjectConfig.VERSION;
 			instance = this;
+			add_action_entries(action_entries, this);
 		}
 
 		private void init()
@@ -208,6 +222,38 @@ namespace GameHub
 			else if(game.status.state == Game.State.UNINSTALLED)
 			{
 				yield game.install();
+			}
+		}
+
+		private static void action_settings(SimpleAction action, Variant? args)
+		{
+			new UI.Dialogs.SettingsDialog.SettingsDialog();
+		}
+
+		private static void action_installer(SimpleAction action, Variant? path)
+		{
+			var file = FSUtils.file(path.get_string());
+			if(file == null || !file.query_exists()) return;
+			try
+			{
+				switch(action.name)
+				{
+					case ACTION_INSTALLER_SHOW:
+						Utils.open_uri(file.get_parent().get_uri());
+						break;
+
+					case ACTION_INSTALLER_BACKUP:
+						file.move(FSUtils.file(path.get_string() + ".backup"), FileCopyFlags.BACKUP);
+						break;
+
+					case ACTION_INSTALLER_REMOVE:
+						file.delete();
+						break;
+				}
+			}
+			catch(Error e)
+			{
+				warning("[app.installer_action] %s", e.message);
 			}
 		}
 	}

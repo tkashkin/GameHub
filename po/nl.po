@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 09:40+0300\n"
+"POT-Creation-Date: 2018-12-16 03:36+0300\n"
 "PO-Revision-Date: 2018-12-16 00:34+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -19,15 +19,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:134
+#: src/app.vala:148
 msgid "Run game"
 msgstr "Spel starten"
 
-#: src/app.vala:135
+#: src/app.vala:149
 msgid "Show compatibility options dialog"
 msgstr "Comptabiliteitsmodus-opties tonen"
 
-#: src/app.vala:136
+#: src/app.vala:150
 msgid "Show main window"
 msgstr "Hoofdvenster tonen"
 
@@ -58,6 +58,26 @@ msgstr "Kies map"
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Deel %u van %u: "
+
+#: src/data/Runnable.vala:383
+#, fuzzy, c-format
+msgid "%s: corrupted installer"
+msgstr "Kies installatiebestand"
+
+#: src/data/Runnable.vala:384
+#, c-format
+msgid "Checksum mismatch in %s"
+msgstr ""
+
+#: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: src/data/Runnable.vala:399
+#, fuzzy
+msgid "Backup"
+msgstr "Terug"
 
 #: src/data/Game.vala:465
 msgctxt "status"
@@ -813,11 +833,6 @@ msgstr "Open verzamelmap met installatiebestanden"
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open bonus collection directory"
 msgstr "Open bonusverzamelmap"
-
-#: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
-msgid "Remove"
-msgstr "Verwijderen"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:215

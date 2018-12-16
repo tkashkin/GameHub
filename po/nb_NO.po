@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-06 14:52+0300\n"
+"POT-Creation-Date: 2018-12-16 03:36+0300\n"
 "PO-Revision-Date: 2018-12-16 00:34+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -20,15 +20,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:134
+#: src/app.vala:148
 msgid "Run game"
 msgstr "Kjør spill"
 
-#: src/app.vala:135
+#: src/app.vala:149
 msgid "Show compatibility options dialog"
 msgstr "Vis valg for kompabilitetsmodus"
 
-#: src/app.vala:136
+#: src/app.vala:150
 msgid "Show main window"
 msgstr "Vis hovedvindu"
 
@@ -59,6 +59,26 @@ msgstr "Velg mappe"
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Del %u av %u: "
+
+#: src/data/Runnable.vala:383
+#, fuzzy, c-format
+msgid "%s: corrupted installer"
+msgstr "Velg installasjonskandidat"
+
+#: src/data/Runnable.vala:384
+#, c-format
+msgid "Checksum mismatch in %s"
+msgstr ""
+
+#: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+msgid "Remove"
+msgstr "Fjern"
+
+#: src/data/Runnable.vala:399
+#, fuzzy
+msgid "Backup"
+msgstr "Tilbake"
 
 #: src/data/Game.vala:465
 msgctxt "status"
@@ -813,11 +833,6 @@ msgstr "Åpne installasjonskandidatssamlingsmappe"
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open bonus collection directory"
 msgstr "Åpne bonussamlingsmappe"
-
-#: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
-msgid "Remove"
-msgstr "Fjern"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:215

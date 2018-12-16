@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 01:30+0300\n"
+"POT-Creation-Date: 2018-12-16 03:36+0300\n"
 "PO-Revision-Date: 2018-11-30 01:08+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -20,15 +20,15 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.3-dev\n"
 
-#: src/app.vala:134
+#: src/app.vala:148
 msgid "Run game"
 msgstr "Запустить игру"
 
-#: src/app.vala:135
+#: src/app.vala:149
 msgid "Show compatibility options dialog"
 msgstr "Показать диалог опций совместимости"
 
-#: src/app.vala:136
+#: src/app.vala:150
 msgid "Show main window"
 msgstr "Показать главное окно"
 
@@ -59,6 +59,25 @@ msgstr "Выберите папку"
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Часть %u из %u: "
+
+#: src/data/Runnable.vala:383
+#, c-format
+msgid "%s: corrupted installer"
+msgstr "%s: повреждённый установщик"
+
+#: src/data/Runnable.vala:384
+#, c-format
+msgid "Checksum mismatch in %s"
+msgstr "Несовпадение контрольной суммы в файле %s"
+
+#: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+msgid "Remove"
+msgstr "Удалить"
+
+#: src/data/Runnable.vala:399
+msgid "Backup"
+msgstr "Сохранить"
 
 #: src/data/Game.vala:465
 msgctxt "status"
@@ -816,11 +835,6 @@ msgstr "Открыть папку коллекции установщиков"
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open bonus collection directory"
 msgstr "Открыть папку коллекции бонусного контента"
-
-#: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
-msgid "Remove"
-msgstr "Удалить"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:215

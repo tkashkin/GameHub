@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 01:30+0300\n"
+"POT-Creation-Date: 2018-12-16 03:36+0300\n"
 "PO-Revision-Date: 2018-11-10 22:04+0300\n"
 "Last-Translator: Leandro Stanger\n"
 "Language-Team: none\n"
@@ -18,17 +18,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: src/app.vala:134
+#: src/app.vala:148
 #, fuzzy
 msgid "Run game"
 msgstr "%u jogo"
 
-#: src/app.vala:135
+#: src/app.vala:149
 #, fuzzy
 msgid "Show compatibility options dialog"
 msgstr "Forçar o modo de compatibilidade"
 
-#: src/app.vala:136
+#: src/app.vala:150
 msgid "Show main window"
 msgstr ""
 
@@ -59,6 +59,26 @@ msgstr "Selecione o diretório"
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Parte %u de %u: "
+
+#: src/data/Runnable.vala:383
+#, fuzzy, c-format
+msgid "%s: corrupted installer"
+msgstr "Selecione o instalador"
+
+#: src/data/Runnable.vala:384
+#, c-format
+msgid "Checksum mismatch in %s"
+msgstr ""
+
+#: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+msgid "Remove"
+msgstr "Remover"
+
+#: src/data/Runnable.vala:399
+#, fuzzy
+msgid "Backup"
+msgstr "Voltar"
 
 #: src/data/Game.vala:465
 msgctxt "status"
@@ -819,11 +839,6 @@ msgstr "Abrir diretório de coleção de instaladores"
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open bonus collection directory"
 msgstr "Abra o diretório de coleção de bônus"
-
-#: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
-msgid "Remove"
-msgstr "Remover"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
