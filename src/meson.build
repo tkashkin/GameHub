@@ -55,6 +55,7 @@ sources = [
 	'data/compat/DOSBox.vala',
 	'data/compat/ScummVM.vala',
 	'data/compat/RetroArch.vala',
+	'data/compat/AGS.vala',
 	'data/compat/CustomEmulator.vala',
 
 	'ui/windows/MainWindow.vala',
