@@ -16,6 +16,7 @@
 		<file alias="scalable/actions/tool-wine-symbolic.svg">symbolic/tools/wine.svg</file>
 		<file alias="scalable/actions/tool-dosbox-symbolic.svg">symbolic/tools/dosbox.svg</file>
 		<file alias="scalable/actions/tool-scummvm-symbolic.svg">symbolic/tools/scummvm.svg</file>
+		<file alias="scalable/actions/tool-ags-symbolic.svg">symbolic/tools/ags.svg</file>
 
 		<file alias="scalable/actions/tag.svg">normal/tags/tag.svg</file>
 
