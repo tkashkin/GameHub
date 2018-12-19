@@ -72,7 +72,7 @@ namespace GameHub
 
 			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new User() };
 
-			CompatTool[] tools = { new Compat.CustomScript(), new Compat.CustomEmulator(), new Compat.Innoextract(), new Compat.WineWrap(), new Compat.DOSBox(), new Compat.ScummVM(), new Compat.RetroArch() };
+			CompatTool[] tools = { new Compat.CustomScript(), new Compat.CustomEmulator(), new Compat.Innoextract(), new Compat.WineWrap(), new Compat.DOSBox(), new Compat.ScummVM(), new Compat.AGS(), new Compat.RetroArch() };
 			foreach(var appid in Compat.Proton.APPIDS)
 			{
 				tools += new Compat.Proton(appid);
