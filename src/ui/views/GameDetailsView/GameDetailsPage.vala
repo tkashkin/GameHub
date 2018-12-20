@@ -182,6 +182,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			title_overlay.add(title_hbox);
 			title_overlay.add_overlay(title_icons);
+			title_overlay.set_overlay_pass_through(title_icons, true);
 
 			title_hbox_eventbox.add(title_overlay);
 

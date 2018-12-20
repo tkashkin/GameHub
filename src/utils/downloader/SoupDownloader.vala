@@ -137,7 +137,7 @@ namespace GameHub.Utils.Downloader.Soup
 
 			int64 dl_bytes = 0;
 			int64 dl_bytes_total = 0;
-			
+
 			#if SOUP_2_60
 			int64 resume_from = 0;
 			var resume_dl = false;
@@ -221,6 +221,8 @@ namespace GameHub.Utils.Downloader.Soup
 				}
 			});
 
+			int64 last_update = 0;
+
 			msg.got_chunk.connect((msg, chunk) => {
 				if(session.would_redirect(msg) || local_stream == null) return;
 
@@ -228,7 +230,14 @@ namespace GameHub.Utils.Downloader.Soup
 				try
 				{
 					local_stream.write(chunk.data);
-					download.status = new DownloadStatus(DownloadState.DOWNLOADING, dl_bytes, dl_bytes_total);
+					chunk.free();
+
+					int64 now = get_real_time();
+					if(now - last_update > 1000000)
+					{
+						download.status = new DownloadStatus(DownloadState.DOWNLOADING, dl_bytes, dl_bytes_total);
+						last_update = now;
+					}
 				}
 				catch(Error e)
 				{
@@ -246,6 +255,9 @@ namespace GameHub.Utils.Downloader.Soup
 			if(local_stream == null) return;
 
 			yield local_stream.close_async(Priority.DEFAULT);
+
+			msg.request_body.free();
+			msg.response_body.free();
 
 			if(msg.status_code != Status.OK && msg.status_code != Status.PARTIAL_CONTENT)
 			{
@@ -306,8 +318,8 @@ namespace GameHub.Utils.Downloader.Soup
 
 	public class SoupDownload: PausableDownload
 	{
-		public Session? session;
-		public Message? message;
+		public weak Session? session;
+		public weak Message? message;
 
 		public SoupDownload(File remote, File local, File local_tmp)
 		{
