@@ -298,7 +298,8 @@ namespace GameHub.Data.Sources.Humble
 					var new_url = installer.update_url(this);
 					if(new_url != null)
 					{
-						info = info.replace(old_url, new_url);
+						var url_field = "\"web\": \"%s\"";
+						info = info.replace(url_field.printf(old_url), url_field.printf(new_url));
 					}
 					refresh = true;
 				}
@@ -371,7 +372,7 @@ namespace GameHub.Data.Sources.Humble
 			{
 				id = machine_name;
 				this.platform = platform;
-				this.dl_id = download_identifier;
+				dl_id = download_identifier;
 				dl_name = download.has_member("name") ? download.get_string_member("name") : "";
 				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
