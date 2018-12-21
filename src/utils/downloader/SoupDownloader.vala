@@ -46,8 +46,10 @@ namespace GameHub.Utils.Downloader.Soup
 			return downloads.get(remote.get_uri());
 		}
 
-		public override async File download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error
+		public override async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error
 		{
+			if(remote == null || remote.get_uri() == null || remote.get_uri().length == 0) return null;
+
 			var uri = remote.get_uri();
 			SoupDownload download = downloads.get(uri);
 
@@ -302,6 +304,7 @@ namespace GameHub.Utils.Downloader.Soup
 
 		private async void download_from_filesystem(SoupDownload download) throws GLib.Error
 		{
+			if(download.remote == null || !download.remote.query_exists()) return;
 			try
 			{
 				debug("[SoupDownloader] Copying '%s' to '%s'", download.remote.get_path(), download.local_tmp.get_path());

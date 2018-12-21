@@ -41,11 +41,11 @@ namespace GameHub.Utils.Downloader
 			return downloader;
 		}
 
-		public abstract async File download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error;
+		public abstract async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error;
 		public abstract Download? get_download(File remote);
 	}
 
-	public static async File download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error
+	public static async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error
 	{
 		File result = local;
 		Error? error = null;
