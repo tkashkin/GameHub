@@ -102,6 +102,18 @@ namespace GameHub.Data.Sources.Humble
 							trove_root.foreach_member((trove_root_obj, key, node) => {
 								if(key == TROVE_INTRO_ID) return;
 
+								var obj = node.get_object();
+								var downloads = obj.get_object_member("downloads");
+
+								downloads.foreach_member((downloads_obj, dl_os, dl_node) => {
+									var dl_obj = dl_node.get_object();
+									var dl_name = dl_obj.get_string_member("machine_name");
+									var dl_id = dl_obj.get_object_member("url").get_string_member("web");
+									dl_obj.set_string_member("download_identifier", dl_id);
+									var signed_url = sign_url(dl_name, dl_id, user_token);
+									dl_obj.get_object_member("url").set_string_member("web", signed_url ?? "humble-trove-unsigned://" + dl_name + "/_gh_dl_/" + dl_id);
+								});
+
 								var game = new HumbleGame(this, Trove.FAKE_ORDER, node);
 
 								if(game.platforms.size == 0) return;
