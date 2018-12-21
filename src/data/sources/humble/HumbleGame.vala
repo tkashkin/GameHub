@@ -38,26 +38,46 @@ namespace GameHub.Data.Sources.Humble
 			var json_obj = json_node.get_object();
 
 			id = json_obj.get_string_member("machine_name");
-			name = json_obj.get_string_member("human_name");
-			image = json_obj.get_string_member("icon");
-			icon = image;
+			name = json_obj.has_member("human_name") ? json_obj.get_string_member("human_name") : json_obj.get_string_member("human-name");
+			image = json_obj.has_member("image") ? json_obj.get_string_member("image") : json_obj.get_string_member("icon");
+			icon = json_obj.has_member("icon") ? json_obj.get_string_member("icon") : image;
 			order_id = order;
 
 			info = Json.to_string(json_node, false);
 
 			platforms.clear();
-			if(json_obj.has_member("downloads") && json_obj.get_member("downloads").get_node_type() == Json.NodeType.ARRAY)
+
+			if(json_obj.has_member("downloads"))
 			{
-				foreach(var dl in json_obj.get_array_member("downloads").get_elements())
+				var downloads_node = json_obj.get_member("downloads");
+				switch(downloads_node.get_node_type())
 				{
-					var pl = dl.get_object().get_string_member("platform");
-					foreach(var p in Platforms)
-					{
-						if(pl == p.id())
+					case Json.NodeType.ARRAY:
+						foreach(var dl in downloads_node.get_array().get_elements())
 						{
-							platforms.add(p);
+							var dl_platform = dl.get_object().get_string_member("platform");
+							foreach(var p in Platforms)
+							{
+								if(dl_platform == p.id())
+								{
+									platforms.add(p);
+								}
+							}
 						}
-					}
+						break;
+
+					case Json.NodeType.OBJECT:
+						foreach(var dl_platform in downloads_node.get_object().get_members())
+						{
+							foreach(var p in Platforms)
+							{
+								if(dl_platform == p.id())
+								{
+									platforms.add(p);
+								}
+							}
+						}
+						break;
 				}
 			}
 
@@ -193,67 +213,58 @@ namespace GameHub.Data.Sources.Humble
 			var product = Parser.parse_json(info).get_object();
 			if(product == null) return;
 
-			if(product.has_member("_gamehub_description"))
+			if(product.has_member("description-text"))
+			{
+				description = product.get_string_member("description-text");
+			}
+			else if(product.has_member("_gamehub_description"))
 			{
 				description = product.get_string_member("_gamehub_description");
 			}
 
-			if(product.has_member("downloads") && product.get_member("downloads").get_node_type() == Json.NodeType.ARRAY)
+			if(product.has_member("downloads"))
 			{
-				foreach(var dl_node in product.get_array_member("downloads").get_elements())
+				bool refresh = false;
+
+				var downloads_node = product.get_member("downloads");
+				switch(downloads_node.get_node_type())
 				{
-					var dl = dl_node.get_object();
-					var id = dl.get_string_member("machine_name");
-					var dl_id = dl.has_member("download_identifier") ? dl.get_string_member("download_identifier") : null;
-					var os = dl.get_string_member("platform");
-					var platform = CurrentPlatform;
-					foreach(var p in Platforms)
-					{
-						if(os == p.id())
+					case Json.NodeType.ARRAY:
+						foreach(var dl_node in downloads_node.get_array().get_elements())
 						{
-							platform = p;
-							break;
-						}
-					}
-
-					bool refresh = false;
-
-					if(dl.has_member("download_struct") && dl.get_member("download_struct").get_node_type() == Json.NodeType.ARRAY)
-					{
-						foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
-						{
-							var installer = new Installer(this, id, dl_id, platform, dls_node.get_object());
-							if(installer.is_url_update_required())
+							var dl = dl_node.get_object();
+							var id = dl.get_string_member("machine_name");
+							var dl_id = dl.has_member("download_identifier") ? dl.get_string_member("download_identifier") : null;
+							var os = dl.get_string_member("platform");
+							if(dl.has_member("download_struct") && dl.get_member("download_struct").get_node_type() == Json.NodeType.ARRAY)
 							{
-								if(source is Trove)
+								foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
 								{
-									var old_url = installer.part.url;
-									var new_url = installer.update_url(this);
-									if(new_url != null)
-									{
-										info = info.replace(old_url, new_url);
-									}
-									refresh = true;
-								}
-								else
-								{
-									info = null;
-									refresh = true;
+									refresh = process_download(id, dl_id, os, dls_node.get_object());
 								}
 							}
-							if(!refresh) installers.add(installer);
 						}
-					}
+						break;
 
-					if(refresh && !game_info_refreshed)
-					{
-						//debug("[HumbleGame.update_game_info] Refreshing");
-						game_info_refreshed = true;
-						game_info_updated = false;
-						installers.clear();
-						yield update_game_info();
-						return;
-					}
+					case Json.NodeType.OBJECT:
+						foreach(var os in downloads_node.get_object().get_members())
+						{
+							var dl = downloads_node.get_object().get_object_member(os);
+							var id = dl.get_string_member("machine_name");
+							var dl_id = dl.has_member("download_identifier") ? dl.get_string_member("download_identifier") : null;
+							refresh = process_download(id, dl_id, os, dl);
+						}
+						break;
+				}
+
+				if(refresh && !game_info_refreshed)
+				{
+					//debug("[HumbleGame.update_game_info] Refreshing");
+					game_info_refreshed = true;
+					game_info_updated = false;
+					installers.clear();
+					yield update_game_info();
+					return;
 				}
 			}
 
@@ -262,6 +273,44 @@ namespace GameHub.Data.Sources.Humble
 			update_status();
 
 			game_info_updated = true;
+		}
+
+		private bool process_download(string id, string? dl_id, string os, Json.Object dl_struct)
+		{
+			var platform = CurrentPlatform;
+			foreach(var p in Platforms)
+			{
+				if(os == p.id())
+				{
+					platform = p;
+					break;
+				}
+			}
+
+			bool refresh = false;
+
+			var installer = new Installer(this, id, dl_id, platform, dl_struct);
+			if(installer.is_url_update_required())
+			{
+				if(source is Trove)
+				{
+					var old_url = installer.part.url;
+					var new_url = installer.update_url(this);
+					if(new_url != null)
+					{
+						info = info.replace(old_url, new_url);
+					}
+					refresh = true;
+				}
+				else
+				{
+					info = null;
+					refresh = true;
+				}
+			}
+			if(!refresh) installers.add(installer);
+
+			return refresh;
 		}
 
 		public override async void install()

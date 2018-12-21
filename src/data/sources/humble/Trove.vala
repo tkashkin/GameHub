@@ -27,6 +27,7 @@ namespace GameHub.Data.Sources.Humble
 		public const string PAGE_URL = "https://www.humblebundle.com/monthly/trove";
 		public const string SIGN_URL = "https://www.humblebundle.com/api/v1/user/download/sign";
 		public const string FAKE_ORDER = "humble-trove";
+		public const string TROVE_INTRO_ID = "trove_intro";
 
 		public override string id { get { return "humble-trove"; } }
 		public override string name { get { return "Humble Trove"; } }
@@ -89,100 +90,35 @@ namespace GameHub.Data.Sources.Humble
 				{
 					var xpath = new Xml.XPath.Context(html);
 
-					var items = xpath.eval("//div[starts-with(@class, 'trove-grid-item')]")->nodesetval;
-					if(items != null && !items->is_empty())
+					var trove_json = xpath.eval("//script[@id='webpack-monthly-trove-data']/text()")->nodesetval->item(0)->content.strip();
+
+					if(trove_json != null)
 					{
-						for(int i = 0; i < items->length(); i++)
+						var trove_root_node = Parser.parse_json(trove_json);
+						var trove_root = Parser.json_object(trove_root_node, { "displayItemData" });
+
+						if(trove_root != null)
 						{
-							var item = items->item(i);
-							var id = item->get_prop("data-machine-name");
-							var xr = @"//div[starts-with(@class, 'trove-product-detail')][@data-machine-name='$(id)']";
+							trove_root.foreach_member((trove_root_obj, key, node) => {
+								if(key == TROVE_INTRO_ID) return;
 
-							var dl_btn = xpath.eval(@"$(xr)//button[contains(@class, 'js-download-button')]")->nodesetval;
+								var game = new HumbleGame(this, Trove.FAKE_ORDER, node);
 
-							if(dl_btn == null || dl_btn->is_empty())
-							{
-								continue; // no dl button, can't download
-							}
-
-							var image = Parser.html_subnode(item, "img")->get_prop("src");
-
-							var name = xpath.eval(@"$(xr)//h1[@class='product-human-name']/text()")->nodesetval->item(0)->content;
-
-							var desc_nodes = xpath.eval(@"$(xr)//div[@class='trove-product-description']/node()")->nodesetval;
-
-							string desc = "";
-
-							if(desc_nodes != null && desc_nodes->length() > 0)
-							{
-								for(int dn = 0; dn < desc_nodes->length(); dn++)
+								if(game.platforms.size == 0) return;
+								bool is_new_game = !_games.contains(game);
+								if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
 								{
-									desc += Parser.xml_node_to_string(desc_nodes->item(dn));
+									game.update_game_info.begin((obj, res) => {
+										game.update_game_info.end(res);
+										_games.add(game);
+										if(game_loaded != null)
+										{
+											Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
+										}
+									});
 								}
-								desc = desc.strip();
-							}
-
-							var json = new Json.Object();
-							json.set_string_member("machine_name", id);
-							json.set_string_member("human_name", name);
-							json.set_string_member("icon", image);
-							json.set_string_member("_gamehub_description", desc);
-
-							var dl_nodes = xpath.eval(@"$(xr)//div[starts-with(@class, 'trove-platform-selector')]")->nodesetval;
-
-							var dls = new Json.Array();
-
-							if(dl_nodes != null && !dl_nodes->is_empty())
-							{
-								for(int d = 0; d < dl_nodes->length(); d++)
-								{
-									var dn = dl_nodes->item(d);
-									var dl = new Json.Object();
-
-									dl.set_string_member("platform", dn->get_prop("data-platform"));
-									dl.set_string_member("download_identifier", dn->get_prop("data-url"));
-									dl.set_string_member("machine_name", dn->get_prop("data-machine-name"));
-
-									var signed_url = sign_url(dn->get_prop("data-machine-name"), dn->get_prop("data-url"), user_token);
-
-									var dl_struct = new Json.Object();
-									dl_struct.set_string_member("name", @"$(name) (Trove)");
-
-									var urls = new Json.Object();
-									urls.set_string_member("web", signed_url);
-
-									dl_struct.set_object_member("url", urls);
-
-									var dl_struct_arr = new Json.Array();
-									dl_struct_arr.add_object_element(dl_struct);
-
-									dl.set_array_member("download_struct", dl_struct_arr);
-
-									dls.add_object_element(dl);
-								}
-							}
-
-							json.set_array_member("downloads", dls);
-
-							var json_node = new Json.Node(Json.NodeType.OBJECT);
-							json_node.set_object(json);
-
-							var game = new HumbleGame(this, Trove.FAKE_ORDER, json_node);
-
-							if(game.platforms.size == 0) continue;
-							bool is_new_game = !_games.contains(game);
-							if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
-							{
-								game.update_game_info.begin((obj, res) => {
-									game.update_game_info.end(res);
-									_games.add(game);
-									if(game_loaded != null)
-									{
-										Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
-									}
-								});
-							}
-							if(is_new_game) games_count++;
+								if(is_new_game) games_count++;
+							});
 						}
 					}
 				}
