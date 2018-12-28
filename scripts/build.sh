@@ -274,6 +274,7 @@ if [[ "$ACTION" = "appimage_checkrt" || ( "$ACTION" = "build_local" && "$CHECKRT
 if [[ "$ACTION" = "appimage_pack" || "$ACTION" = "build_local" ]]; then appimage_pack; fi
 
 if [[ "$ACTION" = "build_appimage" ]]; then
+	build
 	appimage
 	appimage_tweak
 	appimage_bundle_libs

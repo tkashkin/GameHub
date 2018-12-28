@@ -2,7 +2,7 @@ com.github.tkashkin.gamehub ($VERSION) $DISTRO; urgency=low
 
   * CI update
 
-  -- Anatoliy Kashkin <tkashkin@gmail.com>  $DATE
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  $DATE
 
 com.github.tkashkin.gamehub (0.12.0) bionic; urgency=low
 
@@ -10,19 +10,19 @@ com.github.tkashkin.gamehub (0.12.0) bionic; urgency=low
   * Gamepad support
   * Overlays
 
-  -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 09 Nov 2018 01:27:12 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 09 Nov 2018 01:27:12 +0300
 
 com.github.tkashkin.gamehub (0.11.7) bionic; urgency=low
 
   * Overlays
 
-  -- Anatoliy Kashkin <tkashkin@gmail.com>  Mon, 05 Nov 2018 05:46:22 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Mon, 05 Nov 2018 05:46:22 +0300
 
 com.github.tkashkin.gamehub (0.11.6) bionic; urgency=low
 
   * Gamepad support
 
-  -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 23 Oct 2018 15:15:24 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 23 Oct 2018 15:15:24 +0300
 
 com.github.tkashkin.gamehub (0.11.5) bionic; urgency=low
 
@@ -30,13 +30,13 @@ com.github.tkashkin.gamehub (0.11.5) bionic; urgency=low
   * Proton 3.16 support
   * Basic keyboard/gamepad navigation in grid view (#75)
 
-  -- Anatoliy Kashkin <tkashkin@gmail.com>  Sun, 14 Oct 2018 01:27:49 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Sun, 14 Oct 2018 01:27:49 +0300
 
 com.github.tkashkin.gamehub (0.11.4) bionic; urgency=low
 
   * 0.11.4
 
-  -- Anatoliy Kashkin <tkashkin@gmail.com>  Thu, 11 Oct 2018 23:57:59 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Thu, 11 Oct 2018 23:57:59 +0300
 
 com.github.tkashkin.gamehub (0.11.3) bionic; urgency=low
 
