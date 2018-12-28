@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-28 14:43+0300\n"
-"PO-Revision-Date: 2018-12-17 12:08+0000\n"
+"PO-Revision-Date: 2018-12-29 00:42+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -204,7 +204,7 @@ msgstr "esync uitschakelen"
 
 #: src/data/compat/Proton.vala:48
 msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr ""
+msgstr "LARE_ADDRESS_AWARE-functie afdwingen"
 
 #: src/data/compat/Proton.vala:49
 msgid "Disable DirectX 11 compatibility layer"
