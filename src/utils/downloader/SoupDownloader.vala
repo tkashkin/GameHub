@@ -224,21 +224,26 @@ namespace GameHub.Utils.Downloader.Soup
 			});
 
 			int64 last_update = 0;
+			int64 dl_bytes_from_last_update = 0;
 
 			msg.got_chunk.connect((msg, chunk) => {
 				if(session.would_redirect(msg) || local_stream == null) return;
 
 				dl_bytes += chunk.length;
+				dl_bytes_from_last_update += chunk.length;
 				try
 				{
 					local_stream.write(chunk.data);
 					chunk.free();
 
 					int64 now = get_real_time();
-					if(now - last_update > 1000000)
+					int64 diff = now - last_update;
+					if(diff > 1000000)
 					{
-						download.status = new DownloadStatus(DownloadState.DOWNLOADING, dl_bytes, dl_bytes_total);
+						int64 dl_speed = (int64) (((double) dl_bytes_from_last_update) / ((double) diff) * ((double) 1000000));
+						download.status = new DownloadStatus(DownloadState.DOWNLOADING, dl_bytes, dl_bytes_total, dl_speed);
 						last_update = now;
+						dl_bytes_from_last_update = 0;
 					}
 				}
 				catch(Error e)

@@ -131,12 +131,14 @@ namespace GameHub.Utils.Downloader
 
 		public int64 bytes_downloaded;
 		public int64 bytes_total;
+		public int64 dl_speed;
 
-		public DownloadStatus(DownloadState state=DownloadState.STARTING, int64 downloaded = -1, int64 total = -1)
+		public DownloadStatus(DownloadState state=DownloadState.STARTING, int64 downloaded = -1, int64 total = -1, int64 speed = -1)
 		{
 			this.state = state;
 			this.bytes_downloaded = downloaded;
 			this.bytes_total = total;
+			this.dl_speed = speed;
 		}
 
 		public double progress
@@ -157,7 +159,7 @@ namespace GameHub.Utils.Downloader
 					case DownloadState.FINISHED: return C_("dl_status", "Download finished");
 					case DownloadState.FAILED: return C_("dl_status", "Download failed");
 					case DownloadState.DOWNLOADING:
-						return C_("dl_status", "Downloading: %d%% (%s / %s)").printf((int)(progress * 100), format_size(bytes_downloaded), format_size(bytes_total));
+						return C_("dl_status", "Downloading: %d%% (%s / %s) [%s/s]").printf((int)(progress * 100), format_size(bytes_downloaded), format_size(bytes_total), format_size(dl_speed));
 					case DownloadState.PAUSED:
 						return C_("dl_status", "Paused: %d%% (%s / %s)").printf((int)(progress * 100), format_size(bytes_downloaded), format_size(bytes_total));
 				}

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 03:36+0300\n"
+"POT-Creation-Date: 2018-12-28 14:43+0300\n"
 "PO-Revision-Date: 2018-12-17 12:08+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
@@ -72,7 +72,7 @@ msgid "Checksum mismatch in %s"
 msgstr "Prüfsummenfehler in %s"
 
 #: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -183,7 +183,7 @@ msgstr "Benutzerdefiniertes Skript bearbeiten"
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run"
 msgstr "Ausführen"
 
@@ -191,7 +191,7 @@ msgstr "Ausführen"
 msgid "Show WineWrap menu"
 msgstr "WineWrap-Menü anzeigen"
 
-#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:80
+#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:81
 #: src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
 msgstr "Apps im Präfix beenden"
@@ -205,30 +205,34 @@ msgid "Disable esync"
 msgstr "esync deaktivieren"
 
 #: src/data/compat/Proton.vala:48
+msgid "Force LARGE_ADDRESS_AWARE flag"
+msgstr ""
+
+#: src/data/compat/Proton.vala:49
 msgid "Disable DirectX 11 compatibility layer"
 msgstr "DirectX11 Kompatibilitätsschicht deaktivieren"
 
-#: src/data/compat/Proton.vala:49
+#: src/data/compat/Proton.vala:50
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
 msgstr "WineD3D11 als DirectX 11 Kompatibilitätsschicht verwenden"
 
-#: src/data/compat/Proton.vala:50
+#: src/data/compat/Proton.vala:51
 msgid "Show DXVK info overlay"
 msgstr "DXVK-Info-Overlay anzeigen"
 
-#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:69 src/data/compat/Wine.vala:68
 msgid "Open prefix directory"
 msgstr "Präfixverzeichnis öffnen"
 
-#: src/data/compat/Proton.vala:71 src/data/compat/Wine.vala:71
+#: src/data/compat/Proton.vala:72 src/data/compat/Wine.vala:71
 msgid "Run winecfg"
 msgstr "winecfg ausführen"
 
-#: src/data/compat/Proton.vala:74 src/data/compat/Wine.vala:74
+#: src/data/compat/Proton.vala:75 src/data/compat/Wine.vala:74
 msgid "Run winetricks"
 msgstr "winetricks ausführen"
 
-#: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
+#: src/data/compat/Proton.vala:78 src/data/compat/Wine.vala:77
 msgid "Run taskmgr"
 msgstr "taskmgr ausführen"
 
@@ -482,7 +486,7 @@ msgstr "Kompatibilitätsmodus erzwingen"
 
 #: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:199
 #: src/ui/views/GamesView/GameContextMenu.vala:49
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:208
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Install"
 msgstr "Installieren"
 
@@ -603,7 +607,7 @@ msgstr "Verzeichnis öffnen"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:45
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
 msgid "Run with compatibility layer"
 msgstr "Mit Kompatibilitätsschicht ausführen"
 
@@ -825,30 +829,30 @@ msgid "Properties"
 msgstr "Eigenschaften"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:103
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Open installation directory"
 msgstr "Installationsverzeichnis öffnen"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:111
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installers collection directory"
 msgstr "Öffne Sammelverzeichnis des Installers"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:119
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open bonus collection directory"
 msgstr "Bonus-Sammlungsverzeichnis öffnen"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Uninstall"
 msgstr "Deinstallieren"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
 msgid "Open store page"
 msgstr "Shop-Seite öffnen"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
 msgid "Game properties"
 msgstr "Spieleigenschaften"
 
@@ -946,39 +950,39 @@ msgctxt "sort_mode"
 msgid "By playtime"
 msgstr "Nach Spielzeit"
 
-#: src/utils/downloader/Downloader.vala:155
+#: src/utils/downloader/Downloader.vala:157
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Download wird gestartet"
 
-#: src/utils/downloader/Downloader.vala:156
+#: src/utils/downloader/Downloader.vala:158
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Download gestartet"
 
-#: src/utils/downloader/Downloader.vala:157
+#: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Download abgeschlossen"
 
-#: src/utils/downloader/Downloader.vala:158
+#: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Download fehlgeschlagen"
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:162
 #, c-format
 msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s)"
-msgstr "Herunterladen: %d%%% (%s / %s)"
+msgid "Downloading: %d%% (%s / %s) [%s/s]"
+msgstr "Herunterladen: %d%%% (%s / %s) [%s/s]"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:164
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
 msgstr "Angehalten: %d%%% (%s / %s)"
 
-#: src/utils/downloader/Downloader.vala:164
+#: src/utils/downloader/Downloader.vala:166
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Download abgebrochen"

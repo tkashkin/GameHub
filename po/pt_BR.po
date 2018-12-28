@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 03:36+0300\n"
+"POT-Creation-Date: 2018-12-28 14:43+0300\n"
 "PO-Revision-Date: 2018-11-10 22:04+0300\n"
 "Last-Translator: Leandro Stanger\n"
 "Language-Team: none\n"
@@ -71,7 +71,7 @@ msgid "Checksum mismatch in %s"
 msgstr ""
 
 #: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Remover"
 
@@ -184,7 +184,7 @@ msgstr "Editar script personalizado"
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run"
 msgstr "Jogar"
 
@@ -192,7 +192,7 @@ msgstr "Jogar"
 msgid "Show WineWrap menu"
 msgstr ""
 
-#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:80
+#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:81
 #: src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
 msgstr "Mate aplicativos no prefixo"
@@ -206,30 +206,34 @@ msgid "Disable esync"
 msgstr "Desativar esync"
 
 #: src/data/compat/Proton.vala:48
+msgid "Force LARGE_ADDRESS_AWARE flag"
+msgstr ""
+
+#: src/data/compat/Proton.vala:49
 msgid "Disable DirectX 11 compatibility layer"
 msgstr "Desativar camada de compatibilidade do DirectX 11"
 
-#: src/data/compat/Proton.vala:49
+#: src/data/compat/Proton.vala:50
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
 msgstr "Use WineD3D11 como camada de compatibilidade DirectX 11"
 
-#: src/data/compat/Proton.vala:50
+#: src/data/compat/Proton.vala:51
 msgid "Show DXVK info overlay"
 msgstr "Mostrar sobreposição de informações do DXVK"
 
-#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:69 src/data/compat/Wine.vala:68
 msgid "Open prefix directory"
 msgstr "Abrir diretório de prefixo"
 
-#: src/data/compat/Proton.vala:71 src/data/compat/Wine.vala:71
+#: src/data/compat/Proton.vala:72 src/data/compat/Wine.vala:71
 msgid "Run winecfg"
 msgstr "Executar winecfg"
 
-#: src/data/compat/Proton.vala:74 src/data/compat/Wine.vala:74
+#: src/data/compat/Proton.vala:75 src/data/compat/Wine.vala:74
 msgid "Run winetricks"
 msgstr "Executar winetricks"
 
-#: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
+#: src/data/compat/Proton.vala:78 src/data/compat/Wine.vala:77
 msgid "Run taskmgr"
 msgstr "Executar taskmgr"
 
@@ -483,7 +487,7 @@ msgstr "Forçar o modo de compatibilidade"
 
 #: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:199
 #: src/ui/views/GamesView/GameContextMenu.vala:49
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:208
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Install"
 msgstr "Instalar"
 
@@ -605,7 +609,7 @@ msgstr "Diretório aberto"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:45
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
 msgid "Run with compatibility layer"
 msgstr "Jogar com camada de compatibilidade do Windows"
 
@@ -826,30 +830,30 @@ msgid "Properties"
 msgstr "Propriedades"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:103
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Open installation directory"
 msgstr "Abra o diretório de instalação"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:111
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installers collection directory"
 msgstr "Abrir diretório de coleção de instaladores"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:119
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open bonus collection directory"
 msgstr "Abra o diretório de coleção de bônus"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
 msgid "Open store page"
 msgstr "Abra a página da loja"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
 msgid "Game properties"
 msgstr "Propriedades do jogo"
 
@@ -947,39 +951,39 @@ msgctxt "sort_mode"
 msgid "By playtime"
 msgstr "Por playtime"
 
-#: src/utils/downloader/Downloader.vala:155
+#: src/utils/downloader/Downloader.vala:157
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Iniciando a baixar"
 
-#: src/utils/downloader/Downloader.vala:156
+#: src/utils/downloader/Downloader.vala:158
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Começando a baixar"
 
-#: src/utils/downloader/Downloader.vala:157
+#: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Baixou com sucesso"
 
-#: src/utils/downloader/Downloader.vala:158
+#: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Falha ao baixar"
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:162
 #, c-format
 msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s)"
-msgstr "Baixando: %d%% (%s / %s)"
+msgid "Downloading: %d%% (%s / %s) [%s/s]"
+msgstr "Baixando: %d%% (%s / %s) [%s/s]"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:164
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
 msgstr "Pausado: %d%% (%s / %s)"
 
-#: src/utils/downloader/Downloader.vala:164
+#: src/utils/downloader/Downloader.vala:166
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Download cancelado"

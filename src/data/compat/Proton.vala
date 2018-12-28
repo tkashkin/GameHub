@@ -24,7 +24,7 @@ namespace GameHub.Data.Compat
 {
 	public class Proton: Wine
 	{
-		public const string[] APPIDS = {"961940", "930400", "858280"}; // 3.16, 3.7 Beta, 3.7
+		public const string[] APPIDS = {"996510", "961940", "930400", "858280"}; // 3.16 Beta, 3.16, 3.7 Beta, 3.7
 
 		public string appid { get; construct; }
 
@@ -45,6 +45,7 @@ namespace GameHub.Data.Compat
 			options = {
 				opt_env,
 				new CompatTool.BoolOption("PROTON_NO_ESYNC", _("Disable esync"), false),
+				new CompatTool.BoolOption("PROTON_FORCE_LARGE_ADDRESS_AWARE", _("Force LARGE_ADDRESS_AWARE flag"), false),
 				new CompatTool.BoolOption("PROTON_NO_D3D11", _("Disable DirectX 11 compatibility layer"), false),
 				new CompatTool.BoolOption("PROTON_USE_WINED3D11", _("Use WineD3D11 as DirectX 11 compatibility layer"), false),
 				new CompatTool.BoolOption("DXVK_HUD", _("Show DXVK info overlay"), true)
@@ -178,7 +179,7 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEARCH", arch);
 			}
 
-			yield Utils.run_thread({ executable.get_path(), "run" }, runnable.install_dir.get_path(), env);
+			yield Utils.run_thread({ executable.get_path(), "run", prefix.get_child("drive_c/windows/system32/cmd.exe").get_path() }, runnable.install_dir.get_path(), env);
 		}
 	}
 }
