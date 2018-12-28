@@ -117,10 +117,10 @@ build_deb()
 	else
 		cp -f "debian/control.in" "debian/control"
 	fi
+	echo "[scripts/build.sh] Building deb package"
+	dpkg-buildpackage -F -sa -us -uc
 	export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
 	if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
-		echo "[scripts/build.sh] Building source package for launchpad"
-		dpkg-buildpackage -S -sa -us -uc
 		set +e
 		echo "[scripts/build.sh] Signing source package"
 		debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
@@ -129,8 +129,6 @@ build_deb()
 		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../*.changes
 		set -e
 	fi
-	echo "[scripts/build.sh] Building deb package"
-	dpkg-buildpackage -us -uc
 	mkdir -p "build/$_BUILD_IMAGE"
 	cp ../*.deb "build/$_BUILD_IMAGE/GameHub-$_VERSION-amd64.deb"
 	cd "$_ROOT"
@@ -274,5 +272,13 @@ if [[ "$ACTION" = "appimage_tweak" || "$ACTION" = "build_local" ]]; then appimag
 if [[ "$ACTION" = "appimage_bundle_libs" || "$ACTION" = "build_local" ]]; then appimage_bundle_libs; fi
 if [[ "$ACTION" = "appimage_checkrt" || ( "$ACTION" = "build_local" && "$CHECKRT" = "--checkrt" ) ]]; then appimage_checkrt; fi
 if [[ "$ACTION" = "appimage_pack" || "$ACTION" = "build_local" ]]; then appimage_pack; fi
+
+if [[ "$ACTION" = "build_appimage" ]]; then
+	appimage
+	appimage_tweak
+	appimage_bundle_libs
+	appimage_checkrt
+	appimage_pack
+fi
 
 if [[ "$ACTION" = "build_flatpak" && ! "$_BUILD_IMAGE" = "xenial" ]]; then build_flatpak; fi
