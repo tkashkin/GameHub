@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 03:36+0300\n"
+"POT-Creation-Date: 2018-12-28 14:43+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -73,7 +73,7 @@ msgid "Checksum mismatch in %s"
 msgstr ""
 
 #: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Hapus"
 
@@ -186,7 +186,7 @@ msgstr "Sunting skrip ubahan"
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run"
 msgstr "Jalankan"
 
@@ -194,7 +194,7 @@ msgstr "Jalankan"
 msgid "Show WineWrap menu"
 msgstr ""
 
-#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:80
+#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:81
 #: src/data/compat/Wine.vala:80
 msgid "Kill apps in prefix"
 msgstr ""
@@ -208,30 +208,34 @@ msgid "Disable esync"
 msgstr "Nonaktifkan esync"
 
 #: src/data/compat/Proton.vala:48
+msgid "Force LARGE_ADDRESS_AWARE flag"
+msgstr ""
+
+#: src/data/compat/Proton.vala:49
 msgid "Disable DirectX 11 compatibility layer"
 msgstr "Nonaktifkan lapisan kompatibilitas DirectX 11"
 
-#: src/data/compat/Proton.vala:49
+#: src/data/compat/Proton.vala:50
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
 msgstr "Gunakan WineD3D11 sebagai lapisan kompatibilitas DirectX 11"
 
-#: src/data/compat/Proton.vala:50
+#: src/data/compat/Proton.vala:51
 msgid "Show DXVK info overlay"
 msgstr "Tampilkan info overlay DXVK"
 
-#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:69 src/data/compat/Wine.vala:68
 msgid "Open prefix directory"
 msgstr "Buka direktori prefiks"
 
-#: src/data/compat/Proton.vala:71 src/data/compat/Wine.vala:71
+#: src/data/compat/Proton.vala:72 src/data/compat/Wine.vala:71
 msgid "Run winecfg"
 msgstr "Jalankan winecfg"
 
-#: src/data/compat/Proton.vala:74 src/data/compat/Wine.vala:74
+#: src/data/compat/Proton.vala:75 src/data/compat/Wine.vala:74
 msgid "Run winetricks"
 msgstr "Jalankan winetricks"
 
-#: src/data/compat/Proton.vala:77 src/data/compat/Wine.vala:77
+#: src/data/compat/Proton.vala:78 src/data/compat/Wine.vala:77
 msgid "Run taskmgr"
 msgstr "Jalankan taskmgr"
 
@@ -484,7 +488,7 @@ msgstr "Paksakan mode pengguna yang ada"
 
 #: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:199
 #: src/ui/views/GamesView/GameContextMenu.vala:49
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:208
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Install"
 msgstr "Pasang"
 
@@ -603,7 +607,7 @@ msgstr "Buka direktori"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:45
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
 msgid "Run with compatibility layer"
 msgstr "Jalankan dengan lapisan kompatibilitas"
 
@@ -825,30 +829,30 @@ msgid "Properties"
 msgstr "Properti"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:103
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Open installation directory"
 msgstr "Buka direktori pemasangan"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:111
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installers collection directory"
 msgstr ""
 
 #: src/ui/views/GamesView/GameContextMenu.vala:119
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open bonus collection directory"
 msgstr "Buka direktori koleksi bonus"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:126
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Uninstall"
 msgstr "Copot pemasangan"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
 msgid "Open store page"
 msgstr "Buka halaman toko"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
 msgid "Game properties"
 msgstr "Properti permainan"
 
@@ -946,39 +950,39 @@ msgctxt "sort_mode"
 msgid "By playtime"
 msgstr "Berdasarkan waktu main"
 
-#: src/utils/downloader/Downloader.vala:155
+#: src/utils/downloader/Downloader.vala:157
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Mulai mengunduh"
 
-#: src/utils/downloader/Downloader.vala:156
+#: src/utils/downloader/Downloader.vala:158
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Unduhan dimulai"
 
-#: src/utils/downloader/Downloader.vala:157
+#: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Unduhan selesai"
 
-#: src/utils/downloader/Downloader.vala:158
+#: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Unduhan gagal"
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:162
 #, c-format
 msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s)"
-msgstr "Mengunduh: %d%% (%s / %s)"
+msgid "Downloading: %d%% (%s / %s) [%s/s]"
+msgstr "Mengunduh: %d%% (%s / %s) [%s/s]"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:164
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
 msgstr "Dijeda: %d%% (%s / %s)"
 
-#: src/utils/downloader/Downloader.vala:164
+#: src/utils/downloader/Downloader.vala:166
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Unduhan dibatalkan"
