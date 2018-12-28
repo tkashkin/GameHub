@@ -7,7 +7,7 @@ skip_tags: true
 
 image:
   - Ubuntu1804
-  - Ubuntu1604
+#  - Ubuntu1604     # skip xenial builds because dependencies are broken
 
 clone_folder: ~/build/GameHub
 clone_depth: 1
@@ -18,12 +18,7 @@ environment:
 
 build_script:
   - sh: bash scripts/build.sh build_deb
-  - sh: bash scripts/build.sh build
-  - sh: bash scripts/build.sh appimage
-  - sh: bash scripts/build.sh appimage_tweak
-  - sh: bash scripts/build.sh appimage_bundle_libs
-  - sh: bash scripts/build.sh appimage_checkrt
-  - sh: bash scripts/build.sh appimage_pack
+  - sh: bash scripts/build.sh build_appimage
   - sh: bash scripts/build.sh build_flatpak
 
 install:
@@ -42,11 +37,7 @@ artifacts:
 
 deploy:
   - provider: GitHub
-    description: |
-        CI build
-
-        * Use `bionic` packages for recent distros (>= Ubuntu 18.04)
-        * Use `xenial` packages for older distros (>= Ubuntu 16.04)
+    description: CI build
     auth_token:
         secure: J2LCcNeVYvzbvHRa/LChp+SmN6UKbg1ELsA4jmxnObCbX+ZyZ9DFH+S2aQIoA3dG
     artifact: deb,AppImage,flatpak

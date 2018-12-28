@@ -2,7 +2,7 @@ com.github.tkashkin.gamehub ($VERSION) $DISTRO; urgency=low
 
   * CI update
 
- -- Anatoliy Kashkin <tkashkin@gmail.com>  $DATE
+  -- Anatoliy Kashkin <tkashkin@gmail.com>  $DATE
 
 com.github.tkashkin.gamehub (0.12.0) bionic; urgency=low
 
