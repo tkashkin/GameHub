@@ -52,6 +52,8 @@ namespace GameHub.Data
 		public abstract File? executable { owned get; set; }
 		public File? install_dir { get; set; }
 
+		public ArrayList<RunnableAction> actions { get; protected set; default = new ArrayList<RunnableAction>(); }
+
 		public abstract async void install();
 		public abstract async void run();
 
@@ -517,11 +519,29 @@ namespace GameHub.Data
 					}
 					catch(Error e){}
 
-					//Utils.run({"chmod", "-R", "+x", runnable.install_dir.get_path()});
+					runnable.update_status();
 
-					if(!(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC) && !runnable.executable.query_exists())
+					if(runnable is GameHub.Data.Sources.GOG.GOGGame && !(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC) && (runnable.executable == null || !runnable.executable.query_exists()))
 					{
-						runnable.choose_executable();
+						if(runnable.actions != null && runnable.actions.size > 0)
+						{
+							foreach(var action in runnable.actions)
+							{
+								if(action.is_primary)
+								{
+									if(action.file != null && action.file.query_exists())
+									{
+										runnable.executable = action.file;
+										runnable.arguments = action.args;
+									}
+								}
+							}
+						}
+
+						if(runnable.executable == null || !runnable.executable.query_exists())
+						{
+							runnable.choose_executable();
+						}
 					}
 
 					if(game != null && version != null)
@@ -635,6 +655,57 @@ namespace GameHub.Data
 							return InstallerType.ARCHIVE;
 					}
 					return InstallerType.UNKNOWN;
+				}
+			}
+		}
+
+		public abstract class RunnableAction
+		{
+			public Runnable runnable     { get; protected set; }
+
+			public bool      is_primary   { get; protected set; default = false; }
+			public bool      is_hidden    { get; protected set; default = false; }
+			public string    name         { get; protected set; }
+			public File?     file         { get; protected set; }
+			public File?     workdir      { get; protected set; }
+			public string?   args         { get; protected set; }
+			public Type?[]   compat_tools { get; protected set; default = { null }; }
+			public string?   uri          { get; protected set; }
+
+			public bool is_available(CompatTool? tool=null)
+			{
+				if(file == null && uri != null)
+				{
+					return true;
+				}
+
+				if(tool == null)
+				{
+					return compat_tools.length == 0 || compat_tools[0] == null;
+				}
+
+				foreach(var type in compat_tools)
+				{
+					if(tool.get_type().is_a(type))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			public async void invoke(CompatTool? tool=null)
+			{
+				if(file == null && uri != null)
+				{
+					Utils.open_uri(uri);
+					return;
+				}
+
+				if(is_available(tool) && tool.can_run_action(runnable, this))
+				{
+					yield tool.run_action(runnable, this);
 				}
 			}
 		}

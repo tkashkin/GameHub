@@ -78,6 +78,24 @@ namespace GameHub.UI.Views.GamesView
 					add(run);
 				}
 				add(new Gtk.SeparatorMenuItem());
+
+				if(game.actions != null && game.actions.size > 0)
+				{
+					var compat_tool = CompatTool.by_id(game.compat_tool);
+					foreach(var action in game.actions)
+					{
+						var action_item = new Gtk.MenuItem.with_label(action.name);
+						action_item.get_style_context().add_class("menuitem-game-action");
+						if(action.is_primary)
+						{
+							action_item.get_style_context().add_class("primary");
+						}
+						action_item.sensitive = action.is_available(compat_tool);
+						action_item.activate.connect(() => action.invoke.begin(compat_tool));
+						add(action_item);
+					}
+					add(new Gtk.SeparatorMenuItem());
+				}
 			}
 			else if(game.status.state == Game.State.UNINSTALLED)
 			{

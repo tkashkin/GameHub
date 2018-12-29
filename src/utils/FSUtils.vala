@@ -251,6 +251,53 @@ namespace GameHub.Utils
 			return f != null ? File.new_for_path(f) : null;
 		}
 
+		public static File? find_case_insensitive(File root, string? path=null, string[]? parts=null)
+		{
+			if(path == null && parts == null) return null;
+
+			string[]? _parts = parts;
+
+			if(parts == null)
+			{
+				_parts = path.down().split("/");
+			}
+
+			try
+			{
+				FileInfo? finfo = null;
+				var enumerator = root.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+				while((finfo = enumerator.next_file()) != null)
+				{
+					if(finfo.get_name().down() == _parts[0])
+					{
+						var child = root.get_child(finfo.get_name());
+						if(finfo.get_file_type() == FileType.REGULAR || _parts.length == 1)
+						{
+							return child;
+						}
+						else
+						{
+							var new_parts = new string[]{};
+							for(int i = 1; i < _parts.length; i++)
+							{
+								new_parts += _parts[i];
+							}
+							var child_file = find_case_insensitive(child, null, new_parts);
+							if(child_file != null)
+							{
+								return child_file;
+							}
+						}
+					}
+				}
+			}
+			catch(Error e)
+			{
+				warning("[FSUtils.find_case_insensitive] %s", e.message);
+			}
+			return null;
+		}
+
 		public static File? mkdir(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
 			try

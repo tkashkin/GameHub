@@ -387,6 +387,29 @@ namespace GameHub.Data.Sources.GOG
 				update_version();
 			}
 
+			actions.clear();
+			if(goggame != null && goggame.query_exists())
+			{
+				var goggame_node = Parser.parse_json_file(goggame.get_path());
+				if(goggame_node != null && goggame_node.get_node_type() == Json.NodeType.OBJECT)
+				{
+					var goggame_obj = goggame_node.get_object();
+					var tasks = goggame_obj.has_member("playTasks") ? goggame_obj.get_array_member("playTasks") : null;
+					if(tasks != null)
+					{
+						foreach(var task_node in tasks.get_elements())
+						{
+							if(task_node == null || task_node.get_node_type() != Json.NodeType.OBJECT) continue;
+							var action = new RunnableAction(this, task_node.get_object());
+							if(!action.is_hidden)
+							{
+								actions.add(action);
+							}
+						}
+					}
+				}
+			}
+
 			string g = name;
 			string? d = null;
 			if(this is DLC)
@@ -563,6 +586,49 @@ namespace GameHub.Data.Sources.GOG
 						parts.add(new Runnable.Installer.Part(id, url, size, remote, local, hash, hash_type));
 					}
 				}
+			}
+		}
+
+		public class RunnableAction: Runnable.RunnableAction
+		{
+			public RunnableAction(GOGGame game, Json.Object json)
+			{
+				runnable = game;
+				is_primary = json.has_member("isPrimary") && json.get_boolean_member("isPrimary");
+				is_hidden = json.has_member("isHidden") && json.get_boolean_member("isHidden");
+				name = json.has_member("name") ? json.get_string_member("name") : game.name;
+
+				var type = json.has_member("type") ? json.get_string_member("type") : "FileTask";
+
+				if(type.down() == "filetask")
+				{
+					file = find_file(json.get_string_member("path"));
+					if(file.get_basename().down().has_suffix(".exe"))
+					{
+						workdir = find_file(json.has_member("workingDir") ? json.get_string_member("workingDir") : "");
+						args = json.has_member("arguments") ? json.get_string_member("arguments").replace("\\", "/").strip() : null;
+						compat_tools = { typeof(GameHub.Data.Compat.Wine) };
+					}
+					else
+					{
+						uri = file.get_uri();
+						file = null;
+					}
+				}
+				else if(type.down() == "urltask")
+				{
+					uri = json.has_member("link") ? json.get_string_member("link") : null;
+				}
+			}
+
+			private File? find_file(string path)
+			{
+				var p = path.replace("\\", "/").strip();
+				if(p.length == 0)
+				{
+					return runnable.install_dir;
+				}
+				return FSUtils.find_case_insensitive(runnable.install_dir, p);
 			}
 		}
 

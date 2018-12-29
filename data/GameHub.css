@@ -201,7 +201,6 @@ list:not(:backdrop) row:selected:focus label.category-label
 	background: transparent;
 }
 
-
 .installers-list .list-row,
 .installers-list row
 {
@@ -473,4 +472,17 @@ dialog .sidebar list
 {
 	padding: 0;
 	margin: 0;
+}
+
+.menuitem-game-action
+{
+	border-left: 8px alpha(#888, 0.2) solid;
+}
+.menuitem-game-action label
+{
+	margin-left: -8px;
+}
+.menuitem-game-action.primary
+{
+	font-weight: bold;
 }
