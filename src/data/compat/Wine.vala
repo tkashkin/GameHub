@@ -94,6 +94,11 @@ namespace GameHub.Data.Compat
 			return installed && runnable != null && ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms)) || runnable is Emulator);
 		}
 
+		public override bool can_run_action(Runnable runnable, Runnable.RunnableAction action)
+		{
+			return installed && runnable != null && action != null;
+		}
+
 		protected virtual async string[] prepare_installer_args(Runnable runnable)
 		{
 			var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
@@ -128,7 +133,14 @@ namespace GameHub.Data.Compat
 		{
 			if(!can_run(runnable)) return;
 			yield wineboot(null, runnable);
-			yield exec(runnable, runnable.executable, runnable.install_dir);
+			yield exec(runnable, runnable.executable, runnable.install_dir, Utils.parse_args(runnable.arguments));
+		}
+
+		public override async void run_action(Runnable runnable, Runnable.RunnableAction action)
+		{
+			if(!can_run_action(runnable, action)) return;
+			yield wineboot(null, runnable);
+			yield exec(runnable, action.file, action.workdir, Utils.parse_args(action.args));
 		}
 
 		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)

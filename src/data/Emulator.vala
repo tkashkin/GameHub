@@ -138,14 +138,14 @@ namespace GameHub.Data
 					variables.set("file", "");
 					variables.set("game_dir", "");
 				}
-				var args = arguments.split(" ");
+				var args = Utils.parse_args(arguments);
 				foreach(var arg in args)
 				{
 					if(arg == "$game_args")
 					{
 						if(game != null)
 						{
-							var game_args = game.arguments.split(" ");
+							var game_args = Utils.parse_args(game.arguments);
 							foreach(var game_arg in game_args)
 							{
 								result_args += game_arg;

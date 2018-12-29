@@ -59,6 +59,24 @@ namespace GameHub.Utils
 		}
 	}
 
+	public static string[]? parse_args(string? args)
+	{
+		if(args != null && args.length > 0)
+		{
+			try
+			{
+				string[]? argv = null;
+				Shell.parse_argv(args, out argv);
+				return argv;
+			}
+			catch(ShellError e)
+			{
+				warning("[Utils.parse_args] Error parsing args: %s", e.message);
+			}
+		}
+		return null;
+	}
+
 	public static string run(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool log=true)
 	{
 		string stdout;
