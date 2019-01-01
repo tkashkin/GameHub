@@ -2,35 +2,34 @@
 # Copyright (C) 2018 THE com.github.tkashkin.gamehub'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Automatically generated, 2018.
-#
+# Leandro Stanger <leandrostanger@hotmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-28 14:43+0300\n"
-"PO-Revision-Date: 2018-11-10 22:04+0300\n"
-"Last-Translator: Leandro Stanger\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-01-02 01:06+0000\n"
+"Last-Translator: Leandro Stanger <leandrostanger@hotmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"gamehub/translations/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #: src/app.vala:148
-#, fuzzy
 msgid "Run game"
-msgstr "%u jogo"
+msgstr "Jogo de corrida"
 
 #: src/app.vala:149
-#, fuzzy
 msgid "Show compatibility options dialog"
-msgstr "Forçar o modo de compatibilidade"
+msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
 #: src/app.vala:150
 msgid "Show main window"
-msgstr ""
+msgstr "Mostrar janela principal"
 
 #: src/data/Runnable.vala:73 src/data/Runnable.vala:75
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
@@ -61,14 +60,14 @@ msgid "Part %u of %u: "
 msgstr "Parte %u de %u: "
 
 #: src/data/Runnable.vala:383
-#, fuzzy, c-format
+#, c-format
 msgid "%s: corrupted installer"
-msgstr "Selecione o instalador"
+msgstr "%s: instalador corrompido"
 
 #: src/data/Runnable.vala:384
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr ""
+msgstr "Incompatibilidade de soma de verificação em %s"
 
 #: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
@@ -76,9 +75,8 @@ msgid "Remove"
 msgstr "Remover"
 
 #: src/data/Runnable.vala:399
-#, fuzzy
 msgid "Backup"
-msgstr "Voltar"
+msgstr "Cópia de segurança"
 
 #: src/data/Game.vala:465
 msgctxt "status"
@@ -96,10 +94,9 @@ msgid "Installing"
 msgstr "Instalando"
 
 #: src/data/Game.vala:470
-#, fuzzy
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr "Instalação muito silenciosa"
+msgstr "Verificando a integridade do instalador"
 
 #: src/data/Game.vala:471
 msgctxt "status"
@@ -190,7 +187,7 @@ msgstr "Jogar"
 
 #: src/data/compat/WineWrap.vala:61
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "Mostrar menu do WineWrap"
 
 #: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:81
 #: src/data/compat/Wine.vala:80
@@ -207,7 +204,7 @@ msgstr "Desativar esync"
 
 #: src/data/compat/Proton.vala:48
 msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr ""
+msgstr "Forçar sinalizador LARGE_ADDRESS_AWARE"
 
 #: src/data/compat/Proton.vala:49
 msgid "Disable DirectX 11 compatibility layer"
@@ -330,7 +327,7 @@ msgstr "Lista compacta"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:38
 msgid "Show platform icons in grid view"
-msgstr ""
+msgstr "Mostrar ícones de plataforma na visualização em grade"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:42
 msgid "Merge games from different sources"
@@ -548,20 +545,19 @@ msgstr "Compatibilidade"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:273
 msgid "Launch from terminal"
-msgstr ""
+msgstr "Lançamento do terminal"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:289
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Copiar para área de transferência"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:291
-#, fuzzy
 msgid "Add to Steam"
-msgstr "Adicionar etiqueta"
+msgstr "Adicionar ao Steam"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:292
 msgid "Add to the Steam library"
-msgstr ""
+msgstr "Adicionar à biblioteca do Steam"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
 #, c-format
@@ -615,7 +611,7 @@ msgstr "Jogar com camada de compatibilidade do Windows"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
-msgstr "No enabled game sources"
+msgstr "Nenhuma fonte de jogo habilitada"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "Enable some game sources in settings"
@@ -874,11 +870,11 @@ msgstr "Porcentagem global: %g%%"
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:47
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:61
 msgid "Playtime"
-msgstr "Playtime"
+msgstr "Tempo de reprodução"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:53
 msgid "Playtime (local)"
-msgstr "Playtime (local)"
+msgstr "Tempo de reprodução (local)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:70
 msgid "Last launch"
