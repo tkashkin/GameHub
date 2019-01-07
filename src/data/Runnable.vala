@@ -533,15 +533,18 @@ namespace GameHub.Data
 									{
 										runnable.executable = action.file;
 										runnable.arguments = action.args;
+										break;
 									}
 								}
 							}
 						}
 
-						if(runnable.executable == null || !runnable.executable.query_exists())
-						{
-							runnable.choose_executable();
-						}
+						runnable.update_status();
+					}
+
+					if(runnable.executable == null || !runnable.executable.query_exists())
+					{
+						runnable.choose_executable();
 					}
 
 					if(game != null && version != null)
