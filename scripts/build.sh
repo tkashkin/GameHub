@@ -128,8 +128,8 @@ build_deb()
 		debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
 		rm -f "$_SCRIPTROOT/launchpad/passphrase"
 		echo "[scripts/build.sh] Uploading package to launchpad"
-		sed 's/Architecture: source amd64/Architecture: source/;/\.deb/d;/\.buildinfo/d' ../${_GH_RDNN}_${_DEB_VERSION}_amd64.changes > ../${_GH_RDNN}_${_DEB_VERSION}.changes
-		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../${_GH_RDNN}_${_DEB_VERSION}.changes
+		sed 's/Architecture: source amd64/Architecture: source/;/\.deb/d;/\.buildinfo/d' ../${_GH_RDNN}_${_DEB_VERSION}_amd64.changes > ../${_GH_RDNN}_${_DEB_VERSION}_source.changes
+		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../${_GH_RDNN}_${_DEB_VERSION}_source.changes
 		set -e
 	fi
 	cd "$_ROOT"
