@@ -7,7 +7,7 @@ _GH_BRANCH="${APPVEYOR_REPO_BRANCH:-$(git symbolic-ref --short -q HEAD)}"
 
 _ROOT="`pwd`"
 _SCRIPTROOT="$(dirname "$(readlink -f "$0")")"
-_LINUXDEPLOYQT="linuxdeployqt-continuous-x86_64.AppImage"
+_LINUXDEPLOYQT="linuxdeployqt-5-x86_64.AppImage"
 
 _SOURCE="${APPVEYOR_BUILD_VERSION:-$_GH_VERSION-$_GH_BRANCH-local}"
 _VERSION="$_SOURCE-$(git rev-parse --short HEAD)"
@@ -124,11 +124,11 @@ build_deb()
 	export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
 	if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
 		set +e
+		dpkg-buildpackage -S -sa -us -uc
 		echo "[scripts/build.sh] Signing source package"
 		debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
 		rm -f "$_SCRIPTROOT/launchpad/passphrase"
 		echo "[scripts/build.sh] Uploading package to launchpad"
-		sed 's/Architecture: source amd64/Architecture: source/;/\.deb/d;/\.buildinfo/d' ../${_GH_RDNN}_${_DEB_VERSION}_amd64.changes > ../${_GH_RDNN}_${_DEB_VERSION}_source.changes
 		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../${_GH_RDNN}_${_DEB_VERSION}_source.changes
 		set -e
 	fi
@@ -153,7 +153,7 @@ appimage()
 	set -e
 	echo "[scripts/build.sh] Preparing AppImage"
 	cd "$BUILDROOT"
-	wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/$_LINUXDEPLOYQT"
+	wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/5/$_LINUXDEPLOYQT"
 	chmod a+x "./$_LINUXDEPLOYQT"
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
 	export VERSION="$_VERSION"
