@@ -128,6 +128,7 @@ build_deb()
 		debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
 		rm -f "$_SCRIPTROOT/launchpad/passphrase"
 		echo "[scripts/build.sh] Uploading package to launchpad"
+		sed 's/Architecture: source amd64/Architecture: source/;/\.deb/d;/\.buildinfo/d' ../$_GH_RDNN*.changes
 		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../$_GH_RDNN*.changes
 		set -e
 	fi
