@@ -357,7 +357,7 @@ namespace GameHub.Data.Sources.Steam
 				this.global_percentage = global_percentage;
 				this.unlock_timestamp = unlock_time;
 				this.unlock_date = new DateTime.from_unix_utc(unlock_time);
-				this.unlock_time = Granite.DateTime.get_relative_datetime(this.unlock_date);
+				this.unlock_time = Utils.get_relative_datetime(this.unlock_date);
 			}
 		}
 	}
