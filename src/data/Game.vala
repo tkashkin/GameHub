@@ -194,14 +194,6 @@ namespace GameHub.Data
 			set { _status = value; status_change(_status); }
 		}
 
-		public virtual string escaped_name
-		{
-			owned get
-			{
-				return Utils.strip_name(name.replace(" ", "_"), "_.,");
-			}
-		}
-
 		public int64 playtime_source  { get; set; default = 0; }
 		public int64 playtime_tracked { get; set; default = 0; }
 
