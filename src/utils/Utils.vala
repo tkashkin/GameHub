@@ -311,11 +311,15 @@ namespace GameHub.Utils
 	}
 
 	private const string NAME_CHARS_TO_STRIP = "!@#$%^&*()-_+=:~`;?'\"<>,./\\|’“”„«»™℠®©";
-	public static string strip_name(string name, string? keep=null)
+	public static string strip_name(string name, string? keep=null, bool move_the=false)
 	{
 		if(name == null) return name;
 		var n = name.strip();
-		if(n == "") return n;
+		if(n.length == 0) return n;
+		if(move_the && n.down().has_prefix("the "))
+		{
+			n = n.substring(4) + ", The";
+		}
 		unichar c;
 		for(int i = 0; NAME_CHARS_TO_STRIP.get_next_char(ref i, out c);)
 		{
