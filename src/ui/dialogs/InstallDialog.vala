@@ -41,6 +41,7 @@ namespace GameHub.UI.Dialogs
 		private Label title_label;
 		private Label subtitle_label;
 
+		private Granite.Widgets.ModeButton platforms_list;
 		private ListBox installers_list;
 
 		private bool is_finished = false;
@@ -77,9 +78,12 @@ namespace GameHub.UI.Dialogs
 			title_label.max_width_chars = 36;
 			title_label.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
+			var subtitle_hbox = new Box(Orientation.HORIZONTAL, 8);
+
 			subtitle_label = new Label(null);
 			subtitle_label.margin_start = subtitle_label.margin_end = 4;
 			subtitle_label.halign = Align.START;
+			subtitle_label.valign = Align.CENTER;
 			subtitle_label.hexpand = true;
 
 			if(game != null && game.icon != null)
@@ -95,14 +99,21 @@ namespace GameHub.UI.Dialogs
 
 			hbox.add(content);
 
+			subtitle_hbox.add(subtitle_label);
+
 			content.add(title_label);
-			content.add(subtitle_label);
+			content.add(subtitle_hbox);
 
 			title_label.label = runnable.name;
 
+			platforms_list = new Granite.Widgets.ModeButton();
+			platforms_list.get_style_context().add_class("installer-platforms-list");
+			platforms_list.halign = Align.END;
+			platforms_list.valign = Align.CENTER;
+
 			installers_list = new ListBox();
-			installers_list.margin_top = 4;
 			installers_list.get_style_context().add_class("installers-list");
+			installers_list.margin_top = 4;
 
 			installers_list.set_sort_func((row1, row2) => {
 				var item1 = row1 as InstallerRow;
@@ -123,6 +134,7 @@ namespace GameHub.UI.Dialogs
 			var sys_langs = Intl.get_language_names();
 
 			var compatible_installers = new ArrayList<Runnable.Installer>();
+			var compatible_platforms = new ArrayList<Platform>();
 
 			foreach(var installer in installers)
 			{
@@ -131,6 +143,11 @@ namespace GameHub.UI.Dialogs
 				compatible_installers.add(installer);
 				var row = new InstallerRow(runnable, installer);
 				installers_list.add(row);
+
+				if(!(installer.platform in compatible_platforms))
+				{
+					compatible_platforms.add(installer.platform);
+				}
 
 				if(installer is GOGGame.Installer && (installer as GOGGame.Installer).lang in sys_langs)
 				{
@@ -142,10 +159,47 @@ namespace GameHub.UI.Dialogs
 				}
 			}
 
+			installers_list.set_filter_func(installers_filter);
+
+			platforms_list.mode_changed.connect(() => {
+				installers_list.invalidate_filter();
+				foreach(var r in installers_list.get_children())
+				{
+					var row = r as InstallerRow;
+					var selected_row = installers_list.get_selected_row() as InstallerRow;
+					if(selected_row == null || !installers_filter(selected_row))
+					{
+						if(installers_filter(row) && (!(row.installer is GOGGame.Installer) || (row.installer as GOGGame.Installer).lang in sys_langs))
+						{
+							installers_list.select_row(row);
+							break;
+						}
+					}
+				}
+			});
+
+			platforms_list.selected = -1;
+			for(int i = 0; i < Platforms.length; i++)
+			{
+				var icon = new Image.from_icon_name(Platforms[i].icon(), IconSize.BUTTON);
+				icon.tooltip_text = Platforms[i].name();
+				platforms_list.append(icon);
+				var is_compatible = Platforms[i] in compatible_platforms;
+				platforms_list.set_item_visible(i, is_compatible);
+				if(is_compatible && platforms_list.selected < 0)
+				{
+					platforms_list.selected = i;
+				}
+			}
+
 			if(compatible_installers.size > 1)
 			{
 				subtitle_label.label = _("Select installer");
 				content.add(installers_list);
+				if(compatible_platforms.size > 1)
+				{
+					subtitle_hbox.add(platforms_list);
+				}
 			}
 			else
 			{
@@ -276,6 +330,12 @@ namespace GameHub.UI.Dialogs
 				return format_size(size);
 			}
 			return _("Unknown");
+		}
+
+		private bool installers_filter(ListBoxRow row)
+		{
+			var item = row as InstallerRow;
+			return item != null && platforms_list.selected >= 0 && platforms_list.selected < Platforms.length && item.installer.platform == Platforms[platforms_list.selected];
 		}
 
 		private class InstallerRow: ListBoxRow
