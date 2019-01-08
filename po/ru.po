@@ -2,13 +2,13 @@
 # Copyright (C) 2018 THE com.github.tkashkin.gamehub'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Automatically generated, 2018.
-# Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
+# Anatoliy Kashkin <tkashkin@gmail.com>, 2018, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-28 14:43+0300\n"
-"PO-Revision-Date: 2018-11-30 01:08+0000\n"
+"PO-Revision-Date: 2019-01-08 01:24+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
 "translations/ru/>\n"
@@ -16,9 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.3-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #: src/app.vala:148
 msgid "Run game"
@@ -205,7 +205,7 @@ msgstr "Выключить esync"
 
 #: src/data/compat/Proton.vala:48
 msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr ""
+msgstr "Принудительно использовать флаг LARGE_ADDRESS_AWARE"
 
 #: src/data/compat/Proton.vala:49
 msgid "Disable DirectX 11 compatibility layer"
@@ -490,7 +490,7 @@ msgstr "Установить"
 
 #: src/ui/dialogs/InstallDialog.vala:147
 msgid "Select installer"
-msgstr "Выбрать установщик"
+msgstr "Выберите установщик"
 
 #: src/ui/dialogs/InstallDialog.vala:152
 #, c-format
