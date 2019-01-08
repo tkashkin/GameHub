@@ -462,13 +462,13 @@ dialog .sidebar list
 	background: transparent;
 }
 
-.filters-sort-mode > *
+.filters-sort-mode > *, .installer-platforms-list > *
 {
 	padding: 4px;
 	min-width: 16px;
 	min-height: 16px;
 }
-.filters-sort-mode > * > image
+.filters-sort-mode > * > image, .installer-platforms-list > * > image
 {
 	padding: 0;
 	margin: 0;
