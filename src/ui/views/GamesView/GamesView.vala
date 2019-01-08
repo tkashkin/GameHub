@@ -971,10 +971,10 @@ namespace GameHub.UI.Views.GamesView
 					return;
 				}
 
-				bool name_match_exact = Utils.strip_name(game.name).casefold() == Utils.strip_name(game2.name).casefold();
+				bool name_match_exact = game.normalized_name.casefold() == game2.normalized_name.casefold();
 				bool name_match_fuzzy_prefix = game.source != src
-				                  && (Utils.strip_name(game.name, ":").casefold().has_prefix(Utils.strip_name(game2.name).casefold() + ":")
-				                  || Utils.strip_name(game2.name, ":").casefold().has_prefix(Utils.strip_name(game.name).casefold() + ":"));
+				                  && (Utils.strip_name(game.name, ":", true).casefold().has_prefix(game2.normalized_name.casefold() + ":")
+				                  || Utils.strip_name(game2.name, ":", true).casefold().has_prefix(game.normalized_name.casefold() + ":"));
 				if(name_match_exact || name_match_fuzzy_prefix)
 				{
 					Tables.Merges.add(game, game2);
