@@ -809,7 +809,7 @@ namespace GameHub.UI.Views.GamesView
 						break;
 				}
 
-				return game1.name.collate(game2.name);
+				return game1.normalized_name.collate(game2.normalized_name);
 			}
 			return 0;
 		}
