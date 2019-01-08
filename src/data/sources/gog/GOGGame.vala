@@ -511,7 +511,7 @@ namespace GameHub.Data.Sources.GOG
 				if(unlock_date != null)
 				{
 					this.unlock_date = new DateTime.from_iso8601(unlock_date, new TimeZone.utc());
-					this.unlock_time = Granite.DateTime.get_relative_datetime(this.unlock_date);
+					this.unlock_time = Utils.get_relative_datetime(this.unlock_date);
 				}
 			}
 		}

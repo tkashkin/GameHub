@@ -67,7 +67,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				if(date != null)
 				{
 					if(add_separator) hbox.add(new Separator(Orientation.VERTICAL));
-					add_info_label(_("Last launch"), Granite.DateTime.get_relative_datetime(date), false, false, hbox);
+					add_info_label(_("Last launch"), Utils.get_relative_datetime(date), false, false, hbox);
 				}
 			}
 
