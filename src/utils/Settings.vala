@@ -110,6 +110,14 @@ namespace GameHub.Settings
 			}
 		}
 
+		public static IconSize headerbar_icon_size
+		{
+			get
+			{
+				return instance.symbolic_icons ? IconSize.SMALL_TOOLBAR : IconSize.LARGE_TOOLBAR;
+			}
+		}
+
 		public UI()
 		{
 			base(ProjectConfig.PROJECT_NAME + ".ui");
