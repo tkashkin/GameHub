@@ -90,6 +90,8 @@ namespace GameHub.Settings
 	public class UI: Granite.Services.Settings
 	{
 		public bool dark_theme { get; set; }
+		public bool symbolic_icons { get; set; }
+
 		public bool compact_list { get; set; }
 		public bool show_grid_icons { get; set; }
 
@@ -99,6 +101,14 @@ namespace GameHub.Settings
 		public bool use_compat { get; set; }
 
 		public bool use_imported_tags { get; set; }
+
+		public static string symbolic_icon_suffix
+		{
+			get
+			{
+				return instance.symbolic_icons ? "-symbolic" : "";
+			}
+		}
 
 		public UI()
 		{

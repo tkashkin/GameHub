@@ -46,6 +46,9 @@
 		<key name="dark-theme" type="b">
 			<default>false</default>
 		</key>
+		<key name="symbolic-icons" type="b">
+			<default>false</default>
+		</key>
 		<key name="compact-list" type="b">
 			<default>false</default>
 		</key>

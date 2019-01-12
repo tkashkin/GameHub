@@ -437,10 +437,13 @@ namespace GameHub.UI.Views.GameDetailsView
 		private delegate void Action();
 		private ActionButton add_action(string icon, string? icon_overlay, string title, Action action, bool primary=false)
 		{
-			var button = new ActionButton(icon, icon_overlay, title, primary);
+			var button = new ActionButton(icon + Settings.UI.symbolic_icon_suffix, icon_overlay, title, primary);
 			button.hexpand = primary;
 			actions.add(button);
 			button.clicked.connect(() => action());
+			Settings.UI.get_instance().notify["symbolic-icons"].connect(() => {
+				button.icon = icon + Settings.UI.symbolic_icon_suffix;
+			});
 			return button;
 		}
 	}

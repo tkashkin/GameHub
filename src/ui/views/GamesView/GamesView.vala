@@ -175,7 +175,8 @@ namespace GameHub.UI.Views.GamesView
 
 			downloads = new MenuButton();
 			downloads.tooltip_text = _("Downloads");
-			downloads.image = new Image.from_icon_name("emblem-downloads", IconSize.LARGE_TOOLBAR);
+			downloads.image = new Image.from_icon_name("folder-download" + Settings.UI.symbolic_icon_suffix, IconSize.LARGE_TOOLBAR);
+
 			downloads_popover = new Popover(downloads);
 			downloads_list = new ListBox();
 			downloads_list.get_style_context().add_class("downloads-list");
@@ -199,14 +200,14 @@ namespace GameHub.UI.Views.GamesView
 
 			filters = new MenuButton();
 			filters.tooltip_text = _("Filters");
-			filters.image = new Image.from_icon_name("tag", IconSize.LARGE_TOOLBAR);
+			filters.image = new Image.from_icon_name("tag" + Settings.UI.symbolic_icon_suffix, IconSize.LARGE_TOOLBAR);
 			filters_popover = new FiltersPopover(filters);
 			filters_popover.position = PositionType.BOTTOM;
 			filters.popover = filters_popover;
 
 			add_game_button = new MenuButton();
 			add_game_button.tooltip_text = _("Add game");
-			add_game_button.image = new Image.from_icon_name("list-add", IconSize.LARGE_TOOLBAR);
+			add_game_button.image = new Image.from_icon_name("list-add" + Settings.UI.symbolic_icon_suffix, IconSize.LARGE_TOOLBAR);
 			add_game_popover = new AddGamePopover(add_game_button);
 			add_game_popover.position = PositionType.BOTTOM;
 			add_game_button.popover = add_game_popover;
@@ -218,7 +219,7 @@ namespace GameHub.UI.Views.GamesView
 
 			settings = new Button();
 			settings.tooltip_text = _("Settings");
-			settings.image = new Image.from_icon_name("open-menu", IconSize.LARGE_TOOLBAR);
+			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, IconSize.LARGE_TOOLBAR);
 
 			settings.clicked.connect(() => new Dialogs.SettingsDialog.SettingsDialog());
 
@@ -285,6 +286,13 @@ namespace GameHub.UI.Views.GamesView
 
 			ui_settings.notify["show-unsupported-games"].connect(postpone_view_update);
 			ui_settings.notify["use-proton"].connect(postpone_view_update);
+
+			ui_settings.notify["symbolic-icons"].connect(() => {
+				(filters.image as Image).icon_name = "tag" + Settings.UI.symbolic_icon_suffix;
+				(add_game_button.image as Image).icon_name = "list-add" + Settings.UI.symbolic_icon_suffix;
+				(downloads.image as Image).icon_name = "folder-download" + Settings.UI.symbolic_icon_suffix;
+				(settings.image as Image).icon_name = "open-menu" + Settings.UI.symbolic_icon_suffix;
+			});
 
 			filters_popover.filters_changed.connect(postpone_view_update);
 			filters_popover.sort_mode_changed.connect(() => {
