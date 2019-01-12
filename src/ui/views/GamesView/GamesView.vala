@@ -175,7 +175,7 @@ namespace GameHub.UI.Views.GamesView
 
 			downloads = new MenuButton();
 			downloads.tooltip_text = _("Downloads");
-			downloads.image = new Image.from_icon_name("folder-download" + Settings.UI.symbolic_icon_suffix, IconSize.LARGE_TOOLBAR);
+			downloads.image = new Image.from_icon_name("folder-download" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 
 			downloads_popover = new Popover(downloads);
 			downloads_list = new ListBox();
@@ -200,14 +200,14 @@ namespace GameHub.UI.Views.GamesView
 
 			filters = new MenuButton();
 			filters.tooltip_text = _("Filters");
-			filters.image = new Image.from_icon_name("tag" + Settings.UI.symbolic_icon_suffix, IconSize.LARGE_TOOLBAR);
+			filters.image = new Image.from_icon_name("tag" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 			filters_popover = new FiltersPopover(filters);
 			filters_popover.position = PositionType.BOTTOM;
 			filters.popover = filters_popover;
 
 			add_game_button = new MenuButton();
 			add_game_button.tooltip_text = _("Add game");
-			add_game_button.image = new Image.from_icon_name("list-add" + Settings.UI.symbolic_icon_suffix, IconSize.LARGE_TOOLBAR);
+			add_game_button.image = new Image.from_icon_name("list-add" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 			add_game_popover = new AddGamePopover(add_game_button);
 			add_game_popover.position = PositionType.BOTTOM;
 			add_game_button.popover = add_game_popover;
@@ -219,7 +219,7 @@ namespace GameHub.UI.Views.GamesView
 
 			settings = new Button();
 			settings.tooltip_text = _("Settings");
-			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, IconSize.LARGE_TOOLBAR);
+			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 
 			settings.clicked.connect(() => new Dialogs.SettingsDialog.SettingsDialog());
 
@@ -292,6 +292,7 @@ namespace GameHub.UI.Views.GamesView
 				(add_game_button.image as Image).icon_name = "list-add" + Settings.UI.symbolic_icon_suffix;
 				(downloads.image as Image).icon_name = "folder-download" + Settings.UI.symbolic_icon_suffix;
 				(settings.image as Image).icon_name = "open-menu" + Settings.UI.symbolic_icon_suffix;
+				(filters.image as Image).icon_size = (add_game_button.image as Image).icon_size = (downloads.image as Image).icon_size = (settings.image as Image).icon_size = Settings.UI.headerbar_icon_size;
 			});
 
 			filters_popover.filters_changed.connect(postpone_view_update);

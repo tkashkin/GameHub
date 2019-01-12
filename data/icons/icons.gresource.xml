@@ -18,6 +18,7 @@
 		<file alias="scalable/actions/tool-scummvm-symbolic.svg">symbolic/tools/scummvm.svg</file>
 
 		<file alias="scalable/actions/tag.svg">normal/tags/tag.svg</file>
+		<file alias="scalable/actions/tag-symbolic.svg">symbolic/tags/tag.svg</file>
 
 		<file alias="scalable/actions/gh-tag-symbolic.svg">symbolic/tags/tag.svg</file>
 		<file alias="scalable/actions/gh-tag-add-symbolic.svg">symbolic/tags/tag-add.svg</file>
