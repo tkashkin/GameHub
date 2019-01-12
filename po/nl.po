@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-28 14:43+0300\n"
+"POT-Creation-Date: 2019-01-12 20:42+0300\n"
 "PO-Revision-Date: 2018-12-29 00:42+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -31,99 +31,99 @@ msgstr "Comptabiliteitsmodus-opties tonen"
 msgid "Show main window"
 msgstr "Hoofdvenster tonen"
 
-#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
+#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Kies uitvoerbaar bestand"
 
-#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
-#: src/data/Runnable.vala:144 src/ui/views/GamesView/GamesView.vala:352
+#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
+#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:352
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
 msgstr "Kiezen"
 
-#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
-#: src/data/Runnable.vala:143 src/ui/widgets/FileChooserEntry.vala:53
+#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
+#: src/data/Runnable.vala:162 src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: src/data/Runnable.vala:129 src/ui/widgets/FileChooserEntry.vala:47
+#: src/data/Runnable.vala:148 src/ui/widgets/FileChooserEntry.vala:47
 msgid "Select directory"
 msgstr "Kies map"
 
-#: src/data/Runnable.vala:361
+#: src/data/Runnable.vala:380
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Deel %u van %u: "
 
-#: src/data/Runnable.vala:383
+#: src/data/Runnable.vala:402
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: kapot installatiebestand"
 
-#: src/data/Runnable.vala:384
+#: src/data/Runnable.vala:403
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Controlesom komt niet overeen voor %s"
 
-#: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/data/Runnable.vala:417 src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: src/data/Runnable.vala:399
+#: src/data/Runnable.vala:418
 msgid "Backup"
 msgstr "Back-up"
 
-#: src/data/Game.vala:465
+#: src/data/Game.vala:457
 msgctxt "status"
 msgid "Running"
 msgstr "Actief"
 
-#: src/data/Game.vala:468
+#: src/data/Game.vala:460
 msgctxt "status"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:469
+#: src/data/Game.vala:461
 msgctxt "status"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:470
+#: src/data/Game.vala:462
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Bezig met verifiëren van integriteit"
 
-#: src/data/Game.vala:471
+#: src/data/Game.vala:463
 msgctxt "status"
 msgid "Download started"
 msgstr "Downloaden gestart"
 
-#: src/data/Game.vala:473
+#: src/data/Game.vala:465
 msgctxt "status"
 msgid "Not installed"
 msgstr "Niet-geïnstalleerd"
 
-#: src/data/Game.vala:483
+#: src/data/Game.vala:475
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:484
+#: src/data/Game.vala:476
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:486
+#: src/data/Game.vala:478
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Bezig met downloaden"
 
-#: src/data/Game.vala:488
+#: src/data/Game.vala:480
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
@@ -189,70 +189,79 @@ msgstr "Uitvoeren"
 msgid "Show WineWrap menu"
 msgstr "WineWrap-menu tonen"
 
-#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:81
-#: src/data/compat/Wine.vala:80
+#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:93
+#: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "Wine-apps beëindigen"
 
-#: src/data/compat/Proton.vala:43 src/data/compat/Wine.vala:49
-msgid "Environment variables"
-msgstr "Omgevingsvariabelen"
+#: src/data/compat/Proton.vala:43
+msgid "Proton prefix"
+msgstr ""
 
-#: src/data/compat/Proton.vala:47
+#: src/data/compat/Proton.vala:49
 msgid "Disable esync"
 msgstr "esync uitschakelen"
 
-#: src/data/compat/Proton.vala:48
+#: src/data/compat/Proton.vala:50
 msgid "Force LARGE_ADDRESS_AWARE flag"
 msgstr "LARE_ADDRESS_AWARE-functie afdwingen"
 
-#: src/data/compat/Proton.vala:49
+#: src/data/compat/Proton.vala:51
 msgid "Disable DirectX 11 compatibility layer"
 msgstr "DirectX 11-comptabiliteit uitschakelen"
 
-#: src/data/compat/Proton.vala:50
+#: src/data/compat/Proton.vala:52
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
 msgstr "WineD3D11 gebruiken voor DirectX 11-comptabiliteit"
 
-#: src/data/compat/Proton.vala:51
+#: src/data/compat/Proton.vala:53
 msgid "Show DXVK info overlay"
 msgstr "DXVK-informatieoverlay tonen"
 
-#: src/data/compat/Proton.vala:69 src/data/compat/Wine.vala:68
-msgid "Open prefix directory"
-msgstr "Wine-profielmap openen"
-
-#: src/data/compat/Proton.vala:72 src/data/compat/Wine.vala:71
-msgid "Run winecfg"
-msgstr "winecfg uitvoeren"
-
-#: src/data/compat/Proton.vala:75 src/data/compat/Wine.vala:74
-msgid "Run winetricks"
-msgstr "winetricks uitvoeren"
-
-#: src/data/compat/Proton.vala:78 src/data/compat/Wine.vala:77
-msgid "Run taskmgr"
-msgstr "Taakbeheer uitvoeren"
-
-#: src/data/compat/Wine.vala:55
-msgid "InnoSetup default options"
-msgstr "Standaardopties voor InnoSetup"
-
-#: src/data/compat/Wine.vala:59
+#: src/data/compat/Proton.vala:60 src/data/compat/Wine.vala:66
 msgid "Silent installation"
 msgstr "Stille installatie"
 
-#: src/data/compat/Wine.vala:60
+#: src/data/compat/Proton.vala:61 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
 msgstr "Erg stille installatie"
 
-#: src/data/compat/Wine.vala:61
+#: src/data/compat/Proton.vala:62 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
 msgstr "Berichten onderdrukken"
 
-#: src/data/compat/Wine.vala:62
+#: src/data/compat/Proton.vala:63 src/data/compat/Wine.vala:69
 msgid "No GUI"
 msgstr "Zonder grafisch venster"
+
+#: src/data/compat/Proton.vala:81 src/data/compat/Wine.vala:75
+msgid "Open prefix directory"
+msgstr "Wine-profielmap openen"
+
+#: src/data/compat/Proton.vala:84 src/data/compat/Wine.vala:78
+msgid "Run winecfg"
+msgstr "winecfg uitvoeren"
+
+#: src/data/compat/Proton.vala:87 src/data/compat/Wine.vala:81
+msgid "Run winetricks"
+msgstr "winetricks uitvoeren"
+
+#: src/data/compat/Proton.vala:90 src/data/compat/Wine.vala:84
+msgid "Run taskmgr"
+msgstr "Taakbeheer uitvoeren"
+
+#: src/data/compat/Wine.vala:53
+#, fuzzy
+msgid "Wine prefix"
+msgstr "Wine-apps beëindigen"
+
+#: src/data/compat/Wine.vala:55
+msgid "Environment variables"
+msgstr "Omgevingsvariabelen"
+
+#: src/data/compat/Wine.vala:60
+msgid "InnoSetup default options"
+msgstr "Standaardopties voor InnoSetup"
 
 #: src/data/compat/DOSBox.vala:52
 msgid "Windowed"
@@ -480,30 +489,31 @@ msgstr "Kies emulatormap"
 msgid "Force compatibility mode"
 msgstr "Comptabiliteitsmodus afdwingen"
 
-#: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:199
+#: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:112
 #: src/ui/views/GamesView/GameContextMenu.vala:49
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Install"
 msgstr "Installeren"
 
-#: src/ui/dialogs/InstallDialog.vala:147
+#: src/ui/dialogs/InstallDialog.vala:110
+msgid "Import"
+msgstr "Importeren"
+
+#: src/ui/dialogs/InstallDialog.vala:111
+#, fuzzy
+msgid "Download"
+msgstr "Downloads"
+
+#: src/ui/dialogs/InstallDialog.vala:212
 msgid "Select installer"
 msgstr "Kies installatiebestand"
 
-#: src/ui/dialogs/InstallDialog.vala:152
+#: src/ui/dialogs/InstallDialog.vala:221
 #, c-format
 msgid "Installer size: %s"
 msgstr "Grootte van installatiebestand: %s"
 
-#: src/ui/dialogs/InstallDialog.vala:197
-msgid "Import"
-msgstr "Importeren"
-
-#: src/ui/dialogs/InstallDialog.vala:203
-msgid "Download only"
-msgstr "Alleen downloaden"
-
-#: src/ui/dialogs/InstallDialog.vala:278
+#: src/ui/dialogs/InstallDialog.vala:322
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -822,22 +832,22 @@ msgstr "Verborgen"
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:103
+#: src/ui/views/GamesView/GameContextMenu.vala:121
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Open installation directory"
 msgstr "Open installatiemap"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:111
+#: src/ui/views/GamesView/GameContextMenu.vala:129
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installers collection directory"
 msgstr "Open verzamelmap met installatiebestanden"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:119
+#: src/ui/views/GamesView/GameContextMenu.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open bonus collection directory"
 msgstr "Open bonusverzamelmap"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Uninstall"
 msgstr "Deïnstalleren"
@@ -980,3 +990,6 @@ msgstr "Gepauzeerd: %d%% (%s/%s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Downloaden geannuleerd"
+
+#~ msgid "Download only"
+#~ msgstr "Alleen downloaden"
