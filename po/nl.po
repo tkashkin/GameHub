@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-12 20:42+0300\n"
-"PO-Revision-Date: 2019-01-12 20:12+0000\n"
+"PO-Revision-Date: 2019-01-12 22:01+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -331,7 +331,7 @@ msgstr "Donker thema gebruiken"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:37
 msgid "Use symbolic icons instead of colored icons"
-msgstr ""
+msgstr "Symbolische pictogrammen gebruiken in plaats van gekleurde"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:41
 msgid "Compact list"
