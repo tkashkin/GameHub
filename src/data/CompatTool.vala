@@ -75,6 +75,7 @@ namespace GameHub.Data
 		public class StringOption: Option
 		{
 			public string? value { get; construct set; }
+			public string? icon { get; set; default = null; }
 			public StringOption(string name, string description, string? value)
 			{
 				Object(name: name, description: description, value: value);
@@ -85,9 +86,11 @@ namespace GameHub.Data
 		{
 			public File? directory { get; construct set; }
 			public File? file { get; construct set; }
-			public FileOption(string name, string description, File? directory, File? file)
+			public Gtk.FileChooserAction mode { get; construct set; }
+			public string? icon { get; set; default = null; }
+			public FileOption(string name, string description, File? directory, File? file, Gtk.FileChooserAction mode=Gtk.FileChooserAction.OPEN)
 			{
-				Object(name: name, description: description, directory: directory, file: file);
+				Object(name: name, description: description, directory: directory, file: file, mode: mode);
 			}
 		}
 
