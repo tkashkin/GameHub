@@ -521,7 +521,7 @@ namespace GameHub.Data.Sources.GOG
 			public string lang;
 			public string lang_full;
 
-			public override string name { owned get { return lang_full + (version != null ? " (" + version + ")" : ""); } }
+			public override string name { owned get { return lang_full + (version != null ? ": " + version : ""); } }
 
 			public Installer(GOGGame game, Json.Object json)
 			{
