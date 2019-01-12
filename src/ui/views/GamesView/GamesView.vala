@@ -174,6 +174,7 @@ namespace GameHub.UI.Views.GamesView
 			filter.set_active(sources.size > 1 ? 0 : 1);
 
 			downloads = new MenuButton();
+			downloads.valign = Align.CENTER;
 			downloads.tooltip_text = _("Downloads");
 			downloads.image = new Image.from_icon_name("folder-download" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 
@@ -199,6 +200,7 @@ namespace GameHub.UI.Views.GamesView
 			downloads.sensitive = false;
 
 			filters = new MenuButton();
+			filters.valign = Align.CENTER;
 			filters.tooltip_text = _("Filters");
 			filters.image = new Image.from_icon_name("tag" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 			filters_popover = new FiltersPopover(filters);
@@ -206,6 +208,7 @@ namespace GameHub.UI.Views.GamesView
 			filters.popover = filters_popover;
 
 			add_game_button = new MenuButton();
+			add_game_button.valign = Align.CENTER;
 			add_game_button.tooltip_text = _("Add game");
 			add_game_button.image = new Image.from_icon_name("list-add" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 			add_game_popover = new AddGamePopover(add_game_button);
@@ -218,6 +221,7 @@ namespace GameHub.UI.Views.GamesView
 			search.valign = Align.CENTER;
 
 			settings = new Button();
+			settings.valign = Align.CENTER;
 			settings.tooltip_text = _("Settings");
 			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 
