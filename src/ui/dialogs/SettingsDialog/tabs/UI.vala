@@ -34,10 +34,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			var ui = Settings.UI.get_instance();
 
 			add_switch(_("Use dark theme"), ui.dark_theme, v => { ui.dark_theme = v; });
-			add_switch(_("Compact list"), ui.compact_list, v => { ui.compact_list = v; });
-			add_switch(_("Show platform icons in grid view"), ui.show_grid_icons, v => { ui.show_grid_icons = v; });
+			add_switch(_("Use symbolic icons instead of colored icons"), ui.symbolic_icons, v => { ui.symbolic_icons = v; });
 
 			add_separator();
+
+			add_switch(_("Compact list"), ui.compact_list, v => { ui.compact_list = v; });
+			add_switch(_("Show platform icons in grid view"), ui.show_grid_icons, v => { ui.show_grid_icons = v; });
 
 			add_switch(_("Merge games from different sources"), ui.merge_games, v => { ui.merge_games = v; dialog.show_restart_message(); });
 
