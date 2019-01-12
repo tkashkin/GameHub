@@ -28,13 +28,13 @@ namespace GameHub.UI.Widgets
 	public class CompatToolOptions: ListBox
 	{
 		private CompatToolPicker compat_tool_picker;
-		private Runnable game;
+		private Runnable runnable;
 		private bool install;
 		private string settings_key;
 
-		public CompatToolOptions(Runnable game, CompatToolPicker picker, bool install = false)
+		public CompatToolOptions(Runnable runnable, CompatToolPicker picker, bool install = false)
 		{
-			this.game = game;
+			this.runnable = runnable;
 			this.compat_tool_picker = picker;
 			this.install = install;
 			this.settings_key = install ? "install_options" : "options";
@@ -54,7 +54,7 @@ namespace GameHub.UI.Widgets
 			var options = install ? compat_tool_picker.selected.install_options : compat_tool_picker.selected.options;
 			if(options == null) return;
 
-			var tool_settings = game.get_compat_settings(compat_tool_picker.selected);
+			var tool_settings = runnable.get_compat_settings(compat_tool_picker.selected);
 			var ts_options = tool_settings.has_member(settings_key) ? tool_settings.get_object_member(settings_key) : new Json.Object();
 
 			foreach(var opt in options)
@@ -82,6 +82,20 @@ namespace GameHub.UI.Widgets
 						((CompatTool.StringOption) opt).value = ts_options.get_string_member(opt.name);
 					}
 				}
+				else
+				{
+					switch(opt.name)
+					{
+						case Compat.Wine.OPT_PREFIX:
+							var prefix = (compat_tool_picker.selected as Compat.Wine).get_default_wineprefix(runnable);
+							if(compat_tool_picker.selected is Compat.Proton)
+							{
+								prefix = prefix.get_parent();
+							}
+							((CompatTool.FileOption) opt).file = prefix;
+							break;
+					}
+				}
 				add(new OptionRow(opt));
 			}
 
@@ -90,13 +104,13 @@ namespace GameHub.UI.Widgets
 
 		public void save_options()
 		{
-			game.compat_options_saved = true;
+			runnable.compat_options_saved = true;
 
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 			var options = install ? compat_tool_picker.selected.install_options : compat_tool_picker.selected.options;
 			if(options == null) return;
 
-			var tool_settings = game.get_compat_settings(compat_tool_picker.selected);
+			var tool_settings = runnable.get_compat_settings(compat_tool_picker.selected);
 			var ts_options = tool_settings.has_member(settings_key) ? tool_settings.get_object_member(settings_key) : new Json.Object();
 
 			foreach(var opt in options)
@@ -143,7 +157,7 @@ namespace GameHub.UI.Widgets
 				}
 			}
 			tool_settings.set_object_member(settings_key, ts_options);
-			game.set_compat_settings(compat_tool_picker.selected, tool_settings);
+			runnable.set_compat_settings(compat_tool_picker.selected, tool_settings);
 		}
 
 		public class OptionRow: ListBoxRow
@@ -196,39 +210,37 @@ namespace GameHub.UI.Widgets
 				{
 					var file_option = (CompatTool.FileOption) option;
 
-					var icon = new Image.from_icon_name("document-open-symbolic", IconSize.MENU);
+					var icon = new Image.from_icon_name(file_option.icon ?? "document-open-symbolic", IconSize.MENU);
 					box.add(icon);
 
 					ebox.above_child = false;
 					box.margin_top = box.margin_bottom = 2;
 					box.margin_end = 0;
 
-					var chooser = new FileChooserButton(file_option.description, FileChooserAction.OPEN);
-					chooser.show_hidden = true;
-					chooser.set_size_request(170, -1);
+					var entry = new FileChooserEntry(file_option.description, file_option.mode);
+					entry.set_size_request(220, -1);
+
 					if(file_option.file != null || file_option.directory != null)
 					{
 						try
 						{
-							chooser.select_file(file_option.file ?? file_option.directory);
-							chooser.tooltip_text = chooser.get_filename();
+							entry.select_file(file_option.file ?? file_option.directory);
 						}
 						catch(Error e)
 						{
 							warning(e.message);
 						}
 					}
-					chooser.file_set.connect(() => {
-						file_option.file = chooser.get_file();
-						chooser.tooltip_text = chooser.get_filename();
+					entry.file_set.connect(() => {
+						file_option.file = entry.file;
 					});
-					option_widget = chooser;
+					option_widget = entry;
 				}
 				else if(option is CompatTool.ComboOption)
 				{
 					var combo_option = (CompatTool.ComboOption) option;
 
-					var icon = new Image.from_icon_name("view-sort-descending-symbolic", IconSize.MENU);
+					var icon = new Image.from_icon_name(combo_option.icon ?? "view-sort-descending-symbolic", IconSize.MENU);
 					box.add(icon);
 
 					ebox.above_child = false;
@@ -245,7 +257,7 @@ namespace GameHub.UI.Widgets
 					}
 
 					var combo = new ComboBox.with_model(model);
-					combo.set_size_request(170, -1);
+					combo.set_size_request(220, -1);
 
 					var renderer = new CellRendererText();
 					combo.pack_start(renderer, true);
@@ -263,7 +275,7 @@ namespace GameHub.UI.Widgets
 				{
 					var string_option = (CompatTool.StringOption) option;
 
-					var icon = new Image.from_icon_name("insert-text-symbolic", IconSize.MENU);
+					var icon = new Image.from_icon_name(string_option.icon ?? "insert-text-symbolic", IconSize.MENU);
 					box.add(icon);
 
 					ebox.above_child = false;
@@ -271,7 +283,7 @@ namespace GameHub.UI.Widgets
 					box.margin_end = 0;
 
 					var entry = new Entry();
-					entry.set_size_request(170, -1);
+					entry.set_size_request(220, -1);
 					if(string_option.value != null)
 					{
 						entry.text = string_option.value;

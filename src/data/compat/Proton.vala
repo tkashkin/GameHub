@@ -40,15 +40,27 @@ namespace GameHub.Data.Compat
 			icon = "source-steam-symbolic";
 			installed = false;
 
-			opt_env = new CompatTool.StringOption("env", _("Environment variables"), null);
+			opt_prefix = new CompatTool.FileOption(Wine.OPT_PREFIX, _("Proton prefix"), null, null, Gtk.FileChooserAction.SELECT_FOLDER);
+			opt_prefix.icon = icon;
 
 			options = {
+				opt_prefix,
 				opt_env,
 				new CompatTool.BoolOption("PROTON_NO_ESYNC", _("Disable esync"), false),
 				new CompatTool.BoolOption("PROTON_FORCE_LARGE_ADDRESS_AWARE", _("Force LARGE_ADDRESS_AWARE flag"), false),
 				new CompatTool.BoolOption("PROTON_NO_D3D11", _("Disable DirectX 11 compatibility layer"), false),
 				new CompatTool.BoolOption("PROTON_USE_WINED3D11", _("Use WineD3D11 as DirectX 11 compatibility layer"), false),
 				new CompatTool.BoolOption("DXVK_HUD", _("Show DXVK info overlay"), true)
+			};
+
+			install_options = {
+				opt_prefix,
+				opt_env,
+				install_opt_innosetup_args,
+				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
+				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), true),
+				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
+				new CompatTool.BoolOption("/NOGUI", _("No GUI"), true)
 			};
 
 			File? proton_dir = null;
@@ -67,19 +79,19 @@ namespace GameHub.Data.Compat
 			{
 				actions = {
 					new CompatTool.Action("prefix", _("Open prefix directory"), r => {
-						Utils.open_uri(get_wineprefix(r).get_uri());
+						Utils.open_uri(get_wineprefix(r).get_parent().get_uri());
 					}),
 					new CompatTool.Action("winecfg", _("Run winecfg"), r => {
-						wineutil.begin(null, r, "winecfg");
+						wineutil.begin(r, "winecfg");
 					}),
 					new CompatTool.Action("winetricks", _("Run winetricks"), r => {
-						winetricks.begin(null, r);
+						winetricks.begin(r);
 					}),
 					new CompatTool.Action("taskmgr", _("Run taskmgr"), r => {
-						wineutil.begin(null, r, "taskmgr");
+						wineutil.begin(r, "taskmgr");
 					}),
 					new CompatTool.Action("kill", _("Kill apps in prefix"), r => {
-						wineboot.begin(null, r, {"-k"});
+						wineboot.begin(r, {"-k"});
 					})
 				};
 			}
@@ -99,49 +111,58 @@ namespace GameHub.Data.Compat
 			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(runnable, parse_opts));
 		}
 
-		protected override File get_wineprefix(Runnable runnable)
+		public override File get_default_wineprefix(Runnable runnable)
 		{
 			var prefix = FSUtils.mkdir(runnable.install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)/pfx");
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(FSUtils.file(runnable.install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(id)").query_exists())
+			if(FSUtils.file(runnable.install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
 			{
 				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}, runnable.install_dir.get_path());
 				FSUtils.rm(dosdevices.get_child("d:").get_path());
 			}
 
+			return prefix;
+		}
+
+		public override File get_wineprefix(Runnable runnable)
+		{
+			var prefix = get_default_wineprefix(runnable);
+
+			if(opt_prefix.file != null && opt_prefix.file.query_exists())
+			{
+				prefix = opt_prefix.file.get_child("pfx");
+			}
+
+			var dosdevices = prefix.get_child("dosdevices");
+
 			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists())
 			{
-				Utils.run({"ln", "-nsf", "../../../../../", "d:"}, dosdevices.get_path());
+				if(dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
+				{
+					Utils.run({"ln", "-nsf", "../../../../../", "d:"}, dosdevices.get_path());
+				}
 			}
+
 			return prefix;
 		}
 
 		protected override string[] prepare_env(Runnable runnable, bool parse_opts=true)
 		{
-			var env = Environ.get();
+			var env = base.prepare_env(runnable, parse_opts);
 
-			var compatdata = FSUtils.mkdir(runnable.install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)");
+			var compatdata = get_wineprefix(runnable).get_parent();
 			if(compatdata != null && compatdata.query_exists())
 			{
-				env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.Paths.Steam.Home);
 				env = Environ.set_variable(env, "STEAM_COMPAT_DATA_PATH", compatdata.get_path());
-				env = Environ.set_variable(env, "PROTON_LOG", "1");
-				env = Environ.set_variable(env, "PROTON_DUMP_DEBUG_COMMANDS", "1");
+				env = Environ.set_variable(env, "WINEPREFIX", compatdata.get_child("pfx").get_path());
 			}
+
+			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.Paths.Steam.Home);
+			env = Environ.set_variable(env, "PROTON_LOG", "1");
 
 			if(parse_opts)
 			{
-				if(opt_env.value != null && opt_env.value.length > 0)
-				{
-					var evars = opt_env.value.split(" ");
-					foreach(var ev in evars)
-					{
-						var v = ev.split("=");
-						env = Environ.set_variable(env, v[0], v[1]);
-					}
-				}
-
 				foreach(var opt in options)
 				{
 					if(opt is CompatTool.BoolOption && ((CompatTool.BoolOption) opt).enabled)
@@ -154,32 +175,25 @@ namespace GameHub.Data.Compat
 			return env;
 		}
 
-		protected override async void wineboot(File? wineprefix, Runnable runnable, string[]? args=null)
+		protected override async void wineboot(Runnable runnable, string[]? args=null)
 		{
 			if(args == null)
 			{
-				yield proton_init_prefix(wineprefix, runnable);
+				yield proton_init_prefix(runnable);
 			}
 
-			yield wineutil(wineprefix, runnable, "wineboot", args);
+			yield wineutil(runnable, "wineboot", args);
 		}
 
-		protected async void proton_init_prefix(File? wineprefix, Runnable runnable)
+		protected async void proton_init_prefix(Runnable runnable)
 		{
-			var env = prepare_env(runnable, false);
-			env = Environ.set_variable(env, "WINE", wine_binary.get_path());
-			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
-			var prefix = wineprefix ?? get_wineprefix(runnable);
-			if(prefix != null && prefix.query_exists())
+			var prefix = get_wineprefix(runnable);
+			if(opt_prefix.file != null && opt_prefix.file.query_exists())
 			{
-				env = Environ.set_variable(env, "WINEPREFIX", prefix.get_path());
-			}
-			if(arch != null && arch.length > 0)
-			{
-				env = Environ.set_variable(env, "WINEARCH", arch);
+				prefix = opt_prefix.file.get_child("pfx");
 			}
 
-			yield Utils.run_thread({ executable.get_path(), "run", prefix.get_child("drive_c/windows/system32/cmd.exe").get_path() }, runnable.install_dir.get_path(), env);
+			yield Utils.run_thread({ executable.get_path(), "run", prefix.get_child("drive_c/windows/system32/cmd.exe").get_path() }, runnable.install_dir.get_path(), prepare_env(runnable));
 		}
 	}
 }
