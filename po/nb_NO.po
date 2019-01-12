@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-28 14:43+0300\n"
+"POT-Creation-Date: 2019-01-12 20:42+0300\n"
 "PO-Revision-Date: 2018-12-17 12:08+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -32,99 +32,99 @@ msgstr "Vis valg for kompabilitetsmodus"
 msgid "Show main window"
 msgstr "Vis hovedvindu"
 
-#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
+#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Velg kjørbar fil"
 
-#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
-#: src/data/Runnable.vala:144 src/ui/views/GamesView/GamesView.vala:352
+#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
+#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:352
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
 msgstr "Velg"
 
-#: src/data/Runnable.vala:73 src/data/Runnable.vala:75
-#: src/data/Runnable.vala:143 src/ui/widgets/FileChooserEntry.vala:53
+#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
+#: src/data/Runnable.vala:162 src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/data/Runnable.vala:129 src/ui/widgets/FileChooserEntry.vala:47
+#: src/data/Runnable.vala:148 src/ui/widgets/FileChooserEntry.vala:47
 msgid "Select directory"
 msgstr "Velg mappe"
 
-#: src/data/Runnable.vala:361
+#: src/data/Runnable.vala:380
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Del %u av %u: "
 
-#: src/data/Runnable.vala:383
+#: src/data/Runnable.vala:402
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: Skadet installasjonskandidat"
 
-#: src/data/Runnable.vala:384
+#: src/data/Runnable.vala:403
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Sjekksum stemmer ikke overens i %s"
 
-#: src/data/Runnable.vala:398 src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/data/Runnable.vala:417 src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Fjern"
 
-#: src/data/Runnable.vala:399
+#: src/data/Runnable.vala:418
 msgid "Backup"
 msgstr "Sikkerhetskopi"
 
-#: src/data/Game.vala:465
+#: src/data/Game.vala:457
 msgctxt "status"
 msgid "Running"
 msgstr "Kjører"
 
-#: src/data/Game.vala:468
+#: src/data/Game.vala:460
 msgctxt "status"
 msgid "Installed"
 msgstr "Installert"
 
-#: src/data/Game.vala:469
+#: src/data/Game.vala:461
 msgctxt "status"
 msgid "Installing"
 msgstr "Installerer"
 
-#: src/data/Game.vala:470
+#: src/data/Game.vala:462
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Bekrefter installasjonskandidatfila"
 
-#: src/data/Game.vala:471
+#: src/data/Game.vala:463
 msgctxt "status"
 msgid "Download started"
 msgstr "Nedlasting startet"
 
-#: src/data/Game.vala:473
+#: src/data/Game.vala:465
 msgctxt "status"
 msgid "Not installed"
 msgstr "Ikke installert"
 
-#: src/data/Game.vala:483
+#: src/data/Game.vala:475
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Installert"
 
-#: src/data/Game.vala:484
+#: src/data/Game.vala:476
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Installerer"
 
-#: src/data/Game.vala:486
+#: src/data/Game.vala:478
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Laster ned"
 
-#: src/data/Game.vala:488
+#: src/data/Game.vala:480
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Ikke installert"
@@ -190,70 +190,79 @@ msgstr "Kjør"
 msgid "Show WineWrap menu"
 msgstr "Vis WineWrap-meny"
 
-#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:81
-#: src/data/compat/Wine.vala:80
+#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:93
+#: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "Drep programmer i prefiks"
 
-#: src/data/compat/Proton.vala:43 src/data/compat/Wine.vala:49
-msgid "Environment variables"
-msgstr "Miljøvariabler"
-
-#: src/data/compat/Proton.vala:47
-msgid "Disable esync"
-msgstr "Skru av esync"
-
-#: src/data/compat/Proton.vala:48
-msgid "Force LARGE_ADDRESS_AWARE flag"
+#: src/data/compat/Proton.vala:43
+msgid "Proton prefix"
 msgstr ""
 
 #: src/data/compat/Proton.vala:49
+msgid "Disable esync"
+msgstr "Skru av esync"
+
+#: src/data/compat/Proton.vala:50
+msgid "Force LARGE_ADDRESS_AWARE flag"
+msgstr ""
+
+#: src/data/compat/Proton.vala:51
 msgid "Disable DirectX 11 compatibility layer"
 msgstr "Skru av DirextX 11-kompabilitetslag"
 
-#: src/data/compat/Proton.vala:50
+#: src/data/compat/Proton.vala:52
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
 msgstr "Bruk WineD3D11 som DirectX 11-kompabilitetslag"
 
-#: src/data/compat/Proton.vala:51
+#: src/data/compat/Proton.vala:53
 msgid "Show DXVK info overlay"
 msgstr "Vis DXVK-infooverlag"
 
-#: src/data/compat/Proton.vala:69 src/data/compat/Wine.vala:68
-msgid "Open prefix directory"
-msgstr "Åpne prefiks-mappe"
-
-#: src/data/compat/Proton.vala:72 src/data/compat/Wine.vala:71
-msgid "Run winecfg"
-msgstr "Kjør winecfg"
-
-#: src/data/compat/Proton.vala:75 src/data/compat/Wine.vala:74
-msgid "Run winetricks"
-msgstr "Kjør winetricks"
-
-#: src/data/compat/Proton.vala:78 src/data/compat/Wine.vala:77
-msgid "Run taskmgr"
-msgstr "Kjør taskmgr"
-
-#: src/data/compat/Wine.vala:55
-msgid "InnoSetup default options"
-msgstr "Forvalgte valg for InnoSetup"
-
-#: src/data/compat/Wine.vala:59
+#: src/data/compat/Proton.vala:60 src/data/compat/Wine.vala:66
 msgid "Silent installation"
 msgstr "Stille installasjon"
 
-#: src/data/compat/Wine.vala:60
+#: src/data/compat/Proton.vala:61 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
 msgstr "Veldig stille installasjon"
 
-#: src/data/compat/Wine.vala:61
+#: src/data/compat/Proton.vala:62 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
 msgstr "Undertrykk meldinger"
 
-#: src/data/compat/Wine.vala:62
+#: src/data/compat/Proton.vala:63 src/data/compat/Wine.vala:69
 msgid "No GUI"
 msgstr "Inget grensesnitt"
+
+#: src/data/compat/Proton.vala:81 src/data/compat/Wine.vala:75
+msgid "Open prefix directory"
+msgstr "Åpne prefiks-mappe"
+
+#: src/data/compat/Proton.vala:84 src/data/compat/Wine.vala:78
+msgid "Run winecfg"
+msgstr "Kjør winecfg"
+
+#: src/data/compat/Proton.vala:87 src/data/compat/Wine.vala:81
+msgid "Run winetricks"
+msgstr "Kjør winetricks"
+
+#: src/data/compat/Proton.vala:90 src/data/compat/Wine.vala:84
+msgid "Run taskmgr"
+msgstr "Kjør taskmgr"
+
+#: src/data/compat/Wine.vala:53
+#, fuzzy
+msgid "Wine prefix"
+msgstr "Drep programmer i prefiks"
+
+#: src/data/compat/Wine.vala:55
+msgid "Environment variables"
+msgstr "Miljøvariabler"
+
+#: src/data/compat/Wine.vala:60
+msgid "InnoSetup default options"
+msgstr "Forvalgte valg for InnoSetup"
 
 #: src/data/compat/DOSBox.vala:52
 msgid "Windowed"
@@ -480,30 +489,31 @@ msgstr "Velg emulatormappe"
 msgid "Force compatibility mode"
 msgstr "Tving gjennom kompabilitetsmodus"
 
-#: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:199
+#: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:112
 #: src/ui/views/GamesView/GameContextMenu.vala:49
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Install"
 msgstr "Installer"
 
-#: src/ui/dialogs/InstallDialog.vala:147
+#: src/ui/dialogs/InstallDialog.vala:110
+msgid "Import"
+msgstr "Importer"
+
+#: src/ui/dialogs/InstallDialog.vala:111
+#, fuzzy
+msgid "Download"
+msgstr "Nedlastinger"
+
+#: src/ui/dialogs/InstallDialog.vala:212
 msgid "Select installer"
 msgstr "Velg installasjonskandidat"
 
-#: src/ui/dialogs/InstallDialog.vala:152
+#: src/ui/dialogs/InstallDialog.vala:221
 #, c-format
 msgid "Installer size: %s"
 msgstr "Installasjonsstørrelse: %s"
 
-#: src/ui/dialogs/InstallDialog.vala:197
-msgid "Import"
-msgstr "Importer"
-
-#: src/ui/dialogs/InstallDialog.vala:203
-msgid "Download only"
-msgstr "Kun last ned"
-
-#: src/ui/dialogs/InstallDialog.vala:278
+#: src/ui/dialogs/InstallDialog.vala:322
 msgid "Unknown"
 msgstr "Ukjent"
 
@@ -822,22 +832,22 @@ msgstr "Skjult"
 msgid "Properties"
 msgstr "Egenskaper"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:103
+#: src/ui/views/GamesView/GameContextMenu.vala:121
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Open installation directory"
 msgstr "Åpne installasjonsmappe"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:111
+#: src/ui/views/GamesView/GameContextMenu.vala:129
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installers collection directory"
 msgstr "Åpne installasjonskandidatssamlingsmappe"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:119
+#: src/ui/views/GamesView/GameContextMenu.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open bonus collection directory"
 msgstr "Åpne bonussamlingsmappe"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:126
+#: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Uninstall"
 msgstr "Avinstaller"
@@ -980,3 +990,6 @@ msgstr "Pauset: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Nedlasting avbrutt"
+
+#~ msgid "Download only"
+#~ msgstr "Kun last ned"
