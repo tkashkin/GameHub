@@ -216,6 +216,11 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_uninstall = add_action("edit-delete", null, (game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"), uninstall_game);
 			action_properties = add_action("system-run", null, _("Game properties"), game_properties);
 
+			if (Settings.UI.get_instance().symbolic_icons) {
+				action_run_with_compat.icon = "platform-windows-symbolic";
+				action_run_with_compat.icon_overlay = null;
+			}
+
 			action_cancel.clicked.connect(() => {
 				if(download != null) download.cancel();
 			});
@@ -337,7 +342,8 @@ namespace GameHub.UI.Views.GameDetailsView
 					{
 						if(tool.id == game.compat_tool)
 						{
-							action_run_with_compat.icon_overlay = tool.icon;
+							var compat_icon_type = Settings.UI.get_instance().symbolic_icons ? "icon" : "icon_overlay";
+							action_run_with_compat.set_property(compat_icon_type, tool.icon);
 							break;
 						}
 					}

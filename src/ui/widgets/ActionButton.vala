@@ -36,14 +36,17 @@ namespace GameHub.UI.Widgets
 		{
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
+			var ui_settings = GameHub.Settings.UI.get_instance();
+			var icon_size = ui_settings.symbolic_icons ? IconSize.LARGE_TOOLBAR : IconSize.DIALOG;
+			var button_size = int.max(icon_size, 32);
 			var box = new Box(Orientation.HORIZONTAL, 8);
 
 			var overlay = new Overlay();
 			overlay.valign = Align.START;
-			overlay.set_size_request(48, 48);
+			overlay.set_size_request(button_size, button_size);
 
-			var image = new Image.from_icon_name(icon, IconSize.DIALOG);
-			image.set_size_request(48, 48);
+			var image = new Image.from_icon_name(icon, icon_size);
+			image.set_size_request(icon_size, icon_size);
 			overlay.add(image);
 
 			notify["icon"].connect(() => {
