@@ -31,7 +31,8 @@ namespace GameHub.UI.Dialogs
 {
 	public class InstallDialog: Dialog
 	{
-		private const int RESPONSE_IMPORT = 123;
+		private const int RESPONSE_IMPORT = 10;
+		private const int RESPONSE_DOWNLOAD = 11;
 
 		public signal void import();
 		public signal void install(Runnable.Installer installer, bool dl_only, CompatTool? tool);
@@ -106,6 +107,19 @@ namespace GameHub.UI.Dialogs
 
 			title_label.label = runnable.name;
 
+			var import_btn = add_button(_("Import"), InstallDialog.RESPONSE_IMPORT);
+			var dl_btn = add_button(_("Download"), InstallDialog.RESPONSE_DOWNLOAD);
+			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
+			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
+			install_btn.grab_default();
+
+			var bbox = import_btn.get_parent() as ButtonBox;
+			if(bbox != null)
+			{
+				bbox.set_child_secondary(import_btn, true);
+				bbox.set_child_non_homogeneous(import_btn, true);
+			}
+
 			platforms_list = new Granite.Widgets.ModeButton();
 			platforms_list.get_style_context().add_class("installer-platforms-list");
 			platforms_list.halign = Align.END;
@@ -176,6 +190,7 @@ namespace GameHub.UI.Dialogs
 						}
 					}
 				}
+				install_btn.sensitive = platforms_list.selected >= 0 && platforms_list.selected < Platforms.length && Platforms[platforms_list.selected] != Platform.MACOS;
 			});
 
 			platforms_list.selected = -1;
@@ -248,41 +263,15 @@ namespace GameHub.UI.Dialogs
 				compat_tool_box.add(opts_list);
 			}
 
-			var import_btn = add_button(_("Import"), InstallDialog.RESPONSE_IMPORT);
-
-			var install_btn = add_button(_("Install"), ResponseType.ACCEPT);
-			install_btn.get_style_context().add_class(STYLE_CLASS_SUGGESTED_ACTION);
-			install_btn.grab_default();
-
-			var dl_only_check = new CheckButton.with_label(_("Download only"));
-			dl_only_check.get_style_context().add_class("default-padding");
-			dl_only_check.margin_start = 5;
-			dl_only_check.valign = Align.CENTER;
-
-			var bbox = install_btn.get_parent() as ButtonBox;
-			if(bbox != null)
-			{
-				bbox.add(dl_only_check);
-				bbox.set_child_secondary(dl_only_check, true);
-				bbox.set_child_non_homogeneous(dl_only_check, true);
-			}
-
 			if(game is GameHub.Data.Sources.User.UserGame || runnable is GameHub.Data.Emulator)
 			{
 				subtitle_label.no_show_all = true;
 				subtitle_label.visible = false;
-				dl_only_check.no_show_all = true;
-				dl_only_check.visible = false;
+				dl_btn.no_show_all = true;
+				dl_btn.visible = false;
 				import_btn.no_show_all = true;
 				import_btn.visible = false;
 				compat_tool_revealer.reveal_child = true;
-			}
-
-			if(compat_tool_revealer != null)
-			{
-				dl_only_check.toggled.connect(() => {
-					compat_tool_revealer.sensitive = !dl_only_check.active;
-				});
 			}
 
 			response.connect((source, response_id) => {
@@ -299,6 +288,7 @@ namespace GameHub.UI.Dialogs
 						break;
 
 					case ResponseType.ACCEPT:
+					case InstallDialog.RESPONSE_DOWNLOAD:
 						var installer = compatible_installers[0];
 						if(compatible_installers.size > 1)
 						{
@@ -310,7 +300,7 @@ namespace GameHub.UI.Dialogs
 						{
 							opts_list.save_options();
 						}
-						install(installer, dl_only_check.active, compat_tool_picker != null ? compat_tool_picker.selected : null);
+						install(installer, response_id == InstallDialog.RESPONSE_DOWNLOAD, compat_tool_picker != null ? compat_tool_picker.selected : null);
 						destroy();
 						break;
 				}

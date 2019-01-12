@@ -457,7 +457,7 @@ namespace GameHub.Data
 					if(game != null && game.is_running) return C_("status", "Running");
 					switch(state)
 					{
-						case Game.State.INSTALLED: return C_("status", "Installed") + (game != null && game.version != null ? @" ($(game.version))" : "");
+						case Game.State.INSTALLED: return C_("status", "Installed") + (game != null && game.version != null ? @": $(game.version)" : "");
 						case Game.State.INSTALLING: return C_("status", "Installing");
 						case Game.State.VERIFYING_INSTALLER_INTEGRITY: return C_("status", "Verifying installer integrity");
 						case Game.State.DOWNLOADING: return download != null ? download.status.description : C_("status", "Download started");
