@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
-# Heimen Stoffels <vistausss@outlook.com>, 2018.
+# Heimen Stoffels <vistausss@outlook.com>, 2018, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-12 20:42+0300\n"
-"PO-Revision-Date: 2018-12-29 00:42+0000\n"
+"PO-Revision-Date: 2019-01-12 20:12+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -196,7 +196,7 @@ msgstr "Wine-apps beëindigen"
 
 #: src/data/compat/Proton.vala:43
 msgid "Proton prefix"
-msgstr ""
+msgstr "Proton-voorvoegsel"
 
 #: src/data/compat/Proton.vala:49
 msgid "Disable esync"
@@ -251,9 +251,8 @@ msgid "Run taskmgr"
 msgstr "Taakbeheer uitvoeren"
 
 #: src/data/compat/Wine.vala:53
-#, fuzzy
 msgid "Wine prefix"
-msgstr "Wine-apps beëindigen"
+msgstr "Wine-voorvoegsel"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
@@ -500,9 +499,8 @@ msgid "Import"
 msgstr "Importeren"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#, fuzzy
 msgid "Download"
-msgstr "Downloads"
+msgstr "Downloaden"
 
 #: src/ui/dialogs/InstallDialog.vala:212
 msgid "Select installer"
