@@ -4,7 +4,6 @@ about: Report GameHub crashing under some circumstances
 ---
 
 <!--
-
 Before creating the issue, please make sure that...
 
 * You are using the latest version of GameHub (active development happens in the dev branch).
@@ -16,31 +15,35 @@ If you have multiple unrelated problems, create separate issues rather than comb
 Note that leaving sections blank or being vague will make it difficult to understand and fix the problem.
 -->
 
-### Steps to reproduce
+###### Steps to reproduce
 
-### Environment
 
-- GameHub version:
-- Desktop Environment:
-- Distribution:
-- Kernel version:
 
-### GDB log output
+###### Version and environment
+
+<!-- Paste output of `com.github.tkashkin.gamehub -v` below: -->
+```
+PASTE VERSION INFO HERE
+```
+
+###### GDB log
 
 <!--
-
 To get the GDB log, follow these steps:
 
 1. Close GameHub if it's running.
 2. Run this in your terminal:
 "gdb -ex 'set args --debug' -ex 'set pagination off' -ex run com.github.tkashkin.gamehub"
-3. Once the app has crashed (become unresponsive), type "bt full" (and  press enter) to get a backtrace.
+3. Once the app has crashed (become unresponsive), type "bt full" (and press enter) to get a backtrace.
 4. type "q" to quit the debugger (or "c" to continue until the app quits)
 5. Copy the log and paste below
-6. Remove private information (tokens, keys or id's for steam, gog or humble bundle)
-
 -->
+
+<details>
+<summary>GDB log</summary>
 
 ```
 PASTE LOG HERE
 ```
+
+</details>
