@@ -34,6 +34,9 @@ namespace GameHub
 	{
 		public static Application instance;
 
+		public static bool log_auth = false;
+		public static bool log_downloader = false;
+
 		private GameHub.UI.Windows.MainWindow? main_window;
 
 		public const string ACTION_PREFIX = "app.";
@@ -144,11 +147,13 @@ namespace GameHub
 			bool opt_show_compat = false;
 			bool opt_show = false;
 
-			OptionEntry[] options = new OptionEntry[4];
+			OptionEntry[] options = new OptionEntry[6];
 			options[0] = { "run", 'r', 0, OptionArg.STRING, out opt_run, _("Run game"), null };
 			options[1] = { "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, _("Show compatibility options dialog"), null };
 			options[2] = { "show", 's', 0, OptionArg.NONE, out opt_show, _("Show main window"), null };
-			options[3] = { null };
+			options[3] = { "log-auth", 0, 0, OptionArg.NONE, out log_auth, _("Log authentication process and sensitive information like authentication tokens"), null };
+			options[4] = { "log-downloader", 0, 0, OptionArg.NONE, out log_downloader, _("Log download manager"), null };
+			options[5] = { null };
 
 			var ctx = new OptionContext();
 			ctx.add_main_entries(options, null);

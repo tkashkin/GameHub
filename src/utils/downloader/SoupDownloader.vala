@@ -57,7 +57,10 @@ namespace GameHub.Utils.Downloader.Soup
 
 			if(local.query_exists())
 			{
-				debug("[SoupDownloader] '%s' is already downloaded", uri);
+				if(GameHub.Application.log_downloader)
+				{
+					debug("[SoupDownloader] '%s' is already downloaded", uri);
+				}
 				return local;
 			}
 
@@ -76,7 +79,10 @@ namespace GameHub.Utils.Downloader.Soup
 				dl_started(info);
 			}
 
-			debug("[SoupDownloader] Downloading '%s'...", uri);
+			if(GameHub.Application.log_downloader)
+			{
+				debug("[SoupDownloader] Downloading '%s'...", uri);
+			}
 
 			try
 			{
@@ -109,7 +115,10 @@ namespace GameHub.Utils.Downloader.Soup
 				download.local_tmp.move(download.local, FileCopyFlags.OVERWRITE);
 			}
 
-			debug("[SoupDownloader] Downloaded '%s'", uri);
+			if(GameHub.Application.log_downloader)
+			{
+				debug("[SoupDownloader] Downloaded '%s'", uri);
+			}
 
 			downloaded(download);
 			if(info != null) dl_ended(info);
@@ -152,14 +161,20 @@ namespace GameHub.Utils.Downloader.Soup
 				{
 					resume_dl = true;
 					msg.request_headers.set_range(resume_from, -1);
-					debug(@"[SoupDownloader] Download part found, size: $(resume_from)");
+					if(GameHub.Application.log_downloader)
+					{
+						debug(@"[SoupDownloader] Download part found, size: $(resume_from)");
+					}
 				}
 			}
 			#endif
 
 			msg.got_headers.connect(() => {
 				dl_bytes_total = msg.response_headers.get_content_length();
-				debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
+				if(GameHub.Application.log_downloader)
+				{
+					debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
+				}
 				try
 				{
 					if(preserve_filename)
@@ -173,7 +188,7 @@ namespace GameHub.Utils.Downloader.Soup
 							if(disposition == "attachment" && dparams != null)
 							{
 								filename = dparams.get("filename");
-								if(filename != null)
+								if(filename != null && GameHub.Application.log_downloader)
 								{
 									debug(@"[SoupDownloader] Content-Disposition: filename=%s", filename);
 								}
@@ -190,7 +205,10 @@ namespace GameHub.Utils.Downloader.Soup
 							download.local = download.local.get_parent().get_child(filename);
 							if(download.local.query_exists())
 							{
-								debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
+								if(GameHub.Application.log_downloader)
+								{
+									debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
+								}
 								var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
 								if(info.get_size() == dl_bytes_total)
 								{
@@ -198,7 +216,10 @@ namespace GameHub.Utils.Downloader.Soup
 									return;
 								}
 							}
-							debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
+							if(GameHub.Application.log_downloader)
+							{
+								debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
+							}
 						}
 					}
 
@@ -206,8 +227,11 @@ namespace GameHub.Utils.Downloader.Soup
 					int64 rstart = -1, rend = -1;
 					if(resume_dl && msg.response_headers.get_content_range(out rstart, out rend, out dl_bytes_total))
 					{
-						debug(@"[SoupDownloader] Content-Range is supported($(rstart)-$(rend)), resuming from $(resume_from)");
-						debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
+						if(GameHub.Application.log_downloader)
+						{
+							debug(@"[SoupDownloader] Content-Range is supported($(rstart)-$(rend)), resuming from $(resume_from)");
+							debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
+						}
 						dl_bytes = resume_from;
 						local_stream = download.local_tmp.append_to(FileCreateFlags.NONE);
 					}
@@ -312,7 +336,10 @@ namespace GameHub.Utils.Downloader.Soup
 			if(download.remote == null || !download.remote.query_exists()) return;
 			try
 			{
-				debug("[SoupDownloader] Copying '%s' to '%s'", download.remote.get_path(), download.local_tmp.get_path());
+				if(GameHub.Application.log_downloader)
+				{
+					debug("[SoupDownloader] Copying '%s' to '%s'", download.remote.get_path(), download.local_tmp.get_path());
+				}
 				yield download.remote.copy_async(
 					download.local_tmp,
 					FileCopyFlags.OVERWRITE,

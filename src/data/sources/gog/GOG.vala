@@ -111,7 +111,10 @@ namespace GameHub.Data.Sources.GOG
 			wnd.finished.connect(code =>
 			{
 				user_auth_code = code;
-				debug("[Auth] GOG auth code: %s", code);
+				if(GameHub.Application.log_auth)
+				{
+					debug("[Auth] GOG auth code: %s", code);
+				}
 				Idle.add(get_auth_code.callback);
 			});
 
@@ -142,9 +145,12 @@ namespace GameHub.Data.Sources.GOG
 			settings.access_token = user_token ?? "";
 			settings.refresh_token = user_refresh_token ?? "";
 
-			debug("[Auth] GOG access token: %s", user_token);
-			debug("[Auth] GOG refresh token: %s", user_refresh_token);
-			debug("[Auth] GOG user id: %s", user_id);
+			if(GameHub.Application.log_auth)
+			{
+				debug("[Auth] GOG access token: %s", user_token);
+				debug("[Auth] GOG refresh token: %s", user_refresh_token);
+				debug("[Auth] GOG user id: %s", user_id);
+			}
 
 			return user_token != null;
 		}
@@ -156,7 +162,10 @@ namespace GameHub.Data.Sources.GOG
 				return false;
 			}
 
-			debug("[Auth] Refreshing GOG access token with refresh token: %s", user_refresh_token);
+			if(GameHub.Application.log_auth)
+			{
+				debug("[Auth] Refreshing GOG access token with refresh token: %s", user_refresh_token);
+			}
 
 			var url = @"https://auth.gog.com/token?client_id=$(CLIENT_ID)&client_secret=$(CLIENT_SECRET)&grant_type=refresh_token&refresh_token=$(user_refresh_token)";
 			var root_node = yield Parser.parse_remote_json_file_async(url);
@@ -175,9 +184,12 @@ namespace GameHub.Data.Sources.GOG
 			settings.access_token = user_token ?? "";
 			settings.refresh_token = user_refresh_token ?? "";
 
-			debug("[Auth] GOG access token: %s", user_token);
-			debug("[Auth] GOG refresh token: %s", user_refresh_token);
-			debug("[Auth] GOG user id: %s", user_id);
+			if(GameHub.Application.log_auth)
+			{
+				debug("[Auth] GOG access token: %s", user_token);
+				debug("[Auth] GOG refresh token: %s", user_refresh_token);
+				debug("[Auth] GOG user id: %s", user_id);
+			}
 
 			token_needs_refresh = false;
 

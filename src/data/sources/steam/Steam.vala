@@ -146,7 +146,10 @@ namespace GameHub.Data.Sources.Steam
 
 					var last = !user.has_member("mostrecent") || user.get_string_member("mostrecent") == "1";
 
-					debug(@"[Auth] SteamID: $(user_id), PersonaName: $(user_name), last: $(last)");
+					if(GameHub.Application.log_auth)
+					{
+						debug(@"[Auth] SteamID: $(user_id), PersonaName: $(user_name), last: $(last)");
+					}
 
 					if(last)
 					{

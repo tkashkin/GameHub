@@ -50,7 +50,10 @@ namespace GameHub.UI.Windows
 
 			set_modal(true);
 
-			debug("[WebAuth/%s] Authenticating at `%s`; success_url_prefix: `%s`; success_cookie_name: `%s`", source, url, success_url_prefix, success_cookie_name);
+			if(GameHub.Application.log_auth)
+			{
+				debug("[WebAuth/%s] Authenticating at `%s`; success_url_prefix: `%s`; success_cookie_name: `%s`", source, url, success_url_prefix, success_cookie_name);
+			}
 
 			webview = new WebView();
 
@@ -73,7 +76,10 @@ namespace GameHub.UI.Windows
 
 				spinner.active = e != LoadEvent.FINISHED;
 
-				debug("[WebAuth/%s] URI: `%s`", source, uri);
+				if(GameHub.Application.log_auth)
+				{
+					debug("[WebAuth/%s] URI: `%s`", source, uri);
+				}
 
 				if(!is_finished && success_cookie_name != null)
 				{
@@ -83,12 +89,18 @@ namespace GameHub.UI.Windows
 							var cookies = webview.web_context.get_cookie_manager().get_cookies.end(res);
 							foreach(var cookie in cookies)
 							{
-								debug("[WebAuth/%s] [Cookie] `%s`=`%s`", source, cookie.name, cookie.value);
+								if(GameHub.Application.log_auth)
+								{
+									debug("[WebAuth/%s] [Cookie] `%s`=`%s`", source, cookie.name, cookie.value);
+								}
 								if(!is_finished && cookie.name == success_cookie_name && (success_url_prefix == null || uri.has_prefix(success_url_prefix)))
 								{
 									is_finished = true;
 									var token = cookie.value;
-									debug("[WebAuth/%s] Finished with result `%s`", source, token);
+									if(GameHub.Application.log_auth)
+									{
+										debug("[WebAuth/%s] Finished with result `%s`", source, token);
+									}
 									finished(token);
 									destroy();
 									break;
@@ -102,7 +114,10 @@ namespace GameHub.UI.Windows
 				{
 					is_finished = true;
 					var token = uri.substring(success_url_prefix.length);
-					debug("[WebAuth/%s] Finished with result `%s`", source, token);
+					if(GameHub.Application.log_auth)
+					{
+						debug("[WebAuth/%s] Finished with result `%s`", source, token);
+					}
 					finished(token);
 					destroy();
 				}
