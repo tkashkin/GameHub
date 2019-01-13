@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-13 19:21+0300\n"
-"PO-Revision-Date: 2019-01-12 22:01+0000\n"
+"PO-Revision-Date: 2019-01-13 17:59+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -36,10 +36,12 @@ msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Authenticatieproces en gevoelige informatie, zoals authenticatiesleutels, "
+"vastleggen in logbestand"
 
 #: src/app.vala:155
 msgid "Log download manager"
-msgstr ""
+msgstr "Downloadbeheer vastleggen in logbestand"
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
