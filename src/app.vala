@@ -30,12 +30,13 @@ using GameHub.Utils;
 
 namespace GameHub
 {
-	public class Application: Granite.Application
+	public class Application: Gtk.Application
 	{
 		public static Application instance;
 
 		public static bool log_auth = false;
 		public static bool log_downloader = false;
+		public static bool log_workers = false;
 
 		private GameHub.UI.Windows.MainWindow? main_window;
 
@@ -56,8 +57,6 @@ namespace GameHub
 		{
 			application_id = ProjectConfig.PROJECT_NAME;
 			flags = ApplicationFlags.HANDLES_COMMAND_LINE;
-			program_name = "GameHub";
-			build_version = ProjectConfig.VERSION;
 			instance = this;
 			add_action_entries(action_entries, this);
 		}
@@ -128,6 +127,8 @@ namespace GameHub
 
 			var app = new Application();
 
+			Granite.Services.Logger.initialize("GameHub");
+
 			var lang = Environment.get_variable("LC_ALL") ?? "";
 			Intl.setlocale(LocaleCategory.ALL, lang);
 			Intl.bindtextdomain(ProjectConfig.GETTEXT_PACKAGE, ProjectConfig.GETTEXT_DIR);
@@ -143,20 +144,35 @@ namespace GameHub
 			string[] oargs = cmd.get_arguments();
 			unowned string[] args = oargs;
 
+			bool opt_debug_log = false;
+
+			bool opt_show_version = false;
 			string? opt_run = null;
 			bool opt_show_compat = false;
 			bool opt_show = false;
 
-			OptionEntry[] options = new OptionEntry[6];
-			options[0] = { "run", 'r', 0, OptionArg.STRING, out opt_run, _("Run game"), null };
-			options[1] = { "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, _("Show compatibility options dialog"), null };
-			options[2] = { "show", 's', 0, OptionArg.NONE, out opt_show, _("Show main window"), null };
-			options[3] = { "log-auth", 0, 0, OptionArg.NONE, out log_auth, _("Log authentication process and sensitive information like authentication tokens"), null };
-			options[4] = { "log-downloader", 0, 0, OptionArg.NONE, out log_downloader, _("Log download manager"), null };
-			options[5] = { null };
+			OptionEntry[] options = new OptionEntry[5];
+			options[0] = { "version", 'v', 0, OptionArg.NONE, out opt_show_version, _("Show application version and exit"), null };
+			options[1] = { "run", 'r', 0, OptionArg.STRING, out opt_run, _("Run game"), null };
+			options[2] = { "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, _("Show compatibility options dialog"), null };
+			options[3] = { "show", 's', 0, OptionArg.NONE, out opt_show, _("Show main window"), null };
+			options[4] = { null };
+
+			OptionEntry[] options_log = new OptionEntry[5];
+			options_log[0] = { "debug", 'd', 0, OptionArg.NONE, out opt_debug_log, _("Enable debug logging"), null };
+			options_log[1] = { "log-auth", 0, 0, OptionArg.NONE, out log_auth, _("Log authentication process and sensitive information like authentication tokens"), null };
+			options_log[2] = { "log-downloader", 0, 0, OptionArg.NONE, out log_downloader, _("Log download manager"), null };
+			options_log[3] = { "log-workers", 0, 0, OptionArg.NONE, out log_workers, _("Log background workers start/stop"), null };
+			options_log[4] = { null };
 
 			var ctx = new OptionContext();
-			ctx.add_main_entries(options, null);
+
+			var opt_group_log = new OptionGroup("log", _("Logging Options"), _("Show logging options help"));
+			opt_group_log.add_entries(options_log);
+
+			ctx.add_main_entries((owned) options, null);
+			ctx.add_group((owned) opt_group_log);
+
 			try
 			{
 				ctx.parse(ref args);
@@ -166,8 +182,17 @@ namespace GameHub
 				warning(e.message);
 			}
 
-			Granite.Services.Logger.DisplayLevel = Granite.Services.LogLevel.INFO;
-			set_options();
+			if(opt_show_version)
+			{
+				print("Version: %s\n", ProjectConfig.VERSION);
+				print("Branch:  %s\n", ProjectConfig.GIT_BRANCH);
+				print("Commit:  %s (%s)\n", ProjectConfig.GIT_COMMIT_SHORT, ProjectConfig.GIT_COMMIT);
+				print("Distro:  %s\n", Utils.get_distro());
+				print("DE:      %s\n", Utils.get_desktop_environment() ?? "unknown");
+				return 0;
+			}
+
+			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
 
 			if(opt_show || opt_run == null)
 			{

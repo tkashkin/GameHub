@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 19:21+0300\n"
+"POT-Creation-Date: 2019-01-13 20:46+0300\n"
 "PO-Revision-Date: 2019-01-11 16:06+0000\n"
 "Last-Translator: King Claudy <clocloranely@hotmail.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -18,26 +18,46 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:151
+#: src/app.vala:155
+msgid "Show application version and exit"
+msgstr ""
+
+#: src/app.vala:156
 msgid "Run game"
 msgstr "Lancer le jeu"
 
-#: src/app.vala:152
+#: src/app.vala:157
 msgid "Show compatibility options dialog"
 msgstr "Ouvrir les options de compatibilité"
 
-#: src/app.vala:153
+#: src/app.vala:158
 msgid "Show main window"
 msgstr "Afficher la fenêtre principale"
 
-#: src/app.vala:154
+#: src/app.vala:162
+msgid "Enable debug logging"
+msgstr ""
+
+#: src/app.vala:163
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 
-#: src/app.vala:155
+#: src/app.vala:164
 msgid "Log download manager"
+msgstr ""
+
+#: src/app.vala:165
+msgid "Log background workers start/stop"
+msgstr ""
+
+#: src/app.vala:170
+msgid "Logging Options"
+msgstr ""
+
+#: src/app.vala:170
+msgid "Show logging options help"
 msgstr ""
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94

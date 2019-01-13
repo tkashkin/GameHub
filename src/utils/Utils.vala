@@ -40,7 +40,7 @@ namespace GameHub.Utils
 		}
 		public void run()
 		{
-			bool dbg = log && !name.has_prefix("Merging-");
+			bool dbg = GameHub.Application.log_workers && log && !name.has_prefix("Merging-");
 			if(dbg) debug("[Worker] %s started", name);
 			worker();
 			if(dbg) debug("[Worker] %s finished", name);
@@ -203,9 +203,14 @@ namespace GameHub.Utils
 		return "snap";
 		#else
 		if(distro != null) return distro;
-		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"});
+		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}, null, null, false, false).replace("\"", "");
 		return distro;
 		#endif
+	}
+
+	public static string? get_desktop_environment()
+	{
+		return Environment.get_variable("XDG_CURRENT_DESKTOP");
 	}
 
 	public static string get_language_name()
@@ -218,7 +223,7 @@ namespace GameHub.Utils
 		#if APPIMAGE || FLATPAK || SNAP
 		return false;
 		#elif PM_APT
-		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package});
+		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package}, null, null, false, false);
 		return "install ok installed" in output;
 		#else
 		return false;
@@ -358,5 +363,7 @@ namespace GameHub.Utils
 		return n.strip();
 	}
 
+	#if !APPIMAGE && !FLATPAK && !SNAP
 	private static string? distro;
+	#endif
 }
