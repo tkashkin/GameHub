@@ -73,7 +73,10 @@
 			"config-opts": [
 				"--buildtype=debug",
 				"-Dflatpak=true",
-				"-Druntime=/app/lib/steamrt:/app/lib/32bit/steamrt"
+				"-Druntime=/app/lib/steamrt:/app/lib/32bit/steamrt",
+				"-Dgit_branch=$BRANCH",
+				"-Dgit_commit=$COMMIT",
+				"-Dgit_commit_short=$COMMIT_SHORT"
 			],
 			"sources": [
 				{

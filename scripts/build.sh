@@ -4,13 +4,15 @@ _GH_RDNN="com.github.tkashkin.gamehub"
 _GH_VERSION="0.12.1"
 
 _GH_BRANCH="${APPVEYOR_REPO_BRANCH:-$(git symbolic-ref --short -q HEAD)}"
+_GH_COMMIT="$(git rev-parse HEAD)"
+_GH_COMMIT_SHORT="$(git rev-parse --short HEAD)"
 
 _ROOT="`pwd`"
 _SCRIPTROOT="$(dirname "$(readlink -f "$0")")"
 _LINUXDEPLOYQT="linuxdeployqt-5-x86_64.AppImage"
 
 _SOURCE="${APPVEYOR_BUILD_VERSION:-$_GH_VERSION-$_GH_BRANCH-local}"
-_VERSION="$_SOURCE-$(git rev-parse --short HEAD)"
+_VERSION="$_SOURCE-$_GH_COMMIT_SHORT"
 _DEB_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
 _DEB_TARGET_DISTRO="bionic"
 _BUILD_IMAGE="local"
@@ -111,6 +113,7 @@ build_deb()
 {
 	set -e
 	cd "$_ROOT"
+	sed "s/\$_GH_BRANCH/$_GH_BRANCH/g; s/\$_GH_COMMIT_SHORT/$_GH_COMMIT_SHORT/g; s/\$_GH_COMMIT/$_GH_COMMIT/g" "debian/rules.in" > "debian/rules"
 	sed "s/\$VERSION/$_DEB_VERSION/g; s/\$DISTRO/$_DEB_TARGET_DISTRO/g; s/\$DATE/`date -R`/g" "debian/changelog.in" > "debian/changelog"
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sed "s/libmanette-0.2-dev,//g" "debian/control.in" > "debian/control"
@@ -141,7 +144,7 @@ build()
 	echo "[scripts/build.sh] Building"
 	cd "$_ROOT"
 	mkdir -p "$BUILDROOT"
-	meson "$BUILDDIR" --prefix=/usr --buildtype=debug -Ddistro=generic -Dappimage=true
+	meson "$BUILDDIR" --prefix=/usr --buildtype=debug -Ddistro=generic -Dappimage=true -Dgit_branch=$_GH_BRANCH -Dgit_commit=$_GH_COMMIT -Dgit_commit_short=$_GH_COMMIT_SHORT
 	cd "$BUILDDIR"
 	ninja
 	DESTDIR="$APPDIR" ninja install
@@ -243,7 +246,7 @@ build_flatpak()
 	echo "[scripts/build.sh] Installing flatpak"
 	sudo apt install -y flatpak flatpak-builder
 	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-	sed "s/\$BRANCH/$_GH_BRANCH/g" "$_GH_RDNN.json.in" > "$_GH_RDNN.json"
+	sed "s/\$BRANCH/$_GH_BRANCH/g; s/\$COMMIT_SHORT/$_GH_COMMIT_SHORT/g; s/\$COMMIT/$_GH_COMMIT/g" "$_GH_RDNN.json.in" > "$_GH_RDNN.json"
 	echo "[scripts/build.sh] Autoinstalling dependencies"
 	flatpak-builder -y --user --install-deps-from=flathub --install-deps-only "$_ROOT/build/flatpak/build" "$_GH_RDNN.json"
 	echo "[scripts/build.sh] Building"
