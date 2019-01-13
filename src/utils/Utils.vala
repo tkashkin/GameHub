@@ -82,6 +82,7 @@ namespace GameHub.Utils
 	public static string run(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool log=true)
 	{
 		string stdout;
+		string stderr;
 
 		var cdir = dir ?? Environment.get_home_dir();
 		var cenv = env ?? Environ.get();
@@ -103,9 +104,14 @@ namespace GameHub.Utils
 		try
 		{
 			if(log) debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
-			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout);
+			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout, out stderr);
 			stdout = stdout.strip();
-			if(log && stdout.length > 0) print(stdout + "\n");
+			stderr = stderr.strip();
+			if(log)
+			{
+				if(stdout.length > 0) print(stdout + "\n");
+				if(stderr.length > 0) warning(stderr);
+			}
 		}
 		catch (Error e)
 		{

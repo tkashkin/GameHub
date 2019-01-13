@@ -139,8 +139,6 @@ namespace GameHub
 
 		public override int command_line(ApplicationCommandLine cmd)
 		{
-			init();
-
 			string[] oargs = cmd.get_arguments();
 			unowned string[] args = oargs;
 
@@ -193,6 +191,8 @@ namespace GameHub
 			}
 
 			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
+
+			init();
 
 			if(opt_show || opt_run == null)
 			{
