@@ -95,7 +95,7 @@ namespace GameHub.UI.Widgets
 					image.icon_name = compact ? icon_overlay : icon;
 				}
 				image.icon_size = compact ? IconSize.LARGE_TOOLBAR : IconSize.DIALOG;
-				overlay.set_size_request(compact && !show_text ? -1 : 48, compact ? -1 : 48);
+				overlay.set_size_request(compact && !show_text ? -1 : 48, compact ? 32 : 48);
 			});
 			notify_property("compact");
 
