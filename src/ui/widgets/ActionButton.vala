@@ -26,10 +26,11 @@ namespace GameHub.UI.Widgets
 		public string? icon_overlay { get; construct set; }
 		public string text { get; construct set; }
 		public bool show_text { get; construct; default = true; }
+		public bool compact { get; construct set; default = false; }
 
-		public ActionButton(string icon, string? icon_overlay, string text, bool show_text=true)
+		public ActionButton(string icon, string? icon_overlay, string text, bool show_text=true, bool compact=false)
 		{
-			Object(icon: icon, icon_overlay: icon_overlay, text: text, show_text: show_text);
+			Object(icon: icon, icon_overlay: icon_overlay, text: text, show_text: show_text, compact: compact);
 		}
 
 		construct
@@ -43,16 +44,17 @@ namespace GameHub.UI.Widgets
 			overlay.set_size_request(48, 48);
 
 			var image = new Image.from_icon_name(icon, IconSize.DIALOG);
-			image.set_size_request(48, 48);
 			overlay.add(image);
 
 			notify["icon"].connect(() => {
-				image.icon_name = icon;
+				image.icon_name = compact ? icon_overlay ?? icon : icon;
 			});
+
+			Image? overlay_image = null;
 
 			if(icon_overlay != null)
 			{
-				var overlay_image = new Image.from_icon_name(icon_overlay, IconSize.LARGE_TOOLBAR);
+				overlay_image = new Image.from_icon_name(icon_overlay, IconSize.LARGE_TOOLBAR);
 				overlay_image.set_size_request(24, 24);
 				overlay_image.halign = Align.END;
 				overlay_image.valign = Align.END;
@@ -60,6 +62,7 @@ namespace GameHub.UI.Widgets
 				overlay.set_overlay_pass_through(overlay_image, true);
 				notify["icon-overlay"].connect(() => {
 					overlay_image.icon_name = icon_overlay;
+					image.icon_name = compact ? icon_overlay ?? icon : icon;
 				});
 			}
 
@@ -83,6 +86,18 @@ namespace GameHub.UI.Widgets
 			notify["text"].connect(() => {
 				tooltip_text = text;
 			});
+
+			notify["compact"].connect(() => {
+				if(overlay_image != null)
+				{
+					overlay_image.no_show_all = compact;
+					overlay_image.visible = !compact;
+					image.icon_name = compact ? icon_overlay : icon;
+				}
+				image.icon_size = compact ? IconSize.LARGE_TOOLBAR : IconSize.DIALOG;
+				overlay.set_size_request(compact && !show_text ? -1 : 48, compact ? -1 : 48);
+			});
+			notify_property("compact");
 
 			child = box;
 		}
