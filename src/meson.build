@@ -1,7 +1,25 @@
-project_config = configure_file(
-	input: 'ProjectConfig.vala.in',
+project_config = vcs_tag(
+	input: vcs_tag(
+		input: vcs_tag(
+			input: configure_file(
+				input: 'ProjectConfig.vala.in',
+				output: 'ProjectConfig.vala.in.in.in',
+				configuration: conf_data
+			),
+			output: 'ProjectConfig.vala.in.in',
+			command: ['git', 'rev-parse', '--short', 'HEAD'],
+			replace_string: '@GIT_COMMIT_SHORT@',
+			fallback: ''
+		),
+		output: 'ProjectConfig.vala.in',
+		command: ['git', 'rev-parse', 'HEAD'],
+		replace_string: '@GIT_COMMIT@',
+		fallback: ''
+	),
 	output: 'ProjectConfig.vala',
-	configuration: conf_data
+	command: ['git', 'symbolic-ref', '--short', '-q', 'HEAD'],
+	replace_string: '@GIT_BRANCH@',
+	fallback: ''
 )
 
 deps = [
