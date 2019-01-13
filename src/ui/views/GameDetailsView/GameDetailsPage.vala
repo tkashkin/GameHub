@@ -102,7 +102,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			title_overlay.margin_start = title_overlay.margin_end = 7;
 
 			var title_icons = new Box(Orientation.HORIZONTAL, 15);
-			title_icons.valign = Align.END;
+			title_icons.valign = Align.START;
 			title_icons.halign = Align.END;
 
 			var title_hbox = new Box(Orientation.HORIZONTAL, 15);
@@ -437,12 +437,14 @@ namespace GameHub.UI.Views.GameDetailsView
 		private delegate void Action();
 		private ActionButton add_action(string icon, string? icon_overlay, string title, Action action, bool primary=false)
 		{
-			var button = new ActionButton(icon + Settings.UI.symbolic_icon_suffix, icon_overlay, title, primary);
+			var ui_settings = Settings.UI.get_instance();
+			var button = new ActionButton(icon + Settings.UI.symbolic_icon_suffix, icon_overlay, title, primary, ui_settings.symbolic_icons);
 			button.hexpand = primary;
 			actions.add(button);
 			button.clicked.connect(() => action());
-			Settings.UI.get_instance().notify["symbolic-icons"].connect(() => {
+			ui_settings.notify["symbolic-icons"].connect(() => {
 				button.icon = icon + Settings.UI.symbolic_icon_suffix;
+				button.compact = ui_settings.symbolic_icons;
 			});
 			return button;
 		}
