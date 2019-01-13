@@ -12,7 +12,7 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	mkdir -p debian/build
-	cd debian/build && meson --prefix=/usr -Ddistro=debian --buildtype=debug ../..
+	cd debian/build && meson --prefix=/usr --buildtype=debug -Ddistro=debian -Dgit_branch=$_GH_BRANCH -Dgit_commit=$_GH_COMMIT -Dgit_commit_short=$_GH_COMMIT_SHORT ../..
 
 override_dh_auto_build:
 	cd debian/build && ninja -v

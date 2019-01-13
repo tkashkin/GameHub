@@ -6,7 +6,7 @@ debian/*
 !debian/compat
 !debian/control.in
 !debian/copyright
-!debian/rules
+!debian/rules.in
 
 flatpak/com.github.tkashkin.gamehub.json
 flatpak/.flatpak-builder/
