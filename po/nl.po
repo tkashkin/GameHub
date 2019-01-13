@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-13 19:21+0300\n"
-"PO-Revision-Date: 2019-01-13 17:59+0000\n"
+"PO-Revision-Date: 2019-01-13 18:47+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: src/app.vala:155
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Applicatieversie tonen en afsluiten"
 
 #: src/app.vala:156
 msgid "Run game"
@@ -37,7 +37,7 @@ msgstr "Hoofdvenster tonen"
 
 #: src/app.vala:162
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Foutopsporingslogs inschakelen"
 
 #: src/app.vala:163
 msgid ""
@@ -53,15 +53,15 @@ msgstr "Downloadbeheer vastleggen in logbestand"
 
 #: src/app.vala:165
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "Achtergronddiensten van loggen starten/stoppen"
 
 #: src/app.vala:170
 msgid "Logging Options"
-msgstr ""
+msgstr "Opties voor loggen"
 
 #: src/app.vala:170
 msgid "Show logging options help"
-msgstr ""
+msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
