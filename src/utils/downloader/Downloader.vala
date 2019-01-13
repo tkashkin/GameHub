@@ -68,7 +68,7 @@ namespace GameHub.Utils.Downloader
 				}
 				Idle.add(download.callback);
 			});
-		});
+		}, GameHub.Application.log_downloader);
 
 		yield;
 

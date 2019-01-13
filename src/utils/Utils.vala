@@ -31,14 +31,16 @@ namespace GameHub.Utils
 	{
 		public string name;
 		public Future worker;
-		public Worker(string name, owned Future worker)
+		public bool log;
+		public Worker(string name, owned Future worker, bool log=true)
 		{
 			this.name = name;
 			this.worker = (owned) worker;
+			this.log = log;
 		}
 		public void run()
 		{
-			bool dbg = !name.has_prefix("Merging-");
+			bool dbg = log && !name.has_prefix("Merging-");
 			if(dbg) debug("[Worker] %s started", name);
 			worker();
 			if(dbg) debug("[Worker] %s finished", name);
@@ -167,7 +169,7 @@ namespace GameHub.Utils
 	public static File? find_executable(string? name)
 	{
 		if(name == null || name.length == 0) return null;
-		var which = run({"which", name});
+		var which = run({ "which", name }, null, null, false, false);
 		if(which.length == 0 || !which.has_prefix("/"))
 		{
 			return null;
@@ -175,7 +177,7 @@ namespace GameHub.Utils
 		return File.new_for_path(which);
 	}
 
-	public static void thread(string name, owned Future worker)
+	public static void thread(string name, owned Future worker, bool log=true)
 	{
 		try
 		{
@@ -183,7 +185,7 @@ namespace GameHub.Utils
 			{
 				threadpool = new ThreadPool<Worker>.with_owned_data(w => w.run(), -1, false);
 			}
-			threadpool.add(new Worker(name, (owned) worker));
+			threadpool.add(new Worker(name, (owned) worker, log));
 		}
 		catch(Error e)
 		{

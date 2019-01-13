@@ -90,7 +90,10 @@ namespace GameHub.Data.Sources.Humble
 			{
 				user_token = token.replace("\"", "");
 				settings.access_token = user_token ?? "";
-				debug("[Auth] Humble access token: %s", user_token);
+				if(GameHub.Application.log_auth)
+				{
+					debug("[Auth] Humble access token: %s", user_token);
+				}
 				Idle.add(get_token.callback);
 			});
 
