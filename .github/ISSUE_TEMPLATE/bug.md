@@ -4,7 +4,6 @@ about: Report an issue or unexpected behavior with GameHub
 ---
 
 <!--
-
 Before creating the issue, please make sure that...
 
 * You are using the latest version of GameHub (active development happens in the dev branch).
@@ -16,14 +15,21 @@ If you have multiple unrelated problems, create separate issues rather than comb
 Note that leaving sections blank or being vague will make it difficult to help you.
 -->
 
-### Expected behavior
+###### Expected behavior
 
-### Actual behavior
 
-### Steps to reproduce
 
-### Environment
+###### Actual behavior
 
-- GameHub version:
-- Desktop Environment:
-- Distribution:
+
+
+###### Steps to reproduce
+
+
+
+###### Version and environment
+
+<!-- Paste output of `com.github.tkashkin.gamehub -v` below: -->
+```
+PASTE VERSION INFO HERE
+```
