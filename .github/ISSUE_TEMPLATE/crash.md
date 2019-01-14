@@ -32,10 +32,9 @@ PASTE VERSION INFO HERE
 To get the GDB log, follow these steps:
 
 1. Close GameHub if it's running.
-2. Run this in your terminal:
-"gdb -ex 'set args --debug' -ex 'set pagination off' -ex run com.github.tkashkin.gamehub"
+2. Run this in your terminal: `com.github.tkashkin.gamehub --gdb`
 3. Once the app has crashed (become unresponsive), type "bt full" (and press enter) to get a backtrace.
-4. type "q" to quit the debugger (or "c" to continue until the app quits)
+4. Type "q" to quit the debugger (or "c" to continue until the app quits)
 5. Copy the log and paste below
 -->
 
