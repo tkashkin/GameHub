@@ -79,10 +79,10 @@ namespace GameHub.Utils
 		return null;
 	}
 
-	public static string run(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool log=true)
+	public static string run(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool capture_output=false, bool log=true)
 	{
-		string stdout;
-		string stderr;
+		string stdout = "";
+		string stderr = "";
 
 		var cdir = dir ?? Environment.get_home_dir();
 		var cenv = env ?? Environ.get();
@@ -104,13 +104,21 @@ namespace GameHub.Utils
 		try
 		{
 			if(log) debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
-			Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout, out stderr);
-			stdout = stdout.strip();
-			stderr = stderr.strip();
-			if(log)
+
+			if(capture_output)
 			{
-				if(stdout.length > 0) print(stdout + "\n");
-				if(stderr.length > 0) warning(stderr);
+				Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout, out stderr);
+				stdout = stdout.strip();
+				stderr = stderr.strip();
+				if(log)
+				{
+					if(stdout.length > 0) print(stdout + "\n");
+					if(stderr.length > 0) warning(stderr);
+				}
+			}
+			else
+			{
+				Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null);
 			}
 		}
 		catch (Error e)
@@ -144,7 +152,7 @@ namespace GameHub.Utils
 		try
 		{
 			if(log) debug("[Utils.run_async] Running {'%s'} in '%s'", string.joinv("' '", cmd), cdir);
-			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
+			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
 
 			ChildWatch.add(pid, (pid, status) => {
 				Process.close_pid(pid);
@@ -159,14 +167,14 @@ namespace GameHub.Utils
 		if(wait) yield;
 	}
 
-	public static async string run_thread(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool log=true)
+	public static async string run_thread(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool capture_output=false, bool log=true)
 	{
 		string stdout = "";
 
 		Utils.thread("Utils.run_thread", () => {
-			stdout = Utils.run(cmd, dir, env, override_runtime, log);
+			stdout = Utils.run(cmd, dir, env, override_runtime, capture_output, log);
 			Idle.add(run_thread.callback);
-		});
+		}, log);
 
 		yield;
 		return stdout;
@@ -175,7 +183,7 @@ namespace GameHub.Utils
 	public static File? find_executable(string? name)
 	{
 		if(name == null || name.length == 0) return null;
-		var which = run({ "which", name }, null, null, false, false);
+		var which = run({ "which", name }, null, null, false, true, false);
 		if(which.length == 0 || !which.has_prefix("/"))
 		{
 			return null;
@@ -209,7 +217,7 @@ namespace GameHub.Utils
 		return "snap";
 		#else
 		if(distro != null) return distro;
-		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}, null, null, false, false).replace("\"", "");
+		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}, null, null, false, true, false).replace("\"", "");
 		return distro;
 		#endif
 	}
@@ -229,7 +237,7 @@ namespace GameHub.Utils
 		#if APPIMAGE || FLATPAK || SNAP
 		return false;
 		#elif PM_APT
-		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package}, null, null, false, false);
+		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package}, null, null, false, true, false);
 		return "install ok installed" in output;
 		#else
 		return false;
@@ -372,4 +380,166 @@ namespace GameHub.Utils
 	#if !APPIMAGE && !FLATPAK && !SNAP
 	private static string? distro;
 	#endif
+
+	public class Logger: Granite.Services.Logger
+	{
+		public enum ConsoleColor
+		{
+			BLACK,
+			RED,
+			GREEN,
+			YELLOW,
+			BLUE,
+			MAGENTA,
+			CYAN,
+			WHITE
+		}
+
+		const string[] LOG_LEVEL_TO_STRING = {
+			"[DEBUG]\x001b[0m ",
+			"[INFO]\x001b[0m  ",
+			"[NOTIFY]\x001b[0m",
+			"[WARN]\x001b[0m  ",
+			"[ERROR]\x001b[0m ",
+			"[FATAL]\x001b[0m "
+		};
+
+		static Mutex write_mutex;
+
+		static Regex msg_file_regex;
+		static Regex msg_string_regex;
+		static Regex msg_block_regex;
+
+		public static new void initialize(string app_name)
+		{
+			Granite.Services.Logger.initialize(app_name);
+			msg_file_regex = new Regex("^.*\\.vala:\\d+: ");
+			msg_string_regex = new Regex("(['\"`].*?['\"`])");
+			msg_block_regex = new Regex("^(\\[.*?\\])");
+			Log.set_default_handler((LogFunc) glib_log_func);
+		}
+
+		static void write(Granite.Services.LogLevel level, owned string msg)
+		{
+			if(level < DisplayLevel) return;
+
+			write_mutex.lock();
+			set_color_for_level(level);
+			stdout.printf(LOG_LEVEL_TO_STRING[level]);
+
+			reset_color();
+			stdout.printf(" %s\n", msg);
+
+			write_mutex.unlock();
+		}
+
+		static void set_color_for_level(Granite.Services.LogLevel level)
+		{
+			switch(level)
+			{
+				case Granite.Services.LogLevel.DEBUG:
+					set_foreground(ConsoleColor.GREEN);
+					break;
+				case Granite.Services.LogLevel.INFO:
+					set_foreground(ConsoleColor.BLUE);
+					break;
+				case Granite.Services.LogLevel.NOTIFY:
+					set_foreground(ConsoleColor.MAGENTA);
+					break;
+				case Granite.Services.LogLevel.WARN:
+					set_foreground(ConsoleColor.YELLOW);
+					break;
+				case Granite.Services.LogLevel.ERROR:
+					set_foreground(ConsoleColor.RED);
+					break;
+				case Granite.Services.LogLevel.FATAL:
+					set_background(ConsoleColor.RED);
+					set_foreground(ConsoleColor.WHITE);
+					break;
+			}
+		}
+
+		static void reset_color()
+		{
+			stdout.printf("\x001b[0m");
+		}
+
+		static void set_foreground(ConsoleColor color)
+		{
+			set_color(color, true);
+		}
+
+		static void set_background(ConsoleColor color)
+		{
+			set_color(color, false);
+		}
+
+		private static string color(ConsoleColor c, bool foreground)
+		{
+			var color_code = c + 30 + 60;
+			if(!foreground) color_code += 10;
+			return "\x001b[%dm".printf(color_code);
+		}
+
+		static void set_color(ConsoleColor c, bool foreground)
+		{
+			stdout.printf(color(c, foreground));
+		}
+
+		private static new void glib_log_func(string? d, LogLevelFlags flags, string msg)
+		{
+			glib_log_func_granite(d, flags, msg);
+		}
+
+		private static void glib_log_func_granite(string? d, LogLevelFlags flags, string msg)
+		{
+			string domain;
+			if(d != null)
+				domain = "[%s] ".printf(d);
+			else
+				domain = "";
+
+			var message = "%s%s".printf(domain, msg.strip());
+
+			try
+			{
+				message = msg_file_regex.replace_literal(message, -1, 0, "");
+				message = msg_string_regex.replace(message, -1, 0, color(ConsoleColor.WHITE, true) + "\\1\x001b[0m");
+				message = msg_block_regex.replace(message, -1, 0, color(ConsoleColor.BLACK, true) + "\\1\x001b[0m");
+			}
+			catch(Error e){}
+
+			Granite.Services.LogLevel level;
+
+			// Strip internal flags to make it possible to use a switch statement
+			flags = (flags & LogLevelFlags.LEVEL_MASK);
+
+			switch(flags)
+			{
+				case LogLevelFlags.LEVEL_CRITICAL:
+					level = Granite.Services.LogLevel.FATAL;
+					break;
+
+				case LogLevelFlags.LEVEL_ERROR:
+					level = Granite.Services.LogLevel.ERROR;
+					break;
+
+				case LogLevelFlags.LEVEL_INFO:
+				case LogLevelFlags.LEVEL_MESSAGE:
+					level = Granite.Services.LogLevel.INFO;
+					break;
+
+				case LogLevelFlags.LEVEL_DEBUG:
+					level = Granite.Services.LogLevel.DEBUG;
+					break;
+
+				case LogLevelFlags.LEVEL_WARNING:
+				default:
+					level = Granite.Services.LogLevel.WARN;
+					break;
+			}
+
+			write(level, message);
+		}
+	}
 }

@@ -104,7 +104,7 @@ namespace GameHub
 
 		protected override void activate()
 		{
-			info("Distro: %s", Utils.get_distro());
+			print_version(false);
 
 			if(main_window == null)
 			{
@@ -127,7 +127,7 @@ namespace GameHub
 
 			var app = new Application();
 
-			Granite.Services.Logger.initialize("GameHub");
+			Utils.Logger.initialize("GameHub");
 
 			var lang = Environment.get_variable("LC_ALL") ?? "";
 			Intl.setlocale(LocaleCategory.ALL, lang);
@@ -182,11 +182,7 @@ namespace GameHub
 
 			if(opt_show_version)
 			{
-				print("Version: %s\n", ProjectConfig.VERSION);
-				print("Branch:  %s\n", ProjectConfig.GIT_BRANCH);
-				print("Commit:  %s (%s)\n", ProjectConfig.GIT_COMMIT_SHORT, ProjectConfig.GIT_COMMIT);
-				print("Distro:  %s\n", Utils.get_distro());
-				print("DE:      %s\n", Utils.get_desktop_environment() ?? "unknown");
+				print_version(true);
 				return 0;
 			}
 
@@ -234,6 +230,29 @@ namespace GameHub
 			}
 
 			return 0;
+		}
+
+		[PrintfFormat]
+		private void println(bool plain, string format, ...)
+		{
+			var line = format.vprintf(va_list());
+			if(plain)
+			{
+				print(line + "\n");
+			}
+			else
+			{
+				info(line);
+			}
+		}
+
+		private void print_version(bool plain)
+		{
+			println(plain, "Version: %s", ProjectConfig.VERSION);
+			println(plain, "Branch:  %s", ProjectConfig.GIT_BRANCH);
+			println(plain, "Commit:  %s (%s)", ProjectConfig.GIT_COMMIT_SHORT, ProjectConfig.GIT_COMMIT);
+			println(plain, "Distro:  %s", Utils.get_distro());
+			println(plain, "DE:      %s", Utils.get_desktop_environment() ?? "unknown");
 		}
 
 		private async void run_game(Game game, bool show_compat)

@@ -388,22 +388,28 @@ namespace GameHub.UI.Views.GamesView
 			add_game_button.sensitive = false;
 
 			Downloader.get_instance().dl_started.connect(dl => {
-				downloads_list.add(new DownloadProgressView(dl));
-				downloads.sensitive = true;
-				downloads_count++;
+				Idle.add(() => {
+					downloads_list.add(new DownloadProgressView(dl));
+					downloads.sensitive = true;
+					downloads_count++;
+					return Source.REMOVE;
+				});
 			});
 			Downloader.get_instance().dl_ended.connect(dl => {
-				downloads_count--;
-				if(downloads_count < 0) downloads_count = 0;
-				downloads.sensitive = downloads_count > 0;
-				if(downloads_count == 0)
-				{
-					#if GTK_3_22
-					downloads_popover.popdown();
-					#else
-					downloads_popover.hide();
-					#endif
-				}
+				Idle.add(() => {
+					downloads_count--;
+					if(downloads_count < 0) downloads_count = 0;
+					downloads.sensitive = downloads_count > 0;
+					if(downloads_count == 0)
+					{
+						#if GTK_3_22
+						downloads_popover.popdown();
+						#else
+						downloads_popover.hide();
+						#endif
+					}
+					return Source.REMOVE;
+				});
 			});
 
 			#if MANETTE

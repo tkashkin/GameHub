@@ -47,7 +47,7 @@ namespace GameHub.Data.Compat
 		{
 			if(dir != null && dir.query_exists())
 			{
-				var output = Utils.run({ executable.get_path(), "--detect" }, dir.get_path(), null, false, false);
+				var output = Utils.run({ executable.get_path(), "--detect" }, dir.get_path(), null, false, true, false);
 				return !(SCUMMVM_NO_GAMES_WARNING in output);
 			}
 			return false;
