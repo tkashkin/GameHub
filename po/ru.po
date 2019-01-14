@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 20:46+0300\n"
+"POT-Creation-Date: 2019-01-14 15:26+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -16,31 +16,31 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:155
+#: src/app.vala:153
 msgid "Show application version and exit"
 msgstr "Показать версию приложения и выйти"
 
-#: src/app.vala:156
+#: src/app.vala:154
 msgid "Run game"
 msgstr "Запустить игру"
 
-#: src/app.vala:157
+#: src/app.vala:155
 msgid "Show compatibility options dialog"
 msgstr "Показать диалог опций совместимости"
 
-#: src/app.vala:158
+#: src/app.vala:156
 msgid "Show main window"
 msgstr "Показать главное окно"
 
-#: src/app.vala:162
+#: src/app.vala:160
 msgid "Enable debug logging"
 msgstr "Включить отладочные сообщения"
 
-#: src/app.vala:163
+#: src/app.vala:161
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -48,19 +48,19 @@ msgstr ""
 "Выводить сообщения о процессе аутентификации и конфиденциальную информацию, "
 "такую как токены аутентификации"
 
-#: src/app.vala:164
+#: src/app.vala:162
 msgid "Log download manager"
 msgstr "Выводить сообщения менеджера загрузок"
 
-#: src/app.vala:165
+#: src/app.vala:163
 msgid "Log background workers start/stop"
 msgstr "Выводить сообщения о запуске/остановке фоновых потоков"
 
-#: src/app.vala:170
-msgid "Logging Options"
-msgstr "Параметры журналирования"
+#: src/app.vala:168
+msgid "Logging Options:"
+msgstr "Параметры журналирования:"
 
-#: src/app.vala:170
+#: src/app.vala:168
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 

@@ -165,7 +165,7 @@ namespace GameHub
 
 			var ctx = new OptionContext();
 
-			var opt_group_log = new OptionGroup("log", _("Logging Options"), _("Show logging options help"));
+			var opt_group_log = new OptionGroup("log", _("Logging Options:"), _("Show logging options help"));
 			opt_group_log.add_entries(options_log);
 
 			ctx.add_main_entries((owned) options, null);
