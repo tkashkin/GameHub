@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 15:26+0300\n"
+"POT-Creation-Date: 2019-01-14 19:30+0300\n"
 "PO-Revision-Date: 2018-12-17 12:08+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
@@ -322,7 +322,7 @@ msgstr "Starte im Spielverzeichnis"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
 #: src/ui/views/GamesView/GamesView.vala:225
-#: src/ui/views/GamesView/GamesView.vala:687
+#: src/ui/views/GamesView/GamesView.vala:693
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -341,21 +341,6 @@ msgstr "Sammlung"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:74
 msgid "Emulators"
 msgstr "Emulatoren"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:181
-msgid "Open"
-msgstr "Öffnen"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:188
-msgid "Clear"
-msgstr "Leeren"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:204
-#, c-format
-msgid "%llu installer; %s"
-msgid_plural "%llu installers; %s"
-msgstr[0] ""
-msgstr[1] ""
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:36
 msgid "Use dark theme"
@@ -753,46 +738,46 @@ msgstr "Menü"
 msgid "Back"
 msgstr "Zurück"
 
-#: src/ui/views/GamesView/GamesView.vala:505
+#: src/ui/views/GamesView/GamesView.vala:511
 #, c-format
 msgid "Loading games from %s"
 msgstr "Laden von Spielen aus %s"
 
-#: src/ui/views/GamesView/GamesView.vala:534
+#: src/ui/views/GamesView/GamesView.vala:540
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u Spiel"
+msgstr[1] "%u Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:549
+#: src/ui/views/GamesView/GamesView.vala:555
 msgid "No user-added games"
 msgstr "Keine vom Benutzer hinzugefügten Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:550
+#: src/ui/views/GamesView/GamesView.vala:556
 msgid "Add some games using plus button"
 msgstr "Einige Spiele mit der Plus-Taste hinzufügen"
 
-#: src/ui/views/GamesView/GamesView.vala:554
+#: src/ui/views/GamesView/GamesView.vala:560
 #, c-format
 msgid "No %s games"
 msgstr "Keine %s Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:555
+#: src/ui/views/GamesView/GamesView.vala:561
 msgid "Get some Linux-compatible games"
 msgstr "Holen Sie sich einige Linux-kompatible Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:576
+#: src/ui/views/GamesView/GamesView.vala:582
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Keine Spiele entsprechen \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:581
+#: src/ui/views/GamesView/GamesView.vala:587
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Keine %1$s Spiele entsprechen \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:685
+#: src/ui/views/GamesView/GamesView.vala:691
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -800,29 +785,29 @@ msgstr ""
 "Es wurden keine Spiele von Steam geladen. Stelle deine Spieleliste auf "
 "öffentlich oder verwende deinen eigenen Steam API-Schlüssel."
 
-#: src/ui/views/GamesView/GamesView.vala:686
+#: src/ui/views/GamesView/GamesView.vala:692
 msgid "Privacy"
 msgstr "Datenschutz"
 
-#: src/ui/views/GamesView/GamesView.vala:905
+#: src/ui/views/GamesView/GamesView.vala:911
 msgid "Updating game info"
 msgstr "Aktualisieren von Spielinformationen"
 
-#: src/ui/views/GamesView/GamesView.vala:911
+#: src/ui/views/GamesView/GamesView.vala:917
 #, c-format
 msgid "Updating %s game info"
 msgstr "Aktualisierung von %s Spielinformationen"
 
-#: src/ui/views/GamesView/GamesView.vala:929
+#: src/ui/views/GamesView/GamesView.vala:935
 msgid "Merging games"
 msgstr "Zusammenführung von Spielen"
 
-#: src/ui/views/GamesView/GamesView.vala:945
+#: src/ui/views/GamesView/GamesView.vala:951
 #, c-format
 msgid "Merging games from %s"
 msgstr "Zusammenführen von Spielen aus %s"
 
-#: src/ui/views/GamesView/GamesView.vala:962
+#: src/ui/views/GamesView/GamesView.vala:968
 #, c-format
 msgid "Merging %s (%s)"
 msgstr "Zusammenführen von %s und (%s)"
@@ -1030,6 +1015,3 @@ msgstr "Angehalten: %d%%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Download abgebrochen"
-
-#~ msgid "Download only"
-#~ msgstr "Nur Herunterladen"

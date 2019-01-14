@@ -168,59 +168,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			return add_widget(hbox);
 		}
 
-		protected Box add_cache_directory(string name, string path)
-		{
-			var bbox = new Box(Orientation.HORIZONTAL, 2);
-			bbox.set_size_request(280, -1);
-
-			var size_label = new Label(null);
-			size_label.margin_end = 8;
-			size_label.halign = Align.START;
-
-			var open_btn = new Button();
-			open_btn.label = _("Open");
-			open_btn.clicked.connect(() => {
-				Utils.open_uri(FSUtils.file(path).get_uri());
-			});
-
-			var clear_btn = new Button();
-			clear_btn.get_style_context().add_class(STYLE_CLASS_DESTRUCTIVE_ACTION);
-			clear_btn.label = _("Clear");
-
-			var label = new Label(name);
-			label.halign = Align.START;
-			label.hexpand = true;
-
-			bbox.pack_start(size_label);
-			bbox.pack_start(open_btn, false);
-			bbox.pack_start(clear_btn, false);
-
-			SourceFunc calc_size = () => {
-				try
-				{
-					uint64 dir_size;
-					uint64 files;
-					FSUtils.file(path).measure_disk_usage(FileMeasureFlags.NONE, null, null, out dir_size, null, out files);
-					size_label.label = ngettext("%llu installer; %s", "%llu installers; %s", (ulong) files).printf(files, format_size(dir_size));
-					clear_btn.sensitive = dir_size > 32;
-				}
-				catch(Error e){}
-				return false;
-			};
-
-			calc_size();
-
-			clear_btn.clicked.connect(() => {
-				FSUtils.rm(path, "*");
-				calc_size();
-			});
-
-			var hbox = new Box(Orientation.HORIZONTAL, 12);
-			hbox.add(label);
-			hbox.add(bbox);
-			return add_widget(hbox);
-		}
-
 		protected Separator add_separator()
 		{
 			return add_widget(new Separator(Orientation.HORIZONTAL));

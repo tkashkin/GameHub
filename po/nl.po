@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 15:26+0300\n"
+"POT-Creation-Date: 2019-01-14 19:30+0300\n"
 "PO-Revision-Date: 2019-01-13 18:47+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -321,7 +321,7 @@ msgstr "Uitvoeren in spelmap"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
 #: src/ui/views/GamesView/GamesView.vala:225
-#: src/ui/views/GamesView/GamesView.vala:687
+#: src/ui/views/GamesView/GamesView.vala:693
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -341,21 +341,6 @@ msgstr "Verzameling"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:74
 msgid "Emulators"
 msgstr "Emulators"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:181
-msgid "Open"
-msgstr "Openen"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:188
-msgid "Clear"
-msgstr "Wissen"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:204
-#, c-format
-msgid "%llu installer; %s"
-msgid_plural "%llu installers; %s"
-msgstr[0] ""
-msgstr[1] ""
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:36
 msgid "Use dark theme"
@@ -747,46 +732,46 @@ msgstr "Menu"
 msgid "Back"
 msgstr "Terug"
 
-#: src/ui/views/GamesView/GamesView.vala:505
+#: src/ui/views/GamesView/GamesView.vala:511
 #, c-format
 msgid "Loading games from %s"
 msgstr "Bezig met laden van spellen uit %s"
 
-#: src/ui/views/GamesView/GamesView.vala:534
+#: src/ui/views/GamesView/GamesView.vala:540
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u spel"
+msgstr[1] "%u spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:549
+#: src/ui/views/GamesView/GamesView.vala:555
 msgid "No user-added games"
 msgstr "Geen door de gebruiker toegevoegde spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:550
+#: src/ui/views/GamesView/GamesView.vala:556
 msgid "Add some games using plus button"
 msgstr "Voeg spellen toe via de plus-knop"
 
-#: src/ui/views/GamesView/GamesView.vala:554
+#: src/ui/views/GamesView/GamesView.vala:560
 #, c-format
 msgid "No %s games"
 msgstr "Geen %s-spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:555
+#: src/ui/views/GamesView/GamesView.vala:561
 msgid "Get some Linux-compatible games"
 msgstr "Installeer met Linux compatibele spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:576
+#: src/ui/views/GamesView/GamesView.vala:582
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Er zijn geen spellen die overeenkomen met \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:581
+#: src/ui/views/GamesView/GamesView.vala:587
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Er zijn geen %1$s-spellen die overeenkomen met \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:685
+#: src/ui/views/GamesView/GamesView.vala:691
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -794,29 +779,29 @@ msgstr ""
 "Er zijn geen spellen geladen vanuit Steam. Maak je spellijst openbaar of "
 "voeg je eigen Steam API-sleutel toe via de instellingen."
 
-#: src/ui/views/GamesView/GamesView.vala:686
+#: src/ui/views/GamesView/GamesView.vala:692
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/ui/views/GamesView/GamesView.vala:905
+#: src/ui/views/GamesView/GamesView.vala:911
 msgid "Updating game info"
 msgstr "Bezig met bijwerken van spelinformatie"
 
-#: src/ui/views/GamesView/GamesView.vala:911
+#: src/ui/views/GamesView/GamesView.vala:917
 #, c-format
 msgid "Updating %s game info"
 msgstr "Bezig met bijwerken van %s-spelinformatie"
 
-#: src/ui/views/GamesView/GamesView.vala:929
+#: src/ui/views/GamesView/GamesView.vala:935
 msgid "Merging games"
 msgstr "Bezig met samenvoegen van spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:945
+#: src/ui/views/GamesView/GamesView.vala:951
 #, c-format
 msgid "Merging games from %s"
 msgstr "Bezig met samenvoegen van spellen uit %s"
 
-#: src/ui/views/GamesView/GamesView.vala:962
+#: src/ui/views/GamesView/GamesView.vala:968
 #, c-format
 msgid "Merging %s (%s)"
 msgstr "Bezig met samenvoegen van %s (%s)"
@@ -1024,6 +1009,3 @@ msgstr "Gepauzeerd: %d%% (%s/%s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Downloaden geannuleerd"
-
-#~ msgid "Download only"
-#~ msgstr "Alleen downloaden"

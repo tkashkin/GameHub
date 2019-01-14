@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 15:26+0300\n"
+"POT-Creation-Date: 2019-01-14 19:30+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -324,7 +324,7 @@ msgstr "Luncurkan di direktori game"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
 #: src/ui/views/GamesView/GamesView.vala:225
-#: src/ui/views/GamesView/GamesView.vala:687
+#: src/ui/views/GamesView/GamesView.vala:693
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -343,21 +343,6 @@ msgstr "Koleksi"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:74
 msgid "Emulators"
 msgstr "Emulator"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:181
-msgid "Open"
-msgstr "Buka"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:188
-msgid "Clear"
-msgstr "Bersih"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala:204
-#, c-format
-msgid "%llu installer; %s"
-msgid_plural "%llu installers; %s"
-msgstr[0] ""
-msgstr[1] ""
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:36
 msgid "Use dark theme"
@@ -752,46 +737,46 @@ msgstr "Menu"
 msgid "Back"
 msgstr "Kembali"
 
-#: src/ui/views/GamesView/GamesView.vala:505
+#: src/ui/views/GamesView/GamesView.vala:511
 #, c-format
 msgid "Loading games from %s"
 msgstr "Memuat game dari %s"
 
-#: src/ui/views/GamesView/GamesView.vala:534
+#: src/ui/views/GamesView/GamesView.vala:540
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u permainan"
+msgstr[1] "%u permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:549
+#: src/ui/views/GamesView/GamesView.vala:555
 msgid "No user-added games"
 msgstr "Tidak ada game yang ditambahkan pengguna"
 
-#: src/ui/views/GamesView/GamesView.vala:550
+#: src/ui/views/GamesView/GamesView.vala:556
 msgid "Add some games using plus button"
 msgstr "Tambahkan beberapa game menggunakan tombol plus"
 
-#: src/ui/views/GamesView/GamesView.vala:554
+#: src/ui/views/GamesView/GamesView.vala:560
 #, c-format
 msgid "No %s games"
 msgstr "Tidak ada %s permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:555
+#: src/ui/views/GamesView/GamesView.vala:561
 msgid "Get some Linux-compatible games"
 msgstr "Dapatkan beberapa permainan Linux yang kompatibel"
 
-#: src/ui/views/GamesView/GamesView.vala:576
+#: src/ui/views/GamesView/GamesView.vala:582
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Tidak ada permainan yang cocok dengan “%s”"
 
-#: src/ui/views/GamesView/GamesView.vala:581
+#: src/ui/views/GamesView/GamesView.vala:587
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Tidak ada permainan dari %1$s yang cocok dengan “%2$s”"
 
-#: src/ui/views/GamesView/GamesView.vala:685
+#: src/ui/views/GamesView/GamesView.vala:691
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -799,29 +784,29 @@ msgstr ""
 "Tidak ada permainan yang dimuat dari Steam. Setel privasi daftar permainan "
 "anda ke publik atau gunakan kunci API Steam anda sendiri dalam pengaturan."
 
-#: src/ui/views/GamesView/GamesView.vala:686
+#: src/ui/views/GamesView/GamesView.vala:692
 msgid "Privacy"
 msgstr "Privasi"
 
-#: src/ui/views/GamesView/GamesView.vala:905
+#: src/ui/views/GamesView/GamesView.vala:911
 msgid "Updating game info"
 msgstr "Memperbarui info game"
 
-#: src/ui/views/GamesView/GamesView.vala:911
+#: src/ui/views/GamesView/GamesView.vala:917
 #, c-format
 msgid "Updating %s game info"
 msgstr "Memperbarui info game %s"
 
-#: src/ui/views/GamesView/GamesView.vala:929
+#: src/ui/views/GamesView/GamesView.vala:935
 msgid "Merging games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:945
+#: src/ui/views/GamesView/GamesView.vala:951
 #, c-format
 msgid "Merging games from %s"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:962
+#: src/ui/views/GamesView/GamesView.vala:968
 #, c-format
 msgid "Merging %s (%s)"
 msgstr ""
@@ -1029,6 +1014,3 @@ msgstr "Dijeda: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Unduhan dibatalkan"
-
-#~ msgid "Download only"
-#~ msgstr "Hanya mengunduh"
