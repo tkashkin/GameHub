@@ -148,13 +148,15 @@ namespace GameHub
 			string? opt_run = null;
 			bool opt_show_compat = false;
 			bool opt_show = false;
+			bool opt_gdb = false;
 
-			OptionEntry[] options = new OptionEntry[5];
+			OptionEntry[] options = new OptionEntry[6];
 			options[0] = { "version", 'v', 0, OptionArg.NONE, out opt_show_version, _("Show application version and exit"), null };
 			options[1] = { "run", 'r', 0, OptionArg.STRING, out opt_run, _("Run game"), null };
 			options[2] = { "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, _("Show compatibility options dialog"), null };
 			options[3] = { "show", 's', 0, OptionArg.NONE, out opt_show, _("Show main window"), null };
-			options[4] = { null };
+			options[4] = { "gdb", 0, 0, OptionArg.NONE, out opt_gdb, _("Restart with GDB debugger attached"), null };
+			options[5] = { null };
 
 			OptionEntry[] options_log = new OptionEntry[5];
 			options_log[0] = { "debug", 'd', 0, OptionArg.NONE, out opt_debug_log, _("Enable debug logging"), null };
@@ -186,7 +188,30 @@ namespace GameHub
 				return 0;
 			}
 
-			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
+			Granite.Services.Logger.DisplayLevel = opt_debug_log || opt_gdb ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
+
+			if(opt_gdb)
+			{
+				string[] current_args = cmd.get_arguments();
+				string[] cmd_args = {};
+				for(int i = 1; i < current_args.length; i++)
+				{
+					var arg = current_args[i];
+					if(arg != "--gdb")
+					{
+						cmd_args += arg;
+					}
+				}
+				if(!("--debug" in cmd_args) && !("-d" in cmd_args))
+				{
+					cmd_args += "--debug";
+				}
+				string cmd_args_string = string.joinv(" ", cmd_args);
+				string[] exec_cmd = { "xterm", "-geometry", "128x48", "-fa", "Monospace", "-fs", "12", "-e", "gdb", "-ex", @"set args $cmd_args_string", "-ex", "set pagination off", "-ex", "run", current_args[0] };
+				info("Restarting with GDB");
+				Utils.run_async.begin(exec_cmd, cmd.get_cwd());
+				return 0;
+			}
 
 			init();
 

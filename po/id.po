@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 19:30+0300\n"
+"POT-Creation-Date: 2019-01-15 02:19+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -20,47 +20,51 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.3-dev\n"
 
-#: src/app.vala:153
+#: src/app.vala:154
 msgid "Show application version and exit"
 msgstr ""
 
-#: src/app.vala:154
+#: src/app.vala:155
 #, fuzzy
 msgid "Run game"
 msgstr "Jalankan taskmgr"
 
-#: src/app.vala:155
+#: src/app.vala:156
 #, fuzzy
 msgid "Show compatibility options dialog"
 msgstr "Paksakan mode pengguna yang ada"
 
-#: src/app.vala:156
+#: src/app.vala:157
 msgid "Show main window"
 msgstr ""
 
-#: src/app.vala:160
+#: src/app.vala:158
+msgid "Restart with GDB debugger attached"
+msgstr ""
+
+#: src/app.vala:162
 msgid "Enable debug logging"
 msgstr ""
 
-#: src/app.vala:161
+#: src/app.vala:163
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 
-#: src/app.vala:162
+#: src/app.vala:164
 msgid "Log download manager"
 msgstr ""
 
-#: src/app.vala:163
+#: src/app.vala:165
 msgid "Log background workers start/stop"
 msgstr ""
 
-#: src/app.vala:168
+#: src/app.vala:170
 msgid "Logging Options:"
 msgstr ""
 
-#: src/app.vala:168
+#: src/app.vala:170
 msgid "Show logging options help"
 msgstr ""
 
