@@ -298,50 +298,53 @@ namespace GameHub.UI.Views.GameDetailsView
 			blocks.show_all();
 
 			game.status_change.connect(s => {
-				status.label = s.description;
-				download_progress.hide();
-				if(s.state == Game.State.DOWNLOADING && s.download != null)
-				{
-					download = s.download;
-					var ds = download.status.state;
-
-					download_progress.show();
-					download_progress.fraction = s.download.status.progress;
-
-					action_cancel.visible = true;
-					action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
-					action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
-					action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
-				}
-				else
-				{
-					action_cancel.visible = false;
-					action_pause.visible = false;
-					action_resume.visible = false;
-				}
-				action_install.visible = s.state != Game.State.INSTALLED;
-				action_install.sensitive = s.state == Game.State.UNINSTALLED && game.is_installable;
-				action_run_with_compat.visible = s.state == Game.State.INSTALLED && game.use_compat;
-				action_run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
-				action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
-				action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
-				action_open_installer_collection_directory.visible = game.installers_dir != null && game.installers_dir.query_exists();
-				action_open_bonus_collection_directory.visible = game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists();
-				action_open_store_page.visible = game.store_page != null;
-				action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
-				action_properties.visible = !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
-
-				if(action_run_with_compat.visible && game.compat_tool != null)
-				{
-					foreach(var tool in CompatTools)
+				Idle.add(() => {
+					status.label = s.description;
+					download_progress.hide();
+					if(s.state == Game.State.DOWNLOADING && s.download != null)
 					{
-						if(tool.id == game.compat_tool)
+						download = s.download;
+						var ds = download.status.state;
+
+						download_progress.show();
+						download_progress.fraction = s.download.status.progress;
+
+						action_cancel.visible = true;
+						action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
+						action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
+						action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
+					}
+					else
+					{
+						action_cancel.visible = false;
+						action_pause.visible = false;
+						action_resume.visible = false;
+					}
+					action_install.visible = s.state != Game.State.INSTALLED;
+					action_install.sensitive = s.state == Game.State.UNINSTALLED && game.is_installable;
+					action_run_with_compat.visible = s.state == Game.State.INSTALLED && game.use_compat;
+					action_run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
+					action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
+					action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
+					action_open_installer_collection_directory.visible = game.installers_dir != null && game.installers_dir.query_exists();
+					action_open_bonus_collection_directory.visible = game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists();
+					action_open_store_page.visible = game.store_page != null;
+					action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
+					action_properties.visible = !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
+
+					if(action_run_with_compat.visible && game.compat_tool != null)
+					{
+						foreach(var tool in CompatTools)
 						{
-							action_run_with_compat.icon_overlay = tool.icon;
-							break;
+							if(tool.id == game.compat_tool)
+							{
+								action_run_with_compat.icon_overlay = tool.icon;
+								break;
+							}
 						}
 					}
-				}
+					return Source.REMOVE;
+				});
 			});
 			game.status_change(game.status);
 

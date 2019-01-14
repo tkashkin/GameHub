@@ -272,7 +272,7 @@ namespace GameHub.Data.Compat
 
 		public async string convert_path(Runnable runnable, File path)
 		{
-			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, runnable.install_dir.get_path(), prepare_env(runnable))).strip();
+			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true)).strip();
 			debug("[Wine.convert_path] '%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
 		}

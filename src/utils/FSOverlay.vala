@@ -109,7 +109,7 @@ namespace GameHub.Utils
 		{
 			yield polkit_authenticate();
 
-			while(id in (yield Utils.run_thread({"mount"}, null, null, false, false)))
+			while(id in (yield Utils.run_thread({"mount"}, null, null, false, true, false)))
 			{
 				yield Utils.run_thread({"pkexec", POLKIT_HELPER, "umount", id});
 				yield Utils.sleep_async(500);

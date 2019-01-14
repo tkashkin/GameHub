@@ -154,15 +154,19 @@ namespace GameHub.UI.Views.GamesView
 			child = hbox;
 
 			dl_info.download.status_change.connect(s => {
-				state_label.label = s.description;
-				var ds = s.state;
+				Idle.add(() => {
+					state_label.label = s.description;
+					var ds = s.state;
 
-				progress_bar.fraction = s.progress;
+					progress_bar.fraction = s.progress;
 
-				action_cancel.visible = true;
-				action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
-				action_pause.visible = dl_info.download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
-				action_resume.visible = dl_info.download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
+					action_cancel.visible = true;
+					action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
+					action_pause.visible = dl_info.download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
+					action_resume.visible = dl_info.download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
+
+					return Source.REMOVE;
+				});
 			});
 
 			action_cancel.clicked.connect(() => {
@@ -184,7 +188,10 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			Downloader.get_instance().dl_ended.connect(dl => {
-				if(dl == dl_info) destroy();
+				Idle.add(() => {
+					if(dl == dl_info) destroy();
+					return Source.REMOVE;
+				});
 			});
 
 			show_all();
