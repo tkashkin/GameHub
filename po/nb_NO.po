@@ -30,7 +30,7 @@ msgstr "Vis programversjon og avslutt"
 
 #: src/app.vala:68
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Start på nytt med GDB-feilsporer tilknyttet"
 
 #: src/app.vala:69
 msgid "Show full GDB backtrace"
@@ -533,7 +533,6 @@ msgid "Import"
 msgstr "Importer"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#, fuzzy
 msgid "Download"
 msgstr "Last ned"
 
