@@ -197,7 +197,7 @@ namespace GameHub.Utils
 		{
 			if(threadpool == null)
 			{
-				threadpool = new ThreadPool<Worker>.with_owned_data(w => w.run(), -1, false);
+				threadpool = new ThreadPool<Worker>.with_owned_data(w => w.run(), Application.worker_threads, false);
 			}
 			threadpool.add(new Worker(name, (owned) worker, log));
 		}
