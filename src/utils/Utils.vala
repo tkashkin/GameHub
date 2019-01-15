@@ -107,7 +107,7 @@ namespace GameHub.Utils
 
 			if(capture_output)
 			{
-				Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.CHILD_INHERITS_STDIN, null, out stdout, out stderr);
+				Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout, out stderr);
 				stdout = stdout.strip();
 				stderr = stderr.strip();
 				if(log)

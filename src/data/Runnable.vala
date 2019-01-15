@@ -580,7 +580,32 @@ namespace GameHub.Data
 
 					if(runnable.executable == null || !runnable.executable.query_exists())
 					{
-						runnable.choose_executable();
+						if(game != null)
+						{
+							Utils.notify(
+								_("%s: can't detect main executable").printf(game.name),
+								_("Main executable file for this game cannot be detected automatically.\nPlease set main executable in properties."),
+								NotificationPriority.HIGH,
+								n =>
+								{
+									n.set_icon(new ThemedIcon("dialog-warning"));
+									if(game != null)
+									{
+										var icon = Utils.cached_image_file(game.icon, "icon");
+										if(icon != null && icon.query_exists())
+										{
+											n.set_icon(new FileIcon(icon));
+										}
+									}
+									n.set_default_action_and_target_value(Application.ACTION_PREFIX + Application.ACTION_GAME_PROPERTIES, new Variant.string(game.full_id));
+									return n;
+								}
+							);
+						}
+						else
+						{
+							runnable.choose_executable();
+						}
 					}
 
 					if(game != null && version != null)

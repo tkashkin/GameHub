@@ -193,7 +193,7 @@ namespace GameHub.Data.Compat
 				prefix = opt_prefix.file.get_child("pfx");
 			}
 
-			yield Utils.run_thread({ executable.get_path(), "run", prefix.get_child("drive_c/windows/system32/cmd.exe").get_path() }, runnable.install_dir.get_path(), prepare_env(runnable));
+			yield Utils.run_thread({ executable.get_path(), "run", prefix.get_child("drive_c/windows/system32/cmd.exe").get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
 		}
 	}
 }
