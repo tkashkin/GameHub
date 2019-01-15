@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-15 02:19+0300\n"
+"POT-Creation-Date: 2019-01-15 13:37+0300\n"
 "PO-Revision-Date: 2019-01-02 01:06+0000\n"
 "Last-Translator: Leandro Stanger <leandrostanger@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -19,49 +19,57 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:154
+#: src/app.vala:66
+msgid "Show help"
+msgstr ""
+
+#: src/app.vala:67
 msgid "Show application version and exit"
 msgstr ""
 
-#: src/app.vala:155
-msgid "Run game"
-msgstr "Jogo de corrida"
-
-#: src/app.vala:156
-msgid "Show compatibility options dialog"
-msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
-
-#: src/app.vala:157
-msgid "Show main window"
-msgstr "Mostrar janela principal"
-
-#: src/app.vala:158
+#: src/app.vala:68
 msgid "Restart with GDB debugger attached"
 msgstr ""
 
-#: src/app.vala:162
+#: src/app.vala:69
+msgid "Show full GDB backtrace"
+msgstr ""
+
+#: src/app.vala:73
+msgid "Run game"
+msgstr "Jogo de corrida"
+
+#: src/app.vala:74
+msgid "Show compatibility options dialog"
+msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
+
+#: src/app.vala:75
+msgid "Show main window"
+msgstr "Mostrar janela principal"
+
+#: src/app.vala:79
 msgid "Enable debug logging"
 msgstr ""
 
-#: src/app.vala:163
+#: src/app.vala:80
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 
-#: src/app.vala:164
+#: src/app.vala:81
 msgid "Log download manager"
 msgstr ""
 
-#: src/app.vala:165
+#: src/app.vala:82
 msgid "Log background workers start/stop"
 msgstr ""
 
-#: src/app.vala:170
+#: src/app.vala:171
 msgid "Logging Options:"
 msgstr ""
 
-#: src/app.vala:170
+#: src/app.vala:171
 msgid "Show logging options help"
 msgstr ""
 
