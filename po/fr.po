@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # King Claudy <clocloranely@hotmail.fr>, 2019.
+# Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-15 13:37+0300\n"
-"PO-Revision-Date: 2019-01-11 16:06+0000\n"
-"Last-Translator: King Claudy <clocloranely@hotmail.fr>\n"
+"PO-Revision-Date: 2019-01-15 16:27+0000\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -96,9 +97,9 @@ msgid "Select directory"
 msgstr "Choisir le dossier"
 
 #: src/data/Runnable.vala:380
-#, fuzzy, c-format
+#, c-format
 msgid "Part %u of %u: "
-msgstr "Partie %u sur %u "
+msgstr "Partie %u sur %u : "
 
 #: src/data/Runnable.vala:402
 #, c-format
