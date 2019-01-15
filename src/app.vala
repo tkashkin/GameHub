@@ -52,6 +52,8 @@ namespace GameHub
 		private static bool opt_gdb = false;
 		private static bool opt_gdb_bt_full = false;
 
+		public static int worker_threads = -1;
+
 		private GameHub.UI.Windows.MainWindow? main_window;
 
 		public const string ACTION_PREFIX                          = "app.";
@@ -85,6 +87,7 @@ namespace GameHub
 		private const OptionEntry[] options = {
 			{ "show", 's', 0, OptionArg.NONE, out opt_show, N_("Show main window"), null },
 			{ "settings", 0, 0, OptionArg.NONE, out opt_settings, N_("Show application settings dialog"), null },
+			{ "worker-threads", 'j', 0, OptionArg.INT, out worker_threads, N_("Number of background worker threads"), "THREADS" },
 			{ null }
 		};
 		private const OptionEntry[] options_game = {
@@ -273,7 +276,7 @@ namespace GameHub
 					"-ex", "handle SIGUSR1 nostop pass",
 					"-ex", "handle SIGUSR2 nostop pass",
 					"-ex", "handle SIGCHLD nostop pass",
-					"-ex", "set print thread-events off",
+					//"-ex", "set print thread-events off",
 					"-ex", "run",
 					"-ex", "thread apply all bt" + (opt_gdb_bt_full ? " full" : ""),
 					"--tty=/dev/stdout",
