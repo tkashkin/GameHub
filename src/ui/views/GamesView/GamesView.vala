@@ -224,8 +224,7 @@ namespace GameHub.UI.Views.GamesView
 			settings.valign = Align.CENTER;
 			settings.tooltip_text = _("Settings");
 			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
-
-			settings.clicked.connect(() => new Dialogs.SettingsDialog.SettingsDialog());
+			settings.action_name = GameHub.Application.ACTION_PREFIX + GameHub.Application.ACTION_SETTINGS;
 
 			games_grid.set_sort_func((child1, child2) => {
 				var item1 = child1 as GameCard;

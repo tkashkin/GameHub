@@ -94,6 +94,7 @@ sources = [
 	'ui/dialogs/GamePropertiesDialog.vala',
 	'ui/dialogs/GameFSOverlaysDialog.vala',
 	'ui/dialogs/CompatRunDialog.vala',
+	'ui/dialogs/CorruptedInstallerDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',

@@ -334,6 +334,22 @@ namespace GameHub.Data
 				{
 					Object(id: id, url: url, size: size, remote: remote, local: local, checksum: checksum, checksum_type: checksum_type);
 				}
+				public string? checksum_type_string
+				{
+					get
+					{
+						if(checksum == null || checksum.length == 0) return null;
+						switch(checksum_type)
+						{
+							case ChecksumType.MD5: return "md5";
+							case ChecksumType.SHA1: return "sha1";
+							case ChecksumType.SHA256: return "sha256";
+							case ChecksumType.SHA384: return "sha384";
+							case ChecksumType.SHA512: return "sha512";
+						}
+						return null;
+					}
+				}
 			}
 
 			public string   id           { get; protected set; }
@@ -387,6 +403,7 @@ namespace GameHub.Data
 							string? file_checksum = null;
 							if(part.checksum != null)
 							{
+								FileUtils.set_contents(file.get_path() + "." + part.checksum_type_string, part.checksum);
 								if(game != null) game.status = new Game.Status(Game.State.VERIFYING_INSTALLER_INTEGRITY, game);
 								file_checksum = yield Utils.compute_file_checksum(file, part.checksum_type);
 								if(game != null) game.status = new Game.Status(Game.State.DOWNLOADING, game, null);
@@ -413,9 +430,11 @@ namespace GameHub.Data
 												n.set_icon(new FileIcon(icon));
 											}
 										}
-										n.set_default_action_and_target_value("app.installer.show", new Variant.string(file.get_path()));
-										n.add_button_with_target_value(_("Remove"), "app.installer.remove", new Variant.string(file.get_path()));
-										n.add_button_with_target_value(_("Backup"), "app.installer.backup", new Variant.string(file.get_path()));
+										var args = new Variant("(ss)", game != null ? game.full_id : runnable.id, file.get_path());
+										n.set_default_action_and_target_value(Application.ACTION_PREFIX + Application.ACTION_CORRUPTED_INSTALLER_PICK_ACTION, args);
+										n.add_button_with_target_value(_("Show file"), Application.ACTION_PREFIX + Application.ACTION_CORRUPTED_INSTALLER_SHOW, args);
+										n.add_button_with_target_value(_("Remove"), Application.ACTION_PREFIX + Application.ACTION_CORRUPTED_INSTALLER_REMOVE, args);
+										n.add_button_with_target_value(_("Backup"), Application.ACTION_PREFIX + Application.ACTION_CORRUPTED_INSTALLER_BACKUP, args);
 										return n;
 									}
 								);

@@ -41,25 +41,38 @@ namespace GameHub
 		private static bool opt_help = false;
 		private static bool opt_debug_log = false;
 		private static bool opt_show_version = false;
+
 		private static string? opt_run = null;
+		private static string? opt_game_details = null;
+		private static string? opt_game_properties = null;
+
 		private static bool opt_show_compat = false;
 		private static bool opt_show = false;
+		private static bool opt_settings = false;
 		private static bool opt_gdb = false;
 		private static bool opt_gdb_bt_full = false;
 
 		private GameHub.UI.Windows.MainWindow? main_window;
 
-		public const string ACTION_PREFIX = "app.";
-		public const string ACTION_SETTINGS = "settings";
-		public const string ACTION_INSTALLER_SHOW = "installer.show";
-		public const string ACTION_INSTALLER_BACKUP = "installer.backup";
-		public const string ACTION_INSTALLER_REMOVE = "installer.remove";
+		public const string ACTION_PREFIX                          = "app.";
+		public const string ACTION_SETTINGS                        = "settings";
+		public const string ACTION_CORRUPTED_INSTALLER_PICK_ACTION = "corrupted-installer.pick-action";
+		public const string ACTION_CORRUPTED_INSTALLER_SHOW        = "corrupted-installer.show";
+		public const string ACTION_CORRUPTED_INSTALLER_BACKUP      = "corrupted-installer.backup";
+		public const string ACTION_CORRUPTED_INSTALLER_REMOVE      = "corrupted-installer.remove";
+		public const string ACTION_GAME_RUN                        = "game.run";
+		public const string ACTION_GAME_DETAILS                    = "game.details";
+		public const string ACTION_GAME_PROPERTIES                 = "game.properties";
 
 		private const GLib.ActionEntry[] action_entries = {
-			{ ACTION_SETTINGS, action_settings },
-			{ ACTION_INSTALLER_SHOW,   action_installer, "s" },
-			{ ACTION_INSTALLER_BACKUP, action_installer, "s" },
-			{ ACTION_INSTALLER_REMOVE, action_installer, "s" }
+			{ ACTION_SETTINGS,                        action_settings },
+			{ ACTION_CORRUPTED_INSTALLER_PICK_ACTION, action_corrupted_installer, "(ss)" },
+			{ ACTION_CORRUPTED_INSTALLER_SHOW,        action_corrupted_installer, "(ss)" },
+			{ ACTION_CORRUPTED_INSTALLER_BACKUP,      action_corrupted_installer, "(ss)" },
+			{ ACTION_CORRUPTED_INSTALLER_REMOVE,      action_corrupted_installer, "(ss)" },
+			{ ACTION_GAME_RUN,                        action_game, "s" },
+			{ ACTION_GAME_DETAILS,                    action_game, "s" },
+			{ ACTION_GAME_PROPERTIES,                 action_game, "s" }
 		};
 
 		private const OptionEntry[] local_options = {
@@ -70,9 +83,15 @@ namespace GameHub
 			{ null }
 		};
 		private const OptionEntry[] options = {
-			{ "run", 'r', 0, OptionArg.STRING, out opt_run, N_("Run game"), null },
-			{ "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, N_("Show compatibility options dialog"), null },
 			{ "show", 's', 0, OptionArg.NONE, out opt_show, N_("Show main window"), null },
+			{ "settings", 0, 0, OptionArg.NONE, out opt_settings, N_("Show application settings dialog"), null },
+			{ null }
+		};
+		private const OptionEntry[] options_game = {
+			{ "run", 'r', 0, OptionArg.STRING, out opt_run, N_("Run game"), "GAME" },
+			{ "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, N_("Show compatibility options dialog"), null },
+			{ "details", 0, 0, OptionArg.STRING, out opt_game_details, N_("Open game details"), "GAME" },
+			{ "properties", 0, 0, OptionArg.STRING, out opt_game_properties, N_("Open game properties"), "GAME" },
 			{ null }
 		};
 		private const OptionEntry[] options_log = {
@@ -166,6 +185,14 @@ namespace GameHub
 			return app.run(args);
 		}
 
+		private OptionGroup get_game_option_group()
+		{
+			var group = new OptionGroup("game", _("Game Options:"), _("Show game options help"));
+			group.add_entries(options_game);
+			group.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+			return group;
+		}
+
 		private OptionGroup get_log_option_group()
 		{
 			var group = new OptionGroup("log", _("Logging Options:"), _("Show logging options help"));
@@ -205,6 +232,7 @@ namespace GameHub
 				help_option_context.set_help_enabled(false);
 				help_option_context.add_main_entries(local_options, ProjectConfig.GETTEXT_PACKAGE);
 				help_option_context.add_main_entries(options, ProjectConfig.GETTEXT_PACKAGE);
+				help_option_context.add_group(get_game_option_group());
 				help_option_context.add_group(get_log_option_group());
 				help_option_context.add_group(Gtk.get_option_group(true));
 				help_option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
@@ -268,6 +296,7 @@ namespace GameHub
 
 			var option_context = new OptionContext();
 			option_context.add_main_entries(options, ProjectConfig.GETTEXT_PACKAGE);
+			option_context.add_group(get_game_option_group());
 			option_context.add_group(get_log_option_group());
 			option_context.add_group(Gtk.get_option_group(true));
 			option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
@@ -285,48 +314,39 @@ namespace GameHub
 
 			init();
 
-			if(opt_show || opt_run == null)
+			if(opt_show || (opt_run == null && opt_game_details == null && opt_game_properties == null))
 			{
 				activate();
 				main_window.present();
 			}
 
+			if(opt_settings)
+			{
+				activate_action(ACTION_SETTINGS, null);
+			}
+
 			if(opt_run != null)
 			{
-				opt_run = opt_run.strip();
-				if(opt_run.length > 0 && ":" in opt_run)
-				{
-					var id_parts = opt_run.split(":");
-					var game = GameHub.Data.DB.Tables.Games.get(id_parts[0], id_parts[1]);
-					if(game != null)
-					{
-						info("Starting `%s`", game.name);
+				activate_action(ACTION_GAME_RUN, new Variant.string(opt_run));
+			}
 
-						var loop = new MainLoop();
-						game.update_game_info.begin((obj, res) => {
-							game.update_game_info.end(res);
-							run_game.begin(game, opt_show_compat, (obj, res) => {
-								run_game.end(res);
-								info("`%s` finished", game.name);
-								loop.quit();
-							});
-						});
-						loop.run();
-					}
-					else
-					{
-						error("Game with id `%s` from source `%s` is not found", id_parts[1], id_parts[0]);
-					}
-				}
-				else
-				{
-					error("`%s` is not a fully-qualified game id", opt_run);
-				}
+			if(opt_game_details != null)
+			{
+				activate_action(ACTION_GAME_DETAILS, new Variant.string(opt_game_details));
+			}
+
+			if(opt_game_properties != null)
+			{
+				activate_action(ACTION_GAME_PROPERTIES, new Variant.string(opt_game_properties));
 			}
 
 			opt_run = null;
+			opt_game_details = null;
+			opt_game_properties = null;
+
 			opt_show_compat = false;
 			opt_show = false;
+			opt_settings = false;
 
 			return 0;
 		}
@@ -354,7 +374,7 @@ namespace GameHub
 			println(plain, "DE:      %s", Utils.get_desktop_environment() ?? "unknown");
 		}
 
-		private async void run_game(Game game, bool show_compat)
+		private static async void run_game(Game game, bool show_compat)
 		{
 			if(game.status.state == Game.State.INSTALLED)
 			{
@@ -378,23 +398,51 @@ namespace GameHub
 			new UI.Dialogs.SettingsDialog.SettingsDialog();
 		}
 
-		private static void action_installer(SimpleAction action, Variant? path)
+		private static void action_corrupted_installer(SimpleAction action, Variant? args)
 		{
-			var file = FSUtils.file(path.get_string());
+			if(args == null) return;
+
+			var args_iter = args.iterator();
+			string? game_id = null;
+			string? path = null;
+			args_iter.next("s", &game_id);
+			args_iter.next("s", &path);
+
+			if(game_id == null || path == null) return;
+
+			var file = FSUtils.file(path);
 			if(file == null || !file.query_exists()) return;
 			try
 			{
 				switch(action.name)
 				{
-					case ACTION_INSTALLER_SHOW:
+					case ACTION_CORRUPTED_INSTALLER_PICK_ACTION:
+						game_id = game_id.strip();
+						if(game_id.length > 0 && ":" in game_id)
+						{
+							var id_parts = game_id.split(":");
+							var game = GameHub.Data.DB.Tables.Games.get(id_parts[0], id_parts[1]);
+							if(game != null)
+							{
+								var loop = new MainLoop();
+								var dlg = new UI.Dialogs.CorruptedInstallerDialog(game, file);
+								dlg.destroy.connect(() => {
+									loop.quit();
+								});
+								loop.run();
+							}
+						}
+						break;
+
+					case ACTION_CORRUPTED_INSTALLER_SHOW:
 						Utils.open_uri(file.get_parent().get_uri());
 						break;
 
-					case ACTION_INSTALLER_BACKUP:
-						file.move(FSUtils.file(path.get_string() + ".backup"), FileCopyFlags.BACKUP);
+					case ACTION_CORRUPTED_INSTALLER_BACKUP:
+						file.move(FSUtils.file(path + ".backup"), FileCopyFlags.BACKUP);
 						break;
 
-					case ACTION_INSTALLER_REMOVE:
+					case ACTION_CORRUPTED_INSTALLER_REMOVE:
 						file.delete();
 						break;
 				}
@@ -402,6 +450,61 @@ namespace GameHub
 			catch(Error e)
 			{
 				warning("[app.installer_action] %s", e.message);
+			}
+		}
+
+		private static void action_game(SimpleAction action, Variant? args)
+		{
+			if(args == null) return;
+			string? game_id = args.get_string();
+			if(game_id == null) return;
+
+			game_id = game_id.strip();
+			if(game_id.length > 0 && ":" in game_id)
+			{
+				var id_parts = game_id.split(":");
+				var game = GameHub.Data.DB.Tables.Games.get(id_parts[0], id_parts[1]);
+				if(game != null)
+				{
+					var loop = new MainLoop();
+					game.update_game_info.begin((obj, res) => {
+						game.update_game_info.end(res);
+						switch(action.name)
+						{
+							case ACTION_GAME_RUN:
+								info("Starting `%s`", game.name);
+								run_game.begin(game, opt_show_compat, (obj, res) => {
+									run_game.end(res);
+									info("`%s` finished", game.name);
+									loop.quit();
+								});
+								break;
+
+							case ACTION_GAME_DETAILS:
+								var dlg = new UI.Dialogs.GameDetailsDialog(game);
+								dlg.destroy.connect(() => {
+									loop.quit();
+								});
+								break;
+
+							case ACTION_GAME_PROPERTIES:
+								var dlg = new UI.Dialogs.GamePropertiesDialog(game);
+								dlg.destroy.connect(() => {
+									loop.quit();
+								});
+								break;
+						}
+					});
+					loop.run();
+				}
+				else
+				{
+					error("Game with id `%s` from source `%s` is not found", id_parts[1], id_parts[0]);
+				}
+			}
+			else
+			{
+				error("`%s` is not a fully-qualified game id", opt_run);
 			}
 		}
 	}

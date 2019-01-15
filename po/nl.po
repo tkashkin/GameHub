@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-15 13:37+0300\n"
+"POT-Creation-Date: 2019-01-16 00:43+0300\n"
 "PO-Revision-Date: 2019-01-15 16:18+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -19,39 +19,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:66
+#: src/app.vala:79
 msgid "Show help"
 msgstr "Hulp tonen"
 
-#: src/app.vala:67
+#: src/app.vala:80
 msgid "Show application version and exit"
 msgstr "Applicatieversie tonen en afsluiten"
 
-#: src/app.vala:68
+#: src/app.vala:81
 msgid "Restart with GDB debugger attached"
 msgstr "Herstarten met GDB-foutopsporing"
 
-#: src/app.vala:69
+#: src/app.vala:82
 msgid "Show full GDB backtrace"
 msgstr "Volledige GDB-backtrace tonen"
 
-#: src/app.vala:73
-msgid "Run game"
-msgstr "Spel starten"
-
-#: src/app.vala:74
-msgid "Show compatibility options dialog"
-msgstr "Comptabiliteitsmodus-opties tonen"
-
-#: src/app.vala:75
+#: src/app.vala:86
 msgid "Show main window"
 msgstr "Hoofdvenster tonen"
 
-#: src/app.vala:79
+#: src/app.vala:87
+#, fuzzy
+msgid "Show application settings dialog"
+msgstr "Applicatieversie tonen en afsluiten"
+
+#: src/app.vala:91
+msgid "Run game"
+msgstr "Spel starten"
+
+#: src/app.vala:92
+msgid "Show compatibility options dialog"
+msgstr "Comptabiliteitsmodus-opties tonen"
+
+#: src/app.vala:93
+msgid "Open game details"
+msgstr ""
+
+#: src/app.vala:94
+#, fuzzy
+msgid "Open game properties"
+msgstr "Speleigenschappen"
+
+#: src/app.vala:98
 msgid "Enable debug logging"
 msgstr "Foutopsporingslogs inschakelen"
 
-#: src/app.vala:80
+#: src/app.vala:99
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -59,19 +73,29 @@ msgstr ""
 "Authenticatieproces en gevoelige informatie, zoals authenticatiesleutels, "
 "vastleggen in logbestand"
 
-#: src/app.vala:81
+#: src/app.vala:100
 msgid "Log download manager"
 msgstr "Downloadbeheer vastleggen in logbestand"
 
-#: src/app.vala:82
+#: src/app.vala:101
 msgid "Log background workers start/stop"
 msgstr "Achtergronddiensten van loggen starten/stoppen"
 
-#: src/app.vala:171
+#: src/app.vala:190
+#, fuzzy
+msgid "Game Options:"
+msgstr "Speleigenschappen"
+
+#: src/app.vala:190
+#, fuzzy
+msgid "Show game options help"
+msgstr "Hulp bij opties voor loggen tonen en afsluiten"
+
+#: src/app.vala:198
 msgid "Logging Options:"
 msgstr "Opties voor loggen:"
 
-#: src/app.vala:171
+#: src/app.vala:198
 msgid "Show logging options help"
 msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 
@@ -82,7 +106,7 @@ msgid "Select executable"
 msgstr "Kies uitvoerbaar bestand"
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:365
+#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:364
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
@@ -98,27 +122,33 @@ msgstr "Annuleren"
 msgid "Select directory"
 msgstr "Kies map"
 
-#: src/data/Runnable.vala:380
+#: src/data/Runnable.vala:396
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Deel %u van %u: "
 
-#: src/data/Runnable.vala:402
+#: src/data/Runnable.vala:419 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: kapot installatiebestand"
 
-#: src/data/Runnable.vala:403
+#: src/data/Runnable.vala:420
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Controlesom komt niet overeen voor %s"
 
-#: src/data/Runnable.vala:417 src/ui/views/GamesView/GameContextMenu.vala:144
+#: src/data/Runnable.vala:435 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#, fuzzy
+msgid "Show file"
+msgstr "Hulp tonen"
+
+#: src/data/Runnable.vala:436 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: src/data/Runnable.vala:418
+#: src/data/Runnable.vala:437 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
 msgstr "Back-up"
 
@@ -333,7 +363,7 @@ msgstr "Uitvoeren in spelmap"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
 #: src/ui/views/GamesView/GamesView.vala:225
-#: src/ui/views/GamesView/GamesView.vala:693
+#: src/ui/views/GamesView/GamesView.vala:692
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -648,6 +678,10 @@ msgstr "Map openen"
 msgid "Run with compatibility layer"
 msgstr "Uitvoeren met comptabiliteit"
 
+#: src/ui/dialogs/CorruptedInstallerDialog.vala:72
+msgid "Corrupted installer: checksum mismatch in"
+msgstr "Kapot installatiebestand: controlesom komt niet overeen voor"
+
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
 msgstr "Geen spelbronnen ingeschakeld"
@@ -730,60 +764,60 @@ msgstr "Spel toevoegen"
 msgid "Search"
 msgstr "Zoeken"
 
-#: src/ui/views/GamesView/GamesView.vala:271
+#: src/ui/views/GamesView/GamesView.vala:270
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Favorieten"
 
-#: src/ui/views/GamesView/GamesView.vala:363
+#: src/ui/views/GamesView/GamesView.vala:362
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:364
+#: src/ui/views/GamesView/GamesView.vala:363
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:79
 msgid "Back"
 msgstr "Terug"
 
-#: src/ui/views/GamesView/GamesView.vala:511
+#: src/ui/views/GamesView/GamesView.vala:510
 #, c-format
 msgid "Loading games from %s"
 msgstr "Bezig met laden van spellen uit %s"
 
-#: src/ui/views/GamesView/GamesView.vala:540
+#: src/ui/views/GamesView/GamesView.vala:539
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spel"
 msgstr[1] "%u spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:555
+#: src/ui/views/GamesView/GamesView.vala:554
 msgid "No user-added games"
 msgstr "Geen door de gebruiker toegevoegde spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:556
+#: src/ui/views/GamesView/GamesView.vala:555
 msgid "Add some games using plus button"
 msgstr "Voeg spellen toe via de plus-knop"
 
-#: src/ui/views/GamesView/GamesView.vala:560
+#: src/ui/views/GamesView/GamesView.vala:559
 #, c-format
 msgid "No %s games"
 msgstr "Geen %s-spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:561
+#: src/ui/views/GamesView/GamesView.vala:560
 msgid "Get some Linux-compatible games"
 msgstr "Installeer met Linux compatibele spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:582
+#: src/ui/views/GamesView/GamesView.vala:581
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Er zijn geen spellen die overeenkomen met \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:586
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Er zijn geen %1$s-spellen die overeenkomen met \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:691
+#: src/ui/views/GamesView/GamesView.vala:690
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -791,29 +825,29 @@ msgstr ""
 "Er zijn geen spellen geladen vanuit Steam. Maak je spellijst openbaar of "
 "voeg je eigen Steam API-sleutel toe via de instellingen."
 
-#: src/ui/views/GamesView/GamesView.vala:692
+#: src/ui/views/GamesView/GamesView.vala:691
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/ui/views/GamesView/GamesView.vala:911
+#: src/ui/views/GamesView/GamesView.vala:910
 msgid "Updating game info"
 msgstr "Bezig met bijwerken van spelinformatie"
 
-#: src/ui/views/GamesView/GamesView.vala:917
+#: src/ui/views/GamesView/GamesView.vala:916
 #, c-format
 msgid "Updating %s game info"
 msgstr "Bezig met bijwerken van %s-spelinformatie"
 
-#: src/ui/views/GamesView/GamesView.vala:935
+#: src/ui/views/GamesView/GamesView.vala:934
 msgid "Merging games"
 msgstr "Bezig met samenvoegen van spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:951
+#: src/ui/views/GamesView/GamesView.vala:950
 #, c-format
 msgid "Merging games from %s"
 msgstr "Bezig met samenvoegen van spellen uit %s"
 
-#: src/ui/views/GamesView/GamesView.vala:968
+#: src/ui/views/GamesView/GamesView.vala:967
 #, c-format
 msgid "Merging %s (%s)"
 msgstr "Bezig met samenvoegen van %s (%s)"
