@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-15 13:37+0300\n"
+"POT-Creation-Date: 2019-01-16 00:43+0300\n"
 "PO-Revision-Date: 2019-01-14 23:23+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -20,39 +20,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:66
+#: src/app.vala:79
 msgid "Show help"
 msgstr ""
 
-#: src/app.vala:67
+#: src/app.vala:80
 msgid "Show application version and exit"
 msgstr "Vis programversjon og avslutt"
 
-#: src/app.vala:68
+#: src/app.vala:81
 msgid "Restart with GDB debugger attached"
 msgstr "Start på nytt med GDB-feilsporer tilknyttet"
 
-#: src/app.vala:69
+#: src/app.vala:82
 msgid "Show full GDB backtrace"
 msgstr ""
 
-#: src/app.vala:73
-msgid "Run game"
-msgstr "Kjør spill"
-
-#: src/app.vala:74
-msgid "Show compatibility options dialog"
-msgstr "Vis valg for kompabilitetsmodus"
-
-#: src/app.vala:75
+#: src/app.vala:86
 msgid "Show main window"
 msgstr "Vis hovedvindu"
 
-#: src/app.vala:79
+#: src/app.vala:87
+#, fuzzy
+msgid "Show application settings dialog"
+msgstr "Vis programversjon og avslutt"
+
+#: src/app.vala:91
+msgid "Run game"
+msgstr "Kjør spill"
+
+#: src/app.vala:92
+msgid "Show compatibility options dialog"
+msgstr "Vis valg for kompabilitetsmodus"
+
+#: src/app.vala:93
+msgid "Open game details"
+msgstr ""
+
+#: src/app.vala:94
+#, fuzzy
+msgid "Open game properties"
+msgstr "Spillegenskaper"
+
+#: src/app.vala:98
 msgid "Enable debug logging"
 msgstr "Skru på feilrettingslogging"
 
-#: src/app.vala:80
+#: src/app.vala:99
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -60,19 +74,29 @@ msgstr ""
 "Loggfør identitetsbekreftelsesprosess og sensitiv info som "
 "identitetsbekreftelsessymboler"
 
-#: src/app.vala:81
+#: src/app.vala:100
 msgid "Log download manager"
 msgstr "Loggfør nedlastingsbehandler"
 
-#: src/app.vala:82
+#: src/app.vala:101
 msgid "Log background workers start/stop"
 msgstr "Loggfør oppstart/stopp av bakgrunnsarbeidere"
 
-#: src/app.vala:171
+#: src/app.vala:190
+#, fuzzy
+msgid "Game Options:"
+msgstr "Spillegenskaper"
+
+#: src/app.vala:190
+#, fuzzy
+msgid "Show game options help"
+msgstr "Vis hjelp for loggføringsvalg"
+
+#: src/app.vala:198
 msgid "Logging Options:"
 msgstr "Loggføringsvalg:"
 
-#: src/app.vala:171
+#: src/app.vala:198
 msgid "Show logging options help"
 msgstr "Vis hjelp for loggføringsvalg"
 
@@ -83,7 +107,7 @@ msgid "Select executable"
 msgstr "Velg kjørbar fil"
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:365
+#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:364
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
@@ -99,27 +123,33 @@ msgstr "Avbryt"
 msgid "Select directory"
 msgstr "Velg mappe"
 
-#: src/data/Runnable.vala:380
+#: src/data/Runnable.vala:396
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Del %u av %u: "
 
-#: src/data/Runnable.vala:402
+#: src/data/Runnable.vala:419 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: Skadet installasjonskandidat"
 
-#: src/data/Runnable.vala:403
+#: src/data/Runnable.vala:420
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Sjekksum stemmer ikke overens i %s"
 
-#: src/data/Runnable.vala:417 src/ui/views/GamesView/GameContextMenu.vala:144
+#: src/data/Runnable.vala:435 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#, fuzzy
+msgid "Show file"
+msgstr "Velg fil"
+
+#: src/data/Runnable.vala:436 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Fjern"
 
-#: src/data/Runnable.vala:418
+#: src/data/Runnable.vala:437 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
 msgstr "Sikkerhetskopi"
 
@@ -335,7 +365,7 @@ msgstr "Kjør i spillmappe"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
 #: src/ui/views/GamesView/GamesView.vala:225
-#: src/ui/views/GamesView/GamesView.vala:693
+#: src/ui/views/GamesView/GamesView.vala:692
 msgid "Settings"
 msgstr "Innstillinger"
 
@@ -649,6 +679,10 @@ msgstr "Åpne mappe"
 msgid "Run with compatibility layer"
 msgstr "Kjør med kompabilitetslag"
 
+#: src/ui/dialogs/CorruptedInstallerDialog.vala:72
+msgid "Corrupted installer: checksum mismatch in"
+msgstr "Skadet installasjonskandidat: sjekksum stemmer ikke overens i"
+
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
 msgstr "Ingen påskrudde spillkilder"
@@ -731,60 +765,60 @@ msgstr "Legg til spill"
 msgid "Search"
 msgstr "Søk"
 
-#: src/ui/views/GamesView/GamesView.vala:271
+#: src/ui/views/GamesView/GamesView.vala:270
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Favoritter"
 
-#: src/ui/views/GamesView/GamesView.vala:363
+#: src/ui/views/GamesView/GamesView.vala:362
 msgid "Menu"
 msgstr "Meny"
 
-#: src/ui/views/GamesView/GamesView.vala:364
+#: src/ui/views/GamesView/GamesView.vala:363
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:79
 msgid "Back"
 msgstr "Tilbake"
 
-#: src/ui/views/GamesView/GamesView.vala:511
+#: src/ui/views/GamesView/GamesView.vala:510
 #, c-format
 msgid "Loading games from %s"
 msgstr "Laster spill fra %s"
 
-#: src/ui/views/GamesView/GamesView.vala:540
+#: src/ui/views/GamesView/GamesView.vala:539
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spill"
 msgstr[1] "%u spill"
 
-#: src/ui/views/GamesView/GamesView.vala:555
+#: src/ui/views/GamesView/GamesView.vala:554
 msgid "No user-added games"
 msgstr "Ingen brukertillagte spill"
 
-#: src/ui/views/GamesView/GamesView.vala:556
+#: src/ui/views/GamesView/GamesView.vala:555
 msgid "Add some games using plus button"
 msgstr "Legg till noen spill med pluss-knappen"
 
-#: src/ui/views/GamesView/GamesView.vala:560
+#: src/ui/views/GamesView/GamesView.vala:559
 #, c-format
 msgid "No %s games"
 msgstr "Ingen %s-spill"
 
-#: src/ui/views/GamesView/GamesView.vala:561
+#: src/ui/views/GamesView/GamesView.vala:560
 msgid "Get some Linux-compatible games"
 msgstr "Hent noen Linux-kompatible spill"
 
-#: src/ui/views/GamesView/GamesView.vala:582
+#: src/ui/views/GamesView/GamesView.vala:581
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Ingen spill samsvarer med \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:586
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Ingen %1$s-spill samsvarer med \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:691
+#: src/ui/views/GamesView/GamesView.vala:690
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -792,29 +826,29 @@ msgstr ""
 "Ingen spill ble innlastet fra Steam. Sett ditt spilllistepersonvern til "
 "\"offentlig\" for å bruke din egen Steam-API-nøkkel i innstillingene."
 
-#: src/ui/views/GamesView/GamesView.vala:692
+#: src/ui/views/GamesView/GamesView.vala:691
 msgid "Privacy"
 msgstr "Personvern"
 
-#: src/ui/views/GamesView/GamesView.vala:911
+#: src/ui/views/GamesView/GamesView.vala:910
 msgid "Updating game info"
 msgstr "Oppdaterer spillinfo"
 
-#: src/ui/views/GamesView/GamesView.vala:917
+#: src/ui/views/GamesView/GamesView.vala:916
 #, c-format
 msgid "Updating %s game info"
 msgstr "Oppdaterer %s spillinfo"
 
-#: src/ui/views/GamesView/GamesView.vala:935
+#: src/ui/views/GamesView/GamesView.vala:934
 msgid "Merging games"
 msgstr "Fletter spill"
 
-#: src/ui/views/GamesView/GamesView.vala:951
+#: src/ui/views/GamesView/GamesView.vala:950
 #, c-format
 msgid "Merging games from %s"
 msgstr "Fletter spill fra %s"
 
-#: src/ui/views/GamesView/GamesView.vala:968
+#: src/ui/views/GamesView/GamesView.vala:967
 #, c-format
 msgid "Merging %s (%s)"
 msgstr "Fletter %s (%s)"

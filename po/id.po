@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-15 13:37+0300\n"
+"POT-Creation-Date: 2019-01-16 00:43+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -20,59 +20,82 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.3-dev\n"
 
-#: src/app.vala:66
+#: src/app.vala:79
 msgid "Show help"
 msgstr ""
 
-#: src/app.vala:67
+#: src/app.vala:80
 msgid "Show application version and exit"
 msgstr ""
 
-#: src/app.vala:68
+#: src/app.vala:81
 msgid "Restart with GDB debugger attached"
 msgstr ""
 
-#: src/app.vala:69
+#: src/app.vala:82
 msgid "Show full GDB backtrace"
 msgstr ""
 
-#: src/app.vala:73
+#: src/app.vala:86
+msgid "Show main window"
+msgstr ""
+
+#: src/app.vala:87
+#, fuzzy
+msgid "Show application settings dialog"
+msgstr "Paksakan mode pengguna yang ada"
+
+#: src/app.vala:91
 #, fuzzy
 msgid "Run game"
 msgstr "Jalankan taskmgr"
 
-#: src/app.vala:74
+#: src/app.vala:92
 #, fuzzy
 msgid "Show compatibility options dialog"
 msgstr "Paksakan mode pengguna yang ada"
 
-#: src/app.vala:75
-msgid "Show main window"
+#: src/app.vala:93
+msgid "Open game details"
 msgstr ""
 
-#: src/app.vala:79
+#: src/app.vala:94
+#, fuzzy
+msgid "Open game properties"
+msgstr "Properti permainan"
+
+#: src/app.vala:98
 msgid "Enable debug logging"
 msgstr ""
 
-#: src/app.vala:80
+#: src/app.vala:99
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 
-#: src/app.vala:81
+#: src/app.vala:100
 msgid "Log download manager"
 msgstr ""
 
-#: src/app.vala:82
+#: src/app.vala:101
 msgid "Log background workers start/stop"
 msgstr ""
 
-#: src/app.vala:171
+#: src/app.vala:190
+#, fuzzy
+msgid "Game Options:"
+msgstr "Properti permainan"
+
+#: src/app.vala:190
+msgid "Show game options help"
+msgstr ""
+
+#: src/app.vala:198
 msgid "Logging Options:"
 msgstr ""
 
-#: src/app.vala:171
+#: src/app.vala:198
 msgid "Show logging options help"
 msgstr ""
 
@@ -83,7 +106,7 @@ msgid "Select executable"
 msgstr ""
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:365
+#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:364
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
@@ -99,27 +122,33 @@ msgstr "Batal"
 msgid "Select directory"
 msgstr "Pilih direktori"
 
-#: src/data/Runnable.vala:380
+#: src/data/Runnable.vala:396
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Bagian %u dari %u: "
 
-#: src/data/Runnable.vala:402
+#: src/data/Runnable.vala:419 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, fuzzy, c-format
 msgid "%s: corrupted installer"
 msgstr "Tidak terpasang"
 
-#: src/data/Runnable.vala:403
+#: src/data/Runnable.vala:420
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr ""
 
-#: src/data/Runnable.vala:417 src/ui/views/GamesView/GameContextMenu.vala:144
+#: src/data/Runnable.vala:435 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#, fuzzy
+msgid "Show file"
+msgstr "Pilih berkas"
+
+#: src/data/Runnable.vala:436 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Hapus"
 
-#: src/data/Runnable.vala:418
+#: src/data/Runnable.vala:437 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 #, fuzzy
 msgid "Backup"
 msgstr "Kembali"
@@ -336,7 +365,7 @@ msgstr "Luncurkan di direktori game"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
 #: src/ui/views/GamesView/GamesView.vala:225
-#: src/ui/views/GamesView/GamesView.vala:693
+#: src/ui/views/GamesView/GamesView.vala:692
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -651,6 +680,10 @@ msgstr "Buka direktori"
 msgid "Run with compatibility layer"
 msgstr "Jalankan dengan lapisan kompatibilitas"
 
+#: src/ui/dialogs/CorruptedInstallerDialog.vala:72
+msgid "Corrupted installer: checksum mismatch in"
+msgstr ""
+
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
 msgstr "Tidak ada sumber permainan yang diaktifkan"
@@ -735,60 +768,60 @@ msgstr "Tambah permainan"
 msgid "Search"
 msgstr "Cari"
 
-#: src/ui/views/GamesView/GamesView.vala:271
+#: src/ui/views/GamesView/GamesView.vala:270
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Favorit"
 
-#: src/ui/views/GamesView/GamesView.vala:363
+#: src/ui/views/GamesView/GamesView.vala:362
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:364
+#: src/ui/views/GamesView/GamesView.vala:363
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:79
 msgid "Back"
 msgstr "Kembali"
 
-#: src/ui/views/GamesView/GamesView.vala:511
+#: src/ui/views/GamesView/GamesView.vala:510
 #, c-format
 msgid "Loading games from %s"
 msgstr "Memuat game dari %s"
 
-#: src/ui/views/GamesView/GamesView.vala:540
+#: src/ui/views/GamesView/GamesView.vala:539
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u permainan"
 msgstr[1] "%u permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:555
+#: src/ui/views/GamesView/GamesView.vala:554
 msgid "No user-added games"
 msgstr "Tidak ada game yang ditambahkan pengguna"
 
-#: src/ui/views/GamesView/GamesView.vala:556
+#: src/ui/views/GamesView/GamesView.vala:555
 msgid "Add some games using plus button"
 msgstr "Tambahkan beberapa game menggunakan tombol plus"
 
-#: src/ui/views/GamesView/GamesView.vala:560
+#: src/ui/views/GamesView/GamesView.vala:559
 #, c-format
 msgid "No %s games"
 msgstr "Tidak ada %s permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:561
+#: src/ui/views/GamesView/GamesView.vala:560
 msgid "Get some Linux-compatible games"
 msgstr "Dapatkan beberapa permainan Linux yang kompatibel"
 
-#: src/ui/views/GamesView/GamesView.vala:582
+#: src/ui/views/GamesView/GamesView.vala:581
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Tidak ada permainan yang cocok dengan “%s”"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:586
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Tidak ada permainan dari %1$s yang cocok dengan “%2$s”"
 
-#: src/ui/views/GamesView/GamesView.vala:691
+#: src/ui/views/GamesView/GamesView.vala:690
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -796,29 +829,29 @@ msgstr ""
 "Tidak ada permainan yang dimuat dari Steam. Setel privasi daftar permainan "
 "anda ke publik atau gunakan kunci API Steam anda sendiri dalam pengaturan."
 
-#: src/ui/views/GamesView/GamesView.vala:692
+#: src/ui/views/GamesView/GamesView.vala:691
 msgid "Privacy"
 msgstr "Privasi"
 
-#: src/ui/views/GamesView/GamesView.vala:911
+#: src/ui/views/GamesView/GamesView.vala:910
 msgid "Updating game info"
 msgstr "Memperbarui info game"
 
-#: src/ui/views/GamesView/GamesView.vala:917
+#: src/ui/views/GamesView/GamesView.vala:916
 #, c-format
 msgid "Updating %s game info"
 msgstr "Memperbarui info game %s"
 
-#: src/ui/views/GamesView/GamesView.vala:935
+#: src/ui/views/GamesView/GamesView.vala:934
 msgid "Merging games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:951
+#: src/ui/views/GamesView/GamesView.vala:950
 #, c-format
 msgid "Merging games from %s"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:968
+#: src/ui/views/GamesView/GamesView.vala:967
 #, c-format
 msgid "Merging %s (%s)"
 msgstr ""
