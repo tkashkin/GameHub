@@ -413,9 +413,13 @@ namespace GameHub.Utils
 		public static new void initialize(string app_name)
 		{
 			Granite.Services.Logger.initialize(app_name);
-			msg_file_regex = new Regex("^.*\\.vala:\\d+: ");
-			msg_string_regex = new Regex("(['\"`].*?['\"`])");
-			msg_block_regex = new Regex("^(\\[.*?\\])");
+			try
+			{
+				msg_file_regex = new Regex("^.*\\.vala:\\d+: ");
+				msg_string_regex = new Regex("(['\"`].*?['\"`])");
+				msg_block_regex = new Regex("^(\\[.*?\\])");
+			}
+			catch(Error e){}
 			Log.set_default_handler((LogFunc) glib_log_func);
 		}
 

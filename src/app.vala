@@ -38,6 +38,15 @@ namespace GameHub
 		public static bool log_downloader = false;
 		public static bool log_workers = false;
 
+		private static bool opt_help = false;
+		private static bool opt_debug_log = false;
+		private static bool opt_show_version = false;
+		private static string? opt_run = null;
+		private static bool opt_show_compat = false;
+		private static bool opt_show = false;
+		private static bool opt_gdb = false;
+		private static bool opt_gdb_bt_full = false;
+
 		private GameHub.UI.Windows.MainWindow? main_window;
 
 		public const string ACTION_PREFIX = "app.";
@@ -51,6 +60,27 @@ namespace GameHub
 			{ ACTION_INSTALLER_SHOW,   action_installer, "s" },
 			{ ACTION_INSTALLER_BACKUP, action_installer, "s" },
 			{ ACTION_INSTALLER_REMOVE, action_installer, "s" }
+		};
+
+		private const OptionEntry[] local_options = {
+			{ "help", 'h', 0, OptionArg.NONE, out opt_help, N_("Show help"), null },
+			{ "version", 'v', 0, OptionArg.NONE, out opt_show_version, N_("Show application version and exit"), null },
+			{ "gdb", 0, 0, OptionArg.NONE, out opt_gdb, N_("Restart with GDB debugger attached"), null },
+			{ "gdb-bt-full", 0, 0, OptionArg.NONE, out opt_gdb_bt_full, N_("Show full GDB backtrace"), null },
+			{ null }
+		};
+		private const OptionEntry[] options = {
+			{ "run", 'r', 0, OptionArg.STRING, out opt_run, N_("Run game"), null },
+			{ "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, N_("Show compatibility options dialog"), null },
+			{ "show", 's', 0, OptionArg.NONE, out opt_show, N_("Show main window"), null },
+			{ null }
+		};
+		private const OptionEntry[] options_log = {
+			{ "debug", 'd', 0, OptionArg.NONE, out opt_debug_log, N_("Enable debug logging"), null },
+			{ "log-auth", 0, 0, OptionArg.NONE, out log_auth, N_("Log authentication process and sensitive information like authentication tokens"), null },
+			{ "log-downloader", 0, 0, OptionArg.NONE, out log_downloader, N_("Log download manager"), null },
+			{ "log-workers", 0, 0, OptionArg.NONE, out log_workers, N_("Log background workers start/stop"), null },
+			{ null }
 		};
 
 		construct
@@ -104,10 +134,9 @@ namespace GameHub
 
 		protected override void activate()
 		{
-			print_version(false);
-
 			if(main_window == null)
 			{
+				print_version(false);
 				init();
 
 				#if MANETTE
@@ -137,45 +166,26 @@ namespace GameHub
 			return app.run(args);
 		}
 
-		public override int command_line(ApplicationCommandLine cmd)
+		private OptionGroup get_log_option_group()
 		{
-			string[] oargs = cmd.get_arguments();
-			unowned string[] args = oargs;
+			var group = new OptionGroup("log", _("Logging Options:"), _("Show logging options help"));
+			group.add_entries(options_log);
+			group.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+			return group;
+		}
 
-			bool opt_debug_log = false;
-
-			bool opt_show_version = false;
-			string? opt_run = null;
-			bool opt_show_compat = false;
-			bool opt_show = false;
-			bool opt_gdb = false;
-
-			OptionEntry[] options = new OptionEntry[6];
-			options[0] = { "version", 'v', 0, OptionArg.NONE, out opt_show_version, _("Show application version and exit"), null };
-			options[1] = { "run", 'r', 0, OptionArg.STRING, out opt_run, _("Run game"), null };
-			options[2] = { "show-compat", 'c', 0, OptionArg.NONE, out opt_show_compat, _("Show compatibility options dialog"), null };
-			options[3] = { "show", 's', 0, OptionArg.NONE, out opt_show, _("Show main window"), null };
-			options[4] = { "gdb", 0, 0, OptionArg.NONE, out opt_gdb, _("Restart with GDB debugger attached"), null };
-			options[5] = { null };
-
-			OptionEntry[] options_log = new OptionEntry[5];
-			options_log[0] = { "debug", 'd', 0, OptionArg.NONE, out opt_debug_log, _("Enable debug logging"), null };
-			options_log[1] = { "log-auth", 0, 0, OptionArg.NONE, out log_auth, _("Log authentication process and sensitive information like authentication tokens"), null };
-			options_log[2] = { "log-downloader", 0, 0, OptionArg.NONE, out log_downloader, _("Log download manager"), null };
-			options_log[3] = { "log-workers", 0, 0, OptionArg.NONE, out log_workers, _("Log background workers start/stop"), null };
-			options_log[4] = { null };
-
-			var ctx = new OptionContext();
-
-			var opt_group_log = new OptionGroup("log", _("Logging Options:"), _("Show logging options help"));
-			opt_group_log.add_entries(options_log);
-
-			ctx.add_main_entries((owned) options, null);
-			ctx.add_group((owned) opt_group_log);
+		public override bool local_command_line(ref weak string[] arguments, out int exit_status)
+		{
+			OptionContext local_option_context = new OptionContext();
+			local_option_context.set_ignore_unknown_options(true);
+			local_option_context.set_help_enabled(false);
+			local_option_context.add_main_entries(local_options, ProjectConfig.GETTEXT_PACKAGE);
+			local_option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
 
 			try
 			{
-				ctx.parse(ref args);
+				unowned string[] args = arguments;
+				local_option_context.parse(ref args);
 			}
 			catch(Error e)
 			{
@@ -185,14 +195,29 @@ namespace GameHub
 			if(opt_show_version)
 			{
 				print_version(true);
-				return 0;
+				exit_status = 0;
+				return true;
 			}
 
-			Granite.Services.Logger.DisplayLevel = opt_debug_log || opt_gdb ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
-
-			if(opt_gdb)
+			if(opt_help)
 			{
-				string[] current_args = cmd.get_arguments();
+				OptionContext help_option_context = new OptionContext();
+				help_option_context.set_help_enabled(false);
+				help_option_context.add_main_entries(local_options, ProjectConfig.GETTEXT_PACKAGE);
+				help_option_context.add_main_entries(options, ProjectConfig.GETTEXT_PACKAGE);
+				help_option_context.add_group(get_log_option_group());
+				help_option_context.add_group(Gtk.get_option_group(true));
+				help_option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+				print(help_option_context.get_help(false, null));
+				exit_status = 0;
+				return true;
+			}
+
+			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
+
+			if(opt_gdb || opt_gdb_bt_full)
+			{
+				string[] current_args = arguments;
 				string[] cmd_args = {};
 				for(int i = 1; i < current_args.length; i++)
 				{
@@ -207,11 +232,56 @@ namespace GameHub
 					cmd_args += "--debug";
 				}
 				string cmd_args_string = string.joinv(" ", cmd_args);
-				string[] exec_cmd = { "xterm", "-geometry", "128x48", "-fa", "Monospace", "-fs", "12", "-e", "gdb", "-ex", @"set args $cmd_args_string", "-ex", "set pagination off", "-ex", "run", current_args[0] };
+
+				string[] exec_cmd = {
+					"gdb", "-q", "--batch",
+					"-ex", @"set args $cmd_args_string",
+					"-ex", "set pagination off",
+					"-ex", "handle SIGHUP nostop pass",
+					"-ex", "handle SIGQUIT nostop pass",
+					"-ex", "handle SIGPIPE nostop pass",
+					"-ex", "handle SIGALRM nostop pass",
+					"-ex", "handle SIGTERM nostop pass",
+					"-ex", "handle SIGUSR1 nostop pass",
+					"-ex", "handle SIGUSR2 nostop pass",
+					"-ex", "handle SIGCHLD nostop pass",
+					"-ex", "set print thread-events off",
+					"-ex", "run",
+					"-ex", "thread apply all bt" + (opt_gdb_bt_full ? " full" : ""),
+					"--tty=/dev/stdout",
+					current_args[0]
+				};
+
 				info("Restarting with GDB");
-				Utils.run_async.begin(exec_cmd, cmd.get_cwd());
-				return 0;
+				Utils.run(exec_cmd, Environment.get_current_dir());
+				exit_status = 0;
+				return true;
 			}
+
+			return base.local_command_line(ref arguments, out exit_status);
+		}
+
+		public override int command_line(ApplicationCommandLine cmd)
+		{
+			string[] oargs = cmd.get_arguments();
+			unowned string[] args = oargs;
+
+			var option_context = new OptionContext();
+			option_context.add_main_entries(options, ProjectConfig.GETTEXT_PACKAGE);
+			option_context.add_group(get_log_option_group());
+			option_context.add_group(Gtk.get_option_group(true));
+			option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+
+			try
+			{
+				option_context.parse(ref args);
+			}
+			catch(Error e)
+			{
+				warning(e.message);
+			}
+
+			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
 
 			init();
 
@@ -253,6 +323,10 @@ namespace GameHub
 					error("`%s` is not a fully-qualified game id", opt_run);
 				}
 			}
+
+			opt_run = null;
+			opt_show_compat = false;
+			opt_show = false;
 
 			return 0;
 		}
