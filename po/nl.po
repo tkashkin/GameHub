@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-15 13:37+0300\n"
-"PO-Revision-Date: 2019-01-13 18:47+0000\n"
+"PO-Revision-Date: 2019-01-15 16:18+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: src/app.vala:66
 msgid "Show help"
-msgstr ""
+msgstr "Hulp tonen"
 
 #: src/app.vala:67
 msgid "Show application version and exit"
@@ -29,11 +29,11 @@ msgstr "Applicatieversie tonen en afsluiten"
 
 #: src/app.vala:68
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Herstarten met GDB-foutopsporing"
 
 #: src/app.vala:69
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "Volledige GDB-backtrace tonen"
 
 #: src/app.vala:73
 msgid "Run game"
