@@ -102,7 +102,7 @@ namespace GameHub.Utils
 
 			yield polkit_authenticate();
 
-			yield Utils.run_thread({"pkexec", POLKIT_HELPER, "mount", id, options, target.get_path()});
+			yield Utils.run_thread({"pkexec", POLKIT_HELPER, "mount", id, options, target.get_path()}, null, null, false, false, GameHub.Application.log_verbose);
 		}
 
 		public async void umount()
@@ -111,7 +111,7 @@ namespace GameHub.Utils
 
 			while(id in (yield Utils.run_thread({"mount"}, null, null, false, true, false)))
 			{
-				yield Utils.run_thread({"pkexec", POLKIT_HELPER, "umount", id});
+				yield Utils.run_thread({"pkexec", POLKIT_HELPER, "umount", id}, null, null, false, false, GameHub.Application.log_verbose);
 				yield Utils.sleep_async(500);
 			}
 

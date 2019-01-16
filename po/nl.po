@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-16 01:16+0300\n"
+"POT-Creation-Date: 2019-01-16 17:06+0300\n"
 "PO-Revision-Date: 2019-01-15 16:18+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -19,53 +19,58 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:79
+#: src/app.vala:82
 msgid "Show help"
 msgstr "Hulp tonen"
 
-#: src/app.vala:80
+#: src/app.vala:83
 msgid "Show application version and exit"
 msgstr "Applicatieversie tonen en afsluiten"
 
-#: src/app.vala:81
+#: src/app.vala:84
 msgid "Restart with GDB debugger attached"
 msgstr "Herstarten met GDB-foutopsporing"
 
-#: src/app.vala:82
+#: src/app.vala:85
 msgid "Show full GDB backtrace"
 msgstr "Volledige GDB-backtrace tonen"
 
-#: src/app.vala:86
+#: src/app.vala:89
 msgid "Show main window"
 msgstr "Hoofdvenster tonen"
 
-#: src/app.vala:87
+#: src/app.vala:90
 #, fuzzy
 msgid "Show application settings dialog"
 msgstr "Applicatieversie tonen en afsluiten"
 
 #: src/app.vala:91
+#, fuzzy
+msgid "Maximum number of background worker threads"
+msgstr "Achtergronddiensten van loggen starten/stoppen"
+
+#: src/app.vala:95
 msgid "Run game"
 msgstr "Spel starten"
 
-#: src/app.vala:92
+#: src/app.vala:96
 msgid "Show compatibility options dialog"
 msgstr "Comptabiliteitsmodus-opties tonen"
 
-#: src/app.vala:93
+#: src/app.vala:97
 msgid "Open game details"
 msgstr ""
 
-#: src/app.vala:94
+#: src/app.vala:98
 #, fuzzy
 msgid "Open game properties"
 msgstr "Speleigenschappen"
 
-#: src/app.vala:98
+#: src/app.vala:102
 msgid "Enable debug logging"
 msgstr "Foutopsporingslogs inschakelen"
 
-#: src/app.vala:99
+#: src/app.vala:103
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -73,29 +78,33 @@ msgstr ""
 "Authenticatieproces en gevoelige informatie, zoals authenticatiesleutels, "
 "vastleggen in logbestand"
 
-#: src/app.vala:100
+#: src/app.vala:104
 msgid "Log download manager"
 msgstr "Downloadbeheer vastleggen in logbestand"
 
-#: src/app.vala:101
+#: src/app.vala:105
 msgid "Log background workers start/stop"
 msgstr "Achtergronddiensten van loggen starten/stoppen"
 
-#: src/app.vala:190
+#: src/app.vala:106
+msgid "Verbose logging"
+msgstr ""
+
+#: src/app.vala:195
 #, fuzzy
 msgid "Game Options:"
 msgstr "Speleigenschappen"
 
-#: src/app.vala:190
+#: src/app.vala:195
 #, fuzzy
 msgid "Show game options help"
 msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 
-#: src/app.vala:198
+#: src/app.vala:203
 msgid "Logging Options:"
 msgstr "Opties voor loggen:"
 
-#: src/app.vala:198
+#: src/app.vala:203
 msgid "Show logging options help"
 msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 

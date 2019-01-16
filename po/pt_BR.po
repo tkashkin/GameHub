@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-16 01:16+0300\n"
+"POT-Creation-Date: 2019-01-16 17:06+0300\n"
 "PO-Revision-Date: 2019-01-02 01:06+0000\n"
 "Last-Translator: Leandro Stanger <leandrostanger@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -19,80 +19,88 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:79
+#: src/app.vala:82
 msgid "Show help"
 msgstr ""
 
-#: src/app.vala:80
+#: src/app.vala:83
 msgid "Show application version and exit"
 msgstr ""
 
-#: src/app.vala:81
+#: src/app.vala:84
 msgid "Restart with GDB debugger attached"
 msgstr ""
 
-#: src/app.vala:82
+#: src/app.vala:85
 msgid "Show full GDB backtrace"
 msgstr ""
 
-#: src/app.vala:86
+#: src/app.vala:89
 msgid "Show main window"
 msgstr "Mostrar janela principal"
 
-#: src/app.vala:87
+#: src/app.vala:90
 #, fuzzy
 msgid "Show application settings dialog"
 msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
 #: src/app.vala:91
+msgid "Maximum number of background worker threads"
+msgstr ""
+
+#: src/app.vala:95
 msgid "Run game"
 msgstr "Jogo de corrida"
 
-#: src/app.vala:92
+#: src/app.vala:96
 msgid "Show compatibility options dialog"
 msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
-#: src/app.vala:93
+#: src/app.vala:97
 msgid "Open game details"
 msgstr ""
 
-#: src/app.vala:94
+#: src/app.vala:98
 #, fuzzy
 msgid "Open game properties"
 msgstr "Propriedades do jogo"
 
-#: src/app.vala:98
+#: src/app.vala:102
 msgid "Enable debug logging"
 msgstr ""
 
-#: src/app.vala:99
+#: src/app.vala:103
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 
-#: src/app.vala:100
+#: src/app.vala:104
 msgid "Log download manager"
 msgstr ""
 
-#: src/app.vala:101
+#: src/app.vala:105
 msgid "Log background workers start/stop"
 msgstr ""
 
-#: src/app.vala:190
+#: src/app.vala:106
+msgid "Verbose logging"
+msgstr ""
+
+#: src/app.vala:195
 #, fuzzy
 msgid "Game Options:"
 msgstr "Propriedades do jogo"
 
-#: src/app.vala:190
+#: src/app.vala:195
 msgid "Show game options help"
 msgstr ""
 
-#: src/app.vala:198
+#: src/app.vala:203
 msgid "Logging Options:"
 msgstr ""
 
-#: src/app.vala:198
+#: src/app.vala:203
 msgid "Show logging options help"
 msgstr ""
 
