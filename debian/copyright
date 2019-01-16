@@ -3,7 +3,7 @@ Upstream-Name: com.github.tkashkin.gamehub
 Source: https://github.com/tkashkin/GameHub
 
 Files: *
-Copyright: 2018 Anatoliy Kashkin
+Copyright: 2018-2019 Anatoliy Kashkin
 License: GPL-3.0+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
