@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 01:16+0300\n"
-"PO-Revision-Date: 2019-01-15 16:18+0000\n"
+"PO-Revision-Date: 2019-01-16 14:07+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -40,9 +40,8 @@ msgid "Show main window"
 msgstr "Hoofdvenster tonen"
 
 #: src/app.vala:87
-#, fuzzy
 msgid "Show application settings dialog"
-msgstr "Applicatieversie tonen en afsluiten"
+msgstr "Applicatie-instellingen tonen"
 
 #: src/app.vala:91
 msgid "Run game"
@@ -54,12 +53,11 @@ msgstr "Comptabiliteitsmodus-opties tonen"
 
 #: src/app.vala:93
 msgid "Open game details"
-msgstr ""
+msgstr "Spelgegevens openen"
 
 #: src/app.vala:94
-#, fuzzy
 msgid "Open game properties"
-msgstr "Speleigenschappen"
+msgstr "Speleigenschappen openen"
 
 #: src/app.vala:98
 msgid "Enable debug logging"
@@ -82,14 +80,12 @@ msgid "Log background workers start/stop"
 msgstr "Achtergronddiensten van loggen starten/stoppen"
 
 #: src/app.vala:190
-#, fuzzy
 msgid "Game Options:"
-msgstr "Speleigenschappen"
+msgstr "Spelopties:"
 
 #: src/app.vala:190
-#, fuzzy
 msgid "Show game options help"
-msgstr "Hulp bij opties voor loggen tonen en afsluiten"
+msgstr "Hulp bij opties van spel tonen"
 
 #: src/app.vala:198
 msgid "Logging Options:"
@@ -138,9 +134,8 @@ msgid "Checksum mismatch in %s"
 msgstr "Controlesom komt niet overeen voor %s"
 
 #: src/data/Runnable.vala:435 src/ui/dialogs/CorruptedInstallerDialog.vala:125
-#, fuzzy
 msgid "Show file"
-msgstr "Hulp tonen"
+msgstr "Bestand tonen"
 
 #: src/data/Runnable.vala:436 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:144
