@@ -37,6 +37,7 @@ namespace GameHub
 		public static bool log_auth = false;
 		public static bool log_downloader = false;
 		public static bool log_workers = false;
+		public static bool log_verbose = false;
 
 		private static bool opt_help = false;
 		private static bool opt_debug_log = false;
@@ -87,7 +88,7 @@ namespace GameHub
 		private const OptionEntry[] options = {
 			{ "show", 's', 0, OptionArg.NONE, out opt_show, N_("Show main window"), null },
 			{ "settings", 0, 0, OptionArg.NONE, out opt_settings, N_("Show application settings dialog"), null },
-			{ "worker-threads", 'j', 0, OptionArg.INT, out worker_threads, N_("Number of background worker threads"), "THREADS" },
+			{ "worker-threads", 'j', 0, OptionArg.INT, out worker_threads, N_("Maximum number of background worker threads"), "THREADS" },
 			{ null }
 		};
 		private const OptionEntry[] options_game = {
@@ -102,6 +103,7 @@ namespace GameHub
 			{ "log-auth", 0, 0, OptionArg.NONE, out log_auth, N_("Log authentication process and sensitive information like authentication tokens"), null },
 			{ "log-downloader", 0, 0, OptionArg.NONE, out log_downloader, N_("Log download manager"), null },
 			{ "log-workers", 0, 0, OptionArg.NONE, out log_workers, N_("Log background workers start/stop"), null },
+			{ "verbose", 0, 0, OptionArg.NONE, out log_verbose, N_("Verbose logging"), null },
 			{ null }
 		};
 

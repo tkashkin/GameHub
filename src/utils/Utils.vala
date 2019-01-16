@@ -303,7 +303,10 @@ namespace GameHub.Utils
 		catch(IOError.EXISTS e){}
 		catch(Error e)
 		{
-			warning("Error caching `%s` in `%s`: %s", url, cached.get_path(), e.message);
+			if(GameHub.Application.log_verbose)
+			{
+				warning("Error caching `%s` in `%s`: %s", url, cached.get_path(), e.message);
+			}
 		}
 		return null;
 	}

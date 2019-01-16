@@ -319,7 +319,10 @@ namespace GameHub.Data.Sources.GOG
 								var id = t.get_object().get_string_member("id");
 								var name = t.get_object().get_string_member("name");
 								Tables.Tags.add(new Tables.Tags.Tag("gog:" + id, name, icon));
-								debug("[GOG] Imported tag: %s (%s)", name, id);
+								if(GameHub.Application.log_verbose)
+								{
+									debug("[GOG] Imported tag: %s (%s)", name, id);
+								}
 							}
 						}
 					}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-16 01:16+0300\n"
+"POT-Creation-Date: 2019-01-16 17:06+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -20,51 +20,55 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:79
+#: src/app.vala:82
 msgid "Show help"
 msgstr "Показать справку"
 
-#: src/app.vala:80
+#: src/app.vala:83
 msgid "Show application version and exit"
 msgstr "Показать версию приложения и выйти"
 
-#: src/app.vala:81
+#: src/app.vala:84
 msgid "Restart with GDB debugger attached"
 msgstr "Перезапустить с подключенным отладчиком GDB"
 
-#: src/app.vala:82
+#: src/app.vala:85
 msgid "Show full GDB backtrace"
 msgstr "Показывать полный стек вызовов в GDB"
 
-#: src/app.vala:86
+#: src/app.vala:89
 msgid "Show main window"
 msgstr "Показать главное окно"
 
-#: src/app.vala:87
+#: src/app.vala:90
 msgid "Show application settings dialog"
 msgstr "Показать диалог настроек приложения"
 
 #: src/app.vala:91
+msgid "Maximum number of background worker threads"
+msgstr "Максимальное количество фоновых потоков"
+
+#: src/app.vala:95
 msgid "Run game"
 msgstr "Запустить игру"
 
-#: src/app.vala:92
+#: src/app.vala:96
 msgid "Show compatibility options dialog"
 msgstr "Показать диалог опций совместимости"
 
-#: src/app.vala:93
+#: src/app.vala:97
 msgid "Open game details"
 msgstr "Открыть информацию об игре"
 
-#: src/app.vala:94
+#: src/app.vala:98
 msgid "Open game properties"
 msgstr "Открыть свойства игры"
 
-#: src/app.vala:98
+#: src/app.vala:102
 msgid "Enable debug logging"
 msgstr "Включить отладочные сообщения"
 
-#: src/app.vala:99
+#: src/app.vala:103
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -72,27 +76,31 @@ msgstr ""
 "Выводить сообщения о процессе аутентификации и конфиденциальную информацию, "
 "такую как токены аутентификации"
 
-#: src/app.vala:100
+#: src/app.vala:104
 msgid "Log download manager"
 msgstr "Выводить сообщения менеджера загрузок"
 
-#: src/app.vala:101
+#: src/app.vala:105
 msgid "Log background workers start/stop"
 msgstr "Выводить сообщения о запуске/остановке фоновых потоков"
 
-#: src/app.vala:190
+#: src/app.vala:106
+msgid "Verbose logging"
+msgstr "Подробные сообщения"
+
+#: src/app.vala:195
 msgid "Game Options:"
 msgstr "Параметры игр:"
 
-#: src/app.vala:190
+#: src/app.vala:195
 msgid "Show game options help"
 msgstr "Показать справку о параметрах игр"
 
-#: src/app.vala:198
+#: src/app.vala:203
 msgid "Logging Options:"
 msgstr "Параметры журналирования:"
 
-#: src/app.vala:198
+#: src/app.vala:203
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 

@@ -210,7 +210,10 @@ namespace GameHub.Data.Sources.Humble
 
 			if(installers.size > 0) return;
 
-			var product = Parser.parse_json(info).get_object();
+			var product_node = Parser.parse_json(info);
+			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return;
+
+			var product = product_node.get_object();
 			if(product == null) return;
 
 			if(product.has_member("description-text"))

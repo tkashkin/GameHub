@@ -130,7 +130,10 @@ namespace GameHub.Data.Sources.Steam
 
 			if(info_detailed == null || info_detailed.length == 0)
 			{
-				debug("[Steam:%s] No cached app data for '%s', fetching...", id, name);
+				if(GameHub.Application.log_verbose)
+				{
+					debug("[SteamGame] %s: no cached app data for '%s', fetching...", id, name);
+				}
 				var lang = Utils.get_language_name().down();
 				var url = @"https://store.steampowered.com/api/appdetails?appids=$(id)" + (lang != null && lang.length > 0 ? "&l=" + lang : "");
 				info_detailed = (yield Parser.load_remote_file_async(url));
@@ -142,7 +145,10 @@ namespace GameHub.Data.Sources.Steam
 
 			if(app == null)
 			{
-				debug("[Steam:%s] No app data for '%s', store page does not exist", id, name);
+				if(GameHub.Application.log_verbose)
+				{
+					debug("[SteamGame] %s: no app data for '%s', store page does not exist", id, name);
+				}
 				game_info_updated = true;
 				return;
 			}
@@ -152,7 +158,10 @@ namespace GameHub.Data.Sources.Steam
 			if(data == null)
 			{
 				bool success = app.has_member("success") && app.get_boolean_member("success");
-				debug("[Steam:%s] No app data for '%s', success: %s, store page does not exist", id, name, success.to_string());
+				if(GameHub.Application.log_verbose)
+				{
+					debug("[SteamGame] %s: no app data for '%s', success: %s, store page does not exist", id, name, success.to_string());
+				}
 				if(metadata_tries > 0)
 				{
 					game_info_updated = true;
@@ -169,7 +178,10 @@ namespace GameHub.Data.Sources.Steam
 			platforms.clear();
 			if(platforms_json == null)
 			{
-				debug("[Steam:%s] No platform support data, %d tries failed, assuming Windows support", id, metadata_tries);
+				if(GameHub.Application.log_verbose)
+				{
+					debug("[SteamGame] %s: No platform support data, %d tries failed, assuming Windows support", id, metadata_tries);
+				}
 				platforms.add(Platform.WINDOWS);
 				save();
 				game_info_updated = true;
