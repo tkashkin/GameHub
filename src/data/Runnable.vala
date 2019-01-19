@@ -526,26 +526,27 @@ namespace GameHub.Data
 							FSUtils.rm(runnable.install_dir.get_path(), "\\$*DIR", "-rf"); // remove anything like $PLUGINSDIR
 						}
 
+						int dircount = 0;
 						string? dirname = null;
 						FileInfo? finfo = null;
 						var enumerator = yield runnable.install_dir.enumerate_children_async("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
 						while((finfo = enumerator.next_file()) != null)
 						{
-							if(dirname == null && finfo.get_file_type() == FileType.DIRECTORY)
+							if(finfo.get_file_type() == FileType.DIRECTORY && finfo.get_name() != FSUtils.GAMEHUB_DIR)
 							{
-								dirname = finfo.get_name();
+								dircount++;
+								dirname = dirname == null && dircount == 1 ? finfo.get_name() : null;
 							}
-							else
+							else if(finfo.get_file_type() != FileType.DIRECTORY)
 							{
 								dirname = null;
+								break;
 							}
 						}
 
-						if(dirname != null && dirname != FSUtils.GAMEHUB_DIR && !(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC))
+						if(dirname != null && !(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC))
 						{
-							dirname = dirname.replace(" ", "\\ ");
-							Utils.run({"bash", "-c", "mv " + dirname + "/* " + dirname + "/.* ."}, runnable.install_dir.get_path());
-							FSUtils.rm(runnable.install_dir.get_path(), dirname, "-rf");
+							FSUtils.mv_up(runnable.install_dir, dirname.replace(" ", "\\ "));
 						}
 
 						if(windows_installer || platform == Platform.WINDOWS)
@@ -583,8 +584,8 @@ namespace GameHub.Data
 						if(game != null)
 						{
 							Utils.notify(
-								_("%s: can't detect main executable").printf(game.name),
-								_("Main executable file for this game cannot be detected automatically.\nPlease set main executable in properties."),
+								_("%s: cannot detect main executable").printf(game.name),
+								_("Main executable file for this game cannot be detected automatically.\nPlease set main executable in game's properties."),
 								NotificationPriority.HIGH,
 								n =>
 								{

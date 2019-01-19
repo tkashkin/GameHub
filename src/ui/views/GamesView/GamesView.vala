@@ -197,7 +197,7 @@ namespace GameHub.UI.Views.GamesView
 
 			downloads_popover.add(downloads_scrolled);
 			downloads_popover.position = PositionType.BOTTOM;
-			downloads_popover.set_size_request(384, -1);
+			downloads_popover.set_size_request(500, -1);
 			downloads.popover = downloads_popover;
 			downloads.sensitive = false;
 

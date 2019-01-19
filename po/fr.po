@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-16 17:06+0300\n"
+"POT-Creation-Date: 2019-01-20 02:16+0300\n"
 "PO-Revision-Date: 2019-01-15 16:27+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -109,7 +109,7 @@ msgid "Select executable"
 msgstr "Choisir l'exécutable"
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:364
+#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:366
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
@@ -153,6 +153,17 @@ msgstr "Enlever"
 #: src/data/Runnable.vala:437 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
 msgstr "Sauvegarder"
+
+#: src/data/Runnable.vala:587
+#, fuzzy, c-format
+msgid "%s: cannot detect main executable"
+msgstr "Choisir l'exécutable"
+
+#: src/data/Runnable.vala:588
+msgid ""
+"Main executable file for this game cannot be detected automatically.\n"
+"Please set main executable in game's properties."
+msgstr ""
 
 #: src/data/Game.vala:457
 msgctxt "status"
@@ -365,8 +376,8 @@ msgstr "Lancer dans le répertoire du jeu"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
-#: src/ui/views/GamesView/GamesView.vala:225
-#: src/ui/views/GamesView/GamesView.vala:692
+#: src/ui/views/GamesView/GamesView.vala:227
+#: src/ui/views/GamesView/GamesView.vala:714
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -727,131 +738,126 @@ msgstr ""
 msgid "Return to GameHub after installing"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:106
+#: src/ui/views/GamesView/GamesView.vala:108
 msgid "No games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:106
+#: src/ui/views/GamesView/GamesView.vala:108
 msgid "Get some games or enable some game sources in settings"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:107
+#: src/ui/views/GamesView/GamesView.vala:109
 msgid "Reload"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:155
+#: src/ui/views/GamesView/GamesView.vala:157
 msgid "Grid view"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:156
+#: src/ui/views/GamesView/GamesView.vala:158
 msgid "List view"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:166
+#: src/ui/views/GamesView/GamesView.vala:168
 msgid "All games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:178
+#: src/ui/views/GamesView/GamesView.vala:180
 msgid "Downloads"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:204
+#: src/ui/views/GamesView/GamesView.vala:206
 msgid "Filters"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:212
+#: src/ui/views/GamesView/GamesView.vala:214
 #: src/ui/views/GamesView/AddGamePopover.vala:83
 msgid "Add game"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:219
+#: src/ui/views/GamesView/GamesView.vala:221
 msgid "Search"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:270
+#: src/ui/views/GamesView/GamesView.vala:272
 msgctxt "status_header"
 msgid "Favorites"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:362
+#: src/ui/views/GamesView/GamesView.vala:364
 msgid "Menu"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:363
+#: src/ui/views/GamesView/GamesView.vala:365
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:79
 msgid "Back"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:510
+#: src/ui/views/GamesView/GamesView.vala:512
 #, c-format
 msgid "Loading games from %s"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:539
+#: src/ui/views/GamesView/GamesView.vala:553
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u jeu"
 msgstr[1] "%u jeux"
 
-#: src/ui/views/GamesView/GamesView.vala:554
+#: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:555
+#: src/ui/views/GamesView/GamesView.vala:569
 msgid "Add some games using plus button"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:559
+#: src/ui/views/GamesView/GamesView.vala:573
 #, c-format
 msgid "No %s games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:560
+#: src/ui/views/GamesView/GamesView.vala:574
 msgid "Get some Linux-compatible games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:581
+#: src/ui/views/GamesView/GamesView.vala:595
 #, c-format
 msgid "No games matching “%s”"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:586
+#: src/ui/views/GamesView/GamesView.vala:600
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:690
+#: src/ui/views/GamesView/GamesView.vala:712
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:691
+#: src/ui/views/GamesView/GamesView.vala:713
 msgid "Privacy"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:910
+#: src/ui/views/GamesView/GamesView.vala:932
 msgid "Updating game info"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:916
+#: src/ui/views/GamesView/GamesView.vala:938
 #, c-format
 msgid "Updating %s game info"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:934
+#: src/ui/views/GamesView/GamesView.vala:957
 msgid "Merging games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:950
+#: src/ui/views/GamesView/GamesView.vala:973
 #, c-format
 msgid "Merging games from %s"
-msgstr ""
-
-#: src/ui/views/GamesView/GamesView.vala:967
-#, c-format
-msgid "Merging %s (%s)"
 msgstr ""
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
