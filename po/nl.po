@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-16 01:16+0300\n"
+"POT-Creation-Date: 2019-01-20 02:16+0300\n"
 "PO-Revision-Date: 2019-01-18 00:20+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -39,7 +39,7 @@ msgstr "Volledige GDB-backtrace tonen"
 msgid "Show main window"
 msgstr "Hoofdvenster tonen"
 
-#: src/app.vala:87
+#: src/app.vala:90
 msgid "Show application settings dialog"
 msgstr "Applicatie-instellingen tonen"
 
@@ -59,7 +59,7 @@ msgstr "Comptabiliteitsmodus-opties tonen"
 msgid "Open game details"
 msgstr "Spelgegevens openen"
 
-#: src/app.vala:94
+#: src/app.vala:98
 msgid "Open game properties"
 msgstr "Speleigenschappen openen"
 
@@ -91,7 +91,7 @@ msgstr "Uitgebreid loggen"
 msgid "Game Options:"
 msgstr "Spelopties:"
 
-#: src/app.vala:190
+#: src/app.vala:195
 msgid "Show game options help"
 msgstr "Hulp bij opties van spel tonen"
 
@@ -110,7 +110,7 @@ msgid "Select executable"
 msgstr "Kies uitvoerbaar bestand"
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:364
+#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:366
 #: src/ui/widgets/FileChooserEntry.vala:53
 #: src/ui/widgets/FileChooserEntry.vala:55
 msgid "Select"
@@ -154,6 +154,17 @@ msgstr "Verwijderen"
 #: src/data/Runnable.vala:437 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
 msgstr "Back-up"
+
+#: src/data/Runnable.vala:587
+#, fuzzy, c-format
+msgid "%s: cannot detect main executable"
+msgstr "Kies uitvoerbaar bestand"
+
+#: src/data/Runnable.vala:588
+msgid ""
+"Main executable file for this game cannot be detected automatically.\n"
+"Please set main executable in game's properties."
+msgstr ""
 
 #: src/data/Game.vala:457
 msgctxt "status"
@@ -365,8 +376,8 @@ msgstr "Uitvoeren in spelmap"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
-#: src/ui/views/GamesView/GamesView.vala:225
-#: src/ui/views/GamesView/GamesView.vala:692
+#: src/ui/views/GamesView/GamesView.vala:227
+#: src/ui/views/GamesView/GamesView.vala:714
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -726,101 +737,101 @@ msgstr "%s installeren"
 msgid "Return to GameHub after installing"
 msgstr "Keer na het installeren terug naar GameHub"
 
-#: src/ui/views/GamesView/GamesView.vala:106
+#: src/ui/views/GamesView/GamesView.vala:108
 msgid "No games"
 msgstr "Geen spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:106
+#: src/ui/views/GamesView/GamesView.vala:108
 msgid "Get some games or enable some game sources in settings"
 msgstr "Installeer spellen of schakel spelbronnen in via de instellingen"
 
-#: src/ui/views/GamesView/GamesView.vala:107
+#: src/ui/views/GamesView/GamesView.vala:109
 msgid "Reload"
 msgstr "Herladen"
 
-#: src/ui/views/GamesView/GamesView.vala:155
+#: src/ui/views/GamesView/GamesView.vala:157
 msgid "Grid view"
 msgstr "Rasterweergave"
 
-#: src/ui/views/GamesView/GamesView.vala:156
+#: src/ui/views/GamesView/GamesView.vala:158
 msgid "List view"
 msgstr "Lijstweergave"
 
-#: src/ui/views/GamesView/GamesView.vala:166
+#: src/ui/views/GamesView/GamesView.vala:168
 msgid "All games"
 msgstr "Alle spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:178
+#: src/ui/views/GamesView/GamesView.vala:180
 msgid "Downloads"
 msgstr "Downloads"
 
-#: src/ui/views/GamesView/GamesView.vala:204
+#: src/ui/views/GamesView/GamesView.vala:206
 msgid "Filters"
 msgstr "Filters"
 
-#: src/ui/views/GamesView/GamesView.vala:212
+#: src/ui/views/GamesView/GamesView.vala:214
 #: src/ui/views/GamesView/AddGamePopover.vala:83
 msgid "Add game"
 msgstr "Spel toevoegen"
 
-#: src/ui/views/GamesView/GamesView.vala:219
+#: src/ui/views/GamesView/GamesView.vala:221
 msgid "Search"
 msgstr "Zoeken"
 
-#: src/ui/views/GamesView/GamesView.vala:270
+#: src/ui/views/GamesView/GamesView.vala:272
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Favorieten"
 
-#: src/ui/views/GamesView/GamesView.vala:362
+#: src/ui/views/GamesView/GamesView.vala:364
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:363
+#: src/ui/views/GamesView/GamesView.vala:365
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:79
 msgid "Back"
 msgstr "Terug"
 
-#: src/ui/views/GamesView/GamesView.vala:510
+#: src/ui/views/GamesView/GamesView.vala:512
 #, c-format
 msgid "Loading games from %s"
 msgstr "Bezig met laden van spellen uit %s"
 
-#: src/ui/views/GamesView/GamesView.vala:539
+#: src/ui/views/GamesView/GamesView.vala:553
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spel"
 msgstr[1] "%u spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:554
+#: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
 msgstr "Geen door de gebruiker toegevoegde spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:555
+#: src/ui/views/GamesView/GamesView.vala:569
 msgid "Add some games using plus button"
 msgstr "Voeg spellen toe via de plus-knop"
 
-#: src/ui/views/GamesView/GamesView.vala:559
+#: src/ui/views/GamesView/GamesView.vala:573
 #, c-format
 msgid "No %s games"
 msgstr "Geen %s-spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:560
+#: src/ui/views/GamesView/GamesView.vala:574
 msgid "Get some Linux-compatible games"
 msgstr "Installeer met Linux compatibele spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:581
+#: src/ui/views/GamesView/GamesView.vala:595
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Er zijn geen spellen die overeenkomen met \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:586
+#: src/ui/views/GamesView/GamesView.vala:600
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Er zijn geen %1$s-spellen die overeenkomen met \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:690
+#: src/ui/views/GamesView/GamesView.vala:712
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -828,32 +839,27 @@ msgstr ""
 "Er zijn geen spellen geladen vanuit Steam. Maak je spellijst openbaar of "
 "voeg je eigen Steam API-sleutel toe via de instellingen."
 
-#: src/ui/views/GamesView/GamesView.vala:691
+#: src/ui/views/GamesView/GamesView.vala:713
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/ui/views/GamesView/GamesView.vala:910
+#: src/ui/views/GamesView/GamesView.vala:932
 msgid "Updating game info"
 msgstr "Bezig met bijwerken van spelinformatie"
 
-#: src/ui/views/GamesView/GamesView.vala:916
+#: src/ui/views/GamesView/GamesView.vala:938
 #, c-format
 msgid "Updating %s game info"
 msgstr "Bezig met bijwerken van %s-spelinformatie"
 
-#: src/ui/views/GamesView/GamesView.vala:934
+#: src/ui/views/GamesView/GamesView.vala:957
 msgid "Merging games"
 msgstr "Bezig met samenvoegen van spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:950
+#: src/ui/views/GamesView/GamesView.vala:973
 #, c-format
 msgid "Merging games from %s"
 msgstr "Bezig met samenvoegen van spellen uit %s"
-
-#: src/ui/views/GamesView/GamesView.vala:967
-#, c-format
-msgid "Merging %s (%s)"
-msgstr "Bezig met samenvoegen van %s (%s)"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
@@ -1058,3 +1064,6 @@ msgstr "Gepauzeerd: %d%% (%s/%s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Downloaden geannuleerd"
+
+#~ msgid "Merging %s (%s)"
+#~ msgstr "Bezig met samenvoegen van %s (%s)"

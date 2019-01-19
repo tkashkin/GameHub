@@ -318,6 +318,29 @@ namespace GameHub.Utils
 			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") });
 		}
 
+		public static void mv_up(File path, string dirname)
+		{
+			try
+			{
+				var tmp_dir = path.get_child(dirname).set_display_name(".gh_" + dirname + "_" + Utils.md5(dirname)); // rename source dir in case there's a child with the same name
+				debug("[FSUtils.mv_up] %s", tmp_dir.get_path());
+				FileInfo? finfo = null;
+				var enumerator = tmp_dir.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+				while((finfo = enumerator.next_file()) != null)
+				{
+					var src = tmp_dir.get_child(finfo.get_name());
+					var dest = path.get_child(finfo.get_name());
+					debug("[FSUtils.mv_up] '%s' -> '%s'", src.get_path(), dest.get_path());
+					src.move(dest, FileCopyFlags.OVERWRITE | FileCopyFlags.NOFOLLOW_SYMLINKS);
+				}
+				tmp_dir.delete();
+			}
+			catch(Error e)
+			{
+				warning("[FSUtils.mv_up] %s", e.message);
+			}
+		}
+
 		public static void make_dirs()
 		{
 			mkdir(FSUtils.Paths.Cache.Home);
