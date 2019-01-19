@@ -62,15 +62,11 @@ namespace GameHub.Data.Sources.Humble
 						if(g.platforms.size == 0) continue;
 						if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
 						{
-							g.update_game_info.begin((obj, res) => {
-								g.update_game_info.end(res);
-								_games.add(g);
-								if(game_loaded != null)
-								{
-									Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
-								}
-							});
-							Thread.usleep(100000);
+							_games.add(g);
+							if(game_loaded != null)
+							{
+								game_loaded(g, true);
+							}
 						}
 						games_count++;
 					}

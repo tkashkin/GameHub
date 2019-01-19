@@ -74,9 +74,11 @@ namespace GameHub.UI.Views.GamesView
 		private Settings.UI ui_settings;
 		private Settings.SavedState saved_state;
 
+		private int view_update_interval = 500000;
 		private bool view_update_interval_started = false;
 		private bool view_update_pending = false;
 		private int view_update_no_updates_cycles = 0;
+		private ArrayList<unowned Game> view_update_postponed_games = new ArrayList<unowned Game>();
 
 		#if MANETTE
 		private Manette.Monitor manette_monitor = new Manette.Monitor();
@@ -478,7 +480,7 @@ namespace GameHub.UI.Views.GamesView
 				Utils.thread("GamesViewUpdate", () => {
 					view_update_interval_started = true;
 					view_update_no_updates_cycles = 0;
-					while(view_update_no_updates_cycles < 10)
+					while(view_update_no_updates_cycles < 100)
 					{
 						if(view_update_pending)
 						{
@@ -490,7 +492,7 @@ namespace GameHub.UI.Views.GamesView
 							view_update_no_updates_cycles++;
 						}
 						view_update_pending = false;
-						Thread.usleep(500000);
+						Thread.usleep(view_update_interval);
 					}
 					view_update_interval_started = false;
 				});
@@ -528,6 +530,18 @@ namespace GameHub.UI.Views.GamesView
 		private void update_view()
 		{
 			show_games();
+
+			if(view_update_postponed_games != null && view_update_postponed_games.size > 0)
+			{
+				lock(view_update_postponed_games)
+				{
+					foreach(var g in view_update_postponed_games)
+					{
+						add_game(g);
+					}
+					view_update_postponed_games.clear();
+				}
+			}
 
 			games_grid.invalidate_filter();
 			games_list.invalidate_filter();
@@ -618,40 +632,48 @@ namespace GameHub.UI.Views.GamesView
 			add_game_button.sensitive = true;
 		}
 
+		private void add_game_delayed(Game g, bool cached=false)
+		{
+			if(!cached)
+			{
+				new_games_added = true;
+			}
+			lock(view_update_postponed_games)
+			{
+				view_update_postponed_games.add(g);
+			}
+			postpone_view_update();
+		}
+
 		private void add_game(Game g, bool cached=false)
 		{
-			Idle.add(() => {
-				var card = new GameCard(g);
-				var row = new GameListRow(g);
+			var card = new GameCard(g);
+			var row = new GameListRow(g);
 
-				games_grid.add(card);
-				games_list.add(row);
+			games_grid.add(card);
+			games_list.add(row);
 
-				card.show();
-				row.show();
+			card.show();
+			row.show();
 
-				if(games_grid.get_children().length() == 0)
-				{
-					card.grab_focus();
-				}
+			if(games_grid.get_children().length() == 0)
+			{
+				card.grab_focus();
+			}
 
-				if(games_list.get_selected_row() == null)
-				{
-					games_list.select_row(games_list.get_row_at_index(0));
-				}
-
-				return Source.REMOVE;
-			});
-
-			g.tags_update.connect(postpone_view_update);
+			if(games_list.get_selected_row() == null)
+			{
+				games_list.select_row(games_list.get_row_at_index(0));
+			}
 
 			if(!cached)
 			{
-				//merge_game(g);
 				new_games_added = true;
 			}
 
 			postpone_view_update();
+
+			g.tags_update.connect(postpone_view_update);
 
 			if(g is Sources.User.UserGame)
 			{
@@ -669,7 +691,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				loading_sources.add(src);
 				status_changed = true;
-				src.load_games.begin(add_game, postpone_view_update, (obj, res) => {
+				src.load_games.begin(add_game_delayed, postpone_view_update, (obj, res) => {
 					src.load_games.end(res);
 
 					loading_sources.remove(src);
@@ -925,6 +947,7 @@ namespace GameHub.UI.Views.GamesView
 				status_text = null;
 				status_changed = true;
 				update_status();
+				view_update_interval = 100000;
 			});
 		}
 
@@ -964,9 +987,6 @@ namespace GameHub.UI.Views.GamesView
 		private void merge_game(Game game)
 		{
 			if(!ui_settings.merge_games || in_destruction() || game is Sources.GOG.GOGGame.DLC) return;
-			status_text = _("Merging %s (%s)").printf(game.name, game.full_id);
-			status_changed = true;
-			update_status();
 			Utils.thread("Merging-" + game.full_id, () => {
 				foreach(var src in sources)
 				{
@@ -975,9 +995,6 @@ namespace GameHub.UI.Views.GamesView
 						merge_game_with_game(src, game, game2);
 					}
 				}
-				status_text = null;
-				status_changed = true;
-				update_status();
 			});
 		}
 

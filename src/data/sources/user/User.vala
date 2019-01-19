@@ -93,7 +93,7 @@ namespace GameHub.Data.Sources.User
 							_games.add(g);
 							if(game_loaded != null)
 							{
-								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
+								/*Idle.add(() => { */game_loaded(g, true); /*return Source.REMOVE; });*/
 							}
 							((UserGame) g).removed.connect(() => {
 								_games.remove(g);

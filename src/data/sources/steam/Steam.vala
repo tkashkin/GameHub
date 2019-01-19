@@ -199,12 +199,10 @@ namespace GameHub.Data.Sources.Steam
 					{
 						if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
 						{
-							//g.update_game_info.begin();
 							_games.add(g);
 							if(game_loaded != null)
 							{
-								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
-								Thread.usleep(100000);
+								game_loaded(g, true);
 							}
 						}
 						games_count++;
@@ -246,7 +244,7 @@ namespace GameHub.Data.Sources.Steam
 						_games.add(game);
 						if(game_loaded != null)
 						{
-							Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
+							game_loaded(game, false);
 						}
 					}
 					if(is_new_game)

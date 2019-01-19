@@ -269,19 +269,16 @@ namespace GameHub.Data.Sources.GOG
 					{
 						if(!(g.id in GAMES_BLACKLIST) && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g)))
 						{
-							//g.update_game_info.begin();
 							_games.add(g);
 							if(stats.has_key(g.id))
 							{
 								var s = stats.get(g.id);
-								//g.image = s.image;
 								g.last_launch = int64.max(g.last_launch, s.last_launch);
 								g.playtime_source = s.playtime;
 							}
 							if(game_loaded != null)
 							{
-								Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
-								Thread.usleep(100000);
+								game_loaded(g, true);
 							}
 						}
 						games_count++;
@@ -339,13 +336,12 @@ namespace GameHub.Data.Sources.GOG
 							if(stats.has_key(game.id))
 							{
 								var s = stats.get(game.id);
-								//game.image = s.image;
 								game.last_launch = int64.max(game.last_launch, s.last_launch);
 								game.playtime_source = s.playtime;
 							}
 							if(game_loaded != null)
 							{
-								Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
+								game_loaded(game, false);
 							}
 						}
 
