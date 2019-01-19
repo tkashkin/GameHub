@@ -32,6 +32,8 @@ namespace GameHub.Data.DB.Tables
 	{
 		public static Games instance;
 
+		private static HashMap<string, Game> cache;
+
 		public static Table.Field SOURCE;
 		public static Table.Field ID;
 		public static Table.Field NAME;
@@ -53,6 +55,8 @@ namespace GameHub.Data.DB.Tables
 		public Games()
 		{
 			instance             = this;
+
+			cache                = new HashMap<string, Game>();
 
 			SOURCE               = f(0);
 			ID                   = f(1);
@@ -115,6 +119,11 @@ namespace GameHub.Data.DB.Tables
 
 		public static bool add(Game game)
 		{
+			if(!cache.has_key(game.full_id))
+			{
+				cache.set(game.full_id, game);
+			}
+
 			if(game is Sources.GOG.GOGGame.DLC) return false;
 
 			unowned Sqlite.Database? db = Database.instance.db;
@@ -192,6 +201,11 @@ namespace GameHub.Data.DB.Tables
 
 		public static bool remove(Game game)
 		{
+			if(cache.has_key(game.full_id))
+			{
+				cache.unset(game.full_id);
+			}
+
 			unowned Sqlite.Database? db = Database.instance.db;
 			if(db == null) return false;
 
@@ -222,6 +236,11 @@ namespace GameHub.Data.DB.Tables
 		{
 			if(src == null || id == null) return null;
 
+			if(cache.has_key(@"$(src):$(id)"))
+			{
+				return cache.get(@"$(src):$(id)");
+			}
+
 			unowned Sqlite.Database? db = Database.instance.db;
 			if(db == null) return null;
 
@@ -241,23 +260,31 @@ namespace GameHub.Data.DB.Tables
 			if((res = st.step()) == Sqlite.ROW)
 			{
 				var s = GameSource.by_id(SOURCE.get(st));
+				Game? g = null;
 
 				if(s is Steam)
 				{
-					return new SteamGame.from_db((Steam) s, st);
+					g = new SteamGame.from_db((Steam) s, st);
 				}
 				else if(s is GOG)
 				{
-					return new GOGGame.from_db((GOG) s, st);
+					g = new GOGGame.from_db((GOG) s, st);
 				}
 				else if(s is Humble)
 				{
-					return new HumbleGame.from_db((Humble) s, st);
+					g = new HumbleGame.from_db((Humble) s, st);
 				}
 				else if(s is User)
 				{
-					return new UserGame.from_db((User) s, st);
+					g = new UserGame.from_db((User) s, st);
 				}
+
+				if(g != null)
+				{
+					cache.set(g.full_id, g);
+				}
+
+				return g;
 			}
 
 			return null;
@@ -295,21 +322,42 @@ namespace GameHub.Data.DB.Tables
 			{
 				var s = GameSource.by_id(SOURCE.get(st));
 
-				if(s is Steam)
+				Game? g = null;
+
+				var full_id = SOURCE.get(st) + ":" + ID.get(st);
+
+				if(cache.has_key(full_id))
 				{
-					games.add(new SteamGame.from_db((Steam) s, st));
+					g = cache.get(full_id);
 				}
-				else if(s is GOG)
+
+				if(g == null)
 				{
-					games.add(new GOGGame.from_db((GOG) s, st));
+					if(s is Steam)
+					{
+						g = new SteamGame.from_db((Steam) s, st);
+					}
+					else if(s is GOG)
+					{
+						g = new GOGGame.from_db((GOG) s, st);
+					}
+					else if(s is Humble)
+					{
+						g = new HumbleGame.from_db((Humble) s, st);
+					}
+					else if(s is User)
+					{
+						g = new UserGame.from_db((User) s, st);
+					}
 				}
-				else if(s is Humble)
+
+				if(g != null)
 				{
-					games.add(new HumbleGame.from_db((Humble) s, st));
-				}
-				else if(s is User)
-				{
-					games.add(new UserGame.from_db((User) s, st));
+					games.add(g);
+					if(!cache.has_key(g.full_id))
+					{
+						cache.set(g.full_id, g);
+					}
 				}
 			}
 

@@ -356,7 +356,7 @@ namespace GameHub.Data.Sources.Humble
 			update_status();
 			if(!install_dir.query_exists() && !executable.query_exists())
 			{
-				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+				install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
 				executable = FSUtils.file(install_dir.get_path(), "start.sh");
 				save();
 				update_status();
