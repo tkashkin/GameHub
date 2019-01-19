@@ -278,7 +278,7 @@ namespace GameHub
 					"-ex", "handle SIGUSR1 nostop pass",
 					"-ex", "handle SIGUSR2 nostop pass",
 					"-ex", "handle SIGCHLD nostop pass",
-					//"-ex", "set print thread-events off",
+					"-ex", "set print thread-events off",
 					"-ex", "run",
 					"-ex", "thread apply all bt" + (opt_gdb_bt_full ? " full" : ""),
 					"--tty=/dev/stdout",

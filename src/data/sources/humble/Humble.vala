@@ -130,15 +130,11 @@ namespace GameHub.Data.Sources.Humble
 						if(g.platforms.size == 0) continue;
 						if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
 						{
-							g.update_game_info.begin((obj, res) => {
-								g.update_game_info.end(res);
-								_games.add(g);
-								if(game_loaded != null)
-								{
-									Idle.add(() => { game_loaded(g, true); return Source.REMOVE; });
-								}
-							});
-							Thread.usleep(100000);
+							_games.add(g);
+							if(game_loaded != null)
+							{
+								game_loaded(g, true);
+							}
 						}
 						games_count++;
 					}
@@ -177,14 +173,11 @@ namespace GameHub.Data.Sources.Humble
 						bool is_new_game = !_games.contains(game);
 						if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
 						{
-							game.update_game_info.begin((obj, res) => {
-								game.update_game_info.end(res);
-								_games.add(game);
-								if(game_loaded != null)
-								{
-									Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
-								}
-							});
+							_games.add(game);
+							if(game_loaded != null)
+							{
+								game_loaded(game, false);
+							}
 						}
 						if(is_new_game) games_count++;
 					}

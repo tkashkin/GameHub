@@ -91,11 +91,11 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					image.set_size_request(IMAGE_SIZE, IMAGE_SIZE);
 					image.opacity = achievement.unlocked ? 1 : 0.2;
 
-					image.tooltip_markup = """<span weight="600">%s</span>""".printf(achievement.name) + "\n";
+					image.tooltip_markup = """<span weight="600">%s</span>""".printf(achievement.name.replace("&amp;", "&").replace("&", "&amp;")) + "\n";
 
 					if(achievement.description.length > 0)
 					{
-						image.tooltip_markup += """<span>%s</span>""".printf(achievement.description) + "\n";
+						image.tooltip_markup += """<span>%s</span>""".printf(achievement.description.replace("&amp;", "&").replace("&", "&amp;")) + "\n";
 					}
 
 					if(achievement.unlocked)
