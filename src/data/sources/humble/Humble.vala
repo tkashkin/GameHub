@@ -148,7 +148,28 @@ namespace GameHub.Data.Sources.Humble
 				var headers = new HashMap<string, string>();
 				headers["Cookie"] = @"$(AUTH_COOKIE)=\"$(user_token)\";";
 
-				var orders = Parser.parse_remote_json_file("https://www.humblebundle.com/api/v1/user/order?ajax=true", "GET", null, headers).get_array();
+				var orders_json = Parser.load_remote_file("https://www.humblebundle.com/api/v1/user/order?ajax=true", "GET", null, headers);
+				var orders_md5 = Utils.md5(orders_json);
+
+				try
+				{
+					string? cached_orders_md5 = null;
+					FileUtils.get_contents(FSUtils.expand(FSUtils.Paths.Humble.LoadedOrdersMD5), out cached_orders_md5);
+					if(orders_md5 == cached_orders_md5)
+					{
+						Idle.add(load_games.callback);
+						return;
+					}
+				}
+				catch(Error e){}
+
+				try
+				{
+					FileUtils.set_contents(FSUtils.expand(FSUtils.Paths.Humble.LoadedOrdersMD5), orders_md5);
+				}
+				catch(Error e){}
+
+				var orders = Parser.parse_json(orders_json).get_array();
 
 				foreach(var order in orders.get_elements())
 				{

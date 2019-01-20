@@ -69,6 +69,8 @@ namespace GameHub.Utils
 
 				public const string Compat = FSUtils.Paths.Cache.Home + "/compat";
 				public const string WineWrap = FSUtils.Paths.Cache.Compat + "/winewrap";
+
+				public const string Sources = FSUtils.Paths.Cache.Home + "/sources";
 			}
 
 			public class Steam
@@ -89,6 +91,9 @@ namespace GameHub.Utils
 			public class Humble
 			{
 				public static string Games { owned get { return FSUtils.Paths.Settings.get_instance().humble_games; } }
+
+				public const string Cache = FSUtils.Paths.Cache.Sources + "/humble";
+				public static string LoadedOrdersMD5 { owned get { return FSUtils.Paths.Humble.Cache + "/orders.md5"; } }
 			}
 
 			public class Collection: Granite.Services.Settings
@@ -345,6 +350,7 @@ namespace GameHub.Utils
 		{
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Images);
+			mkdir(FSUtils.Paths.Humble.Cache);
 
 			#if FLATPAK
 			var paths = Paths.Settings.get_instance();
