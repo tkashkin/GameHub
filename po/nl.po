@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-20 02:16+0300\n"
-"PO-Revision-Date: 2019-01-18 00:20+0000\n"
+"PO-Revision-Date: 2019-01-20 17:29+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -156,15 +156,18 @@ msgid "Backup"
 msgstr "Back-up"
 
 #: src/data/Runnable.vala:587
-#, fuzzy, c-format
+#, c-format
 msgid "%s: cannot detect main executable"
-msgstr "Kies uitvoerbaar bestand"
+msgstr "%s: kan uitvoerbaar bestand niet detecteren"
 
 #: src/data/Runnable.vala:588
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"Het algemene uitvoerbare bestand van dit spel kan niet automatisch worden "
+"gedetecteerd.\n"
+"Stel dit handmatig in in de speleigenschappen."
 
 #: src/data/Game.vala:457
 msgctxt "status"
