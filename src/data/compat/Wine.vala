@@ -141,7 +141,7 @@ namespace GameHub.Data.Compat
 		{
 			if(!can_run(runnable)) return;
 			yield wineboot(runnable);
-			yield exec(runnable, runnable.executable, runnable.install_dir, Utils.parse_args(runnable.arguments));
+			yield exec(runnable, runnable.executable, runnable.install_dir.get_child("_gamehub_game_root"), Utils.parse_args(runnable.arguments));
 		}
 
 		public override async void run_action(Runnable runnable, Runnable.RunnableAction action)
