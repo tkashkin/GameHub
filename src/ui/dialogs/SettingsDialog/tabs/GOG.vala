@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Granite;
 using GameHub.Utils;
+using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 {
@@ -27,6 +28,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 		private Settings.Auth.GOG gog_auth;
 		private Box enabled_box;
 		private Button logout_btn;
+		private FileChooserEntry games_dir_chooser;
 
 		public GOG(SettingsDialog dlg)
 		{
@@ -43,9 +45,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			add_separator();
 
-			add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; dialog.show_restart_message(); });
-
-			//add_cache_directory(_("Installers cache"), FSUtils.Paths.GOG.Installers);
+			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; update(); dialog.show_restart_message(); }).get_children().last().data as FileChooserEntry;
 
 			add_separator();
 
@@ -70,6 +70,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				if(w != enabled_box) w.sensitive = gog_auth.enabled;
 			});
 			logout_btn.sensitive = gog_auth.enabled && gog_auth.authenticated && gog_auth.access_token.length > 0;
+
+			if(" " in FSUtils.Paths.Settings.get_instance().gog_games)
+			{
+				games_dir_chooser.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
+			}
+			else
+			{
+				games_dir_chooser.get_style_context().remove_class(Gtk.STYLE_CLASS_ERROR);
+			}
+			dialog.update_games_dir_space_message();
 		}
 
 	}

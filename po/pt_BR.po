@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-20 02:16+0300\n"
+"POT-Creation-Date: 2019-01-20 22:34+0300\n"
 "PO-Revision-Date: 2019-01-02 01:06+0000\n"
 "Last-Translator: Leandro Stanger <leandrostanger@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -377,27 +377,31 @@ msgstr "Emulador"
 msgid "Launch in game directory"
 msgstr "Lançamento no diretório do jogo"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
 #: src/ui/views/GamesView/GamesView.vala:227
 #: src/ui/views/GamesView/GamesView.vala:714
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:54
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:56
 msgid "Some settings will be applied after application restart"
 msgstr ""
 "Algumas configurações serão aplicadas após a reinicialização do aplicativo"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:68
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:61
+msgid "Games directory contains space. It may cause problems for some games"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:76
 msgid "Interface"
 msgstr "Interface"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:69
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:77
 msgid "Collection"
 msgstr "Coleção"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:74
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:82
 msgid "Emulators"
 msgstr "Emuladores"
 
@@ -469,8 +473,8 @@ msgid "Game name"
 msgstr "Nome do jogo"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:41
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:42
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:42
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:44
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:44
 msgid "Enabled"
 msgstr "Ativado"
 
@@ -499,17 +503,17 @@ msgstr "Restaurar chave de API padrão"
 msgid "Steam API key"
 msgstr "Chave da API do Steam"
 
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:46
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:49
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:48
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:52
 msgid "Games directory"
 msgstr "Diretório de jogos"
 
 #: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:52
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:55
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:56
 msgid "Logout"
 msgstr "Sair"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:46
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:48
 msgid "Load games from Humble Trove"
 msgstr "Carregar jogos de Humble Trove"
 

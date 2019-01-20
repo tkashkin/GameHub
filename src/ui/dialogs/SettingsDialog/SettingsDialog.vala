@@ -25,8 +25,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 	public class SettingsDialog: Dialog
 	{
 		private static bool restart_msg_shown = false;
+		private static bool games_dir_space_msg_shown = false;
 
 		private InfoBar restart_msg;
+		private InfoBar games_dir_space_msg;
 
 		private Stack tabs;
 
@@ -52,9 +54,15 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			restart_msg = new InfoBar();
 			restart_msg.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
 			restart_msg.get_content_area().add(new Label(_("Some settings will be applied after application restart")));
-			restart_msg.message_type = MessageType.WARNING;
-			restart_msg.margin_bottom = 8;
-			update_restart_message();
+			restart_msg.message_type = MessageType.INFO;
+
+			games_dir_space_msg = new InfoBar();
+			games_dir_space_msg.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			games_dir_space_msg.get_content_area().add(new Label(_("Games directory contains space. It may cause problems for some games")));
+			games_dir_space_msg.message_type = MessageType.WARNING;
+			games_dir_space_msg.margin_bottom = 8;
+
+			update_messages();
 
 			tabs = new Stack();
 			tabs.homogeneous = false;
@@ -74,6 +82,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			add_tab("emu/custom", new Tabs.Emulators(this), _("Emulators"));
 
 			content.pack_start(restart_msg, false, false, 0);
+			content.pack_start(games_dir_space_msg, false, false, 0);
 			content.pack_start(tabs_switcher, false, false, 0);
 			content.pack_start(tabs, false, false, 0);
 
@@ -100,16 +109,26 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		public void show_restart_message()
 		{
 			restart_msg_shown = true;
-			update_restart_message();
+			update_messages();
 		}
 
-		private void update_restart_message()
+		public void update_games_dir_space_message()
+		{
+			var paths = FSUtils.Paths.Settings.get_instance();
+			games_dir_space_msg_shown = " " in paths.gog_games || " " in paths.humble_games;
+			update_messages();
+		}
+
+		private void update_messages()
 		{
 			#if GTK_3_22
 			restart_msg.revealed = restart_msg_shown;
+			games_dir_space_msg.revealed = games_dir_space_msg_shown;
 			#else
 			restart_msg.visible = restart_msg_shown;
 			restart_msg.no_show_all = !restart_msg_shown;
+			games_dir_space_msg.visible = games_dir_space_msg_shown;
+			games_dir_space_msg.no_show_all = !games_dir_space_msg_shown;
 			#endif
 		}
 	}
