@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Granite;
 using GameHub.Utils;
+using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 {
@@ -27,6 +28,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 		private Settings.Auth.Humble humble_auth;
 		private Box enabled_box;
 		private Button logout_btn;
+		private FileChooserEntry games_dir_chooser;
 
 		public Humble(SettingsDialog dlg)
 		{
@@ -46,9 +48,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			add_switch(_("Load games from Humble Trove"), humble_auth.load_trove_games, v => { humble_auth.load_trove_games = v; update(); dialog.show_restart_message(); });
 
 			add_separator();
-			add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; dialog.show_restart_message(); });
 
-			//add_cache_directory(_("Installers cache"), FSUtils.Paths.Humble.Installers);
+			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; update(); dialog.show_restart_message(); }).get_children().last().data as FileChooserEntry;
 
 			add_separator();
 
@@ -72,6 +73,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				if(w != enabled_box) w.sensitive = humble_auth.enabled;
 			});
 			logout_btn.sensitive = humble_auth.enabled && humble_auth.authenticated && humble_auth.access_token.length > 0;
+
+			if(" " in FSUtils.Paths.Settings.get_instance().humble_games)
+			{
+				games_dir_chooser.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
+			}
+			else
+			{
+				games_dir_chooser.get_style_context().remove_class(Gtk.STYLE_CLASS_ERROR);
+			}
+			dialog.update_games_dir_space_message();
 		}
 
 	}

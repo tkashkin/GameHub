@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-20 02:16+0300\n"
+"POT-Creation-Date: 2019-01-20 22:34+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -377,26 +377,30 @@ msgstr "Эмулятор"
 msgid "Launch in game directory"
 msgstr "Запускать в папке игры"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:37
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
 #: src/ui/views/GamesView/GamesView.vala:227
 #: src/ui/views/GamesView/GamesView.vala:714
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:54
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:56
 msgid "Some settings will be applied after application restart"
 msgstr "Некоторые настройки будут применены после перезапуска приложения"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:68
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:61
+msgid "Games directory contains space. It may cause problems for some games"
+msgstr "Папка игр содержит пробел. Это может вызвать проблемы для некоторых игр"
+
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:76
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:69
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:77
 msgid "Collection"
 msgstr "Коллекция"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:74
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:82
 msgid "Emulators"
 msgstr "Эмуляторы"
 
@@ -468,8 +472,8 @@ msgid "Game name"
 msgstr "Название игры"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:41
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:42
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:42
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:44
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:44
 msgid "Enabled"
 msgstr "Включено"
 
@@ -497,17 +501,17 @@ msgstr "Восстановить API-ключ по умолчанию"
 msgid "Steam API key"
 msgstr "API-ключ Steam"
 
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:46
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:49
+#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:48
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:52
 msgid "Games directory"
 msgstr "Папка игр"
 
 #: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:52
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:55
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:56
 msgid "Logout"
 msgstr "Выйти"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:46
+#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:48
 msgid "Load games from Humble Trove"
 msgstr "Загружать игры из Humble Trove"
 
@@ -849,7 +853,7 @@ msgstr "Приватность"
 
 #: src/ui/views/GamesView/GamesView.vala:932
 msgid "Updating game info"
-msgstr "Обновление информации об игре"
+msgstr "Обновление информации об играх"
 
 #: src/ui/views/GamesView/GamesView.vala:938
 #, c-format
