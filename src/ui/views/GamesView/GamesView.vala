@@ -701,7 +701,7 @@ namespace GameHub.UI.Views.GamesView
 					if(loading_sources.size == 0)
 					{
 						if(new_games_added) merge_games();
-						update_games();
+						//update_games();
 					}
 					postpone_view_update();
 
