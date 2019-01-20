@@ -216,7 +216,7 @@ namespace GameHub.Data.Compat
 		protected virtual string[] prepare_env(Runnable runnable, bool parse_opts=true)
 		{
 			var env = Environ.get();
-			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mscoree,mshtml=");
 
 			var prefix = get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())
