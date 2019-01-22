@@ -245,7 +245,7 @@ namespace GameHub.Data
 			}
 			set
 			{
-				if(value != null && value.query_exists())
+				if(value != null && value.query_exists() && install_dir != null && install_dir.query_exists())
 				{
 					File[] dirs = { install_dir };
 					if(overlays_enabled)
@@ -432,8 +432,7 @@ namespace GameHub.Data
 			{
 				if(game is Sources.Steam.SteamGame || game.install_dir == null || !game.install_dir.query_exists()) return;
 
-				directory = FSUtils.mkdir(game.install_dir.get_child(FSUtils.GAMEHUB_DIR)
-								.get_child(FSUtils.OVERLAYS_DIR).get_child(id).get_path());
+				directory = FSUtils.mkdir(game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(id).get_path());
 			}
 		}
 

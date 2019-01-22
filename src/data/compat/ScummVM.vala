@@ -55,7 +55,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_run(Runnable runnable)
 		{
-			return installed && runnable is Game && runnable.install_dir != null
+			return installed && runnable is Game && runnable.install_dir != null && runnable.install_dir.query_exists()
 				&& (scummvm_detect(runnable.install_dir) || scummvm_detect(runnable.install_dir.get_child("data")));
 		}
 

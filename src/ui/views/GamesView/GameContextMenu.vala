@@ -177,7 +177,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private void open_game_directory()
 		{
-			if(game != null && game.status.state == Game.State.INSTALLED)
+			if(game != null && game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
 			{
 				Utils.open_uri(game.install_dir.get_uri());
 			}

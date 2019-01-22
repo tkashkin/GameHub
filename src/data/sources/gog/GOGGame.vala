@@ -32,6 +32,14 @@ namespace GameHub.Data.Sources.GOG
 
 		public bool has_updates { get; set; default = false; }
 
+		public override File? default_install_dir
+		{
+			owned get
+			{
+				return FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			}
+		}
+
 		private bool game_info_updated = false;
 
 		public GOGGame.default(){}
@@ -77,9 +85,10 @@ namespace GameHub.Data.Sources.GOG
 
 			has_updates = json_obj.has_member("updates") && json_obj.get_int_member("updates") > 0;
 
-			install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			install_dir = null;
 			executable_path = "$game_dir/start.sh";
 			update_status();
+			save();
 		}
 
 		public GOGGame.from_db(GOG src, Sqlite.Statement s)
@@ -91,7 +100,7 @@ namespace GameHub.Data.Sources.GOG
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
-			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
+			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
 			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
@@ -292,7 +301,7 @@ namespace GameHub.Data.Sources.GOG
 
 		public override async void uninstall()
 		{
-			if(install_dir.query_exists())
+			if(install_dir != null && install_dir.query_exists())
 			{
 				string? uninstaller = null;
 				try
@@ -324,10 +333,10 @@ namespace GameHub.Data.Sources.GOG
 				}
 				update_status();
 			}
-			if(!install_dir.query_exists() && !executable.query_exists())
+			if((install_dir == null || !install_dir.query_exists()) && (executable == null || !executable.query_exists()))
 			{
-				install_dir = FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
-				executable = FSUtils.file(install_dir.get_path(), "start.sh");
+				install_dir = null;
+				executable = null;
 				save();
 				update_status();
 			}
@@ -623,6 +632,7 @@ namespace GameHub.Data.Sources.GOG
 
 			private File? find_file(string path)
 			{
+				if(runnable.install_dir == null || !runnable.install_dir.query_exists()) return null;
 				var p = path.replace("\\", "/").strip();
 				if(p.length == 0)
 				{
@@ -774,6 +784,14 @@ namespace GameHub.Data.Sources.GOG
 		{
 			public GOGGame game;
 
+			public override File? default_install_dir
+			{
+				owned get
+				{
+					return game.default_install_dir;
+				}
+			}
+
 			public DLC(GOGGame game, Json.Node json_node)
 			{
 				base(game.source as GOG, json_node);
@@ -833,9 +851,7 @@ namespace GameHub.Data.Sources.GOG
 
 				yield base.install();
 
-				debug("[GOGGame.DLC.install] before umount");
 				yield game.umount_overlays();
-				debug("[GOGGame.DLC.install] after umount");
 
 				game.overlays.add(dlc_overlay);
 				game.save_overlays();

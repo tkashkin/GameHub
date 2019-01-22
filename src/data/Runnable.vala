@@ -68,6 +68,7 @@ namespace GameHub.Data
 
 		public abstract File? executable { owned get; set; }
 		public File? install_dir { get; set; }
+		public virtual File? default_install_dir { owned get { return null; } }
 
 		public ArrayList<RunnableAction> actions { get; protected set; default = new ArrayList<RunnableAction>(); }
 
@@ -175,9 +176,9 @@ namespace GameHub.Data
 					choose_executable(false);
 				}
 
-				if(install_dir.query_exists())
+				if(executable.query_exists())
 				{
-					Utils.run({"chmod", "-R", "+x", install_dir.get_path()});
+					Utils.run({"chmod", "+x", executable.get_path()});
 				}
 
 				if(update)
@@ -372,6 +373,12 @@ namespace GameHub.Data
 					}
 
 					if(game != null) game.status = new Game.Status(Game.State.DOWNLOADING, game, null);
+
+					var runnable_install_dir = runnable.install_dir ?? runnable.default_install_dir;
+
+					if(runnable_install_dir == null) return;
+
+					runnable.install_dir = runnable_install_dir;
 
 					var files = new ArrayList<File>();
 
