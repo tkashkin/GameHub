@@ -31,6 +31,14 @@ namespace GameHub.Data.Sources.Humble
 
 		public ArrayList<Runnable.Installer>? installers { get; protected set; default = new ArrayList<Runnable.Installer>(); }
 
+		public override File? default_install_dir
+		{
+			owned get
+			{
+				return FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
+			}
+		}
+
 		public HumbleGame(Humble src, string order, Json.Node json_node)
 		{
 			source = src;
@@ -81,10 +89,11 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
+			install_dir = null;
 			executable_path = "$game_dir/start.sh";
 			info_detailed = @"{\"order\":\"$(order_id)\"}";
 			update_status();
+			save();
 		}
 
 		public HumbleGame.from_db(Humble src, Sqlite.Statement s)
@@ -96,7 +105,7 @@ namespace GameHub.Data.Sources.Humble
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
-			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
+			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
 			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
@@ -150,8 +159,7 @@ namespace GameHub.Data.Sources.Humble
 		{
 			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
 
-			var exec = executable;
-			status = new Game.Status(exec != null && exec.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED, this);
+			status = new Game.Status(executable != null && executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED, this);
 			if(status.state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
@@ -351,15 +359,18 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void uninstall()
 		{
-			yield umount_overlays();
-			FSUtils.rm(install_dir.get_path(), "", "-rf");
-			update_status();
-			if(!install_dir.query_exists() && !executable.query_exists())
+			if(install_dir != null && install_dir.query_exists())
 			{
-				install_dir = FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
-				executable = FSUtils.file(install_dir.get_path(), "start.sh");
-				save();
+				yield umount_overlays();
+				FSUtils.rm(install_dir.get_path(), "", "-rf");
 				update_status();
+				if((install_dir == null || !install_dir.query_exists()) && (executable == null || !executable.query_exists()))
+				{
+					install_dir = null;
+					executable = null;
+					save();
+					update_status();
+				}
 			}
 		}
 

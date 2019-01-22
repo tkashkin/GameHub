@@ -76,7 +76,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_install(Runnable runnable)
 		{
-			return installed && runnable != null && runnable is GOGGame && wrappers.has_key(runnable.id);
+			return installed && runnable != null && runnable is GOGGame && wrappers.has_key(runnable.id) && runnable.install_dir != null;
 		}
 
 		public override async void install(Runnable runnable, File installer)
@@ -101,10 +101,10 @@ namespace GameHub.Data.Compat
 
 				var winewrap_env = Environ.get();
 				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_RESPATH", installer.get_parent().get_path());
-				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_BUILDPATH", FSUtils.expand(FSUtils.Paths.GOG.Games));
+				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_BUILDPATH", runnable.install_dir.get_parent().get_path());
 				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_SKIP_CHECKSUMS", "1");
 
-				FSUtils.rm(FSUtils.Paths.GOG.Games, (runnable as GOGGame).escaped_name, "-rf");
+				FSUtils.rm(runnable.install_dir.get_path(), null, "-rf");
 
 				cmd = { "bash", "-c", "./*_wine.sh -dirname=" + (runnable as GOGGame).escaped_name };
 				yield Utils.run_thread(cmd, wrapper_dir.get_path(), winewrap_env);
@@ -119,7 +119,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_run(Runnable runnable)
 		{
-			return can_install(runnable) || runnable.compat_tool == id;
+			return (can_install(runnable) || runnable.compat_tool == id) && runnable.install_dir != null && runnable.install_dir.query_exists();
 		}
 
 		public override async void run(Runnable runnable)

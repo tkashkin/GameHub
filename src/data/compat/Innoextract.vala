@@ -50,11 +50,13 @@ namespace GameHub.Data.Compat
 		{
 			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
 
+			runnable.install_dir = runnable.install_dir ?? runnable.default_install_dir;
+
 			string[] cmd = { executable.get_path(), "-e", "-m", "-d", runnable.install_dir.get_path() };
 			if(runnable is Sources.GOG.GOGGame) cmd += "--gog";
 			cmd += installer.get_path();
 			yield Utils.run_thread(cmd, installer.get_parent().get_path());
-			Utils.run({"bash", "-c", "mv app/* ."}, runnable.install_dir.get_path());
+			FSUtils.mv_up(runnable.install_dir, "app");
 		}
 	}
 }

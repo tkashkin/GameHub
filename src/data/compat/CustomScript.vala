@@ -62,11 +62,12 @@ GH_GAME_NAME_ESCAPED="${10}"
 
 		public override bool can_run(Runnable runnable)
 		{
-			return true;
+			return runnable.install_dir != null && runnable.install_dir.query_exists();
 		}
 
 		public override async void run(Runnable runnable)
 		{
+			if(!can_run(runnable)) return;
 			var gh_dir = FSUtils.mkdir(runnable.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
@@ -93,6 +94,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 
 		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
 		{
+			if(!can_run(emu)) return;
 			var gh_dir = FSUtils.mkdir(emu.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
@@ -112,6 +114,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 
 		public void edit_script(Runnable runnable)
 		{
+			if(!can_run(runnable)) return;
 			var gh_dir = FSUtils.mkdir(runnable.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(!script.query_exists())
