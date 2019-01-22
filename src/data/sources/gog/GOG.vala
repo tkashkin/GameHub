@@ -352,7 +352,11 @@ namespace GameHub.Data.Sources.GOG
 							((GOGGame) _games.get(g_index)).has_updates = go.has_member("updates") && go.get_int_member("updates") > 0;
 						}
 
-						if(is_new_game) games_count++;
+						if(is_new_game)
+						{
+							games_count++;
+							game.save();
+						}
 					}
 
 					page++;

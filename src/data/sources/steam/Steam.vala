@@ -250,6 +250,7 @@ namespace GameHub.Data.Sources.Steam
 					if(is_new_game)
 					{
 						games_count++;
+						game.save();
 					}
 					else if(g != null && g.get_node_type() == Json.NodeType.OBJECT)
 					{

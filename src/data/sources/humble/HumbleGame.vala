@@ -93,7 +93,6 @@ namespace GameHub.Data.Sources.Humble
 			executable_path = "$game_dir/start.sh";
 			info_detailed = @"{\"order\":\"$(order_id)\"}";
 			update_status();
-			save();
 		}
 
 		public HumbleGame.from_db(Humble src, Sqlite.Statement s)
