@@ -200,7 +200,11 @@ namespace GameHub.Data.Sources.Humble
 								game_loaded(game, false);
 							}
 						}
-						if(is_new_game) games_count++;
+						if(is_new_game)
+						{
+							games_count++;
+							game.save();
+						}
 					}
 				}
 

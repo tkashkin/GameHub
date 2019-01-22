@@ -98,7 +98,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_run(Runnable runnable)
 		{
-			return installed && runnable != null && ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms)) || runnable is Emulator) && runnable.install_dir != null;
+			return installed && runnable != null && ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms)) || runnable is Emulator);
 		}
 
 		public override bool can_run_action(Runnable runnable, Runnable.RunnableAction action)

@@ -258,7 +258,7 @@ msgstr "Установленные"
 #: src/data/db/tables/Tags.vala:195
 msgctxt "tag"
 msgid "Hidden"
-msgstr "Избранные"
+msgstr "Скрытые"
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit script"

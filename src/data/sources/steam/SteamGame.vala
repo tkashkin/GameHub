@@ -46,7 +46,6 @@ namespace GameHub.Data.Sources.Steam
 			store_page = @"steam://store/$(id)";
 
 			update_status();
-			save();
 		}
 
 		public SteamGame.from_db(Steam src, Sqlite.Statement s)

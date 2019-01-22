@@ -19,9 +19,7 @@ _BUILD_IMAGE="local"
 _GPG_BINARY="gpg1"
 _GPG_PACKAGE="gnupg1"
 
-export CFLAGS=-O0
-export CPPFLAGS=-O0
-export CXXFLAGS=-O0
+export CFLAGS="$CFLAGS -O0"
 
 if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_VERSION="xenial-$_VERSION"

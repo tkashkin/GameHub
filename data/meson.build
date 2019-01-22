@@ -1,7 +1,17 @@
-install_data(
-	meson.project_name() + '.svg',
-	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
-)
+icon_sizes = ['32', '48', '64', '128']
+
+foreach i : icon_sizes
+	install_data(
+		join_paths('icon', i + '.svg'),
+		install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'icons', 'hicolor', i + 'x' + i, 'apps'),
+		rename: meson.project_name() + '.svg'
+	)
+	install_data(
+		join_paths('icon', i + '.svg'),
+		install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'icons', 'hicolor', i + 'x' + i + '@2', 'apps'),
+		rename: meson.project_name() + '.svg'
+	)
+endforeach
 
 install_data(
 	meson.project_name() + '.gschema.xml',

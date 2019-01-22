@@ -88,7 +88,6 @@ namespace GameHub.Data.Sources.GOG
 			install_dir = null;
 			executable_path = "$game_dir/start.sh";
 			update_status();
-			save();
 		}
 
 		public GOGGame.from_db(GOG src, Sqlite.Statement s)

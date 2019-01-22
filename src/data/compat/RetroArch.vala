@@ -94,7 +94,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_run(Runnable runnable)
 		{
-			return installed && runnable is Game && runnable.install_dir != null && runnable.install_dir.query_exists() && has_cores;
+			return installed && runnable is Game && has_cores;
 		}
 
 		public override async void run(Runnable runnable)

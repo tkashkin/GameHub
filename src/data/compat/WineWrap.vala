@@ -76,7 +76,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_install(Runnable runnable)
 		{
-			return installed && runnable != null && runnable is GOGGame && wrappers.has_key(runnable.id) && runnable.install_dir != null;
+			return installed && runnable != null && runnable is GOGGame && wrappers.has_key(runnable.id);
 		}
 
 		public override async void install(Runnable runnable, File installer)
@@ -119,7 +119,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_run(Runnable runnable)
 		{
-			return (can_install(runnable) || runnable.compat_tool == id) && runnable.install_dir != null && runnable.install_dir.query_exists();
+			return can_install(runnable) || runnable.compat_tool == id;
 		}
 
 		public override async void run(Runnable runnable)
