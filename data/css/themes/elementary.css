@@ -10,6 +10,7 @@
 .titlebar.flat .title,
 .titlebar.flat .subtitle,
 .titlebar.flat .titlebutton,
+.titlebar.flat button,
 .titlebar.flat *:not(entry) image
 {
 	color: @textColorPrimaryDefault;
@@ -20,6 +21,7 @@
 .titlebar.flat .title:backdrop,
 .titlebar.flat .subtitle:backdrop,
 .titlebar.flat .titlebutton:backdrop,
+.titlebar.flat button:backdrop,
 .titlebar.flat *:not(entry) image:backdrop
 {
 	color: mix(@textColorPrimaryDefault, @titlebar_color, 0.3);

@@ -38,6 +38,23 @@ namespace GameHub.Data.Sources.Humble
 
 		public string? user_token = null;
 
+		public static string? escaped_cookie(string? token)
+		{
+			if(token == null)
+			{
+				return null;
+			}
+			var escaped = "%s=\"%s\";".printf(AUTH_COOKIE, token.replace("=", "\\075"));
+
+			if(GameHub.Application.log_auth && GameHub.Application.log_verbose)
+			{
+				debug("[Humble.escaped_cookie] Unescaped: %s", token);
+				debug("[Humble.escaped_cookie] Escaped:   %s", escaped);
+			}
+
+			return escaped;
+		}
+
 		private Settings.Auth.Humble settings;
 
 		public Humble()
@@ -88,7 +105,7 @@ namespace GameHub.Data.Sources.Humble
 
 			wnd.finished.connect(token =>
 			{
-				user_token = token.replace("\"", "");
+				user_token = token.replace("\"", "").replace("\\\\075", "=").replace("\\075", "=");
 				settings.access_token = user_token ?? "";
 				if(GameHub.Application.log_auth)
 				{
@@ -146,7 +163,7 @@ namespace GameHub.Data.Sources.Humble
 				}
 
 				var headers = new HashMap<string, string>();
-				headers["Cookie"] = @"$(AUTH_COOKIE)=\"$(user_token)\";";
+				headers["Cookie"] = escaped_cookie(user_token);
 
 				var orders_json = Parser.load_remote_file("https://www.humblebundle.com/api/v1/user/order?ajax=true", "GET", null, headers);
 				var orders_md5 = Utils.md5(orders_json);
