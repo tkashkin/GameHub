@@ -78,7 +78,7 @@ namespace GameHub.Data.Sources.Humble
 				}
 
 				var headers = new HashMap<string, string>();
-				headers["Cookie"] = @"$(AUTH_COOKIE)=\"$(user_token)\";";
+				headers["Cookie"] = escaped_cookie(user_token);
 
 				var html = Parser.parse_remote_html_file(Trove.PAGE_URL, "GET", null, headers);
 
@@ -144,7 +144,7 @@ namespace GameHub.Data.Sources.Humble
 		public static string? sign_url(string machine_name, string filename, string humble_token)
 		{
 			var headers = new HashMap<string, string>();
-			headers["Cookie"] = @"$(AUTH_COOKIE)=\"$(humble_token)\";";
+			headers["Cookie"] = escaped_cookie(humble_token);
 
 			var data = new HashMap<string, string>();
 			data["machine_name"] = machine_name;
