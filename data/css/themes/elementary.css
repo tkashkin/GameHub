@@ -3,3 +3,26 @@
 @define-color theme_selected_bg_color @colorAccent;
 @define-color textColorPrimary mix(@colorPrimary, #fafafa, 0.95);
 @define-color textColorPrimaryShadow alpha(#7239b3, 0.4);
+
+@define-color textColorPrimaryDefault mix(@titlebar_color, @text_color, 0.75);
+@define-color textColorPrimaryShadowDefault alpha(shade(@titlebar_color, 1.4), 0.4);
+
+.titlebar.flat .title,
+.titlebar.flat .subtitle,
+.titlebar.flat .titlebutton,
+.titlebar.flat *:not(entry) image
+{
+	color: @textColorPrimaryDefault;
+	text-shadow: 0 1px @textColorPrimaryShadowDefault;
+	-gtk-icon-shadow: 0 1px @textColorPrimaryShadowDefault;
+}
+
+.titlebar.flat .title:backdrop,
+.titlebar.flat .subtitle:backdrop,
+.titlebar.flat .titlebutton:backdrop,
+.titlebar.flat *:not(entry) image:backdrop
+{
+	color: mix(@textColorPrimaryDefault, @titlebar_color, 0.3);
+	text-shadow: none;
+	-gtk-icon-shadow: none;
+}
