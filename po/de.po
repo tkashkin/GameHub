@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # jonathanschaefer <jonathanschaefer@protonmail.com>, 2018.
-# ssantos <ssantos@web.de>, 2018.
+# ssantos <ssantos@web.de>, 2018, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
 # Ettore Atalan <atalanttore@googlemail.com>, 2018.
 msgid ""
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-20 22:34+0300\n"
-"PO-Revision-Date: 2018-12-17 12:08+0000\n"
+"PO-Revision-Date: 2019-01-23 14:02+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -19,36 +19,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 3.4\n"
 
 #: src/app.vala:82
 msgid "Show help"
-msgstr ""
+msgstr "Hilfe anzeigen"
 
 #: src/app.vala:83
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Anwendungsversion anzeigen und beenden"
 
 #: src/app.vala:84
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Neustart mit verbundenem GDB-Debugger"
 
 #: src/app.vala:85
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "Vollständige GDB-Backtrace anzeigen"
 
 #: src/app.vala:89
 msgid "Show main window"
 msgstr "Hauptfenster anzeigen"
 
 #: src/app.vala:90
-#, fuzzy
 msgid "Show application settings dialog"
-msgstr "Kompatibilitätsoptionen-Dialog anzeigen"
+msgstr "Dialogfeld für Anwendungseinstellungen anzeigen"
 
 #: src/app.vala:91
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "Maximale Anzahl von Hintergrund-Worker-Threads"
 
 #: src/app.vala:95
 msgid "Run game"
@@ -60,51 +59,51 @@ msgstr "Kompatibilitätsoptionen-Dialog anzeigen"
 
 #: src/app.vala:97
 msgid "Open game details"
-msgstr ""
+msgstr "Spieledetails öffnen"
 
 #: src/app.vala:98
-#, fuzzy
 msgid "Open game properties"
-msgstr "Spieleigenschaften"
+msgstr "Spieleigenschaften öffnen"
 
 #: src/app.vala:102
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Debug-Protokollierung aktivieren"
 
 #: src/app.vala:103
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Den Authentifizierungsprozess und sensible Informationen wie "
+"Authentifizierungstoken protokollieren"
 
 #: src/app.vala:104
 msgid "Log download manager"
-msgstr ""
+msgstr "Download-Manager protokollieren"
 
 #: src/app.vala:105
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "Start/Stopp von Hintergrund-Workern protokollieren"
 
 #: src/app.vala:106
 msgid "Verbose logging"
-msgstr ""
+msgstr "Ausführliche Protokollierung"
 
 #: src/app.vala:195
-#, fuzzy
 msgid "Game Options:"
-msgstr "Spieleigenschaften"
+msgstr "Spieloptionen:"
 
 #: src/app.vala:195
 msgid "Show game options help"
-msgstr ""
+msgstr "Hilfe zu den Spieloptionen anzeigen"
 
 #: src/app.vala:203
 msgid "Logging Options:"
-msgstr ""
+msgstr "Protokollierungsoptionen:"
 
 #: src/app.vala:203
 msgid "Show logging options help"
-msgstr ""
+msgstr "Hilfe zu den Protokollierungsoptionen anzeigen"
 
 #: src/data/Runnable.vala:92 src/data/Runnable.vala:94
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
@@ -145,9 +144,8 @@ msgid "Checksum mismatch in %s"
 msgstr "Prüfsummenfehler in %s"
 
 #: src/data/Runnable.vala:435 src/ui/dialogs/CorruptedInstallerDialog.vala:125
-#, fuzzy
 msgid "Show file"
-msgstr "Datei auswählen"
+msgstr "Datei anzeigen"
 
 #: src/data/Runnable.vala:436 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:144
@@ -160,15 +158,18 @@ msgid "Backup"
 msgstr "Sicherung"
 
 #: src/data/Runnable.vala:587
-#, fuzzy, c-format
+#, c-format
 msgid "%s: cannot detect main executable"
-msgstr "Ausführbare Spiel-Datei auswählen"
+msgstr "%s: kann die Hauptausführdatei nicht identifizieren"
 
 #: src/data/Runnable.vala:588
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"Die Hauptausführungsdatei für dieses Spiel kann nicht automatisch erkannt "
+"werden.\n"
+"Bitte stellen Sie die Hauptausführungsdatei in den Spieleigenschaften ein."
 
 #: src/data/Game.vala:457
 msgctxt "status"
@@ -288,7 +289,7 @@ msgstr "Apps im Präfix beenden"
 
 #: src/data/compat/Proton.vala:43
 msgid "Proton prefix"
-msgstr ""
+msgstr "Proton Präfix"
 
 #: src/data/compat/Proton.vala:49
 msgid "Disable esync"
@@ -296,7 +297,7 @@ msgstr "esync deaktivieren"
 
 #: src/data/compat/Proton.vala:50
 msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr ""
+msgstr "LARGE_ADDRESS_AWARE-Flag erzwingen"
 
 #: src/data/compat/Proton.vala:51
 msgid "Disable DirectX 11 compatibility layer"
@@ -343,9 +344,8 @@ msgid "Run taskmgr"
 msgstr "taskmgr ausführen"
 
 #: src/data/compat/Wine.vala:53
-#, fuzzy
 msgid "Wine prefix"
-msgstr "Apps im Präfix beenden"
+msgstr "Wine-Präfix"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
@@ -393,6 +393,8 @@ msgstr "Einige Einstellungen werden nach dem Neustart übernommen"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:61
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
+"Das Spielverzeichnis enthält Leerzeichen. Das kann bei einigen Spielen zu "
+"Problemen führen"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:76
 msgid "Interface"
@@ -411,8 +413,9 @@ msgid "Use dark theme"
 msgstr "Dunklen Modus verwenden"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:37
+#, fuzzy
 msgid "Use symbolic icons instead of colored icons"
-msgstr ""
+msgstr "Symbolische Symbole anstelle von farbigen Symbolen verwenden."
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:41
 msgid "Compact list"
@@ -587,9 +590,8 @@ msgid "Import"
 msgstr "Importieren"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#, fuzzy
 msgid "Download"
-msgstr "Downloads"
+msgstr "Herunterladen"
 
 #: src/ui/dialogs/InstallDialog.vala:212
 msgid "Select installer"
