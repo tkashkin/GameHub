@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-	<gresource prefix="/com/github/tkashkin/gamehub">
-		<file alias="GameHub.css" compressed="true">GameHub.css</file>
+	<gresource prefix="/com/github/tkashkin/gamehub/css">
+		<file alias="app.css" compressed="true">css/app.css</file>
+		<file alias="themes/elementary.css" compressed="true">css/themes/elementary.css</file>
 	</gresource>
 </gresources>

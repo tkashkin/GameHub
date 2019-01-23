@@ -153,7 +153,14 @@ namespace GameHub.Data.Sources.Humble
 			var signed_node = Parser.parse_remote_json_file(Trove.SIGN_URL, "POST", null, headers, data);
 			var signed = signed_node != null && signed_node.get_node_type() == Json.NodeType.OBJECT ? signed_node.get_object() : null;
 
-			return signed != null && signed.has_member("signed_url") ? signed.get_string_member("signed_url") : null;
+			var signed_url = signed != null && signed.has_member("signed_url") ? signed.get_string_member("signed_url") : null;
+
+			if(GameHub.Application.log_verbose)
+			{
+				debug("[Trove.sign_url] '%s':'%s' -> '%s'", machine_name, filename, signed_url);
+			}
+
+			return signed_url;
 		}
 	}
 }
