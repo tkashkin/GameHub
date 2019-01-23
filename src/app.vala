@@ -151,9 +151,28 @@ namespace GameHub
 			weak IconTheme default_theme = IconTheme.get_default();
 			default_theme.add_resource_path("/com/github/tkashkin/gamehub/icons");
 
-			var provider = new CssProvider();
-			provider.load_from_resource("/com/github/tkashkin/gamehub/GameHub.css");
-			StyleContext.add_provider_for_screen(Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+			var screen = Screen.get_default();
+
+			var app_provider = new CssProvider();
+			app_provider.load_from_resource("/com/github/tkashkin/gamehub/css/app.css");
+
+			var elementary_provider = new CssProvider();
+			elementary_provider.load_from_resource("/com/github/tkashkin/gamehub/css/themes/elementary.css");
+
+			StyleContext.add_provider_for_screen(screen, app_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+			var settings = Gtk.Settings.get_for_screen(screen);
+			settings.notify["gtk-theme-name"].connect(() => {
+				if(settings.gtk_theme_name == "elementary")
+				{
+					StyleContext.add_provider_for_screen(screen, elementary_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+				}
+				else
+				{
+					StyleContext.remove_provider_for_screen(screen, elementary_provider);
+				}
+			});
+			settings.notify_property("gtk-theme-name");
 		}
 
 		protected override void activate()

@@ -1,7 +1,3 @@
-@define-color colorAccent #a56de2;
-@define-color selected_bg_color @colorAccent;
-@define-color theme_selected_bg_color @colorAccent;
-
 .gamecard
 {
 	opacity: 0.75;

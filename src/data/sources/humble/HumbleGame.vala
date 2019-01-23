@@ -419,7 +419,7 @@ namespace GameHub.Data.Sources.Humble
 
 			public bool is_url_update_required()
 			{
-				if(part.url == null || part.url.length == 0) return true;
+				if(part.url == null || part.url.length == 0 || part.url.has_prefix("humble-trove-unsigned://")) return true;
 				if(!part.url.contains("&ttl=")) return false;
 				var ttl_string = part.url.split("&ttl=")[1].split("&")[0];
 				var ttl = new DateTime.from_unix_utc(int64.parse(ttl_string));
@@ -432,9 +432,13 @@ namespace GameHub.Data.Sources.Humble
 			{
 				if(!(game.source is Trove) || !is_url_update_required()) return null;
 
-				//debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s)", part.url, game.full_id);
 				var new_url = Trove.sign_url(id, dl_id, ((Humble) game.source).user_token);
-				//debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s)", new_url, game.full_id);
+
+				if(GameHub.Application.log_verbose)
+				{
+					debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s)", part.url, game.full_id);
+					debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s)", new_url, game.full_id);
+				}
 
 				if(new_url != null) part.url = new_url;
 
