@@ -41,6 +41,7 @@
 	</screenshots>
 
 	<releases>
+		<release type="development" version="0.13.1" date="2019-01-28" />
 		<release type="development" version="0.12.0" date="2018-11-09">
 			<description>
 				<ul>
