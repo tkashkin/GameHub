@@ -82,7 +82,7 @@ scripts/build.sh build_deb
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
 cd GameHub
-meson build --prefix=/usr -Ddistro=generic --buildtype=debug
+CFLAGS="$CFLAGS -O0" meson build --prefix=/usr -Ddistro=generic --buildtype=debug
 cd build
 ninja
 sudo ninja install
