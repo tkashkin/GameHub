@@ -137,6 +137,7 @@ namespace GameHub.UI.Views.GamesView
 			running_indicator.get_style_context().add_class("running-indicator");
 			running_indicator.halign = Align.CENTER;
 			running_indicator.valign = Align.CENTER;
+			running_indicator.opacity = 0;
 
 			content.add(image);
 			content.add_overlay(actions);
