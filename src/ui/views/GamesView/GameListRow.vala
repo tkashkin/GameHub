@@ -115,6 +115,7 @@ namespace GameHub.UI.Views.GamesView
 
 			show_all();
 
+			favorite_icon.visible = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 			updated_icon.visible = false;
 			if(game is GameHub.Data.Sources.GOG.GOGGame)
 			{
