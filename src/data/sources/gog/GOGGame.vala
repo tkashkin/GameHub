@@ -221,9 +221,17 @@ namespace GameHub.Data.Sources.GOG
 			var bonuses_json = downloads == null || !downloads.has_member("bonus_content") ? null : downloads.get_array_member("bonus_content");
 			if(bonuses_json != null && bonus_content.size == 0)
 			{
+				Json.Object? bonus_map = null;
+
+				if(bonus_content_dir != null && bonus_content_dir.query_exists())
+				{
+					var map_root_node = Parser.parse_json_file(bonus_content_dir.get_child(BonusContent.FILEMAP_NAME).get_path());
+					bonus_map = map_root_node != null && map_root_node.get_node_type() == Json.NodeType.OBJECT ? map_root_node.get_object() : null;
+				}
+
 				foreach(var bonus_json in bonuses_json.get_elements())
 				{
-					bonus_content.add(new BonusContent(this, bonus_json.get_object()));
+					bonus_content.add(new BonusContent(this, bonus_json.get_object(), bonus_map));
 				}
 			}
 
@@ -643,6 +651,8 @@ namespace GameHub.Data.Sources.GOG
 
 		public class BonusContent
 		{
+			public const string FILEMAP_NAME = ".bonusmap.json";
+
 			public GOGGame game;
 
 			public string id;
@@ -651,6 +661,8 @@ namespace GameHub.Data.Sources.GOG
 			public int64 count;
 			public string file;
 			public int64 size;
+
+			public string filename;
 
 			protected BonusContent.Status _status = new BonusContent.Status();
 			public signal void status_change(BonusContent.Status status);
@@ -691,7 +703,7 @@ namespace GameHub.Data.Sources.GOG
 				}
 			}
 
-			public BonusContent(GOGGame game, Json.Object json)
+			public BonusContent(GOGGame game, Json.Object json, Json.Object? bonus_map=null)
 			{
 				this.game = game;
 				id = json.get_int_member("id").to_string();
@@ -700,8 +712,15 @@ namespace GameHub.Data.Sources.GOG
 				count = json.get_int_member("count");
 				file = json.get_array_member("files").get_object_element(0).get_string_member("downlink");
 				size = json.get_int_member("total_size");
-
 				dl_info = new Downloader.DownloadInfo(text, game.name, game.icon, null, null, icon);
+
+				filename = "gog_" + game.id + "_bonus_" + id;
+				if(bonus_map != null && bonus_map.has_member(id))
+				{
+					filename = bonus_map.get_string_member(id);
+					downloaded_file = game.bonus_content_dir.get_child(filename);
+					status = new BonusContent.Status(downloaded_file != null && downloaded_file.query_exists() ? BonusContent.State.DOWNLOADED : BonusContent.State.NOT_DOWNLOADED);
+				}
 			}
 
 			public async File? download()
@@ -716,7 +735,7 @@ namespace GameHub.Data.Sources.GOG
 
 				if(game.bonus_content_dir == null) return null;
 
-				var local = game.bonus_content_dir.get_child("gog_" + game.id + "_bonus_" + id);
+				var local = game.bonus_content_dir.get_child(filename);
 
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(game.bonus_content_dir.get_path());
@@ -740,6 +759,8 @@ namespace GameHub.Data.Sources.GOG
 
 				Downloader.get_instance().disconnect(ds_id);
 
+				save_filename();
+
 				status = new BonusContent.Status(downloaded_file != null && downloaded_file.query_exists() ? BonusContent.State.DOWNLOADED : BonusContent.State.NOT_DOWNLOADED);
 
 				var elapsed = new DateTime.now_local().difference(start_date);
@@ -757,6 +778,42 @@ namespace GameHub.Data.Sources.GOG
 						Utils.open_uri(downloaded_file.get_uri());
 						return Source.REMOVE;
 					});
+				}
+			}
+
+			private void save_filename()
+			{
+				if(game.bonus_content_dir == null || downloaded_file == null || !downloaded_file.query_exists()) return;
+
+				filename = downloaded_file.get_basename();
+
+				var file = game.bonus_content_dir.get_child(BonusContent.FILEMAP_NAME);
+
+				var root_node = Parser.parse_json_file(file.get_path());
+				Json.Object root;
+
+				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT)
+				{
+					root_node = new Json.Node(Json.NodeType.OBJECT);
+					root = new Json.Object();
+				}
+				else
+				{
+					root = root_node.get_object();
+				}
+
+				root.set_string_member(id, filename);
+				root_node.set_object(root);
+
+				var json = Json.to_string(root_node, true);
+
+				try
+				{
+					FileUtils.set_contents(file.get_path(), json);
+				}
+				catch(Error e)
+				{
+					warning("[GOGGame.BonusContent.save_filename] %s", e.message);
 				}
 			}
 
