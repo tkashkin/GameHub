@@ -248,9 +248,11 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			{
 				this.dlc = dlc;
 
-				var box = new EventBox();
-				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 4;
+				var ebox = new EventBox();
+				ebox.margin_start = ebox.margin_end = 8;
+				ebox.margin_top = ebox.margin_bottom = 4;
+
+				var box = new Box(Orientation.HORIZONTAL, 8);
 
 				var name = new Label(dlc.name);
 				name.ellipsize = Pango.EllipsizeMode.END;
@@ -258,8 +260,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				name.halign = Align.START;
 				name.xalign = 0;
 
-				box.add_events(EventMask.BUTTON_RELEASE_MASK);
-				box.button_release_event.connect(e => {
+				var status_icon = new Image.from_icon_name(dlc.status.state == Game.State.INSTALLED ? "process-completed-symbolic" : "folder-download-symbolic", IconSize.BUTTON);
+				status_icon.opacity = dlc.is_installable ? 1 : 0.6;
+				status_icon.halign = Align.END;
+
+				ebox.add_events(EventMask.BUTTON_RELEASE_MASK);
+				ebox.button_release_event.connect(e => {
 					switch(e.button)
 					{
 						case 1:
@@ -273,8 +279,22 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					return true;
 				});
 
+				dlc.status_change.connect(() => {
+					Idle.add(() => {
+						status_icon.icon_name = dlc.status.state == Game.State.INSTALLED ? "process-completed-symbolic" : "folder-download-symbolic";
+						status_icon.opacity = dlc.is_installable ? 1 : 0.6;
+						return Source.REMOVE;
+					});
+				});
+
+				dlc.update_game_info.begin();
+
 				box.add(name);
-				child = box;
+				box.add(status_icon);
+
+				ebox.add(box);
+
+				child = ebox;
 			}
 		}
 	}
