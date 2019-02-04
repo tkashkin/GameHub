@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # AngryPenguinPL <angrypenguinpoland@gmail.com>, 2019.
+# Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-20 22:34+0300\n"
-"PO-Revision-Date: 2019-02-04 02:39+0000\n"
-"Last-Translator: AngryPenguinPL <angrypenguinpoland@gmail.com>\n"
+"PO-Revision-Date: 2019-02-04 02:40+0000\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
 "translations/pl/>\n"
 "Language: pl\n"
@@ -811,8 +812,8 @@ msgstr "Wczytywanie gier z %s"
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u gra"
-msgstr[1] "%u gra"
-msgstr[2] "%u gra"
+msgstr[1] "%u gry"
+msgstr[2] "%u gier"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
