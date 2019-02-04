@@ -19,6 +19,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 
+using GameHub.Utils;
+
 namespace GameHub.UI.Widgets
 {
 	public class FileChooserEntry: Entry
@@ -97,9 +99,9 @@ namespace GameHub.UI.Widgets
 					file = File.new_for_uri(uri);
 				}
 			}
-			else if(path.has_prefix("/"))
+			else if(path.has_prefix("/") || path.has_prefix("~"))
 			{
-				file = File.new_for_path(path);
+				file = FSUtils.file(path);
 				uri = file.get_uri();
 			}
 			else if(allow_executable && path.length > 0)
@@ -111,7 +113,7 @@ namespace GameHub.UI.Widgets
 				}
 				else
 				{
-					file = File.new_for_path("/usr/bin/" + text);
+					file = FSUtils.file("/usr/bin", text);
 				}
 				uri = file.get_uri();
 			}
