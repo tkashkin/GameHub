@@ -380,6 +380,15 @@ namespace GameHub.Utils
 		return n.strip();
 	}
 
+	public static string? replace_prefix(string? str, string? prefix, string replacement)
+	{
+		if(str == null || prefix == null || !str.has_prefix(prefix))
+		{
+			return str;
+		}
+		return replacement + str.substring(str.index_of_nth_char(prefix.length));
+	}
+
 	#if !APPIMAGE && !FLATPAK && !SNAP
 	private static string? distro;
 	#endif
