@@ -586,7 +586,7 @@ namespace GameHub.Data
 						runnable.update_status();
 					}
 
-					if(runnable.executable == null || !runnable.executable.query_exists())
+					if((runnable.executable == null || !runnable.executable.query_exists()) && !(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC))
 					{
 						if(game != null)
 						{
@@ -619,6 +619,12 @@ namespace GameHub.Data
 					if(game != null && version != null)
 					{
 						game.save_version(version);
+					}
+
+					var gh_marker = runnable.install_dir.get_child(".gamehub_" + runnable.id);
+					if(gh_marker != null)
+					{
+						FileUtils.set_contents(gh_marker.get_path(), "");
 					}
 				}
 				catch(IOError.CANCELLED e){}
