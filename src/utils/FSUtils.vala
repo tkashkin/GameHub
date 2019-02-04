@@ -247,7 +247,9 @@ namespace GameHub.Utils
 					expanded_path = expanded_path.replace("${" + v.key + "}", v.value).replace("$" + v.key, v.value);
 				}
 			}
-			return expanded_path.replace("~/.cache", Environment.get_user_cache_dir()).replace("~", Environment.get_home_dir()) + (file != null && file != "" ? "/" + file : "");
+			expanded_path = Utils.replace_prefix(expanded_path, "~/.cache", Environment.get_user_cache_dir());
+			expanded_path = Utils.replace_prefix(expanded_path, "~", Environment.get_home_dir());
+			return expanded_path + (file != null && file != "" ? "/" + file : "");
 		}
 
 		public static File? file(string? path, string? file=null, HashMap<string, string>? variables=null)
