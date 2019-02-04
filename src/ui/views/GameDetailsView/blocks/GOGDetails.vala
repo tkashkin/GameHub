@@ -160,12 +160,16 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				name.halign = Align.START;
 				name.xalign = 0;
 
-				var size = new Label(format_size(bonus.size));
-				size.halign = Align.END;
+				var desc_label = new Label(format_size(bonus.size));
+				desc_label.halign = Align.END;
+
+				var status_icon = new Image.from_icon_name("folder-download-symbolic", IconSize.BUTTON);
+				status_icon.halign = Align.END;
 
 				box.add(icon);
 				box.add(name);
-				box.add(size);
+				box.add(desc_label);
+				box.add(status_icon);
 
 				var event_box = new Box(Orientation.VERTICAL, 0);
 				event_box.expand = true;
@@ -175,22 +179,43 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				content.add_overlay(event_box);
 
 				bonus.status_change.connect(s => {
-					switch(s.state)
+					if(s.state == GOGGame.BonusContent.State.DOWNLOADING)
 					{
-						case GOGGame.BonusContent.State.DOWNLOADING:
-							Allocation alloc;
-							content.get_allocation(out alloc);
-							if(s.download != null)
-							{
-								progress_bar.get_style_context().add_class("downloading");
-								progress_bar.set_size_request((int) (s.download.status.progress * alloc.width), alloc.height);
-							}
-							break;
+						Allocation alloc;
+						content.get_allocation(out alloc);
+						if(s.download != null)
+						{
+							progress_bar.get_style_context().add_class("downloading");
+							progress_bar.set_size_request((int) (s.download.status.progress * alloc.width), alloc.height);
+							desc_label.label = s.download.status.description;
+							desc_label.get_style_context().remove_class(Gtk.STYLE_CLASS_DIM_LABEL);
+							desc_label.ellipsize = Pango.EllipsizeMode.NONE;
+							status_icon.icon_name = "folder-download-symbolic";
+						}
+						return;
+					}
 
-						default:
-							progress_bar.get_style_context().remove_class("downloading");
-							progress_bar.set_size_request(0, 0);
-							break;
+					progress_bar.get_style_context().remove_class("downloading");
+					progress_bar.set_size_request(0, 0);
+
+					if(s.state == GOGGame.BonusContent.State.DOWNLOADED && (bonus.downloaded_file == null || !bonus.downloaded_file.query_exists()))
+					{
+						s.state = GOGGame.BonusContent.State.NOT_DOWNLOADED;
+					}
+
+					if(s.state == GOGGame.BonusContent.State.DOWNLOADED)
+					{
+						desc_label.label = bonus.filename;
+						desc_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+						desc_label.ellipsize = Pango.EllipsizeMode.MIDDLE;
+						status_icon.icon_name = "document-open-symbolic";
+					}
+					else
+					{
+						desc_label.label = format_size(bonus.size);
+						desc_label.get_style_context().remove_class(Gtk.STYLE_CLASS_DIM_LABEL);
+						desc_label.ellipsize = Pango.EllipsizeMode.NONE;
+						status_icon.icon_name = "folder-download-symbolic";
 					}
 				});
 				bonus.status_change(bonus.status);
@@ -199,7 +224,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				content.button_release_event.connect(e => {
 					if(e.button == 1)
 					{
-						if(bonus.status.state == GOGGame.BonusContent.State.NOT_DOWNLOADED)
+						if(bonus.status.state == GOGGame.BonusContent.State.NOT_DOWNLOADED || (bonus.status.state == GOGGame.BonusContent.State.DOWNLOADED && (bonus.downloaded_file == null || !bonus.downloaded_file.query_exists())))
 						{
 							bonus.download.begin();
 						}
