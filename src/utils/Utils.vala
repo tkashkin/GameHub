@@ -389,6 +389,45 @@ namespace GameHub.Utils
 		return replacement + str.substring(str.index_of_nth_char(prefix.length));
 	}
 
+	public static int? compare_versions(int[]? v1, int[]? v2)
+	{
+		if(v1 == null || v2 == null || v1.length == 0 || v2.length == 0) return null;
+
+		for(int i = 0; i < int.min(v1.length, v2.length); i++)
+		{
+			if(v1[i] > v2[i]) return 1;
+			if(v1[i] < v2[i]) return -1;
+		}
+
+		if(v1.length > v2.length) return 1;
+		if(v1.length < v2.length) return -1;
+
+		return 0;
+	}
+
+	public static int[]? parse_version(string? version, string delimiter=".")
+	{
+		if(version == null || version.strip().length == 0) return null;
+		int[] ver = {};
+		var parts = version.split(delimiter);
+		foreach(var part in parts)
+		{
+			ver += int.parse(part);
+		}
+		return ver;
+	}
+
+	public static string? format_version(int[]? version, string delimiter=".")
+	{
+		if(version == null || version.length == 0) return null;
+		string[] ver = {};
+		foreach(var part in version)
+		{
+			ver += part.to_string();
+		}
+		return string.joinv(delimiter, ver);
+	}
+
 	#if !APPIMAGE && !FLATPAK && !SNAP
 	private static string? distro;
 	#endif

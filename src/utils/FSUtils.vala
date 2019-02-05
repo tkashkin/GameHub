@@ -322,7 +322,7 @@ namespace GameHub.Utils
 
 		public static void rm(string path, string? file=null, string flags="-f", HashMap<string, string>? variables=null)
 		{
-			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") });
+			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") }, null, null, false, false, false);
 		}
 
 		public static void mv_up(File path, string dirname)

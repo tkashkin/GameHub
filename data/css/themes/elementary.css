@@ -45,3 +45,8 @@
 	text-shadow: none;
 	-gtk-icon-shadow: none;
 }
+
+infobar.frame.compat-tool-warning
+{
+	margin: -1px -3px -1px -7px;
+}
