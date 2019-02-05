@@ -98,7 +98,7 @@ deps()
 	sudo add-apt-repository ppa:elementary-os/daily -y
 	sudo add-apt-repository ppa:vala-team/next -y
 	sudo apt update -qq
-	sudo apt install -y meson valac checkinstall build-essential dput elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
+	sudo apt install -y meson valac checkinstall build-essential dput fakeroot elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
 	#sudo apt full-upgrade -y
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sudo dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
