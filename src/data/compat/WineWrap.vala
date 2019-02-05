@@ -40,7 +40,10 @@ namespace GameHub.Data.Compat
 
 		private async void update_index()
 		{
-			debug("[WineWrap] updating index");
+			if(GameHub.Application.log_verbose)
+			{
+				debug("[WineWrap] Updating index");
+			}
 
 			var root_node = yield Parser.parse_remote_json_file_async(WRAPPERS_INDEX_URL);
 			if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return;
@@ -71,7 +74,10 @@ namespace GameHub.Data.Compat
 				installed = false;
 			}
 
-			debug("[WineWrap] index updated");
+			if(GameHub.Application.log_verbose)
+			{
+				debug("[WineWrap] Index updated");
+			}
 		}
 
 		public override bool can_install(Runnable runnable)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-20 22:34+0300\n"
+"POT-Creation-Date: 2019-02-05 06:33+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -88,80 +88,80 @@ msgstr "Выводить сообщения о запуске/остановке
 msgid "Verbose logging"
 msgstr "Подробные сообщения"
 
-#: src/app.vala:195
+#: src/app.vala:214
 msgid "Game Options:"
 msgstr "Параметры игр:"
 
-#: src/app.vala:195
+#: src/app.vala:214
 msgid "Show game options help"
 msgstr "Показать справку о параметрах игр"
 
-#: src/app.vala:203
+#: src/app.vala:222
 msgid "Logging Options:"
 msgstr "Параметры журналирования:"
 
-#: src/app.vala:203
+#: src/app.vala:222
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 
-#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
+#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Выберите исполняемый файл"
 
-#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:366
-#: src/ui/widgets/FileChooserEntry.vala:53
+#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:366
 #: src/ui/widgets/FileChooserEntry.vala:55
+#: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
 msgstr "Выбрать"
 
-#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:162 src/ui/widgets/FileChooserEntry.vala:53
-#: src/ui/widgets/FileChooserEntry.vala:55
+#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
+#: src/data/Runnable.vala:163 src/ui/widgets/FileChooserEntry.vala:55
+#: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/data/Runnable.vala:148 src/ui/widgets/FileChooserEntry.vala:47
+#: src/data/Runnable.vala:149 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
 msgstr "Выберите папку"
 
-#: src/data/Runnable.vala:396
+#: src/data/Runnable.vala:403
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Часть %u из %u: "
 
-#: src/data/Runnable.vala:419 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:426 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: повреждённый установщик"
 
-#: src/data/Runnable.vala:420
+#: src/data/Runnable.vala:427
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Несовпадение контрольной суммы в файле %s"
 
-#: src/data/Runnable.vala:435 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:442 src/ui/dialogs/CorruptedInstallerDialog.vala:125
 msgid "Show file"
 msgstr "Показать файл"
 
-#: src/data/Runnable.vala:436 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/data/Runnable.vala:437 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
 msgstr "Сохранить"
 
-#: src/data/Runnable.vala:587
+#: src/data/Runnable.vala:594
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: невозможно определить исполняемый файл игры"
 
-#: src/data/Runnable.vala:588
+#: src/data/Runnable.vala:595
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -169,52 +169,52 @@ msgstr ""
 "Исполняемый файл для этой игры невозможно определить автоматически.\n"
 "Укажите исполняемый файл в свойствах игры."
 
-#: src/data/Game.vala:457
+#: src/data/Game.vala:456
 msgctxt "status"
 msgid "Running"
 msgstr "Запущена"
 
-#: src/data/Game.vala:460
+#: src/data/Game.vala:459
 msgctxt "status"
 msgid "Installed"
 msgstr "Установлена"
 
-#: src/data/Game.vala:461
+#: src/data/Game.vala:460
 msgctxt "status"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:462
+#: src/data/Game.vala:461
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Проверка целостности установщика"
 
-#: src/data/Game.vala:463
+#: src/data/Game.vala:462
 msgctxt "status"
 msgid "Download started"
 msgstr "Загрузка начата"
 
-#: src/data/Game.vala:465
+#: src/data/Game.vala:464
 msgctxt "status"
 msgid "Not installed"
 msgstr "Не установлена"
 
-#: src/data/Game.vala:475
+#: src/data/Game.vala:474
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Установленные"
 
-#: src/data/Game.vala:476
+#: src/data/Game.vala:475
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:478
+#: src/data/Game.vala:477
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Загрузка"
 
-#: src/data/Game.vala:480
+#: src/data/Game.vala:479
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Не установленные"
@@ -268,7 +268,18 @@ msgstr "Редактировать скрипт"
 msgid "Edit custom script"
 msgstr "Редактировать пользовательский скрипт"
 
-#: src/data/compat/WineWrap.vala:58
+#: src/data/compat/Innoextract.vala:55
+#, c-format
+msgid ""
+"Innoextract <b>%1$s</b> is not supported and may not be able to extract some "
+"games correctly.\n"
+"Install innoextract <b>%2$s</b> or newer."
+msgstr ""
+"Innoextract <b>%1$s</b> не поддерживается и может извлекать некоторые игры "
+"некорректно.\n"
+"Установите innoextract <b>%2$s</b> или более новый."
+
+#: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
@@ -276,11 +287,11 @@ msgstr "Редактировать пользовательский скрипт
 msgid "Run"
 msgstr "Запустить"
 
-#: src/data/compat/WineWrap.vala:61
+#: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
 msgstr "Показать меню WineWrap"
 
-#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:93
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:93
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "Завершить приложения в префиксе"
@@ -390,7 +401,8 @@ msgstr "Некоторые настройки будут применены по
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:61
 msgid "Games directory contains space. It may cause problems for some games"
-msgstr "Папка игр содержит пробел. Это может вызвать проблемы для некоторых игр"
+msgstr ""
+"Папка игр содержит пробел. Это может вызвать проблемы для некоторых игр"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:76
 msgid "Interface"
@@ -1011,13 +1023,13 @@ msgstr "Жанр"
 msgid "Genres"
 msgstr "Жанры"
 
-#: src/ui/widgets/FileChooserEntry.vala:47
-#: src/ui/widgets/FileChooserEntry.vala:53
+#: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
+#: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select file"
 msgstr "Выбрать файл"
 
-#: src/ui/widgets/CompatToolPicker.vala:51
+#: src/ui/widgets/CompatToolPicker.vala:52
 msgid "Compatibility layer:"
 msgstr "Слой совместимости:"
 

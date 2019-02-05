@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-20 22:34+0300\n"
+"POT-Creation-Date: 2019-02-05 06:33+0300\n"
 "PO-Revision-Date: 2019-01-15 16:27+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -86,131 +86,131 @@ msgstr ""
 msgid "Verbose logging"
 msgstr ""
 
-#: src/app.vala:195
+#: src/app.vala:214
 msgid "Game Options:"
 msgstr ""
 
-#: src/app.vala:195
+#: src/app.vala:214
 msgid "Show game options help"
 msgstr ""
 
-#: src/app.vala:203
+#: src/app.vala:222
 msgid "Logging Options:"
 msgstr ""
 
-#: src/app.vala:203
+#: src/app.vala:222
 msgid "Show logging options help"
 msgstr ""
 
-#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
+#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Choisir l'exécutable"
 
-#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:163 src/ui/views/GamesView/GamesView.vala:366
-#: src/ui/widgets/FileChooserEntry.vala:53
+#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:366
 #: src/ui/widgets/FileChooserEntry.vala:55
+#: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
 msgstr "Choisir"
 
-#: src/data/Runnable.vala:92 src/data/Runnable.vala:94
-#: src/data/Runnable.vala:162 src/ui/widgets/FileChooserEntry.vala:53
-#: src/ui/widgets/FileChooserEntry.vala:55
+#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
+#: src/data/Runnable.vala:163 src/ui/widgets/FileChooserEntry.vala:55
+#: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/data/Runnable.vala:148 src/ui/widgets/FileChooserEntry.vala:47
+#: src/data/Runnable.vala:149 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
 msgstr "Choisir le dossier"
 
-#: src/data/Runnable.vala:396
+#: src/data/Runnable.vala:403
 #, c-format
 msgid "Part %u of %u: "
 msgstr "Partie %u sur %u : "
 
-#: src/data/Runnable.vala:419 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:426 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s : Installeur corrompu"
 
-#: src/data/Runnable.vala:420
+#: src/data/Runnable.vala:427
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Différence dans la somme de contrôle dans %s"
 
-#: src/data/Runnable.vala:435 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:442 src/ui/dialogs/CorruptedInstallerDialog.vala:125
 msgid "Show file"
 msgstr ""
 
-#: src/data/Runnable.vala:436 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Enlever"
 
-#: src/data/Runnable.vala:437 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
 msgstr "Sauvegarder"
 
-#: src/data/Runnable.vala:587
+#: src/data/Runnable.vala:594
 #, fuzzy, c-format
 msgid "%s: cannot detect main executable"
 msgstr "Choisir l'exécutable"
 
-#: src/data/Runnable.vala:588
+#: src/data/Runnable.vala:595
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
 
-#: src/data/Game.vala:457
+#: src/data/Game.vala:456
 msgctxt "status"
 msgid "Running"
 msgstr "En exécution"
 
-#: src/data/Game.vala:460
+#: src/data/Game.vala:459
 msgctxt "status"
 msgid "Installed"
 msgstr "Installé"
 
-#: src/data/Game.vala:461
+#: src/data/Game.vala:460
 msgctxt "status"
 msgid "Installing"
 msgstr "En cours d'installation"
 
-#: src/data/Game.vala:462
+#: src/data/Game.vala:461
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Vérification de l'intégrité de l'installateur"
 
-#: src/data/Game.vala:463
+#: src/data/Game.vala:462
 msgctxt "status"
 msgid "Download started"
 msgstr "Téléchargement commencé"
 
-#: src/data/Game.vala:465
+#: src/data/Game.vala:464
 msgctxt "status"
 msgid "Not installed"
 msgstr "Non installé"
 
-#: src/data/Game.vala:475
+#: src/data/Game.vala:474
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Installé"
 
-#: src/data/Game.vala:476
+#: src/data/Game.vala:475
 msgctxt "status_header"
 msgid "Installing"
 msgstr "En cours d'installation"
 
-#: src/data/Game.vala:478
+#: src/data/Game.vala:477
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "En cours de téléchargement"
 
-#: src/data/Game.vala:480
+#: src/data/Game.vala:479
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Non installé"
@@ -264,7 +264,15 @@ msgstr "Modifier le script"
 msgid "Edit custom script"
 msgstr "Modifier le script personnalisé"
 
-#: src/data/compat/WineWrap.vala:58
+#: src/data/compat/Innoextract.vala:55
+#, c-format
+msgid ""
+"Innoextract <b>%1$s</b> is not supported and may not be able to extract some "
+"games correctly.\n"
+"Install innoextract <b>%2$s</b> or newer."
+msgstr ""
+
+#: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
 #: src/ui/dialogs/CompatRunDialog.vala:100
 #: src/ui/views/GamesView/GameContextMenu.vala:42
@@ -272,11 +280,11 @@ msgstr "Modifier le script personnalisé"
 msgid "Run"
 msgstr "Lancer"
 
-#: src/data/compat/WineWrap.vala:61
+#: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
 msgstr "Afficher le menu WineWrap"
 
-#: src/data/compat/WineWrap.vala:64 src/data/compat/Proton.vala:93
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:93
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "Arrêter les applications dans prefix"
@@ -1006,13 +1014,13 @@ msgstr ""
 msgid "Genres"
 msgstr ""
 
-#: src/ui/widgets/FileChooserEntry.vala:47
-#: src/ui/widgets/FileChooserEntry.vala:53
+#: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
+#: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select file"
 msgstr ""
 
-#: src/ui/widgets/CompatToolPicker.vala:51
+#: src/ui/widgets/CompatToolPicker.vala:52
 msgid "Compatibility layer:"
 msgstr ""
 

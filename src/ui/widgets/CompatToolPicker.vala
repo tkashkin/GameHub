@@ -38,6 +38,7 @@ namespace GameHub.UI.Widgets
 		private ComboBox combo;
 
 		private Box actions;
+		private Box warnings;
 
 		public CompatToolPicker(Runnable runnable, bool install_mode)
 		{
@@ -84,6 +85,8 @@ namespace GameHub.UI.Widgets
 			tool_box.add(label);
 			tool_box.add(combo);
 
+			warnings = new Box(Orientation.VERTICAL, 0);
+
 			actions = new Box(Orientation.HORIZONTAL, 4);
 
 			combo.changed.connect(() => {
@@ -106,8 +109,8 @@ namespace GameHub.UI.Widgets
 				}
 
 				actions.foreach(w => w.destroy());
-
 				actions.hide();
+
 				if(selected.actions != null)
 				{
 					foreach(var action in selected.actions)
@@ -115,6 +118,18 @@ namespace GameHub.UI.Widgets
 						add_action(action);
 					}
 					actions.show_all();
+				}
+
+				warnings.foreach(w => w.destroy());
+				warnings.hide();
+
+				if(selected.warnings != null && selected.warnings.length > 0)
+				{
+					foreach(var warning in selected.warnings)
+					{
+						add_warning(warning);
+					}
+					warnings.show_all();
 				}
 			});
 
@@ -141,6 +156,7 @@ namespace GameHub.UI.Widgets
 			}
 
 			add(tool_box);
+			add(warnings);
 			add(actions);
 
 			show_all();
@@ -153,6 +169,21 @@ namespace GameHub.UI.Widgets
 			btn.hexpand = true;
 			btn.clicked.connect(() => action.invoke(runnable));
 			actions.add(btn);
+		}
+
+		private void add_warning(string warning)
+		{
+			var infobar = new InfoBar();
+			infobar.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			infobar.get_style_context().add_class("compat-tool-warning");
+			infobar.message_type = MessageType.WARNING;
+			var label = new Label(warning);
+			label.use_markup = true;
+			label.wrap = true;
+			label.max_width_chars = 42;
+			label.xalign = 0;
+			infobar.get_content_area().add(label);
+			warnings.add(infobar);
 		}
 	}
 }
