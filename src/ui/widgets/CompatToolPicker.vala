@@ -180,7 +180,6 @@ namespace GameHub.UI.Widgets
 			var label = new Label(warning);
 			label.use_markup = true;
 			label.wrap = true;
-			label.max_width_chars = 42;
 			label.xalign = 0;
 			infobar.get_content_area().add(label);
 			warnings.add(infobar);
