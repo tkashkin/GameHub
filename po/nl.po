@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-05 06:33+0300\n"
-"PO-Revision-Date: 2019-01-20 21:44+0000\n"
+"PO-Revision-Date: 2019-02-05 20:27+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 3.5-dev\n"
 
 #: src/app.vala:82
 msgid "Show help"
@@ -275,6 +275,9 @@ msgid ""
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
+"Innoextract <b>%1$s</b> wordt niet ondersteund en kan daardoor sommige "
+"spellen mogelijk niet goed uitpakken.\n"
+"Installeer Innoextracht <b>%2$s</b> of hoger."
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
