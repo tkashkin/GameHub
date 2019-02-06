@@ -235,11 +235,14 @@ namespace GameHub.Data.Compat
 			{
 				if(opt_env.value != null && opt_env.value.length > 0)
 				{
-					var evars = opt_env.value.split(" ");
-					foreach(var ev in evars)
+					var evars = Utils.parse_args(opt_env.value);
+					if(evars != null)
 					{
-						var v = ev.split("=");
-						env = Environ.set_variable(env, v[0], v[1]);
+						foreach(var ev in evars)
+						{
+							var v = ev.split("=");
+							env = Environ.set_variable(env, v[0], v[1]);
+						}
 					}
 				}
 			}

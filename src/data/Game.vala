@@ -119,14 +119,17 @@ namespace GameHub.Data
 					var variables = new HashMap<string, string>();
 					variables.set("game", name.replace(": ", " - ").replace(":", ""));
 					variables.set("game_dir", install_dir.get_path());
-					var args = arguments.split(" ");
-					foreach(var arg in args)
+					var args = Utils.parse_args(arguments);
+					if(args != null)
 					{
-						if("$" in arg)
+						foreach(var arg in args)
 						{
-							arg = FSUtils.expand(arg, null, variables);
+							if("$" in arg)
+							{
+								arg = FSUtils.expand(arg, null, variables);
+							}
+							cmd += arg;
 						}
-						cmd += arg;
 					}
 				}
 
