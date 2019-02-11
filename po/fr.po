@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-05 06:33+0300\n"
-"PO-Revision-Date: 2019-01-15 16:27+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2019-02-11 14:11+0000\n"
+"Last-Translator: King Claudy <clocloranely@hotmail.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 3.5-dev\n"
 
 #: src/app.vala:82
 msgid "Show help"
-msgstr ""
+msgstr "Afficher l'aide"
 
 #: src/app.vala:83
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Afficher la version de l'application et quitter"
 
 #: src/app.vala:84
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Redémarrer avec le débogueur GDB attaché"
 
 #: src/app.vala:85
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "Afficher l'intégralité de la trace d'appels de GDB"
 
 #: src/app.vala:89
 msgid "Show main window"
@@ -46,7 +46,7 @@ msgstr "Ouvrir les options de compatibilité"
 
 #: src/app.vala:91
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "Nombre maximal de tâches d’arrière-plan"
 
 #: src/app.vala:95
 msgid "Run game"
@@ -58,49 +58,51 @@ msgstr "Ouvrir les options de compatibilité"
 
 #: src/app.vala:97
 msgid "Open game details"
-msgstr ""
+msgstr "Ouvrir les détails du jeu"
 
 #: src/app.vala:98
 msgid "Open game properties"
-msgstr ""
+msgstr "Ouvrir les propriétés du jeu"
 
 #: src/app.vala:102
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Activer la journalisation du débogage"
 
 #: src/app.vala:103
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Journaliser le processus d'authentification et des informations sensibles "
+"comme les clés d'authentification"
 
 #: src/app.vala:104
 msgid "Log download manager"
-msgstr ""
+msgstr "Journaliser le gestionnaire de téléchargement"
 
 #: src/app.vala:105
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "Journaliser les démarrages et arrêts des tâches d'arrière-plan"
 
 #: src/app.vala:106
 msgid "Verbose logging"
-msgstr ""
+msgstr "Journalisation détaillée"
 
 #: src/app.vala:214
 msgid "Game Options:"
-msgstr ""
+msgstr "Options de jeu :"
 
 #: src/app.vala:214
 msgid "Show game options help"
-msgstr ""
+msgstr "Afficher l’aide pour les options de jeu"
 
 #: src/app.vala:222
 msgid "Logging Options:"
-msgstr ""
+msgstr "Options de journalisation :"
 
 #: src/app.vala:222
 msgid "Show logging options help"
-msgstr ""
+msgstr "Afficher l’aide pour les options de journalisation"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
@@ -142,7 +144,7 @@ msgstr "Différence dans la somme de contrôle dans %s"
 
 #: src/data/Runnable.vala:442 src/ui/dialogs/CorruptedInstallerDialog.vala:125
 msgid "Show file"
-msgstr ""
+msgstr "Afficher le fichier"
 
 #: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:144
@@ -164,6 +166,8 @@ msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"L’exécutable pour ce jeu ne peut être détecté automatiquement.\n"
+"Veuillez le choisir dans les propriétés du jeu."
 
 #: src/data/Game.vala:456
 msgctxt "status"
@@ -271,6 +275,9 @@ msgid ""
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
+"Innoextract <b>%1$s</b> n’est pas pris en charge et peut ne être pas en "
+"mesure d’extraire certains jeux correctement.\n"
+"Installer innoextract <b>%2$s</b> ou plus récent."
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
@@ -291,7 +298,7 @@ msgstr "Arrêter les applications dans prefix"
 
 #: src/data/compat/Proton.vala:43
 msgid "Proton prefix"
-msgstr ""
+msgstr "Préfixe de Proton"
 
 #: src/data/compat/Proton.vala:49
 msgid "Disable esync"
@@ -397,6 +404,8 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:61
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
+"Le nom de dossier des jeux contient des espaces. Cela peut poser problème "
+"pour certains jeux"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:76
 msgid "Interface"
@@ -416,7 +425,7 @@ msgstr "Utiliser thème sombre"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:37
 msgid "Use symbolic icons instead of colored icons"
-msgstr ""
+msgstr "Utilisez les icônes symboliques au lieu des icônes de couleur"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:41
 msgid "Compact list"
@@ -648,24 +657,24 @@ msgstr "Lancer depuis le terminal"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:289
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Copier dans le presse-papier"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:291
 msgid "Add to Steam"
-msgstr ""
+msgstr "Ajouter à Steam"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:292
 msgid "Add to the Steam library"
-msgstr ""
+msgstr "Ajouter à la bibliothèque Steam"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:52
 #, c-format
 msgid "%s: Overlays"
-msgstr ""
+msgstr "%s: Superpositions"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:68
 msgid "Overlays are disabled"
-msgstr ""
+msgstr "Les superpositions sont désactivées"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:68
 msgid ""
