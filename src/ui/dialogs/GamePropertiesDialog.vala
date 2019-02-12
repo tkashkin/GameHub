@@ -220,6 +220,7 @@ namespace GameHub.UI.Dialogs
 				var executable_picker = new FileChooserEntry(_("Select executable"), FileChooserAction.OPEN, "application-x-executable", _("Executable"), false, true);
 				try
 				{
+					executable_picker.set_default_directory(game.install_dir);
 					executable_picker.select_file(game.executable);
 				}
 				catch(Error e)

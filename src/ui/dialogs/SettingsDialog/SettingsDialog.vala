@@ -55,11 +55,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			restart_msg.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
 			restart_msg.get_content_area().add(new Label(_("Some settings will be applied after application restart")));
 			restart_msg.message_type = MessageType.INFO;
+			restart_msg.show_all();
 
 			games_dir_space_msg = new InfoBar();
 			games_dir_space_msg.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
 			games_dir_space_msg.get_content_area().add(new Label(_("Games directory contains space. It may cause problems for some games")));
 			games_dir_space_msg.message_type = MessageType.WARNING;
+			games_dir_space_msg.show_all();
 			games_dir_space_msg.margin_bottom = 8;
 
 			update_messages();
@@ -121,14 +123,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		private void update_messages()
 		{
-			#if GTK_3_22
-			restart_msg.revealed = restart_msg_shown;
-			games_dir_space_msg.revealed = games_dir_space_msg_shown;
-			#else
 			restart_msg.visible = restart_msg_shown;
 			restart_msg.no_show_all = !restart_msg_shown;
 			games_dir_space_msg.visible = games_dir_space_msg_shown;
 			games_dir_space_msg.no_show_all = !games_dir_space_msg_shown;
+			#if GTK_3_22
+			restart_msg.revealed = restart_msg_shown;
+			games_dir_space_msg.revealed = games_dir_space_msg_shown;
 			#endif
 		}
 	}

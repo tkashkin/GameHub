@@ -195,6 +195,22 @@ list:not(:backdrop) row:selected:focus label.category-label
 {
 	color: alpha(#ffffff, 0.8);
 }
+.overlay-bar
+{
+	background-color: alpha (#222, 0.9);
+	border-radius: 3px;
+	border-width: 0;
+	box-shadow: 0 1px 3px alpha (#000, 0.12), 0 1px 2px alpha (#000, 0.24);
+	color: #fff;
+	padding: 3px 6px;
+	text-shadow: 0 1px 2px alpha (#000, 0.6);
+	margin: 3px;
+}
+.overlay-bar label
+{
+	color: #fff;
+	text-shadow: 0 1px 2px alpha (#000, 0.6);
+}
 
 .installers-list
 {
@@ -249,6 +265,23 @@ list:not(:backdrop) row:selected:focus label.category-label
 {
 	background-color: rgb(59, 63, 69);
 	color: white;
+}
+
+.gameinfo-background undershoot.left
+{
+	background: linear-gradient(to left, alpha(rgb(245, 245, 245), 0) 50%, rgb(245, 245, 245));
+}
+.gameinfo-background undershoot.right
+{
+	background: linear-gradient(to right, alpha(rgb(245, 245, 245), 0) 50%, rgb(245, 245, 245));
+}
+.gameinfo-background.dark undershoot.left
+{
+	background: linear-gradient(to left, alpha(rgb(59, 63, 69), 0) 50%, rgb(59, 63, 69));
+}
+.gameinfo-background.dark undershoot.right
+{
+	background: linear-gradient(to right, alpha(rgb(59, 63, 69), 0) 50%, rgb(59, 63, 69));
 }
 
 .dl-progress-type-icon
