@@ -156,6 +156,21 @@ namespace GameHub.UI.Widgets
 			select_file_path(f != null ? f.get_path() : null);
 		}
 
+		public void set_default_directory(File? directory)
+		{
+			if(directory != null && directory.query_exists())
+			{
+				try
+				{
+					chooser.set_current_folder_file(directory);
+				}
+				catch(Error e)
+				{
+					warning("[FileChooserEntry.set_default_directory] %s", e.message);
+				}
+			}
+		}
+
 		public void reset()
 		{
 			select_file_path(null);
