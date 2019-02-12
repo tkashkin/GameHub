@@ -135,6 +135,12 @@ namespace GameHub.Data.Compat
 			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
 			yield wineboot(runnable);
 			yield exec(runnable, installer, installer.get_parent(), yield prepare_installer_args(runnable));
+			
+			var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
+			if(runnable.install_dir != null && runnable.install_dir.get_child(tmp_root).query_exists())
+			{
+				FSUtils.mv_up(runnable.install_dir, tmp_root);
+			}
 		}
 
 		public override async void run(Runnable runnable)
