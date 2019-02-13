@@ -635,16 +635,19 @@ namespace GameHub.Data.Sources.GOG
 				if(type.down() == "filetask")
 				{
 					file = find_file(json.get_string_member("path"));
-					if(file.get_basename().down().has_suffix(".exe"))
+					if(file != null && file.query_exists())
 					{
-						workdir = find_file(json.has_member("workingDir") ? json.get_string_member("workingDir") : "");
-						args = json.has_member("arguments") ? json.get_string_member("arguments").replace("\\", "/").strip() : null;
-						compat_tools = { typeof(GameHub.Data.Compat.Wine) };
-					}
-					else
-					{
-						uri = file.get_uri();
-						file = null;
+						if(file.get_basename().down().has_suffix(".exe"))
+						{
+							workdir = find_file(json.has_member("workingDir") ? json.get_string_member("workingDir") : "");
+							args = json.has_member("arguments") ? json.get_string_member("arguments").replace("\\", "/").strip() : null;
+							compat_tools = { typeof(GameHub.Data.Compat.Wine) };
+						}
+						else
+						{
+							uri = file.get_uri();
+							file = null;
+						}
 					}
 				}
 				else if(type.down() == "urltask")
@@ -656,12 +659,16 @@ namespace GameHub.Data.Sources.GOG
 			private File? find_file(string path)
 			{
 				if(runnable.install_dir == null || !runnable.install_dir.query_exists()) return null;
+				var dir = (runnable is Game && ((Game) runnable).overlays_enabled)
+					? runnable.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged")
+					: runnable.install_dir;
+				if(dir == null || !dir.query_exists()) return null;
 				var p = path.replace("\\", "/").strip();
 				if(p.length == 0)
 				{
-					return runnable.install_dir;
+					return dir;
 				}
-				return FSUtils.find_case_insensitive(runnable.install_dir, p);
+				return FSUtils.find_case_insensitive(dir, p);
 			}
 		}
 
