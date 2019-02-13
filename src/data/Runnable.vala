@@ -762,9 +762,11 @@ namespace GameHub.Data
 					return compat_tools.length == 0 || compat_tools[0] == null;
 				}
 
+				var t = tool.get_type();
+
 				foreach(var type in compat_tools)
 				{
-					if(tool.get_type().is_a(type))
+					if(type != null && t.is_a(type))
 					{
 						return true;
 					}
