@@ -325,10 +325,11 @@ namespace GameHub.Utils
 			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") }, null, null, false, false, false);
 		}
 
-		public static void mv_up(File path, string dirname)
+		public static void mv_up(File? path, string dirname)
 		{
 			try
 			{
+				if(path == null || !path.get_child(dirname).query_exists() || path.get_child(dirname).query_file_type(FileQueryInfoFlags.NONE) != FileType.DIRECTORY) return;
 				var tmp_dir = path.get_child(dirname).set_display_name(".gh_" + dirname + "_" + Utils.md5(dirname)); // rename source dir in case there's a child with the same name
 				debug("[FSUtils.mv_up] %s", tmp_dir.get_path());
 				FileInfo? finfo = null;
