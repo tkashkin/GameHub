@@ -74,8 +74,8 @@ namespace GameHub.Data.Compat
 			if(runnable is Sources.GOG.GOGGame) cmd += "--gog";
 			cmd += installer.get_path();
 			yield Utils.run_thread(cmd, installer.get_parent().get_path());
+			FSUtils.mv_up(runnable.install_dir, "__support");
 			FSUtils.mv_up(runnable.install_dir, "app");
-			FSUtils.mv_up(runnable.install_dir, "__support/app");
 		}
 	}
 }
