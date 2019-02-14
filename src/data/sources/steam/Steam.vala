@@ -71,7 +71,11 @@ namespace GameHub.Data.Sources.Steam
 
 			if("elementary" in Utils.get_distro())
 			{
-				installed = Utils.is_package_installed("steam");
+				installed = Utils.is_package_installed("steam")
+				         || Utils.is_package_installed("steam64")
+				         || Utils.is_package_installed("steam-launcher")
+				         || Utils.is_package_installed("steam-installer")
+				         || FSUtils.file(FSUtils.Paths.Steam.Home).query_exists();
 			}
 			else
 			{
