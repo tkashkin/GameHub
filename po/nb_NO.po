@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-05 06:33+0300\n"
-"PO-Revision-Date: 2019-01-20 21:44+0000\n"
+"PO-Revision-Date: 2019-02-25 03:17+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 3.5-dev\n"
 
 #: src/app.vala:82
 msgid "Show help"
@@ -821,10 +821,10 @@ msgid "Loading games from %s"
 msgstr "Laster spill fra %s"
 
 #: src/ui/views/GamesView/GamesView.vala:553
-#, c-format
+#, c-format, fuzzy
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] "%u spill"
+msgstr[0] "ett spill"
 msgstr[1] "%u spill"
 
 #: src/ui/views/GamesView/GamesView.vala:568
