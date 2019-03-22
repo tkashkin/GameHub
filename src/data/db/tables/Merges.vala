@@ -195,7 +195,7 @@ namespace GameHub.Data.DB.Tables
 
 			Statement s;
 
-			int res = db.prepare_v2("SELECT * FROM `merges` WHERE `merge` LIKE ? LIMIT 1", -1, out s);
+			int res = db.prepare_v2("SELECT * FROM `merges` WHERE `merge` LIKE ? OR `merge` LIKE ? LIMIT 1", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -203,7 +203,8 @@ namespace GameHub.Data.DB.Tables
 				return false;
 			}
 
-			s.bind_text(1, @"%|$(game.full_id)%");
+			s.bind_text(1, @"%|$(game.full_id)|%");
+			s.bind_text(2, @"%|$(game.full_id)");
 
 			return s.step() == Sqlite.ROW;
 		}

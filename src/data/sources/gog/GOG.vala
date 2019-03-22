@@ -267,18 +267,21 @@ namespace GameHub.Data.Sources.GOG
 				{
 					foreach(var g in cached)
 					{
-						if(!(g.id in GAMES_BLACKLIST) && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g)))
+						if(!(g.id in GAMES_BLACKLIST))
 						{
-							_games.add(g);
 							if(stats.has_key(g.id))
 							{
 								var s = stats.get(g.id);
 								g.last_launch = int64.max(g.last_launch, s.last_launch);
 								g.playtime_source = s.playtime;
 							}
-							if(game_loaded != null)
+							if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
 							{
-								game_loaded(g, true);
+								_games.add(g);
+								if(game_loaded != null)
+								{
+									game_loaded(g, true);
+								}
 							}
 						}
 						games_count++;
@@ -330,18 +333,21 @@ namespace GameHub.Data.Sources.GOG
 					{
 						var game = new GOGGame(this, g);
 						bool is_new_game = !(game.id in GAMES_BLACKLIST) && !_games.contains(game);
-						if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
+						if(is_new_game)
 						{
-							_games.add(game);
 							if(stats.has_key(game.id))
 							{
 								var s = stats.get(game.id);
 								game.last_launch = int64.max(game.last_launch, s.last_launch);
 								game.playtime_source = s.playtime;
 							}
-							if(game_loaded != null)
+							if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game))
 							{
-								game_loaded(game, false);
+								_games.add(game);
+								if(game_loaded != null)
+								{
+									game_loaded(game, false);
+								}
 							}
 						}
 
