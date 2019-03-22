@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-05 06:33+0300\n"
+"POT-Creation-Date: 2019-03-22 23:20+0300\n"
 "PO-Revision-Date: 2019-02-11 14:11+0000\n"
 "Last-Translator: King Claudy <clocloranely@hotmail.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -169,52 +169,52 @@ msgstr ""
 "L’exécutable pour ce jeu ne peut être détecté automatiquement.\n"
 "Veuillez le choisir dans les propriétés du jeu."
 
-#: src/data/Game.vala:456
+#: src/data/Game.vala:459
 msgctxt "status"
 msgid "Running"
 msgstr "En exécution"
 
-#: src/data/Game.vala:459
+#: src/data/Game.vala:462
 msgctxt "status"
 msgid "Installed"
 msgstr "Installé"
 
-#: src/data/Game.vala:460
+#: src/data/Game.vala:463
 msgctxt "status"
 msgid "Installing"
 msgstr "En cours d'installation"
 
-#: src/data/Game.vala:461
+#: src/data/Game.vala:464
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Vérification de l'intégrité de l'installateur"
 
-#: src/data/Game.vala:462
+#: src/data/Game.vala:465
 msgctxt "status"
 msgid "Download started"
 msgstr "Téléchargement commencé"
 
-#: src/data/Game.vala:464
+#: src/data/Game.vala:467
 msgctxt "status"
 msgid "Not installed"
 msgstr "Non installé"
 
-#: src/data/Game.vala:474
+#: src/data/Game.vala:477
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Installé"
 
-#: src/data/Game.vala:475
+#: src/data/Game.vala:478
 msgctxt "status_header"
 msgid "Installing"
 msgstr "En cours d'installation"
 
-#: src/data/Game.vala:477
+#: src/data/Game.vala:480
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "En cours de téléchargement"
 
-#: src/data/Game.vala:479
+#: src/data/Game.vala:482
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Non installé"
@@ -401,21 +401,21 @@ msgid "Some settings will be applied after application restart"
 msgstr ""
 "Certains paramètres seront appliqués après le redémarrage de l'application"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:61
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:62
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "Le nom de dossier des jeux contient des espaces. Cela peut poser problème "
 "pour certains jeux"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:76
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:78
 msgid "Interface"
 msgstr "Interface"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:77
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:79
 msgid "Collection"
 msgstr "Ludothèque"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:82
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:84
 msgid "Emulators"
 msgstr "Émulateurs"
 
@@ -435,21 +435,25 @@ msgstr "Liste compacte"
 msgid "Show platform icons in grid view"
 msgstr "Afficher les icônes de la plate-forme sur une grille"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:44
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:43
+msgid "Run games with double click"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:47
 msgid "Merge games from different sources"
 msgstr "Fusionner les jeux de différentes sources"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:48
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:51
 msgid "Show non-native games"
 msgstr "Afficher les jeux non natifs"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:49
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:52
 msgid "Use compatibility layers and consider Windows games compatible"
 msgstr ""
 "Utilisez les couches de compatibilité et considérez les jeux Windows "
 "compatibles"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:53
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:56
 msgid "Use imported tags"
 msgstr "Utiliser les étiquettes importées"
 
@@ -570,7 +574,7 @@ msgid "Name"
 msgstr "Nom"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:228
-#: src/ui/dialogs/GamePropertiesDialog.vala:238
+#: src/ui/dialogs/GamePropertiesDialog.vala:239
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Arguments"
 msgstr "Arguments"
@@ -585,7 +589,7 @@ msgid "Select emulator directory"
 msgstr "Sélectionner le répertoire de l'émulateur"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:277
-#: src/ui/dialogs/GamePropertiesDialog.vala:256
+#: src/ui/dialogs/GamePropertiesDialog.vala:257
 msgid "Force compatibility mode"
 msgstr "Force le mode de compatibilité"
 
@@ -647,23 +651,23 @@ msgstr "URL de l’icone"
 msgid "Search images:"
 msgstr "Rechercher des images :"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:251
+#: src/ui/dialogs/GamePropertiesDialog.vala:252
 msgid "Compatibility"
 msgstr "Compatibilité"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:273
+#: src/ui/dialogs/GamePropertiesDialog.vala:274
 msgid "Launch from terminal"
 msgstr "Lancer depuis le terminal"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:289
+#: src/ui/dialogs/GamePropertiesDialog.vala:290
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papier"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:291
+#: src/ui/dialogs/GamePropertiesDialog.vala:292
 msgid "Add to Steam"
 msgstr "Ajouter à Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:292
+#: src/ui/dialogs/GamePropertiesDialog.vala:293
 msgid "Add to the Steam library"
 msgstr "Ajouter à la bibliothèque Steam"
 

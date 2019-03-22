@@ -99,11 +99,15 @@ namespace GameHub.UI.Views.GamesView
 			child = ebox;
 
 			ebox.add_events(EventMask.ALL_EVENTS_MASK);
-			ebox.button_release_event.connect(e => {
+			ebox.button_press_event.connect(e => {
 				switch(e.button)
 				{
 					case 1:
 						activate();
+						if(e.type == EventType.2BUTTON_PRESS)
+						{
+							run_game();
+						}
 						break;
 
 					case 3:
@@ -150,6 +154,25 @@ namespace GameHub.UI.Views.GamesView
 			if(game.icon == old_icon) return;
 			old_icon = game.icon;
 			Utils.load_image.begin(image, game.icon, "icon");
+		}
+
+		private void run_game()
+		{
+			if(game.status.state == Game.State.INSTALLED)
+			{
+				if(game.use_compat)
+				{
+					game.run_with_compat.begin(false);
+				}
+				else
+				{
+					game.run.begin();
+				}
+			}
+			else if(game.status.state == Game.State.UNINSTALLED)
+			{
+				game.install.begin();
+			}
 		}
 	}
 }

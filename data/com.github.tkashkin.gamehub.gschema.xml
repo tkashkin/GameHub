@@ -55,6 +55,9 @@
 		<key name="show-grid-icons" type="b">
 			<default>true</default>
 		</key>
+		<key name="grid-doubleclick" type="b">
+			<default>false</default>
+		</key>
 		<key name="merge-games" type="b">
 			<default>true</default>
 		</key>

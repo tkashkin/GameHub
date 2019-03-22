@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-05 06:33+0300\n"
+"POT-Creation-Date: 2019-03-22 23:20+0300\n"
 "PO-Revision-Date: 2019-02-05 20:40+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -169,52 +169,52 @@ msgstr ""
 "gedetecteerd.\n"
 "Stel dit handmatig in in de speleigenschappen."
 
-#: src/data/Game.vala:456
+#: src/data/Game.vala:459
 msgctxt "status"
 msgid "Running"
 msgstr "Actief"
 
-#: src/data/Game.vala:459
+#: src/data/Game.vala:462
 msgctxt "status"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:460
+#: src/data/Game.vala:463
 msgctxt "status"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:461
+#: src/data/Game.vala:464
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Bezig met verifiëren van integriteit"
 
-#: src/data/Game.vala:462
+#: src/data/Game.vala:465
 msgctxt "status"
 msgid "Download started"
 msgstr "Downloaden gestart"
 
-#: src/data/Game.vala:464
+#: src/data/Game.vala:467
 msgctxt "status"
 msgid "Not installed"
 msgstr "Niet-geïnstalleerd"
 
-#: src/data/Game.vala:474
+#: src/data/Game.vala:477
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:475
+#: src/data/Game.vala:478
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:477
+#: src/data/Game.vala:480
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Bezig met downloaden"
 
-#: src/data/Game.vala:479
+#: src/data/Game.vala:482
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
@@ -400,20 +400,20 @@ msgid "Some settings will be applied after application restart"
 msgstr ""
 "Sommige instellingen worden pas toegepast na het herstarten van de applicatie"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:61
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:62
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "De spelmap bevat een spatie; dit kan problemen opleveren bij sommige spellen"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:76
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:78
 msgid "Interface"
 msgstr "Uiterlijk"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:77
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:79
 msgid "Collection"
 msgstr "Verzameling"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:82
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:84
 msgid "Emulators"
 msgstr "Emulators"
 
@@ -433,19 +433,23 @@ msgstr "Compacte lijst"
 msgid "Show platform icons in grid view"
 msgstr "Platformpictogrammen tonen in rasterweergave"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:44
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:43
+msgid "Run games with double click"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:47
 msgid "Merge games from different sources"
 msgstr "Spellen uit verschillende bronnen samenvoegen"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:48
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:51
 msgid "Show non-native games"
 msgstr "Wine-spellen tonen"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:49
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:52
 msgid "Use compatibility layers and consider Windows games compatible"
 msgstr "Comptabiliteit gebruiken en Windows-spellen aanmerken als compatibel"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:53
+#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:56
 msgid "Use imported tags"
 msgstr "Geïmporteerde labels gebruiken"
 
@@ -565,7 +569,7 @@ msgid "Name"
 msgstr "Naam"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:228
-#: src/ui/dialogs/GamePropertiesDialog.vala:238
+#: src/ui/dialogs/GamePropertiesDialog.vala:239
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Arguments"
 msgstr "Extra opties"
@@ -580,7 +584,7 @@ msgid "Select emulator directory"
 msgstr "Kies emulatormap"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:277
-#: src/ui/dialogs/GamePropertiesDialog.vala:256
+#: src/ui/dialogs/GamePropertiesDialog.vala:257
 msgid "Force compatibility mode"
 msgstr "Comptabiliteitsmodus afdwingen"
 
@@ -641,23 +645,23 @@ msgstr "Pictogram-URL"
 msgid "Search images:"
 msgstr "Afbeeldingen zoeken:"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:251
+#: src/ui/dialogs/GamePropertiesDialog.vala:252
 msgid "Compatibility"
 msgstr "Comptabiliteit"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:273
+#: src/ui/dialogs/GamePropertiesDialog.vala:274
 msgid "Launch from terminal"
 msgstr "Opstarten in terminalvenster"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:289
+#: src/ui/dialogs/GamePropertiesDialog.vala:290
 msgid "Copy to clipboard"
 msgstr "Kopiëren naar klembord"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:291
+#: src/ui/dialogs/GamePropertiesDialog.vala:292
 msgid "Add to Steam"
 msgstr "Toevoegen aan Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:292
+#: src/ui/dialogs/GamePropertiesDialog.vala:293
 msgid "Add to the Steam library"
 msgstr "Toevoegen aan de Steam-bibliotheek"
 
