@@ -40,6 +40,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			add_switch(_("Compact list"), ui.compact_list, v => { ui.compact_list = v; });
 			add_switch(_("Show platform icons in grid view"), ui.show_grid_icons, v => { ui.show_grid_icons = v; });
+			add_switch(_("Run games with double click"), ui.grid_doubleclick, v => { ui.grid_doubleclick = v; });
+
+			add_separator();
 
 			add_switch(_("Merge games from different sources"), ui.merge_games, v => { ui.merge_games = v; dialog.show_restart_message(); });
 

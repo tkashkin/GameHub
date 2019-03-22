@@ -94,6 +94,7 @@ namespace GameHub.Settings
 
 		public bool compact_list { get; set; }
 		public bool show_grid_icons { get; set; }
+		public bool grid_doubleclick { get; set; }
 
 		public bool merge_games { get; set; }
 

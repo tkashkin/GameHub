@@ -154,17 +154,22 @@ namespace GameHub.UI.Views.GamesView
 			content.add_events(EventMask.ALL_EVENTS_MASK);
 			content.enter_notify_event.connect(e => { card.get_style_context().add_class("hover"); });
 			content.leave_notify_event.connect(e => { card.get_style_context().remove_class("hover"); });
-			content.button_release_event.connect(e => {
+			content.button_press_event.connect(e => {
 				switch(e.button)
 				{
 					case 1:
-						run_game();
+						if(!Settings.UI.get_instance().grid_doubleclick || (Settings.UI.get_instance().grid_doubleclick && e.type == EventType.2BUTTON_PRESS))
+						{
+							run_game();
+						}
 						break;
 
 					case 3:
 						open_context_menu(e, true);
 						break;
 				}
+				((FlowBox) parent).select_child(this);
+				grab_focus();
 				return true;
 			});
 			key_release_event.connect(e => {
