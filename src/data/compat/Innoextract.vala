@@ -24,7 +24,7 @@ namespace GameHub.Data.Compat
 {
 	public class Innoextract: CompatTool
 	{
-		private const int[] MIN_SUPPORTED_VERSION = { 1, 7 };
+		private const int[] MIN_SUPPORTED_VERSION = { 1, 8 };
 
 		public string binary { get; construct; default = "innoextract"; }
 
