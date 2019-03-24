@@ -95,6 +95,7 @@ namespace GameHub.UI.Views.GamesView
 			label.hexpand = true;
 			label.justify = Justification.CENTER;
 			label.lines = 3;
+			label.ellipsize = Pango.EllipsizeMode.END;
 			label.set_line_wrap(true);
 
 			favorite_icon = new Image.from_icon_name("gh-game-favorite-symbolic", IconSize.BUTTON);
