@@ -338,13 +338,38 @@ namespace GameHub.Utils
 					var src = tmp_dir.get_child(finfo.get_name());
 					var dest = path.get_child(finfo.get_name());
 					debug("[FSUtils.mv_up] '%s' -> '%s'", src.get_path(), dest.get_path());
-					src.move(dest, FileCopyFlags.OVERWRITE | FileCopyFlags.NOFOLLOW_SYMLINKS);
+					FSUtils.mv_merge(src, dest);
 				}
 				tmp_dir.delete();
 			}
 			catch(Error e)
 			{
 				warning("[FSUtils.mv_up] %s", e.message);
+			}
+		}
+
+		public static void mv_merge(File source, File destination)
+		{
+			try
+			{
+				source.move(destination, FileCopyFlags.OVERWRITE | FileCopyFlags.NOFOLLOW_SYMLINKS);
+			}
+			catch(IOError.WOULD_MERGE e)
+			{
+				FileInfo? finfo = null;
+				var enumerator = source.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+				while((finfo = enumerator.next_file()) != null)
+				{
+					var src = source.get_child(finfo.get_name());
+					var dest = destination.get_child(finfo.get_name());
+					debug("[FSUtils.mv_merge] '%s' -> '%s'", src.get_path(), dest.get_path());
+					FSUtils.mv_merge(src, dest);
+				}
+				source.delete();
+			}
+			catch(Error e)
+			{
+				warning("[FSUtils.mv_merge] %s", e.message);
 			}
 		}
 
