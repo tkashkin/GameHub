@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-22 23:20+0300\n"
-"PO-Revision-Date: 2019-02-09 14:09+0000\n"
+"PO-Revision-Date: 2019-03-25 13:38+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.5-dev\n"
+"X-Generator: Weblate 3.6-dev\n"
 
 #: src/app.vala:82
 msgid "Show help"
@@ -437,7 +437,7 @@ msgstr "Plattformsymbole in der Gitteransicht anzeigen"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:43
 msgid "Run games with double click"
-msgstr ""
+msgstr "Spiele per Doppelklick starten"
 
 #: src/ui/dialogs/SettingsDialog/tabs/UI.vala:47
 msgid "Merge games from different sources"
