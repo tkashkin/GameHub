@@ -24,7 +24,7 @@ namespace GameHub.Data.Compat
 {
 	public class Proton: Wine
 	{
-		public const string[] APPIDS = {"996510", "961940", "930400", "858280"}; // 3.16 Beta, 3.16, 3.7 Beta, 3.7
+		public const string[] APPIDS = {"1054830", "996510", "961940", "930400", "858280"}; // 4.2, 3.16 Beta, 3.16, 3.7 Beta, 3.7
 
 		public string appid { get; construct; }
 
