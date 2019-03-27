@@ -134,6 +134,10 @@ namespace GameHub
 				tools += new Compat.Proton(appid);
 			}
 
+			CompatTools = tools;
+
+			tools += new Compat.Proton(Compat.Proton.LATEST);
+
 			string[] wine_binaries = { "wine"/*, "wine64", "wine32"*/ };
 			string[] wine_arches = { "win64", "win32" };
 
