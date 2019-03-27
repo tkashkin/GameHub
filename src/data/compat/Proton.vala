@@ -25,6 +25,7 @@ namespace GameHub.Data.Compat
 	public class Proton: Wine
 	{
 		public const string[] APPIDS = {"1054830", "996510", "961940", "930400", "858280"}; // 4.2, 3.16 Beta, 3.16, 3.7 Beta, 3.7
+		public const string LATEST = "latest";
 
 		public string appid { get; construct; }
 
@@ -63,15 +64,37 @@ namespace GameHub.Data.Compat
 				new CompatTool.BoolOption("/NOGUI", _("No GUI"), true)
 			};
 
-			File? proton_dir = null;
-			if(Steam.find_app_install_dir(appid, out proton_dir))
+			if(appid == Proton.LATEST)
 			{
-				if(proton_dir != null)
+				foreach(var tool in CompatTools)
 				{
-					name = proton_dir.get_basename();
-					executable = proton_dir.get_child("proton");
-					installed = executable.query_exists();
-					wine_binary = proton_dir.get_child("dist/bin/wine");
+					if(tool is Proton)
+					{
+						var proton = tool as Proton;
+						if(proton.installed)
+						{
+							appid = proton.appid;
+							name = "Proton (latest)";
+							executable = proton.executable;
+							installed = true;
+							wine_binary = proton.wine_binary;
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				File? proton_dir = null;
+				if(Steam.find_app_install_dir(appid, out proton_dir))
+				{
+					if(proton_dir != null)
+					{
+						name = proton_dir.get_basename();
+						executable = proton_dir.get_child("proton");
+						installed = executable.query_exists();
+						wine_binary = proton_dir.get_child("dist/bin/wine");
+					}
 				}
 			}
 
