@@ -256,12 +256,12 @@ list:not(:backdrop) row:selected:focus label.category-label
 	border-bottom: 1px alpha(#333, 0.3) solid;
 }
 
-.gameinfo-background
+.gameinfo-background, .gameinfo-background viewport
 {
 	background-color: rgb(245, 245, 245);
 	color: rgb(66, 66, 66);
 }
-.gameinfo-background.dark
+.gameinfo-background.dark, .gameinfo-background.dark viewport
 {
 	background-color: rgb(59, 63, 69);
 	color: white;
