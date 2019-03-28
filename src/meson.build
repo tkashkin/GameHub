@@ -23,7 +23,7 @@ project_config = vcs_tag(
 )
 
 deps = [
-	dependency('granite'),
+	dependency('granite', version: '>=5.2.0'),
 	dependency('gdk-3.0'),
 	dependency('webkit2gtk-4.0'),
 	dependency('glib-2.0'),

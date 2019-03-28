@@ -428,6 +428,11 @@ namespace GameHub.Utils
 		return string.joinv(delimiter, ver);
 	}
 
+	public static void set_accel_tooltip(Widget widget, string tooltip, string accel)
+	{
+		widget.tooltip_markup = Granite.markup_accel_tooltip({ accel }, tooltip);
+	}
+
 	#if !APPIMAGE && !FLATPAK && !SNAP
 	private static string? distro;
 	#endif

@@ -24,6 +24,7 @@ using Granite;
 using GameHub.Data;
 using GameHub.Data.DB;
 using GameHub.Utils;
+using GameHub.UI.Windows;
 
 namespace GameHub.UI.Views.GamesView
 {
@@ -87,6 +88,33 @@ namespace GameHub.UI.Views.GamesView
 		private ArrayList<Widget> gamepad_mode_visible_widgets = new ArrayList<Widget>();
 		private ArrayList<Widget> gamepad_mode_hidden_widgets = new ArrayList<Widget>();
 		#endif
+
+		public const string ACTION_PREFIX             = "win.";
+		public const string ACTION_SOURCE_PREV        = "source.previous";
+		public const string ACTION_SOURCE_NEXT        = "source.next";
+		public const string ACTION_SEARCH             = "search";
+		public const string ACTION_FILTERS            = "filters";
+		public const string ACTION_DOWNLOADS          = "downloads";
+		public const string ACTION_SELECT_RANDOM_GAME = "select-random-game";
+		public const string ACTION_ADD_GAME           = "add-game";
+
+		public const string ACCEL_SOURCE_PREV         = "F1"; // LB
+		public const string ACCEL_SOURCE_NEXT         = "F2"; // RB
+		public const string ACCEL_SEARCH              = "<Control>F";
+		public const string ACCEL_FILTERS             = "<Alt>F";
+		public const string ACCEL_DOWNLOADS           = "<Control>D";
+		public const string ACCEL_SELECT_RANDOM_GAME  = "<Control>R";
+		public const string ACCEL_ADD_GAME            = "<Control>N";
+
+		private const GLib.ActionEntry[] action_entries = {
+			{ ACTION_SOURCE_PREV,        window_action_handler },
+			{ ACTION_SOURCE_NEXT,        window_action_handler },
+			{ ACTION_SEARCH,             window_action_handler },
+			{ ACTION_FILTERS,            window_action_handler },
+			{ ACTION_DOWNLOADS,          window_action_handler },
+			{ ACTION_SELECT_RANDOM_GAME, window_action_handler },
+			{ ACTION_ADD_GAME,           window_action_handler }
+		};
 
 		construct
 		{
@@ -177,7 +205,7 @@ namespace GameHub.UI.Views.GamesView
 
 			downloads = new MenuButton();
 			downloads.valign = Align.CENTER;
-			downloads.tooltip_text = _("Downloads");
+			Utils.set_accel_tooltip(downloads, _("Downloads"), ACCEL_DOWNLOADS);
 			downloads.image = new Image.from_icon_name("folder-download" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 
 			downloads_popover = new Popover(downloads);
@@ -203,7 +231,7 @@ namespace GameHub.UI.Views.GamesView
 
 			filters = new MenuButton();
 			filters.valign = Align.CENTER;
-			filters.tooltip_text = _("Filters");
+			Utils.set_accel_tooltip(filters, _("Filters"), ACCEL_FILTERS);
 			filters.image = new Image.from_icon_name("tag" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 			filters_popover = new FiltersPopover(filters);
 			filters_popover.position = PositionType.BOTTOM;
@@ -211,7 +239,7 @@ namespace GameHub.UI.Views.GamesView
 
 			add_game_button = new MenuButton();
 			add_game_button.valign = Align.CENTER;
-			add_game_button.tooltip_text = _("Add game");
+			Utils.set_accel_tooltip(add_game_button, _("Add game"), ACCEL_ADD_GAME);
 			add_game_button.image = new Image.from_icon_name("list-add" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
 			add_game_popover = new AddGamePopover(add_game_button);
 			add_game_popover.position = PositionType.BOTTOM;
@@ -219,14 +247,15 @@ namespace GameHub.UI.Views.GamesView
 
 			search = new SearchEntry();
 			search.placeholder_text = _("Search");
+			Utils.set_accel_tooltip(search, search.placeholder_text, ACCEL_SEARCH);
 			search.halign = Align.CENTER;
 			search.valign = Align.CENTER;
 
 			settings = new Button();
 			settings.valign = Align.CENTER;
-			settings.tooltip_text = _("Settings");
+			Utils.set_accel_tooltip(settings, _("Settings"), Application.ACCEL_SETTINGS);
 			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
-			settings.action_name = GameHub.Application.ACTION_PREFIX + GameHub.Application.ACTION_SETTINGS;
+			settings.action_name = Application.ACTION_PREFIX + Application.ACTION_SETTINGS;
 
 			games_grid.set_sort_func((child1, child2) => {
 				var item1 = child1 as GameCard;
@@ -429,47 +458,77 @@ namespace GameHub.UI.Views.GamesView
 			manette_monitor.device_disconnected.connect(on_gamepad_disconnected);
 			#endif
 
-			add_events(EventMask.KEY_RELEASE_MASK);
-			key_release_event.connect(e => {
-				switch(((EventKey) e).keyval)
-				{
-					case Key.F1: // LB
-					case Key.F2: // RB
-						var tab = filter.selected + (((EventKey) e).keyval == Key.F1 ? -1 : 1);
-						if(tab < 0) tab = (int) filter.n_items - 1;
-						else if(tab >= filter.n_items) tab = 0;
-						filter.selected = tab;
-						break;
+			load_games();
+		}
 
-					case Key.F5: // Select
-						settings.clicked();
-						break;
+		public override void attach_to_window(MainWindow wnd)
+		{
+			base.attach_to_window(wnd);
 
-					case Key.R:
-					case Key.r:
-						int index = Random.int_range(0, (int32) games_grid.get_children().length());
-						var card = games_grid.get_child_at_index(index);
-						if(card != null)
+			window.add_action_entries(action_entries, this);
+			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_SOURCE_PREV,                      { ACCEL_SOURCE_PREV });
+			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_SOURCE_NEXT,                      { ACCEL_SOURCE_NEXT });
+			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_SEARCH,                           { ACCEL_SEARCH });
+			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_FILTERS,                          { ACCEL_FILTERS });
+			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_DOWNLOADS,                        { ACCEL_DOWNLOADS });
+			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_SELECT_RANDOM_GAME,               { ACCEL_SELECT_RANDOM_GAME });
+			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_ADD_GAME,                         { ACCEL_ADD_GAME });
+			Application.instance.set_accels_for_action(Application.ACTION_PREFIX + Application.ACTION_SETTINGS, { "F5" }); // Select
+		}
+
+		private void window_action_handler(SimpleAction action, Variant? args)
+		{
+			switch(action.name)
+			{
+				case ACTION_SOURCE_PREV:
+				case ACTION_SOURCE_NEXT:
+					var tab = filter.selected + (action.name == ACTION_SOURCE_PREV ? -1 : 1);
+					if(tab < 0) tab = (int) filter.n_items - 1;
+					else if(tab >= filter.n_items) tab = 0;
+					filter.selected = tab;
+					break;
+
+				case ACTION_SEARCH:
+					search.grab_focus();
+					break;
+
+				case ACTION_FILTERS:
+					filters.clicked();
+					break;
+
+				case ACTION_DOWNLOADS:
+					if(downloads.sensitive)
+					{
+						downloads.clicked();
+					}
+					break;
+
+				case ACTION_SELECT_RANDOM_GAME:
+					int index = Random.int_range(0, (int32) games_grid.get_children().length());
+					var card = games_grid.get_child_at_index(index);
+					if(card != null)
+					{
+						games_grid.select_child(card);
+						if(view.selected == 0)
 						{
-							games_grid.select_child(card);
 							card.grab_focus();
 						}
-						var row = games_list.get_row_at_index(index);
-						if(row != null)
+					}
+					var row = games_list.get_row_at_index(index);
+					if(row != null)
+					{
+						games_list.select_row(row);
+						if(view.selected == 1)
 						{
-							games_list.select_row(row);
 							row.grab_focus();
 						}
-						break;
+					}
+					break;
 
-					case Key.Alt_L: // Y
-					case Key.Alt_R:
-						filters.clicked();
-						break;
-				}
-			});
-
-			load_games();
+				case ACTION_ADD_GAME:
+					add_game_button.clicked();
+					break;
+			}
 		}
 
 		private void postpone_view_update()

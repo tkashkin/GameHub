@@ -182,8 +182,6 @@ namespace GameHub.UI.Views.GamesView
 						run_game();
 						return true;
 
-					case Key.Control_L:
-					case Key.Control_R:
 					case Key.Menu:
 						open_context_menu(e, false);
 						return true;
