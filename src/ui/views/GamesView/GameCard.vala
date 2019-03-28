@@ -278,7 +278,7 @@ namespace GameHub.UI.Views.GamesView
 			Settings.UI.get_instance().notify["show-grid-icons"].connect(update);
 		}
 
-		private void run_game()
+		public void run_game()
 		{
 			if(game.status.state == Game.State.INSTALLED)
 			{

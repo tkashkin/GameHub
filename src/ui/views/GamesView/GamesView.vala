@@ -317,6 +317,7 @@ namespace GameHub.UI.Views.GamesView
 
 			filter.mode_changed.connect(postpone_view_update);
 			search.search_changed.connect(postpone_view_update);
+			search.activate.connect(search_run_first_matching_game);
 
 			ui_settings.notify["show-unsupported-games"].connect(postpone_view_update);
 			ui_settings.notify["use-proton"].connect(postpone_view_update);
@@ -934,6 +935,30 @@ namespace GameHub.UI.Views.GamesView
 				if(!search.has_focus)
 				{
 					card.grab_focus();
+				}
+			}
+		}
+
+		private void search_run_first_matching_game()
+		{
+			if(search.text.strip().length == 0 || !search.has_focus) return;
+
+			if(view.selected == 0)
+			{
+				#if GTK_3_22
+				var card = games_grid.get_child_at_pos(0, 0) as GameCard?;
+				if(card != null)
+				{
+					card.run_game();
+				}
+				#endif
+			}
+			else
+			{
+				var row = games_list.get_row_at_y(32) as GameListRow?;
+				if(row != null)
+				{
+					row.run_game();
 				}
 			}
 		}
