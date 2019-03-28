@@ -156,7 +156,7 @@ namespace GameHub.UI.Views.GamesView
 			Utils.load_image.begin(image, game.icon, "icon");
 		}
 
-		private void run_game()
+		public void run_game()
 		{
 			if(game.status.state == Game.State.INSTALLED)
 			{
