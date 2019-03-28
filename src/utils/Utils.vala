@@ -209,17 +209,16 @@ namespace GameHub.Utils
 
 	public static string get_distro()
 	{
-		#if APPIMAGE
-		return "appimage";
-		#elif FLATPAK
-		return "flatpak";
-		#elif SNAP
-		return "snap";
-		#else
 		if(distro != null) return distro;
 		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}, null, null, false, true, false).replace("\"", "");
-		return distro;
+		#if APPIMAGE
+		distro = "[AppImage] " + distro;
+		#elif FLATPAK
+		distro = "[Flatpak] " + distro;
+		#elif SNAP
+		distro = "[Snap] " + distro;
 		#endif
+		return distro;
 	}
 
 	public static string? get_desktop_environment()

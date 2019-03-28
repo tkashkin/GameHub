@@ -120,10 +120,15 @@ namespace GameHub.UI.Views.GameDetailsView
 			notify["preferred-source"].connect(() => {
 				if(preferred_source != null)
 				{
-					var name = preferred_source.id;
-					if(stack.get_child_by_name(name) != null)
+					var id = preferred_source.id;
+					foreach(var page in stack.get_children())
 					{
-						stack.set_visible_child_full(name, StackTransitionType.NONE);
+						var page_id = Value(typeof(string));
+						stack.child_get_property(page, "name", ref page_id);
+						if(page_id.holds(typeof(string)) && page_id.get_string().has_prefix(@"$(id):"))
+						{
+							stack.set_visible_child_full(page_id.get_string(), StackTransitionType.NONE);
+						}
 					}
 				}
 			});
@@ -191,11 +196,11 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void add_page(Game g)
 		{
-			if(stack.get_child_by_name(g.source.id) != null) return;
+			if(stack.get_child_by_name(g.full_id) != null) return;
 
 			var page = new GameDetailsPage(g, this);
 			page.content.margin = content_margin;
-			stack.add_titled(page, g.source.id, g.source.name);
+			stack.add_titled(page, g.full_id, @"$(g.source.name): $(g.name)");
 		}
 	}
 }

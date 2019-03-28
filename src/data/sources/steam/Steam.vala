@@ -69,7 +69,8 @@ namespace GameHub.Data.Sources.Steam
 				return (!) installed;
 			}
 
-			if("elementary" in Utils.get_distro())
+			var distro = Utils.get_distro().down();
+			if("ubuntu" in distro || "elementary" in distro || "pop!_os" in distro)
 			{
 				installed = Utils.is_package_installed("steam")
 				         || Utils.is_package_installed("steam64")
@@ -109,7 +110,8 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async bool install()
 		{
-			if("elementary" in Utils.get_distro())
+			var distro = Utils.get_distro().down();
+			if("elementary" in distro || "pop!_os" in distro)
 			{
 				Utils.open_uri("appstream://steam.desktop");
 			}
