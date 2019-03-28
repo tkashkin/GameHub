@@ -67,6 +67,8 @@ namespace GameHub
 		public const string ACTION_GAME_DETAILS                    = "game.details";
 		public const string ACTION_GAME_PROPERTIES                 = "game.properties";
 
+		public const string ACCEL_SETTINGS                         = "<Control>S";
+
 		private const GLib.ActionEntry[] action_entries = {
 			{ ACTION_SETTINGS,                        action_settings },
 			{ ACTION_CORRUPTED_INSTALLER_PICK_ACTION, action_corrupted_installer, "(ss)" },
@@ -113,6 +115,7 @@ namespace GameHub
 			flags = ApplicationFlags.HANDLES_COMMAND_LINE;
 			instance = this;
 			add_action_entries(action_entries, this);
+			set_accels_for_action(ACTION_PREFIX + ACTION_SETTINGS, { ACCEL_SETTINGS });
 		}
 
 		private void init()
