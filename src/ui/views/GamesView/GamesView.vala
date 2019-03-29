@@ -89,6 +89,9 @@ namespace GameHub.UI.Views.GamesView
 		private ArrayList<Widget> gamepad_mode_hidden_widgets = new ArrayList<Widget>();
 		#endif
 
+		private Unity.LauncherEntry launcher_entry;
+		private Dbusmenu.Menuitem launcher_menu;
+
 		public const string ACTION_PREFIX             = "win.";
 		public const string ACTION_SOURCE_PREV        = "source.previous";
 		public const string ACTION_SOURCE_NEXT        = "source.next";
@@ -418,11 +421,22 @@ namespace GameHub.UI.Views.GamesView
 			add_game_button.opacity = 0;
 			add_game_button.sensitive = false;
 
+			launcher_entry = Unity.LauncherEntry.get_for_desktop_id(ProjectConfig.PROJECT_NAME + ".desktop");
+
+			setup_launcher_menu();
+
 			Downloader.get_instance().dl_started.connect(dl => {
 				Idle.add(() => {
 					downloads_list.add(new DownloadProgressView(dl));
 					downloads.sensitive = true;
 					downloads_count++;
+
+					dl.download.status_change.connect(s => {
+						Idle.add(() => {
+							update_downloads_progress();
+							return Source.REMOVE;
+						});
+					});
 					return Source.REMOVE;
 				});
 			});
@@ -439,6 +453,7 @@ namespace GameHub.UI.Views.GamesView
 						downloads_popover.hide();
 						#endif
 					}
+					update_downloads_progress();
 					return Source.REMOVE;
 				});
 			});
@@ -735,6 +750,8 @@ namespace GameHub.UI.Views.GamesView
 
 			g.tags_update.connect(postpone_view_update);
 
+			add_game_to_launcher_favorites_menu(g);
+
 			if(g is Sources.User.UserGame)
 			{
 				((Sources.User.UserGame) g).removed.connect(() => {
@@ -949,7 +966,7 @@ namespace GameHub.UI.Views.GamesView
 				var card = games_grid.get_child_at_pos(0, 0) as GameCard?;
 				if(card != null)
 				{
-					card.run_game();
+					card.game.run_or_install.begin();
 				}
 				#endif
 			}
@@ -958,7 +975,7 @@ namespace GameHub.UI.Views.GamesView
 				var row = games_list.get_row_at_y(32) as GameListRow?;
 				if(row != null)
 				{
-					row.run_game();
+					row.game.run_or_install.begin();
 				}
 			}
 		}
@@ -1107,6 +1124,70 @@ namespace GameHub.UI.Views.GamesView
 					});
 				}
 			});
+		}
+
+		private void update_downloads_progress()
+		{
+			launcher_entry.progress_visible = downloads_count > 0;
+			double progress = 0;
+			int count = 0;
+			downloads_list.foreach(row => {
+				var dl_row = row as DownloadProgressView;
+				if(dl_row != null)
+				{
+					progress += dl_row.dl_info.download.status.progress;
+					count++;
+				}
+			});
+			launcher_entry.progress = progress / count;
+			launcher_entry.count_visible = count > 0;
+			launcher_entry.count = count;
+		}
+
+		private void setup_launcher_menu()
+		{
+			launcher_menu = new Dbusmenu.Menuitem();
+			launcher_entry.quicklist = launcher_menu;
+		}
+
+		private Dbusmenu.Menuitem launcher_menu_separator()
+		{
+			var separator = new Dbusmenu.Menuitem();
+			separator.property_set(Dbusmenu.MENUITEM_PROP_TYPE, Dbusmenu.CLIENT_TYPES_SEPARATOR);
+			return separator;
+		}
+
+		private void add_game_to_launcher_favorites_menu(Game game)
+		{
+			var added = false;
+			Dbusmenu.Menuitem? item = null;
+
+			game.tags_update.connect(() => {
+				Idle.add(() => {
+					var favorite = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+					if(!added && favorite)
+					{
+						if(item == null)
+						{
+							item = new Dbusmenu.Menuitem();
+							item.property_set(Dbusmenu.MENUITEM_PROP_LABEL, game.name);
+							item.item_activated.connect(() => { game.run_or_install.begin(); });
+						}
+						launcher_menu.child_append(item);
+						added = true;
+					}
+					else if(added && !favorite)
+					{
+						if(item != null)
+						{
+							launcher_menu.child_delete(item);
+						}
+						added = false;
+					}
+					return Source.REMOVE;
+				});
+			});
+			game.tags_update();
 		}
 
 		#if MANETTE

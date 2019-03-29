@@ -432,9 +432,7 @@ namespace GameHub.Utils
 		widget.tooltip_markup = Granite.markup_accel_tooltip({ accel }, tooltip);
 	}
 
-	#if !APPIMAGE && !FLATPAK && !SNAP
 	private static string? distro;
-	#endif
 
 	public class Logger: Granite.Services.Logger
 	{
