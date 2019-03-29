@@ -106,7 +106,7 @@ namespace GameHub.UI.Views.GamesView
 						activate();
 						if(e.type == EventType.2BUTTON_PRESS)
 						{
-							run_game();
+							game.run_or_install.begin();
 						}
 						break;
 
@@ -154,25 +154,6 @@ namespace GameHub.UI.Views.GamesView
 			if(game.icon == old_icon) return;
 			old_icon = game.icon;
 			Utils.load_image.begin(image, game.icon, "icon");
-		}
-
-		public void run_game()
-		{
-			if(game.status.state == Game.State.INSTALLED)
-			{
-				if(game.use_compat)
-				{
-					game.run_with_compat.begin(false);
-				}
-				else
-				{
-					game.run.begin();
-				}
-			}
-			else if(game.status.state == Game.State.UNINSTALLED)
-			{
-				game.install.begin();
-			}
 		}
 	}
 }

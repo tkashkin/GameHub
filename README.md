@@ -46,11 +46,7 @@ sudo apt install com.github.tkashkin.gamehub
 ```
 
 ### Arch Linux
-[gamehub-git](https://aur.archlinux.org/packages/gamehub-git/) is available in AUR:
-```bash
-aurman -S gamehub-git
-```
-Package is maintained by [@btd1337](https://github.com/btd1337).
+[gamehub-git](https://aur.archlinux.org/packages/gamehub-git/) and [gamehub](https://aur.archlinux.org/packages/gamehub/) are available in AUR.
 
 ## Building
 
@@ -69,6 +65,7 @@ Package is maintained by [@btd1337](https://github.com/btd1337).
 * `libsqlite3-dev`
 * `libxml2-dev`
 * `libpolkit-gobject-1-dev`
+* `libunity-dev`
 * `libmanette-0.2-dev`, `libx11-dev`, `libxtst-dev` (optional, required for gamepad support)
 
 #### Building
@@ -82,7 +79,7 @@ scripts/build.sh build_deb
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
 cd GameHub
-meson build --prefix=/usr -Ddistro=generic --buildtype=debug
+CFLAGS="$CFLAGS -O0" meson build --prefix=/usr -Ddistro=generic --buildtype=debug
 cd build
 ninja
 sudo ninja install

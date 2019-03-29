@@ -155,8 +155,7 @@ namespace GameHub
 
 			CompatTools = tools;
 
-			weak IconTheme default_theme = IconTheme.get_default();
-			default_theme.add_resource_path("/com/github/tkashkin/gamehub/icons");
+			IconTheme.get_default().add_resource_path("/com/github/tkashkin/gamehub/icons");
 
 			var screen = Screen.get_default();
 
@@ -405,25 +404,6 @@ namespace GameHub
 			println(plain, "DE:      %s", Utils.get_desktop_environment() ?? "unknown");
 		}
 
-		private static async void run_game(Game game, bool show_compat)
-		{
-			if(game.status.state == Game.State.INSTALLED)
-			{
-				if(game.use_compat)
-				{
-					yield game.run_with_compat(show_compat);
-				}
-				else
-				{
-					yield game.run();
-				}
-			}
-			else if(game.status.state == Game.State.UNINSTALLED)
-			{
-				yield game.install();
-			}
-		}
-
 		private static void action_settings(SimpleAction action, Variant? args)
 		{
 			new UI.Dialogs.SettingsDialog.SettingsDialog();
@@ -504,8 +484,8 @@ namespace GameHub
 						{
 							case ACTION_GAME_RUN:
 								info("Starting `%s`", game.name);
-								run_game.begin(game, opt_show_compat, (obj, res) => {
-									run_game.end(res);
+								game.run_or_install.begin(opt_show_compat, (obj, res) => {
+									game.run_or_install.end(res);
 									info("`%s` finished", game.name);
 									loop.quit();
 								});

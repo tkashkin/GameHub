@@ -144,6 +144,25 @@ namespace GameHub.Data
 			}
 		}
 
+		public async void run_or_install(bool show_compat=false)
+		{
+			if(status.state == Game.State.INSTALLED)
+			{
+				if(use_compat)
+				{
+					yield run_with_compat(show_compat);
+				}
+				else
+				{
+					yield run();
+				}
+			}
+			else if(status.state == Game.State.UNINSTALLED)
+			{
+				yield install();
+			}
+		}
+
 		public virtual async void update_game_info(){}
 
 		protected void update_version()

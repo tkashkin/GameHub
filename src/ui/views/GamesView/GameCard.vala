@@ -161,7 +161,7 @@ namespace GameHub.UI.Views.GamesView
 					case 1:
 						if(!Settings.UI.get_instance().grid_doubleclick || (Settings.UI.get_instance().grid_doubleclick && e.type == EventType.2BUTTON_PRESS))
 						{
-							run_game();
+							game.run_or_install.begin();
 						}
 						break;
 
@@ -179,7 +179,7 @@ namespace GameHub.UI.Views.GamesView
 					case Key.Return:
 					case Key.space:
 					case Key.KP_Space:
-						run_game();
+						game.run_or_install.begin();
 						return true;
 
 					case Key.Menu:
@@ -276,25 +276,6 @@ namespace GameHub.UI.Views.GamesView
 			}
 
 			Settings.UI.get_instance().notify["show-grid-icons"].connect(update);
-		}
-
-		public void run_game()
-		{
-			if(game.status.state == Game.State.INSTALLED)
-			{
-				if(game.use_compat)
-				{
-					game.run_with_compat.begin(false);
-				}
-				else
-				{
-					game.run.begin();
-				}
-			}
-			else if(game.status.state == Game.State.UNINSTALLED)
-			{
-				game.install.begin();
-			}
 		}
 
 		private void open_context_menu(Event e, bool at_pointer=true)

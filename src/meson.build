@@ -32,6 +32,7 @@ deps = [
 	dependency('sqlite3'),
 	dependency('libxml-2.0'),
 	dependency('polkit-gobject-1'),
+	dependency('unity'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
