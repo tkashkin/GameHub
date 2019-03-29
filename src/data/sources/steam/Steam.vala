@@ -60,7 +60,14 @@ namespace GameHub.Data.Sources.Steam
 
 		private bool? installed = null;
 
-		private bool is_authenticated_in_steam_client { get { return FSUtils.file(FSUtils.Paths.Steam.LoginUsersVDF).query_exists(); } }
+		private bool is_authenticated_in_steam_client
+		{
+			get
+			{
+				var loginusers = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.LoginUsersVDF);
+				return loginusers != null && loginusers.query_exists();
+			}
+		}
 
 		public override bool is_installed(bool refresh)
 		{
@@ -91,13 +98,13 @@ namespace GameHub.Data.Sources.Steam
 			install_dir = null;
 			foreach(var dir in Steam.LibraryFolders)
 			{
-				var acf = FSUtils.file(dir, @"appmanifest_$(app).acf");
-				if(acf.query_exists())
+				var acf = FSUtils.find_case_insensitive(FSUtils.file(dir), @"appmanifest_$(app).acf");
+				if(acf != null && acf.query_exists())
 				{
 					var root = Parser.parse_vdf_file(acf.get_path()).get_object();
-					var d = FSUtils.file(dir, "common/" + root.get_object_member("AppState").get_string_member("installdir"));
+					var d = FSUtils.find_case_insensitive(FSUtils.file(dir), "common/" + root.get_object_member("AppState").get_string_member("installdir"));
 					install_dir = d;
-					return d.query_exists();
+					return d != null && d.query_exists();
 				}
 			}
 			return false;
@@ -133,7 +140,16 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			Utils.thread("Steam-loginusers", () => {
-				var config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDF);
+				var loginusers = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.LoginUsersVDF);
+
+				if(loginusers == null || !loginusers.query_exists())
+				{
+					result = false;
+					Idle.add(authenticate.callback);
+					return;
+				}
+
+				var config = Parser.parse_vdf_file(loginusers.get_path());
 				var users = Parser.json_object(config, {"users"});
 
 				if(users == null)
@@ -272,19 +288,31 @@ namespace GameHub.Data.Sources.Steam
 			get
 			{
 				if(folders != null) return folders;
-
 				folders = new ArrayList<string>();
-				folders.add(FSUtils.Paths.Steam.SteamApps);
 
-				var root = Parser.parse_vdf_file(FSUtils.Paths.Steam.LibraryFoldersVDF);
+				var steamapps = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.SteamApps);
+
+				if(steamapps == null || !steamapps.query_exists()) return folders;
+
+				folders.add(steamapps.get_path());
+
+				var libraryfolders = FSUtils.find_case_insensitive(steamapps, FSUtils.Paths.Steam.LibraryFoldersVDF);
+
+				if(libraryfolders == null || !libraryfolders.query_exists()) return folders;
+
+				var root = Parser.parse_vdf_file(libraryfolders.get_path());
 				var lf = Parser.json_object(root, {"LibraryFolders"});
 
 				if(lf != null)
 				{
 					foreach(var key in lf.get_members())
 					{
-						var dir = lf.get_string_member(key) + "/steamapps";
-						if(FSUtils.file(dir).query_exists()) folders.add(dir);
+						var libdir = FSUtils.file(lf.get_string_member(key));
+						if(libdir != null && libdir.query_exists())
+						{
+							var dir = FSUtils.find_case_insensitive(libdir, "steamapps");
+							if(dir != null && dir.query_exists()) folders.add(dir.get_path());
+						}
 					}
 				}
 
@@ -302,7 +330,12 @@ namespace GameHub.Data.Sources.Steam
 			uint64 communityid = uint64.parse(instance.user_id);
 			uint64 steamid3 = communityid_to_steamid3(communityid);
 
-			var shortcuts = FSUtils.file(FSUtils.Paths.Steam.Home, @"steam/userdata/$(steamid3)/config/shortcuts.vdf");
+			var config_dir = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), @"steam/userdata/$(steamid3)/config");
+
+			if(config_dir == null || !config_dir.query_exists()) return;
+
+			var shortcuts = FSUtils.find_case_insensitive(config_dir, "shortcuts.vdf") ?? FSUtils.file(config_dir.get_path(), "shortcuts.vdf");
+
 			var vdf = new BinaryVDF(shortcuts);
 
 			var root_node = vdf.read() as BinaryVDF.ListNode;

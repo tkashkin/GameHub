@@ -76,11 +76,11 @@ namespace GameHub.Utils
 			public class Steam
 			{
 				public static string Home { owned get { return FSUtils.Paths.Settings.get_instance().steam_home; } }
-				public static string Config { owned get { return FSUtils.Paths.Steam.Home + "/steam/config"; } }
-				public static string LoginUsersVDF { owned get { return FSUtils.Paths.Steam.Config + "/loginusers.vdf"; } }
+				public const string Config = "steam/config";
+				public const string LoginUsersVDF = FSUtils.Paths.Steam.Config + "/loginusers.vdf";
 
-				public static string SteamApps { owned get { return FSUtils.Paths.Steam.Home + "/steam/steamapps"; } }
-				public static string LibraryFoldersVDF { owned get { return FSUtils.Paths.Steam.SteamApps + "/libraryfolders.vdf"; } }
+				public const string SteamApps = "steam/steamapps";
+				public const string LibraryFoldersVDF = "libraryfolders.vdf";
 			}
 
 			public class GOG
