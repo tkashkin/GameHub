@@ -2,43 +2,46 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Kemal Oktay Aktoğan <oktay454@disroot.org>, 2019.
+# Güner Acet <kurama632@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 21:53+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2019-03-22 23:20+0300\n"
+"PO-Revision-Date: 2019-03-30 20:30+0000\n"
+"Last-Translator: Güner Acet <kurama632@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
+"translations/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.6-dev\n"
 
 #: src/app.vala:87
 msgid "Show help"
-msgstr ""
+msgstr "Yardımı göster"
 
 #: src/app.vala:88
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Uygulama versiyonunu göster ve çık"
 
 #: src/app.vala:89
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "GDB hata ayıklayıcısı ile birlikte yeniden başlat"
 
 #: src/app.vala:90
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "Tüm GDB geriye dönük izlemesini(olay yığını) göster"
 
 #: src/app.vala:94
 msgid "Show main window"
-msgstr ""
+msgstr "Ana pencereyi göster"
 
 #: src/app.vala:95
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "Uygulama ayarları iletişim kutusunu göster"
 
 #: src/app.vala:96
 msgid "Show about dialog"
@@ -46,118 +49,119 @@ msgstr ""
 
 #: src/app.vala:97
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "Arka planda çalışan iş parçacık sayısının üst limiti"
 
 #: src/app.vala:101
 msgid "Run game"
-msgstr ""
+msgstr "Oyunu çalıştır"
 
 #: src/app.vala:102
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "Uyumluluk ayarları iletişim kutusunu göster"
 
 #: src/app.vala:103
 msgid "Open game details"
-msgstr ""
+msgstr "Oyun ayrıntılarını aç"
 
 #: src/app.vala:104
 msgid "Open game properties"
-msgstr ""
+msgstr "Oyun özelliklerini aç"
 
 #: src/app.vala:108
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Hata ayıklama günlüğünü etkinleştirin"
 
 #: src/app.vala:109
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Kimlik doğrulama işlemi ve kimlik doğrulama belirteçleri gibi hassas bilgiler"
 
 #: src/app.vala:110
 msgid "Log download manager"
-msgstr ""
+msgstr "Seyir kaydı indirme yöneticisi"
 
 #: src/app.vala:111
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "Arka plan çalışma öbeklerinin seyir kaydını başlat/durdur"
 
 #: src/app.vala:112
 msgid "Verbose logging"
-msgstr ""
+msgstr "Ayrıntılı günlük kaydı"
 
 #: src/app.vala:224
 msgid "Game Options:"
-msgstr ""
+msgstr "Oyun seçenekleri:"
 
 #: src/app.vala:224
 msgid "Show game options help"
-msgstr ""
+msgstr "Oyun seçenekleri yardımını göster"
 
 #: src/app.vala:232
 msgid "Logging Options:"
-msgstr ""
+msgstr "Günlüğe Kaydetme Seçenekleri:"
 
 #: src/app.vala:232
 msgid "Show logging options help"
-msgstr ""
+msgstr "Günlüğe kaydetme seçenekleri yardımını göster"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
-msgstr ""
+msgstr "Çalıştırma dosyasını seçiniz"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:399
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "Seç"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/data/Runnable.vala:163 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #: src/data/Runnable.vala:149 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr ""
+msgstr "Dizin seçin"
 
 #: src/data/Runnable.vala:403
 #, c-format
 msgid "Part %u of %u: "
-msgstr ""
+msgstr "%u' nun %u Kısmı: "
 
 #: src/data/Runnable.vala:426 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr ""
+msgstr "%s: bozuk yükleyici"
 
 #: src/data/Runnable.vala:427
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr ""
+msgstr "%s içinde sağlama uyuşmazlığı"
 
 #: src/data/Runnable.vala:442 src/ui/dialogs/CorruptedInstallerDialog.vala:125
 msgid "Show file"
-msgstr ""
+msgstr "Dosyayı göster"
 
 #: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
-msgstr ""
+msgstr "Kaldır"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
-msgstr ""
+msgstr "Yedekleme"
 
 #: src/data/Runnable.vala:594
 #, c-format
 msgid "%s: cannot detect main executable"
-msgstr ""
+msgstr "%s: ana çalıştırılabilir dosya algılanamıyor"
 
 #: src/data/Runnable.vala:595
 msgid ""
