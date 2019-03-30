@@ -45,6 +45,7 @@ src/ui/dialogs/GamePropertiesDialog.vala
 src/ui/dialogs/GameFSOverlaysDialog.vala
 src/ui/dialogs/CompatRunDialog.vala
 src/ui/dialogs/CorruptedInstallerDialog.vala
+src/ui/dialogs/AboutDialog.vala
 src/ui/views/BaseView.vala
 src/ui/views/WelcomeView.vala
 src/ui/views/GamesView/GamesView.vala

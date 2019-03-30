@@ -16,6 +16,8 @@
 	​<update_contact>tkashkin@gmail.com</update_contact>
 	<url type="homepage">https://tkashkin.tk/projects/gamehub</url>
 	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
+	<url type="translate">https://hosted.weblate.org/engage/gamehub</url>
+	<url type="contact">https://tkashkin.tk</url>
 
 	<provides>
 		<binary>com.github.tkashkin.gamehub</binary>
@@ -39,6 +41,11 @@
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/8b321ac7991d2946b1d331e1a2e525ceb2ece324/data/screenshots/light/properties%402x.png</image>
 		</screenshot>
 	</screenshots>
+
+	<custom>
+		<value key="x-appcenter-color-primary">#7239b3</value>
+		<value key="x-appcenter-color-primary-text">#ffffff</value>
+	</custom>
 
 	<releases>
 		<release type="development" version="0.13.1" date="2019-01-28" />

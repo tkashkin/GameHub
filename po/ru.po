@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-22 23:20+0300\n"
+"POT-Creation-Date: 2019-03-30 21:53+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -20,55 +20,59 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:82
+#: src/app.vala:87
 msgid "Show help"
 msgstr "Показать справку"
 
-#: src/app.vala:83
+#: src/app.vala:88
 msgid "Show application version and exit"
 msgstr "Показать версию приложения и выйти"
 
-#: src/app.vala:84
+#: src/app.vala:89
 msgid "Restart with GDB debugger attached"
 msgstr "Перезапустить с подключенным отладчиком GDB"
 
-#: src/app.vala:85
+#: src/app.vala:90
 msgid "Show full GDB backtrace"
 msgstr "Показывать полный стек вызовов в GDB"
 
-#: src/app.vala:89
+#: src/app.vala:94
 msgid "Show main window"
 msgstr "Показать главное окно"
 
-#: src/app.vala:90
+#: src/app.vala:95
 msgid "Show application settings dialog"
 msgstr "Показать диалог настроек приложения"
 
-#: src/app.vala:91
+#: src/app.vala:96
+msgid "Show about dialog"
+msgstr "Показать диалог информации о программе"
+
+#: src/app.vala:97
 msgid "Maximum number of background worker threads"
 msgstr "Максимальное количество фоновых потоков"
 
-#: src/app.vala:95
+#: src/app.vala:101
 msgid "Run game"
 msgstr "Запустить игру"
 
-#: src/app.vala:96
+#: src/app.vala:102
 msgid "Show compatibility options dialog"
 msgstr "Показать диалог опций совместимости"
 
-#: src/app.vala:97
+#: src/app.vala:103
 msgid "Open game details"
 msgstr "Открыть информацию об игре"
 
-#: src/app.vala:98
+#: src/app.vala:104
 msgid "Open game properties"
 msgstr "Открыть свойства игры"
 
-#: src/app.vala:102
+#: src/app.vala:108
 msgid "Enable debug logging"
 msgstr "Включить отладочные сообщения"
 
-#: src/app.vala:103
+#: src/app.vala:109
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -76,31 +80,31 @@ msgstr ""
 "Выводить сообщения о процессе аутентификации и конфиденциальную информацию, "
 "такую как токены аутентификации"
 
-#: src/app.vala:104
+#: src/app.vala:110
 msgid "Log download manager"
 msgstr "Выводить сообщения менеджера загрузок"
 
-#: src/app.vala:105
+#: src/app.vala:111
 msgid "Log background workers start/stop"
 msgstr "Выводить сообщения о запуске/остановке фоновых потоков"
 
-#: src/app.vala:106
+#: src/app.vala:112
 msgid "Verbose logging"
 msgstr "Подробные сообщения"
 
-#: src/app.vala:214
+#: src/app.vala:224
 msgid "Game Options:"
 msgstr "Параметры игр:"
 
-#: src/app.vala:214
+#: src/app.vala:224
 msgid "Show game options help"
 msgstr "Показать справку о параметрах игр"
 
-#: src/app.vala:222
+#: src/app.vala:232
 msgid "Logging Options:"
 msgstr "Параметры журналирования:"
 
-#: src/app.vala:222
+#: src/app.vala:232
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 
@@ -111,7 +115,7 @@ msgid "Select executable"
 msgstr "Выберите исполняемый файл"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:366
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:399
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -169,52 +173,52 @@ msgstr ""
 "Исполняемый файл для этой игры невозможно определить автоматически.\n"
 "Укажите исполняемый файл в свойствах игры."
 
-#: src/data/Game.vala:459
+#: src/data/Game.vala:478
 msgctxt "status"
 msgid "Running"
 msgstr "Запущена"
 
-#: src/data/Game.vala:462
+#: src/data/Game.vala:481
 msgctxt "status"
 msgid "Installed"
 msgstr "Установлена"
 
-#: src/data/Game.vala:463
+#: src/data/Game.vala:482
 msgctxt "status"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:464
+#: src/data/Game.vala:483
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Проверка целостности установщика"
 
-#: src/data/Game.vala:465
+#: src/data/Game.vala:484
 msgctxt "status"
 msgid "Download started"
 msgstr "Загрузка начата"
 
-#: src/data/Game.vala:467
+#: src/data/Game.vala:486
 msgctxt "status"
 msgid "Not installed"
 msgstr "Не установлена"
 
-#: src/data/Game.vala:477
+#: src/data/Game.vala:496
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Установленные"
 
-#: src/data/Game.vala:478
+#: src/data/Game.vala:497
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:480
+#: src/data/Game.vala:499
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Загрузка"
 
-#: src/data/Game.vala:482
+#: src/data/Game.vala:501
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Не установленные"
@@ -291,64 +295,64 @@ msgstr "Запустить"
 msgid "Show WineWrap menu"
 msgstr "Показать меню WineWrap"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:93
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:116
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "Завершить приложения в префиксе"
 
-#: src/data/compat/Proton.vala:43
+#: src/data/compat/Proton.vala:44
 msgid "Proton prefix"
 msgstr "Префикс Proton"
 
-#: src/data/compat/Proton.vala:49
+#: src/data/compat/Proton.vala:50
 msgid "Disable esync"
 msgstr "Выключить esync"
 
-#: src/data/compat/Proton.vala:50
+#: src/data/compat/Proton.vala:51
 msgid "Force LARGE_ADDRESS_AWARE flag"
 msgstr "Принудительно использовать флаг LARGE_ADDRESS_AWARE"
 
-#: src/data/compat/Proton.vala:51
+#: src/data/compat/Proton.vala:52
 msgid "Disable DirectX 11 compatibility layer"
 msgstr "Выключить слой совместимости с DirectX 11"
 
-#: src/data/compat/Proton.vala:52
+#: src/data/compat/Proton.vala:53
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
 msgstr "Использовать WineD3D11 как слой совместимости DirectX 11"
 
-#: src/data/compat/Proton.vala:53
+#: src/data/compat/Proton.vala:54
 msgid "Show DXVK info overlay"
 msgstr "Показывать оверлей DXVK"
 
-#: src/data/compat/Proton.vala:60 src/data/compat/Wine.vala:66
+#: src/data/compat/Proton.vala:61 src/data/compat/Wine.vala:66
 msgid "Silent installation"
 msgstr "Тихая установка"
 
-#: src/data/compat/Proton.vala:61 src/data/compat/Wine.vala:67
+#: src/data/compat/Proton.vala:62 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
 msgstr "Очень тихая установка"
 
-#: src/data/compat/Proton.vala:62 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:63 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
 msgstr "Подавить сообщения"
 
-#: src/data/compat/Proton.vala:63 src/data/compat/Wine.vala:69
+#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:69
 msgid "No GUI"
 msgstr "Без интерфейса"
 
-#: src/data/compat/Proton.vala:81 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:104 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
 msgstr "Открыть директорию префикса"
 
-#: src/data/compat/Proton.vala:84 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:107 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
 msgstr "Запустить winecfg"
 
-#: src/data/compat/Proton.vala:87 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
 msgstr "Запустить winetricks"
 
-#: src/data/compat/Proton.vala:90 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
 msgstr "Запустить taskmgr"
 
@@ -389,9 +393,9 @@ msgid "Launch in game directory"
 msgstr "Запускать в папке игры"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
-#: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:76
-#: src/ui/views/GamesView/GamesView.vala:227
-#: src/ui/views/GamesView/GamesView.vala:714
+#: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
+#: src/ui/views/GamesView/GamesView.vala:259
+#: src/ui/views/GamesView/GamesView.vala:791
 msgid "Settings"
 msgstr "Настройки"
 
@@ -404,15 +408,20 @@ msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "Папка игр содержит пробел. Это может вызвать проблемы для некоторых игр"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:78
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:84
+#: src/ui/dialogs/AboutDialog.vala:34
+msgid "About GameHub"
+msgstr "О GameHub"
+
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:97
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:79
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:98
 msgid "Collection"
 msgstr "Коллекция"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:84
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:103
 msgid "Emulators"
 msgstr "Эмуляторы"
 
@@ -719,6 +728,55 @@ msgstr "Запустить, используя слой совместимост
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "повреждённый установщик: несовпадение контрольной суммы в файле"
 
+#: src/ui/dialogs/AboutDialog.vala:77
+msgid "Copy application version and environment info"
+msgstr "Копировать версию приложения и информацию об окружении"
+
+#: src/ui/dialogs/AboutDialog.vala:90 src/ui/views/WelcomeView.vala:56
+msgid "All your games in one place"
+msgstr "Все игры в одном месте"
+
+#: src/ui/dialogs/AboutDialog.vala:99
+msgctxt "about_link"
+msgid "Website"
+msgstr "Веб-сайт"
+
+#: src/ui/dialogs/AboutDialog.vala:100
+msgctxt "about_link"
+msgid "Source code on GitHub"
+msgstr "Исходный код на GitHub"
+
+#: src/ui/dialogs/AboutDialog.vala:101
+msgctxt "about_link"
+msgid "Report a problem"
+msgstr "Сообщить о проблеме"
+
+#: src/ui/dialogs/AboutDialog.vala:102
+msgctxt "about_link"
+msgid "Suggest translations"
+msgstr "Предложить переводы"
+
+#: src/ui/dialogs/AboutDialog.vala:109
+msgctxt "about_link"
+msgid "Issues"
+msgstr "Проблемы"
+
+#: src/ui/dialogs/AboutDialog.vala:110
+msgctxt "about_link"
+msgid "Contributors"
+msgstr "Авторы"
+
+#. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
+#: src/ui/dialogs/AboutDialog.vala:113
+msgctxt "about_link"
+msgid "Pulse"
+msgstr "Pulse"
+
+#: src/ui/dialogs/AboutDialog.vala:114
+msgctxt "about_link"
+msgid "Forks"
+msgstr "Форки"
+
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
 msgstr "Нет активных источников игр"
@@ -728,10 +786,6 @@ msgid "Enable some game sources in settings"
 msgstr "Включите источники в настройках"
 
 #: src/ui/views/WelcomeView.vala:56
-msgid "All your games in one place"
-msgstr "Все игры в одном месте"
-
-#: src/ui/views/WelcomeView.vala:56
 msgid "Let's get started"
 msgstr "Давайте начнём"
 
@@ -739,88 +793,88 @@ msgstr "Давайте начнём"
 msgid "Skip"
 msgstr "Пропустить"
 
-#: src/ui/views/WelcomeView.vala:134
+#: src/ui/views/WelcomeView.vala:140
 msgid "Ready"
 msgstr "Готово"
 
-#: src/ui/views/WelcomeView.vala:140
+#: src/ui/views/WelcomeView.vala:146
 msgid "Authentication required"
 msgstr "Требуется авторизация"
 
-#: src/ui/views/WelcomeView.vala:145
+#: src/ui/views/WelcomeView.vala:151
 msgid "Authenticating..."
 msgstr "Авторизация..."
 
-#: src/ui/views/WelcomeView.vala:156
+#: src/ui/views/WelcomeView.vala:162
 #, c-format
 msgid "Install %s"
 msgstr "Установить %s"
 
-#: src/ui/views/WelcomeView.vala:157
+#: src/ui/views/WelcomeView.vala:163
 msgid "Return to GameHub after installing"
 msgstr "Вернитесь в GameHub после установки"
 
-#: src/ui/views/GamesView/GamesView.vala:108
+#: src/ui/views/GamesView/GamesView.vala:139
 msgid "No games"
 msgstr "Нет игр"
 
-#: src/ui/views/GamesView/GamesView.vala:108
+#: src/ui/views/GamesView/GamesView.vala:139
 msgid "Get some games or enable some game sources in settings"
 msgstr "Получите игры или включите источники в настройках"
 
-#: src/ui/views/GamesView/GamesView.vala:109
+#: src/ui/views/GamesView/GamesView.vala:140
 msgid "Reload"
 msgstr "Обновить"
 
-#: src/ui/views/GamesView/GamesView.vala:157
+#: src/ui/views/GamesView/GamesView.vala:188
 msgid "Grid view"
 msgstr "Сетка"
 
-#: src/ui/views/GamesView/GamesView.vala:158
+#: src/ui/views/GamesView/GamesView.vala:189
 msgid "List view"
 msgstr "Список"
 
-#: src/ui/views/GamesView/GamesView.vala:168
+#: src/ui/views/GamesView/GamesView.vala:199
 msgid "All games"
 msgstr "Все игры"
 
-#: src/ui/views/GamesView/GamesView.vala:180
+#: src/ui/views/GamesView/GamesView.vala:211
 msgid "Downloads"
 msgstr "Загрузки"
 
-#: src/ui/views/GamesView/GamesView.vala:206
+#: src/ui/views/GamesView/GamesView.vala:237
 msgid "Filters"
 msgstr "Фильтры"
 
-#: src/ui/views/GamesView/GamesView.vala:214
+#: src/ui/views/GamesView/GamesView.vala:245
 #: src/ui/views/GamesView/AddGamePopover.vala:83
 msgid "Add game"
 msgstr "Добавить игру"
 
-#: src/ui/views/GamesView/GamesView.vala:221
+#: src/ui/views/GamesView/GamesView.vala:252
 msgid "Search"
 msgstr "Поиск"
 
-#: src/ui/views/GamesView/GamesView.vala:272
+#: src/ui/views/GamesView/GamesView.vala:304
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Избранные"
 
-#: src/ui/views/GamesView/GamesView.vala:364
+#: src/ui/views/GamesView/GamesView.vala:397
 msgid "Menu"
 msgstr "Меню"
 
-#: src/ui/views/GamesView/GamesView.vala:365
+#: src/ui/views/GamesView/GamesView.vala:398
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:79
 msgid "Back"
 msgstr "Назад"
 
-#: src/ui/views/GamesView/GamesView.vala:512
+#: src/ui/views/GamesView/GamesView.vala:587
 #, c-format
 msgid "Loading games from %s"
 msgstr "Загрузка игр из %s"
 
-#: src/ui/views/GamesView/GamesView.vala:553
+#: src/ui/views/GamesView/GamesView.vala:628
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
@@ -828,34 +882,34 @@ msgstr[0] "%u игра"
 msgstr[1] "%u игры"
 msgstr[2] "%u игр"
 
-#: src/ui/views/GamesView/GamesView.vala:568
+#: src/ui/views/GamesView/GamesView.vala:643
 msgid "No user-added games"
 msgstr "Нет пользовательских игр"
 
-#: src/ui/views/GamesView/GamesView.vala:569
+#: src/ui/views/GamesView/GamesView.vala:644
 msgid "Add some games using plus button"
 msgstr "Добавьте игры с помощью кнопки +"
 
-#: src/ui/views/GamesView/GamesView.vala:573
+#: src/ui/views/GamesView/GamesView.vala:648
 #, c-format
 msgid "No %s games"
 msgstr "Нет игр из %s"
 
-#: src/ui/views/GamesView/GamesView.vala:574
+#: src/ui/views/GamesView/GamesView.vala:649
 msgid "Get some Linux-compatible games"
 msgstr "Получите игры, совместимые с Linux"
 
-#: src/ui/views/GamesView/GamesView.vala:595
+#: src/ui/views/GamesView/GamesView.vala:670
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Нет игр, соответствующих запросу «%s»"
 
-#: src/ui/views/GamesView/GamesView.vala:600
+#: src/ui/views/GamesView/GamesView.vala:675
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Нет игр из %1$s, соответствующих запросу «%2$s»"
 
-#: src/ui/views/GamesView/GamesView.vala:712
+#: src/ui/views/GamesView/GamesView.vala:789
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -863,24 +917,24 @@ msgstr ""
 "Нет игр, загруженных из Steam. Настройте список игр как публичный или "
 "используйте свой API-ключ Steam в настройках."
 
-#: src/ui/views/GamesView/GamesView.vala:713
+#: src/ui/views/GamesView/GamesView.vala:790
 msgid "Privacy"
 msgstr "Приватность"
 
-#: src/ui/views/GamesView/GamesView.vala:932
+#: src/ui/views/GamesView/GamesView.vala:1033
 msgid "Updating game info"
 msgstr "Обновление информации об играх"
 
-#: src/ui/views/GamesView/GamesView.vala:938
+#: src/ui/views/GamesView/GamesView.vala:1039
 #, c-format
 msgid "Updating %s game info"
 msgstr "Обновление информации об играх из %s"
 
-#: src/ui/views/GamesView/GamesView.vala:957
+#: src/ui/views/GamesView/GamesView.vala:1058
 msgid "Merging games"
 msgstr "Объединение игр"
 
-#: src/ui/views/GamesView/GamesView.vala:973
+#: src/ui/views/GamesView/GamesView.vala:1074
 #, c-format
 msgid "Merging games from %s"
 msgstr "Объединение игр из %s"
