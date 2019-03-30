@@ -50,6 +50,7 @@ namespace GameHub
 		private static bool opt_show_compat = false;
 		private static bool opt_show = false;
 		private static bool opt_settings = false;
+		private static bool opt_about = false;
 		private static bool opt_gdb = false;
 		private static bool opt_gdb_bt_full = false;
 
@@ -59,6 +60,7 @@ namespace GameHub
 
 		public const string ACTION_PREFIX                          = "app.";
 		public const string ACTION_SETTINGS                        = "settings";
+		public const string ACTION_ABOUT                           = "about";
 		public const string ACTION_CORRUPTED_INSTALLER_PICK_ACTION = "corrupted-installer.pick-action";
 		public const string ACTION_CORRUPTED_INSTALLER_SHOW        = "corrupted-installer.show";
 		public const string ACTION_CORRUPTED_INSTALLER_BACKUP      = "corrupted-installer.backup";
@@ -71,6 +73,7 @@ namespace GameHub
 
 		private const GLib.ActionEntry[] action_entries = {
 			{ ACTION_SETTINGS,                        action_settings },
+			{ ACTION_ABOUT,                           action_about },
 			{ ACTION_CORRUPTED_INSTALLER_PICK_ACTION, action_corrupted_installer, "(ss)" },
 			{ ACTION_CORRUPTED_INSTALLER_SHOW,        action_corrupted_installer, "(ss)" },
 			{ ACTION_CORRUPTED_INSTALLER_BACKUP,      action_corrupted_installer, "(ss)" },
@@ -90,6 +93,7 @@ namespace GameHub
 		private const OptionEntry[] options = {
 			{ "show", 's', 0, OptionArg.NONE, out opt_show, N_("Show main window"), null },
 			{ "settings", 0, 0, OptionArg.NONE, out opt_settings, N_("Show application settings dialog"), null },
+			{ "about", 0, 0, OptionArg.NONE, out opt_about, N_("Show about dialog"), null },
 			{ "worker-threads", 'j', 0, OptionArg.INT, out worker_threads, N_("Maximum number of background worker threads"), "THREADS" },
 			{ null }
 		};
@@ -355,6 +359,11 @@ namespace GameHub
 				activate_action(ACTION_SETTINGS, null);
 			}
 
+			if(opt_about)
+			{
+				activate_action(ACTION_ABOUT, null);
+			}
+
 			if(opt_run != null)
 			{
 				activate_action(ACTION_GAME_RUN, new Variant.string(opt_run));
@@ -406,7 +415,12 @@ namespace GameHub
 
 		private static void action_settings(SimpleAction action, Variant? args)
 		{
-			new UI.Dialogs.SettingsDialog.SettingsDialog();
+			new GameHub.UI.Dialogs.SettingsDialog.SettingsDialog();
+		}
+
+		private static void action_about(SimpleAction action, Variant? args)
+		{
+			new GameHub.UI.Dialogs.AboutDialog();
 		}
 
 		private static void action_corrupted_installer(SimpleAction action, Variant? args)

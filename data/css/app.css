@@ -519,3 +519,8 @@ dialog .sidebar list
 {
 	font-weight: bold;
 }
+
+.stack-switcher .text-button
+{
+	min-width: 32px;
+}

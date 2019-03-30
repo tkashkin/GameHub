@@ -105,7 +105,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		protected Box add_labels(string text, string text2)
 		{
 			var label = new Label(text);
-			label.max_width_chars = 44;
+			label.max_width_chars = 52;
 			label.xalign = 0;
 			label.wrap = true;
 			label.halign = Align.START;
@@ -153,7 +153,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		protected Box add_labeled_link(string label_text, string text, string uri)
 		{
 			var label = new Label(label_text);
-			label.max_width_chars = 44;
+			label.max_width_chars = 52;
 			label.xalign = 0;
 			label.wrap = true;
 			label.halign = Align.START;

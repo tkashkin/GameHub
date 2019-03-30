@@ -49,7 +49,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			modal = true;
 
 			var content = get_content_area();
-			content.set_size_request(480, -1);
+			content.set_size_request(500, -1);
 
 			restart_msg = new InfoBar();
 			restart_msg.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
@@ -70,10 +70,29 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			tabs.homogeneous = false;
 			tabs.interpolate_size = true;
 
+			var tabs_hbox = new Box(Orientation.HORIZONTAL, 8);
+			tabs_hbox.hexpand = true;
+			tabs_hbox.margin_start = 40;
+			tabs_hbox.margin_end = 8;
+			tabs_hbox.margin_bottom = 16;
+
 			var tabs_switcher = new StackSwitcher();
 			tabs_switcher.stack = tabs;
-			tabs_switcher.halign = Align.CENTER;
-			tabs_switcher.margin_bottom = 16;
+			tabs_switcher.valign = tabs_switcher.halign = Align.CENTER;
+
+			var about_btn = new Button.from_icon_name("system-help-symbolic", IconSize.SMALL_TOOLBAR);
+			about_btn.tooltip_text = _("About GameHub");
+			about_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			about_btn.get_style_context().remove_class("image-button");
+			about_btn.get_style_context().add_class("circular");
+			about_btn.valign = Align.CENTER;
+			about_btn.valign = Align.END;
+			about_btn.set_size_request(24, 24);
+
+			about_btn.clicked.connect(() => new GameHub.UI.Dialogs.AboutDialog());
+
+			tabs_hbox.pack_start(tabs_switcher, true, false);
+			tabs_hbox.pack_end(about_btn, false, false);
 
 			add_tab("ui", new Tabs.UI(this), _("Interface"));
 			add_tab("collection", new Tabs.Collection(this), _("Collection"));
@@ -83,10 +102,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			add_tab("emu/retroarch", new Tabs.RetroArch(this), "RetroArch", "emu-retroarch-symbolic");
 			add_tab("emu/custom", new Tabs.Emulators(this), _("Emulators"));
 
-			content.pack_start(restart_msg, false, false, 0);
-			content.pack_start(games_dir_space_msg, false, false, 0);
-			content.pack_start(tabs_switcher, false, false, 0);
-			content.pack_start(tabs, false, false, 0);
+			content.pack_start(restart_msg, false, false);
+			content.pack_start(games_dir_space_msg, false, false);
+			content.pack_start(tabs_hbox, false, true);
+			content.pack_start(tabs, false, false);
 
 			response.connect((source, response_id) => {
 				switch(response_id)
