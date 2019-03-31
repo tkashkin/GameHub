@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 21:53+0300\n"
+"POT-Creation-Date: 2019-03-31 21:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,7 +129,7 @@ msgstr ""
 
 #: src/data/Runnable.vala:403
 #, c-format
-msgid "Part %u of %u: "
+msgid "Part %1$u of %2$u: %3$s"
 msgstr ""
 
 #: src/data/Runnable.vala:426 src/ui/dialogs/CorruptedInstallerDialog.vala:48

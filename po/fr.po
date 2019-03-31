@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 21:53+0300\n"
+"POT-Creation-Date: 2019-03-31 21:21+0300\n"
 "PO-Revision-Date: 2019-02-11 14:11+0000\n"
 "Last-Translator: King Claudy <clocloranely@hotmail.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -134,8 +134,8 @@ msgstr "Choisir le dossier"
 
 #: src/data/Runnable.vala:403
 #, c-format
-msgid "Part %u of %u: "
-msgstr "Partie %u sur %u : "
+msgid "Part %1$u of %2$u: %3$s"
+msgstr "Partie %1$u sur %2$u : %3$s"
 
 #: src/data/Runnable.vala:426 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format

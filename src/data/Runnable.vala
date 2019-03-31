@@ -396,14 +396,14 @@ namespace GameHub.Data
 							}
 						});
 
-						var partDesc = "";
+						var partDesc = part.id;
 
 						if(parts.size > 1)
 						{
-							partDesc = _("Part %u of %u: ").printf(p, parts.size);
+							partDesc = _("Part %1$u of %2$u: %3$s").printf(p, parts.size, part.id);
 						}
 
-						var info = new Downloader.DownloadInfo(runnable.name, partDesc + part.id, game != null ? game.icon : null, null, null, game != null ? game.source.icon : null);
+						var info = new Downloader.DownloadInfo(runnable.name, partDesc, game != null ? game.icon : null, null, null, game != null ? game.source.icon : null);
 						var file = yield Downloader.download(part.remote, part.local, info);
 						if(file != null && file.query_exists())
 						{

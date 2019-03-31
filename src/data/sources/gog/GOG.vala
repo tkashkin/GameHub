@@ -231,11 +231,11 @@ namespace GameHub.Data.Sources.GOG
 				{
 					var game = Parser.json_object(i, {"game"});
 					var stats = Parser.json_object(i, {"stats", user_id});
-					if(game == null) continue;
+					if(game == null || !game.has_member("id")) continue;
 					var id = game.get_string_member("id");
-					var image = game.get_string_member("image");
-					var playtime = stats != null ? stats.get_int_member("playtime") : 0;
-					var last_launch = stats != null ? new DateTime.from_iso8601(stats.get_string_member("lastSession"), new TimeZone.utc()).to_unix() : 0;
+					var image = game.has_member("image") ? game.get_string_member("image") : null;
+					var playtime = stats != null && stats.has_member("playtime") ? stats.get_int_member("playtime") : 0;
+					var last_launch = stats != null && stats.has_member("lastSession") ? new DateTime.from_iso8601(stats.get_string_member("lastSession"), new TimeZone.utc()).to_unix() : 0;
 					player_stats.set(id, new PlayerStatItem(id, playtime, last_launch, image));
 				}
 
