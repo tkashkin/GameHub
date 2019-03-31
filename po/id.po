@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 21:53+0300\n"
+"POT-Creation-Date: 2019-03-31 21:21+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -137,8 +137,8 @@ msgstr "Pilih direktori"
 
 #: src/data/Runnable.vala:403
 #, c-format
-msgid "Part %u of %u: "
-msgstr "Bagian %u dari %u: "
+msgid "Part %1$u of %2$u: %3$s"
+msgstr "Bagian %1$u dari %2$u: %3$s"
 
 #: src/data/Runnable.vala:426 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, fuzzy, c-format

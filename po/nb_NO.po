@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 21:53+0300\n"
+"POT-Creation-Date: 2019-03-31 21:21+0300\n"
 "PO-Revision-Date: 2019-03-31 18:05+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -134,8 +134,8 @@ msgstr "Velg mappe"
 
 #: src/data/Runnable.vala:403
 #, c-format
-msgid "Part %u of %u: "
-msgstr "Del %u av %u: "
+msgid "Part %1$u of %2$u: %3$s"
+msgstr "Del %1$u av %2$u: %3$s"
 
 #: src/data/Runnable.vala:426 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format

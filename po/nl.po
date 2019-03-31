@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 21:53+0300\n"
+"POT-Creation-Date: 2019-03-31 21:21+0300\n"
 "PO-Revision-Date: 2019-03-31 18:05+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -132,8 +132,8 @@ msgstr "Kies map"
 
 #: src/data/Runnable.vala:403
 #, c-format
-msgid "Part %u of %u: "
-msgstr "Deel %u van %u: "
+msgid "Part %1$u of %2$u: %3$s"
+msgstr "Deel %1$u van %2$u: %3$s"
 
 #: src/data/Runnable.vala:426 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
