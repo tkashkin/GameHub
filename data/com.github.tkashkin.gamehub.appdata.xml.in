@@ -17,7 +17,6 @@
 	<url type="homepage">https://tkashkin.tk/projects/gamehub</url>
 	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
 	<url type="translate">https://hosted.weblate.org/engage/gamehub</url>
-	<url type="contact">https://tkashkin.tk</url>
 
 	<provides>
 		<binary>com.github.tkashkin.gamehub</binary>
