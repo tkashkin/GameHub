@@ -1,0 +1,215 @@
+From 96bf265fc11c5bf2f188caf6fc3a27d21e87a1fd Mon Sep 17 00:00:00 2001
+From: Michael Gratton <mike@vee.net>
+Date: Mon, 18 Mar 2019 00:24:31 +1100
+Subject: [PATCH] Fix build errors (but not warnings) with vala 0.44
+
+---
+ protocol/protocol-scope-interface.vala  |  4 ++--
+ protocol/unity-scope-proxy-remote.vala  |  1 +
+ src/unity-aggregator-scope-private.vala | 10 +++++-----
+ src/unity-deprecated-scope-impl.vala    | 14 +++++++-------
+ src/unity-scope-channel.vala            |  2 +-
+ src/unity-scope-dbus-impl.vala          | 10 +++++-----
+ src/unity-synchronizer.vala             |  8 ++++----
+ 7 files changed, 25 insertions(+), 24 deletions(-)
+
+diff --git a/protocol/protocol-scope-interface.vala b/protocol/protocol-scope-interface.vala
+index 4d8aa48..0905037 100644
+--- a/protocol/protocol-scope-interface.vala
++++ b/protocol/protocol-scope-interface.vala
+@@ -131,8 +131,8 @@ public interface ScopeService : GLib.Object
+       uint channel_type,
+       HashTable<string, Variant> hints,
+       Cancellable? cancellable = null,
+-      out HashTable<string, Variant> out_hints,
+-      BusName? sender = null) throws IOError;
++      BusName? sender = null,
++      out HashTable<string, Variant> out_hints) throws IOError;
+ 
+   public abstract async void close_channel (
+       string channel_id,
+diff --git a/protocol/unity-scope-proxy-remote.vala b/protocol/unity-scope-proxy-remote.vala
+index 8b8125f..df7b8eb 100644
+--- a/protocol/unity-scope-proxy-remote.vala
++++ b/protocol/unity-scope-proxy-remote.vala
+@@ -369,6 +369,7 @@ private class ScopeProxyRemote : GLib.Object, ScopeProxy
+     HashTable<string, Variant> out_hints;
+     var channel_id = yield _service.open_channel ((uint) channel_type, hints,
+                                                   cancellable,
++                                                  null,
+                                                   out out_hints);
+     Dee.Peer peer = private_channel ?
+       new Dee.Client (out_hints[CHANNEL_SWARM_NAME_HINT].get_string ()) :
+diff --git a/src/unity-aggregator-scope-private.vala b/src/unity-aggregator-scope-private.vala
+index 014efe0..5b21745 100644
+--- a/src/unity-aggregator-scope-private.vala
++++ b/src/unity-aggregator-scope-private.vala
+@@ -493,13 +493,13 @@ private class AggregatorScopeImpl : GLib.Object, ScopeService, ScopeDBusImpl,
+     }
+   }
+ 
+-  public void set_categories (List<Category> categories)
++  public void set_categories (List<unowned Category> categories)
+   {
+     bool categories_model_empty = categories_model.get_n_rows () == 0;
+     if (!categories_model_empty)
+     {
+       // we support only appending new categories, no changes/deletes
+-      unowned List<Category> cats = categories;
++      unowned List<unowned Category> cats = categories;
+       uint cats_length = categories.length ();
+       bool data_matches = cats_length >= categories_model.get_n_rows ();
+ 
+@@ -541,7 +541,7 @@ private class AggregatorScopeImpl : GLib.Object, ScopeService, ScopeDBusImpl,
+     }
+   }
+ 
+-  public void set_filters (List<Filter> filters)
++  public void set_filters (List<unowned Filter> filters)
+   {
+     filters_model.clear ();
+ 
+@@ -1418,8 +1418,8 @@ private class AggregatorScopeImpl : GLib.Object, ScopeService, ScopeDBusImpl,
+       uint channel_type,
+       HashTable<string, Variant> hints,
+       GLib.Cancellable? cancellable,
+-      out HashTable<string, Variant> out_hints,
+-      BusName? sender = null) throws IOError
++      BusName? sender,
++      out HashTable<string, Variant> out_hints) throws IOError
+   {
+     Unity.AggregatorScope aggscope = owner as Unity.AggregatorScope;
+ 
+diff --git a/src/unity-deprecated-scope-impl.vala b/src/unity-deprecated-scope-impl.vala
+index 52ca9c7..04e6229 100644
+--- a/src/unity-deprecated-scope-impl.vala
++++ b/src/unity-deprecated-scope-impl.vala
+@@ -29,8 +29,8 @@ namespace Unity.Internal {
+ 
+ private interface DeprecatedScopeDBusImpl : ScopeDBusImpl
+ {
+-  public abstract void set_categories (List<Category> categories);
+-  public abstract void set_filters (List<Filter> filters);
++  public abstract void set_categories (List<unowned Category> categories);
++  public abstract void set_filters (List<unowned Filter> filters);
+ }
+ /*
+  * The private implementation of the Scope. This makes sure that none of the 
+@@ -151,13 +151,13 @@ private class DeprecatedScopeImpl : GLib.Object, ScopeService, ScopeDBusImpl, De
+     }
+   }
+ 
+-  public void set_categories (List<Category> categories)
++  public void set_categories (List<unowned Category> categories)
+   {
+     bool categories_model_empty = categories_model.get_n_rows () == 0;
+     if (!categories_model_empty)
+     {
+       // we support only appending new categories, no changes/deletes
+-      unowned List<Category> cats = categories;
++      unowned List<unowned Category> cats = categories;
+       uint cats_length = categories.length ();
+       bool data_matches = cats_length >= categories_model.get_n_rows ();
+       
+@@ -199,7 +199,7 @@ private class DeprecatedScopeImpl : GLib.Object, ScopeService, ScopeDBusImpl, De
+     }
+   }
+ 
+-  public void set_filters (List<Filter> filters)
++  public void set_filters (List<unowned Filter> filters)
+   {
+     filters_model.clear ();
+ 
+@@ -609,8 +609,8 @@ private class DeprecatedScopeImpl : GLib.Object, ScopeService, ScopeDBusImpl, De
+       uint channel_type,
+       HashTable<string, Variant> hints,
+       GLib.Cancellable? cancellable,
+-      out HashTable<string, Variant> out_hints,
+-      BusName? sender) throws IOError
++      BusName? sender,
++      out HashTable<string, Variant> out_hints) throws IOError
+   {
+     ChannelFlags flags = ChannelFlags.from_hints (hints);
+     var channel = new ScopeChannel ((ChannelType) channel_type);
+diff --git a/src/unity-scope-channel.vala b/src/unity-scope-channel.vala
+index 76c551d..1fa9df8 100644
+--- a/src/unity-scope-channel.vala
++++ b/src/unity-scope-channel.vala
+@@ -140,7 +140,7 @@ internal class ScopeChannel : Object
+     unowned string schema;
+ 
+     var vardict_schema =
+-      new HashTable<unowned string, unowned string> (str_hash, str_equal);
++      new HashTable<string, string> (str_hash, str_equal);
+     var iter = HashTableIter<string, string> (optional_metadata);
+     while (iter.next (out field_name, out schema))
+     {
+diff --git a/src/unity-scope-dbus-impl.vala b/src/unity-scope-dbus-impl.vala
+index 9d5524f..1f9c5a8 100644
+--- a/src/unity-scope-dbus-impl.vala
++++ b/src/unity-scope-dbus-impl.vala
+@@ -232,13 +232,13 @@ private class DefaultScopeDBusImpl : GLib.Object, ScopeService, ScopeDBusImpl
+     }
+   }
+ 
+-  public void set_categories (List<Category> categories)
++  public void set_categories (List<unowned Category> categories)
+   {
+     bool categories_model_empty = categories_model.get_n_rows () == 0;
+     if (!categories_model_empty)
+     {
+       // we support only appending new categories, no changes/deletes
+-      unowned List<Category> cats = categories;
++      unowned List<unowned Category> cats = categories;
+       uint cats_length = categories.length ();
+       bool data_matches = cats_length >= categories_model.get_n_rows ();
+       
+@@ -277,7 +277,7 @@ private class DefaultScopeDBusImpl : GLib.Object, ScopeService, ScopeDBusImpl
+                                  new Variant.variant (this.categories));
+   }
+ 
+-  public void set_filters (List<Filter> filters)
++  public void set_filters (List<unowned Filter> filters)
+   {
+     filters_model.clear ();
+ 
+@@ -716,8 +716,8 @@ private class DefaultScopeDBusImpl : GLib.Object, ScopeService, ScopeDBusImpl
+       uint channel_type,
+       HashTable<string, Variant> hints,
+       GLib.Cancellable? cancellable,
+-      out HashTable<string, Variant> out_hints,
+-      BusName? sender) throws IOError
++      BusName? sender,
++      out HashTable<string, Variant> out_hints) throws IOError
+   {
+     ChannelFlags flags = ChannelFlags.from_hints (hints);
+     var channel = new ScopeChannel ((ChannelType) channel_type);
+diff --git a/src/unity-synchronizer.vala b/src/unity-synchronizer.vala
+index 60dd135..5fcf1ca 100644
+--- a/src/unity-synchronizer.vala
++++ b/src/unity-synchronizer.vala
+@@ -42,8 +42,8 @@ internal class ResultsSynchronizer : GLib.Object, MergeStrategy
+   private HashTable<string, unowned Dee.Model> _provider_ids;
+   // need unowned getter, so no Gee
+   private HashTable<unowned Dee.Model, SignalHandlers?> _provider_signal_ids;
+-  private HashTable<unowned Dee.Model, Dee.ModelTag<unowned Dee.ModelIter>> _provider_tags;
+-  private HashTable<unowned Dee.Model, Dee.ModelTag<uint>> _clear_seqnum_tags;
++  private HashTable<unowned Dee.Model, unowned Dee.ModelTag<unowned Dee.ModelIter>> _provider_tags;
++  private HashTable<unowned Dee.Model, unowned Dee.ModelTag<uint>> _clear_seqnum_tags;
+   private Variant[] row_buf = new Variant[9];
+   private Quark scope_id_quark = Quark.from_string ("scope-id");
+   private uint _clear_seq_num = 1;
+@@ -58,8 +58,8 @@ internal class ResultsSynchronizer : GLib.Object, MergeStrategy
+     _providers = new HashTable<Dee.Model, unowned Dee.Model> (null, null);
+     _provider_ids = new HashTable<string, unowned Dee.Model> (str_hash, str_equal);
+     _provider_signal_ids = new HashTable<unowned Dee.Model, SignalHandlers?> (null, null);
+-    _provider_tags = new HashTable<unowned Dee.Model, unowned Dee.ModelTag> (null, null);
+-    _clear_seqnum_tags = new HashTable<unowned Dee.Model, unowned Dee.ModelTag> (null, null);
++    _provider_tags = new HashTable<unowned Dee.Model, unowned Dee.ModelTag<unowned Dee.ModelIter>> (null, null);
++    _clear_seqnum_tags = new HashTable<unowned Dee.Model, unowned Dee.ModelTag<uint>> (null, null);
+     merge_strategy = this;
+   }
+ 
+--
+libgit2 0.26.0
+
