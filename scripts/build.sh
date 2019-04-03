@@ -300,6 +300,8 @@ build_flatpak()
 	echo "[scripts/build.sh] Building flatpak package"
 	mkdir -p "$_ROOT/build/flatpak"
 	cd "$_ROOT/flatpak"
+	gen_changelogs
+	git commit -m "Save generated changelog"
 	echo "[scripts/build.sh] Installing flatpak"
 	sudo apt install -y flatpak flatpak-builder
 	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
