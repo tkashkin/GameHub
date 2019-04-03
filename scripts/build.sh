@@ -13,7 +13,8 @@ _LINUXDEPLOYQT="linuxdeployqt-5-x86_64.AppImage"
 
 _SOURCE="${APPVEYOR_BUILD_VERSION:-$_GH_VERSION-$_GH_BRANCH-local}"
 _VERSION="$_SOURCE-$_GH_COMMIT_SHORT"
-_DEB_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
+_BUILD_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
+_DEB_VERSION="$_BUILD_VERSION"
 _DEB_TARGET_DISTRO="bionic"
 _BUILD_IMAGE="local"
 _GPG_BINARY="gpg1"
@@ -109,13 +110,13 @@ deps()
 
 gen_changelogs()
 {
-	set -e
+	set +e
 	cd "$_ROOT"
 	echo "[scripts/build.sh] Generating changelogs"
 
 	git fetch --tags
 
-	git tag -m $_DEB_VERSION $_DEB_VERSION
+	git tag -m $_BUILD_VERSION $_BUILD_VERSION
 
 	> "debian/changelog"
 	> "data/$_GH_RDNN.changelog.xml"
@@ -160,7 +161,7 @@ gen_changelogs()
 		prevtag="$tag"
 	done
 
-	git tag -d $_DEB_VERSION
+	git tag -d $_BUILD_VERSION
 }
 
 build_deb()
