@@ -17,6 +17,7 @@ environment:
     secure: VBUP6GQXENGa7E+H90WDhA==
 
 build_script:
+  - sh: bash scripts/build.sh gen_changelogs
   - sh: bash scripts/build.sh build_deb
   - sh: bash scripts/build.sh build_appimage
   - sh: bash scripts/build.sh build_flatpak
