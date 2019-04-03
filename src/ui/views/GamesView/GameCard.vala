@@ -55,6 +55,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private Frame progress_bar;
 
+		private Image no_image_indicator;
 		private Image running_indicator;
 
 		construct
@@ -134,6 +135,12 @@ namespace GameHub.UI.Views.GamesView
 			progress_bar.valign = Align.END;
 			progress_bar.get_style_context().add_class("progress");
 
+			no_image_indicator = new Image.from_icon_name("gamehub-symbolic", IconSize.DIALOG);
+			no_image_indicator.get_style_context().add_class("no-image-indicator");
+			no_image_indicator.halign = Align.CENTER;
+			no_image_indicator.valign = Align.CENTER;
+			no_image_indicator.opacity = 0;
+
 			running_indicator = new Image.from_icon_name("system-run-symbolic", IconSize.DIALOG);
 			running_indicator.get_style_context().add_class("running-indicator");
 			running_indicator.halign = Align.CENTER;
@@ -148,6 +155,7 @@ namespace GameHub.UI.Views.GamesView
 			content.add_overlay(favorite_icon);
 			content.add_overlay(updated_icon);
 			content.add_overlay(progress_bar);
+			content.add_overlay(no_image_indicator);
 			content.add_overlay(running_indicator);
 
 			card.add(content);
@@ -247,11 +255,13 @@ namespace GameHub.UI.Views.GamesView
 					{
 						card.get_style_context().add_class("running");
 						running_indicator.opacity = 1;
+						no_image_indicator.opacity = 0;
 					}
 					else
 					{
 						card.get_style_context().remove_class("running");
 						running_indicator.opacity = 0;
+						no_image_indicator.opacity = game.image == null ? 1 : 0;
 					}
 					return Source.REMOVE;
 				});
@@ -260,6 +270,7 @@ namespace GameHub.UI.Views.GamesView
 
 			game.notify["image"].connect(() => {
 				Utils.load_image.begin(image, game.image, "image");
+				no_image_indicator.opacity = game.image == null && !game.is_running ? 1 : 0;
 			});
 			game.notify_property("image");
 
