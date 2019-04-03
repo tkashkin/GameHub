@@ -296,7 +296,9 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		public void update()
 		{
-			update_game.begin();
+			Utils.thread("GameDetailsPageUpdate", () => {
+				update_game.begin();
+			});
 		}
 
 		private async void update_game()

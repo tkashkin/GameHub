@@ -300,8 +300,11 @@ namespace GameHub.UI.Dialogs
 						{
 							opts_list.save_options();
 						}
-						install(installer, response_id == InstallDialog.RESPONSE_DOWNLOAD, compat_tool_picker != null ? compat_tool_picker.selected : null);
-						destroy();
+						installer.fetch_parts.begin((obj, res) => {
+							installer.fetch_parts.end(res);
+							install(installer, response_id == InstallDialog.RESPONSE_DOWNLOAD, compat_tool_picker != null ? compat_tool_picker.selected : null);
+							destroy();
+						});
 						break;
 				}
 			});
