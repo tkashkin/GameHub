@@ -361,6 +361,8 @@ namespace GameHub.Data
 
 			public virtual string  name  { owned get { return id; } }
 
+			public virtual async void fetch_parts(){}
+
 			public async void install(Runnable runnable, bool dl_only, CompatTool? tool=null)
 			{
 				try

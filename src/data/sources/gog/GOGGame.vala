@@ -550,6 +550,10 @@ namespace GameHub.Data.Sources.GOG
 
 		public class Installer: Runnable.Installer
 		{
+			private GOGGame game;
+			private Json.Object json;
+			private bool fetched = false;
+
 			public string lang;
 			public string lang_full;
 
@@ -557,6 +561,9 @@ namespace GameHub.Data.Sources.GOG
 
 			public Installer(GOGGame game, Json.Object json)
 			{
+				this.game = game;
+				this.json = json;
+
 				id = json.get_string_member("id");
 				lang = json.get_string_member("language");
 				lang_full = json.get_string_member("language_full");
@@ -574,10 +581,13 @@ namespace GameHub.Data.Sources.GOG
 
 				full_size = json.get_int_member("total_size");
 				version = json.get_string_member("version");
+			}
 
-				if(!json.has_member("files") || json.get_member("files").get_node_type() != Json.NodeType.ARRAY) return;
+			public override async void fetch_parts()
+			{
+				if(fetched || game.installers_dir == null || !json.has_member("files") || json.get_member("files").get_node_type() != Json.NodeType.ARRAY) return;
 
-				if(game.installers_dir == null) return;
+				int loading_count = 0;
 
 				foreach(var file_node in json.get_array_member("files").get_elements())
 				{
@@ -588,36 +598,51 @@ namespace GameHub.Data.Sources.GOG
 						var size = file.get_int_member("size");
 						var downlink_url = file.get_string_member("downlink");
 
-						var root_node = Parser.parse_remote_json_file(downlink_url, "GET", ((GOG) game.source).user_token);
-						if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) continue;
+						Utils.thread("GOGGame.Installer.fetch_part", () => {
+							loading_count++;
 
-						var root = root_node.get_object();
-						if(root == null || !root.has_member("downlink")) continue;
-
-						var url = root.get_string_member("downlink");
-						var checksum_url = root.get_string_member("checksum");
-						var remote = File.new_for_uri(url);
-
-						var local = game.installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
-
-						string? hash = null;
-						var hash_type = ChecksumType.MD5;
-
-						var checksum_root = Parser.parse_remote_xml_file(checksum_url, "GET", ((GOG) game.source).user_token);
-						if(checksum_root != null)
-						{
-							var checksum_file_node = checksum_root->get_root_element();
-							if(checksum_file_node != null)
+							var root_node = Parser.parse_remote_json_file(downlink_url, "GET", ((GOG) game.source).user_token);
+							if(root_node != null && root_node.get_node_type() == Json.NodeType.OBJECT)
 							{
-								hash = checksum_file_node->get_prop("md5");
+								var root = root_node.get_object();
+								if(root != null && root.has_member("downlink"))
+								{
+									var url = root.get_string_member("downlink");
+									var checksum_url = root.get_string_member("checksum");
+									var remote = File.new_for_uri(url);
+
+									var local = game.installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
+
+									string? hash = null;
+									var hash_type = ChecksumType.MD5;
+
+									var checksum_root = Parser.parse_remote_xml_file(checksum_url, "GET", ((GOG) game.source).user_token);
+									if(checksum_root != null)
+									{
+										var checksum_file_node = checksum_root->get_root_element();
+										if(checksum_file_node != null)
+										{
+											hash = checksum_file_node->get_prop("md5");
+										}
+
+										delete checksum_root;
+									}
+
+									parts.add(new Runnable.Installer.Part(id, url, size, remote, local, hash, hash_type));
+								}
 							}
 
-							delete checksum_root;
-						}
-
-						parts.add(new Runnable.Installer.Part(id, url, size, remote, local, hash, hash_type));
+							loading_count--;
+							if(loading_count == 0)
+							{
+								Idle.add(fetch_parts.callback);
+							}
+						});
 					}
 				}
+
+				if(loading_count > 0) yield;
+				fetched = true;
 			}
 		}
 
