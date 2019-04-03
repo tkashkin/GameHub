@@ -98,7 +98,7 @@ deps()
 	sudo add-apt-repository ppa:elementary-os/daily -y
 	sudo add-apt-repository ppa:vala-team/next -y
 	sudo apt update -qq
-	sudo apt install -y meson valac checkinstall build-essential dput fakeroot elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
+	sudo apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev libunity-dev
 	#sudo apt full-upgrade -y
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sudo dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
@@ -107,12 +107,67 @@ deps()
 	fi
 }
 
+gen_changelogs()
+{
+	set -e
+	cd "$_ROOT"
+	echo "[scripts/build.sh] Generating changelogs"
+
+	git fetch --tags
+
+	git tag -m $_DEB_VERSION $_DEB_VERSION
+
+	> "debian/changelog"
+	> "data/$_GH_RDNN.changelog.xml"
+
+	prevtag="initial"
+	git tag --sort v:refname | while read tag; do
+		if [[ "$prevtag" == "initial" ]]; then
+			prevtag="$tag"
+			continue
+		fi
+
+		echo "[scripts/build.sh] tag: $tag"
+
+		commitmsg=`git log --pretty=format:'  * %s [%h]' $prevtag..$tag`
+
+		(
+			echo "$_GH_RDNN ($tag) $_DEB_TARGET_DISTRO; urgency=low"
+			echo "${commitmsg:-  * <no commit message>}"
+			git log -n1 --pretty='format:%n -- %aN <%aE>  %aD%n%n' $tag^..$tag
+		) | cat - "debian/changelog" | sponge "debian/changelog"
+
+		xml_r_type="development" && [[ "$tag" == *"-master" ]] && xml_r_type="stable"
+		xml_r_date=`git log -n1 --date=short --pretty='format:date="%cd" timestamp="%ct"' $tag^..$tag`
+		xml_r_end=" />" && [[ -n "$commitmsg" ]] && xml_r_end=">"
+		xml_ver=`echo "$tag" | sed -E "s|-|.|g"`
+
+		(
+			echo -e "\t\t<release type=\"$xml_r_type\" version=\"$xml_ver\" $xml_r_date$xml_r_end"
+
+			if [[ -n "$commitmsg" ]]; then
+				echo -e "\t\t\t<description>"
+				echo -e "\t\t\t\t<ul>"
+
+				echo "$commitmsg" | sed -E "s|<|\&lt;|g; s|>|\&gt;|g; s|  \* (.*)|\t\t\t\t\t<li>\1</li>|g"
+
+				echo -e "\t\t\t\t</ul>"
+				echo -e "\t\t\t</description>"
+				echo -e "\t\t</release>"
+			fi
+		) | cat - "data/$_GH_RDNN.changelog.xml" | sponge "data/$_GH_RDNN.changelog.xml"
+
+		prevtag="$tag"
+	done
+
+	git tag -d $_DEB_VERSION
+}
+
 build_deb()
 {
 	set -e
 	cd "$_ROOT"
 	sed "s/\$_GH_BRANCH/$_GH_BRANCH/g; s/\$_GH_COMMIT_SHORT/$_GH_COMMIT_SHORT/g; s/\$_GH_COMMIT/$_GH_COMMIT/g" "debian/rules.in" > "debian/rules"
-	sed "s/\$VERSION/$_DEB_VERSION/g; s/\$DISTRO/$_DEB_TARGET_DISTRO/g; s/\$DATE/`date -R`/g" "debian/changelog.in" > "debian/changelog"
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sed "s/libmanette-0.2-dev,//g" "debian/control.in" > "debian/control"
 	else
@@ -264,6 +319,8 @@ mkdir -p "$BUILDROOT"
 if [[ "$ACTION" = "import_keys" ]]; then import_keys; fi
 
 if [[ "$ACTION" = "deps" ]]; then deps; fi
+
+if [[ "$ACTION" = "gen_changelogs" ]]; then gen_changelogs; fi
 
 if [[ "$ACTION" = "build_deb" ]]; then build_deb; fi
 

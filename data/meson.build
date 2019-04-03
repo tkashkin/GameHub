@@ -29,10 +29,13 @@ i18n.merge_file(
 	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'applications')
 )
 
-i18n.merge_file(
+appdata_changelog_conf = configuration_data()
+appdata_changelog_conf.set('CHANGELOG', run_command('cat', files(meson.project_name() + '.changelog.xml')).stdout().strip())
+
+configure_file(
 	input: meson.project_name() + '.appdata.xml.in',
 	output: meson.project_name() + '.appdata.xml',
-	po_dir: join_paths(meson.source_root(), 'po'),
+	configuration: appdata_changelog_conf,
 	install: true,
 	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'metainfo')
 )
