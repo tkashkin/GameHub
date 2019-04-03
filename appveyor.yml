@@ -10,7 +10,6 @@ image:
 #  - Ubuntu1604     # skip xenial builds because dependencies are broken
 
 clone_folder: ~/build/GameHub
-clone_depth: 1
 
 environment:
   keys_enc_secret:
