@@ -121,7 +121,7 @@ gen_changelogs()
 
 	git fetch --tags
 
-	git tag -m $_BUILD_VERSION $_BUILD_VERSION
+	git tag -a $_BUILD_VERSION -m $_BUILD_VERSION
 
 	> "debian/changelog"
 	> "data/$_GH_RDNN.changelog.xml"
@@ -298,10 +298,12 @@ build_flatpak()
 {
 	set +e
 	echo "[scripts/build.sh] Building flatpak package"
+	cd "$_ROOT"
+	gen_changelogs
+	git add "debian/changelog" "data/$_GH_RDNN.changelog.xml"
+	git commit -m "Save generated changelog"
 	mkdir -p "$_ROOT/build/flatpak"
 	cd "$_ROOT/flatpak"
-	gen_changelogs
-	git commit -m "Save generated changelog"
 	echo "[scripts/build.sh] Installing flatpak"
 	sudo apt install -y flatpak flatpak-builder
 	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
