@@ -641,7 +641,7 @@ namespace GameHub.Data.Sources.GOG
 					}
 				}
 
-				if(loading_count > 0) yield;
+				yield;
 				fetched = true;
 			}
 		}
