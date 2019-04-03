@@ -114,6 +114,11 @@ gen_changelogs()
 	cd "$_ROOT"
 	echo "[scripts/build.sh] Generating changelogs"
 
+	if [[ -z `git config user.name` ]]; then
+		git config user.email "ci@localhost"
+		git config user.name "CI"
+	fi
+
 	git fetch --tags
 
 	git tag -m $_BUILD_VERSION $_BUILD_VERSION
@@ -127,8 +132,6 @@ gen_changelogs()
 			prevtag="$tag"
 			continue
 		fi
-
-		echo "[scripts/build.sh] tag: $tag"
 
 		commitmsg=`git log --pretty=format:'  * %s [%h]' $prevtag..$tag`
 
