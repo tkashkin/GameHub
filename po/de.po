@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-31 21:21+0300\n"
-"PO-Revision-Date: 2019-03-25 13:38+0000\n"
+"PO-Revision-Date: 2019-04-08 03:52+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -46,9 +46,8 @@ msgid "Show application settings dialog"
 msgstr "Dialogfeld für Anwendungseinstellungen anzeigen"
 
 #: src/app.vala:96
-#, fuzzy
 msgid "Show about dialog"
-msgstr "Kompatibilitätsoptionen-Dialog anzeigen"
+msgstr "Infodialog anzeigen"
 
 #: src/app.vala:97
 msgid "Maximum number of background worker threads"
@@ -415,7 +414,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:84
 #: src/ui/dialogs/AboutDialog.vala:34
 msgid "About GameHub"
-msgstr ""
+msgstr "Über GameHub"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:97
 msgid "Interface"
@@ -735,9 +734,8 @@ msgid "Corrupted installer: checksum mismatch in"
 msgstr "Fehlerhafter Installer: Prüfsummenfehler in"
 
 #: src/ui/dialogs/AboutDialog.vala:77
-#, fuzzy
 msgid "Copy application version and environment info"
-msgstr "Anwendungsversion anzeigen und beenden"
+msgstr "Anwendungsversion und Umgebungsinformationen kopieren"
 
 #: src/ui/dialogs/AboutDialog.vala:90 src/ui/views/WelcomeView.vala:56
 msgid "All your games in one place"
@@ -746,44 +744,43 @@ msgstr "Alle Ihre Spiele an einem Ort"
 #: src/ui/dialogs/AboutDialog.vala:99
 msgctxt "about_link"
 msgid "Website"
-msgstr ""
+msgstr "Webseite"
 
 #: src/ui/dialogs/AboutDialog.vala:100
 msgctxt "about_link"
 msgid "Source code on GitHub"
-msgstr ""
+msgstr "Quellcode auf GitHub"
 
 #: src/ui/dialogs/AboutDialog.vala:101
 msgctxt "about_link"
 msgid "Report a problem"
-msgstr ""
+msgstr "Ein Problem melden"
 
 #: src/ui/dialogs/AboutDialog.vala:102
-#, fuzzy
 msgctxt "about_link"
 msgid "Suggest translations"
-msgstr "Stille Installation"
+msgstr "Übersetzungen vorschlagen"
 
 #: src/ui/dialogs/AboutDialog.vala:109
 msgctxt "about_link"
 msgid "Issues"
-msgstr ""
+msgstr "Probleme"
 
 #: src/ui/dialogs/AboutDialog.vala:110
 msgctxt "about_link"
 msgid "Contributors"
-msgstr ""
+msgstr "Mitwirkende"
 
 #. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
 #: src/ui/dialogs/AboutDialog.vala:113
 msgctxt "about_link"
 msgid "Pulse"
-msgstr ""
+msgstr "Pulse"
 
 #: src/ui/dialogs/AboutDialog.vala:114
 msgctxt "about_link"
 msgid "Forks"
-msgstr ""
+msgstr "Forks"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
