@@ -1254,7 +1254,7 @@ namespace GameHub.UI.Views.GamesView
 				debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
 				ui_update_gamepad_mode();
 
-				if(controller_settings.focus_window && !press && b == Gamepad.BTN_GUIDE && !window.has_focus && !RunnableIsLaunched)
+				if(controller_settings.focus_window && !press && b == Gamepad.BTN_GUIDE && !window.has_focus && !RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
 				{
 					window.get_window().focus(Gdk.CURRENT_TIME);
 				}

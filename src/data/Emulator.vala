@@ -166,7 +166,7 @@ namespace GameHub.Data
 
 		public override async void run()
 		{
-			if(!RunnableIsLaunched && executable.query_exists())
+			if(!RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning && executable.query_exists())
 			{
 				RunnableIsLaunched = is_running = true;
 

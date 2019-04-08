@@ -77,7 +77,7 @@ namespace GameHub.Data
 
 		public virtual async void run_with_compat(bool is_opened_from_menu=false)
 		{
-			if(!RunnableIsLaunched)
+			if(!RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
 			{
 				var dlg = new UI.Dialogs.CompatRunDialog(this, is_opened_from_menu);
 				dlg.destroy.connect(() => {

@@ -29,6 +29,8 @@ namespace GameHub.Data.Sources.Steam
 
 		private bool game_info_updated = false;
 
+		public bool is_updating { get; set; default = false; }
+
 		public SteamGame(Steam src, Json.Node json_node)
 		{
 			source = src;
@@ -204,9 +206,14 @@ namespace GameHub.Data.Sources.Steam
 
 		public override void update_status()
 		{
-			status = new Game.Status(Steam.is_app_installed(id) ? Game.State.INSTALLED : Game.State.UNINSTALLED, this);
-			if(status.state == Game.State.INSTALLED)
+			var state = Game.State.UNINSTALLED;
+			if(is_updating)
 			{
+				state = Game.State.INSTALLING;
+			}
+			else if(Steam.is_app_installed(id))
+			{
+				state = Game.State.INSTALLED;
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				add_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
@@ -215,6 +222,7 @@ namespace GameHub.Data.Sources.Steam
 				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
+			status = new Game.Status(state, this);
 		}
 
 		public override async void install()
