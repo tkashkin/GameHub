@@ -87,6 +87,7 @@ namespace GameHub.UI.Views.GamesView
 		private bool gamepad_axes_to_keys_thread_running = false;
 		private ArrayList<Widget> gamepad_mode_visible_widgets = new ArrayList<Widget>();
 		private ArrayList<Widget> gamepad_mode_hidden_widgets = new ArrayList<Widget>();
+		private Settings.Controller controller_settings;
 		#endif
 
 		private Unity.LauncherEntry launcher_entry;
@@ -459,19 +460,23 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			#if MANETTE
+			controller_settings = Settings.Controller.get_instance();
 			gamepad_mode_hidden_widgets.add(view);
 			gamepad_mode_hidden_widgets.add(downloads);
 			gamepad_mode_hidden_widgets.add(search);
 			gamepad_mode_hidden_widgets.add(add_game_button);
 
-			var manette_iterator = manette_monitor.iterate();
-			Manette.Device manette_device = null;
-			while(manette_iterator.next(out manette_device))
+			if(controller_settings.enabled)
 			{
-				on_gamepad_connected(manette_device);
+				var manette_iterator = manette_monitor.iterate();
+				Manette.Device manette_device = null;
+				while(manette_iterator.next(out manette_device))
+				{
+					on_gamepad_connected(manette_device);
+				}
+				manette_monitor.device_connected.connect(on_gamepad_connected);
+				manette_monitor.device_disconnected.connect(on_gamepad_disconnected);
 			}
-			manette_monitor.device_connected.connect(on_gamepad_connected);
-			manette_monitor.device_disconnected.connect(on_gamepad_disconnected);
 			#endif
 
 			load_games();
@@ -1249,7 +1254,7 @@ namespace GameHub.UI.Views.GamesView
 				debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
 				ui_update_gamepad_mode();
 
-				if(!press && b == Gamepad.BTN_HOME && !window.has_focus && !RunnableIsLaunched)
+				if(controller_settings.focus_window && !press && b == Gamepad.BTN_GUIDE && !window.has_focus && !RunnableIsLaunched)
 				{
 					window.get_window().focus(Gdk.CURRENT_TIME);
 				}

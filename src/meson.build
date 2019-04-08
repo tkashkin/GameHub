@@ -162,6 +162,7 @@ if manette.found()
 	deps += dependency('gdk-x11-3.0')
 	deps += dependency('xtst')
 	sources += 'utils/Gamepad.vala'
+	sources += 'ui/dialogs/SettingsDialog/tabs/Controller.vala'
 endif
 
 executable(
