@@ -250,6 +250,8 @@ namespace GameHub.Data.Sources.Steam
 
 			yield;
 
+			watch_client_registry();
+
 			return _games;
 		}
 
@@ -278,6 +280,50 @@ namespace GameHub.Data.Sources.Steam
 					{
 						_games.get(_games.index_of(game)).playtime_source = g.get_object().get_int_member("playtime_forever");
 					}
+				}
+			}
+		}
+
+		private void watch_client_registry()
+		{
+			var regfile = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.RegistryVDF);
+			if(regfile == null || !regfile.query_exists()) return;
+
+			Timeout.add_seconds(5, () => {
+				Utils.thread("SteamClientRegistryUpdate", () => {
+					client_registry_update(regfile);
+				}, false);
+				return Source.CONTINUE;
+			}, Priority.LOW);
+		}
+
+		private void client_registry_update(File? regfile)
+		{
+			if(regfile == null || !regfile.query_exists()) return;
+
+			var reg = Parser.parse_vdf_file(regfile.get_path());
+			var steam = Parser.json_object(reg, {"Registry", "HKCU", "Software", "Valve", "Steam"});
+
+			if(steam == null) return;
+
+			var running_appid = steam.has_member("RunningAppID") ? steam.get_string_member("RunningAppID") : "0";
+			IsAnyAppRunning = running_appid != "0";
+
+			var apps = steam.has_member("Apps") ? steam.get_member("Apps") : null;
+
+			foreach(var g in _games)
+			{
+				var game = g as SteamGame;
+
+				var appinfo  = Parser.json_object(apps, {game.id});
+				var running  = game.id == running_appid || (appinfo != null && appinfo.has_member("Running") && appinfo.get_string_member("Running") == "1");
+				var updating = appinfo != null && appinfo.has_member("Updating") && appinfo.get_string_member("Updating") == "1";
+
+				if(game.is_running != running || game.is_updating != updating)
+				{
+					game.is_running = running;
+					game.is_updating = updating;
+					game.update_status();
 				}
 			}
 		}
@@ -374,5 +420,7 @@ namespace GameHub.Data.Sources.Steam
 
 			BinaryVDF.write(shortcuts, root_node);
 		}
+
+		public static bool IsAnyAppRunning = false;
 	}
 }
