@@ -46,7 +46,7 @@ namespace GameHub.Utils.Gamepad
 
 	public static Button BTN_SELECT;
 	public static Button BTN_START;
-	public static Button BTN_HOME;
+	public static Button BTN_GUIDE;
 
 	public static Button DPAD_UP;
 	public static Button DPAD_DOWN;
@@ -84,7 +84,7 @@ namespace GameHub.Utils.Gamepad
 
 		BTN_SELECT = b(0x13a, "Select", null, { Key.F5 });
 		BTN_START  = b(0x13b, "Start", null, { Key.F6 });
-		BTN_HOME   = b(0x13c, "Home", null, { Key.F7 });
+		BTN_GUIDE  = b(0x13c, "Guide", null, { Key.F7 });
 
 		STICK_LEFT  = b(0x13d, "LS", "Left Stick");
 		STICK_RIGHT = b(0x13e, "RS", "Right Stick");

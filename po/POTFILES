@@ -34,6 +34,7 @@ src/ui/dialogs/SettingsDialog/SettingsDialog.vala
 src/ui/dialogs/SettingsDialog/SettingsDialogTab.vala
 src/ui/dialogs/SettingsDialog/tabs/UI.vala
 src/ui/dialogs/SettingsDialog/tabs/Collection.vala
+src/ui/dialogs/SettingsDialog/tabs/Controller.vala
 src/ui/dialogs/SettingsDialog/tabs/Steam.vala
 src/ui/dialogs/SettingsDialog/tabs/GOG.vala
 src/ui/dialogs/SettingsDialog/tabs/Humble.vala

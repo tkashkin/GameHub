@@ -96,6 +96,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 			add_tab("ui", new Tabs.UI(this), _("Interface"));
 			add_tab("collection", new Tabs.Collection(this), _("Collection"));
+			#if MANETTE
+			add_tab("controller", new Tabs.Controller(this), _("Controller"));
+			#endif
 			add_tab("gs/steam", new Tabs.Steam(this), "Steam", "source-steam-symbolic");
 			add_tab("gs/gog", new Tabs.GOG(this), "GOG", "source-gog-symbolic");
 			add_tab("gs/humble", new Tabs.Humble(this), "Humble Bundle", "source-humble-symbolic");

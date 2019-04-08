@@ -161,4 +161,19 @@
 			<default>'$game_dir'</default>
 		</key>
 	</schema>
+
+	<schema path="/com/github/tkashkin/gamehub/controller/" id="com.github.tkashkin.gamehub.controller" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="enabled" type="b">
+			<default>true</default>
+		</key>
+		<key name="focus-window" type="b">
+			<default>true</default>
+		</key>
+		<key name="known-controllers" type="as">
+			<default>[]</default>
+		</key>
+		<key name="ignored-controllers" type="as">
+			<default>[]</default>
+		</key>
+	</schema>
 </schemalist>

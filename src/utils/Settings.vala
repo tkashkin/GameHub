@@ -220,4 +220,28 @@ namespace GameHub.Settings
 			}
 		}
 	}
+
+	public class Controller: Granite.Services.Settings
+	{
+		public bool enabled { get; set; }
+		public bool focus_window { get; set; }
+
+		public string[] known_controllers { get; set; }
+		public string[] ignored_controllers { get; set; }
+
+		public Controller()
+		{
+			base(ProjectConfig.PROJECT_NAME + ".controller");
+		}
+
+		private static Controller? instance;
+		public static unowned Controller get_instance()
+		{
+			if(instance == null)
+			{
+				instance = new Controller();
+			}
+			return instance;
+		}
+	}
 }
