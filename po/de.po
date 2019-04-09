@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-08 07:47+0300\n"
+"POT-Creation-Date: 2019-04-09 16:55+0300\n"
 "PO-Revision-Date: 2019-04-08 03:52+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
@@ -116,7 +116,7 @@ msgid "Select executable"
 msgstr "Ausführbare Datei auswählen"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:400
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:337
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -287,7 +287,7 @@ msgstr ""
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
-#: src/ui/dialogs/CompatRunDialog.vala:100
+#: src/ui/dialogs/CompatRunDialog.vala:101
 #: src/ui/views/GamesView/GameContextMenu.vala:42
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run"
@@ -396,8 +396,8 @@ msgstr "Starte im Spielverzeichnis"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
-#: src/ui/views/GamesView/GamesView.vala:260
-#: src/ui/views/GamesView/GamesView.vala:796
+#: src/ui/views/GamesView/GamesView.vala:246
+#: src/ui/views/GamesView/GamesView.vala:577
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -832,103 +832,89 @@ msgstr "%s installieren"
 msgid "Return to GameHub after installing"
 msgstr "Zurück zu GameHub nach der Installation"
 
-#: src/ui/views/GamesView/GamesView.vala:140
+#: src/ui/views/GamesView/GamesView.vala:130
 msgid "No games"
 msgstr "Keine Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:140
+#: src/ui/views/GamesView/GamesView.vala:130
 msgid "Get some games or enable some game sources in settings"
 msgstr ""
 "Holen Sie sich einige Spiele oder aktivieren Sie einige Spiel-Quellen in den "
 "Einstellungen"
 
-#: src/ui/views/GamesView/GamesView.vala:141
-msgid "Reload"
-msgstr "Neu laden"
-
-#: src/ui/views/GamesView/GamesView.vala:189
+#: src/ui/views/GamesView/GamesView.vala:178
 msgid "Grid view"
 msgstr "Rasteransicht"
 
-#: src/ui/views/GamesView/GamesView.vala:190
+#: src/ui/views/GamesView/GamesView.vala:179
 msgid "List view"
 msgstr "Listenansicht"
 
-#: src/ui/views/GamesView/GamesView.vala:200
+#: src/ui/views/GamesView/GamesView.vala:187
 msgid "All games"
 msgstr "Alle Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:212
+#: src/ui/views/GamesView/GamesView.vala:198
 msgid "Downloads"
 msgstr "Downloads"
 
-#: src/ui/views/GamesView/GamesView.vala:238
+#: src/ui/views/GamesView/GamesView.vala:224
 msgid "Filters"
 msgstr "Filter"
 
-#: src/ui/views/GamesView/GamesView.vala:246
+#: src/ui/views/GamesView/GamesView.vala:232
 #: src/ui/views/GamesView/AddGamePopover.vala:83
 msgid "Add game"
 msgstr "Spiel hinzufügen"
 
-#: src/ui/views/GamesView/GamesView.vala:253
+#: src/ui/views/GamesView/GamesView.vala:239
 msgid "Search"
 msgstr "Suche"
 
-#: src/ui/views/GamesView/GamesView.vala:305
-msgctxt "status_header"
-msgid "Favorites"
-msgstr "Favoriten"
-
-#: src/ui/views/GamesView/GamesView.vala:398
+#: src/ui/views/GamesView/GamesView.vala:335
 msgid "Menu"
 msgstr "Menü"
 
-#: src/ui/views/GamesView/GamesView.vala:399
+#: src/ui/views/GamesView/GamesView.vala:336
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:82
 msgid "Back"
 msgstr "Zurück"
 
-#: src/ui/views/GamesView/GamesView.vala:592
-#, c-format
-msgid "Loading games from %s"
-msgstr "Laden von Spielen aus %s"
-
-#: src/ui/views/GamesView/GamesView.vala:633
+#: src/ui/views/GamesView/GamesView.vala:499
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u Spiel"
 msgstr[1] "%u Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:648
+#: src/ui/views/GamesView/GamesView.vala:513
 msgid "No user-added games"
 msgstr "Keine vom Benutzer hinzugefügten Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:649
+#: src/ui/views/GamesView/GamesView.vala:514
 msgid "Add some games using plus button"
 msgstr "Einige Spiele mit der Plus-Taste hinzufügen"
 
-#: src/ui/views/GamesView/GamesView.vala:653
+#: src/ui/views/GamesView/GamesView.vala:518
 #, c-format
 msgid "No %s games"
 msgstr "Keine %s Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:654
+#: src/ui/views/GamesView/GamesView.vala:519
 msgid "Get some Linux-compatible games"
 msgstr "Holen Sie sich einige Linux-kompatible Spiele"
 
-#: src/ui/views/GamesView/GamesView.vala:675
+#: src/ui/views/GamesView/GamesView.vala:529
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Keine Spiele entsprechen \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:680
+#: src/ui/views/GamesView/GamesView.vala:534
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Keine %1$s Spiele entsprechen \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:794
+#: src/ui/views/GamesView/GamesView.vala:575
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -936,27 +922,9 @@ msgstr ""
 "Es wurden keine Spiele von Steam geladen. Stelle deine Spieleliste auf "
 "öffentlich oder verwende deinen eigenen Steam API-Schlüssel."
 
-#: src/ui/views/GamesView/GamesView.vala:795
+#: src/ui/views/GamesView/GamesView.vala:576
 msgid "Privacy"
 msgstr "Datenschutz"
-
-#: src/ui/views/GamesView/GamesView.vala:1038
-msgid "Updating game info"
-msgstr "Aktualisieren von Spielinformationen"
-
-#: src/ui/views/GamesView/GamesView.vala:1044
-#, c-format
-msgid "Updating %s game info"
-msgstr "Aktualisierung von %s Spielinformationen"
-
-#: src/ui/views/GamesView/GamesView.vala:1063
-msgid "Merging games"
-msgstr "Zusammenführung von Spielen"
-
-#: src/ui/views/GamesView/GamesView.vala:1079
-#, c-format
-msgid "Merging games from %s"
-msgstr "Zusammenführen von Spielen aus %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
@@ -1106,9 +1074,13 @@ msgstr "Genres"
 msgid "Select file"
 msgstr "Datei auswählen"
 
-#: src/ui/widgets/CompatToolPicker.vala:52
+#: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
 msgstr "Kompatibilitätsschicht:"
+
+#: src/ui/widgets/CompatToolPicker.vala:92
+msgid "Configure"
+msgstr ""
 
 #: src/utils/Settings.vala:43
 msgctxt "sort_mode"
@@ -1161,6 +1133,28 @@ msgstr "Angehalten: %d%%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Download abgebrochen"
+
+#~ msgid "Reload"
+#~ msgstr "Neu laden"
+
+#~ msgctxt "status_header"
+#~ msgid "Favorites"
+#~ msgstr "Favoriten"
+
+#~ msgid "Loading games from %s"
+#~ msgstr "Laden von Spielen aus %s"
+
+#~ msgid "Updating game info"
+#~ msgstr "Aktualisieren von Spielinformationen"
+
+#~ msgid "Updating %s game info"
+#~ msgstr "Aktualisierung von %s Spielinformationen"
+
+#~ msgid "Merging games"
+#~ msgstr "Zusammenführung von Spielen"
+
+#~ msgid "Merging games from %s"
+#~ msgstr "Zusammenführen von Spielen aus %s"
 
 #~ msgid "Merging %s (%s)"
 #~ msgstr "Zusammenführen von %s und (%s)"

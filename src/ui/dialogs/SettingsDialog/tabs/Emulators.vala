@@ -277,7 +277,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				var compat_force_switch = add_switch(_("Force compatibility mode"), emulator.force_compat, f => { emulator.force_compat = f; });
 				compat_force_switch.no_show_all = true;
 
-				var compat_tool = new CompatToolPicker(emulator, false);
+				var compat_tool = new CompatToolPicker(emulator, false, true);
 				compat_tool.no_show_all = true;
 				attach(compat_tool, 0, rows, 2, 1);
 				rows++;
