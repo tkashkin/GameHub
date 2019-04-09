@@ -26,7 +26,7 @@ using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Views.GamesView
 {
-	class GameListRow: ListBoxRow
+	public class GameListRow: ListBoxRow
 	{
 		public Game game;
 
@@ -116,8 +116,6 @@ namespace GameHub.UI.Views.GamesView
 				}
 				return true;
 			});
-
-			show_all();
 
 			favorite_icon.visible = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 			updated_icon.visible = false;

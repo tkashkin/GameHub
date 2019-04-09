@@ -196,8 +196,6 @@ namespace GameHub.UI.Views.GamesView
 				}
 				return false;
 			});
-
-			show_all();
 		}
 
 		public GameCard(Game game)

@@ -76,6 +76,8 @@ sources = [
 	'data/compat/RetroArch.vala',
 	'data/compat/CustomEmulator.vala',
 
+	'data/adapters/GamesAdapter.vala',
+
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
 
