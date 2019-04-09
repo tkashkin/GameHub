@@ -257,7 +257,7 @@ namespace GameHub.UI.Dialogs
 				var compat_force_switch = add_switch(_("Force compatibility mode"), game.force_compat, f => { game.force_compat = f; });
 				compat_force_switch.no_show_all = true;
 
-				var compat_tool = new CompatToolPicker(game, false);
+				var compat_tool = new CompatToolPicker(game, false, true);
 				compat_tool.no_show_all = true;
 				compat_tool.margin_start = compat_tool.margin_end = 4;
 				properties_box.add(compat_tool);
