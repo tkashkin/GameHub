@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-08 07:47+0300\n"
-"PO-Revision-Date: 2019-03-31 18:05+0000\n"
+"PO-Revision-Date: 2019-04-09 14:00+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -45,9 +45,8 @@ msgid "Show application settings dialog"
 msgstr "Vis programinnstillingsdialogvindu"
 
 #: src/app.vala:96
-#, fuzzy
 msgid "Show about dialog"
-msgstr "Vis valg for kompabilitetsmodus"
+msgstr "Vis \"Om\"-dialogvindu"
 
 #: src/app.vala:97
 msgid "Maximum number of background worker threads"
@@ -423,9 +422,8 @@ msgid "Collection"
 msgstr "Samling"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:100
-#, fuzzy
 msgid "Controller"
-msgstr "Bidragsytere"
+msgstr "Kontroller"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:106
 msgid "Emulators"
@@ -503,11 +501,12 @@ msgstr "Spillnavn"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Controller.vala:40
 msgid "Enable controller support"
-msgstr ""
+msgstr "Skru på kontrollerstøtte"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Controller.vala:41
+#, fuzzy
 msgid "Focus GameHub window with Guide button"
-msgstr ""
+msgstr "Fokuser GameHub-vinduet med Guide-knappen"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:41
 #: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:44
@@ -742,9 +741,8 @@ msgid "Corrupted installer: checksum mismatch in"
 msgstr "Skadet installasjonskandidat: sjekksum stemmer ikke overens i"
 
 #: src/ui/dialogs/AboutDialog.vala:77
-#, fuzzy
 msgid "Copy application version and environment info"
-msgstr "Vis programversjon og avslutt"
+msgstr "Vis programversjon og miljøinformasjon"
 
 #: src/ui/dialogs/AboutDialog.vala:90 src/ui/views/WelcomeView.vala:56
 msgid "All your games in one place"
@@ -767,10 +765,9 @@ msgid "Report a problem"
 msgstr "Innrapporter et problem"
 
 #: src/ui/dialogs/AboutDialog.vala:102
-#, fuzzy
 msgctxt "about_link"
 msgid "Suggest translations"
-msgstr "Stille installasjon"
+msgstr "Foreslå oversettelser"
 
 #: src/ui/dialogs/AboutDialog.vala:109
 msgctxt "about_link"
