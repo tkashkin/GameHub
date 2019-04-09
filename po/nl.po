@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-08 07:47+0300\n"
-"PO-Revision-Date: 2019-04-09 14:00+0000\n"
+"PO-Revision-Date: 2019-04-10 09:19+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -1072,7 +1072,7 @@ msgstr "Comptabiliteit:"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
-msgstr ""
+msgstr "Instellen"
 
 #: src/utils/Settings.vala:43
 msgctxt "sort_mode"
