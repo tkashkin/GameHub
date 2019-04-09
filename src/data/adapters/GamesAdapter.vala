@@ -51,6 +51,9 @@ namespace GameHub.Data.Adapters
 
 		private HashMap<Game, ViewHolder> view_cache = new HashMap<Game, ViewHolder>();
 
+		public Unity.LauncherEntry launcher_entry;
+		public Dbusmenu.Menuitem launcher_menu;
+
 		public GamesAdapter(FlowBox grid, ListBox list)
 		{
 			foreach(var src in GameSources)
@@ -87,6 +90,9 @@ namespace GameHub.Data.Adapters
 				return sort((r as GameListRow).game, (r2 as GameListRow).game);
 			});
 			this.list.set_header_func(list_header);
+
+			launcher_entry = Unity.LauncherEntry.get_for_desktop_id(ProjectConfig.PROJECT_NAME + ".desktop");
+			setup_launcher_menu();
 		}
 
 		public void invalidate(bool filter=true, bool sort=true)
@@ -147,6 +153,7 @@ namespace GameHub.Data.Adapters
 					remove(game);
 				});
 			}
+			add_game_to_launcher_favorites_menu(game);
 		}
 
 		private void add_views(Game game, ViewHolder? holder=null)
@@ -203,7 +210,7 @@ namespace GameHub.Data.Adapters
 			}
 		}
 
-		private bool filter(Game game)
+		public bool filter(Game game)
 		{
 			if(!filter_settings_show_unsupported && !game.is_supported(null, filter_settings_use_compat)) return false;
 
@@ -258,7 +265,7 @@ namespace GameHub.Data.Adapters
 			return (same_src || merged_src) && (tags_all_enabled || tags_all_except_hidden_enabled || tags_match || tags_match_merged) && !hidden && Utils.strip_name(filter_search_query).casefold() in Utils.strip_name(game.name).casefold();
 		}
 
-		private int sort(Game game1, Game game2)
+		public int sort(Game game1, Game game2)
 		{
 			if(game1 != null && game2 != null)
 			{
@@ -376,6 +383,55 @@ namespace GameHub.Data.Adapters
 				debug("[Merge] Merging '%s' (%s) with '%s' (%s)", game.name, game.full_id, game2.name, game2.full_id);
 				remove(game2);
 			}
+		}
+
+		private void setup_launcher_menu()
+		{
+			launcher_menu = new Dbusmenu.Menuitem();
+			launcher_entry.quicklist = launcher_menu;
+		}
+
+		private Dbusmenu.Menuitem launcher_menu_separator()
+		{
+			var separator = new Dbusmenu.Menuitem();
+			separator.property_set(Dbusmenu.MENUITEM_PROP_TYPE, Dbusmenu.CLIENT_TYPES_SEPARATOR);
+			return separator;
+		}
+
+		private void add_game_to_launcher_favorites_menu(Game game)
+		{
+			var added = false;
+			Dbusmenu.Menuitem? item = null;
+
+			SourceFunc update = () => {
+				Idle.add(() => {
+					var favorite = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+					if(!added && favorite)
+					{
+						if(item == null)
+						{
+							item = new Dbusmenu.Menuitem();
+							item.property_set(Dbusmenu.MENUITEM_PROP_LABEL, game.name);
+							item.item_activated.connect(() => { game.run_or_install.begin(); });
+						}
+						launcher_menu.child_append(item);
+						added = true;
+					}
+					else if(added && !favorite)
+					{
+						if(item != null)
+						{
+							launcher_menu.child_delete(item);
+						}
+						added = false;
+					}
+					return Source.REMOVE;
+				}, Priority.LOW);
+				return Source.REMOVE;
+			};
+
+			game.tags_update.connect(() => update());
+			update();
 		}
 
 		private class ViewHolder
