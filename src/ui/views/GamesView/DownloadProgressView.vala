@@ -67,6 +67,7 @@ namespace GameHub.UI.Views.GamesView
 			if(dl_info.icon != null)
 			{
 				image = new AutoSizeImage();
+				image.valign = Align.START;
 				image.set_constraint(48, 48, 1);
 				image.set_size_request(48, 48);
 				Utils.load_image.begin(image, dl_info.icon, "icon");

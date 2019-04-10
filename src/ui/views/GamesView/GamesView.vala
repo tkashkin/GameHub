@@ -55,6 +55,8 @@ namespace GameHub.UI.Views.GamesView
 		private Granite.Widgets.ModeButton filter;
 		private SearchEntry search;
 
+		private Granite.Widgets.OverlayBar status_overlay;
+
 		private Button settings;
 
 		private MenuButton downloads;
@@ -131,7 +133,7 @@ namespace GameHub.UI.Views.GamesView
 			games_grid.margin = 4;
 
 			games_grid.activate_on_single_click = false;
-			games_grid.homogeneous = false;
+			games_grid.homogeneous = true;
 			games_grid.min_children_per_line = 2;
 			games_grid.selection_mode = SelectionMode.BROWSE;
 			games_grid.valign = Align.START;
@@ -277,7 +279,10 @@ namespace GameHub.UI.Views.GamesView
 				games_adapter.invalidate(false, true);
 			});
 
-			add_game_popover.game_added.connect(g => games_adapter.add(g));
+			add_game_popover.game_added.connect(g => {
+				games_adapter.add(g);
+				update_view();
+			});
 
 			titlebar.pack_start(view);
 
@@ -334,6 +339,24 @@ namespace GameHub.UI.Views.GamesView
 			titlebar.pack_end(gamepad_image("a", _("Select")));
 			#endif
 
+			status_overlay = new Granite.Widgets.OverlayBar(overlay);
+			games_adapter.notify["status"].connect(() => {
+				Idle.add(() => {
+					if(games_adapter.status != null && games_adapter.status.length > 0)
+					{
+						status_overlay.label = games_adapter.status;
+						status_overlay.active = true;
+						status_overlay.show();
+					}
+					else
+					{
+						status_overlay.active = false;
+						status_overlay.hide();
+					}
+					return Source.REMOVE;
+				}, Priority.LOW);
+			});
+
 			show_all();
 			games_grid_scrolled.show_all();
 			games_grid.show_all();
@@ -358,14 +381,16 @@ namespace GameHub.UI.Views.GamesView
 					downloads.sensitive = true;
 					downloads_count++;
 
+					#if UNITY
 					dl.download.status_change.connect(s => {
 						Idle.add(() => {
 							update_downloads_progress();
 							return Source.REMOVE;
-						});
+						}, Priority.LOW);
 					});
+					#endif
 					return Source.REMOVE;
-				});
+				}, Priority.LOW);
 			});
 			Downloader.get_instance().dl_ended.connect(dl => {
 				Idle.add(() => {
@@ -380,9 +405,11 @@ namespace GameHub.UI.Views.GamesView
 						downloads_popover.hide();
 						#endif
 					}
+					#if UNITY
 					update_downloads_progress();
+					#endif
 					return Source.REMOVE;
-				});
+				}, Priority.LOW);
 			});
 
 			#if MANETTE
@@ -682,6 +709,7 @@ namespace GameHub.UI.Views.GamesView
 			return bar;
 		}
 
+		#if UNITY
 		private void update_downloads_progress()
 		{
 			games_adapter.launcher_entry.progress_visible = downloads_count > 0;
@@ -699,6 +727,7 @@ namespace GameHub.UI.Views.GamesView
 			games_adapter.launcher_entry.count_visible = count > 0;
 			games_adapter.launcher_entry.count = count;
 		}
+		#endif
 
 		#if MANETTE
 		private void ui_update_gamepad_mode()

@@ -78,6 +78,7 @@ namespace GameHub.UI.Dialogs
 			if(game is Game && (game as Game).icon != null)
 			{
 				var icon = new AutoSizeImage();
+				icon.valign = Align.START;
 				icon.set_constraint(48, 48, 1);
 				icon.set_size_request(48, 48);
 				title_label.margin_start = 8;

@@ -105,7 +105,7 @@ namespace GameHub.Data.Sources.User
 
 				if(cache_loaded != null)
 				{
-					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
+					cache_loaded();
 				}
 
 				Idle.add(load_games.callback);

@@ -326,5 +326,11 @@ namespace GameHub.UI.Views.GamesView
 
 			src_icons.visible = platform_icons.visible = Settings.UI.get_instance().show_grid_icons;
 		}
+
+		public override void show_all()
+		{
+			base.show_all();
+			update();
+		}
 	}
 }

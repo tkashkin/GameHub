@@ -51,8 +51,12 @@ namespace GameHub.Data.Adapters
 
 		private HashMap<Game, ViewHolder> view_cache = new HashMap<Game, ViewHolder>();
 
+		public string? status { get; private set; default = null; }
+
+		#if UNITY
 		public Unity.LauncherEntry launcher_entry;
 		public Dbusmenu.Menuitem launcher_menu;
+		#endif
 
 		public GamesAdapter(FlowBox grid, ListBox list)
 		{
@@ -91,8 +95,10 @@ namespace GameHub.Data.Adapters
 			});
 			this.list.set_header_func(list_header);
 
+			#if UNITY
 			launcher_entry = Unity.LauncherEntry.get_for_desktop_id(ProjectConfig.PROJECT_NAME + ".desktop");
 			setup_launcher_menu();
+			#endif
 		}
 
 		public void invalidate(bool filter=true, bool sort=true)
@@ -118,13 +124,22 @@ namespace GameHub.Data.Adapters
 				foreach(var src in sources)
 				{
 					loading_sources.add(src);
+					update_loading_status();
 					src.load_games.begin(add, () => add_cached_views(), (obj, res) => {
 						src.load_games.end(res);
 						loading_sources.remove(src);
+						update_loading_status();
 						loaded_callback(src);
 						if(loading_sources.size == 0 && new_games_added)
 						{
-							merge_games();
+							if(new_games_added)
+							{
+								merge_games();
+							}
+							else
+							{
+								status = null;
+							}
 						}
 					});
 				}
@@ -153,7 +168,10 @@ namespace GameHub.Data.Adapters
 					remove(game);
 				});
 			}
+
+			#if UNITY
 			add_game_to_launcher_favorites_menu(game);
+			#endif
 		}
 
 		private void add_views(Game game, ViewHolder? holder=null)
@@ -165,6 +183,15 @@ namespace GameHub.Data.Adapters
 				grid.add(holder.grid_card);
 				list.add(holder.list_row);
 				holder.is_added = true;
+
+				if(grid.get_children().length() == 0)
+				{
+					holder.grid_card.grab_focus();
+				}
+				if(list.get_selected_row() == null)
+				{
+					list.select_row(holder.list_row);
+				}
 
 				holder.grid_card.show_all();
 				holder.list_row.show_all();
@@ -341,20 +368,26 @@ namespace GameHub.Data.Adapters
 
 		private void merge_games()
 		{
-			foreach(var src in sources)
-			{
-				merge_games_from(src);
-			}
+			if(!filter_settings_merge) return;
+			Utils.thread("GamesAdapterMerge", () => {
+				status = _("Merging games");
+				foreach(var src in sources)
+				{
+					merge_games_from(src);
+				}
+				status = null;
+			});
 		}
 
 		private void merge_games_from(GameSource src)
 		{
-			Utils.thread("Merging-" + src.id, () => {
-				foreach(var game in src.games)
-				{
-					merge_game(game);
-				}
-			});
+			if(!filter_settings_merge) return;
+			debug("[Merge] Merging %s games", src.name);
+			status = _("Merging games from %s").printf(src.name);
+			foreach(var game in src.games)
+			{
+				merge_game(game);
+			}
 		}
 
 		private void merge_game(Game game)
@@ -385,6 +418,24 @@ namespace GameHub.Data.Adapters
 			}
 		}
 
+		private void update_loading_status()
+		{
+			if(loading_sources.size > 0)
+			{
+				string[] src_names = {};
+				foreach(var s in loading_sources)
+				{
+					src_names += s.name;
+				}
+				status = _("Loading games from %s").printf(string.joinv(", ", src_names));
+			}
+			else
+			{
+				status = null;
+			}
+		}
+
+		#if UNITY
 		private void setup_launcher_menu()
 		{
 			launcher_menu = new Dbusmenu.Menuitem();
@@ -433,6 +484,7 @@ namespace GameHub.Data.Adapters
 			game.tags_update.connect(() => update());
 			update();
 		}
+		#endif
 
 		private class ViewHolder
 		{

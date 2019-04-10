@@ -74,7 +74,7 @@ namespace GameHub.Data.Sources.Humble
 
 				if(cache_loaded != null)
 				{
-					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
+					cache_loaded();
 				}
 
 				var headers = new HashMap<string, string>();
@@ -106,8 +106,7 @@ namespace GameHub.Data.Sources.Humble
 									var dl_name = dl_obj.get_string_member("machine_name");
 									var dl_id = dl_obj.get_object_member("url").get_string_member("web");
 									dl_obj.set_string_member("download_identifier", dl_id);
-									var signed_url = sign_url(dl_name, dl_id, user_token);
-									dl_obj.get_object_member("url").set_string_member("web", signed_url ?? "humble-trove-unsigned://" + dl_name + "/_gh_dl_/" + dl_id);
+									dl_obj.get_object_member("url").set_string_member("web", "humble-trove-unsigned://" + dl_name + "/_gh_dl_/" + dl_id);
 								});
 
 								var game = new HumbleGame(this, Trove.FAKE_ORDER, node);
@@ -116,14 +115,11 @@ namespace GameHub.Data.Sources.Humble
 								bool is_new_game = !_games.contains(game);
 								if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
 								{
-									game.update_game_info.begin((obj, res) => {
-										game.update_game_info.end(res);
-										_games.add(game);
-										if(game_loaded != null)
-										{
-											Idle.add(() => { game_loaded(game, false); return Source.REMOVE; });
-										}
-									});
+									_games.add(game);
+									if(game_loaded != null)
+									{
+										game_loaded(game, false);
+									}
 								}
 								if(is_new_game) games_count++;
 							});

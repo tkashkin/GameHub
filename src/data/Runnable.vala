@@ -428,8 +428,7 @@ namespace GameHub.Data
 									_("%s: corrupted installer").printf(runnable.name),
 									_("Checksum mismatch in %s").printf(file.get_basename()),
 									NotificationPriority.HIGH,
-									n =>
-									{
+									n => {
 										n.set_icon(new ThemedIcon("dialog-warning"));
 										if(game != null)
 										{
@@ -596,8 +595,7 @@ namespace GameHub.Data
 								_("%s: cannot detect main executable").printf(game.name),
 								_("Main executable file for this game cannot be detected automatically.\nPlease set main executable in game's properties."),
 								NotificationPriority.HIGH,
-								n =>
-								{
+								n => {
 									n.set_icon(new ThemedIcon("dialog-warning"));
 									if(game != null)
 									{
