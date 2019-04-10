@@ -108,6 +108,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			var title_hbox = new Box(Orientation.HORIZONTAL, 15);
 
 			icon = new AutoSizeImage();
+			icon.valign = Align.START;
 			icon.set_constraint(48, 48, 1);
 			icon.set_size_request(48, 48);
 

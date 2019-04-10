@@ -49,6 +49,7 @@ namespace GameHub.UI.Views.GamesView
 			vbox.valign = Align.CENTER;
 
 			image = new AutoSizeImage();
+			image.valign = Align.CENTER;
 
 			hbox.add(image);
 

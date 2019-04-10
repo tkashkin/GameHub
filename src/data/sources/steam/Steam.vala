@@ -233,7 +233,7 @@ namespace GameHub.Data.Sources.Steam
 
 				if(cache_loaded != null)
 				{
-					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
+					cache_loaded();
 				}
 
 				var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(api_key)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";

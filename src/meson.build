@@ -32,7 +32,6 @@ deps = [
 	dependency('sqlite3'),
 	dependency('libxml-2.0'),
 	dependency('polkit-gobject-1'),
-	dependency('unity'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
@@ -154,6 +153,12 @@ if soup260.found()
 	deps += soup260
 else
 	deps += dependency('libsoup-2.4')
+endif
+
+unity = dependency('unity', required: false)
+if unity.found()
+	add_global_arguments('-D', 'UNITY', language: 'vala')
+	deps += unity
 endif
 
 manette = dependency('manette-0.2', required: false)

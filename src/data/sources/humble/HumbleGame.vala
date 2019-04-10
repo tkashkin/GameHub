@@ -215,8 +215,6 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			if(installers.size > 0) return;
-
 			var product_node = Parser.parse_json(info);
 			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return;
 
@@ -231,6 +229,23 @@ namespace GameHub.Data.Sources.Humble
 			{
 				description = product.get_string_member("_gamehub_description");
 			}
+
+			save();
+
+			update_status();
+
+			game_info_updated = true;
+		}
+
+		private async void update_installers()
+		{
+			if(installers.size > 0) return;
+
+			var product_node = Parser.parse_json(info);
+			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return;
+
+			var product = product_node.get_object();
+			if(product == null) return;
 
 			if(product.has_member("downloads"))
 			{
@@ -269,20 +284,34 @@ namespace GameHub.Data.Sources.Humble
 
 				if(refresh && !game_info_refreshed)
 				{
-					//debug("[HumbleGame.update_game_info] Refreshing");
 					game_info_refreshed = true;
 					game_info_updated = false;
 					installers.clear();
 					yield update_game_info();
+					yield update_installers();
 					return;
 				}
 			}
 
-			save();
+			is_installable = installers.size > 0;
 
-			update_status();
-
-			game_info_updated = true;
+			if(installers.size == 0 && source is Trove)
+			{
+				Utils.notify(
+					_("%s: no available installers").printf(name),
+					_("Cannot get Trove download URL.\nMake sure your Humble Monthly subscription is active."),
+					NotificationPriority.HIGH,
+					n => {
+						n.set_icon(new ThemedIcon("dialog-warning"));
+						var cached_icon = Utils.cached_image_file(icon, "icon");
+						if(cached_icon != null && cached_icon.query_exists())
+						{
+							n.set_icon(new FileIcon(cached_icon));
+						}
+						return n;
+					}
+				);
+			}
 		}
 
 		private bool process_download(string id, string? dl_id, string os, Json.Object dl_struct)
@@ -326,7 +355,7 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void install()
 		{
-			yield update_game_info();
+			yield update_installers();
 
 			if(installers.size < 1) return;
 

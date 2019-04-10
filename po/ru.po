@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-09 16:55+0300\n"
+"POT-Creation-Date: 2019-04-10 12:17+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -115,7 +115,7 @@ msgid "Select executable"
 msgstr "Выберите исполняемый файл"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:337
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:339
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -146,26 +146,26 @@ msgstr "%s: повреждённый установщик"
 msgid "Checksum mismatch in %s"
 msgstr "Несовпадение контрольной суммы в файле %s"
 
-#: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "Показать файл"
 
-#: src/data/Runnable.vala:445 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:445 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "Сохранить"
 
-#: src/data/Runnable.vala:596
+#: src/data/Runnable.vala:595
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: невозможно определить исполняемый файл игры"
 
-#: src/data/Runnable.vala:597
+#: src/data/Runnable.vala:596
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -228,6 +228,25 @@ msgstr "Не установленные"
 msgid "%s games"
 msgstr "Игры из %s"
 
+#: src/data/adapters/GamesAdapter.vala:345
+msgctxt "status_header"
+msgid "Favorites"
+msgstr "Избранные"
+
+#: src/data/adapters/GamesAdapter.vala:373
+msgid "Merging games"
+msgstr "Объединение игр"
+
+#: src/data/adapters/GamesAdapter.vala:386
+#, c-format
+msgid "Merging games from %s"
+msgstr "Объединение игр из %s"
+
+#: src/data/adapters/GamesAdapter.vala:430
+#, c-format
+msgid "Loading games from %s"
+msgstr "Загрузка игр из %s"
+
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr "Ваш SteamID будет прочитан из файла конфигурации Steam"
@@ -239,6 +258,19 @@ msgid ""
 msgstr ""
 "Файл конфигурации Steam не найден.\n"
 "Войдите в ваш аккаунт в клиенте Steam и вернитесь в GameHub"
+
+#: src/data/sources/humble/HumbleGame.vala:301
+#, c-format
+msgid "%s: no available installers"
+msgstr "%s: нет доступных установщиков"
+
+#: src/data/sources/humble/HumbleGame.vala:302
+msgid ""
+"Cannot get Trove download URL.\n"
+"Make sure your Humble Monthly subscription is active."
+msgstr ""
+"Не удалось получить URL Trove.\n"
+"Убедитесь, что подписка Humble Monthly активна."
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -285,9 +317,9 @@ msgstr ""
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
-#: src/ui/dialogs/CompatRunDialog.vala:101
+#: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
 msgid "Run"
 msgstr "Запустить"
 
@@ -394,8 +426,8 @@ msgstr "Запускать в папке игры"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
-#: src/ui/views/GamesView/GamesView.vala:246
-#: src/ui/views/GamesView/GamesView.vala:577
+#: src/ui/views/GamesView/GamesView.vala:245
+#: src/ui/views/GamesView/GamesView.vala:597
 msgid "Settings"
 msgstr "Настройки"
 
@@ -609,30 +641,30 @@ msgstr "Выберите папку эмулятора"
 msgid "Force compatibility mode"
 msgstr "Использовать режим совместимости"
 
-#: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:112
+#: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GamesView/GameContextMenu.vala:49
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Install"
 msgstr "Установить"
 
-#: src/ui/dialogs/InstallDialog.vala:110
+#: src/ui/dialogs/InstallDialog.vala:111
 msgid "Import"
 msgstr "Импортировать"
 
-#: src/ui/dialogs/InstallDialog.vala:111
+#: src/ui/dialogs/InstallDialog.vala:112
 msgid "Download"
 msgstr "Загрузить"
 
-#: src/ui/dialogs/InstallDialog.vala:212
+#: src/ui/dialogs/InstallDialog.vala:213
 msgid "Select installer"
 msgstr "Выберите установщик"
 
-#: src/ui/dialogs/InstallDialog.vala:221
+#: src/ui/dialogs/InstallDialog.vala:222
 #, c-format
 msgid "Installer size: %s"
 msgstr "Размер установщика: %s"
 
-#: src/ui/dialogs/InstallDialog.vala:325
+#: src/ui/dialogs/InstallDialog.vala:326
 msgid "Unknown"
 msgstr "Неизвестно"
 
@@ -732,7 +764,7 @@ msgstr "Открыть папку"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:45
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Run with compatibility layer"
 msgstr "Запустить, используя слой совместимости"
 
@@ -826,53 +858,53 @@ msgstr "Установить %s"
 msgid "Return to GameHub after installing"
 msgstr "Вернитесь в GameHub после установки"
 
-#: src/ui/views/GamesView/GamesView.vala:130
+#: src/ui/views/GamesView/GamesView.vala:129
 msgid "No games"
 msgstr "Нет игр"
 
-#: src/ui/views/GamesView/GamesView.vala:130
+#: src/ui/views/GamesView/GamesView.vala:129
 msgid "Get some games or enable some game sources in settings"
 msgstr "Получите игры или включите источники в настройках"
 
-#: src/ui/views/GamesView/GamesView.vala:178
+#: src/ui/views/GamesView/GamesView.vala:177
 msgid "Grid view"
 msgstr "Сетка"
 
-#: src/ui/views/GamesView/GamesView.vala:179
+#: src/ui/views/GamesView/GamesView.vala:178
 msgid "List view"
 msgstr "Список"
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:186
 msgid "All games"
 msgstr "Все игры"
 
-#: src/ui/views/GamesView/GamesView.vala:198
+#: src/ui/views/GamesView/GamesView.vala:197
 msgid "Downloads"
 msgstr "Загрузки"
 
-#: src/ui/views/GamesView/GamesView.vala:224
+#: src/ui/views/GamesView/GamesView.vala:223
 msgid "Filters"
 msgstr "Фильтры"
 
-#: src/ui/views/GamesView/GamesView.vala:232
+#: src/ui/views/GamesView/GamesView.vala:231
 #: src/ui/views/GamesView/AddGamePopover.vala:83
 msgid "Add game"
 msgstr "Добавить игру"
 
-#: src/ui/views/GamesView/GamesView.vala:239
+#: src/ui/views/GamesView/GamesView.vala:238
 msgid "Search"
 msgstr "Поиск"
 
-#: src/ui/views/GamesView/GamesView.vala:335
+#: src/ui/views/GamesView/GamesView.vala:337
 msgid "Menu"
 msgstr "Меню"
 
-#: src/ui/views/GamesView/GamesView.vala:336
+#: src/ui/views/GamesView/GamesView.vala:338
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:82
 msgid "Back"
 msgstr "Назад"
 
-#: src/ui/views/GamesView/GamesView.vala:499
+#: src/ui/views/GamesView/GamesView.vala:519
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
@@ -880,34 +912,34 @@ msgstr[0] "%u игра"
 msgstr[1] "%u игры"
 msgstr[2] "%u игр"
 
-#: src/ui/views/GamesView/GamesView.vala:513
+#: src/ui/views/GamesView/GamesView.vala:533
 msgid "No user-added games"
 msgstr "Нет пользовательских игр"
 
-#: src/ui/views/GamesView/GamesView.vala:514
+#: src/ui/views/GamesView/GamesView.vala:534
 msgid "Add some games using plus button"
 msgstr "Добавьте игры с помощью кнопки +"
 
-#: src/ui/views/GamesView/GamesView.vala:518
+#: src/ui/views/GamesView/GamesView.vala:538
 #, c-format
 msgid "No %s games"
 msgstr "Нет игр из %s"
 
-#: src/ui/views/GamesView/GamesView.vala:519
+#: src/ui/views/GamesView/GamesView.vala:539
 msgid "Get some Linux-compatible games"
 msgstr "Получите игры, совместимые с Linux"
 
-#: src/ui/views/GamesView/GamesView.vala:529
+#: src/ui/views/GamesView/GamesView.vala:549
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Нет игр, соответствующих запросу «%s»"
 
-#: src/ui/views/GamesView/GamesView.vala:534
+#: src/ui/views/GamesView/GamesView.vala:554
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Нет игр из %1$s, соответствующих запросу «%2$s»"
 
-#: src/ui/views/GamesView/GamesView.vala:575
+#: src/ui/views/GamesView/GamesView.vala:595
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -915,22 +947,22 @@ msgstr ""
 "Нет игр, загруженных из Steam. Настройте список игр как публичный или "
 "используйте свой API-ключ Steam в настройках."
 
-#: src/ui/views/GamesView/GamesView.vala:576
+#: src/ui/views/GamesView/GamesView.vala:596
 msgid "Privacy"
 msgstr "Приватность"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:124
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
+#: src/ui/views/GamesView/DownloadProgressView.vala:125
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:149
 msgid "Pause download"
 msgstr "Приостановить загрузку"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:154
+#: src/ui/views/GamesView/DownloadProgressView.vala:130
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:155
 msgid "Resume download"
 msgstr "Возобновить загрузку"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:134
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:160
+#: src/ui/views/GamesView/DownloadProgressView.vala:135
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
 msgid "Cancel download"
 msgstr "Отменить загрузку"
 
@@ -965,30 +997,30 @@ msgid "Properties"
 msgstr "Свойства"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:121
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installation directory"
 msgstr "Открыть папку установки"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open installers collection directory"
 msgstr "Открыть папку коллекции установщиков"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:137
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
 msgid "Open bonus collection directory"
 msgstr "Открыть папку коллекции бонусного контента"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
 msgid "Uninstall"
 msgstr "Деинсталлировать"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Open store page"
 msgstr "Открыть страницу в магазине"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:218
 msgid "Game properties"
 msgstr "Свойства игры"
 
@@ -996,12 +1028,12 @@ msgstr "Свойства игры"
 msgid "Achievements"
 msgstr "Достижения"
 
-#: src/ui/views/GameDetailsView/blocks/Achievements.vala:103
+#: src/ui/views/GameDetailsView/blocks/Achievements.vala:104
 #, c-format
 msgid "Unlocked: %s"
 msgstr "Открыто: %s"
 
-#: src/ui/views/GameDetailsView/blocks/Achievements.vala:108
+#: src/ui/views/GameDetailsView/blocks/Achievements.vala:109
 #, c-format
 msgid "Global percentage: %g%%"
 msgstr "Глобальный процент: %g%%"
@@ -1130,24 +1162,11 @@ msgstr "Загрузка отменена"
 #~ msgid "Reload"
 #~ msgstr "Обновить"
 
-#~ msgctxt "status_header"
-#~ msgid "Favorites"
-#~ msgstr "Избранные"
-
-#~ msgid "Loading games from %s"
-#~ msgstr "Загрузка игр из %s"
-
 #~ msgid "Updating game info"
 #~ msgstr "Обновление информации об играх"
 
 #~ msgid "Updating %s game info"
 #~ msgstr "Обновление информации об играх из %s"
-
-#~ msgid "Merging games"
-#~ msgstr "Объединение игр"
-
-#~ msgid "Merging games from %s"
-#~ msgstr "Объединение игр из %s"
 
 #~ msgid "Merging %s (%s)"
 #~ msgstr "Объединение %s (%s)"

@@ -3,6 +3,7 @@ src/data/Runnable.vala
 src/data/Game.vala
 src/data/GameSource.vala
 src/data/Emulator.vala
+src/data/adapters/GamesAdapter.vala
 src/data/sources/steam/Steam.vala
 src/data/sources/steam/SteamGame.vala
 src/data/sources/gog/GOG.vala

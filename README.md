@@ -65,7 +65,7 @@ sudo apt install com.github.tkashkin.gamehub
 * `libsqlite3-dev`
 * `libxml2-dev`
 * `libpolkit-gobject-1-dev`
-* `libunity-dev`
+* `libunity-dev` (optional, required for launcher icon quicklist, progress indicator and counter)
 * `libmanette-0.2-dev`, `libx11-dev`, `libxtst-dev` (optional, required for gamepad support)
 
 #### Building
