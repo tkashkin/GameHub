@@ -93,8 +93,8 @@ namespace GameHub.UI.Widgets
 		{
 			ctx.scale(1.0 / scale_factor, 1.0 / scale_factor);
 
-			var width = get_allocated_width();
-			var height = get_allocated_height();
+			var width = get_allocated_width() * scale_factor;
+			var height = get_allocated_height() * scale_factor;
 
 			if(src != null)
 			{
