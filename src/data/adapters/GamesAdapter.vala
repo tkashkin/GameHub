@@ -205,34 +205,17 @@ namespace GameHub.Data.Adapters
 
 		private void add_cached_views()
 		{
-			var views_to_add = new ArrayList<ViewHolder>();
-
-			lock(view_cache)
-			{
-				foreach(var holder in view_cache.values)
+			Idle.add(() => {
+				lock(view_cache)
 				{
-					if(!holder.is_added)
+					foreach(var holder in view_cache.values)
 					{
-						views_to_add.add(holder);
-
-						if(views_to_add.size >= 200)
+						if(!holder.is_added)
 						{
-							Idle.add(() => {
-								foreach(var h in views_to_add)
-								{
-									add_views(h.game, h);
-								}
-								views_to_add.clear();
-								return Source.REMOVE;
-							}, Priority.LOW);
-
-							while(views_to_add.size > 0) Thread.usleep(50000);
+							add_views(holder.game, holder);
 						}
 					}
 				}
-			}
-
-			Idle.add(() => {
 				cache_loaded();
 				return Source.REMOVE;
 			}, Priority.LOW);
