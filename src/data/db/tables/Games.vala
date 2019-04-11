@@ -119,9 +119,12 @@ namespace GameHub.Data.DB.Tables
 
 		public static bool add(Game game)
 		{
-			if(!cache.has_key(game.full_id))
+			lock(cache)
 			{
-				cache.set(game.full_id, game);
+				if(!cache.has_key(game.full_id))
+				{
+					cache.set(game.full_id, game);
+				}
 			}
 
 			if(game is Sources.GOG.GOGGame.DLC) return false;
@@ -201,9 +204,12 @@ namespace GameHub.Data.DB.Tables
 
 		public static bool remove(Game game)
 		{
-			if(cache.has_key(game.full_id))
+			lock(cache)
 			{
-				cache.unset(game.full_id);
+				if(cache.has_key(game.full_id))
+				{
+					cache.unset(game.full_id);
+				}
 			}
 
 			unowned Sqlite.Database? db = Database.instance.db;
@@ -236,9 +242,12 @@ namespace GameHub.Data.DB.Tables
 		{
 			if(src == null || id == null) return null;
 
-			if(cache.has_key(@"$(src):$(id)"))
+			lock(cache)
 			{
-				return cache.get(@"$(src):$(id)");
+				if(cache.has_key(@"$(src):$(id)"))
+				{
+					return cache.get(@"$(src):$(id)");
+				}
 			}
 
 			unowned Sqlite.Database? db = Database.instance.db;
@@ -281,7 +290,10 @@ namespace GameHub.Data.DB.Tables
 
 				if(g != null)
 				{
-					cache.set(g.full_id, g);
+					lock(cache)
+					{
+						cache.set(g.full_id, g);
+					}
 				}
 
 				return g;
@@ -326,9 +338,12 @@ namespace GameHub.Data.DB.Tables
 
 				var full_id = SOURCE.get(st) + ":" + ID.get(st);
 
-				if(cache.has_key(full_id))
+				lock(cache)
 				{
-					g = cache.get(full_id);
+					if(cache.has_key(full_id))
+					{
+						g = cache.get(full_id);
+					}
 				}
 
 				if(g == null)
@@ -354,9 +369,12 @@ namespace GameHub.Data.DB.Tables
 				if(g != null)
 				{
 					games.add(g);
-					if(!cache.has_key(g.full_id))
+					lock(cache)
 					{
-						cache.set(g.full_id, g);
+						if(!cache.has_key(g.full_id))
+						{
+							cache.set(g.full_id, g);
+						}
 					}
 				}
 			}
