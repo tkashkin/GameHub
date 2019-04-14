@@ -27,6 +27,7 @@ namespace GameHub.Data.Sources.Steam
 	{
 		private int metadata_tries = 0;
 
+		private bool game_info_updating = false;
 		private bool game_info_updated = false;
 
 		public bool is_updating { get; set; default = false; }
@@ -103,6 +104,9 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async void update_game_info()
 		{
+			if(game_info_updating) return;
+			game_info_updating = true;
+
 			update_status();
 
 			if(image == null || image == "")
@@ -128,7 +132,11 @@ namespace GameHub.Data.Sources.Steam
 			Steam.find_app_install_dir(id, out dir);
 			install_dir = dir;
 
-			if(game_info_updated) return;
+			if(game_info_updated)
+			{
+				game_info_updating = false;
+				return;
+			}
 
 			if(info_detailed == null || info_detailed.length == 0)
 			{
@@ -152,6 +160,7 @@ namespace GameHub.Data.Sources.Steam
 					debug("[SteamGame] %s: no app data for '%s', store page does not exist", id, name);
 				}
 				game_info_updated = true;
+				game_info_updating = false;
 				return;
 			}
 
@@ -167,6 +176,7 @@ namespace GameHub.Data.Sources.Steam
 				if(metadata_tries > 0)
 				{
 					game_info_updated = true;
+					game_info_updating = false;
 					return;
 				}
 			}
@@ -187,6 +197,7 @@ namespace GameHub.Data.Sources.Steam
 				platforms.add(Platform.WINDOWS);
 				save();
 				game_info_updated = true;
+				game_info_updating = false;
 				return;
 			}
 
@@ -200,8 +211,10 @@ namespace GameHub.Data.Sources.Steam
 
 			save();
 
-			game_info_updated = true;
 			update_status();
+			
+			game_info_updated = true;
+			game_info_updating = false;
 		}
 
 		public override void update_status()

@@ -26,6 +26,7 @@ namespace GameHub.Data.Sources.Humble
 	{
 		public string order_id;
 
+		private bool game_info_updating = false;
 		private bool game_info_updated = false;
 		private bool game_info_refreshed = false;
 
@@ -177,6 +178,9 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void update_game_info()
 		{
+			if(game_info_updating) return;
+			game_info_updating = true;
+
 			update_status();
 
 			mount_overlays();
@@ -192,7 +196,11 @@ namespace GameHub.Data.Sources.Humble
 				image = icon;
 			}
 
-			if(game_info_updated) return;
+			if(game_info_updated)
+			{
+				game_info_updating = false;
+				return;
+			}
 
 			if(info == null || info.length == 0)
 			{
@@ -202,11 +210,23 @@ namespace GameHub.Data.Sources.Humble
 				headers["Cookie"] = @"$(Humble.AUTH_COOKIE)=\"$(token)\";";
 
 				var root_node = yield Parser.parse_remote_json_file_async(@"https://www.humblebundle.com/api/v1/order/$(order_id)?ajax=true", "GET", null, headers);
-				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return;
+				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT)
+				{
+					game_info_updating = false;
+					return;
+				}
 				var root = root_node.get_object();
-				if(root == null) return;
+				if(root == null)
+				{
+					game_info_updating = false;
+					return;
+				}
 				var products = root.get_array_member("subproducts");
-				if(products == null) return;
+				if(products == null)
+				{
+					game_info_updating = false;
+					return;
+				}
 				foreach(var product_node in products.get_elements())
 				{
 					if(product_node.get_object().get_string_member("machine_name") != id) continue;
@@ -216,10 +236,18 @@ namespace GameHub.Data.Sources.Humble
 			}
 
 			var product_node = Parser.parse_json(info);
-			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return;
+			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT)
+			{
+				game_info_updating = false;
+				return;
+			}
 
 			var product = product_node.get_object();
-			if(product == null) return;
+			if(product == null)
+			{
+				game_info_updating = false;
+				return;
+			}
 
 			if(product.has_member("description-text"))
 			{
@@ -235,6 +263,7 @@ namespace GameHub.Data.Sources.Humble
 			update_status();
 
 			game_info_updated = true;
+			game_info_updating = false;
 		}
 
 		private async void update_installers()

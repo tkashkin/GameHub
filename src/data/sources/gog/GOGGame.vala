@@ -40,6 +40,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 		}
 
+		private bool game_info_updating = false;
 		private bool game_info_updated = false;
 
 		public GOGGame.default(){}
@@ -141,6 +142,9 @@ namespace GameHub.Data.Sources.GOG
 
 		public override async void update_game_info()
 		{
+			if(game_info_updating) return;
+			game_info_updating = true;
+
 			update_status();
 
 			mount_overlays();
@@ -171,7 +175,11 @@ namespace GameHub.Data.Sources.GOG
 				else icon = image;
 			}
 
-			if(game_info_updated) return;
+			if(game_info_updated)
+			{
+				game_info_updating = false;
+				return;
+			}
 
 			is_installable = root != null && root.get_node_type() == Json.NodeType.OBJECT
 				&& root.get_object().has_member("is_installable") && root.get_object().get_boolean_member("is_installable");
@@ -275,6 +283,7 @@ namespace GameHub.Data.Sources.GOG
 			update_status();
 
 			game_info_updated = true;
+			game_info_updating = false;
 		}
 
 		public override async void install()
