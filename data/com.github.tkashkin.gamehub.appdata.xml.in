@@ -23,6 +23,8 @@
 	</provides>
 	<launchable type="desktop-id">com.github.tkashkin.gamehub.desktop</launchable>
 
+	<icon type="remote" width="128" height="128">https://raw.githubusercontent.com/tkashkin/GameHub/e380a848b89498904e96e73fa72a07aa823151ce/data/icon/128.svg?sanitize=true</icon>
+
 	<screenshots>
 		<screenshot type="default">
 			<image>https://raw.githubusercontent.com/tkashkin/GameHub/8b321ac7991d2946b1d331e1a2e525ceb2ece324/data/screenshots/light/welcome%402x.png</image>
