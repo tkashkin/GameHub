@@ -186,10 +186,10 @@ build_deb()
 		set +e
 		dpkg-buildpackage -S -sa -us -uc
 		echo "[scripts/build.sh] Signing source package"
-		debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
+		debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 "../${_GH_RDNN}_${_BUILD_VERSION}_source.changes"
 		rm -f "$_SCRIPTROOT/launchpad/passphrase"
 		echo "[scripts/build.sh] Uploading package to launchpad"
-		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../${_GH_RDNN}_${_DEB_VERSION}_source.changes
+		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" "../${_GH_RDNN}_${_BUILD_VERSION}_source.changes"
 		set -e
 	fi
 	cd "$_ROOT"

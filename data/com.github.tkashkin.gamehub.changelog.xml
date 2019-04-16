@@ -1,3 +1,148 @@
+		<release type="development" version="0.13.1.82.dev" date="2019-04-14" timestamp="1555231690">
+			<description>
+				<ul>
+					<li>Fix running Game.update_game_info() multiple times in threads (#237) [7a4f9e1]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.81.dev" date="2019-04-14" timestamp="1555230711">
+			<description>
+				<ul>
+					<li>Translated using Weblate (German) [79de66d]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.80.dev" date="2019-04-11" timestamp="1554976073">
+			<description>
+				<ul>
+					<li>Revert: Attempt to add game views in batches instead of all at once (#57) [c6994ef]</li>
+					<li>Fix AutoSizeImage scaling Fix Games DB cache threaded crashes Attempt to add game views in batches instead of all at once (#57) [cac6092]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.77.dev" date="2019-04-11" timestamp="1554934671">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [3b27e88]</li>
+					<li>Translated using Weblate (Dutch) [e11b410]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.76.dev" date="2019-04-11" timestamp="1554934655">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [4179176]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.75.dev" date="2019-04-10" timestamp="1554887984">
+			<description>
+				<ul>
+					<li>Merge branch 'origin/dev' into Weblate. [d3ec7c7]</li>
+					<li>Translated using Weblate (Dutch) [c45ba0f]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.74.dev" date="2019-04-10" timestamp="1554887975">
+			<description>
+				<ul>
+					<li>Make libunity optional Improve AutoSizeImage resizing Reimplement status indicator [07806a8]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.73.dev" date="2019-04-09" timestamp="1554819495">
+			<description>
+				<ul>
+					<li>Update launcher menu in GamesAdapter [642e452]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.72.dev" date="2019-04-09" timestamp="1554818414">
+			<description>
+				<ul>
+					<li>Merge branch 'origin/dev' into Weblate. [f32037e]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [60a0416]</li>
+					<li>Translated using Weblate (German) [af70e10]</li>
+					<li>Translated using Weblate (Dutch) [ad3ecc9]</li>
+					<li>Add config button to CompatToolPicker [3ac3d07]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.70.dev" date="2019-04-09" timestamp="1554814855">
+			<description>
+				<ul>
+					<li>Merge branch 'dev' of github.com:tkashkin/GameHub into dev [a0d7c1a]</li>
+					<li>GamesView refactoring (#57) [d5cb0e5]</li>
+					<li>[ci skip] Add new Game subcategory to desktop file (#233) [9d02815]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.69.dev" date="2019-04-08" timestamp="1554707859">
+			<description>
+				<ul>
+					<li>Improved Steam client integration [20047cc]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.68.dev" date="2019-04-08" timestamp="1554699127">
+			<description>
+				<ul>
+					<li>Add controller settings (#122) [3628f0b]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.67.dev" date="2019-04-08" timestamp="1554695574">
+			<description>
+				<ul>
+					<li>Translated using Weblate (German) [d18ad6b]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.66.dev" date="2019-04-03" timestamp="1554291044">
+			<description>
+				<ul>
+					<li>Fix GOG install segfault (#232) [abc24ad]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.65.dev" date="2019-04-03" timestamp="1554282197">
+			<description>
+				<ul>
+					<li>Fix GOG games installers parsing (#57) [cbac777]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.64.dev" date="2019-04-03" timestamp="1554275490">
+			<description>
+				<ul>
+					<li>Add default game icon (#204) [2334f9b]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.63.dev" date="2019-04-03" timestamp="1554268598">
+			<description>
+				<ul>
+					<li>Non-shallow git clone for AppVeyor [2541409]</li>
+					<li>Fix build script [9be335f]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.61.dev" date="2019-04-03" timestamp="1554266397">
+			<description>
+				<ul>
+					<li>Fix changelogs for flatpak [422ab93]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.60.dev" date="2019-04-03" timestamp="1554264879">
+			<description>
+				<ul>
+					<li>Set git user for AppVeyor [1176725]</li>
+					<li>Fix build script [bd542e3]</li>
+					<li>Generate changelogs automatically from git commits [517a32a]</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.13.1.57.dev" date="2019-04-02" timestamp="1554207001">
 			<description>
 				<ul>

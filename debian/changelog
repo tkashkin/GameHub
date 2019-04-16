@@ -1,3 +1,110 @@
+com.github.tkashkin.gamehub (0.13.1-82-dev) bionic; urgency=low
+  * Fix running Game.update_game_info() multiple times in threads (#237) [7a4f9e1]
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 14 Apr 2019 11:48:10 +0300
+
+com.github.tkashkin.gamehub (0.13.1-81-dev) bionic; urgency=low
+  * Translated using Weblate (German) [79de66d]
+
+ -- ssantos <ssantos@web.de>  Sat, 13 Apr 2019 21:58:23 +0000
+
+com.github.tkashkin.gamehub (0.13.1-80-dev) bionic; urgency=low
+  * Revert: Attempt to add game views in batches instead of all at once (#57) [c6994ef]
+  * Fix AutoSizeImage scaling Fix Games DB cache threaded crashes Attempt to add game views in batches instead of all at once (#57) [cac6092]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 11 Apr 2019 12:47:53 +0300
+
+com.github.tkashkin.gamehub (0.13.1-77-dev) bionic; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [3b27e88]
+  * Translated using Weblate (Dutch) [e11b410]
+
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Wed, 10 Apr 2019 22:17:35 +0000
+
+com.github.tkashkin.gamehub (0.13.1-76-dev) bionic; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [4179176]
+
+ -- Allan Nordhøy <epost@anotheragency.no>  Wed, 10 Apr 2019 09:57:56 +0000
+
+com.github.tkashkin.gamehub (0.13.1-75-dev) bionic; urgency=low
+  * Merge branch 'origin/dev' into Weblate. [d3ec7c7]
+  * Translated using Weblate (Dutch) [c45ba0f]
+
+ -- Hosted Weblate <hosted@weblate.org>  Wed, 10 Apr 2019 11:19:44 +0200
+
+com.github.tkashkin.gamehub (0.13.1-74-dev) bionic; urgency=low
+  * Make libunity optional Improve AutoSizeImage resizing Reimplement status indicator [07806a8]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 10 Apr 2019 12:19:35 +0300
+
+com.github.tkashkin.gamehub (0.13.1-73-dev) bionic; urgency=low
+  * Update launcher menu in GamesAdapter [642e452]
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 9 Apr 2019 17:18:15 +0300
+
+com.github.tkashkin.gamehub (0.13.1-72-dev) bionic; urgency=low
+  * Merge branch 'origin/dev' into Weblate. [f32037e]
+  * Translated using Weblate (Norwegian Bokmål) [60a0416]
+  * Translated using Weblate (German) [af70e10]
+  * Translated using Weblate (Dutch) [ad3ecc9]
+  * Add config button to CompatToolPicker [3ac3d07]
+
+ -- Hosted Weblate <hosted@weblate.org>  Tue, 9 Apr 2019 16:00:14 +0200
+
+com.github.tkashkin.gamehub (0.13.1-70-dev) bionic; urgency=low
+  * Merge branch 'dev' of github.com:tkashkin/GameHub into dev [a0d7c1a]
+  * GamesView refactoring (#57) [d5cb0e5]
+  * [ci skip] Add new Game subcategory to desktop file (#233) [9d02815]
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 9 Apr 2019 16:00:55 +0300
+
+com.github.tkashkin.gamehub (0.13.1-69-dev) bionic; urgency=low
+  * Improved Steam client integration [20047cc]
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 8 Apr 2019 10:17:39 +0300
+
+com.github.tkashkin.gamehub (0.13.1-68-dev) bionic; urgency=low
+  * Add controller settings (#122) [3628f0b]
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 8 Apr 2019 07:52:07 +0300
+
+com.github.tkashkin.gamehub (0.13.1-67-dev) bionic; urgency=low
+  * Translated using Weblate (German) [d18ad6b]
+
+ -- ssantos <ssantos@web.de>  Sun, 7 Apr 2019 06:18:02 +0000
+
+com.github.tkashkin.gamehub (0.13.1-66-dev) bionic; urgency=low
+  * Fix GOG install segfault (#232) [abc24ad]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 3 Apr 2019 14:30:44 +0300
+
+com.github.tkashkin.gamehub (0.13.1-65-dev) bionic; urgency=low
+  * Fix GOG games installers parsing (#57) [cbac777]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 3 Apr 2019 12:03:17 +0300
+
+com.github.tkashkin.gamehub (0.13.1-64-dev) bionic; urgency=low
+  * Add default game icon (#204) [2334f9b]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 3 Apr 2019 10:11:30 +0300
+
+com.github.tkashkin.gamehub (0.13.1-63-dev) bionic; urgency=low
+  * Non-shallow git clone for AppVeyor [2541409]
+  * Fix build script [9be335f]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 3 Apr 2019 08:16:38 +0300
+
+com.github.tkashkin.gamehub (0.13.1-61-dev) bionic; urgency=low
+  * Fix changelogs for flatpak [422ab93]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 3 Apr 2019 07:39:57 +0300
+
+com.github.tkashkin.gamehub (0.13.1-60-dev) bionic; urgency=low
+  * Set git user for AppVeyor [1176725]
+  * Fix build script [bd542e3]
+  * Generate changelogs automatically from git commits [517a32a]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 3 Apr 2019 07:14:39 +0300
+
 com.github.tkashkin.gamehub (0.13.1-57-dev) bionic; urgency=low
   * Fix appstream data [f89dc4b]
 
