@@ -139,7 +139,7 @@ gen_changelogs()
 		commitmsg=`git log --pretty=format:'  * %s [%h]' $prevtag..$tag`
 
 		(
-			echo "$_GH_RDNN ($tag~\$DISTRO_VERSION_SUFFIX) \$DISTRO; urgency=low"
+			echo "$_GH_RDNN ($tag~\$VERSION_SUFFIX) \$DISTRO; urgency=low"
 			echo "${commitmsg:-  * <no commit message>}"
 			git log -n1 --pretty='format:%n -- %aN <%aE>  %aD%n%n' $tag^..$tag
 		) | cat - "debian/changelog.in" | sponge "debian/changelog.in"
@@ -186,7 +186,7 @@ build_deb()
 		_DEB_TARGET_DISTRO_VERSION="${_DEB_TARGET_DISTRO_VERSIONS[$i]}"
 		_DEB_VERSION_SUFFIX="${_DEB_TARGET_DISTRO_ID}${_DEB_TARGET_DISTRO_VERSION}"
 		_DEB_VERSION="${_BUILD_VERSION}~${_DEB_VERSION_SUFFIX}"
-		sed "s/\$DISTRO/${_DEB_TARGET_DISTRO_NAME}/g; s/\$DISTRO_VERSION_SUFFIX/${_DEB_VERSION_SUFFIX}/g" "debian/changelog.in" > "debian/changelog"
+		sed "s/\$DISTRO/${_DEB_TARGET_DISTRO_NAME}/g; s/\$VERSION_SUFFIX/${_DEB_VERSION_SUFFIX}/g" "debian/changelog.in" > "debian/changelog"
 
 		if [[ $i = 0 ]]; then
 			echo "[scripts/build.sh] Building binary package for $_DEB_TARGET_DISTRO_ID $_DEB_TARGET_DISTRO_VERSION ($_DEB_TARGET_DISTRO_NAME)"
