@@ -11,3 +11,17 @@ method = ftp
 incoming = ~tkashkin/ubuntu/gamehub/xenial
 login = anonymous
 allow_unsigned_uploads = 1
+
+[gamehub_cosmic]
+fqdn = ppa.launchpad.net
+method = ftp
+incoming = ~tkashkin/ubuntu/gamehub/cosmic
+login = anonymous
+allow_unsigned_uploads = 1
+
+[gamehub_disco]
+fqdn = ppa.launchpad.net
+method = ftp
+incoming = ~tkashkin/ubuntu/gamehub/disco
+login = anonymous
+allow_unsigned_uploads = 1
