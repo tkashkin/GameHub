@@ -126,7 +126,7 @@ gen_changelogs()
 
 	git tag -a $_BUILD_VERSION -m $_BUILD_VERSION
 
-	> "debian/changelog"
+	> "debian/changelog.in"
 	> "data/$_GH_RDNN.changelog.xml"
 
 	prevtag="initial"
