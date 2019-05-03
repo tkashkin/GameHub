@@ -32,8 +32,9 @@
 			"config-opts": ["--libdir=lib"],
 			"sources": [
 				{
-					"type": "git",
-					"url": "https://gitlab.gnome.org/aplazas/libmanette.git"
+					"type": "archive",
+					"url": "https://gitlab.gnome.org/aplazas/libmanette/-/archive/0.2.2/libmanette-0.2.2.tar.gz",
+					"md5": "9d27cae2612d08d6fce31771b57d9bf1"
 				}
 			]
 		},
@@ -43,9 +44,9 @@
 			"build-options": { "cflags": "-Wno-error=misleading-indentation" },
 			"sources": [
 				{
-				"type": "archive",
-				"url": "https://launchpad.net/dee/1.0/1.2.7/+download/dee-1.2.7.tar.gz",
-				"md5": "b92f27f0a99cac24c2128880601bb7d7"
+					"type": "archive",
+					"url": "https://launchpad.net/dee/1.0/1.2.7/+download/dee-1.2.7.tar.gz",
+					"md5": "b92f27f0a99cac24c2128880601bb7d7"
 				}
 			]
 		},
