@@ -30,7 +30,7 @@ test: off
 artifacts:
   - path: build/*/*.deb
     name: deb
-  - path: build/appimage/GameHub*.AppImage*
+  - path: build/appimage/GameHub*.AppImage
     name: AppImage
   - path: build/flatpak/GameHub*.flatpak
     name: flatpak
