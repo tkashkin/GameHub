@@ -192,7 +192,7 @@ build_deb()
 			echo "[scripts/build.sh] Building binary package for $_DEB_TARGET_DISTRO_ID $_DEB_TARGET_DISTRO_VERSION ($_DEB_TARGET_DISTRO_NAME)"
 			dpkg-buildpackage -F -sa -us -uc
 			mkdir -p "build/$_BUILD_IMAGE"
-			mv ../$_GH_RDNN*.deb "build/$_BUILD_IMAGE/GameHub-$_DEB_VERSION-amd64.deb"
+			mv ../$_GH_RDNN*.deb "build/${_BUILD_IMAGE}/GameHub-${_BUILD_VERSION}-${_DEB_TARGET_DISTRO_NAME}-amd64.deb"
 		fi
 
 		if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
