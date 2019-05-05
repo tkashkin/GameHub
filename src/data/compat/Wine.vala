@@ -64,9 +64,9 @@ namespace GameHub.Data.Compat
 				opt_env,
 				install_opt_innosetup_args,
 				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
-				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), true),
-				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
-				new CompatTool.BoolOption("/NOGUI", _("No GUI"), true)
+				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), false),
+				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), false),
+				new CompatTool.BoolOption("/NOGUI", _("No GUI"), false)
 			};
 
 			if(installed)
@@ -135,7 +135,7 @@ namespace GameHub.Data.Compat
 			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
 			yield wineboot(runnable);
 			yield exec(runnable, installer, installer.get_parent(), yield prepare_installer_args(runnable));
-			
+
 			var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
 			if(runnable.install_dir != null && runnable.install_dir.get_child(tmp_root).query_exists())
 			{
@@ -224,7 +224,18 @@ namespace GameHub.Data.Compat
 		protected virtual string[] prepare_env(Runnable runnable, bool parse_opts=true)
 		{
 			var env = Environ.get();
-			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d");
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d;winemenubuilder.exe=d");
+
+			if(wine_binary != null && wine_binary.query_exists())
+			{
+				env = Environ.set_variable(env, "WINE", wine_binary.get_path());
+				env = Environ.set_variable(env, "WINELOADER", wine_binary.get_path());
+				var wineserver_binary = wine_binary.get_parent().get_child("wineserver");
+				if(wineserver_binary.query_exists())
+				{
+					env = Environ.set_variable(env, "WINESERVER", wineserver_binary.get_path());
+				}
+			}
 
 			var prefix = get_wineprefix(runnable);
 			if(prefix != null && prefix.query_exists())

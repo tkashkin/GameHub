@@ -59,9 +59,9 @@ namespace GameHub.Data.Compat
 				opt_env,
 				install_opt_innosetup_args,
 				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
-				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), true),
-				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
-				new CompatTool.BoolOption("/NOGUI", _("No GUI"), true)
+				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), false),
+				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), false),
+				new CompatTool.BoolOption("/NOGUI", _("No GUI"), false)
 			};
 
 			if(appid == Proton.LATEST)
@@ -176,6 +176,9 @@ namespace GameHub.Data.Compat
 		{
 			var env = base.prepare_env(runnable, parse_opts);
 
+			var dist = executable.get_parent().get_child("dist").get_path();
+			env = Environ.set_variable(env, "WINEDLLPATH", @"$(dist)/lib64/wine:$(dist)/lib/wine");
+
 			var compatdata = get_wineprefix(runnable).get_parent();
 			if(compatdata != null && compatdata.query_exists())
 			{
@@ -218,7 +221,12 @@ namespace GameHub.Data.Compat
 				prefix = opt_prefix.file.get_child("pfx");
 			}
 
-			yield Utils.run_thread({ executable.get_path(), "run", prefix.get_child("drive_c/windows/system32/cmd.exe").get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
+			var cmd = prefix.get_child("drive_c/windows/system32/cmd.exe");
+
+			if(!cmd.query_exists())
+			{
+				yield Utils.run_thread({ executable.get_path(), "run", cmd.get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
+			}
 		}
 	}
 }
