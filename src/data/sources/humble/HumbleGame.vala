@@ -332,7 +332,7 @@ namespace GameHub.Data.Sources.Humble
 					NotificationPriority.HIGH,
 					n => {
 						n.set_icon(new ThemedIcon("dialog-warning"));
-						var cached_icon = Utils.cached_image_file(icon, "icon");
+						var cached_icon = ImageCache.local_file(icon, "icon");
 						if(cached_icon != null && cached_icon.query_exists())
 						{
 							n.set_icon(new FileIcon(cached_icon));

@@ -267,7 +267,7 @@ namespace GameHub.UI.Views.GamesView
 			game.status_change(game.status);
 
 			game.notify["image"].connect(() => {
-				Utils.load_image.begin(image, game.image, "image");
+				image.load(game.image, "image");
 				no_image_indicator.opacity = game.image == null && !game.is_running ? 1 : 0;
 			});
 			game.notify_property("image");

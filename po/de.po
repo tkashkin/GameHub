@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-10 12:17+0300\n"
+"POT-Creation-Date: 2019-05-23 23:19+0300\n"
 "PO-Revision-Date: 2019-04-19 18:33+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
@@ -22,59 +22,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6-dev\n"
 
-#: src/app.vala:87
+#: src/app.vala:88
 msgid "Show help"
 msgstr "Hilfe anzeigen"
 
-#: src/app.vala:88
+#: src/app.vala:89
 msgid "Show application version and exit"
 msgstr "Anwendungsversion anzeigen und beenden"
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Restart with GDB debugger attached"
 msgstr "Neustart mit verbundenem GDB-Debugger"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show full GDB backtrace"
 msgstr "Vollständige GDB-Backtrace anzeigen"
 
-#: src/app.vala:94
+#: src/app.vala:92
+msgid "Treat fatal errors as criticals and crash application"
+msgstr ""
+
+#: src/app.vala:96
 msgid "Show main window"
 msgstr "Hauptfenster anzeigen"
 
-#: src/app.vala:95
+#: src/app.vala:97
 msgid "Show application settings dialog"
 msgstr "Dialogfeld für Anwendungseinstellungen anzeigen"
 
-#: src/app.vala:96
+#: src/app.vala:98
 msgid "Show about dialog"
 msgstr "Infodialog anzeigen"
 
-#: src/app.vala:97
+#: src/app.vala:99
 msgid "Maximum number of background worker threads"
 msgstr "Maximale Anzahl von Hintergrund-Worker-Threads"
 
-#: src/app.vala:101
+#: src/app.vala:103
 msgid "Run game"
 msgstr "Spiel starten"
 
-#: src/app.vala:102
+#: src/app.vala:104
 msgid "Show compatibility options dialog"
 msgstr "Kompatibilitätsoptionen-Dialog anzeigen"
 
-#: src/app.vala:103
+#: src/app.vala:105
 msgid "Open game details"
 msgstr "Spieldetails öffnen"
 
-#: src/app.vala:104
+#: src/app.vala:106
 msgid "Open game properties"
 msgstr "Spieleigenschaften öffnen"
 
-#: src/app.vala:108
+#: src/app.vala:110
 msgid "Enable debug logging"
 msgstr "Debug-Protokollierung aktivieren"
 
-#: src/app.vala:109
+#: src/app.vala:111
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -82,31 +86,31 @@ msgstr ""
 "Den Authentifizierungsprozess und sensible Informationen wie "
 "Authentifizierungstoken protokollieren"
 
-#: src/app.vala:110
+#: src/app.vala:112
 msgid "Log download manager"
 msgstr "Download-Manager protokollieren"
 
-#: src/app.vala:111
+#: src/app.vala:113
 msgid "Log background workers start/stop"
 msgstr "Start/Stopp von Hintergrund-Workern protokollieren"
 
-#: src/app.vala:112
+#: src/app.vala:114
 msgid "Verbose logging"
 msgstr "Ausführliche Protokollierung"
 
-#: src/app.vala:224
+#: src/app.vala:226
 msgid "Game Options:"
 msgstr "Spieloptionen:"
 
-#: src/app.vala:224
+#: src/app.vala:226
 msgid "Show game options help"
 msgstr "Hilfe zu den Spieloptionen anzeigen"
 
-#: src/app.vala:232
+#: src/app.vala:234
 msgid "Logging Options:"
 msgstr "Protokollierungsoptionen:"
 
-#: src/app.vala:232
+#: src/app.vala:234
 msgid "Show logging options help"
 msgstr "Hilfe zu den Protokollierungsoptionen anzeigen"
 
@@ -262,12 +266,12 @@ msgstr ""
 "Steam-Konfigurationsdatei nicht gefunden.\n"
 "Bitte melden Sie sich in Steam an"
 
-#: src/data/sources/humble/HumbleGame.vala:301
+#: src/data/sources/humble/HumbleGame.vala:330
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: keine Installationsprogramme verfügbare"
 
-#: src/data/sources/humble/HumbleGame.vala:302
+#: src/data/sources/humble/HumbleGame.vala:331
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -552,7 +556,8 @@ msgstr "Aktiviert"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:46
 msgid "Steam API keys have limited number of uses per day"
-msgstr "Steam-API-Schlüssel haben eine begrenzte Anzahl von Anwendungen pro Tag"
+msgstr ""
+"Steam-API-Schlüssel haben eine begrenzte Anzahl von Anwendungen pro Tag"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:46
 msgid "Generate key"

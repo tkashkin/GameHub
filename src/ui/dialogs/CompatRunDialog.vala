@@ -83,7 +83,7 @@ namespace GameHub.UI.Dialogs
 				icon.set_size_request(48, 48);
 				title_label.margin_start = 8;
 				compat_tool_picker.margin_start = 4;
-				Utils.load_image.begin(icon, (game as Game).icon, "icon");
+				icon.load((game as Game).icon, "icon");
 				hbox.add(icon);
 			}
 

@@ -152,7 +152,7 @@ namespace GameHub.UI.Views.GamesView
 			image.queue_draw();
 			if(game.icon == old_icon) return;
 			old_icon = game.icon;
-			Utils.load_image.begin(image, game.icon, "icon");
+			image.load(game.icon, "icon");
 		}
 	}
 }

@@ -53,6 +53,7 @@ namespace GameHub
 		private static bool opt_about = false;
 		private static bool opt_gdb = false;
 		private static bool opt_gdb_bt_full = false;
+		private static bool opt_gdb_fatal_criticals = false;
 
 		public static int worker_threads = -1;
 
@@ -88,6 +89,7 @@ namespace GameHub
 			{ "version", 'v', 0, OptionArg.NONE, out opt_show_version, N_("Show application version and exit"), null },
 			{ "gdb", 0, 0, OptionArg.NONE, out opt_gdb, N_("Restart with GDB debugger attached"), null },
 			{ "gdb-bt-full", 0, 0, OptionArg.NONE, out opt_gdb_bt_full, N_("Show full GDB backtrace"), null },
+			{ "gdb-fatal-criticals", 0, 0, OptionArg.NONE, out opt_gdb_fatal_criticals, N_("Treat fatal errors as criticals and crash application"), null },
 			{ null }
 		};
 		private const OptionEntry[] options = {
@@ -127,7 +129,7 @@ namespace GameHub
 			if(Platforms != null && GameSources != null && CompatTools != null) return;
 
 			FSUtils.make_dirs();
-
+			ImageCache.init();
 			Database.create();
 
 			Platforms = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS };
@@ -277,14 +279,14 @@ namespace GameHub
 
 			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
 
-			if(opt_gdb || opt_gdb_bt_full)
+			if(opt_gdb || opt_gdb_bt_full || opt_gdb_fatal_criticals)
 			{
 				string[] current_args = arguments;
 				string[] cmd_args = {};
 				for(int i = 1; i < current_args.length; i++)
 				{
 					var arg = current_args[i];
-					if(arg != "--gdb")
+					if(arg != "--gdb" && arg != "--gdb-bt-full" && arg != "--gdb-fatal-criticals")
 					{
 						cmd_args += arg;
 					}
@@ -298,6 +300,7 @@ namespace GameHub
 				string[] exec_cmd = {
 					"gdb", "-q", "--batch",
 					"-ex", @"set args $cmd_args_string",
+					"-ex", (opt_gdb_fatal_criticals ? "set env G_DEBUG = fatal-criticals" : "unset env G_DEBUG"),
 					"-ex", "set pagination off",
 					"-ex", "handle SIGHUP nostop pass",
 					"-ex", "handle SIGQUIT nostop pass",
@@ -310,7 +313,6 @@ namespace GameHub
 					"-ex", "set print thread-events off",
 					"-ex", "run",
 					"-ex", "thread apply all bt" + (opt_gdb_bt_full ? " full" : ""),
-					"--tty=/dev/stdout",
 					current_args[0]
 				};
 

@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gdk;
+using GameHub.Utils;
 
 namespace GameHub.UI.Widgets
 {
@@ -53,6 +54,19 @@ namespace GameHub.UI.Widgets
 		public void set_source(Pixbuf? buf)
 		{
 			src = buf;
+			queue_draw();
+		}
+
+		public void load(string? url, string cache_prefix=ImageCache.DEFAULT_CACHED_FILE_PREFIX)
+		{
+			if(url == null || url == "")
+			{
+				set_source(null);
+				return;
+			}
+			ImageCache.load.begin(url, cache_prefix, (obj, res) => {
+				set_source(ImageCache.load.end(res));
+			});
 		}
 
 		public override SizeRequestMode get_request_mode()
