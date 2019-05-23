@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-23 23:19+0300\n"
-"PO-Revision-Date: 2019-04-10 22:17+0000\n"
+"PO-Revision-Date: 2019-05-24 23:43+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 3.7-dev\n"
 
 #: src/app.vala:88
 msgid "Show help"
@@ -37,7 +37,7 @@ msgstr "Volledige GDB-backtrace tonen"
 
 #: src/app.vala:92
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "Fatale fouten opvatten als kritiek en app laten crashen"
 
 #: src/app.vala:96
 msgid "Show main window"
