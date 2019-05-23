@@ -70,7 +70,7 @@ namespace GameHub.UI.Views.GamesView
 				image.valign = Align.START;
 				image.set_constraint(48, 48, 1);
 				image.set_size_request(48, 48);
-				Utils.load_image.begin(image, dl_info.icon, "icon");
+				image.load(dl_info.icon, "icon");
 				image_overlay.add(image);
 			}
 			else if(dl_info.icon_name != null)
@@ -88,7 +88,7 @@ namespace GameHub.UI.Views.GamesView
 				type_image.halign = Align.END;
 				type_image.valign = Align.END;
 				type_image.get_style_context().add_class("dl-progress-type-icon");
-				Utils.load_image.begin(type_image, dl_info.type_icon, "icon");
+				type_image.load(dl_info.type_icon, "icon");
 				image_overlay.add_overlay(type_image);
 			}
 			else if(dl_info.type_icon_name != null)

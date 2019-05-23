@@ -109,7 +109,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 						image.tooltip_markup += "\n" + """<span weight="600" size="smaller">%s</span>""".printf(_("Global percentage: %g%%").printf(achievement.global_percentage));
 					}
 
-					Utils.load_image.begin(image, achievement.image, @"achievement_$(game.source.id)_$(game.id)");
+					image.load(achievement.image, @"achievement_$(game.source.id)_$(game.id)");
 					achievements_box.add(image);
 				}
 				achievements_box.show_all();

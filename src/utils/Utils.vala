@@ -276,51 +276,6 @@ namespace GameHub.Utils
 		return hash;
 	}
 
-	public static File? cached_image_file(string url, string prefix="remote")
-	{
-		if(url == null || url == "") return null;
-		var parts = url.split("?")[0].split(".");
-		var ext = parts.length > 1 ? parts[parts.length - 1] : null;
-		ext = ext != null && ext.length <= 6 ? "." + ext : null;
-		var hash = md5(url);
-		return FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");;
-	}
-
-	public static async string? cache_image(string url, string prefix="remote")
-	{
-		if(url == null || url == "") return null;
-		var remote = File.new_for_uri(url);
-		var cached = cached_image_file(url, prefix);
-		try
-		{
-			if(!cached.query_exists())
-			{
-				yield Downloader.download(remote, cached, null, false);
-			}
-			return cached.get_path();
-		}
-		catch(IOError.EXISTS e){}
-		catch(Error e)
-		{
-			if(GameHub.Application.log_verbose)
-			{
-				warning("Error caching `%s` in `%s`: %s", url, cached.get_path(), e.message);
-			}
-		}
-		return null;
-	}
-
-	public static async void load_image(GameHub.UI.Widgets.AutoSizeImage image, string url, string prefix="remote")
-	{
-		var cached = yield cache_image(url, prefix);
-		try
-		{
-			image.set_source(cached != null ? new Gdk.Pixbuf.from_file(cached) : null);
-		}
-		catch(Error e){}
-		image.queue_draw();
-	}
-
 	public static string get_relative_datetime(GLib.DateTime date_time)
 	{
 		var schema_source = SettingsSchemaSource.get_default();

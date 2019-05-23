@@ -128,6 +128,7 @@ sources = [
 	'ui/widgets/TagRow.vala',
 
 	'utils/Utils.vala',
+	'utils/ImageCache.vala',
 	'utils/FSUtils.vala',
 	'utils/FSOverlay.vala',
 	'utils/Parser.vala',

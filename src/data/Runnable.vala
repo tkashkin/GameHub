@@ -432,7 +432,7 @@ namespace GameHub.Data
 										n.set_icon(new ThemedIcon("dialog-warning"));
 										if(game != null)
 										{
-											var icon = Utils.cached_image_file(game.icon, "icon");
+											var icon = ImageCache.local_file(game.icon, "icon");
 											if(icon != null && icon.query_exists())
 											{
 												n.set_icon(new FileIcon(icon));
@@ -599,7 +599,7 @@ namespace GameHub.Data
 									n.set_icon(new ThemedIcon("dialog-warning"));
 									if(game != null)
 									{
-										var icon = Utils.cached_image_file(game.icon, "icon");
+										var icon = ImageCache.local_file(game.icon, "icon");
 										if(icon != null && icon.query_exists())
 										{
 											n.set_icon(new FileIcon(icon));

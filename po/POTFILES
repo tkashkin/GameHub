@@ -72,6 +72,7 @@ src/ui/widgets/CompatToolOptions.vala
 src/ui/widgets/CompatToolPicker.vala
 src/ui/widgets/TagRow.vala
 src/utils/Utils.vala
+src/utils/ImageCache.vala
 src/utils/FSUtils.vala
 src/utils/FSOverlay.vala
 src/utils/Parser.vala

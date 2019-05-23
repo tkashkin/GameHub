@@ -93,7 +93,7 @@ namespace GameHub.UI.Dialogs
 				icon.valign = Align.START;
 				icon.set_constraint(48, 48, 1);
 				icon.set_size_request(48, 48);
-				Utils.load_image.begin(icon, game.icon, "icon");
+				icon.load(game.icon, "icon");
 				hbox.add(icon);
 				title_label.margin_start = title_label.margin_end = 8;
 				subtitle_label.margin_start = subtitle_label.margin_end = 8;

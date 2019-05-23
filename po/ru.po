@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-10 12:17+0300\n"
+"POT-Creation-Date: 2019-05-23 23:19+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -20,59 +20,63 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:87
+#: src/app.vala:88
 msgid "Show help"
 msgstr "Показать справку"
 
-#: src/app.vala:88
+#: src/app.vala:89
 msgid "Show application version and exit"
 msgstr "Показать версию приложения и выйти"
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Restart with GDB debugger attached"
 msgstr "Перезапустить с подключенным отладчиком GDB"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show full GDB backtrace"
 msgstr "Показывать полный стек вызовов в GDB"
 
-#: src/app.vala:94
+#: src/app.vala:92
+msgid "Treat fatal errors as criticals and crash application"
+msgstr "Считать фатальные ошибки критическими и завершать приложение"
+
+#: src/app.vala:96
 msgid "Show main window"
 msgstr "Показать главное окно"
 
-#: src/app.vala:95
+#: src/app.vala:97
 msgid "Show application settings dialog"
 msgstr "Показать диалог настроек приложения"
 
-#: src/app.vala:96
+#: src/app.vala:98
 msgid "Show about dialog"
 msgstr "Показать диалог информации о программе"
 
-#: src/app.vala:97
+#: src/app.vala:99
 msgid "Maximum number of background worker threads"
 msgstr "Максимальное количество фоновых потоков"
 
-#: src/app.vala:101
+#: src/app.vala:103
 msgid "Run game"
 msgstr "Запустить игру"
 
-#: src/app.vala:102
+#: src/app.vala:104
 msgid "Show compatibility options dialog"
 msgstr "Показать диалог опций совместимости"
 
-#: src/app.vala:103
+#: src/app.vala:105
 msgid "Open game details"
 msgstr "Открыть информацию об игре"
 
-#: src/app.vala:104
+#: src/app.vala:106
 msgid "Open game properties"
 msgstr "Открыть свойства игры"
 
-#: src/app.vala:108
+#: src/app.vala:110
 msgid "Enable debug logging"
 msgstr "Включить отладочные сообщения"
 
-#: src/app.vala:109
+#: src/app.vala:111
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -80,31 +84,31 @@ msgstr ""
 "Выводить сообщения о процессе аутентификации и конфиденциальную информацию, "
 "такую как токены аутентификации"
 
-#: src/app.vala:110
+#: src/app.vala:112
 msgid "Log download manager"
 msgstr "Выводить сообщения менеджера загрузок"
 
-#: src/app.vala:111
+#: src/app.vala:113
 msgid "Log background workers start/stop"
 msgstr "Выводить сообщения о запуске/остановке фоновых потоков"
 
-#: src/app.vala:112
+#: src/app.vala:114
 msgid "Verbose logging"
 msgstr "Подробные сообщения"
 
-#: src/app.vala:224
+#: src/app.vala:226
 msgid "Game Options:"
 msgstr "Параметры игр:"
 
-#: src/app.vala:224
+#: src/app.vala:226
 msgid "Show game options help"
 msgstr "Показать справку о параметрах игр"
 
-#: src/app.vala:232
+#: src/app.vala:234
 msgid "Logging Options:"
 msgstr "Параметры журналирования:"
 
-#: src/app.vala:232
+#: src/app.vala:234
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 
@@ -259,12 +263,12 @@ msgstr ""
 "Файл конфигурации Steam не найден.\n"
 "Войдите в ваш аккаунт в клиенте Steam и вернитесь в GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:301
+#: src/data/sources/humble/HumbleGame.vala:330
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: нет доступных установщиков"
 
-#: src/data/sources/humble/HumbleGame.vala:302
+#: src/data/sources/humble/HumbleGame.vala:331
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."

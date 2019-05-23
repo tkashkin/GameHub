@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-10 12:17+0300\n"
+"POT-Creation-Date: 2019-05-23 23:19+0300\n"
 "PO-Revision-Date: 2019-01-02 01:06+0000\n"
 "Last-Translator: Leandro Stanger <leandrostanger@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -19,93 +19,97 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.4-dev\n"
 
-#: src/app.vala:87
+#: src/app.vala:88
 msgid "Show help"
 msgstr ""
 
-#: src/app.vala:88
+#: src/app.vala:89
 msgid "Show application version and exit"
 msgstr ""
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Restart with GDB debugger attached"
 msgstr ""
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show full GDB backtrace"
 msgstr ""
 
-#: src/app.vala:94
+#: src/app.vala:92
+msgid "Treat fatal errors as criticals and crash application"
+msgstr ""
+
+#: src/app.vala:96
 msgid "Show main window"
 msgstr "Mostrar janela principal"
 
-#: src/app.vala:95
+#: src/app.vala:97
 #, fuzzy
 msgid "Show application settings dialog"
 msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
-#: src/app.vala:96
+#: src/app.vala:98
 #, fuzzy
 msgid "Show about dialog"
 msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
-#: src/app.vala:97
+#: src/app.vala:99
 msgid "Maximum number of background worker threads"
 msgstr ""
 
-#: src/app.vala:101
+#: src/app.vala:103
 msgid "Run game"
 msgstr "Jogo de corrida"
 
-#: src/app.vala:102
+#: src/app.vala:104
 msgid "Show compatibility options dialog"
 msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
-#: src/app.vala:103
+#: src/app.vala:105
 msgid "Open game details"
 msgstr ""
 
-#: src/app.vala:104
+#: src/app.vala:106
 #, fuzzy
 msgid "Open game properties"
 msgstr "Propriedades do jogo"
 
-#: src/app.vala:108
+#: src/app.vala:110
 msgid "Enable debug logging"
 msgstr ""
 
-#: src/app.vala:109
+#: src/app.vala:111
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 
-#: src/app.vala:110
+#: src/app.vala:112
 msgid "Log download manager"
 msgstr ""
 
-#: src/app.vala:111
+#: src/app.vala:113
 msgid "Log background workers start/stop"
 msgstr ""
 
-#: src/app.vala:112
+#: src/app.vala:114
 msgid "Verbose logging"
 msgstr ""
 
-#: src/app.vala:224
+#: src/app.vala:226
 #, fuzzy
 msgid "Game Options:"
 msgstr "Propriedades do jogo"
 
-#: src/app.vala:224
+#: src/app.vala:226
 msgid "Show game options help"
 msgstr ""
 
-#: src/app.vala:232
+#: src/app.vala:234
 msgid "Logging Options:"
 msgstr ""
 
-#: src/app.vala:232
+#: src/app.vala:234
 msgid "Show logging options help"
 msgstr ""
 
@@ -259,12 +263,12 @@ msgstr ""
 "Arquivo de configuração do Steam não encontrado.\n"
 "Entre na sua conta no cliente Steam e retorne ao GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:301
+#: src/data/sources/humble/HumbleGame.vala:330
 #, fuzzy, c-format
 msgid "%s: no available installers"
 msgstr "%s: instalador corrompido"
 
-#: src/data/sources/humble/HumbleGame.vala:302
+#: src/data/sources/humble/HumbleGame.vala:331
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."

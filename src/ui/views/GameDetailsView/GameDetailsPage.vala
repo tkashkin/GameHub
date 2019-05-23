@@ -357,7 +357,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			});
 			set_visible_widgets(game.status);
 
-			yield Utils.load_image(icon, game.icon, "icon");
+			icon.load(game.icon, "icon");
 
 			stack.set_visible_child(content_scrolled);
 		}
