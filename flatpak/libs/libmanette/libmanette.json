@@ -5,7 +5,7 @@
 	"sources": [
 		{
 			"type": "archive",
-			"url": "libmanette-0.2.2.tar.gz"
+			"path": "libmanette-0.2.2.tar.gz"
 		}
 	]
 }
