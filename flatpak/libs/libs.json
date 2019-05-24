@@ -26,18 +26,7 @@
 				}
 			]
 		},
-		{
-			"name": "manette",
-			"buildsystem": "meson",
-			"config-opts": ["--libdir=lib"],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "https://gitlab.gnome.org/aplazas/libmanette/-/archive/0.2.2/libmanette-0.2.2.tar.gz",
-					"md5": "9d27cae2612d08d6fce31771b57d9bf1"
-				}
-			]
-		},
+		"libmanette/libmanette.json",
 
 		{
 			"name": "libdee",
