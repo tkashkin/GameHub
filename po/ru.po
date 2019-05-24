@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-23 23:19+0300\n"
+"POT-Creation-Date: 2019-05-25 02:41+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -502,39 +502,43 @@ msgstr ""
 msgid "Use imported tags"
 msgstr "Использовать импортированные теги"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:50
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:69
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:51
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:70
 msgid "Collection directory"
 msgstr "Папка коллекции"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:55
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:63
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:71
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:56
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:64
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:72
 msgid "Game directory"
 msgstr "Папка игры"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:56
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:64
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:57
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:65
 msgid "Installers"
 msgstr "Установщики"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:57
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:58
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
 msgid "DLC"
 msgstr "DLC"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:58
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:59
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:89
 msgid "Bonus content"
 msgstr "Бонусный контент"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:68
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:69
 msgid "Variables"
 msgstr "Переменные"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:70
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:71
 msgid "Game name"
 msgstr "Название игры"
+
+#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:73
+msgid "Platform"
+msgstr "Платформа"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Controller.vala:40
 msgid "Enable controller support"

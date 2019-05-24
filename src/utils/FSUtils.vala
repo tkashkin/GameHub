@@ -129,37 +129,41 @@ namespace GameHub.Utils
 					public string dlc { get; set; }
 					public string bonus { get; set; }
 
-					public static string expand_game_dir(string game)
+					public static string expand_game_dir(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
 						variables.set("game", g);
+						variables.set("platform_name", platform == null ? "" : platform.name());
+						variables.set("platform", platform == null ? "" : platform.id());
 						return FSUtils.expand(get_instance().game_dir, null, variables);
 					}
-					public static string expand_dlc(string game)
+					public static string expand_dlc(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
-						variables.set("game", g);
-						variables.set("game_dir", expand_game_dir(g));
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
+						variables.set("game_dir", expand_game_dir(g, platform));
 						return FSUtils.expand(get_instance().dlc, null, variables);
 					}
-					public static string expand_installers(string game, string? dlc=null)
+					public static string expand_installers(string game, string? dlc=null, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var d = dlc == null ? null : dlc.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
-						variables.set("game", g);
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
 						if(d == null)
 						{
-							variables.set("game_dir", expand_game_dir(g));
+							variables.set("game_dir", expand_game_dir(g, platform));
 						}
 						else
 						{
-							variables.set("game_dir", expand_dlc(g) + "/" + d);
+							variables.set("game_dir", expand_dlc(g, platform) + "/" + d);
 						}
 						return FSUtils.expand(get_instance().installers, null, variables);
 					}
@@ -169,7 +173,6 @@ namespace GameHub.Utils
 						var d = dlc == null ? null : dlc.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
-						variables.set("game", g);
 						if(d == null)
 						{
 							variables.set("game_dir", expand_game_dir(g));
@@ -202,21 +205,24 @@ namespace GameHub.Utils
 					public string game_dir { get; set; }
 					public string installers { get; set; }
 
-					public static string expand_game_dir(string game)
+					public static string expand_game_dir(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
 						variables.set("game", g);
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
 						return FSUtils.expand(get_instance().game_dir, null, variables);
 					}
-					public static string expand_installers(string game)
+					public static string expand_installers(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
-						variables.set("game", g);
-						variables.set("game_dir", expand_game_dir(g));
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
+						variables.set("game_dir", expand_game_dir(g, platform));
 						return FSUtils.expand(get_instance().installers, null, variables);
 					}
 

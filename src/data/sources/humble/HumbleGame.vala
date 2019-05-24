@@ -433,6 +433,8 @@ namespace GameHub.Data.Sources.Humble
 
 		public class Installer: Runnable.Installer
 		{
+			private File? installers_dir;
+
 			public string dl_name;
 			public string? dl_id;
 			public Runnable.Installer.Part part;
@@ -448,9 +450,13 @@ namespace GameHub.Data.Sources.Humble
 				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
 				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
-				if(game.installers_dir == null) return;
+
+				installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(name, platform)) ?? game.installers_dir;
+
+				if(installers_dir == null) return;
+
 				var remote = File.new_for_uri(url);
-				var local = game.installers_dir.get_child("humble_" + game.id + "_" + id);
+				var local = installers_dir.get_child("humble_" + game.id + "_" + id);
 
 				string? hash = null;
 				ChecksumType hash_type = ChecksumType.MD5;
