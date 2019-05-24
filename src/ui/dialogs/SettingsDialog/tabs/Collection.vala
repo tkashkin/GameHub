@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Granite;
 
+using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -69,16 +70,17 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			add_labels("• $root", _("Collection directory")).sensitive = false;
 			add_labels("• $game", _("Game name")).sensitive = false;
 			add_labels("• $game_dir", _("Game directory")).sensitive = false;
+			add_labels("• $platform, $platform_name", _("Platform")).sensitive = false;
 
 			update_hints();
 		}
 
 		private void update_hints()
 		{
-			var game = "VVVVVV";
+			var game = "Game";
 
 			gog_game_dir.tooltip_text = FSUtils.Paths.Collection.GOG.expand_game_dir(game);
-			gog_installers.tooltip_text = FSUtils.Paths.Collection.GOG.expand_installers(game);
+			gog_installers.tooltip_text = FSUtils.Paths.Collection.GOG.expand_installers(game, null, CurrentPlatform);
 			gog_dlc.tooltip_text = FSUtils.Paths.Collection.GOG.expand_dlc(game);
 			gog_bonus.tooltip_text = FSUtils.Paths.Collection.GOG.expand_bonus(game);
 

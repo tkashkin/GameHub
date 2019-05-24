@@ -562,6 +562,7 @@ namespace GameHub.Data.Sources.GOG
 			private GOGGame game;
 			private Json.Object json;
 			private bool fetched = false;
+			private File? installers_dir;
 
 			public string lang;
 			public string lang_full;
@@ -588,13 +589,22 @@ namespace GameHub.Data.Sources.GOG
 					}
 				}
 
+				string g = game.name;
+				string? d = null;
+				if(game is DLC)
+				{
+					g = (game as DLC).game.name;
+					d = game.name;
+				}
+				installers_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_installers(g, d, platform)) ?? game.installers_dir;
+
 				full_size = json.get_int_member("total_size");
 				version = json.get_string_member("version");
 			}
 
 			public override async void fetch_parts()
 			{
-				if(fetched || game.installers_dir == null || !json.has_member("files") || json.get_member("files").get_node_type() != Json.NodeType.ARRAY) return;
+				if(fetched || installers_dir == null || !json.has_member("files") || json.get_member("files").get_node_type() != Json.NodeType.ARRAY) return;
 
 				int loading_count = 0;
 
@@ -620,7 +630,7 @@ namespace GameHub.Data.Sources.GOG
 									var checksum_url = root.get_string_member("checksum");
 									var remote = File.new_for_uri(url);
 
-									var local = game.installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
+									var local = installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
 
 									string? hash = null;
 									var hash_type = ChecksumType.MD5;
