@@ -1,0 +1,11 @@
+{
+	"name": "manette",
+	"buildsystem": "meson",
+	"config-opts": ["--libdir=lib"],
+	"sources": [
+		{
+			"type": "archive",
+			"url": "libmanette-0.2.2.tar.gz"
+		}
+	]
+}
