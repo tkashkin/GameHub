@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-23 23:19+0300\n"
-"PO-Revision-Date: 2019-05-24 23:43+0000\n"
+"PO-Revision-Date: 2019-05-28 06:14+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -538,7 +538,7 @@ msgstr "Spelnaam"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:73
 msgid "Platform"
-msgstr ""
+msgstr "Platform"
 
 #: src/ui/dialogs/SettingsDialog/tabs/Controller.vala:40
 msgid "Enable controller support"
