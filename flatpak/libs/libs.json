@@ -64,7 +64,7 @@
 			"sources": [
 				{
 					"type": "archive",
-					"url": "bundled/libunity_7.1.4+16.04.20180209.1.orig.tar.gz"
+					"path": "bundled/libunity_7.1.4+16.04.20180209.1.orig.tar.gz"
 				},
 				{
 					"type": "patch",
