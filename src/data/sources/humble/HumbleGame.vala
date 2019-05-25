@@ -451,7 +451,7 @@ namespace GameHub.Data.Sources.Humble
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
 				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
 
-				installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(name, platform)) ?? game.installers_dir;
+				installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(game.name, platform)) ?? game.installers_dir;
 
 				if(installers_dir == null) return;
 
