@@ -26,7 +26,17 @@
 				}
 			]
 		},
-		"libmanette/libmanette.json",
+		{
+			"name": "manette",
+			"buildsystem": "meson",
+			"config-opts": ["--libdir=lib"],
+			"sources": [
+				{
+					"type": "archive",
+					"path": "bundled/libmanette-0.2.2.tar.gz"
+				}
+			]
+		},
 
 		{
 			"name": "libdee",
@@ -34,8 +44,7 @@
 			"sources": [
 				{
 					"type": "archive",
-					"url": "https://launchpad.net/dee/1.0/1.2.7/+download/dee-1.2.7.tar.gz",
-					"md5": "b92f27f0a99cac24c2128880601bb7d7"
+					"path": "bundled/dee-1.2.7.tar.gz"
 				}
 			]
 		},
@@ -46,8 +55,7 @@
 			"sources": [
 				{
 					"type": "archive",
-					"url": "https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz",
-					"md5": "3c05d53053b3ea69384b5f93d7a4c7c4"
+					"path": "bundled/libdbusmenu-16.04.0.tar.gz"
 				}
 			]
 		},
@@ -56,8 +64,7 @@
 			"sources": [
 				{
 					"type": "archive",
-					"url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libunity/7.1.4+16.04.20180209.1-0ubuntu1/libunity_7.1.4+16.04.20180209.1.orig.tar.gz",
-					"sha256": "d4013500c0a972ecea5ba26e3567ee5d4c3eae481281badbbbe3cbaeab5f389b"
+					"url": "bundled/libunity_7.1.4+16.04.20180209.1.orig.tar.gz"
 				},
 				{
 					"type": "patch",
