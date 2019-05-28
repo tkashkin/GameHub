@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-28 14:41+0300\n"
-"PO-Revision-Date: 2019-05-28 06:14+0000\n"
+"PO-Revision-Date: 2019-05-28 14:48+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -451,20 +451,19 @@ msgstr "Uiterlijk"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:32
 msgid "Appearance"
-msgstr ""
+msgstr "Uiterlijk"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:33
 msgid "General interface settings"
-msgstr ""
+msgstr "Algemene instellingen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:42
-#, fuzzy
 msgid "Dark theme"
-msgstr "Donker thema gebruiken"
+msgstr "Donker thema"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:43
 msgid "Symbolic icons"
-msgstr ""
+msgstr "Symbolische pictogrammen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:47
 msgid "Compact list"
@@ -476,11 +475,11 @@ msgstr "Platformpictogrammen tonen in rasterweergave"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
-msgstr ""
+msgstr "Gedrag"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
 msgid "Behavior settings"
-msgstr ""
+msgstr "Gedragsinstellingen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:41
 msgid "Run games with double click"
@@ -503,9 +502,8 @@ msgid "Use imported tags"
 msgstr "Geïmporteerde labels gebruiken"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:48
-#, fuzzy
 msgid "General"
-msgstr "Sleutel genereren"
+msgstr "Algemeen"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:49
 msgid "Collection"
@@ -565,14 +563,12 @@ msgstr "Ingeschakeld"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:70
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:90
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:93
-#, fuzzy
 msgid "Disabled"
-msgstr "esync uitschakelen"
+msgstr "Uitgeschakeld"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
-#, fuzzy
 msgid "Game sources"
-msgstr "Speleigenschappen"
+msgstr "Spelbronnen"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:47
 msgid "Steam API keys have limited number of uses per day"
@@ -588,29 +584,26 @@ msgstr "Installatiemap"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:74
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:63
-#, fuzzy
 msgid "Not installed"
 msgstr "Niet-geïnstalleerd"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:78
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:94
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:97
-#, fuzzy
 msgid "Not authenticated"
-msgstr "Authenticatie vereist"
+msgstr "Geen authenticatie"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
 #, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr ""
+msgstr "Geauthenticeerd als <b>%s</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:101
-#, fuzzy
 msgid "Authenticated"
-msgstr "Bezig met authenticeren..."
+msgstr "Geacthenticeerd"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:91
 msgid "Default"
@@ -653,26 +646,25 @@ msgstr "Libretro-core-informatiemap"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "No cores found"
-msgstr ""
+msgstr "Geen kernen aangetroffen"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:58
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u kern aangetroffen"
+msgstr[1] "%u kernen aangetroffen"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:167
-#, fuzzy, c-format
+#, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
-msgstr[0] "Aangepaste emulator"
-msgstr[1] "Aangepaste emulator"
+msgstr[0] "%u aangepaste emulator"
+msgstr[1] "%u aangepaste emulators"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:171
-#, fuzzy
 msgid "No custom emulators"
-msgstr "Aangepaste emulator"
+msgstr "Geen aangepaste emulators"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:255
@@ -725,7 +717,7 @@ msgstr "Comptabiliteitsmodus afdwingen"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:35
 msgid "About"
-msgstr ""
+msgstr "Over"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
 msgid "Copy application version and environment info"
