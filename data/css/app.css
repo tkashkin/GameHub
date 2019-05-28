@@ -213,7 +213,7 @@ list:not(:backdrop) row:selected:focus label.category-label
 	text-shadow: 0 1px 2px alpha (#000, 0.6);
 }
 
-.installers-list
+.installers-list,
 {
 	background: transparent;
 }
@@ -524,4 +524,9 @@ dialog .sidebar list
 .stack-switcher .text-button
 {
 	min-width: 32px;
+}
+
+.settings-dialog .settings-pages-sidebar list
+{
+	background: transparent;
 }

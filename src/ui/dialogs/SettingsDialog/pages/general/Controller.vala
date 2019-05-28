@@ -21,33 +21,42 @@ using Granite;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
+namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 {
-	public class Controller: SettingsDialogTab
+	public class Controller: SettingsDialogPage
 	{
 		private Settings.Controller settings;
-		private Box enabled_box;
 
 		public Controller(SettingsDialog dlg)
 		{
-			Object(orientation: Orientation.VERTICAL, dialog: dlg);
+			Object(
+				dialog: dlg,
+				title: _("Controller"),
+				icon_name: "gamehub-symbolic",
+				activatable: true
+			);
 		}
 
 		construct
 		{
 			settings = Settings.Controller.get_instance();
 
-			enabled_box = add_switch(_("Enable controller support"), settings.enabled, v => { settings.enabled = v; update(); dialog.show_restart_message(); });
-			add_switch(_("Focus GameHub window with Guide button"), settings.focus_window, v => { settings.focus_window = v; update(); dialog.show_restart_message(); });
+			add_switch(_("Focus GameHub window with Guide button"), settings.focus_window, v => { settings.focus_window = v; update(); request_restart(); });
+
+			status_switch.active = settings.enabled;
+			status_switch.notify["active"].connect(() => {
+				settings.enabled = status_switch.active;
+				update();
+				request_restart();
+			});
 
 			update();
 		}
 
 		private void update()
 		{
-			this.foreach(w => {
-				if(w != enabled_box) w.sensitive = settings.enabled;
-			});
+			content_area.sensitive = settings.enabled;
+			status = settings.enabled ? _("Enabled") : _("Disabled");
 		}
 	}
 }

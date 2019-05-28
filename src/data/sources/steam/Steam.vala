@@ -60,7 +60,7 @@ namespace GameHub.Data.Sources.Steam
 
 		private bool? installed = null;
 
-		private bool is_authenticated_in_steam_client
+		public bool is_authenticated_in_steam_client
 		{
 			get
 			{

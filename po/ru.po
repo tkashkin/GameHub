@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-25 02:41+0300\n"
+"POT-Creation-Date: 2019-05-28 14:41+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -113,7 +113,7 @@ msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:255
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Выберите исполняемый файл"
@@ -320,7 +320,7 @@ msgstr ""
 "Установите innoextract <b>%2$s</b> или более новый."
 
 #: src/data/compat/WineWrap.vala:61
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:235
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
@@ -435,174 +435,242 @@ msgstr "Запускать в папке игры"
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:56
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:57
 msgid "Some settings will be applied after application restart"
 msgstr "Некоторые настройки будут применены после перезапуска приложения"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:62
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:63
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "Папка игр содержит пробел. Это может вызвать проблемы для некоторых игр"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:84
-#: src/ui/dialogs/AboutDialog.vala:34
-msgid "About GameHub"
-msgstr "О GameHub"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:97
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:31
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:98
-msgid "Collection"
-msgstr "Коллекция"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:32
+msgid "Appearance"
+msgstr "Внешний вид"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:100
-msgid "Controller"
-msgstr "Контроллер"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:33
+msgid "General interface settings"
+msgstr "Общие настройки интерфейса"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:106
-msgid "Emulators"
-msgstr "Эмуляторы"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:42
+msgid "Dark theme"
+msgstr "Тёмная тема"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:36
-msgid "Use dark theme"
-msgstr "Использовать тёмную тему"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:43
+msgid "Symbolic icons"
+msgstr "Символьные иконки"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:37
-msgid "Use symbolic icons instead of colored icons"
-msgstr "Использовать символьные иконки вместо цветных"
-
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:41
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:47
 msgid "Compact list"
 msgstr "Компактный список"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:42
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgid "Show platform icons in grid view"
 msgstr "Показывать иконки платформ в сетке"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:43
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
+msgid "Behavior"
+msgstr "Поведение"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
+msgid "Behavior settings"
+msgstr "Настройки поведения"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:41
 msgid "Run games with double click"
 msgstr "Запускать игры двойным кликом"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:47
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:45
 msgid "Merge games from different sources"
 msgstr "Объединять игры из разных источников"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:49
 msgid "Show non-native games"
 msgstr "Показывать ненативные игры"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:50
 msgid "Use compatibility layers and consider Windows games compatible"
 msgstr ""
 "Использовать слои совместимости и считать игры для Windows совместимыми"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:56
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:54
 msgid "Use imported tags"
 msgstr "Использовать импортированные теги"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:51
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:70
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:48
+msgid "General"
+msgstr "Общие"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:49
+msgid "Collection"
+msgstr "Коллекция"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:60
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Collection directory"
 msgstr "Папка коллекции"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:56
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:64
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:72
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:81
 msgid "Game directory"
 msgstr "Папка игры"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:57
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:66
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:74
 msgid "Installers"
 msgstr "Установщики"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:58
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:67
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
 msgid "DLC"
 msgstr "DLC"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:68
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:89
 msgid "Bonus content"
 msgstr "Бонусный контент"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:69
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
 msgid "Variables"
 msgstr "Переменные"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:71
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:80
 msgid "Game name"
 msgstr "Название игры"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:73
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:82
 msgid "Platform"
 msgstr "Платформа"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Controller.vala:40
-msgid "Enable controller support"
-msgstr "Включить поддержку контроллера"
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:34
+msgid "Controller"
+msgstr "Контроллер"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Controller.vala:41
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:44
 msgid "Focus GameHub window with Guide button"
 msgstr "Фокусировать окно GameHub при нажатии кнопки Guide"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:41
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:44
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:44
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:59
 msgid "Enabled"
 msgstr "Включено"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:70
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:90
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:93
+msgid "Disabled"
+msgstr "Отключено"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
+msgid "Game sources"
+msgstr "Источники игр"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:47
 msgid "Steam API keys have limited number of uses per day"
 msgstr "API-ключи Steam имеют ограничение на количество использований в день"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:47
 msgid "Generate key"
 msgstr "Сгенерировать ключ"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:49
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:50
 msgid "Installation directory"
 msgstr "Папка установки"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:66
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:74
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:63
+msgid "Not installed"
+msgstr "Не установлен"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:78
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:94
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:97
+msgid "Not authenticated"
+msgstr "Не авторизован"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
+#, c-format
+msgid "Authenticated as <b>%s</b>"
+msgstr "Авторизован как <b>%s</b>"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:101
+msgid "Authenticated"
+msgstr "Авторизован"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:91
 msgid "Default"
 msgstr "По умолчанию"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:74
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:99
 msgid "Restore default API key"
 msgstr "Восстановить API-ключ по умолчанию"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:85
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:110
 msgid "Steam API key"
 msgstr "API-ключ Steam"
 
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:48
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:48
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:52
 msgid "Games directory"
 msgstr "Папка игр"
 
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:52
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:56
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:57
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:61
 msgid "Logout"
 msgstr "Выйти"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:48
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:48
 msgid "Load games from Humble Trove"
 msgstr "Загружать игры из Humble Trove"
 
-#: src/ui/dialogs/SettingsDialog/tabs/RetroArch.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:43
+msgid "Emulators"
+msgstr "Эмуляторы"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:43
 msgid "Libretro core directory"
 msgstr "Папка ядер libretro"
 
-#: src/ui/dialogs/SettingsDialog/tabs/RetroArch.vala:37
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:44
 msgid "Libretro core info directory"
 msgstr "Папка информации о ядрах libretro"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:194
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:319
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
+msgid "No cores found"
+msgstr "Ядра не найдены"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:58
+#, c-format
+msgid "%u core found"
+msgid_plural "%u cores found"
+msgstr[0] "Найдено %u ядро"
+msgstr[1] "Найдено %u ядра"
+msgstr[2] "Найдено %u ядер"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:167
+#, c-format
+msgid "%u custom emulator"
+msgid_plural "%u custom emulators"
+msgstr[0] "%u пользовательский эмулятор"
+msgstr[1] "%u пользовательских эмулятора"
+msgstr[2] "%u пользовательских эмуляторов"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:171
+msgid "No custom emulators"
+msgstr "Нет пользовательских эмуляторов"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:255
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:348
 #: src/ui/dialogs/GamePropertiesDialog.vala:216
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 #: src/ui/views/GamesView/AddGamePopover.vala:66
@@ -611,43 +679,97 @@ msgstr "Папка информации о ядрах libretro"
 msgid "Executable"
 msgstr "Исполняемый файл"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:195
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:319
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:224
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:348
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:121
 msgid "Installer"
 msgstr "Установщик"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:200
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:229
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:212
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:241
 #: src/ui/dialogs/GamePropertiesDialog.vala:130
 #: src/ui/dialogs/GamePropertiesDialog.vala:135
 #: src/ui/views/GamesView/AddGamePopover.vala:72
 msgid "Name"
 msgstr "Название"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:228
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:257
 #: src/ui/dialogs/GamePropertiesDialog.vala:239
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Arguments"
 msgstr "Параметры"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:240
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:269
 #: src/ui/views/GamesView/AddGamePopover.vala:81
 msgid "Directory"
 msgstr "Папка"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:240
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:269
 msgid "Select emulator directory"
 msgstr "Выберите папку эмулятора"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:277
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:306
 #: src/ui/dialogs/GamePropertiesDialog.vala:257
 msgid "Force compatibility mode"
 msgstr "Использовать режим совместимости"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:35
+msgid "About"
+msgstr "О программе"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:71
+msgid "Copy application version and environment info"
+msgstr "Копировать версию приложения и информацию об окружении"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:78
+#: src/ui/views/WelcomeView.vala:56
+msgid "All your games in one place"
+msgstr "Все игры в одном месте"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:93
+msgctxt "about_link"
+msgid "Website"
+msgstr "Веб-сайт"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:94
+msgctxt "about_link"
+msgid "Source code on GitHub"
+msgstr "Исходный код на GitHub"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:95
+msgctxt "about_link"
+msgid "Report a problem"
+msgstr "Сообщить о проблеме"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:96
+msgctxt "about_link"
+msgid "Suggest translations"
+msgstr "Предложить переводы"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:102
+msgctxt "about_link"
+msgid "Issues"
+msgstr "Проблемы"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:103
+msgctxt "about_link"
+msgid "Contributors"
+msgstr "Авторы"
+
+#. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:106
+msgctxt "about_link"
+msgid "Pulse"
+msgstr "Pulse"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:107
+msgctxt "about_link"
+msgid "Forks"
+msgstr "Форки"
 
 #: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GamesView/GameContextMenu.vala:49
@@ -779,55 +901,6 @@ msgstr "Запустить, используя слой совместимост
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:72
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "повреждённый установщик: несовпадение контрольной суммы в файле"
-
-#: src/ui/dialogs/AboutDialog.vala:77
-msgid "Copy application version and environment info"
-msgstr "Копировать версию приложения и информацию об окружении"
-
-#: src/ui/dialogs/AboutDialog.vala:90 src/ui/views/WelcomeView.vala:56
-msgid "All your games in one place"
-msgstr "Все игры в одном месте"
-
-#: src/ui/dialogs/AboutDialog.vala:99
-msgctxt "about_link"
-msgid "Website"
-msgstr "Веб-сайт"
-
-#: src/ui/dialogs/AboutDialog.vala:100
-msgctxt "about_link"
-msgid "Source code on GitHub"
-msgstr "Исходный код на GitHub"
-
-#: src/ui/dialogs/AboutDialog.vala:101
-msgctxt "about_link"
-msgid "Report a problem"
-msgstr "Сообщить о проблеме"
-
-#: src/ui/dialogs/AboutDialog.vala:102
-msgctxt "about_link"
-msgid "Suggest translations"
-msgstr "Предложить переводы"
-
-#: src/ui/dialogs/AboutDialog.vala:109
-msgctxt "about_link"
-msgid "Issues"
-msgstr "Проблемы"
-
-#: src/ui/dialogs/AboutDialog.vala:110
-msgctxt "about_link"
-msgid "Contributors"
-msgstr "Авторы"
-
-#. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
-#: src/ui/dialogs/AboutDialog.vala:113
-msgctxt "about_link"
-msgid "Pulse"
-msgstr "Pulse"
-
-#: src/ui/dialogs/AboutDialog.vala:114
-msgctxt "about_link"
-msgid "Forks"
-msgstr "Форки"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
@@ -1166,6 +1239,15 @@ msgstr "Приостановлено: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Загрузка отменена"
+
+#~ msgid "About GameHub"
+#~ msgstr "О GameHub"
+
+#~ msgid "Use symbolic icons instead of colored icons"
+#~ msgstr "Использовать символьные иконки вместо цветных"
+
+#~ msgid "Enable controller support"
+#~ msgstr "Включить поддержку контроллера"
 
 #~ msgid "Reload"
 #~ msgstr "Обновить"

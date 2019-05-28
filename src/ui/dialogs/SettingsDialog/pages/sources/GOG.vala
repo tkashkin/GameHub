@@ -21,18 +21,22 @@ using Granite;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
+namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
-	public class GOG: SettingsDialogTab
+	public class GOG: SettingsDialogPage
 	{
 		private Settings.Auth.GOG gog_auth;
-		private Box enabled_box;
 		private Button logout_btn;
 		private FileChooserEntry games_dir_chooser;
 
 		public GOG(SettingsDialog dlg)
 		{
-			Object(orientation: Orientation.VERTICAL, dialog: dlg);
+			Object(
+				dialog: dlg,
+				title: "GOG",
+				icon_name: "source-gog-symbolic",
+				activatable: true
+			);
 		}
 
 		construct
@@ -41,24 +45,24 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			gog_auth = Settings.Auth.GOG.get_instance();
 
-			enabled_box = add_switch(_("Enabled"), gog_auth.enabled, v => { gog_auth.enabled = v; update(); dialog.show_restart_message(); });
+			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; request_restart(); update(); }).get_children().last().data as FileChooserEntry;
 
-			add_separator();
-
-			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; update(); dialog.show_restart_message(); }).get_children().last().data as FileChooserEntry;
-
-			add_separator();
+			status_switch.active = gog_auth.enabled;
+			status_switch.notify["active"].connect(() => {
+				gog_auth.enabled = status_switch.active;
+				request_restart();
+				update();
+			});
 
 			logout_btn = new Button.with_label(_("Logout"));
-			logout_btn.halign = Align.END;
-			add_widget(logout_btn);
+			action_area.add(logout_btn);
 
 			logout_btn.clicked.connect(() => {
 				gog_auth.authenticated = false;
 				gog_auth.access_token = "";
 				gog_auth.refresh_token = "";
+				request_restart();
 				update();
-				dialog.show_restart_message();
 			});
 
 			update();
@@ -66,20 +70,34 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 		private void update()
 		{
-			this.foreach(w => {
-				if(w != enabled_box) w.sensitive = gog_auth.enabled;
-			});
-			logout_btn.sensitive = gog_auth.enabled && gog_auth.authenticated && gog_auth.access_token.length > 0;
+			content_area.sensitive = gog_auth.enabled;
+			logout_btn.sensitive = gog_auth.authenticated && gog_auth.access_token.length > 0;
 
 			if(" " in FSUtils.Paths.Settings.get_instance().gog_games)
 			{
 				games_dir_chooser.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
+				status_type = StatusType.ERROR;
 			}
 			else
 			{
 				games_dir_chooser.get_style_context().remove_class(Gtk.STYLE_CLASS_ERROR);
+				status_type = restart_requested ? StatusType.WARNING : StatusType.NONE;
 			}
 			dialog.update_games_dir_space_message();
+
+			if(!gog_auth.enabled)
+			{
+				status = _("Disabled");
+			}
+			else if(!gog_auth.authenticated || gog_auth.access_token.length == 0)
+			{
+				status = _("Not authenticated");
+			}
+			else
+			{
+				var user_name = GameHub.Data.Sources.GOG.GOG.instance.user_name;
+				status = user_name != null ? _("Authenticated as <b>%s</b>").printf(user_name) : _("Authenticated");
+			}
 		}
 
 	}

@@ -26,9 +26,9 @@ using GameHub.UI.Widgets;
 
 using GameHub.Data.DB;
 
-namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
+namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 {
-	public class Emulators: SettingsDialogTab
+	public class Emulators: SettingsDialogPage
 	{
 		private Stack stack;
 		private Button add_btn;
@@ -38,19 +38,32 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 		public Emulators(SettingsDialog dlg)
 		{
-			Object(orientation: Orientation.HORIZONTAL, dialog: dlg);
+			Object(
+				dialog: dlg,
+				title: _("Emulators"),
+				icon_name: "application-x-executable-symbolic"
+			);
 		}
 
 		construct
 		{
-			margin_start = margin_end = 0;
+			var root = content_area.get_parent() as Grid;
+			var header = root.get_child_at(0, 0);
+
+			root.margin = 0;
+			root.row_spacing = 0;
+
+			header.margin = 12;
+
+			content_area.orientation = Orientation.HORIZONTAL;
+			content_area.margin = 0;
+			content_area.column_spacing = 0;
 
 			var paths = FSUtils.Paths.Settings.get_instance();
 
 			stack = new Stack();
-			stack.margin_start = stack.margin_end = 8;
+			stack.margin = 8;
 			stack.expand = true;
-			stack.set_size_request(360, 240);
 
 			var sidebar_box = new Box(Orientation.VERTICAL, 0);
 			sidebar_box.vexpand = true;
@@ -82,9 +95,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			sidebar_box.add(sidebar);
 			sidebar_box.add(actionbar);
 
-			add(sidebar_box);
-			add(new Separator(Orientation.VERTICAL));
-			add(stack);
+			content_area.add(sidebar_box);
+			content_area.add(new Separator(Orientation.VERTICAL));
+			content_area.add(stack);
 
 			stack.notify["visible-child"].connect(() => {
 				var page = stack.visible_child as EmulatorPage;
@@ -115,6 +128,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			{
 				add_emu_page(emu);
 			}
+			update();
 		}
 
 		private void add_emu_page(Emulator? emulator=null)
@@ -129,9 +143,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			}
 			page.emulator.removed.connect(() => {
 				stack.remove(page);
-				remove_btn.sensitive = stack.get_children().length() > 0;
+				update();
 			});
-			remove_btn.sensitive = stack.get_children().length() > 0;
+			update();
 		}
 
 		private void remove_emu_page()
@@ -140,6 +154,21 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			if(page != null)
 			{
 				page.remove();
+				update();
+			}
+		}
+
+		private void update()
+		{
+			var count = stack.get_children().length();
+			remove_btn.sensitive = count > 0;
+			if(count > 0)
+			{
+				status = ngettext("%u custom emulator", "%u custom emulators", count).printf(count);
+			}
+			else
+			{
+				status = _("No custom emulators");
 			}
 		}
 
@@ -375,7 +404,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				var entry = new Entry();
 				entry.primary_icon_name = icon;
 				entry.primary_icon_activatable = false;
-				entry.set_size_request(180, -1);
+				entry.set_size_request(280, -1);
 				attach(label, 0, rows);
 				attach(entry, 1, rows);
 				rows++;
@@ -394,7 +423,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 					label.get_style_context().add_class("category-label");
 				}
 				var entry = new FileChooserEntry(title, action, null, null, false, action == FileChooserAction.OPEN);
-				entry.set_size_request(180, -1);
+				entry.set_size_request(280, -1);
 				attach(label, 0, rows);
 				attach(entry, 1, rows);
 				rows++;
@@ -409,7 +438,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 				rows++;
 			}
 
-			private Box add_switch(string text, bool enabled, owned SettingsDialogTab.SwitchAction action)
+			private Box add_switch(string text, bool enabled, owned SettingsDialogPage.SwitchAction action)
 			{
 				var sw = new Switch();
 				sw.active = enabled;

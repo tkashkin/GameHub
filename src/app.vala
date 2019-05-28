@@ -422,7 +422,7 @@ namespace GameHub
 
 		private static void action_about(SimpleAction action, Variant? args)
 		{
-			new GameHub.UI.Dialogs.AboutDialog();
+			new GameHub.UI.Dialogs.SettingsDialog.SettingsDialog("about");
 		}
 
 		private static void action_corrupted_installer(SimpleAction action, Variant? args)

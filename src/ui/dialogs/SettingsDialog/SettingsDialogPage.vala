@@ -24,18 +24,29 @@ using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog
 {
-	public abstract class SettingsDialogTab: Box
+	public abstract class SettingsDialogPage: SimpleSettingsPage
 	{
 		public SettingsDialog dialog { construct; protected get; }
 
-		public SettingsDialogTab(SettingsDialog dlg)
+		public bool restart_requested = false;
+
+		public SettingsDialogPage(SettingsDialog dlg)
 		{
-			Object(orientation: Orientation.VERTICAL, dialog: dlg);
+			Object(dialog: dlg);
 		}
 
 		construct
 		{
-			margin_start = margin_end = 8;
+			//margin_start = margin_end = 8;
+			content_area.orientation = Orientation.VERTICAL;
+			content_area.row_spacing = 0;
+		}
+
+		protected void request_restart()
+		{
+			status_type = StatusType.WARNING;
+			dialog.show_restart_message();
+			restart_requested = true;
 		}
 
 		protected Box add_switch(string text, bool enabled, owned SwitchAction action)
@@ -175,8 +186,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		protected T add_widget<T>(T widget)
 		{
-			if(!(widget is HeaderLabel)) (widget as Widget).margin = 4;
-			add(widget as Widget);
+			if(!(widget is HeaderLabel))
+			{
+				(widget as Widget).margin = 4;
+				(widget as Widget).margin_end = 0;
+			}
+			content_area.add(widget as Widget);
 			return widget;
 		}
 

@@ -20,22 +20,32 @@ using Gtk;
 using Granite;
 using GameHub.Utils;
 
-namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
+namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 {
-	public class RetroArch: SettingsDialogTab
+	public class Appearance: SettingsDialogPage
 	{
-		public RetroArch(SettingsDialog dlg)
+		public Appearance(SettingsDialog dlg)
 		{
-			Object(orientation: Orientation.VERTICAL, dialog: dlg);
+			Object(
+				dialog: dlg,
+				header: _("Interface"),
+				title: _("Appearance"),
+				status: _("General interface settings"),
+				icon_name: "preferences-desktop"
+			);
 		}
 
 		construct
 		{
-			var paths = FSUtils.Paths.Settings.get_instance();
+			var ui = Settings.UI.get_instance();
 
-			add_file_chooser(_("Libretro core directory"), FileChooserAction.SELECT_FOLDER, paths.libretro_core_dir, v => { paths.libretro_core_dir = v; dialog.show_restart_message(); });
-			add_file_chooser(_("Libretro core info directory"), FileChooserAction.SELECT_FOLDER, paths.libretro_core_info_dir, v => { paths.libretro_core_info_dir = v; dialog.show_restart_message(); });
+			add_switch(_("Dark theme"), ui.dark_theme, v => { ui.dark_theme = v; });
+			add_switch(_("Symbolic icons"), ui.symbolic_icons, v => { ui.symbolic_icons = v; });
+
+			add_separator();
+
+			add_switch(_("Compact list"), ui.compact_list, v => { ui.compact_list = v; });
+			add_switch(_("Show platform icons in grid view"), ui.show_grid_icons, v => { ui.show_grid_icons = v; });
 		}
-
 	}
 }

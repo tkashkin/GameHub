@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-25 02:41+0300\n"
+"POT-Creation-Date: 2019-05-28 14:41+0300\n"
 "PO-Revision-Date: 2019-01-02 01:06+0000\n"
 "Last-Translator: Leandro Stanger <leandrostanger@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -114,7 +114,7 @@ msgid "Show logging options help"
 msgstr ""
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:255
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Selecione o executável"
@@ -315,7 +315,7 @@ msgid ""
 msgstr ""
 
 #: src/data/compat/WineWrap.vala:61
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:206
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:235
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
@@ -431,176 +431,250 @@ msgstr "Lançamento no diretório do jogo"
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:56
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:57
 msgid "Some settings will be applied after application restart"
 msgstr ""
 "Algumas configurações serão aplicadas após a reinicialização do aplicativo"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:62
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:63
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:84
-#: src/ui/dialogs/AboutDialog.vala:34
-msgid "About GameHub"
-msgstr ""
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:97
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:31
 msgid "Interface"
 msgstr "Interface"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:98
-msgid "Collection"
-msgstr "Coleção"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:100
-#, fuzzy
-msgid "Controller"
-msgstr "Instalar"
-
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:106
-msgid "Emulators"
-msgstr "Emuladores"
-
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:36
-msgid "Use dark theme"
-msgstr "Use o tema escuro"
-
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:37
-msgid "Use symbolic icons instead of colored icons"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:32
+msgid "Appearance"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:41
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:33
+msgid "General interface settings"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:42
+#, fuzzy
+msgid "Dark theme"
+msgstr "Use o tema escuro"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:43
+msgid "Symbolic icons"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:47
 msgid "Compact list"
 msgstr "Lista compacta"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:42
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgid "Show platform icons in grid view"
 msgstr "Mostrar ícones de plataforma na visualização em grade"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:43
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
+msgid "Behavior"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
+msgid "Behavior settings"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:41
 msgid "Run games with double click"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:47
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:45
 msgid "Merge games from different sources"
 msgstr "Mesclar jogos de diferentes fontes"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:49
 msgid "Show non-native games"
 msgstr "Mostrar jogos não nativos"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:50
 msgid "Use compatibility layers and consider Windows games compatible"
 msgstr ""
 "Use camadas de compatibilidade e considere os jogos do Windows compatíveis"
 
-#: src/ui/dialogs/SettingsDialog/tabs/UI.vala:56
+#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:54
 msgid "Use imported tags"
 msgstr "Use tags importadas"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:51
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:70
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:48
+#, fuzzy
+msgid "General"
+msgstr "Gerar chave"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:49
+msgid "Collection"
+msgstr "Coleção"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:60
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Collection directory"
 msgstr "Diretório de coleção"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:56
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:64
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:72
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:81
 msgid "Game directory"
 msgstr "Diretório de jogos"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:57
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:66
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:74
 msgid "Installers"
 msgstr "Instaladores"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:58
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:67
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
 msgid "DLC"
 msgstr "DLC"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:68
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:89
 msgid "Bonus content"
 msgstr "Conteúdo de bônus"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:69
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
 msgid "Variables"
 msgstr "Variáveis"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:71
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:80
 msgid "Game name"
 msgstr "Nome do jogo"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Collection.vala:73
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:82
 msgid "Platform"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/tabs/Controller.vala:40
-msgid "Enable controller support"
-msgstr ""
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:34
+#, fuzzy
+msgid "Controller"
+msgstr "Instalar"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Controller.vala:41
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:44
 msgid "Focus GameHub window with Guide button"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:41
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:44
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:44
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:59
 msgid "Enabled"
 msgstr "Ativado"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:70
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:90
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:93
+#, fuzzy
+msgid "Disabled"
+msgstr "Desativar esync"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
+#, fuzzy
+msgid "Game sources"
+msgstr "Propriedades do jogo"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:47
 msgid "Steam API keys have limited number of uses per day"
 msgstr ""
 "As chaves da API do Steam têm um número limitado de utilizações por dia"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:47
 msgid "Generate key"
 msgstr "Gerar chave"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:49
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:50
 msgid "Installation directory"
 msgstr "Diretório de instalação"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:66
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:74
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:63
+#, fuzzy
+msgid "Not installed"
+msgstr "Não instalado"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:78
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:94
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:97
+#, fuzzy
+msgid "Not authenticated"
+msgstr "Autentificação requerida"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
+#, c-format
+msgid "Authenticated as <b>%s</b>"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:101
+#, fuzzy
+msgid "Authenticated"
+msgstr "Autenticando..."
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:91
 msgid "Default"
 msgstr "Padrão"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:74
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:99
 msgid "Restore default API key"
 msgstr "Restaurar chave de API padrão"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Steam.vala:85
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:110
 msgid "Steam API key"
 msgstr "Chave da API do Steam"
 
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:48
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:48
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:52
 msgid "Games directory"
 msgstr "Diretório de jogos"
 
-#: src/ui/dialogs/SettingsDialog/tabs/GOG.vala:52
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:56
+#: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:57
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:61
 msgid "Logout"
 msgstr "Sair"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Humble.vala:48
+#: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:48
 msgid "Load games from Humble Trove"
 msgstr "Carregar jogos de Humble Trove"
 
-#: src/ui/dialogs/SettingsDialog/tabs/RetroArch.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:43
+msgid "Emulators"
+msgstr "Emuladores"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:43
 msgid "Libretro core directory"
 msgstr "Diretório do núcleo do Libretro"
 
-#: src/ui/dialogs/SettingsDialog/tabs/RetroArch.vala:37
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:44
 msgid "Libretro core info directory"
 msgstr "Diretório de informações do núcleo do Libretro"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:194
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:226
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:319
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
+msgid "No cores found"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:58
+#, c-format
+msgid "%u core found"
+msgid_plural "%u cores found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:167
+#, fuzzy, c-format
+msgid "%u custom emulator"
+msgid_plural "%u custom emulators"
+msgstr[0] "Emulador personalizado"
+msgstr[1] "Emulador personalizado"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:171
+#, fuzzy
+msgid "No custom emulators"
+msgstr "Emulador personalizado"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:255
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:348
 #: src/ui/dialogs/GamePropertiesDialog.vala:216
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 #: src/ui/views/GamesView/AddGamePopover.vala:66
@@ -609,43 +683,98 @@ msgstr "Diretório de informações do núcleo do Libretro"
 msgid "Executable"
 msgstr "Executável"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:195
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:319
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:224
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:348
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:121
 msgid "Installer"
 msgstr "Instalar"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:200
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:229
 msgid "Save"
 msgstr "Salve"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:212
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:241
 #: src/ui/dialogs/GamePropertiesDialog.vala:130
 #: src/ui/dialogs/GamePropertiesDialog.vala:135
 #: src/ui/views/GamesView/AddGamePopover.vala:72
 msgid "Name"
 msgstr "Nome"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:228
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:257
 #: src/ui/dialogs/GamePropertiesDialog.vala:239
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Arguments"
 msgstr "Argumentos"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:240
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:269
 #: src/ui/views/GamesView/AddGamePopover.vala:81
 msgid "Directory"
 msgstr "Diretório"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:240
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:269
 msgid "Select emulator directory"
 msgstr "Selecione o diretório do emulador"
 
-#: src/ui/dialogs/SettingsDialog/tabs/Emulators.vala:277
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:306
 #: src/ui/dialogs/GamePropertiesDialog.vala:257
 msgid "Force compatibility mode"
 msgstr "Forçar o modo de compatibilidade"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:35
+msgid "About"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:71
+msgid "Copy application version and environment info"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:78
+#: src/ui/views/WelcomeView.vala:56
+msgid "All your games in one place"
+msgstr "Todos os seus jogos em um só lugar"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:93
+msgctxt "about_link"
+msgid "Website"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:94
+msgctxt "about_link"
+msgid "Source code on GitHub"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:95
+msgctxt "about_link"
+msgid "Report a problem"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:96
+#, fuzzy
+msgctxt "about_link"
+msgid "Suggest translations"
+msgstr "Instalação silenciosa"
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:102
+msgctxt "about_link"
+msgid "Issues"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:103
+msgctxt "about_link"
+msgid "Contributors"
+msgstr ""
+
+#. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:106
+msgctxt "about_link"
+msgid "Pulse"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:107
+msgctxt "about_link"
+msgid "Forks"
+msgstr ""
 
 #: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GamesView/GameContextMenu.vala:49
@@ -778,56 +907,6 @@ msgstr "Jogar com camada de compatibilidade do Windows"
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:72
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "Instalador corrompido: incompatibilidade de soma de verificação em"
-
-#: src/ui/dialogs/AboutDialog.vala:77
-msgid "Copy application version and environment info"
-msgstr ""
-
-#: src/ui/dialogs/AboutDialog.vala:90 src/ui/views/WelcomeView.vala:56
-msgid "All your games in one place"
-msgstr "Todos os seus jogos em um só lugar"
-
-#: src/ui/dialogs/AboutDialog.vala:99
-msgctxt "about_link"
-msgid "Website"
-msgstr ""
-
-#: src/ui/dialogs/AboutDialog.vala:100
-msgctxt "about_link"
-msgid "Source code on GitHub"
-msgstr ""
-
-#: src/ui/dialogs/AboutDialog.vala:101
-msgctxt "about_link"
-msgid "Report a problem"
-msgstr ""
-
-#: src/ui/dialogs/AboutDialog.vala:102
-#, fuzzy
-msgctxt "about_link"
-msgid "Suggest translations"
-msgstr "Instalação silenciosa"
-
-#: src/ui/dialogs/AboutDialog.vala:109
-msgctxt "about_link"
-msgid "Issues"
-msgstr ""
-
-#: src/ui/dialogs/AboutDialog.vala:110
-msgctxt "about_link"
-msgid "Contributors"
-msgstr ""
-
-#. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
-#: src/ui/dialogs/AboutDialog.vala:113
-msgctxt "about_link"
-msgid "Pulse"
-msgstr ""
-
-#: src/ui/dialogs/AboutDialog.vala:114
-msgctxt "about_link"
-msgid "Forks"
-msgstr ""
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"

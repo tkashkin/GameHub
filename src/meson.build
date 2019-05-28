@@ -81,15 +81,17 @@ sources = [
 	'ui/windows/WebAuthWindow.vala',
 
 	'ui/dialogs/SettingsDialog/SettingsDialog.vala',
-	'ui/dialogs/SettingsDialog/SettingsDialogTab.vala',
+	'ui/dialogs/SettingsDialog/SettingsDialogPage.vala',
 
-	'ui/dialogs/SettingsDialog/tabs/UI.vala',
-	'ui/dialogs/SettingsDialog/tabs/Collection.vala',
-	'ui/dialogs/SettingsDialog/tabs/Steam.vala',
-	'ui/dialogs/SettingsDialog/tabs/GOG.vala',
-	'ui/dialogs/SettingsDialog/tabs/Humble.vala',
-	'ui/dialogs/SettingsDialog/tabs/RetroArch.vala',
-	'ui/dialogs/SettingsDialog/tabs/Emulators.vala',
+	'ui/dialogs/SettingsDialog/pages/ui/Appearance.vala',
+	'ui/dialogs/SettingsDialog/pages/ui/Behavior.vala',
+	'ui/dialogs/SettingsDialog/pages/general/Collection.vala',
+	'ui/dialogs/SettingsDialog/pages/sources/Steam.vala',
+	'ui/dialogs/SettingsDialog/pages/sources/GOG.vala',
+	'ui/dialogs/SettingsDialog/pages/sources/Humble.vala',
+	'ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala',
+	'ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala',
+	'ui/dialogs/SettingsDialog/pages/About.vala',
 
 	'ui/dialogs/InstallDialog.vala',
 	'ui/dialogs/GameDetailsDialog.vala',
@@ -97,7 +99,6 @@ sources = [
 	'ui/dialogs/GameFSOverlaysDialog.vala',
 	'ui/dialogs/CompatRunDialog.vala',
 	'ui/dialogs/CorruptedInstallerDialog.vala',
-	'ui/dialogs/AboutDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',
@@ -170,7 +171,7 @@ if manette.found()
 	deps += dependency('gdk-x11-3.0')
 	deps += dependency('xtst')
 	sources += 'utils/Gamepad.vala'
-	sources += 'ui/dialogs/SettingsDialog/tabs/Controller.vala'
+	sources += 'ui/dialogs/SettingsDialog/pages/general/Controller.vala'
 endif
 
 executable(

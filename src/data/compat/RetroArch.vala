@@ -26,7 +26,7 @@ namespace GameHub.Data.Compat
 	{
 		private const string LIBRETRO_CORE_SUFFIX = "_libretro.so";
 		public static RetroArch instance;
-		private ArrayList<string> cores = new ArrayList<string>();
+		public ArrayList<string> cores = new ArrayList<string>();
 
 		public string binary { get; construct; default = "retroarch"; }
 		public bool has_cores { get; protected set; default = false; }
