@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-28 14:41+0300\n"
-"PO-Revision-Date: 2019-05-28 06:14+0000\n"
+"PO-Revision-Date: 2019-05-28 14:48+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -450,11 +450,11 @@ msgstr "Grensesnitt"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:32
 msgid "Appearance"
-msgstr ""
+msgstr "Utseende"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:33
 msgid "General interface settings"
-msgstr ""
+msgstr "Generelle grensesnittsinnstillinger"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:42
 #, fuzzy
@@ -463,7 +463,7 @@ msgstr "Bruk mørk drakt"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:43
 msgid "Symbolic icons"
-msgstr ""
+msgstr "Symbolske ikoner"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:47
 msgid "Compact list"
@@ -475,11 +475,11 @@ msgstr "Vis plattformsikoner i rutenettvisning"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
-msgstr ""
+msgstr "Oppførsel"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
 msgid "Behavior settings"
-msgstr ""
+msgstr "Oppførselsinnstillinger"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:41
 msgid "Run games with double click"
@@ -603,7 +603,7 @@ msgstr "Identitetsbekreftelse kreves"
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
 #, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr ""
+msgstr "Identitetsbekreftet som <b>%s</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
@@ -653,14 +653,14 @@ msgstr "Libretro-kjerneinfomappe"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "No cores found"
-msgstr ""
+msgstr "Fant ingen kjerner"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:58
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Fant én kjerne"
+msgstr[1] "Fant %u kjerner"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:167
 #, fuzzy, c-format
@@ -725,7 +725,7 @@ msgstr "Tving gjennom kompabilitetsmodus"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:35
 msgid "About"
-msgstr ""
+msgstr "Om"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
 msgid "Copy application version and environment info"
