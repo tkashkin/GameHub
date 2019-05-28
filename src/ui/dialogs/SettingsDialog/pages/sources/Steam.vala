@@ -20,16 +20,21 @@ using Gtk;
 using Granite;
 using GameHub.Utils;
 
-namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
+namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
-	public class Steam: SettingsDialogTab
+	public class Steam: SettingsDialogPage
 	{
 		private Settings.Auth.Steam steam_auth;
-		private Box enabled_box;
 
 		public Steam(SettingsDialog dlg)
 		{
-			Object(orientation: Orientation.VERTICAL, dialog: dlg);
+			Object(
+				dialog: dlg,
+				header: _("Game sources"),
+				title: "Steam",
+				icon_name: "source-steam-symbolic",
+				activatable: true
+			);
 		}
 
 		construct
@@ -38,24 +43,44 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 			steam_auth = Settings.Auth.Steam.get_instance();
 
-			enabled_box = add_switch(_("Enabled"), steam_auth.enabled, v => { steam_auth.enabled = v; update(); dialog.show_restart_message(); });
-
-			add_separator();
-
 			add_steam_apikey_entry();
 			add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey");
 
 			add_separator();
-			add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; dialog.show_restart_message(); }, false);
+			add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; request_restart(); }, false);
+
+			status_switch.active = steam_auth.enabled;
+			status_switch.notify["active"].connect(() => {
+				steam_auth.enabled = status_switch.active;
+				update();
+				request_restart();
+			});
 
 			update();
 		}
 
 		private void update()
 		{
-			this.foreach(w => {
-				if(w != enabled_box) w.sensitive = steam_auth.enabled;
-			});
+			var steam = GameHub.Data.Sources.Steam.Steam.instance;
+
+			content_area.sensitive = steam.enabled;
+
+			if(!steam.enabled)
+			{
+				status = _("Disabled");
+			}
+			else if(!steam.is_installed())
+			{
+				status = _("Not installed");
+			}
+			else if(!steam.is_authenticated_in_steam_client)
+			{
+				status = _("Not authenticated");
+			}
+			else
+			{
+				status = steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated");
+			}
 		}
 
 		protected void add_steam_apikey_entry()
@@ -74,7 +99,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			entry.secondary_icon_tooltip_text = _("Restore default API key");
 			entry.set_size_request(280, -1);
 
-			entry.notify["text"].connect(() => { steam_auth.api_key = entry.text; dialog.show_restart_message(); });
+			entry.notify["text"].connect(() => { steam_auth.api_key = entry.text; request_restart(); });
 			entry.icon_press.connect((pos, e) => {
 				if(pos == EntryIconPosition.SECONDARY)
 				{

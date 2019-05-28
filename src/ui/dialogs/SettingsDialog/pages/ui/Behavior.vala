@@ -20,31 +20,29 @@ using Gtk;
 using Granite;
 using GameHub.Utils;
 
-namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
+namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 {
-	public class UI: SettingsDialogTab
+	public class Behavior: SettingsDialogPage
 	{
-		public UI(SettingsDialog dlg)
+		public Behavior(SettingsDialog dlg)
 		{
-			Object(orientation: Orientation.VERTICAL, dialog: dlg);
+			Object(
+				dialog: dlg,
+				title: _("Behavior"),
+				status: _("Behavior settings"),
+				icon_name: "preferences-system"
+			);
 		}
 
 		construct
 		{
 			var ui = Settings.UI.get_instance();
 
-			add_switch(_("Use dark theme"), ui.dark_theme, v => { ui.dark_theme = v; });
-			add_switch(_("Use symbolic icons instead of colored icons"), ui.symbolic_icons, v => { ui.symbolic_icons = v; });
-
-			add_separator();
-
-			add_switch(_("Compact list"), ui.compact_list, v => { ui.compact_list = v; });
-			add_switch(_("Show platform icons in grid view"), ui.show_grid_icons, v => { ui.show_grid_icons = v; });
 			add_switch(_("Run games with double click"), ui.grid_doubleclick, v => { ui.grid_doubleclick = v; });
 
 			add_separator();
 
-			add_switch(_("Merge games from different sources"), ui.merge_games, v => { ui.merge_games = v; dialog.show_restart_message(); });
+			add_switch(_("Merge games from different sources"), ui.merge_games, v => { ui.merge_games = v; request_restart(); });
 
 			add_separator();
 

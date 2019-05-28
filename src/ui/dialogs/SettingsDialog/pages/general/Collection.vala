@@ -23,10 +23,14 @@ using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
+namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 {
-	public class Collection: SettingsDialogTab
+	public class Collection: SettingsDialogPage
 	{
+		private FSUtils.Paths.Collection collection;
+		private FSUtils.Paths.Collection.GOG gog;
+		private FSUtils.Paths.Collection.Humble humble;
+
 		private FileChooserEntry collection_root;
 
 		private Entry gog_game_dir;
@@ -39,30 +43,35 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 
 		public Collection(SettingsDialog dlg)
 		{
-			Object(orientation: Orientation.VERTICAL, dialog: dlg);
+			Object(
+				dialog: dlg,
+				header: _("General"),
+				title: _("Collection"),
+				icon_name: "folder-download"
+			);
 		}
 
 		construct
 		{
-			var collection = FSUtils.Paths.Collection.get_instance();
-			var gog = FSUtils.Paths.Collection.GOG.get_instance();
-			var humble = FSUtils.Paths.Collection.Humble.get_instance();
+			collection = FSUtils.Paths.Collection.get_instance();
+			gog = FSUtils.Paths.Collection.GOG.get_instance();
+			humble = FSUtils.Paths.Collection.Humble.get_instance();
 
-			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update_hints(); }).get_children().last().data as FileChooserEntry;
+			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update(); }).get_children().last().data as FileChooserEntry;
 
 			add_separator();
 
 			add_header("GOG");
-			gog_game_dir = add_entry(_("Game directory") + " ($game_dir)", gog.game_dir, v => { gog.game_dir = v; update_hints(); }, "source-gog-symbolic").get_children().last().data as Entry;
-			gog_installers = add_entry(_("Installers"), gog.installers, v => { gog.installers = v; update_hints(); }, "source-gog-symbolic").get_children().last().data as Entry;
-			gog_dlc = add_entry(_("DLC"), gog.dlc, v => { gog.dlc = v; update_hints(); }, "folder-download-symbolic").get_children().last().data as Entry;
-			gog_bonus = add_entry(_("Bonus content"), gog.bonus, v => { gog.bonus = v; update_hints(); }, "folder-music-symbolic").get_children().last().data as Entry;
+			gog_game_dir = add_entry(_("Game directory") + " ($game_dir)", gog.game_dir, v => { gog.game_dir = v; update(); }, "source-gog-symbolic").get_children().last().data as Entry;
+			gog_installers = add_entry(_("Installers"), gog.installers, v => { gog.installers = v; update(); }, "source-gog-symbolic").get_children().last().data as Entry;
+			gog_dlc = add_entry(_("DLC"), gog.dlc, v => { gog.dlc = v; update(); }, "folder-download-symbolic").get_children().last().data as Entry;
+			gog_bonus = add_entry(_("Bonus content"), gog.bonus, v => { gog.bonus = v; update(); }, "folder-music-symbolic").get_children().last().data as Entry;
 
 			add_separator();
 
 			add_header("Humble Bundle");
-			humble_game_dir = add_entry(_("Game directory") + " ($game_dir)", humble.game_dir, v => { humble.game_dir = v; update_hints(); }, "source-humble-symbolic").get_children().last().data as Entry;
-			humble_installers = add_entry(_("Installers"), humble.installers, v => { humble.installers = v; update_hints(); }, "source-humble-symbolic").get_children().last().data as Entry;
+			humble_game_dir = add_entry(_("Game directory") + " ($game_dir)", humble.game_dir, v => { humble.game_dir = v; update(); }, "source-humble-symbolic").get_children().last().data as Entry;
+			humble_installers = add_entry(_("Installers"), humble.installers, v => { humble.installers = v; update(); }, "source-humble-symbolic").get_children().last().data as Entry;
 
 			add_separator();
 
@@ -72,11 +81,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Tabs
 			add_labels("• $game_dir", _("Game directory")).sensitive = false;
 			add_labels("• $platform, $platform_name", _("Platform")).sensitive = false;
 
-			update_hints();
+			update();
 		}
 
-		private void update_hints()
+		private void update()
 		{
+			status = collection.root;
+
 			var game = "Game";
 
 			gog_game_dir.tooltip_text = FSUtils.Paths.Collection.GOG.expand_game_dir(game);

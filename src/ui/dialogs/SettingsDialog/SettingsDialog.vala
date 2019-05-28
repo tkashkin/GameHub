@@ -30,18 +30,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		private InfoBar restart_msg;
 		private InfoBar games_dir_space_msg;
 
-		private Stack tabs;
+		private Stack pages;
 
-		private string default_tab;
+		private string default_page;
 
-		public SettingsDialog(string tab="ui")
+		public SettingsDialog(string page="ui/appearance")
 		{
 			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Settings"));
-			default_tab = tab;
+			default_page = page;
 		}
 
 		construct
 		{
+			get_style_context().add_class("settings-dialog");
 			get_style_context().add_class("rounded");
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
@@ -49,7 +50,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			modal = true;
 
 			var content = get_content_area();
-			content.set_size_request(500, -1);
+			content.set_size_request(800, 480);
 
 			restart_msg = new InfoBar();
 			restart_msg.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
@@ -66,49 +67,42 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 			update_messages();
 
-			tabs = new Stack();
-			tabs.homogeneous = false;
-			tabs.interpolate_size = true;
+			pages = new Stack();
+			pages.homogeneous = false;
+			pages.interpolate_size = true;
 
-			var tabs_hbox = new Box(Orientation.HORIZONTAL, 8);
-			tabs_hbox.hexpand = true;
-			tabs_hbox.margin_start = 40;
-			tabs_hbox.margin_end = 8;
-			tabs_hbox.margin_bottom = 16;
+			add_page("ui/appearance", new Pages.UI.Appearance(this));
+			add_page("ui/behavior", new Pages.UI.Behavior(this));
 
-			var tabs_switcher = new StackSwitcher();
-			tabs_switcher.stack = tabs;
-			tabs_switcher.valign = tabs_switcher.halign = Align.CENTER;
-
-			var about_btn = new Button.from_icon_name("system-help-symbolic", IconSize.SMALL_TOOLBAR);
-			about_btn.tooltip_text = _("About GameHub");
-			about_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-			about_btn.get_style_context().remove_class("image-button");
-			about_btn.get_style_context().add_class("circular");
-			about_btn.valign = Align.CENTER;
-			about_btn.valign = Align.END;
-			about_btn.set_size_request(24, 24);
-
-			about_btn.clicked.connect(() => new GameHub.UI.Dialogs.AboutDialog());
-
-			tabs_hbox.pack_start(tabs_switcher, true, false);
-			tabs_hbox.pack_end(about_btn, false, false);
-
-			add_tab("ui", new Tabs.UI(this), _("Interface"));
-			add_tab("collection", new Tabs.Collection(this), _("Collection"));
+			add_page("general/collection", new Pages.General.Collection(this));
 			#if MANETTE
-			add_tab("controller", new Tabs.Controller(this), _("Controller"));
+			add_page("general/controller", new Pages.General.Controller(this));
 			#endif
-			add_tab("gs/steam", new Tabs.Steam(this), "Steam", "source-steam-symbolic");
-			add_tab("gs/gog", new Tabs.GOG(this), "GOG", "source-gog-symbolic");
-			add_tab("gs/humble", new Tabs.Humble(this), "Humble Bundle", "source-humble-symbolic");
-			add_tab("emu/retroarch", new Tabs.RetroArch(this), "RetroArch", "emu-retroarch-symbolic");
-			add_tab("emu/custom", new Tabs.Emulators(this), _("Emulators"));
 
-			content.pack_start(restart_msg, false, false);
-			content.pack_start(games_dir_space_msg, false, false);
-			content.pack_start(tabs_hbox, false, true);
-			content.pack_start(tabs, false, false);
+			add_page("sources/steam", new Pages.Sources.Steam(this));
+			add_page("sources/gog", new Pages.Sources.GOG(this));
+			add_page("sources/humble", new Pages.Sources.Humble(this));
+
+			add_page("emulators/retroarch", new Pages.Emulators.RetroArch(this));
+			add_page("emulators/custom", new Pages.Emulators.Emulators(this));
+
+			add_page("about", new Pages.About(this));
+
+			var sidebar = new SettingsSidebar(pages);
+			sidebar.get_style_context().add_class("settings-pages-sidebar");
+
+			var content_hbox = new Box(Orientation.HORIZONTAL, 0);
+			var content_root = new Box(Orientation.VERTICAL, 0);
+
+			content_root.add(restart_msg);
+			content_root.add(games_dir_space_msg);
+			content_root.add(pages);
+
+			content_hbox.add(sidebar);
+			content_hbox.add(new Separator(Orientation.VERTICAL));
+			content_hbox.add(content_root);
+
+			content.add(content_hbox);
 
 			response.connect((source, response_id) => {
 				switch(response_id)
@@ -121,13 +115,18 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 			show_all();
 
-			tabs.visible_child_name = default_tab;
+			get_action_area().visible = false;
+
+			Idle.add(() => {
+				pages.visible_child_name = default_page;
+				sidebar.visible_child_name = default_page;
+				return Source.REMOVE;
+			});
 		}
 
-		private void add_tab(string id, SettingsDialogTab tab, string title, string? icon=null)
+		private void add_page(string id, SettingsPage page)
 		{
-			tabs.add_titled(tab, id, title);
-			tabs.child_set_property(tab, "icon-name", icon);
+			pages.add_named(page, id);
 		}
 
 		public void show_restart_message()

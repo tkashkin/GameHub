@@ -20,43 +20,37 @@ using Gtk;
 using Granite;
 using GameHub.Utils;
 
-namespace GameHub.UI.Dialogs
+namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 {
-	public class AboutDialog: Dialog
+	public class About: SettingsPage
 	{
 		private Settings.UI ui_settings;
 
 		private Box links_view;
 		private Box small_links_view;
 
-		public AboutDialog()
+		public About(SettingsDialog dlg)
 		{
-			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("About GameHub"));
+			Object(
+				header: _("About"),
+				title: "GameHub",
+				status: ProjectConfig.VERSION,
+				icon_name: ProjectConfig.PROJECT_NAME
+			);
 		}
 
 		construct
 		{
 			ui_settings = Settings.UI.get_instance();
 
-			get_style_context().add_class("rounded");
-			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-
-			gravity = Gdk.Gravity.CENTER;
-			modal = true;
-
-			var content = get_content_area();
-
-			var content_hbox = new Box(Orientation.HORIZONTAL, 4);
-			content_hbox.margin_start = content_hbox.margin_end = 5;
-			content_hbox.set_size_request(520, -1);
-
-			var logo = new Image.from_icon_name(ProjectConfig.PROJECT_NAME, IconSize.INVALID);
-			logo.pixel_size = 128;
-			logo.valign = Align.START;
-
 			var content_vbox = new Box(Orientation.VERTICAL, 8);
-			content_vbox.margin_top = 8;
 			content_vbox.expand = true;
+
+			var content_hbox = new Box(Orientation.HORIZONTAL, 0);
+			content_hbox.margin = 12;
+
+			var logo = new Image.from_icon_name(ProjectConfig.PROJECT_NAME, IconSize.DIALOG);
+			logo.valign = Align.START;
 
 			var appinfo_grid = new Grid();
 			appinfo_grid.margin_start = 12;
@@ -81,20 +75,20 @@ namespace GameHub.UI.Dialogs
 
 			app_info_copy.clicked.connect(copy_app_info);
 
-			appinfo_grid.attach(app_title, 0, 0);
-			appinfo_grid.attach(app_version, 0, 1);
-			appinfo_grid.attach(app_info_copy, 1, 0, 1, 2);
-
-			content_vbox.add(appinfo_grid);
-
 			var app_subtitle = new Label(_("All your games in one place"));
-			app_subtitle.margin_start = 12;
+			app_subtitle.margin_top = 4;
 			app_subtitle.hexpand = true;
 			app_subtitle.xalign = 0;
 			app_subtitle.get_style_context().add_class(Granite.STYLE_CLASS_H3_LABEL);
 
+			appinfo_grid.attach(app_title, 0, 0);
+			appinfo_grid.attach(app_version, 0, 1);
+			appinfo_grid.attach(app_info_copy, 1, 0, 1, 2);
+			appinfo_grid.attach(app_subtitle, 0, 2);
+
 			links_view = new Box(Orientation.VERTICAL, 2);
-			links_view.margin_top = 4;
+			links_view.expand = true;
+			links_view.margin = 4;
 
 			add_link(C_("about_link", "Website"), "https://tkashkin.tk/projects/gamehub", "web-browser");
 			add_link(C_("about_link", "Source code on GitHub"), "https://github.com/tkashkin/GameHub", "text-x-script");
@@ -102,8 +96,7 @@ namespace GameHub.UI.Dialogs
 			add_link(C_("about_link", "Suggest translations"), "https://hosted.weblate.org/engage/gamehub", "preferences-desktop-locale");
 
 			small_links_view = new Box(Orientation.HORIZONTAL, 8);
-			small_links_view.margin_top = 4;
-			small_links_view.margin_end = 8;
+			small_links_view.margin = 8;
 			small_links_view.halign = Align.END;
 
 			add_small_link(C_("about_link", "Issues"), "https://github.com/tkashkin/GameHub/issues");
@@ -113,30 +106,14 @@ namespace GameHub.UI.Dialogs
 			add_small_link(C_("about_link", "Pulse"), "https://github.com/tkashkin/GameHub/pulse");
 			add_small_link(C_("about_link", "Forks"), "https://github.com/tkashkin/GameHub/network");
 
-			content_vbox.add(app_subtitle);
+			content_hbox.add(logo);
+			content_hbox.add(appinfo_grid);
+
+			content_vbox.add(content_hbox);
 			content_vbox.add(links_view);
 			content_vbox.add(small_links_view);
 
-			content_hbox.add(logo);
-			content_hbox.add(content_vbox);
-
-			content.add(content_hbox);
-
-			response.connect((source, response_id) => {
-				switch(response_id)
-				{
-					case ResponseType.CLOSE:
-						destroy();
-						break;
-				}
-			});
-
-			Idle.add(() => {
-				links_view.get_children().first().data.grab_focus();
-				return Source.REMOVE;
-			});
-
-			show_all();
+			add(content_vbox);
 		}
 
 		private void copy_app_info()
