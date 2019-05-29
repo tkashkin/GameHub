@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-28 14:41+0300\n"
-"PO-Revision-Date: 2019-05-28 06:14+0000\n"
+"PO-Revision-Date: 2019-05-31 00:15+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -39,9 +39,8 @@ msgid "Show full GDB backtrace"
 msgstr "Vollständige GDB-Backtrace anzeigen"
 
 #: src/app.vala:92
-#, fuzzy
 msgid "Treat fatal errors as criticals and crash application"
-msgstr "Behandlung schwerwiegender Fehler als kritisch und Crash-Anwendung"
+msgstr "Schwerwiegende Fehler als kritisch und Crash-Anwendung behandeln"
 
 #: src/app.vala:96
 msgid "Show main window"
@@ -455,20 +454,19 @@ msgstr "Schnittstelle"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:32
 msgid "Appearance"
-msgstr ""
+msgstr "Aussehen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:33
 msgid "General interface settings"
-msgstr ""
+msgstr "Allgemeine Schnittstelleneinstellungen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:42
-#, fuzzy
 msgid "Dark theme"
-msgstr "Dunklen Modus verwenden"
+msgstr "Dunkles Thema"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:43
 msgid "Symbolic icons"
-msgstr ""
+msgstr "Symbolische Symbole"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:47
 msgid "Compact list"
@@ -480,11 +478,11 @@ msgstr "Plattformsymbole in der Gitteransicht anzeigen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
-msgstr ""
+msgstr "Verhalten"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
 msgid "Behavior settings"
-msgstr ""
+msgstr "Verhaltenseinstellungen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:41
 msgid "Run games with double click"
@@ -508,9 +506,8 @@ msgid "Use imported tags"
 msgstr "Importierte Tags verwenden"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:48
-#, fuzzy
 msgid "General"
-msgstr "Schlüssel generieren"
+msgstr "Allgemein"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:49
 msgid "Collection"
@@ -570,14 +567,12 @@ msgstr "Aktiviert"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:70
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:90
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:93
-#, fuzzy
 msgid "Disabled"
-msgstr "esync deaktivieren"
+msgstr "Deaktiviert"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
-#, fuzzy
 msgid "Game sources"
-msgstr "Spieleigenschaften"
+msgstr "Spielquellen"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:47
 msgid "Steam API keys have limited number of uses per day"
@@ -594,29 +589,26 @@ msgstr "Installationsverzeichnis"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:74
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:63
-#, fuzzy
 msgid "Not installed"
 msgstr "Nicht installiert"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:78
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:94
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:97
-#, fuzzy
 msgid "Not authenticated"
-msgstr "Authentifizierung erforderlich"
+msgstr "Nicht authentifiziert"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
 #, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr ""
+msgstr "Authentifiziert als <b>%s</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:82
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:99
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:101
-#, fuzzy
 msgid "Authenticated"
-msgstr "Authentifizierung …"
+msgstr "Authentifiziert"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:91
 msgid "Default"
@@ -659,26 +651,25 @@ msgstr "Libretro-Kern-Infoverzeichnis"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "No cores found"
-msgstr ""
+msgstr "Keine Kerne gefunden"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:58
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u Kern gefunden"
+msgstr[1] "%u Kerne gefunden"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:167
-#, fuzzy, c-format
+#, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
-msgstr[0] "Benutzerdefinierter Emulator"
-msgstr[1] "Benutzerdefinierter Emulator"
+msgstr[0] "%u benutzerdefinierter Emulator"
+msgstr[1] "%u benutzerdefinierte Emulatoren"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:171
-#, fuzzy
 msgid "No custom emulators"
-msgstr "Benutzerdefinierter Emulator"
+msgstr "Keine benutzerdefinierten Emulatoren"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:255
@@ -731,7 +722,7 @@ msgstr "Kompatibilitätsmodus erzwingen"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:35
 msgid "About"
-msgstr ""
+msgstr "Über"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
 msgid "Copy application version and environment info"
