@@ -32,9 +32,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				dialog: dlg,
 				header: _("Game sources"),
 				title: "Steam",
+				description: _("Disabled"),
 				icon_name: "source-steam-symbolic",
 				activatable: true
 			);
+			status = description;
 		}
 
 		construct
@@ -67,19 +69,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			if(!steam.enabled)
 			{
-				status = _("Disabled");
+				status = description = _("Disabled");
 			}
 			else if(!steam.is_installed())
 			{
-				status = _("Not installed");
+				status = description = _("Not installed");
 			}
 			else if(!steam.is_authenticated_in_steam_client)
 			{
-				status = _("Not authenticated");
+				status = description = _("Not authenticated");
 			}
 			else
 			{
-				status = steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated");
+				status = description = steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated");
 			}
 		}
 

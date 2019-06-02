@@ -37,6 +37,7 @@
 		<file alias="scalable/actions/controller-button-x.svg">normal/controller/x.svg</file>
 		<file alias="scalable/actions/controller-button-y.svg">normal/controller/y.svg</file>
 		<file alias="scalable/actions/controller-button-start.svg">normal/controller/start.svg</file>
+		<file alias="scalable/actions/controller-button-guide.svg">normal/controller/guide.svg</file>
 		<file alias="scalable/actions/controller-button-select.svg">normal/controller/select.svg</file>
 		<file alias="scalable/actions/controller-button-bumper-left.svg">normal/controller/bumper-left.svg</file>
 		<file alias="scalable/actions/controller-button-bumper-right.svg">normal/controller/bumper-right.svg</file>

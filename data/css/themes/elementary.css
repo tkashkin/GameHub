@@ -8,6 +8,9 @@
 @define-color textColorPrimaryDefault mix(@titlebar_color, @text_color, 0.75);
 @define-color textColorPrimaryShadowDefault alpha(shade(@titlebar_color, 1.4), 0.4);
 
+@define-color settings_separator @menu_separator;
+@define-color settings_separator_shadow @menu_separator_shadow;
+
 .titlebar.flat .title,
 .titlebar.flat .subtitle,
 .titlebar.flat .titlebutton,

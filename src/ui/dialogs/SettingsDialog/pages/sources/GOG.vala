@@ -34,9 +34,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			Object(
 				dialog: dlg,
 				title: "GOG",
+				description: _("Disabled"),
 				icon_name: "source-gog-symbolic",
 				activatable: true
 			);
+			status = description;
 		}
 
 		construct
@@ -87,16 +89,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			if(!gog_auth.enabled)
 			{
-				status = _("Disabled");
+				status = description = _("Disabled");
 			}
 			else if(!gog_auth.authenticated || gog_auth.access_token.length == 0)
 			{
-				status = _("Not authenticated");
+				status = description = _("Not authenticated");
 			}
 			else
 			{
 				var user_name = GameHub.Data.Sources.GOG.GOG.instance.user_name;
-				status = user_name != null ? _("Authenticated as <b>%s</b>").printf(user_name) : _("Authenticated");
+				status = description = user_name != null ? _("Authenticated as <b>%s</b>").printf(user_name) : _("Authenticated");
 			}
 		}
 

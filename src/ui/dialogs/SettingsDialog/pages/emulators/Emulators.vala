@@ -41,19 +41,18 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			Object(
 				dialog: dlg,
 				title: _("Emulators"),
+				description: _("No custom emulators"),
 				icon_name: "application-x-executable-symbolic"
 			);
+			status = description;
 		}
 
 		construct
 		{
-			var root = content_area.get_parent() as Grid;
-			var header = root.get_child_at(0, 0);
+			root_grid.margin = 0;
+			root_grid.row_spacing = 0;
 
-			root.margin = 0;
-			root.row_spacing = 0;
-
-			header.margin = 12;
+			header_grid.margin = 12;
 
 			content_area.orientation = Orientation.HORIZONTAL;
 			content_area.margin = 0;
@@ -164,11 +163,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			remove_btn.sensitive = count > 0;
 			if(count > 0)
 			{
-				status = ngettext("%u custom emulator", "%u custom emulators", count).printf(count);
+				status = description = ngettext("%u custom emulator", "%u custom emulators", count).printf(count);
 			}
 			else
 			{
-				status = _("No custom emulators");
+				status = description = _("No custom emulators");
 			}
 		}
 

@@ -1,3 +1,6 @@
+@define-color settings_separator alpha(shade(@theme_fg_color, 0.8), 0.15);
+@define-color settings_separator_shadow alpha(shade(@theme_bg_color, 0.8), 0.2);
+
 .gamecard
 {
 	opacity: 0.75;
@@ -198,22 +201,22 @@ list:not(:backdrop) row:selected:focus label.category-label
 }
 .overlay-bar
 {
-	background-color: alpha (#222, 0.9);
+	background-color: alpha(#222, 0.9);
 	border-radius: 3px;
 	border-width: 0;
-	box-shadow: 0 1px 3px alpha (#000, 0.12), 0 1px 2px alpha (#000, 0.24);
+	box-shadow: 0 1px 3px alpha(#000, 0.12), 0 1px 2px alpha(#000, 0.24);
 	color: #fff;
 	padding: 3px 6px;
-	text-shadow: 0 1px 2px alpha (#000, 0.6);
+	text-shadow: 0 1px 2px alpha(#000, 0.6);
 	margin: 3px;
 }
 .overlay-bar label
 {
 	color: #fff;
-	text-shadow: 0 1px 2px alpha (#000, 0.6);
+	text-shadow: 0 1px 2px alpha(#000, 0.6);
 }
 
-.installers-list,
+.installers-list
 {
 	background: transparent;
 }
@@ -526,7 +529,23 @@ dialog .sidebar list
 	min-width: 32px;
 }
 
+.settings-dialog
+{
+	background-image: linear-gradient(to right,
+		                              shade(@theme_bg_color, 0.95) 202px,
+	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
+	                                  transparent 204px, transparent);
+}
+.settings-dialog headerbar
+{
+	background-image: linear-gradient(to right,
+		                              alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
+	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
+	                                  transparent 204px, transparent);
+}
 .settings-dialog .settings-pages-sidebar list
 {
-	background: transparent;
+	background: shade(@theme_bg_color, 0.95);
 }
