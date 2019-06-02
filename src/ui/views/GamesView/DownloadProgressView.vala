@@ -119,7 +119,6 @@ namespace GameHub.UI.Views.GamesView
 			progress_bar = new ProgressBar();
 			progress_bar.hexpand = true;
 			progress_bar.fraction = 0d;
-			progress_bar.get_style_context().add_class(Gtk.STYLE_CLASS_OSD);
 
 			action_pause = new Button.from_icon_name("media-playback-pause-symbolic");
 			action_pause.tooltip_text = _("Pause download");
@@ -162,9 +161,9 @@ namespace GameHub.UI.Views.GamesView
 					progress_bar.fraction = s.progress;
 
 					action_cancel.visible = true;
-					action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
-					action_pause.visible = dl_info.download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
-					action_resume.visible = dl_info.download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
+					action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.QUEUED || ds == Downloader.DownloadState.PAUSED;
+					action_pause.visible = dl_info.download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
+					action_resume.visible = dl_info.download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
 
 					return Source.REMOVE;
 				});

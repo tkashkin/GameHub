@@ -820,7 +820,7 @@ namespace GameHub.Data.Sources.GOG
 
 				try
 				{
-					downloaded_file = yield Downloader.download(remote, local, dl_info);
+					downloaded_file = yield Downloader.download(remote, local, dl_info, true, false);
 				}
 				catch(Error e){}
 

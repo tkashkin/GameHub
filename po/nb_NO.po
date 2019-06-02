@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-02 22:00+0300\n"
+"POT-Creation-Date: 2019-06-03 02:34+0300\n"
 "PO-Revision-Date: 2019-05-28 14:48+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -156,7 +156,7 @@ msgstr "Vis fil"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Fjern"
 
@@ -323,7 +323,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:234
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run"
 msgstr "Kjør"
 
@@ -803,7 +803,7 @@ msgstr "Forgreninger"
 
 #: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GamesView/GameContextMenu.vala:49
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Install"
 msgstr "Installer"
 
@@ -924,7 +924,7 @@ msgstr "Åpne mappe"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:45
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
 msgid "Run with compatibility layer"
 msgstr "Kjør med kompabilitetslag"
 
@@ -1061,18 +1061,18 @@ msgstr ""
 msgid "Privacy"
 msgstr "Personvern"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:125
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:149
+#: src/ui/views/GamesView/DownloadProgressView.vala:124
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
 msgid "Pause download"
 msgstr "Pause nedlasting"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:130
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:155
+#: src/ui/views/GamesView/DownloadProgressView.vala:129
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:154
 msgid "Resume download"
 msgstr "Fortsett nedlasting"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:135
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
+#: src/ui/views/GamesView/DownloadProgressView.vala:134
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:160
 msgid "Cancel download"
 msgstr "Avbryt nedlasting"
 
@@ -1107,30 +1107,30 @@ msgid "Properties"
 msgstr "Egenskaper"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:121
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Open installation directory"
 msgstr "Åpne installasjonsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installers collection directory"
 msgstr "Åpne installasjonskandidatssamlingsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:137
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open bonus collection directory"
 msgstr "Åpne bonussamlingsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Uninstall"
 msgstr "Avinstaller"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
 msgid "Open store page"
 msgstr "Åpne butikkside"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:218
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
 msgid "Game properties"
 msgstr "Spillegenskaper"
 
@@ -1232,39 +1232,44 @@ msgctxt "sort_mode"
 msgid "By playtime"
 msgstr "Etter spilltid"
 
-#: src/utils/downloader/Downloader.vala:157
+#: src/utils/downloader/Downloader.vala:159
+msgctxt "dl_status"
+msgid "Queued"
+msgstr ""
+
+#: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Starter nedlasting"
 
-#: src/utils/downloader/Downloader.vala:158
+#: src/utils/downloader/Downloader.vala:161
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Nedlasting startet"
 
-#: src/utils/downloader/Downloader.vala:159
+#: src/utils/downloader/Downloader.vala:162
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Nedlasting fullført"
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:163
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Nedlasting mislyktes"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:165
 #, c-format
 msgctxt "dl_status"
 msgid "Downloading: %d%% (%s / %s) [%s/s]"
 msgstr "Laster ned: %d%% (%s / %s) [%s/s]"
 
-#: src/utils/downloader/Downloader.vala:164
+#: src/utils/downloader/Downloader.vala:167
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
 msgstr "Pauset: %d%% (%s / %s)"
 
-#: src/utils/downloader/Downloader.vala:166
+#: src/utils/downloader/Downloader.vala:169
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Nedlasting avbrutt"

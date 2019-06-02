@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-02 22:00+0300\n"
+"POT-Creation-Date: 2019-06-03 02:34+0300\n"
 "PO-Revision-Date: 2019-02-04 02:40+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
@@ -157,7 +157,7 @@ msgstr "Pokaż plik"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Usuń"
 
@@ -320,7 +320,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:234
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run"
 msgstr "Uruchom"
 
@@ -805,7 +805,7 @@ msgstr ""
 
 #: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GamesView/GameContextMenu.vala:49
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Install"
 msgstr "Instaluj"
 
@@ -926,7 +926,7 @@ msgstr "Otwórz katalog"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:45
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
 msgid "Run with compatibility layer"
 msgstr "Uruchom z warstwą kompatybilności"
 
@@ -1064,18 +1064,18 @@ msgstr ""
 msgid "Privacy"
 msgstr "Prywatność"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:125
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:149
+#: src/ui/views/GamesView/DownloadProgressView.vala:124
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
 msgid "Pause download"
 msgstr "Wstrzymaj pobieranie"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:130
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:155
+#: src/ui/views/GamesView/DownloadProgressView.vala:129
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:154
 msgid "Resume download"
 msgstr "Wznów pobieranie"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:135
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
+#: src/ui/views/GamesView/DownloadProgressView.vala:134
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:160
 msgid "Cancel download"
 msgstr "Anuluj pobieranie"
 
@@ -1110,30 +1110,30 @@ msgid "Properties"
 msgstr "Właściwości"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:121
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Open installation directory"
 msgstr "Otwórz katalog instalacji"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installers collection directory"
 msgstr "Otwórz katalog kolekcji instalatorów"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:137
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open bonus collection directory"
 msgstr "Otwórz katalog bonusowej kolekcji"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Uninstall"
 msgstr "Odinstaluj"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
 msgid "Open store page"
 msgstr "Otwórz stronę sklepu"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:218
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
 msgid "Game properties"
 msgstr "Właściwości gry"
 
@@ -1235,39 +1235,44 @@ msgctxt "sort_mode"
 msgid "By playtime"
 msgstr "Wg czasu gry"
 
-#: src/utils/downloader/Downloader.vala:157
+#: src/utils/downloader/Downloader.vala:159
+msgctxt "dl_status"
+msgid "Queued"
+msgstr ""
+
+#: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Rozpoczynanie pobierania"
 
-#: src/utils/downloader/Downloader.vala:158
+#: src/utils/downloader/Downloader.vala:161
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Pobieranie rozpoczęte"
 
-#: src/utils/downloader/Downloader.vala:159
+#: src/utils/downloader/Downloader.vala:162
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Pobieranie zakończone"
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:163
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Niepowodzenie pobierania"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:165
 #, c-format
 msgctxt "dl_status"
 msgid "Downloading: %d%% (%s / %s) [%s/s]"
 msgstr "Pobieranie: %d%% (%s / %s) [%s/s]"
 
-#: src/utils/downloader/Downloader.vala:164
+#: src/utils/downloader/Downloader.vala:167
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
 msgstr "Wstrzymano: %d%% (%s / %s)"
 
-#: src/utils/downloader/Downloader.vala:166
+#: src/utils/downloader/Downloader.vala:169
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Pobieranie anulowane"
