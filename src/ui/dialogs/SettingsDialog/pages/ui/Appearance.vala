@@ -30,9 +30,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 				dialog: dlg,
 				header: _("Interface"),
 				title: _("Appearance"),
-				status: _("General interface settings"),
+				description: _("General interface settings"),
 				icon_name: "preferences-desktop"
 			);
+			status = description;
 		}
 
 		construct

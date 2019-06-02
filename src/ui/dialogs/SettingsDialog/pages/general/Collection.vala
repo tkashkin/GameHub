@@ -47,8 +47,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				dialog: dlg,
 				header: _("General"),
 				title: _("Collection"),
+				description: "",
 				icon_name: "folder-download"
 			);
+			status = description;
 		}
 
 		construct
@@ -76,18 +78,17 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			add_separator();
 
 			add_header(_("Variables")).sensitive = false;
-			add_labels("• $root", _("Collection directory")).sensitive = false;
-			add_labels("• $game", _("Game name")).sensitive = false;
-			add_labels("• $game_dir", _("Game directory")).sensitive = false;
-			add_labels("• $platform, $platform_name", _("Platform")).sensitive = false;
+			add_label(_("Syntax: <b>$var</b> or <b>${var}</b>"), true);
+			add_labels(" <b>•</b> $<b>root</b>", _("Collection directory"), true).sensitive = false;
+			add_labels(" <b>•</b> $<b>game</b>", _("Game name"), true).sensitive = false;
+			add_labels(" <b>•</b> $<b>game_dir</b>", _("Game directory"), true).sensitive = false;
+			add_labels(" <b>•</b> $<b>platform</b>, $<b>platform_name</b>", _("Platform"), true).sensitive = false;
 
 			update();
 		}
 
 		private void update()
 		{
-			status = collection.root;
-
 			var game = "Game";
 
 			gog_game_dir.tooltip_text = FSUtils.Paths.Collection.GOG.expand_game_dir(game);
@@ -97,6 +98,22 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 			humble_game_dir.tooltip_text = FSUtils.Paths.Collection.Humble.expand_game_dir(game);
 			humble_installers.tooltip_text = FSUtils.Paths.Collection.Humble.expand_installers(game);
+
+			Utils.thread("CollectionDiskUsage", () => {
+				try
+				{
+					FileMeasureProgressCallback callback = (reporting, size, dirs, files) => {
+						Idle.add(() => {
+							status = description = format_size(size);
+							return Source.REMOVE;
+						});
+					};
+					uint64 size, dirs, files;
+					FSUtils.file(collection.root).measure_disk_usage(FileMeasureFlags.NONE, null, callback, out size, out dirs, out files);
+					callback(true, size, dirs, files);
+				}
+				catch(Error e){}
+			});
 		}
 
 	}

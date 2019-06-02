@@ -84,7 +84,7 @@ namespace GameHub.Utils.Gamepad
 
 		BTN_SELECT = b(0x13a, "Select", null, { Key.F5 });
 		BTN_START  = b(0x13b, "Start", null, { Key.F6 });
-		BTN_GUIDE  = b(0x13c, "Guide", null, { Key.F7 });
+		BTN_GUIDE  = b(0x13c, "Guide", null, { Key.Shift_L });
 
 		STICK_LEFT  = b(0x13d, "LS", "Left Stick");
 		STICK_RIGHT = b(0x13e, "RS", "Right Stick");

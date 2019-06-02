@@ -34,9 +34,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			Object(
 				dialog: dlg,
 				title: "Humble Bundle",
+				description: _("Disabled"),
 				icon_name: "source-humble-symbolic",
 				activatable: true
 			);
+			status = description;
 		}
 
 		construct
@@ -90,15 +92,15 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			if(!humble_auth.enabled)
 			{
-				status = _("Disabled");
+				status = description = _("Disabled");
 			}
 			else if(!humble_auth.authenticated || humble_auth.access_token.length == 0)
 			{
-				status = _("Not authenticated");
+				status = description = _("Not authenticated");
 			}
 			else
 			{
-				status = _("Authenticated");
+				status = description = _("Authenticated");
 			}
 		}
 

@@ -90,6 +90,7 @@ namespace GameHub.UI.Views.GamesView
 		public const string ACTION_DOWNLOADS          = "downloads";
 		public const string ACTION_SELECT_RANDOM_GAME = "select-random-game";
 		public const string ACTION_ADD_GAME           = "add-game";
+		public const string ACTION_EXIT               = "exit";
 
 		public const string ACCEL_SOURCE_PREV         = "F1"; // LB
 		public const string ACCEL_SOURCE_NEXT         = "F2"; // RB
@@ -98,6 +99,7 @@ namespace GameHub.UI.Views.GamesView
 		public const string ACCEL_DOWNLOADS           = "<Control>D";
 		public const string ACCEL_SELECT_RANDOM_GAME  = "<Control>R";
 		public const string ACCEL_ADD_GAME            = "<Control>N";
+		public const string ACCEL_EXIT                = "<Shift>Escape"; // Guide + Escape
 
 		private const GLib.ActionEntry[] action_entries = {
 			{ ACTION_SOURCE_PREV,        window_action_handler },
@@ -106,7 +108,8 @@ namespace GameHub.UI.Views.GamesView
 			{ ACTION_FILTERS,            window_action_handler },
 			{ ACTION_DOWNLOADS,          window_action_handler },
 			{ ACTION_SELECT_RANDOM_GAME, window_action_handler },
-			{ ACTION_ADD_GAME,           window_action_handler }
+			{ ACTION_ADD_GAME,           window_action_handler },
+			{ ACTION_EXIT,               window_action_handler }
 		};
 
 		construct
@@ -450,6 +453,7 @@ namespace GameHub.UI.Views.GamesView
 			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_DOWNLOADS,                        { ACCEL_DOWNLOADS });
 			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_SELECT_RANDOM_GAME,               { ACCEL_SELECT_RANDOM_GAME });
 			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_ADD_GAME,                         { ACCEL_ADD_GAME });
+			Application.instance.set_accels_for_action(ACTION_PREFIX + ACTION_EXIT,                             { ACCEL_EXIT });
 			Application.instance.set_accels_for_action(Application.ACTION_PREFIX + Application.ACTION_SETTINGS, { "F5" }); // Select
 		}
 
@@ -504,6 +508,11 @@ namespace GameHub.UI.Views.GamesView
 
 				case ACTION_ADD_GAME:
 					add_game_button.clicked();
+					break;
+
+				case ACTION_EXIT:
+					Gamepad.reset();
+					window.destroy();
 					break;
 			}
 		}
@@ -749,7 +758,23 @@ namespace GameHub.UI.Views.GamesView
 
 		private void on_gamepad_connected(Manette.Device device)
 		{
+			var known = controller_settings.known_controllers;
+			var ignored = controller_settings.ignored_controllers;
+
+			if(!(device.get_name() in known))
+			{
+				known += device.get_name();
+				controller_settings.known_controllers = known;
+			}
+
+			if(device.get_name() in ignored)
+			{
+				debug("[Gamepad] '%s' connected [ignored]", device.get_name());
+				return;
+			}
+
 			debug("[Gamepad] '%s' connected", device.get_name());
+
 			device.button_press_event.connect(on_gamepad_button_press_event);
 			device.button_release_event.connect(on_gamepad_button_release_event);
 			device.absolute_axis_event.connect(on_gamepad_absolute_axis_event);

@@ -31,9 +31,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			Object(
 				dialog: dlg,
 				header: _("Emulators"),
+				description: _("Not installed"),
 				title: "RetroArch",
 				icon_name: "emu-retroarch-symbolic"
 			);
+			status = description;
 		}
 
 		construct
@@ -51,16 +53,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			var retroarch = GameHub.Data.Compat.RetroArch.instance;
 			if(retroarch.installed)
 			{
-				status = _("No cores found");
+				status = description = _("No cores found");
 				if(retroarch.has_cores)
 				{
 					var cores = retroarch.cores.size;
-					status = ngettext("%u core found", "%u cores found", cores).printf(cores);
+					status = description = ngettext("%u core found", "%u cores found", cores).printf(cores);
 				}
 			}
 			else
 			{
-				status = _("Not installed");
+				status = description = _("Not installed");
 			}
 		}
 	}

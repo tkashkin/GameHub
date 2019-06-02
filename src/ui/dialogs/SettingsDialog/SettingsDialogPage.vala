@@ -30,6 +30,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		public bool restart_requested = false;
 
+		protected Grid root_grid;
+		protected Grid header_grid;
+
 		public SettingsDialogPage(SettingsDialog dlg)
 		{
 			Object(dialog: dlg);
@@ -40,6 +43,17 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			//margin_start = margin_end = 8;
 			content_area.orientation = Orientation.VERTICAL;
 			content_area.row_spacing = 0;
+
+			root_grid = content_area.get_parent() as Grid;
+			header_grid = root_grid.get_child_at(0, 0) as Grid;
+
+			header_grid.row_spacing = 0;
+
+			var description_label = header_grid.get_child_at(1, 1) as Label;
+			if(description_label != null)
+			{
+				description_label.use_markup = true;
+			}
 		}
 
 		protected void request_restart()
@@ -105,15 +119,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			return add_widget(hbox);
 		}
 
-		protected Label add_label(string text)
+		protected Label add_label(string text, bool use_markup=false)
 		{
 			var label = new Label(text);
 			label.halign = Align.START;
 			label.hexpand = true;
+			label.use_markup = use_markup;
 			return add_widget(label);
 		}
 
-		protected Box add_labels(string text, string text2)
+		protected Box add_labels(string text, string text2, bool use_markup=false)
 		{
 			var label = new Label(text);
 			label.max_width_chars = 52;
@@ -121,10 +136,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			label.wrap = true;
 			label.halign = Align.START;
 			label.hexpand = true;
+			label.use_markup = use_markup;
 
 			var label2 = new Label(text2);
 			label2.xalign = 0;
 			label2.wrap = true;
+			label2.use_markup = use_markup;
 			label2.set_size_request(280, -1);
 
 			var hbox = new Box(Orientation.HORIZONTAL, 12);

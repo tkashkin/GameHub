@@ -99,7 +99,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			content_root.add(pages);
 
 			content_hbox.add(sidebar);
-			content_hbox.add(new Separator(Orientation.VERTICAL));
+			//content_hbox.add(new Separator(Orientation.VERTICAL));
 			content_hbox.add(content_root);
 
 			content.add(content_hbox);

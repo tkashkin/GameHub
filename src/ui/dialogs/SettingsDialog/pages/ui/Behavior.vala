@@ -29,9 +29,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			Object(
 				dialog: dlg,
 				title: _("Behavior"),
-				status: _("Behavior settings"),
+				description: _("Behavior settings"),
 				icon_name: "preferences-system"
 			);
+			status = description;
 		}
 
 		construct
