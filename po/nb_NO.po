@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-03 02:34+0300\n"
-"PO-Revision-Date: 2019-05-28 14:48+0000\n"
+"PO-Revision-Date: 2019-06-03 17:27+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -266,7 +266,7 @@ msgstr ""
 #: src/data/sources/humble/HumbleGame.vala:330
 #, fuzzy, c-format
 msgid "%s: no available installers"
-msgstr "%s: Skadet installasjonskandidat"
+msgstr "%s: Ingen tilgjengelige installasjonskandidater"
 
 #: src/data/sources/humble/HumbleGame.vala:331
 msgid ""
@@ -457,9 +457,8 @@ msgid "General interface settings"
 msgstr "Generelle grensesnittsinnstillinger"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:43
-#, fuzzy
 msgid "Dark theme"
-msgstr "Bruk mørk drakt"
+msgstr "Mørk drakt"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:44
 msgid "Symbolic icons"
@@ -502,9 +501,8 @@ msgid "Use imported tags"
 msgstr "Bruk importerte etiketter"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:48
-#, fuzzy
 msgid "General"
-msgstr "Generer nøkkel"
+msgstr "Generelt"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:49
 msgid "Collection"
@@ -542,7 +540,7 @@ msgstr "Variabler"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:81
 msgid "Syntax: <b>$var</b> or <b>${var}</b>"
-msgstr ""
+msgstr "Syntaks: <b>$var</b> or <b>${var}</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:83
 msgid "Game name"
@@ -567,17 +565,16 @@ msgid "Focus GameHub window with Guide button"
 msgstr "Fokuser GameHub-vinduet med Guide-knappen"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
-#, fuzzy
 msgid "Controllers"
-msgstr "Kontroller"
+msgstr "Kontrollere"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:74
 msgid "Move focus"
-msgstr ""
+msgstr "Flytt fokus"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:76
 msgid "Exit"
-msgstr ""
+msgstr "Avslutt"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:35
@@ -586,14 +583,12 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
-#, fuzzy
 msgid "Disabled"
-msgstr "Skru av esync"
+msgstr "Avskrudd"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
-#, fuzzy
 msgid "Game sources"
-msgstr "Spillegenskaper"
+msgstr "Spillkilder"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
 msgid "Steam API keys have limited number of uses per day"
@@ -686,16 +681,15 @@ msgstr[1] "Fant %u kjerner"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:44
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:170
-#, fuzzy
 msgid "No custom emulators"
-msgstr "Egendefinert emulator"
+msgstr "Ingen egendefinerte emulatorer"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:166
-#, fuzzy, c-format
+#, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
-msgstr[0] "Egendefinert emulator"
-msgstr[1] "Egendefinert emulator"
+msgstr[0] "én egendefinert emulator"
+msgstr[1] "%u egendefinerte emulatorer"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:222
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:254
@@ -765,7 +759,6 @@ msgid "Website"
 msgstr "Nettside"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:94
-#, fuzzy
 msgctxt "about_link"
 msgid "Source code on GitHub"
 msgstr "Kildekode på GitHub"
@@ -1235,7 +1228,7 @@ msgstr "Etter spilltid"
 #: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
 msgid "Queued"
-msgstr ""
+msgstr "I kø"
 
 #: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
