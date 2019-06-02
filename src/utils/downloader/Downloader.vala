@@ -17,6 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using GLib;
+using Gee;
 
 namespace GameHub.Utils.Downloader
 {
@@ -26,6 +27,7 @@ namespace GameHub.Utils.Downloader
 
 		public signal void download_started(Download download);
 		public signal void downloaded(Download download);
+		public signal void download_cancelled(Download download, Error error);
 		public signal void download_failed(Download download, Error error);
 
 		public signal void dl_started(DownloadInfo info);
@@ -41,11 +43,11 @@ namespace GameHub.Utils.Downloader
 			return downloader;
 		}
 
-		public abstract async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error;
+		public abstract async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true, bool queue=true) throws Error;
 		public abstract Download? get_download(File remote);
 	}
 
-	public static async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true) throws Error
+	public static async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true, bool queue=true) throws Error
 	{
 		File result = local;
 		Error? error = null;
@@ -57,7 +59,7 @@ namespace GameHub.Utils.Downloader
 		}
 
 		Utils.thread("Download-" + Utils.md5(remote.get_uri()), () => {
-			downloader.download.begin(remote, local, info, preserve_filename, (obj, res) => {
+			downloader.download.begin(remote, local, info, preserve_filename, queue, (obj, res) => {
 				try
 				{
 					result = downloader.download.end(res);
@@ -154,6 +156,7 @@ namespace GameHub.Utils.Downloader
 			{
 				switch(state)
 				{
+					case DownloadState.QUEUED: return C_("dl_status", "Queued");
 					case DownloadState.STARTING: return C_("dl_status", "Starting download");
 					case DownloadState.STARTED: return C_("dl_status", "Download started");
 					case DownloadState.FINISHED: return C_("dl_status", "Download finished");
@@ -170,7 +173,7 @@ namespace GameHub.Utils.Downloader
 
 	public enum DownloadState
 	{
-		STARTING, STARTED, DOWNLOADING, FINISHED, PAUSED, CANCELLED, FAILED;
+		QUEUED, STARTING, STARTED, DOWNLOADING, FINISHED, PAUSED, CANCELLED, FAILED;
 	}
 
 	public class DownloadInfo: Object

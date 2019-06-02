@@ -45,7 +45,7 @@ namespace GameHub.Utils
 			{
 				if(!cached.query_exists())
 				{
-					yield Downloader.download(remote, cached, null, false);
+					yield Downloader.download(remote, cached, null, false, false);
 				}
 				return cached.get_path();
 			}

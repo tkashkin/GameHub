@@ -126,7 +126,6 @@ namespace GameHub.UI.Views.GameDetailsView
 			download_progress = new ProgressBar();
 			download_progress.hexpand = true;
 			download_progress.fraction = 0d;
-			download_progress.get_style_context().add_class(Gtk.STYLE_CLASS_OSD);
 			download_progress.hide();
 
 			src_icon = new Image();
@@ -260,9 +259,9 @@ namespace GameHub.UI.Views.GameDetailsView
 				download_progress.fraction = s.download.status.progress;
 
 				action_cancel.visible = true;
-				action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
-				action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
-				action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
+				action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.QUEUED || ds == Downloader.DownloadState.PAUSED;
+				action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
+				action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
 			}
 			else
 			{
