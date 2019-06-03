@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-03 02:34+0300\n"
-"PO-Revision-Date: 2019-05-28 14:48+0000\n"
+"PO-Revision-Date: 2019-06-03 17:27+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -541,7 +541,7 @@ msgstr "Variabelen"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:81
 msgid "Syntax: <b>$var</b> or <b>${var}</b>"
-msgstr ""
+msgstr "Syntax: <b>$var</b> or <b>${var}</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:83
 msgid "Game name"
@@ -565,17 +565,16 @@ msgid "Focus GameHub window with Guide button"
 msgstr "GameHub-venster focussen met Gids-knop"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
-#, fuzzy
 msgid "Controllers"
-msgstr "Controller"
+msgstr "Controllers"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:74
 msgid "Move focus"
-msgstr ""
+msgstr "Focus verplaatsen"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:76
 msgid "Exit"
-msgstr ""
+msgstr "Afsluiten"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:35
@@ -1226,7 +1225,7 @@ msgstr "Op speeltijd"
 #: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
 msgid "Queued"
-msgstr ""
+msgstr "In wachtrij"
 
 #: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
