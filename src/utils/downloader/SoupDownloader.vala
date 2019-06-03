@@ -361,18 +361,14 @@ namespace GameHub.Utils.Downloader.Soup
 
 			dl_queue.add(download.remote.get_uri());
 
-			SourceFunc callback = await_queue.callback;
 			var downloaded_id = downloaded.connect((downloader, downloaded) => {
 				dl_queue.remove(downloaded.remote.get_uri());
-				callback();
 			});
 			var download_cancelled_id = download_cancelled.connect((downloader, cancelled_download, error) => {
 				dl_queue.remove(cancelled_download.remote.get_uri());
-				callback();
 			});
 			var download_failed_id = download_failed.connect((downloader, failed_download, error) => {
 				dl_queue.remove(failed_download.remote.get_uri());
-				callback();
 			});
 
 			while(dl_queue.peek() != null && dl_queue.peek() != download.remote.get_uri() && !download.is_cancelled)
