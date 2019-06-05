@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # AngryPenguinPL <angrypenguinpoland@gmail.com>, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
+# Antek Karaś <antos.karas@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-03 02:34+0300\n"
-"PO-Revision-Date: 2019-02-04 02:40+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2019-06-07 16:03+0000\n"
+"Last-Translator: Antek Karaś <antos.karas@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
 "translations/pl/>\n"
 "Language: pl\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.5-dev\n"
+"X-Generator: Weblate 3.7-dev\n"
 
 #: src/app.vala:88
 msgid "Show help"
@@ -266,9 +267,9 @@ msgstr ""
 "Zaloguj się na swoje konto w kliencie Steam i powróć do GameHub"
 
 #: src/data/sources/humble/HumbleGame.vala:330
-#, fuzzy, c-format
+#, c-format
 msgid "%s: no available installers"
-msgstr "%s: uszkodzony instalator"
+msgstr "%s: niema dostępnych instalatorów"
 
 #: src/data/sources/humble/HumbleGame.vala:331
 msgid ""
