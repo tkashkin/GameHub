@@ -159,7 +159,7 @@ namespace GameHub.Data.Sources.Humble
 
 				if(cache_loaded != null)
 				{
-					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
+					cache_loaded();
 				}
 
 				var headers = new HashMap<string, string>();

@@ -44,7 +44,10 @@ namespace GameHub.UI.Views.GameDetailsView
 				_game = value;
 				navigation.clear();
 				navigation.add(game);
-				Idle.add(update);
+				Idle.add(() => {
+					update();
+					return Source.REMOVE;
+				});
 			}
 		}
 
@@ -87,7 +90,10 @@ namespace GameHub.UI.Views.GameDetailsView
 				{
 					navigation.remove_at(navigation.size - 1);
 				}
-				update();
+				Idle.add(() => {
+					update();
+					return Source.REMOVE;
+				});
 			});
 
 			actions = new Revealer();
@@ -106,7 +112,13 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			stack.notify["visible-child"].connect(() => {
 				var page = stack.visible_child as GameDetailsPage;
-				if(page != null) page.update();
+				if(page != null)
+				{
+					Idle.add(() => {
+						page.update();
+						return Source.REMOVE;
+					});
+				}
 			});
 
 			get_style_context().add_class("gameinfo-background");
@@ -120,25 +132,36 @@ namespace GameHub.UI.Views.GameDetailsView
 			notify["preferred-source"].connect(() => {
 				if(preferred_source != null)
 				{
-					var name = preferred_source.id;
-					if(stack.get_child_by_name(name) != null)
+					var id = preferred_source.id;
+					foreach(var page in stack.get_children())
 					{
-						stack.set_visible_child_full(name, StackTransitionType.NONE);
+						var page_id = Value(typeof(string));
+						stack.child_get_property(page, "name", ref page_id);
+						if(page_id.holds(typeof(string)) && page_id.get_string().has_prefix(@"$(id):"))
+						{
+							stack.set_visible_child_full(page_id.get_string(), StackTransitionType.NONE);
+						}
 					}
 				}
 			});
 
-			Idle.add(update);
+			Idle.add(() => {
+				update();
+				return Source.REMOVE;
+			});
 		}
 
 		public void navigate(Game g)
 		{
 			navigation.add(g);
 
-			Idle.add(update);
+			Idle.add(() => {
+				update();
+				return Source.REMOVE;
+			});
 		}
 
-		private bool update()
+		private void update()
 		{
 			stack.foreach(p => stack.remove(p));
 
@@ -151,7 +174,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			var g = navigation.get(navigation.size - 1);
 
-			if(g == null) return Source.REMOVE;
+			if(g == null) return;
 
 			var merges = Settings.UI.get_instance().merge_games ? Tables.Merges.get(game) : null;
 			bool merged = merges != null && merges.size > 0;
@@ -185,17 +208,15 @@ namespace GameHub.UI.Views.GameDetailsView
 				notify_property("preferred-source");
 				return Source.REMOVE;
 			});
-
-			return Source.REMOVE;
 		}
 
 		private void add_page(Game g)
 		{
-			if(stack.get_child_by_name(g.source.id) != null) return;
+			if(stack.get_child_by_name(g.full_id) != null) return;
 
 			var page = new GameDetailsPage(g, this);
 			page.content.margin = content_margin;
-			stack.add_titled(page, g.source.id, g.source.name);
+			stack.add_titled(page, g.full_id, @"$(g.source.name): $(g.name)");
 		}
 	}
 }

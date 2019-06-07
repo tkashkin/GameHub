@@ -16,247 +16,40 @@
 	​<update_contact>tkashkin@gmail.com</update_contact>
 	<url type="homepage">https://tkashkin.tk/projects/gamehub</url>
 	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
+	<url type="translate">https://hosted.weblate.org/engage/gamehub</url>
 
 	<provides>
 		<binary>com.github.tkashkin.gamehub</binary>
 	</provides>
 	<launchable type="desktop-id">com.github.tkashkin.gamehub.desktop</launchable>
 
+	<icon type="remote" width="128" height="128">https://raw.githubusercontent.com/tkashkin/GameHub/e380a848b89498904e96e73fa72a07aa823151ce/data/icon/128.svg?sanitize=true</icon>
+
 	<screenshots>
 		<screenshot type="default">
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/8b321ac7991d2946b1d331e1a2e525ceb2ece324/data/screenshots/light/welcome%402x.png</image>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/light/welcome.png</image>
 		</screenshot>
 		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/8b321ac7991d2946b1d331e1a2e525ceb2ece324/data/screenshots/dark/grid%402x.png</image>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/dark/grid.png</image>
 		</screenshot>
 		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/8b321ac7991d2946b1d331e1a2e525ceb2ece324/data/screenshots/light/list%402x.png</image>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/light/list.png</image>
 		</screenshot>
 		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/8b321ac7991d2946b1d331e1a2e525ceb2ece324/data/screenshots/dark/details%402x.png</image>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/dark/details.png</image>
 		</screenshot>
 		<screenshot>
-			<image>https://raw.githubusercontent.com/tkashkin/GameHub/8b321ac7991d2946b1d331e1a2e525ceb2ece324/data/screenshots/light/properties%402x.png</image>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/light/properties.png</image>
 		</screenshot>
 	</screenshots>
 
+	<custom>
+		<value key="x-appcenter-color-primary">#7239b3</value>
+		<value key="x-appcenter-color-primary-text">#ffffff</value>
+	</custom>
+
 	<releases>
-		<release type="development" version="0.13.1" date="2019-01-28" />
-		<release type="development" version="0.12.0" date="2018-11-09">
-			<description>
-				<ul>
-					<li>Fixes and improvements</li>
-					<li>Gamepad support</li>
-					<li>Overlays</li>
-				</ul>
-			</description>
-		</release>
-		<release type="development" version="0.11.7" date="2018-11-05">
-			<description>
-				<ul>
-					<li>Overlays</li>
-				</ul>
-			</description>
-		</release>
-		<release type="development" version="0.11.6" date="2018-10-23">
-			<description>
-				<ul>
-					<li>Gamepad support</li>
-				</ul>
-			</description>
-		</release>
-		<release type="development" version="0.11.5" date="2018-10-14">
-			<description>
-				<ul>
-					<li>UI tweaks</li>
-					<li>Proton 3.16 support</li>
-					<li>Basic keyboard/gamepad navigation in grid view</li>
-				</ul>
-			</description>
-		</release>
-		<release type="development" version="0.11.4" date="2018-10-11" />
-		<release type="development" version="0.11.3" date="2018-10-06">
-			<description>
-				<p>User-added games</p>
-			</description>
-		</release>
-		<release type="development" version="0.11.2" date="2018-09-23">
-			<description>
-				<p>Fixes for CompatTools</p>
-			</description>
-		</release>
-		<release type="development" version="0.11.1" date="2018-09-19">
-			<description>
-				<p>Updated pt_BR localization</p>
-			</description>
-		</release>
-		<release type="development" version="0.11.0" date="2018-09-18">
-			<description>
-				<ul>
-					<li>Humble Trove support</li>
-					<li>Additional compat tools (CustomScript, DOSBox)</li>
-					<li>AppImage version</li>
-				</ul>
-			</description>
-		</release>
-		<release type="development" version="0.10.0" date="2018-09-14">
-			<description>
-				<p>Compatibility tools support for non-native games:</p>
-				<ul>
-					<li>Innoextract</li>
-					<li>Proton</li>
-					<li>Wine</li>
-				</ul>
-				<p>Database rewrite</p>
-				<p>Performance improvements</p>
-				<p>Bugfixes</p>
-			</description>
-		</release>
-		<release type="development" version="0.9.0" date="2018-09-04">
-			<description>
-				<ul>
-					<li>Basic games collection management</li>
-					<li>GOG bonus content downloading</li>
-					<li>GOG multipart installer support</li>
-					<li>Improved performance and loading times</li>
-					<li>Non-native games can now be shown and installed</li>
-					<li>Bugfixes</li>
-				</ul>
-			</description>
-		</release>
-		<release type="development" version="0.8.0" date="2018-08-15">
-			<description>
-				<p>Option to merge games from different sources</p>
-			</description>
-		</release>
-		<release type="development" version="0.7.0" date="2018-08-09">
-			<description>
-				<p>Settings dialog rework</p>
-				<p>Compact games list</p>
-			</description>
-		</release>
-		<release type="development" version="0.6.3" date="2018-08-06">
-			<description>
-				<p>Trying to fix Humble Bundle access token extraction</p>
-			</description>
-		</release>
-		<release type="development" version="0.6.2" date="2018-07-25">
-			<description>
-				<p>Search crash fix and UI improvements</p>
-			</description>
-		</release>
-		<release type="development" version="0.6.1" date="2018-07-24">
-			<description>
-				<p>UI improvements</p>
-			</description>
-		</release>
-		<release type="development" version="0.6.0" date="2018-07-22">
-			<description>
-				<p>Downloader rewrite: now it's possible to pause and cancel downloads</p>
-				<p>Downloads can be resumed after interruption</p>
-				<p>UI improvements</p>
-			</description>
-		</release>
-		<release type="development" version="0.5.7" date="2018-07-21">
-			<description>
-				<p>Yet another locale fix</p>
-				<p>Installers cache management</p>
-			</description>
-		</release>
-		<release type="development" version="0.5.6" date="2018-07-20">
-			<description>
-				<p>Fix crash for GOG "games" like Hotline Miami 2: Wrong Number - Digital Comics</p>
-				<p>Fix building with GTK+3 &lt; 3.22</p>
-			</description>
-		</release>
-		<release type="development" version="0.5.5" date="2018-07-20">
-			<description>
-				<p>Bugfixes</p>
-				<p>Design changes</p>
-				<p>Compatibility</p>
-			</description>
-		</release>
-		<release type="development" version="0.5.4" date="2018-07-16">
-			<description>
-				<p>Icon fixes</p>
-			</description>
-		</release>
-		<release type="development" version="0.5.3" date="2018-07-15">
-			<description>
-				<p>Runtime injection support</p>
-			</description>
-		</release>
-		<release type="development" version="0.5.2" date="2018-07-14">
-			<description>
-				<p>Added localizations:</p>
-				<ul>
-					<li>pt_BR</li>
-					<li>pl</li>
-					<li>uk</li>
-					<li>de</li>
-				</ul>
-			</description>
-		</release>
-		<release type="development" version="0.5.1" date="2018-07-13">
-			<description>
-				<p>Fixes for flatpak packaging.</p>
-			</description>
-		</release>
-		<release type="development" version="0.5.0" date="2018-07-07">
-			<description>
-				<p>New features:</p>
-				<ul>
-					<li>Games list view</li>
-					<li>Game details view/dialog</li>
-				</ul>
-			</description>
-		</release>
-		<release type="development" version="0.4.1" date="2018-07-07">
-			<description>
-				<p>Small features.</p>
-			</description>
-		</release>
-		<release type="development" version="0.4.0" date="2018-07-03">
-			<description>
-				<p>Unneeded game sources now can be disabled.</p>
-			</description>
-		</release>
-		<release type="development" version="0.3.1" date="2018-06-22">
-			<description>
-				<p>Humble Bundle authentication fix and icons fix.</p>
-			</description>
-		</release>
-		<release type="development" version="0.3.0" date="2018-06-17">
-			<description>
-				<p>Humble Bundle support.</p>
-			</description>
-		</release>
-		<release type="development" version="0.2.5" date="2018-06-12">
-			<description>
-				<p>Bug fixes.</p>
-			</description>
-		</release>
-		<release type="development" version="0.2.4" date="2018-06-01">
-			<description>
-				<p>Settings dialog.</p>
-			</description>
-		</release>
-		<release type="development" version="0.2.3" date="2018-06-01">
-			<description>
-				<p>GOG games installation and running.</p>
-			</description>
-		</release>
-		<release type="development" version="0.1.3" date="2018-05-28">
-			<description>
-				<p>Steam config path fix.</p>
-			</description>
-		</release>
-		<release type="development" version="0.1.2" date="2018-05-28">
-			<description>
-				<p>Initial release.</p>
-				<p>Steam and GOG linux-compatible games fetching.</p>
-			</description>
-		</release>
+		@CHANGELOG@
 	</releases>
 
 	<content_rating type="oars-1.1">

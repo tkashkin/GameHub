@@ -26,7 +26,7 @@ using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Views.GamesView
 {
-	class GameListRow: ListBoxRow
+	public class GameListRow: ListBoxRow
 	{
 		public Game game;
 
@@ -49,6 +49,7 @@ namespace GameHub.UI.Views.GamesView
 			vbox.valign = Align.CENTER;
 
 			image = new AutoSizeImage();
+			image.valign = Align.CENTER;
 
 			hbox.add(image);
 
@@ -99,11 +100,15 @@ namespace GameHub.UI.Views.GamesView
 			child = ebox;
 
 			ebox.add_events(EventMask.ALL_EVENTS_MASK);
-			ebox.button_release_event.connect(e => {
+			ebox.button_press_event.connect(e => {
 				switch(e.button)
 				{
 					case 1:
 						activate();
+						if(e.type == EventType.2BUTTON_PRESS)
+						{
+							game.run_or_install.begin();
+						}
 						break;
 
 					case 3:
@@ -113,8 +118,7 @@ namespace GameHub.UI.Views.GamesView
 				return true;
 			});
 
-			show_all();
-
+			favorite_icon.visible = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 			updated_icon.visible = false;
 			if(game is GameHub.Data.Sources.GOG.GOGGame)
 			{
@@ -148,7 +152,7 @@ namespace GameHub.UI.Views.GamesView
 			image.queue_draw();
 			if(game.icon == old_icon) return;
 			old_icon = game.icon;
-			Utils.load_image.begin(image, game.icon, "icon");
+			image.load(game.icon, "icon");
 		}
 	}
 }

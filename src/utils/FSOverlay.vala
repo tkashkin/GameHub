@@ -65,7 +65,7 @@ namespace GameHub.Utils
 					overlay_dirs += overlays.get(i).get_path();
 				}
 
-				options_arr += "lowerdir=" + string.joinv(":", overlay_dirs);
+				options_arr += "index=off,lowerdir=" + string.joinv(":", overlay_dirs);
 
 				if(persist != null && workdir != null)
 				{

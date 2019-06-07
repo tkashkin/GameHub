@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _GH_RDNN="com.github.tkashkin.gamehub"
-_GH_VERSION="0.13.1"
+_GH_VERSION="0.14.0"
 
 _GH_BRANCH="${APPVEYOR_REPO_BRANCH:-$(git symbolic-ref --short -q HEAD)}"
 _GH_COMMIT="$(git rev-parse HEAD)"
@@ -13,28 +13,32 @@ _LINUXDEPLOYQT="linuxdeployqt-5-x86_64.AppImage"
 
 _SOURCE="${APPVEYOR_BUILD_VERSION:-$_GH_VERSION-$_GH_BRANCH-local}"
 _VERSION="$_SOURCE-$_GH_COMMIT_SHORT"
-_DEB_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
-_DEB_TARGET_DISTRO="bionic"
+_BUILD_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
+_DEB_TARGET_DISTRO_ID="ubuntu"
+_DEB_TARGET_DISTRO_NAMES=()
+_DEB_TARGET_DISTRO_VERSIONS=()
 _BUILD_IMAGE="local"
 _GPG_BINARY="gpg1"
 _GPG_PACKAGE="gnupg1"
 
 export CFLAGS="$CFLAGS -O0"
+export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
 
 if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
-	_VERSION="xenial-$_VERSION"
-	_DEB_VERSION="$_DEB_VERSION~ubuntu16.04"
-	_DEB_TARGET_DISTRO="xenial"
+	_DEB_TARGET_DISTRO_NAMES=("xenial")
+	_DEB_TARGET_DISTRO_VERSIONS=("16.04")
 	_BUILD_IMAGE="xenial"
 	_GPG_BINARY="gpg"
 	_GPG_PACKAGE="gnupg"
 elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
-	_VERSION="bionic-$_VERSION"
-	_DEB_VERSION="$_DEB_VERSION~ubuntu18.04"
-	_DEB_TARGET_DISTRO="bionic"
+	_DEB_TARGET_DISTRO_NAMES=("bionic" "cosmic" "disco")
+	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "18.10" "19.04")
 	_BUILD_IMAGE="bionic"
-	_GPG_BINARY="gpg1"
-	_GPG_PACKAGE="gnupg1"
+else
+	source "/etc/os-release"
+	_DEB_TARGET_DISTRO_ID="$ID"
+	_DEB_TARGET_DISTRO_NAMES=("$VERSION_CODENAME")
+	_DEB_TARGET_DISTRO_VERSIONS=("$VERSION_ID")
 fi
 
 BUILDROOT="$_ROOT/build/appimage"
@@ -98,7 +102,7 @@ deps()
 	sudo add-apt-repository ppa:elementary-os/daily -y
 	sudo add-apt-repository ppa:vala-team/next -y
 	sudo apt update -qq
-	sudo apt install -y meson valac checkinstall build-essential dput elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
+	sudo apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
 	#sudo apt full-upgrade -y
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sudo dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
@@ -107,32 +111,103 @@ deps()
 	fi
 }
 
+gen_changelogs()
+{
+	set +e
+	cd "$_ROOT"
+	echo "[scripts/build.sh] Generating changelogs"
+
+	if [[ -z `git config user.name` ]]; then
+		git config user.email "ci@localhost"
+		git config user.name "CI"
+	fi
+
+	git fetch --tags
+
+	git tag -a $_BUILD_VERSION -m $_BUILD_VERSION
+
+	> "debian/changelog.in"
+	> "data/$_GH_RDNN.changelog.xml"
+
+	prevtag="initial"
+	git tag --sort v:refname | while read tag; do
+		if [[ "$prevtag" == "initial" ]]; then
+			prevtag="$tag"
+			continue
+		fi
+
+		commitmsg=`git log --pretty=format:'  * %s [%h]' $prevtag..$tag`
+
+		(
+			echo "$_GH_RDNN ($tag~\$VERSION_SUFFIX) \$DISTRO; urgency=low"
+			echo "${commitmsg:-  * <no commit message>}"
+			git log -n1 --pretty='format:%n -- %aN <%aE>  %aD%n%n' $tag^..$tag
+		) | cat - "debian/changelog.in" | sponge "debian/changelog.in"
+
+		xml_r_type="development" && [[ "$tag" == *"-master" ]] && xml_r_type="stable"
+		xml_r_date=`git log -n1 --date=short --pretty='format:date="%cd" timestamp="%ct"' $tag^..$tag`
+		xml_r_end=" />" && [[ -n "$commitmsg" ]] && xml_r_end=">"
+		xml_ver=`echo "$tag" | sed -E "s|-|.|g"`
+
+		(
+			echo -e "\t\t<release type=\"$xml_r_type\" version=\"$xml_ver\" $xml_r_date$xml_r_end"
+
+			if [[ -n "$commitmsg" ]]; then
+				echo -e "\t\t\t<description>"
+				echo -e "\t\t\t\t<ul>"
+
+				echo "$commitmsg" | sed -E "s|<|\&lt;|g; s|>|\&gt;|g; s|  \* (.*)|\t\t\t\t\t<li>\1</li>|g"
+
+				echo -e "\t\t\t\t</ul>"
+				echo -e "\t\t\t</description>"
+				echo -e "\t\t</release>"
+			fi
+		) | cat - "data/$_GH_RDNN.changelog.xml" | sponge "data/$_GH_RDNN.changelog.xml"
+
+		prevtag="$tag"
+	done
+
+	git tag -d $_BUILD_VERSION
+}
+
 build_deb()
 {
 	set -e
 	cd "$_ROOT"
 	sed "s/\$_GH_BRANCH/$_GH_BRANCH/g; s/\$_GH_COMMIT_SHORT/$_GH_COMMIT_SHORT/g; s/\$_GH_COMMIT/$_GH_COMMIT/g" "debian/rules.in" > "debian/rules"
-	sed "s/\$VERSION/$_DEB_VERSION/g; s/\$DISTRO/$_DEB_TARGET_DISTRO/g; s/\$DATE/`date -R`/g" "debian/changelog.in" > "debian/changelog"
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sed "s/libmanette-0.2-dev,//g" "debian/control.in" > "debian/control"
 	else
 		cp -f "debian/control.in" "debian/control"
 	fi
-	echo "[scripts/build.sh] Building deb package"
-	dpkg-buildpackage -F -sa -us -uc
-	mkdir -p "build/$_BUILD_IMAGE"
-	mv ../$_GH_RDNN*.deb "build/$_BUILD_IMAGE/GameHub-$_VERSION-amd64.deb"
-	export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
-	if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
-		set +e
-		dpkg-buildpackage -S -sa -us -uc
-		echo "[scripts/build.sh] Signing source package"
-		debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 ../*.changes
-		rm -f "$_SCRIPTROOT/launchpad/passphrase"
-		echo "[scripts/build.sh] Uploading package to launchpad"
-		dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_$_DEB_TARGET_DISTRO" ../${_GH_RDNN}_${_DEB_VERSION}_source.changes
-		set -e
-	fi
+
+	for i in "${!_DEB_TARGET_DISTRO_NAMES[@]}"; do
+		_DEB_TARGET_DISTRO_NAME="${_DEB_TARGET_DISTRO_NAMES[$i]}"
+		_DEB_TARGET_DISTRO_VERSION="${_DEB_TARGET_DISTRO_VERSIONS[$i]}"
+		_DEB_VERSION_SUFFIX="${_DEB_TARGET_DISTRO_ID}${_DEB_TARGET_DISTRO_VERSION}"
+		_DEB_VERSION="${_BUILD_VERSION}~${_DEB_VERSION_SUFFIX}"
+		sed "s/\$DISTRO/${_DEB_TARGET_DISTRO_NAME}/g; s/\$VERSION_SUFFIX/${_DEB_VERSION_SUFFIX}/g" "debian/changelog.in" > "debian/changelog"
+
+		if [[ $i = 0 ]]; then
+			echo "[scripts/build.sh] Building binary package for $_DEB_TARGET_DISTRO_ID $_DEB_TARGET_DISTRO_VERSION ($_DEB_TARGET_DISTRO_NAME)"
+			dpkg-buildpackage -F -sa -us -uc
+			mkdir -p "build/$_BUILD_IMAGE"
+			mv ../$_GH_RDNN*.deb "build/${_BUILD_IMAGE}/GameHub-${_BUILD_VERSION}-${_DEB_TARGET_DISTRO_NAME}-amd64.deb"
+		fi
+
+		if [[ -e "$_SCRIPTROOT/launchpad/passphrase" && -n "$keys_enc_secret" ]]; then
+			set +e
+			echo "[scripts/build.sh] Building source package for $_DEB_TARGET_DISTRO_ID $_DEB_TARGET_DISTRO_VERSION ($_DEB_TARGET_DISTRO_NAME)"
+			dpkg-buildpackage -S -sa -us -uc
+			echo "[scripts/build.sh] Signing source package"
+			debsign -p"$_GPG_BINARY --no-use-agent --passphrase-file $_SCRIPTROOT/launchpad/passphrase --batch" -S -k2744E6BAF20BA10AAE92253F20442B9273408FF9 "../${_GH_RDNN}_${_DEB_VERSION}_source.changes"
+			echo "[scripts/build.sh] Uploading package to launchpad"
+			dput -u -c "$_SCRIPTROOT/launchpad/dput.cf" "gamehub_${_DEB_TARGET_DISTRO_NAME}" "../${_GH_RDNN}_${_DEB_VERSION}_source.changes"
+			rm "../${_GH_RDNN}_"*
+			set -e
+		fi
+	done
+	rm -f "$_SCRIPTROOT/launchpad/passphrase"
 	cd "$_ROOT"
 }
 
@@ -157,7 +232,7 @@ appimage()
 	wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/5/$_LINUXDEPLOYQT"
 	chmod a+x "./$_LINUXDEPLOYQT"
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
-	export VERSION="$_VERSION"
+	export VERSION="${_BUILD_IMAGE}-${_VERSION}"
 	export LD_LIBRARY_PATH=$APPDIR/usr/lib:$LD_LIBRARY_PATH
 	"./$_LINUXDEPLOYQT" "$APPDIR/usr/share/applications/$_GH_RDNN.desktop" -appimage -no-plugins -no-copy-copyright-files -verbose=2
 }
@@ -229,7 +304,7 @@ appimage_pack()
 	echo "[scripts/build.sh] Packing AppImage"
 	cd "$BUILDROOT"
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
-	export VERSION="$_VERSION"
+	export VERSION="${_BUILD_IMAGE}-${_VERSION}"
 	export LD_LIBRARY_PATH=$APPDIR/usr/lib:$LD_LIBRARY_PATH
 	"./$_LINUXDEPLOYQT" --appimage-extract
 	PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool --no-appstream "$APPDIR"
@@ -239,6 +314,10 @@ build_flatpak()
 {
 	set +e
 	echo "[scripts/build.sh] Building flatpak package"
+	cd "$_ROOT"
+	gen_changelogs
+	git add "debian/changelog" "data/$_GH_RDNN.changelog.xml"
+	git commit -m "Save generated changelog"
 	mkdir -p "$_ROOT/build/flatpak"
 	cd "$_ROOT/flatpak"
 	echo "[scripts/build.sh] Installing flatpak"
@@ -250,7 +329,7 @@ build_flatpak()
 	echo "[scripts/build.sh] Building"
 	flatpak-builder -y --user --repo="$_ROOT/build/flatpak/repo" --force-clean "$_ROOT/build/flatpak/build" "$_GH_RDNN.json"
 	echo "[scripts/build.sh] Building bundle"
-	flatpak build-bundle "$_ROOT/build/flatpak/repo" "$_ROOT/build/flatpak/GameHub-$_VERSION.flatpak" "$_GH_RDNN"
+	flatpak build-bundle "$_ROOT/build/flatpak/repo" "$_ROOT/build/flatpak/GameHub-${_BUILD_IMAGE}-${_VERSION}.flatpak" "$_GH_RDNN"
 	echo "[scripts/build.sh] Removing flatpak build and repo directories"
 	rm -rf ".flatpak-builder" "$_ROOT/build/flatpak/build" "$_ROOT/build/flatpak/repo"
 	return 0
@@ -264,6 +343,8 @@ mkdir -p "$BUILDROOT"
 if [[ "$ACTION" = "import_keys" ]]; then import_keys; fi
 
 if [[ "$ACTION" = "deps" ]]; then deps; fi
+
+if [[ "$ACTION" = "gen_changelogs" ]]; then gen_changelogs; fi
 
 if [[ "$ACTION" = "build_deb" ]]; then build_deb; fi
 

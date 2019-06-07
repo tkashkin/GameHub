@@ -231,11 +231,11 @@ namespace GameHub.Data.Sources.GOG
 				{
 					var game = Parser.json_object(i, {"game"});
 					var stats = Parser.json_object(i, {"stats", user_id});
-					if(game == null) continue;
+					if(game == null || !game.has_member("id")) continue;
 					var id = game.get_string_member("id");
-					var image = game.get_string_member("image");
-					var playtime = stats != null ? stats.get_int_member("playtime") : 0;
-					var last_launch = stats != null ? new DateTime.from_iso8601(stats.get_string_member("lastSession"), new TimeZone.utc()).to_unix() : 0;
+					var image = game.has_member("image") ? game.get_string_member("image") : null;
+					var playtime = stats != null && stats.has_member("playtime") ? stats.get_int_member("playtime") : 0;
+					var last_launch = stats != null && stats.has_member("lastSession") ? new DateTime.from_iso8601(stats.get_string_member("lastSession"), new TimeZone.utc()).to_unix() : 0;
 					player_stats.set(id, new PlayerStatItem(id, playtime, last_launch, image));
 				}
 
@@ -267,18 +267,21 @@ namespace GameHub.Data.Sources.GOG
 				{
 					foreach(var g in cached)
 					{
-						if(!(g.id in GAMES_BLACKLIST) && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g)))
+						if(!(g.id in GAMES_BLACKLIST))
 						{
-							_games.add(g);
 							if(stats.has_key(g.id))
 							{
 								var s = stats.get(g.id);
 								g.last_launch = int64.max(g.last_launch, s.last_launch);
 								g.playtime_source = s.playtime;
 							}
-							if(game_loaded != null)
+							if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
 							{
-								game_loaded(g, true);
+								_games.add(g);
+								if(game_loaded != null)
+								{
+									game_loaded(g, true);
+								}
 							}
 						}
 						games_count++;
@@ -287,7 +290,7 @@ namespace GameHub.Data.Sources.GOG
 
 				if(cache_loaded != null)
 				{
-					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
+					cache_loaded();
 				}
 
 				var page = 1;
@@ -330,18 +333,21 @@ namespace GameHub.Data.Sources.GOG
 					{
 						var game = new GOGGame(this, g);
 						bool is_new_game = !(game.id in GAMES_BLACKLIST) && !_games.contains(game);
-						if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
+						if(is_new_game)
 						{
-							_games.add(game);
 							if(stats.has_key(game.id))
 							{
 								var s = stats.get(game.id);
 								game.last_launch = int64.max(game.last_launch, s.last_launch);
 								game.playtime_source = s.playtime;
 							}
-							if(game_loaded != null)
+							if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game))
 							{
-								game_loaded(game, false);
+								_games.add(game);
+								if(game_loaded != null)
+								{
+									game_loaded(game, false);
+								}
 							}
 						}
 

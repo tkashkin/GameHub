@@ -60,7 +60,14 @@ namespace GameHub.Data.Sources.Steam
 
 		private bool? installed = null;
 
-		private bool is_authenticated_in_steam_client { get { return FSUtils.file(FSUtils.Paths.Steam.LoginUsersVDF).query_exists(); } }
+		public bool is_authenticated_in_steam_client
+		{
+			get
+			{
+				var loginusers = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.LoginUsersVDF);
+				return loginusers != null && loginusers.query_exists();
+			}
+		}
 
 		public override bool is_installed(bool refresh)
 		{
@@ -69,9 +76,14 @@ namespace GameHub.Data.Sources.Steam
 				return (!) installed;
 			}
 
-			if("elementary" in Utils.get_distro())
+			var distro = Utils.get_distro().down();
+			if("ubuntu" in distro || "elementary" in distro || "pop!_os" in distro)
 			{
-				installed = Utils.is_package_installed("steam");
+				installed = Utils.is_package_installed("steam")
+				         || Utils.is_package_installed("steam64")
+				         || Utils.is_package_installed("steam-launcher")
+				         || Utils.is_package_installed("steam-installer")
+				         || FSUtils.file(FSUtils.Paths.Steam.Home).query_exists();
 			}
 			else
 			{
@@ -86,13 +98,13 @@ namespace GameHub.Data.Sources.Steam
 			install_dir = null;
 			foreach(var dir in Steam.LibraryFolders)
 			{
-				var acf = FSUtils.file(dir, @"appmanifest_$(app).acf");
-				if(acf.query_exists())
+				var acf = FSUtils.find_case_insensitive(FSUtils.file(dir), @"appmanifest_$(app).acf");
+				if(acf != null && acf.query_exists())
 				{
 					var root = Parser.parse_vdf_file(acf.get_path()).get_object();
-					var d = FSUtils.file(dir, "common/" + root.get_object_member("AppState").get_string_member("installdir"));
+					var d = FSUtils.find_case_insensitive(FSUtils.file(dir), "common/" + root.get_object_member("AppState").get_string_member("installdir"));
 					install_dir = d;
-					return d.query_exists();
+					return d != null && d.query_exists();
 				}
 			}
 			return false;
@@ -105,7 +117,8 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async bool install()
 		{
-			if("elementary" in Utils.get_distro())
+			var distro = Utils.get_distro().down();
+			if("elementary" in distro || "pop!_os" in distro)
 			{
 				Utils.open_uri("appstream://steam.desktop");
 			}
@@ -127,7 +140,16 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			Utils.thread("Steam-loginusers", () => {
-				var config = Parser.parse_vdf_file(FSUtils.Paths.Steam.LoginUsersVDF);
+				var loginusers = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.LoginUsersVDF);
+
+				if(loginusers == null || !loginusers.query_exists())
+				{
+					result = false;
+					Idle.add(authenticate.callback);
+					return;
+				}
+
+				var config = Parser.parse_vdf_file(loginusers.get_path());
 				var users = Parser.json_object(config, {"users"});
 
 				if(users == null)
@@ -211,7 +233,7 @@ namespace GameHub.Data.Sources.Steam
 
 				if(cache_loaded != null)
 				{
-					Idle.add(() => { cache_loaded(); return Source.REMOVE; });
+					cache_loaded();
 				}
 
 				var url = @"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=$(api_key)&steamid=$(user_id)&format=json&include_appinfo=1&include_played_free_games=1";
@@ -227,6 +249,8 @@ namespace GameHub.Data.Sources.Steam
 			});
 
 			yield;
+
+			watch_client_registry();
 
 			return _games;
 		}
@@ -260,25 +284,81 @@ namespace GameHub.Data.Sources.Steam
 			}
 		}
 
+		private void watch_client_registry()
+		{
+			var regfile = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.RegistryVDF);
+			if(regfile == null || !regfile.query_exists()) return;
+
+			Timeout.add_seconds(5, () => {
+				Utils.thread("SteamClientRegistryUpdate", () => {
+					client_registry_update(regfile);
+				}, false);
+				return Source.CONTINUE;
+			}, Priority.LOW);
+		}
+
+		private void client_registry_update(File? regfile)
+		{
+			if(regfile == null || !regfile.query_exists()) return;
+
+			var reg = Parser.parse_vdf_file(regfile.get_path());
+			var steam = Parser.json_object(reg, {"Registry", "HKCU", "Software", "Valve", "Steam"});
+
+			if(steam == null) return;
+
+			var running_appid = steam.has_member("RunningAppID") ? steam.get_string_member("RunningAppID") : "0";
+			IsAnyAppRunning = running_appid != "0";
+
+			var apps = steam.has_member("Apps") ? steam.get_member("Apps") : null;
+
+			foreach(var g in _games)
+			{
+				var game = g as SteamGame;
+
+				var appinfo  = Parser.json_object(apps, {game.id});
+				var running  = game.id == running_appid || (appinfo != null && appinfo.has_member("Running") && appinfo.get_string_member("Running") == "1");
+				var updating = appinfo != null && appinfo.has_member("Updating") && appinfo.get_string_member("Updating") == "1";
+
+				if(game.is_running != running || game.is_updating != updating)
+				{
+					game.is_running = running;
+					game.is_updating = updating;
+					game.update_status();
+				}
+			}
+		}
+
 		public static ArrayList<string>? folders = null;
 		public static ArrayList<string> LibraryFolders
 		{
 			get
 			{
 				if(folders != null) return folders;
-
 				folders = new ArrayList<string>();
-				folders.add(FSUtils.Paths.Steam.SteamApps);
 
-				var root = Parser.parse_vdf_file(FSUtils.Paths.Steam.LibraryFoldersVDF);
+				var steamapps = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.SteamApps);
+
+				if(steamapps == null || !steamapps.query_exists()) return folders;
+
+				folders.add(steamapps.get_path());
+
+				var libraryfolders = FSUtils.find_case_insensitive(steamapps, FSUtils.Paths.Steam.LibraryFoldersVDF);
+
+				if(libraryfolders == null || !libraryfolders.query_exists()) return folders;
+
+				var root = Parser.parse_vdf_file(libraryfolders.get_path());
 				var lf = Parser.json_object(root, {"LibraryFolders"});
 
 				if(lf != null)
 				{
 					foreach(var key in lf.get_members())
 					{
-						var dir = lf.get_string_member(key) + "/steamapps";
-						if(FSUtils.file(dir).query_exists()) folders.add(dir);
+						var libdir = FSUtils.file(lf.get_string_member(key));
+						if(libdir != null && libdir.query_exists())
+						{
+							var dir = FSUtils.find_case_insensitive(libdir, "steamapps");
+							if(dir != null && dir.query_exists()) folders.add(dir.get_path());
+						}
 					}
 				}
 
@@ -296,7 +376,12 @@ namespace GameHub.Data.Sources.Steam
 			uint64 communityid = uint64.parse(instance.user_id);
 			uint64 steamid3 = communityid_to_steamid3(communityid);
 
-			var shortcuts = FSUtils.file(FSUtils.Paths.Steam.Home, @"steam/userdata/$(steamid3)/config/shortcuts.vdf");
+			var config_dir = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), @"steam/userdata/$(steamid3)/config");
+
+			if(config_dir == null || !config_dir.query_exists()) return;
+
+			var shortcuts = FSUtils.find_case_insensitive(config_dir, "shortcuts.vdf") ?? FSUtils.file(config_dir.get_path(), "shortcuts.vdf");
+
 			var vdf = new BinaryVDF(shortcuts);
 
 			var root_node = vdf.read() as BinaryVDF.ListNode;
@@ -321,7 +406,7 @@ namespace GameHub.Data.Sources.Steam
 
 			if(game.image != null)
 			{
-				var cached = Utils.cached_image_file(game.image, "image");
+				var cached = ImageCache.local_file(game.image, "image");
 				game_node.add_node(new BinaryVDF.StringNode.node("icon", cached.get_path()));
 			}
 
@@ -335,5 +420,7 @@ namespace GameHub.Data.Sources.Steam
 
 			BinaryVDF.write(shortcuts, root_node);
 		}
+
+		public static bool IsAnyAppRunning = false;
 	}
 }

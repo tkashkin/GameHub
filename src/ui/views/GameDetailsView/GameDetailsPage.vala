@@ -108,6 +108,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			var title_hbox = new Box(Orientation.HORIZONTAL, 15);
 
 			icon = new AutoSizeImage();
+			icon.valign = Align.START;
 			icon.set_constraint(48, 48, 1);
 			icon.set_size_request(48, 48);
 
@@ -125,7 +126,6 @@ namespace GameHub.UI.Views.GameDetailsView
 			download_progress = new ProgressBar();
 			download_progress.hexpand = true;
 			download_progress.fraction = 0d;
-			download_progress.get_style_context().add_class(Gtk.STYLE_CLASS_OSD);
 			download_progress.hide();
 
 			src_icon = new Image();
@@ -259,9 +259,9 @@ namespace GameHub.UI.Views.GameDetailsView
 				download_progress.fraction = s.download.status.progress;
 
 				action_cancel.visible = true;
-				action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
-				action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
-				action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
+				action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.QUEUED || ds == Downloader.DownloadState.PAUSED;
+				action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
+				action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
 			}
 			else
 			{
@@ -272,8 +272,9 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_install.visible = s.state != Game.State.INSTALLED;
 			action_install.sensitive = s.state == Game.State.UNINSTALLED && game.is_installable;
 			action_run_with_compat.visible = s.state == Game.State.INSTALLED && game.use_compat;
-			action_run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
+			action_run_with_compat.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning && Settings.UI.get_instance().use_compat;
 			action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
+			action_run.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
 			action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
 			action_open_installer_collection_directory.visible = game.installers_dir != null && game.installers_dir.query_exists();
 			action_open_bonus_collection_directory.visible = game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists();
@@ -296,7 +297,9 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		public void update()
 		{
-			update_game.begin();
+			Utils.thread("GameDetailsPageUpdate", () => {
+				update_game.begin();
+			});
 		}
 
 		private async void update_game()
@@ -353,7 +356,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			});
 			set_visible_widgets(game.status);
 
-			yield Utils.load_image(icon, game.icon, "icon");
+			icon.load(game.icon, "icon");
 
 			stack.set_visible_child(content_scrolled);
 		}

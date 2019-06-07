@@ -90,9 +90,10 @@ namespace GameHub.UI.Dialogs
 			if(game != null && game.icon != null)
 			{
 				var icon = new AutoSizeImage();
+				icon.valign = Align.START;
 				icon.set_constraint(48, 48, 1);
 				icon.set_size_request(48, 48);
-				Utils.load_image.begin(icon, game.icon, "icon");
+				icon.load(game.icon, "icon");
 				hbox.add(icon);
 				title_label.margin_start = title_label.margin_end = 8;
 				subtitle_label.margin_start = subtitle_label.margin_end = 8;
@@ -300,8 +301,11 @@ namespace GameHub.UI.Dialogs
 						{
 							opts_list.save_options();
 						}
-						install(installer, response_id == InstallDialog.RESPONSE_DOWNLOAD, compat_tool_picker != null ? compat_tool_picker.selected : null);
-						destroy();
+						installer.fetch_parts.begin((obj, res) => {
+							installer.fetch_parts.end(res);
+							install(installer, response_id == InstallDialog.RESPONSE_DOWNLOAD, compat_tool_picker != null ? compat_tool_picker.selected : null);
+							destroy();
+						});
 						break;
 				}
 			});

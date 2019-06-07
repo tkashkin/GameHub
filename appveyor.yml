@@ -1,4 +1,4 @@
-version: 0.13.1-{build}-{branch}
+version: 0.14.0-{build}-{branch}
 
 pull_requests:
   do_not_increment_build_number: true
@@ -10,13 +10,13 @@ image:
 #  - Ubuntu1604     # skip xenial builds because dependencies are broken
 
 clone_folder: ~/build/GameHub
-clone_depth: 1
 
 environment:
   keys_enc_secret:
     secure: VBUP6GQXENGa7E+H90WDhA==
 
 build_script:
+  - sh: bash scripts/build.sh gen_changelogs
   - sh: bash scripts/build.sh build_deb
   - sh: bash scripts/build.sh build_appimage
   - sh: bash scripts/build.sh build_flatpak
@@ -30,7 +30,7 @@ test: off
 artifacts:
   - path: build/*/*.deb
     name: deb
-  - path: build/appimage/GameHub*.AppImage*
+  - path: build/appimage/GameHub*.AppImage
     name: AppImage
   - path: build/flatpak/GameHub*.flatpak
     name: flatpak

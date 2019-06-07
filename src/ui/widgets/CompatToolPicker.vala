@@ -31,6 +31,7 @@ namespace GameHub.UI.Widgets
 
 		public Runnable runnable { get; construct; }
 		public bool install_mode { get; construct; }
+		public bool show_compat_config { get; construct; }
 
 		private Gtk.ListStore model;
 		private int model_size = 0;
@@ -38,10 +39,11 @@ namespace GameHub.UI.Widgets
 		private ComboBox combo;
 
 		private Box actions;
+		private Box warnings;
 
-		public CompatToolPicker(Runnable runnable, bool install_mode)
+		public CompatToolPicker(Runnable runnable, bool install_mode, bool show_compat_config=false)
 		{
-			Object(orientation: Orientation.VERTICAL, spacing: 4, runnable: runnable, install_mode: install_mode);
+			Object(orientation: Orientation.VERTICAL, spacing: 4, runnable: runnable, install_mode: install_mode, show_compat_config: show_compat_config);
 		}
 
 		construct
@@ -81,8 +83,26 @@ namespace GameHub.UI.Widgets
 
 			var tool_box = new Box(Orientation.HORIZONTAL, 8);
 
+			var combo_wrapper = new Box(Orientation.HORIZONTAL, 0);
+			combo_wrapper.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
+
+			combo_wrapper.add(combo);
+
+			var compat_config = new Button.from_icon_name("open-menu-symbolic");
+			compat_config.tooltip_text = _("Configure");
+			compat_config.sensitive = false;
+			compat_config.clicked.connect(() => {
+				runnable.run_with_compat.begin(true);
+			});
+			if(show_compat_config)
+			{
+				combo_wrapper.add(compat_config);
+			}
+
 			tool_box.add(label);
-			tool_box.add(combo);
+			tool_box.add(combo_wrapper);
+
+			warnings = new Box(Orientation.VERTICAL, 0);
 
 			actions = new Box(Orientation.HORIZONTAL, 4);
 
@@ -93,6 +113,8 @@ namespace GameHub.UI.Widgets
 				combo.get_active_iter(out iter);
 				model.get_value(iter, 2, out v);
 				selected = v as CompatTool;
+
+				compat_config.sensitive = false;
 
 				if(selected == null) return;
 
@@ -106,8 +128,8 @@ namespace GameHub.UI.Widgets
 				}
 
 				actions.foreach(w => w.destroy());
-
 				actions.hide();
+
 				if(selected.actions != null)
 				{
 					foreach(var action in selected.actions)
@@ -115,6 +137,20 @@ namespace GameHub.UI.Widgets
 						add_action(action);
 					}
 					actions.show_all();
+				}
+
+				compat_config.sensitive = selected.options != null && selected.options.length > 0;
+
+				warnings.foreach(w => w.destroy());
+				warnings.hide();
+
+				if(selected.warnings != null && selected.warnings.length > 0)
+				{
+					foreach(var warning in selected.warnings)
+					{
+						add_warning(warning);
+					}
+					warnings.show_all();
 				}
 			});
 
@@ -141,6 +177,7 @@ namespace GameHub.UI.Widgets
 			}
 
 			add(tool_box);
+			add(warnings);
 			add(actions);
 
 			show_all();
@@ -153,6 +190,20 @@ namespace GameHub.UI.Widgets
 			btn.hexpand = true;
 			btn.clicked.connect(() => action.invoke(runnable));
 			actions.add(btn);
+		}
+
+		private void add_warning(string warning)
+		{
+			var infobar = new InfoBar();
+			infobar.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			infobar.get_style_context().add_class("compat-tool-warning");
+			infobar.message_type = MessageType.WARNING;
+			var label = new Label(warning);
+			label.use_markup = true;
+			label.wrap = true;
+			label.xalign = 0;
+			infobar.get_content_area().add(label);
+			warnings.add(infobar);
 		}
 	}
 }

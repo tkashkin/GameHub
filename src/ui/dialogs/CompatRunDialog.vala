@@ -61,7 +61,7 @@ namespace GameHub.UI.Dialogs
 			content = new Box(Orientation.VERTICAL, 0);
 
 			title_label = new Label(game.name);
-			title_label.margin_start = 8;
+			title_label.margin_start = 4;
 			title_label.halign = Align.START;
 			title_label.valign = Align.START;
 			title_label.hexpand = true;
@@ -69,7 +69,6 @@ namespace GameHub.UI.Dialogs
 			content.add(title_label);
 
 			compat_tool_picker = new CompatToolPicker(game, false);
-			compat_tool_picker.margin_start = 4;
 			content.add(compat_tool_picker);
 
 			opts_list = new CompatToolOptions(game, compat_tool_picker, false);
@@ -79,9 +78,12 @@ namespace GameHub.UI.Dialogs
 			if(game is Game && (game as Game).icon != null)
 			{
 				var icon = new AutoSizeImage();
+				icon.valign = Align.START;
 				icon.set_constraint(48, 48, 1);
 				icon.set_size_request(48, 48);
-				Utils.load_image.begin(icon, (game as Game).icon, "icon");
+				title_label.margin_start = 8;
+				compat_tool_picker.margin_start = 4;
+				icon.load((game as Game).icon, "icon");
 				hbox.add(icon);
 			}
 
