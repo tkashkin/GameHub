@@ -1,5 +1,5 @@
 # [GameHub](https://tkashkin.tk/projects/gamehub) [![Build status](https://ci.appveyor.com/api/projects/status/cgw5hc4kos4uvmy9/branch/master?svg=true)](https://ci.appveyor.com/project/tkashkin/gamehub/branch/master) [![Translation status](https://hosted.weblate.org/widgets/gamehub/-/translations/svg-badge.svg)](https://hosted.weblate.org/engage/gamehub/?utm_source=widget)
-Unified library for all your games, written in Vala using GTK+3, designed for elementary OS.
+Unified library for all your games.
 
 ### [Features](https://tkashkin.tk/projects/gamehub/#/features)
 GameHub allows to view, download, install, run and uninstall games from [supported sources](#game-sources).
@@ -48,6 +48,9 @@ sudo apt install com.github.tkashkin.gamehub
 ### Arch Linux
 [gamehub-git](https://aur.archlinux.org/packages/gamehub-git/) and [gamehub](https://aur.archlinux.org/packages/gamehub/) are available in AUR.
 
+### Other packages
+See [this issue](https://github.com/tkashkin/GameHub/issues/156) for more information.
+
 ## Building
 
 ### Debian/Ubuntu-based distros
@@ -79,7 +82,7 @@ scripts/build.sh build_deb
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
 cd GameHub
-CFLAGS="$CFLAGS -O0" meson build --prefix=/usr -Ddistro=generic --buildtype=debug
+meson build --prefix=/usr -Ddistro=generic --buildtype=debug
 cd build
 ninja
 sudo ninja install
@@ -93,4 +96,4 @@ scripts/build.sh build_flatpak
 ```
 
 ## [Screenshots](https://tkashkin.tk/projects/gamehub/#/screenshots)
-<p align="center"><img src="data/screenshots/light/welcome@2x.png?raw=true" width="49%" /> <img src="data/screenshots/dark/grid@2x.png?raw=true" width="49%" /><img src="data/screenshots/dark/list@2x.png?raw=true" width="49%" /> <img src="data/screenshots/light/grid_gamepad@2x.png?raw=true" width="49%" /><img src="data/screenshots/light/details@2x.png?raw=true" width="49%" /> <img src="data/screenshots/dark/settings_collection@2x.png?raw=true" width="49%" /><img src="data/screenshots/light/overlays@2x.png?raw=true" width="49%" /> <img src="data/screenshots/light/install@2x.png?raw=true" width="49%" /><img src="data/screenshots/light/properties@2x.png?raw=true" width="49%" /> <img src="data/screenshots/light/install_compat@2x.png?raw=true" width="49%" /></p>
+<p align="center"><img src="data/screenshots/light/welcome.png?raw=true" width="49%" /> <img src="data/screenshots/dark/grid.png?raw=true" width="49%" /><img src="data/screenshots/dark/list.png?raw=true" width="49%" /> <img src="data/screenshots/light/grid_controller.png?raw=true" width="49%" /><img src="data/screenshots/light/details.png?raw=true" width="49%" /> <img src="data/screenshots/dark/settings_collection.png?raw=true" width="49%" /><img src="data/screenshots/dark/overlays.png?raw=true" width="49%" /> <img src="data/screenshots/light/install.png?raw=true" width="49%" /><img src="data/screenshots/light/properties.png?raw=true" width="49%" /> <img src="data/screenshots/dark/install_compat.png?raw=true" width="49%" /></p>
