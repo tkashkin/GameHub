@@ -7,127 +7,129 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-03 02:34+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-06-07 16:04+0000\n"
+"Last-Translator: wenxiaobai <chowhound_xb@163.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"gamehub/translations/zh_CMN-HANT/>\n"
 "Language: zh_CMN-HANT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.7-dev\n"
 
 #: src/app.vala:88
 msgid "Show help"
-msgstr ""
+msgstr "显示帮助"
 
 #: src/app.vala:89
 msgid "Show application version and exit"
-msgstr ""
+msgstr "显示版本并退出"
 
 #: src/app.vala:90
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "重新启动附加的GDB调试器"
 
 #: src/app.vala:91
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "显示完整的GDB回溯"
 
 #: src/app.vala:92
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "将致命错误视为关键和崩溃应用程序"
 
 #: src/app.vala:96
 msgid "Show main window"
-msgstr ""
+msgstr "显示主窗口"
 
 #: src/app.vala:97
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "显示应用设置对话框"
 
 #: src/app.vala:98
 msgid "Show about dialog"
-msgstr ""
+msgstr "显示对话框"
 
 #: src/app.vala:99
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "最大后台工作线程数"
 
 #: src/app.vala:103
 msgid "Run game"
-msgstr ""
+msgstr "运行游戏"
 
 #: src/app.vala:104
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "显示兼容性选项对话框"
 
 #: src/app.vala:105
 msgid "Open game details"
-msgstr ""
+msgstr "打开游戏细节"
 
 #: src/app.vala:106
 msgid "Open game properties"
-msgstr ""
+msgstr "打开游戏属性"
 
 #: src/app.vala:110
 msgid "Enable debug logging"
-msgstr ""
+msgstr "启用调试日志记录"
 
 #: src/app.vala:111
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
-msgstr ""
+msgstr "记录身份验证过程和敏感信息，如身份验证令牌"
 
 #: src/app.vala:112
 msgid "Log download manager"
-msgstr ""
+msgstr "日志管理器"
 
 #: src/app.vala:113
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "日志后台工作开始/停止"
 
 #: src/app.vala:114
 msgid "Verbose logging"
-msgstr ""
+msgstr "详细记录"
 
 #: src/app.vala:226
 msgid "Game Options:"
-msgstr ""
+msgstr "游戏选项："
 
 #: src/app.vala:226
 msgid "Show game options help"
-msgstr ""
+msgstr "显示游戏选项帮助"
 
 #: src/app.vala:234
 msgid "Logging Options:"
-msgstr ""
+msgstr "记录选项："
 
 #: src/app.vala:234
 msgid "Show logging options help"
-msgstr ""
+msgstr "显示日志选项帮助"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:254
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
-msgstr ""
+msgstr "选择可执行文件"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:342
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "选择"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/data/Runnable.vala:163 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: src/data/Runnable.vala:149 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/data/Runnable.vala:405
 #, c-format
@@ -137,164 +139,170 @@ msgstr ""
 #: src/data/Runnable.vala:428 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr ""
+msgstr "%s: 安装程序损坏"
 
 #: src/data/Runnable.vala:429
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr ""
+msgstr "校验和不匹配 %s"
 
 #: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
-msgstr ""
+msgstr "显示文件"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
-msgstr ""
+msgstr "删除"
 
 #: src/data/Runnable.vala:445 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
-msgstr ""
+msgstr "备份"
 
 #: src/data/Runnable.vala:595
 #, c-format
 msgid "%s: cannot detect main executable"
-msgstr ""
+msgstr "%s: 无法检测主可执行文件"
 
 #: src/data/Runnable.vala:596
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"无法自动检测此游戏的主要可执行文件。\n"
+"请在游戏属性中设置主要可执行文件。"
 
 #: src/data/Game.vala:478
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "正在运行"
 
 #: src/data/Game.vala:481
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "安装"
 
 #: src/data/Game.vala:482
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "安装"
 
 #: src/data/Game.vala:483
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr ""
+msgstr "验证安装程序完整性"
 
 #: src/data/Game.vala:484
 msgctxt "status"
 msgid "Download started"
-msgstr ""
+msgstr "下载已开始"
 
 #: src/data/Game.vala:486
 msgctxt "status"
 msgid "Not installed"
-msgstr ""
+msgstr "未安装"
 
 #: src/data/Game.vala:496
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "安装"
 
 #: src/data/Game.vala:497
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "安装"
 
 #: src/data/Game.vala:499
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "正在下载"
 
 #: src/data/Game.vala:501
 msgctxt "status_header"
 msgid "Not installed"
-msgstr ""
+msgstr "未安装"
 
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr ""
+msgstr "%s 游戏"
 
 #: src/data/adapters/GamesAdapter.vala:345
 msgctxt "status_header"
 msgid "Favorites"
-msgstr ""
+msgstr "收藏夹"
 
 #: src/data/adapters/GamesAdapter.vala:373
 msgid "Merging games"
-msgstr ""
+msgstr "合并游戏"
 
 #: src/data/adapters/GamesAdapter.vala:386
 #, c-format
 msgid "Merging games from %s"
-msgstr ""
+msgstr "正在合并来自％s的游戏"
 
 #: src/data/adapters/GamesAdapter.vala:430
 #, c-format
 msgid "Loading games from %s"
-msgstr ""
+msgstr "正在从％s加载游戏"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr ""
+msgstr "您的SteamID将从Steam配置文件中读取"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
+"找不到Steam配置文件。\n"
+"在Steam客户端登录您的帐户并返回GameHub"
 
 #: src/data/sources/humble/HumbleGame.vala:330
 #, c-format
 msgid "%s: no available installers"
-msgstr ""
+msgstr "%s: 没有可用的安装程序"
 
 #: src/data/sources/humble/HumbleGame.vala:331
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
+"无法获取Trove下载URL。\n"
+"确保您的Humble Monthly订阅处于活动状态。"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr ""
+msgstr "用户游戏"
 
 #: src/data/db/tables/Tags.vala:192
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "收藏夹"
 
 #: src/data/db/tables/Tags.vala:193
 msgctxt "tag"
 msgid "Not installed"
-msgstr ""
+msgstr "未安装"
 
 #: src/data/db/tables/Tags.vala:194
 msgctxt "tag"
 msgid "Installed"
-msgstr ""
+msgstr "安装"
 
 #: src/data/db/tables/Tags.vala:195
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "隐藏的"
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit script"
-msgstr ""
+msgstr "编辑脚本"
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit custom script"
-msgstr ""
+msgstr "编辑自定义脚本"
 
 #: src/data/compat/Innoextract.vala:55
 #, c-format
@@ -303,6 +311,8 @@ msgid ""
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
+"Innoextract <b>%1$s</b> 不受支持，可能无法正确提取某些游戏。\n"
+"安装innoextract  <b>%2$s</b> 或更新版本。"
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:234
@@ -310,16 +320,16 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:42
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
 msgid "Run"
-msgstr ""
+msgstr "运行"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "显示WineWrap菜单"
 
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:116
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
-msgstr ""
+msgstr "终止前缀中的应用程序"
 
 #: src/data/compat/Proton.vala:44
 msgid "Proton prefix"
@@ -327,7 +337,7 @@ msgstr ""
 
 #: src/data/compat/Proton.vala:50
 msgid "Disable esync"
-msgstr ""
+msgstr "禁用esync"
 
 #: src/data/compat/Proton.vala:51
 msgid "Force LARGE_ADDRESS_AWARE flag"
@@ -335,47 +345,47 @@ msgstr ""
 
 #: src/data/compat/Proton.vala:52
 msgid "Disable DirectX 11 compatibility layer"
-msgstr ""
+msgstr "禁用DirectX 11兼容层"
 
 #: src/data/compat/Proton.vala:53
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr ""
+msgstr "使用wined3d11作为Directx11兼容层"
 
 #: src/data/compat/Proton.vala:54
 msgid "Show DXVK info overlay"
-msgstr ""
+msgstr "显示dxvk信息覆盖"
 
 #: src/data/compat/Proton.vala:61 src/data/compat/Wine.vala:66
 msgid "Silent installation"
-msgstr ""
+msgstr "静默安装"
 
 #: src/data/compat/Proton.vala:62 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
-msgstr ""
+msgstr "非常安静的安装"
 
 #: src/data/compat/Proton.vala:63 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
-msgstr ""
+msgstr "禁止显示消息"
 
 #: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:69
 msgid "No GUI"
-msgstr ""
+msgstr "无图形用户界面"
 
 #: src/data/compat/Proton.vala:104 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
-msgstr ""
+msgstr "打开前缀目录"
 
 #: src/data/compat/Proton.vala:107 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
-msgstr ""
+msgstr "运行winecfg"
 
 #: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
-msgstr ""
+msgstr "运行winetricks"
 
 #: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
-msgstr ""
+msgstr "运行任务管理器"
 
 #: src/data/compat/Wine.vala:53
 msgid "Wine prefix"
@@ -383,11 +393,11 @@ msgstr ""
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
-msgstr ""
+msgstr "环境变量"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr ""
+msgstr "InnoSetup默认选项"
 
 #: src/data/compat/DOSBox.vala:52
 msgid "Windowed"
