@@ -1,3 +1,137 @@
+		<release type="development" version="0.14.0.master" date="2019-06-07" timestamp="1559926982" />
+		<release type="development" version="0.13.1.115.dev" date="2019-06-07" timestamp="1559926982">
+			<description>
+				<ul>
+					<li>Disable `libunity` by default, enable with `-Duse_libunity=true` [31eb28a]</li>
+					<li>Remove `libunity-dev` from build script [ad8bc0f]</li>
+					<li>Remove `libunity-dev` from debian dependencies [5cc0ae7]</li>
+					<li>Translated using Weblate (Chinese (Simplified)) [0d8bea6]</li>
+					<li>Translated using Weblate (Chinese (Simplified)) [21d8a01]</li>
+					<li>Translated using Weblate (Polish) [39f6735]</li>
+					<li>Added translation using Weblate (Chinese (Simplified)) [d17ad07]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.109.dev" date="2019-06-03" timestamp="1559586192">
+			<description>
+				<ul>
+					<li>Fix crash in SoupDownloader.await_queue() (#220) [9024fef]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.108.dev" date="2019-06-03" timestamp="1559582863">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [d04ad42]</li>
+					<li>Translated using Weblate (Dutch) [583c98c]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.107.dev" date="2019-06-03" timestamp="1559518531">
+			<description>
+				<ul>
+					<li>Queue installer downloads (#220) [87c7f3d]</li>
+					<li>Settings dialog improvements Controller exit shortcut (#75) Ignored controllers option [f05d464]</li>
+					<li>Translated using Weblate (German) [aa0c1c4]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.103.dev" date="2019-05-28" timestamp="1559054928">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [cd2da98]</li>
+					<li>Translated using Weblate (Dutch) [67bfd23]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.102.dev" date="2019-05-28" timestamp="1559044138">
+			<description>
+				<ul>
+					<li>Settings dialog redesign [bc53e7c]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.101.dev" date="2019-05-28" timestamp="1559024088">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [0a3db13]</li>
+					<li>Translated using Weblate (Dutch) [0dad19a]</li>
+					<li>Translated using Weblate (German) [416198f]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.100.dev" date="2019-05-25" timestamp="1558768055">
+			<description>
+				<ul>
+					<li>Fix flatpak libs [3b52419]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.99.dev" date="2019-05-25" timestamp="1558766528">
+			<description>
+				<ul>
+					<li>Fix Humble collection directory name (#244) Bundle more libs for flatpak [4138055]</li>
+					<li>Merge branch 'origin/dev' into Weblate. [201ce95]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [723f43b]</li>
+					<li>Translated using Weblate (Dutch) [dd634ba]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.97.dev" date="2019-05-25" timestamp="1558741392">
+			<description>
+				<ul>
+					<li>Add $platform and $platform_name variables for Collection (#244) [44ba7b8]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.96.dev" date="2019-05-24" timestamp="1558664713">
+			<description>
+				<ul>
+					<li>Bundle libmanette snapshot for flatpak [e08606c]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.95.dev" date="2019-05-24" timestamp="1558663880">
+			<description>
+				<ul>
+					<li>Bundle libmanette snapshot for flatpak because remote downloads on AppVeyor are unreliable [d7b7fdc]</li>
+					<li>In-memory image cache CLI option to restart app with gdb and G_DEBUG=fatal-criticals [6090578]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.92.dev" date="2019-05-05" timestamp="1557070986">
+			<description>
+				<ul>
+					<li>Fix AppVeyor artifacts upload [b8b527e]</li>
+					<li>Set more Wine-related env variables (#242) Don't try to init Proton prefix if it's already initialized [202e4d2]</li>
+					<li>Fix build script [93ba8e1]</li>
+					<li>Fix libmanette for flatpak [0062a8b]</li>
+					<li>Build launchpad source packages for multiple distros [a40fd62]</li>
+					<li>Build launchpad source packages for multiple distros [5cd101e]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.85.dev" date="2019-04-19" timestamp="1555698830">
+			<description>
+				<ul>
+					<li>Translated using Weblate (German) [3081514]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.84.dev" date="2019-04-18" timestamp="1555553078">
+			<description>
+				<ul>
+					<li>Translated using Weblate (German) [488ff43]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.13.1.83.dev" date="2019-04-16" timestamp="1555421185">
+			<description>
+				<ul>
+					<li>Fix launchpad build script Add icon to .appdata.xml [5e849c0]</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.13.1.82.dev" date="2019-04-14" timestamp="1555231690">
 			<description>
 				<ul>

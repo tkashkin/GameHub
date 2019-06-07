@@ -228,6 +228,7 @@ namespace GameHub.Utils
 
 	public static string get_language_name()
 	{
+		return "english";
 		return Posix.nl_langinfo((Posix.NLItem) 786439); // _NL_IDENTIFICATION_LANGUAGE
 	}
 
