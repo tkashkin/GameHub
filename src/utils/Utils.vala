@@ -209,17 +209,16 @@ namespace GameHub.Utils
 
 	public static string get_distro()
 	{
-		#if APPIMAGE
-		return "appimage";
-		#elif FLATPAK
-		return "flatpak";
-		#elif SNAP
-		return "snap";
-		#else
 		if(distro != null) return distro;
 		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}, null, null, false, true, false).replace("\"", "");
-		return distro;
+		#if APPIMAGE
+		distro = "[AppImage] " + distro;
+		#elif FLATPAK
+		distro = "[Flatpak] " + distro;
+		#elif SNAP
+		distro = "[Snap] " + distro;
 		#endif
+		return distro;
 	}
 
 	public static string? get_desktop_environment()
@@ -229,6 +228,7 @@ namespace GameHub.Utils
 
 	public static string get_language_name()
 	{
+		return "english";
 		return Posix.nl_langinfo((Posix.NLItem) 786439); // _NL_IDENTIFICATION_LANGUAGE
 	}
 
@@ -275,51 +275,6 @@ namespace GameHub.Utils
 		});
 		yield;
 		return hash;
-	}
-
-	public static File? cached_image_file(string url, string prefix="remote")
-	{
-		if(url == null || url == "") return null;
-		var parts = url.split("?")[0].split(".");
-		var ext = parts.length > 1 ? parts[parts.length - 1] : null;
-		ext = ext != null && ext.length <= 6 ? "." + ext : null;
-		var hash = md5(url);
-		return FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");;
-	}
-
-	public static async string? cache_image(string url, string prefix="remote")
-	{
-		if(url == null || url == "") return null;
-		var remote = File.new_for_uri(url);
-		var cached = cached_image_file(url, prefix);
-		try
-		{
-			if(!cached.query_exists())
-			{
-				yield Downloader.download(remote, cached, null, false);
-			}
-			return cached.get_path();
-		}
-		catch(IOError.EXISTS e){}
-		catch(Error e)
-		{
-			if(GameHub.Application.log_verbose)
-			{
-				warning("Error caching `%s` in `%s`: %s", url, cached.get_path(), e.message);
-			}
-		}
-		return null;
-	}
-
-	public static async void load_image(GameHub.UI.Widgets.AutoSizeImage image, string url, string prefix="remote")
-	{
-		var cached = yield cache_image(url, prefix);
-		try
-		{
-			image.set_source(cached != null ? new Gdk.Pixbuf.from_file(cached) : null);
-		}
-		catch(Error e){}
-		image.queue_draw();
 	}
 
 	public static string get_relative_datetime(GLib.DateTime date_time)
@@ -380,9 +335,60 @@ namespace GameHub.Utils
 		return n.strip();
 	}
 
-	#if !APPIMAGE && !FLATPAK && !SNAP
+	public static string? replace_prefix(string? str, string? prefix, string replacement)
+	{
+		if(str == null || prefix == null || !str.has_prefix(prefix))
+		{
+			return str;
+		}
+		return replacement + str.substring(str.index_of_nth_char(prefix.length));
+	}
+
+	public static int? compare_versions(int[]? v1, int[]? v2)
+	{
+		if(v1 == null || v2 == null || v1.length == 0 || v2.length == 0) return null;
+
+		for(int i = 0; i < int.min(v1.length, v2.length); i++)
+		{
+			if(v1[i] > v2[i]) return 1;
+			if(v1[i] < v2[i]) return -1;
+		}
+
+		if(v1.length > v2.length) return 1;
+		if(v1.length < v2.length) return -1;
+
+		return 0;
+	}
+
+	public static int[]? parse_version(string? version, string delimiter=".")
+	{
+		if(version == null || version.strip().length == 0) return null;
+		int[] ver = {};
+		var parts = version.split(delimiter);
+		foreach(var part in parts)
+		{
+			ver += int.parse(part);
+		}
+		return ver;
+	}
+
+	public static string? format_version(int[]? version, string delimiter=".")
+	{
+		if(version == null || version.length == 0) return null;
+		string[] ver = {};
+		foreach(var part in version)
+		{
+			ver += part.to_string();
+		}
+		return string.joinv(delimiter, ver);
+	}
+
+	public static void set_accel_tooltip(Widget widget, string tooltip, string accel)
+	{
+		widget.tooltip_markup = Granite.markup_accel_tooltip({ accel }, tooltip);
+	}
+
 	private static string? distro;
-	#endif
 
 	public class Logger: Granite.Services.Logger
 	{

@@ -34,6 +34,8 @@ namespace GameHub.Data
 		public Option[]? install_options = null;
 		public Action[]? actions = null;
 
+		public string[]? warnings = null;
+
 		public virtual bool can_install(Runnable runnable) { return false; }
 		public virtual bool can_run(Runnable runnable) { return false; }
 		public virtual bool can_run_action(Runnable runnable, Runnable.RunnableAction action) { return false; }

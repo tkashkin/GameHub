@@ -2,7 +2,7 @@ build/
 
 debian/*
 !debian/source/
-!debian/changelog.in
+!debian/changelog
 !debian/compat
 !debian/control.in
 !debian/copyright

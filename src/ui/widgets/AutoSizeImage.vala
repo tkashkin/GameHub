@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gdk;
+using GameHub.Utils;
 
 namespace GameHub.UI.Widgets
 {
@@ -38,7 +39,6 @@ namespace GameHub.UI.Widgets
 			this.ratio = ratio;
 			this.cmin = min;
 			this.cmax = max;
-
 			switch(constraint)
 			{
 				case Orientation.HORIZONTAL:
@@ -54,33 +54,61 @@ namespace GameHub.UI.Widgets
 		public void set_source(Pixbuf? buf)
 		{
 			src = buf;
+			queue_draw();
+		}
+
+		public void load(string? url, string cache_prefix=ImageCache.DEFAULT_CACHED_FILE_PREFIX)
+		{
+			if(url == null || url == "")
+			{
+				set_source(null);
+				return;
+			}
+			ImageCache.load.begin(url, cache_prefix, (obj, res) => {
+				set_source(ImageCache.load.end(res));
+			});
+		}
+
+		public override SizeRequestMode get_request_mode()
+		{
+			switch(constraint)
+			{
+				case Orientation.HORIZONTAL: return SizeRequestMode.HEIGHT_FOR_WIDTH;
+				case Orientation.VERTICAL: return SizeRequestMode.WIDTH_FOR_HEIGHT;
+				default: return SizeRequestMode.CONSTANT_SIZE;
+			}
+		}
+
+		public override void get_preferred_width_for_height(int height, out int minimum_width, out int natural_width)
+		{
+			if(constraint == Orientation.VERTICAL)
+			{
+				minimum_width = natural_width = (int) (height / ratio);
+			}
+			else
+			{
+				base.get_preferred_width_for_height(height, out minimum_width, out natural_width);
+			}
+		}
+
+		public override void get_preferred_height_for_width(int width, out int minimum_height, out int natural_height)
+		{
+			if(constraint == Orientation.HORIZONTAL)
+			{
+				minimum_height = natural_height = (int) (width * ratio);
+			}
+			else
+			{
+				base.get_preferred_height_for_width(width, out minimum_height, out natural_height);
+			}
 		}
 
 		public override bool draw(Cairo.Context ctx)
 		{
 			ctx.scale(1.0 / scale_factor, 1.0 / scale_factor);
 
-			Allocation rect;
-			get_allocation(out rect);
-
-			int new_width = 0;
-			int new_height = 0;
-
-			switch(constraint)
-			{
-				case Orientation.HORIZONTAL:
-					new_width = int.max(cmin, int.min(cmax, rect.width));
-					new_height = (int) (new_width * ratio);
-					break;
-
-				case Orientation.VERTICAL:
-					new_height = int.max(cmin, int.min(cmax, rect.height));
-					new_width = (int) (new_height / ratio);
-					break;
-			}
-
-			new_width  *= scale_factor;
-			new_height *= scale_factor;
+			var width = get_allocated_width() * scale_factor;
+			var height = get_allocated_height() * scale_factor;
 
 			if(src != null)
 			{
@@ -88,23 +116,12 @@ namespace GameHub.UI.Widgets
 
 				if(src.width > cmin || src.height > cmin || src.width != src.height)
 				{
-					pixbuf = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
+					pixbuf = src.scale_simple(width, height, InterpType.BILINEAR);
 				}
-				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, new_width, new_height, corner_radius * scale_factor);
-				cairo_set_source_pixbuf(ctx, pixbuf, (new_width - pixbuf.width) / 2, (new_height - pixbuf.height) / 2);
+				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, width, height, corner_radius * scale_factor);
+				cairo_set_source_pixbuf(ctx, pixbuf, (width - pixbuf.width) / 2, (height - pixbuf.height) / 2);
 				ctx.clip();
 				ctx.paint();
-			}
-
-			switch(constraint)
-			{
-				case Orientation.HORIZONTAL:
-					set_size_request(cmin, new_height / scale_factor);
-					break;
-
-				case Orientation.VERTICAL:
-					set_size_request(new_width / scale_factor, cmin);
-					break;
 			}
 
 			return false;

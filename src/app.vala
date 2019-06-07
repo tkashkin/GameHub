@@ -50,8 +50,10 @@ namespace GameHub
 		private static bool opt_show_compat = false;
 		private static bool opt_show = false;
 		private static bool opt_settings = false;
+		private static bool opt_about = false;
 		private static bool opt_gdb = false;
 		private static bool opt_gdb_bt_full = false;
+		private static bool opt_gdb_fatal_criticals = false;
 
 		public static int worker_threads = -1;
 
@@ -59,6 +61,7 @@ namespace GameHub
 
 		public const string ACTION_PREFIX                          = "app.";
 		public const string ACTION_SETTINGS                        = "settings";
+		public const string ACTION_ABOUT                           = "about";
 		public const string ACTION_CORRUPTED_INSTALLER_PICK_ACTION = "corrupted-installer.pick-action";
 		public const string ACTION_CORRUPTED_INSTALLER_SHOW        = "corrupted-installer.show";
 		public const string ACTION_CORRUPTED_INSTALLER_BACKUP      = "corrupted-installer.backup";
@@ -67,8 +70,11 @@ namespace GameHub
 		public const string ACTION_GAME_DETAILS                    = "game.details";
 		public const string ACTION_GAME_PROPERTIES                 = "game.properties";
 
+		public const string ACCEL_SETTINGS                         = "<Control>S";
+
 		private const GLib.ActionEntry[] action_entries = {
 			{ ACTION_SETTINGS,                        action_settings },
+			{ ACTION_ABOUT,                           action_about },
 			{ ACTION_CORRUPTED_INSTALLER_PICK_ACTION, action_corrupted_installer, "(ss)" },
 			{ ACTION_CORRUPTED_INSTALLER_SHOW,        action_corrupted_installer, "(ss)" },
 			{ ACTION_CORRUPTED_INSTALLER_BACKUP,      action_corrupted_installer, "(ss)" },
@@ -83,11 +89,13 @@ namespace GameHub
 			{ "version", 'v', 0, OptionArg.NONE, out opt_show_version, N_("Show application version and exit"), null },
 			{ "gdb", 0, 0, OptionArg.NONE, out opt_gdb, N_("Restart with GDB debugger attached"), null },
 			{ "gdb-bt-full", 0, 0, OptionArg.NONE, out opt_gdb_bt_full, N_("Show full GDB backtrace"), null },
+			{ "gdb-fatal-criticals", 0, 0, OptionArg.NONE, out opt_gdb_fatal_criticals, N_("Treat fatal errors as criticals and crash application"), null },
 			{ null }
 		};
 		private const OptionEntry[] options = {
 			{ "show", 's', 0, OptionArg.NONE, out opt_show, N_("Show main window"), null },
 			{ "settings", 0, 0, OptionArg.NONE, out opt_settings, N_("Show application settings dialog"), null },
+			{ "about", 0, 0, OptionArg.NONE, out opt_about, N_("Show about dialog"), null },
 			{ "worker-threads", 'j', 0, OptionArg.INT, out worker_threads, N_("Maximum number of background worker threads"), "THREADS" },
 			{ null }
 		};
@@ -113,6 +121,7 @@ namespace GameHub
 			flags = ApplicationFlags.HANDLES_COMMAND_LINE;
 			instance = this;
 			add_action_entries(action_entries, this);
+			set_accels_for_action(ACTION_PREFIX + ACTION_SETTINGS, { ACCEL_SETTINGS });
 		}
 
 		private void init()
@@ -120,7 +129,7 @@ namespace GameHub
 			if(Platforms != null && GameSources != null && CompatTools != null) return;
 
 			FSUtils.make_dirs();
-
+			ImageCache.init();
 			Database.create();
 
 			Platforms = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS };
@@ -133,6 +142,10 @@ namespace GameHub
 			{
 				tools += new Compat.Proton(appid);
 			}
+
+			CompatTools = tools;
+
+			tools += new Compat.Proton(Compat.Proton.LATEST);
 
 			string[] wine_binaries = { "wine"/*, "wine64", "wine32"*/ };
 			string[] wine_arches = { "win64", "win32" };
@@ -148,8 +161,7 @@ namespace GameHub
 
 			CompatTools = tools;
 
-			weak IconTheme default_theme = IconTheme.get_default();
-			default_theme.add_resource_path("/com/github/tkashkin/gamehub/icons");
+			IconTheme.get_default().add_resource_path("/com/github/tkashkin/gamehub/icons");
 
 			var screen = Screen.get_default();
 
@@ -267,14 +279,14 @@ namespace GameHub
 
 			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
 
-			if(opt_gdb || opt_gdb_bt_full)
+			if(opt_gdb || opt_gdb_bt_full || opt_gdb_fatal_criticals)
 			{
 				string[] current_args = arguments;
 				string[] cmd_args = {};
 				for(int i = 1; i < current_args.length; i++)
 				{
 					var arg = current_args[i];
-					if(arg != "--gdb")
+					if(arg != "--gdb" && arg != "--gdb-bt-full" && arg != "--gdb-fatal-criticals")
 					{
 						cmd_args += arg;
 					}
@@ -288,6 +300,7 @@ namespace GameHub
 				string[] exec_cmd = {
 					"gdb", "-q", "--batch",
 					"-ex", @"set args $cmd_args_string",
+					"-ex", (opt_gdb_fatal_criticals ? "set env G_DEBUG = fatal-criticals" : "unset env G_DEBUG"),
 					"-ex", "set pagination off",
 					"-ex", "handle SIGHUP nostop pass",
 					"-ex", "handle SIGQUIT nostop pass",
@@ -300,7 +313,6 @@ namespace GameHub
 					"-ex", "set print thread-events off",
 					"-ex", "run",
 					"-ex", "thread apply all bt" + (opt_gdb_bt_full ? " full" : ""),
-					"--tty=/dev/stdout",
 					current_args[0]
 				};
 
@@ -347,6 +359,11 @@ namespace GameHub
 			if(opt_settings)
 			{
 				activate_action(ACTION_SETTINGS, null);
+			}
+
+			if(opt_about)
+			{
+				activate_action(ACTION_ABOUT, null);
 			}
 
 			if(opt_run != null)
@@ -398,28 +415,14 @@ namespace GameHub
 			println(plain, "DE:      %s", Utils.get_desktop_environment() ?? "unknown");
 		}
 
-		private static async void run_game(Game game, bool show_compat)
-		{
-			if(game.status.state == Game.State.INSTALLED)
-			{
-				if(game.use_compat)
-				{
-					yield game.run_with_compat(show_compat);
-				}
-				else
-				{
-					yield game.run();
-				}
-			}
-			else if(game.status.state == Game.State.UNINSTALLED)
-			{
-				yield game.install();
-			}
-		}
-
 		private static void action_settings(SimpleAction action, Variant? args)
 		{
-			new UI.Dialogs.SettingsDialog.SettingsDialog();
+			new GameHub.UI.Dialogs.SettingsDialog.SettingsDialog();
+		}
+
+		private static void action_about(SimpleAction action, Variant? args)
+		{
+			new GameHub.UI.Dialogs.SettingsDialog.SettingsDialog("about");
 		}
 
 		private static void action_corrupted_installer(SimpleAction action, Variant? args)
@@ -497,8 +500,8 @@ namespace GameHub
 						{
 							case ACTION_GAME_RUN:
 								info("Starting `%s`", game.name);
-								run_game.begin(game, opt_show_compat, (obj, res) => {
-									run_game.end(res);
+								game.run_or_install.begin(opt_show_compat, (obj, res) => {
+									game.run_or_install.end(res);
 									info("`%s` finished", game.name);
 									loop.quit();
 								});

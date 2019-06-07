@@ -9,3 +9,5 @@ option('flatpak', type: 'boolean', value: false)
 option('snap', type: 'boolean', value: false)
 
 option('runtime', type: 'string', value: '')
+
+option('use_libunity', type: 'boolean', value: false)

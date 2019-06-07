@@ -107,7 +107,7 @@ namespace GameHub.Data
 
 		public override async void run()
 		{
-			if(!RunnableIsLaunched && executable.query_exists())
+			if(!RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning && executable.query_exists())
 			{
 				RunnableIsLaunched = is_running = true;
 				update_status();
@@ -119,14 +119,17 @@ namespace GameHub.Data
 					var variables = new HashMap<string, string>();
 					variables.set("game", name.replace(": ", " - ").replace(":", ""));
 					variables.set("game_dir", install_dir.get_path());
-					var args = arguments.split(" ");
-					foreach(var arg in args)
+					var args = Utils.parse_args(arguments);
+					if(args != null)
 					{
-						if("$" in arg)
+						foreach(var arg in args)
 						{
-							arg = FSUtils.expand(arg, null, variables);
+							if("$" in arg)
+							{
+								arg = FSUtils.expand(arg, null, variables);
+							}
+							cmd += arg;
 						}
-						cmd += arg;
 					}
 				}
 
@@ -138,6 +141,25 @@ namespace GameHub.Data
 
 				RunnableIsLaunched = is_running = false;
 				update_status();
+			}
+		}
+
+		public async void run_or_install(bool show_compat=false)
+		{
+			if(status.state == Game.State.INSTALLED)
+			{
+				if(use_compat)
+				{
+					yield run_with_compat(show_compat);
+				}
+				else
+				{
+					yield run();
+				}
+			}
+			else if(status.state == Game.State.UNINSTALLED)
+			{
+				yield install();
 			}
 		}
 

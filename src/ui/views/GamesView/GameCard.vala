@@ -55,6 +55,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private Frame progress_bar;
 
+		private Image no_image_indicator;
 		private Image running_indicator;
 
 		construct
@@ -95,6 +96,7 @@ namespace GameHub.UI.Views.GamesView
 			label.hexpand = true;
 			label.justify = Justification.CENTER;
 			label.lines = 3;
+			label.ellipsize = Pango.EllipsizeMode.END;
 			label.set_line_wrap(true);
 
 			favorite_icon = new Image.from_icon_name("gh-game-favorite-symbolic", IconSize.BUTTON);
@@ -133,10 +135,17 @@ namespace GameHub.UI.Views.GamesView
 			progress_bar.valign = Align.END;
 			progress_bar.get_style_context().add_class("progress");
 
+			no_image_indicator = new Image.from_icon_name("gamehub-symbolic", IconSize.DIALOG);
+			no_image_indicator.get_style_context().add_class("no-image-indicator");
+			no_image_indicator.halign = Align.CENTER;
+			no_image_indicator.valign = Align.CENTER;
+			no_image_indicator.opacity = 0;
+
 			running_indicator = new Image.from_icon_name("system-run-symbolic", IconSize.DIALOG);
 			running_indicator.get_style_context().add_class("running-indicator");
 			running_indicator.halign = Align.CENTER;
 			running_indicator.valign = Align.CENTER;
+			running_indicator.opacity = 0;
 
 			content.add(image);
 			content.add_overlay(actions);
@@ -146,6 +155,7 @@ namespace GameHub.UI.Views.GamesView
 			content.add_overlay(favorite_icon);
 			content.add_overlay(updated_icon);
 			content.add_overlay(progress_bar);
+			content.add_overlay(no_image_indicator);
 			content.add_overlay(running_indicator);
 
 			card.add(content);
@@ -153,17 +163,22 @@ namespace GameHub.UI.Views.GamesView
 			content.add_events(EventMask.ALL_EVENTS_MASK);
 			content.enter_notify_event.connect(e => { card.get_style_context().add_class("hover"); });
 			content.leave_notify_event.connect(e => { card.get_style_context().remove_class("hover"); });
-			content.button_release_event.connect(e => {
+			content.button_press_event.connect(e => {
 				switch(e.button)
 				{
 					case 1:
-						run_game();
+						if(!Settings.UI.get_instance().grid_doubleclick || (Settings.UI.get_instance().grid_doubleclick && e.type == EventType.2BUTTON_PRESS))
+						{
+							game.run_or_install.begin();
+						}
 						break;
 
 					case 3:
 						open_context_menu(e, true);
 						break;
 				}
+				((FlowBox) parent).select_child(this);
+				grab_focus();
 				return true;
 			});
 			key_release_event.connect(e => {
@@ -172,19 +187,15 @@ namespace GameHub.UI.Views.GamesView
 					case Key.Return:
 					case Key.space:
 					case Key.KP_Space:
-						run_game();
+						game.run_or_install.begin();
 						return true;
 
-					case Key.Control_L:
-					case Key.Control_R:
 					case Key.Menu:
 						open_context_menu(e, false);
 						return true;
 				}
 				return false;
 			});
-
-			show_all();
 		}
 
 		public GameCard(Game game)
@@ -242,11 +253,13 @@ namespace GameHub.UI.Views.GamesView
 					{
 						card.get_style_context().add_class("running");
 						running_indicator.opacity = 1;
+						no_image_indicator.opacity = 0;
 					}
 					else
 					{
 						card.get_style_context().remove_class("running");
 						running_indicator.opacity = 0;
+						no_image_indicator.opacity = game.image == null ? 1 : 0;
 					}
 					return Source.REMOVE;
 				});
@@ -254,7 +267,8 @@ namespace GameHub.UI.Views.GamesView
 			game.status_change(game.status);
 
 			game.notify["image"].connect(() => {
-				Utils.load_image.begin(image, game.image, "image");
+				image.load(game.image, "image");
+				no_image_indicator.opacity = game.image == null && !game.is_running ? 1 : 0;
 			});
 			game.notify_property("image");
 
@@ -271,25 +285,6 @@ namespace GameHub.UI.Views.GamesView
 			}
 
 			Settings.UI.get_instance().notify["show-grid-icons"].connect(update);
-		}
-
-		private void run_game()
-		{
-			if(game.status.state == Game.State.INSTALLED)
-			{
-				if(game.use_compat)
-				{
-					game.run_with_compat.begin(false);
-				}
-				else
-				{
-					game.run.begin();
-				}
-			}
-			else if(game.status.state == Game.State.UNINSTALLED)
-			{
-				game.install.begin();
-			}
 		}
 
 		private void open_context_menu(Event e, bool at_pointer=true)
@@ -330,6 +325,12 @@ namespace GameHub.UI.Views.GamesView
 			platform_icons.show_all();
 
 			src_icons.visible = platform_icons.visible = Settings.UI.get_instance().show_grid_icons;
+		}
+
+		public override void show_all()
+		{
+			base.show_all();
+			update();
 		}
 	}
 }

@@ -24,7 +24,11 @@ namespace GameHub.Data.Compat
 {
 	public class Innoextract: CompatTool
 	{
+		private const int[] MIN_SUPPORTED_VERSION = { 1, 8 };
+
 		public string binary { get; construct; default = "innoextract"; }
+
+		public string? version { get; construct; default = null; }
 
 		public Innoextract(string binary="innoextract")
 		{
@@ -33,12 +37,26 @@ namespace GameHub.Data.Compat
 
 		construct
 		{
-			id = @"innoextract";
-			name = @"Innoextract";
+			id = "innoextract";
+			name = "Innoextract";
 			icon = "package-x-generic-symbolic";
 
 			executable = Utils.find_executable(binary);
 			installed = executable != null && executable.query_exists();
+
+			if(installed)
+			{
+				version = Utils.run({ executable.get_path(), "-v", "-q", "-c", "0" }, null, null, false, true, false).replace(id, "").strip();
+				name = name + " (" + version + ")";
+
+				if(Utils.compare_versions(Utils.parse_version(version), Innoextract.MIN_SUPPORTED_VERSION) < 0)
+				{
+					warnings = {
+						_("Innoextract <b>%1$s</b> is not supported and may not be able to extract some games correctly.\nInstall innoextract <b>%2$s</b> or newer.")
+							.printf(version, Utils.format_version(Innoextract.MIN_SUPPORTED_VERSION))
+					};
+				}
+			}
 		}
 
 		public override bool can_install(Runnable runnable)
@@ -56,7 +74,13 @@ namespace GameHub.Data.Compat
 			if(runnable is Sources.GOG.GOGGame) cmd += "--gog";
 			cmd += installer.get_path();
 			yield Utils.run_thread(cmd, installer.get_parent().get_path());
-			FSUtils.mv_up(runnable.install_dir, "app");
+
+			do
+			{
+				FSUtils.mv_up(runnable.install_dir, "__support");
+				FSUtils.mv_up(runnable.install_dir, "app");
+			}
+			while(runnable.install_dir.get_child("__support").query_exists());
 		}
 	}
 }

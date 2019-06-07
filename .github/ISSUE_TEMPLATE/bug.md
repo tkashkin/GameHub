@@ -29,7 +29,16 @@ Note that leaving sections blank or being vague will make it difficult to help y
 
 ###### Version and environment
 
-<!-- Paste output of `com.github.tkashkin.gamehub -v` below: -->
+<!--
+Paste GameHub version and environment info below.
+
+To get version and environment info either:
+* Run this in your terminal: `com.github.tkashkin.gamehub -v`
+or:
+* Open GameHub settings
+* Click About button in top right of settings dialog
+* Click Copy button in top right of about dialog
+-->
 ```
 PASTE VERSION INFO HERE
 ```

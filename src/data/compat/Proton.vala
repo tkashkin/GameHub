@@ -24,7 +24,8 @@ namespace GameHub.Data.Compat
 {
 	public class Proton: Wine
 	{
-		public const string[] APPIDS = {"996510", "961940", "930400", "858280"}; // 3.16 Beta, 3.16, 3.7 Beta, 3.7
+		public const string[] APPIDS = {"1054830", "996510", "961940", "930400", "858280"}; // 4.2, 3.16 Beta, 3.16, 3.7 Beta, 3.7
+		public const string LATEST = "latest";
 
 		public string appid { get; construct; }
 
@@ -58,20 +59,42 @@ namespace GameHub.Data.Compat
 				opt_env,
 				install_opt_innosetup_args,
 				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
-				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), true),
-				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), true),
-				new CompatTool.BoolOption("/NOGUI", _("No GUI"), true)
+				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), false),
+				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), false),
+				new CompatTool.BoolOption("/NOGUI", _("No GUI"), false)
 			};
 
-			File? proton_dir = null;
-			if(Steam.find_app_install_dir(appid, out proton_dir))
+			if(appid == Proton.LATEST)
 			{
-				if(proton_dir != null)
+				foreach(var tool in CompatTools)
 				{
-					name = proton_dir.get_basename();
-					executable = proton_dir.get_child("proton");
-					installed = executable.query_exists();
-					wine_binary = proton_dir.get_child("dist/bin/wine");
+					if(tool is Proton)
+					{
+						var proton = tool as Proton;
+						if(proton.installed)
+						{
+							appid = proton.appid;
+							name = "Proton (latest)";
+							executable = proton.executable;
+							installed = true;
+							wine_binary = proton.wine_binary;
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				File? proton_dir = null;
+				if(Steam.find_app_install_dir(appid, out proton_dir))
+				{
+					if(proton_dir != null)
+					{
+						name = proton_dir.get_basename();
+						executable = proton_dir.get_child("proton");
+						installed = executable.query_exists();
+						wine_binary = proton_dir.get_child("dist/bin/wine");
+					}
 				}
 			}
 
@@ -113,12 +136,14 @@ namespace GameHub.Data.Compat
 
 		public override File get_default_wineprefix(Runnable runnable)
 		{
-			var prefix = FSUtils.mkdir(runnable.install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)/pfx");
+			var install_dir = runnable.install_dir ?? runnable.default_install_dir;
+
+			var prefix = FSUtils.mkdir(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)/pfx");
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(FSUtils.file(runnable.install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
+			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}, runnable.install_dir.get_path());
+				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}, install_dir.get_path());
 				FSUtils.rm(dosdevices.get_child("d:").get_path());
 			}
 
@@ -150,6 +175,9 @@ namespace GameHub.Data.Compat
 		protected override string[] prepare_env(Runnable runnable, bool parse_opts=true)
 		{
 			var env = base.prepare_env(runnable, parse_opts);
+
+			var dist = executable.get_parent().get_child("dist").get_path();
+			env = Environ.set_variable(env, "WINEDLLPATH", @"$(dist)/lib64/wine:$(dist)/lib/wine");
 
 			var compatdata = get_wineprefix(runnable).get_parent();
 			if(compatdata != null && compatdata.query_exists())
@@ -193,7 +221,12 @@ namespace GameHub.Data.Compat
 				prefix = opt_prefix.file.get_child("pfx");
 			}
 
-			yield Utils.run_thread({ executable.get_path(), "run", prefix.get_child("drive_c/windows/system32/cmd.exe").get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
+			var cmd = prefix.get_child("drive_c/windows/system32/cmd.exe");
+
+			if(!cmd.query_exists())
+			{
+				yield Utils.run_thread({ executable.get_path(), "run", cmd.get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
+			}
 		}
 	}
 }

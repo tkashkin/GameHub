@@ -86,6 +86,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				foreach(var achievement in game.achievements)
 				{
 					var image = new AutoSizeImage();
+					image.valign = Align.CENTER;
 					image.corner_radius = IMAGE_SIZE / 2;
 					image.set_constraint(IMAGE_SIZE, IMAGE_SIZE, 1);
 					image.set_size_request(IMAGE_SIZE, IMAGE_SIZE);
@@ -108,7 +109,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 						image.tooltip_markup += "\n" + """<span weight="600" size="smaller">%s</span>""".printf(_("Global percentage: %g%%").printf(achievement.global_percentage));
 					}
 
-					Utils.load_image.begin(image, achievement.image, @"achievement_$(game.source.id)_$(game.id)");
+					image.load(achievement.image, @"achievement_$(game.source.id)_$(game.id)");
 					achievements_box.add(image);
 				}
 				achievements_box.show_all();

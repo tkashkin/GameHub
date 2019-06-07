@@ -50,6 +50,8 @@
 		"--filesystem=~/.config/dconf:ro",
 		"--env=DCONF_USER_CONFIG_DIR=.config/dconf",
 
+		"--talk-name=com.canonical.Unity",
+
 		"--filesystem=host",
 		"--filesystem=home",
 		"--filesystem=~/.var/app/com.valvesoftware.Steam"

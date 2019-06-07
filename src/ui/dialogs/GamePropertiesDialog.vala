@@ -204,8 +204,8 @@ namespace GameHub.UI.Dialogs
 
 			properties_box.add(image_search_links);
 
-			Utils.load_image.begin(image_view, game.image, "image");
-			Utils.load_image.begin(icon_view, game.icon, "icon");
+			image_view.load(game.image, "image");
+			icon_view.load(game.icon, "icon");
 
 			var space = new Box(Orientation.VERTICAL, 0);
 			space.vexpand = true;
@@ -220,6 +220,7 @@ namespace GameHub.UI.Dialogs
 				var executable_picker = new FileChooserEntry(_("Select executable"), FileChooserAction.OPEN, "application-x-executable", _("Executable"), false, true);
 				try
 				{
+					executable_picker.set_default_directory(game.install_dir);
 					executable_picker.select_file(game.executable);
 				}
 				catch(Error e)
@@ -256,7 +257,7 @@ namespace GameHub.UI.Dialogs
 				var compat_force_switch = add_switch(_("Force compatibility mode"), game.force_compat, f => { game.force_compat = f; });
 				compat_force_switch.no_show_all = true;
 
-				var compat_tool = new CompatToolPicker(game, false);
+				var compat_tool = new CompatToolPicker(game, false, true);
 				compat_tool.no_show_all = true;
 				compat_tool.margin_start = compat_tool.margin_end = 4;
 				properties_box.add(compat_tool);
@@ -368,7 +369,7 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				Utils.load_image.begin(image_view, url, "image");
+				image_view.load(url, "image");
 			}
 		}
 
@@ -382,7 +383,7 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				Utils.load_image.begin(icon_view, url, "icon");
+				icon_view.load(url, "icon");
 			}
 		}
 

@@ -67,9 +67,10 @@ namespace GameHub.UI.Views.GamesView
 			if(dl_info.icon != null)
 			{
 				image = new AutoSizeImage();
+				image.valign = Align.START;
 				image.set_constraint(48, 48, 1);
 				image.set_size_request(48, 48);
-				Utils.load_image.begin(image, dl_info.icon, "icon");
+				image.load(dl_info.icon, "icon");
 				image_overlay.add(image);
 			}
 			else if(dl_info.icon_name != null)
@@ -87,7 +88,7 @@ namespace GameHub.UI.Views.GamesView
 				type_image.halign = Align.END;
 				type_image.valign = Align.END;
 				type_image.get_style_context().add_class("dl-progress-type-icon");
-				Utils.load_image.begin(type_image, dl_info.type_icon, "icon");
+				type_image.load(dl_info.type_icon, "icon");
 				image_overlay.add_overlay(type_image);
 			}
 			else if(dl_info.type_icon_name != null)
@@ -118,7 +119,6 @@ namespace GameHub.UI.Views.GamesView
 			progress_bar = new ProgressBar();
 			progress_bar.hexpand = true;
 			progress_bar.fraction = 0d;
-			progress_bar.get_style_context().add_class(Gtk.STYLE_CLASS_OSD);
 
 			action_pause = new Button.from_icon_name("media-playback-pause-symbolic");
 			action_pause.tooltip_text = _("Pause download");
@@ -161,9 +161,9 @@ namespace GameHub.UI.Views.GamesView
 					progress_bar.fraction = s.progress;
 
 					action_cancel.visible = true;
-					action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.PAUSED;
-					action_pause.visible = dl_info.download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED;
-					action_resume.visible = dl_info.download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED;
+					action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.QUEUED || ds == Downloader.DownloadState.PAUSED;
+					action_pause.visible = dl_info.download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
+					action_resume.visible = dl_info.download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
 
 					return Source.REMOVE;
 				});

@@ -73,10 +73,16 @@ namespace GameHub.UI.Views
 			skip_btn.valign = Align.CENTER;
 
 			settings = new Button();
-			settings.tooltip_text = _("Settings");
-			settings.image = new Image.from_icon_name("open-menu", IconSize.LARGE_TOOLBAR);
+			settings.valign = Align.CENTER;
+			Utils.set_accel_tooltip(settings, _("Settings"), Application.ACCEL_SETTINGS);
+			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
+			settings.action_name = Application.ACTION_PREFIX + Application.ACTION_SETTINGS;
 
-			settings.clicked.connect(() => new Dialogs.SettingsDialog.SettingsDialog());
+			ui_settings.notify["symbolic-icons"].connect(() => {
+				(settings.image as Image).icon_name = "open-menu" + Settings.UI.symbolic_icon_suffix;
+				(settings.image as Image).icon_size = Settings.UI.headerbar_icon_size;
+			});
+
 			empty_alert.action_activated.connect(() => settings.clicked());
 
 			titlebar.pack_end(settings);

@@ -26,6 +26,7 @@ namespace GameHub.Data.Sources.Humble
 	{
 		public string order_id;
 
+		private bool game_info_updating = false;
 		private bool game_info_updated = false;
 		private bool game_info_refreshed = false;
 
@@ -177,6 +178,9 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void update_game_info()
 		{
+			if(game_info_updating) return;
+			game_info_updating = true;
+
 			update_status();
 
 			mount_overlays();
@@ -192,7 +196,11 @@ namespace GameHub.Data.Sources.Humble
 				image = icon;
 			}
 
-			if(game_info_updated) return;
+			if(game_info_updated)
+			{
+				game_info_updating = false;
+				return;
+			}
 
 			if(info == null || info.length == 0)
 			{
@@ -202,11 +210,23 @@ namespace GameHub.Data.Sources.Humble
 				headers["Cookie"] = @"$(Humble.AUTH_COOKIE)=\"$(token)\";";
 
 				var root_node = yield Parser.parse_remote_json_file_async(@"https://www.humblebundle.com/api/v1/order/$(order_id)?ajax=true", "GET", null, headers);
-				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return;
+				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT)
+				{
+					game_info_updating = false;
+					return;
+				}
 				var root = root_node.get_object();
-				if(root == null) return;
+				if(root == null)
+				{
+					game_info_updating = false;
+					return;
+				}
 				var products = root.get_array_member("subproducts");
-				if(products == null) return;
+				if(products == null)
+				{
+					game_info_updating = false;
+					return;
+				}
 				foreach(var product_node in products.get_elements())
 				{
 					if(product_node.get_object().get_string_member("machine_name") != id) continue;
@@ -215,13 +235,19 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
-			if(installers.size > 0) return;
-
 			var product_node = Parser.parse_json(info);
-			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return;
+			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT)
+			{
+				game_info_updating = false;
+				return;
+			}
 
 			var product = product_node.get_object();
-			if(product == null) return;
+			if(product == null)
+			{
+				game_info_updating = false;
+				return;
+			}
 
 			if(product.has_member("description-text"))
 			{
@@ -231,6 +257,24 @@ namespace GameHub.Data.Sources.Humble
 			{
 				description = product.get_string_member("_gamehub_description");
 			}
+
+			save();
+
+			update_status();
+
+			game_info_updated = true;
+			game_info_updating = false;
+		}
+
+		private async void update_installers()
+		{
+			if(installers.size > 0) return;
+
+			var product_node = Parser.parse_json(info);
+			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return;
+
+			var product = product_node.get_object();
+			if(product == null) return;
 
 			if(product.has_member("downloads"))
 			{
@@ -269,20 +313,34 @@ namespace GameHub.Data.Sources.Humble
 
 				if(refresh && !game_info_refreshed)
 				{
-					//debug("[HumbleGame.update_game_info] Refreshing");
 					game_info_refreshed = true;
 					game_info_updated = false;
 					installers.clear();
 					yield update_game_info();
+					yield update_installers();
 					return;
 				}
 			}
 
-			save();
+			is_installable = installers.size > 0;
 
-			update_status();
-
-			game_info_updated = true;
+			if(installers.size == 0 && source is Trove)
+			{
+				Utils.notify(
+					_("%s: no available installers").printf(name),
+					_("Cannot get Trove download URL.\nMake sure your Humble Monthly subscription is active."),
+					NotificationPriority.HIGH,
+					n => {
+						n.set_icon(new ThemedIcon("dialog-warning"));
+						var cached_icon = ImageCache.local_file(icon, "icon");
+						if(cached_icon != null && cached_icon.query_exists())
+						{
+							n.set_icon(new FileIcon(cached_icon));
+						}
+						return n;
+					}
+				);
+			}
 		}
 
 		private bool process_download(string id, string? dl_id, string os, Json.Object dl_struct)
@@ -326,7 +384,7 @@ namespace GameHub.Data.Sources.Humble
 
 		public override async void install()
 		{
-			yield update_game_info();
+			yield update_installers();
 
 			if(installers.size < 1) return;
 
@@ -375,6 +433,8 @@ namespace GameHub.Data.Sources.Humble
 
 		public class Installer: Runnable.Installer
 		{
+			private File? installers_dir;
+
 			public string dl_name;
 			public string? dl_id;
 			public Runnable.Installer.Part part;
@@ -390,9 +450,13 @@ namespace GameHub.Data.Sources.Humble
 				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
 				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
-				if(game.installers_dir == null) return;
+
+				installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(game.name, platform)) ?? game.installers_dir;
+
+				if(installers_dir == null) return;
+
 				var remote = File.new_for_uri(url);
-				var local = game.installers_dir.get_child("humble_" + game.id + "_" + id);
+				var local = installers_dir.get_child("humble_" + game.id + "_" + id);
 
 				string? hash = null;
 				ChecksumType hash_type = ChecksumType.MD5;

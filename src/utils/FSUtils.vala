@@ -76,11 +76,13 @@ namespace GameHub.Utils
 			public class Steam
 			{
 				public static string Home { owned get { return FSUtils.Paths.Settings.get_instance().steam_home; } }
-				public static string Config { owned get { return FSUtils.Paths.Steam.Home + "/steam/config"; } }
-				public static string LoginUsersVDF { owned get { return FSUtils.Paths.Steam.Config + "/loginusers.vdf"; } }
+				public const string Config = "steam/config";
+				public const string LoginUsersVDF = FSUtils.Paths.Steam.Config + "/loginusers.vdf";
 
-				public static string SteamApps { owned get { return FSUtils.Paths.Steam.Home + "/steam/steamapps"; } }
-				public static string LibraryFoldersVDF { owned get { return FSUtils.Paths.Steam.SteamApps + "/libraryfolders.vdf"; } }
+				public const string SteamApps = "steam/steamapps";
+				public const string LibraryFoldersVDF = "libraryfolders.vdf";
+
+				public const string RegistryVDF = "registry.vdf";
 			}
 
 			public class GOG
@@ -127,37 +129,41 @@ namespace GameHub.Utils
 					public string dlc { get; set; }
 					public string bonus { get; set; }
 
-					public static string expand_game_dir(string game)
+					public static string expand_game_dir(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
 						variables.set("game", g);
+						variables.set("platform_name", platform == null ? "" : platform.name());
+						variables.set("platform", platform == null ? "" : platform.id());
 						return FSUtils.expand(get_instance().game_dir, null, variables);
 					}
-					public static string expand_dlc(string game)
+					public static string expand_dlc(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
-						variables.set("game", g);
-						variables.set("game_dir", expand_game_dir(g));
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
+						variables.set("game_dir", expand_game_dir(g, platform));
 						return FSUtils.expand(get_instance().dlc, null, variables);
 					}
-					public static string expand_installers(string game, string? dlc=null)
+					public static string expand_installers(string game, string? dlc=null, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var d = dlc == null ? null : dlc.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
-						variables.set("game", g);
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
 						if(d == null)
 						{
-							variables.set("game_dir", expand_game_dir(g));
+							variables.set("game_dir", expand_game_dir(g, platform));
 						}
 						else
 						{
-							variables.set("game_dir", expand_dlc(g) + "/" + d);
+							variables.set("game_dir", expand_dlc(g, platform) + "/" + d);
 						}
 						return FSUtils.expand(get_instance().installers, null, variables);
 					}
@@ -167,7 +173,6 @@ namespace GameHub.Utils
 						var d = dlc == null ? null : dlc.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
-						variables.set("game", g);
 						if(d == null)
 						{
 							variables.set("game_dir", expand_game_dir(g));
@@ -200,21 +205,24 @@ namespace GameHub.Utils
 					public string game_dir { get; set; }
 					public string installers { get; set; }
 
-					public static string expand_game_dir(string game)
+					public static string expand_game_dir(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
 						variables.set("game", g);
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
 						return FSUtils.expand(get_instance().game_dir, null, variables);
 					}
-					public static string expand_installers(string game)
+					public static string expand_installers(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.get_instance().root);
-						variables.set("game", g);
-						variables.set("game_dir", expand_game_dir(g));
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
+						variables.set("game_dir", expand_game_dir(g, platform));
 						return FSUtils.expand(get_instance().installers, null, variables);
 					}
 
@@ -247,7 +255,9 @@ namespace GameHub.Utils
 					expanded_path = expanded_path.replace("${" + v.key + "}", v.value).replace("$" + v.key, v.value);
 				}
 			}
-			return expanded_path.replace("~/.cache", Environment.get_user_cache_dir()).replace("~", Environment.get_home_dir()) + (file != null && file != "" ? "/" + file : "");
+			expanded_path = Utils.replace_prefix(expanded_path, "~/.cache", Environment.get_user_cache_dir());
+			expanded_path = Utils.replace_prefix(expanded_path, "~", Environment.get_home_dir());
+			return expanded_path + (file != null && file != "" ? "/" + file : "");
 		}
 
 		public static File? file(string? path, string? file=null, HashMap<string, string>? variables=null)
@@ -320,15 +330,15 @@ namespace GameHub.Utils
 
 		public static void rm(string path, string? file=null, string flags="-f", HashMap<string, string>? variables=null)
 		{
-			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") });
+			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") }, null, null, false, false, false);
 		}
 
-		public static void mv_up(File path, string dirname)
+		public static void mv_up(File? path, string dirname)
 		{
 			try
 			{
+				if(path == null || !path.get_child(dirname).query_exists() || path.get_child(dirname).query_file_type(FileQueryInfoFlags.NONE) != FileType.DIRECTORY) return;
 				var tmp_dir = path.get_child(dirname).set_display_name(".gh_" + dirname + "_" + Utils.md5(dirname)); // rename source dir in case there's a child with the same name
-				debug("[FSUtils.mv_up] %s", tmp_dir.get_path());
 				FileInfo? finfo = null;
 				var enumerator = tmp_dir.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
 				while((finfo = enumerator.next_file()) != null)
@@ -336,13 +346,38 @@ namespace GameHub.Utils
 					var src = tmp_dir.get_child(finfo.get_name());
 					var dest = path.get_child(finfo.get_name());
 					debug("[FSUtils.mv_up] '%s' -> '%s'", src.get_path(), dest.get_path());
-					src.move(dest, FileCopyFlags.OVERWRITE | FileCopyFlags.NOFOLLOW_SYMLINKS);
+					FSUtils.mv_merge(src, dest);
 				}
 				tmp_dir.delete();
 			}
 			catch(Error e)
 			{
 				warning("[FSUtils.mv_up] %s", e.message);
+			}
+		}
+
+		public static void mv_merge(File source, File destination)
+		{
+			try
+			{
+				source.move(destination, FileCopyFlags.OVERWRITE | FileCopyFlags.NOFOLLOW_SYMLINKS);
+			}
+			catch(IOError.WOULD_MERGE e)
+			{
+				FileInfo? finfo = null;
+				var enumerator = source.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+				while((finfo = enumerator.next_file()) != null)
+				{
+					var src = source.get_child(finfo.get_name());
+					var dest = destination.get_child(finfo.get_name());
+					debug("[FSUtils.mv_merge] '%s' -> '%s'", src.get_path(), dest.get_path());
+					FSUtils.mv_merge(src, dest);
+				}
+				source.delete();
+			}
+			catch(Error e)
+			{
+				warning("[FSUtils.mv_merge] %s", e.message);
 			}
 		}
 

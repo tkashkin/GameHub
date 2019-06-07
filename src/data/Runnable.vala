@@ -77,7 +77,7 @@ namespace GameHub.Data
 
 		public virtual async void run_with_compat(bool is_opened_from_menu=false)
 		{
-			if(!RunnableIsLaunched)
+			if(!RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
 			{
 				var dlg = new UI.Dialogs.CompatRunDialog(this, is_opened_from_menu);
 				dlg.destroy.connect(() => {
@@ -361,6 +361,8 @@ namespace GameHub.Data
 
 			public virtual string  name  { owned get { return id; } }
 
+			public virtual async void fetch_parts(){}
+
 			public async void install(Runnable runnable, bool dl_only, CompatTool? tool=null)
 			{
 				try
@@ -396,14 +398,14 @@ namespace GameHub.Data
 							}
 						});
 
-						var partDesc = "";
+						var partDesc = part.id;
 
 						if(parts.size > 1)
 						{
-							partDesc = _("Part %u of %u: ").printf(p, parts.size);
+							partDesc = _("Part %1$u of %2$u: %3$s").printf(p, parts.size, part.id);
 						}
 
-						var info = new Downloader.DownloadInfo(runnable.name, partDesc + part.id, game != null ? game.icon : null, null, null, game != null ? game.source.icon : null);
+						var info = new Downloader.DownloadInfo(runnable.name, partDesc, game != null ? game.icon : null, null, null, game != null ? game.source.icon : null);
 						var file = yield Downloader.download(part.remote, part.local, info);
 						if(file != null && file.query_exists())
 						{
@@ -426,12 +428,11 @@ namespace GameHub.Data
 									_("%s: corrupted installer").printf(runnable.name),
 									_("Checksum mismatch in %s").printf(file.get_basename()),
 									NotificationPriority.HIGH,
-									n =>
-									{
+									n => {
 										n.set_icon(new ThemedIcon("dialog-warning"));
 										if(game != null)
 										{
-											var icon = Utils.cached_image_file(game.icon, "icon");
+											var icon = ImageCache.local_file(game.icon, "icon");
 											if(icon != null && icon.query_exists())
 											{
 												n.set_icon(new FileIcon(icon));
@@ -586,7 +587,7 @@ namespace GameHub.Data
 						runnable.update_status();
 					}
 
-					if(runnable.executable == null || !runnable.executable.query_exists())
+					if((runnable.executable == null || !runnable.executable.query_exists()) && !(runnable is GameHub.Data.Sources.GOG.GOGGame.DLC))
 					{
 						if(game != null)
 						{
@@ -594,12 +595,11 @@ namespace GameHub.Data
 								_("%s: cannot detect main executable").printf(game.name),
 								_("Main executable file for this game cannot be detected automatically.\nPlease set main executable in game's properties."),
 								NotificationPriority.HIGH,
-								n =>
-								{
+								n => {
 									n.set_icon(new ThemedIcon("dialog-warning"));
 									if(game != null)
 									{
-										var icon = Utils.cached_image_file(game.icon, "icon");
+										var icon = ImageCache.local_file(game.icon, "icon");
 										if(icon != null && icon.query_exists())
 										{
 											n.set_icon(new FileIcon(icon));
@@ -619,6 +619,12 @@ namespace GameHub.Data
 					if(game != null && version != null)
 					{
 						game.save_version(version);
+					}
+
+					var gh_marker = runnable.install_dir.get_child(".gamehub_" + runnable.id);
+					if(gh_marker != null)
+					{
+						FileUtils.set_contents(gh_marker.get_path(), "");
 					}
 				}
 				catch(IOError.CANCELLED e){}
@@ -756,9 +762,11 @@ namespace GameHub.Data
 					return compat_tools.length == 0 || compat_tools[0] == null;
 				}
 
+				var t = tool.get_type();
+
 				foreach(var type in compat_tools)
 				{
-					if(tool.get_type().is_a(type))
+					if(type != null && t.is_a(type))
 					{
 						return true;
 					}
