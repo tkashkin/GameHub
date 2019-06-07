@@ -157,10 +157,12 @@ else
 	deps += dependency('libsoup-2.4')
 endif
 
-unity = dependency('unity', required: false)
-if unity.found()
-	add_global_arguments('-D', 'UNITY', language: 'vala')
-	deps += unity
+if get_option('use_libunity')
+	unity = dependency('unity', required: false)
+	if unity.found()
+		add_global_arguments('-D', 'UNITY', language: 'vala')
+		deps += unity
+	endif
 endif
 
 manette = dependency('manette-0.2', required: false)
