@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # wenxiaobai <chowhound_xb@163.com>, 2019.
+# Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-03 02:34+0300\n"
-"PO-Revision-Date: 2019-06-07 16:04+0000\n"
-"Last-Translator: wenxiaobai <chowhound_xb@163.com>\n"
+"PO-Revision-Date: 2019-06-07 16:06+0000\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gamehub/translations/zh_CMN-HANT/>\n"
 "Language: zh_CMN-HANT\n"
@@ -240,12 +241,12 @@ msgstr "合并游戏"
 #: src/data/adapters/GamesAdapter.vala:386
 #, c-format
 msgid "Merging games from %s"
-msgstr "正在合并来自％s的游戏"
+msgstr "正在合并来自%s的游戏"
 
 #: src/data/adapters/GamesAdapter.vala:430
 #, c-format
 msgid "Loading games from %s"
-msgstr "正在从％s加载游戏"
+msgstr "正在从%s加载游戏"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
