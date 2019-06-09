@@ -30,6 +30,8 @@ namespace GameHub.Data
 		public override File? executable { owned get; set; }
 		public Installer? installer;
 
+		public string? game_executable_pattern { get; set; }
+
 		public Emulator.empty(){}
 
 		public Emulator(string name, File dir, File exec, string args, string? compat=null)
@@ -56,6 +58,7 @@ namespace GameHub.Data
 			compat_tool = Tables.Emulators.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Emulators.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Emulators.ARGUMENTS.get(s);
+			game_executable_pattern = Tables.Emulators.GAME_EXECUTABLE_PATTERN.get(s);
 
 			update_status();
 		}

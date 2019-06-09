@@ -24,7 +24,9 @@ namespace GameHub.Data.Compat
 {
 	public class RetroArch: CompatTool
 	{
-		private const string LIBRETRO_CORE_SUFFIX = "_libretro.so";
+		public const string LIBRETRO_CORE_SUFFIX = "_libretro.so";
+		public const string LIBRETRO_CORE_INFO_SUFFIX = "_libretro.info";
+
 		public static RetroArch instance;
 		public ArrayList<string> cores = new ArrayList<string>();
 

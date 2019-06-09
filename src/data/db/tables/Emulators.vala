@@ -36,18 +36,20 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field COMPAT_TOOL;
 		public static Table.Field COMPAT_TOOL_SETTINGS;
 		public static Table.Field ARGUMENTS;
+		public static Table.Field GAME_EXECUTABLE_PATTERN;
 
 		public Emulators()
 		{
-			instance             = this;
+			instance                 = this;
 
-			ID                   = f(0);
-			NAME                 = f(1);
-			INSTALL_PATH         = f(2);
-			EXECUTABLE           = f(3);
-			COMPAT_TOOL          = f(4);
-			COMPAT_TOOL_SETTINGS = f(5);
-			ARGUMENTS            = f(6);
+			ID                       = f(0);
+			NAME                     = f(1);
+			INSTALL_PATH             = f(2);
+			EXECUTABLE               = f(3);
+			COMPAT_TOOL              = f(4);
+			COMPAT_TOOL_SETTINGS     = f(5);
+			ARGUMENTS                = f(6);
+			GAME_EXECUTABLE_PATTERN  = f(7);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -67,6 +69,10 @@ namespace GameHub.Data.DB.Tables
 							`arguments`            string,
 						PRIMARY KEY(`id`))");
 						break;
+
+					case 5:
+						db.exec("ALTER TABLE `emulators` ADD `game_executable_pattern` string");
+						break;
 				}
 			}
 		}
@@ -84,8 +90,9 @@ namespace GameHub.Data.DB.Tables
 					`executable`,
 					`compat_tool`,
 					`compat_tool_settings`,
-					`arguments`)
-				VALUES (?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`arguments`,
+					`game_executable_pattern`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -100,6 +107,7 @@ namespace GameHub.Data.DB.Tables
 			COMPAT_TOOL.bind(s, emu.compat_tool);
 			COMPAT_TOOL_SETTINGS.bind(s, emu.compat_tool_settings);
 			ARGUMENTS.bind(s, emu.arguments);
+			GAME_EXECUTABLE_PATTERN.bind(s, emu.game_executable_pattern);
 
 			res = s.step();
 

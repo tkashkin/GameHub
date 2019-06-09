@@ -62,6 +62,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 			stack = new Stack();
 			stack.margin = 8;
+			stack.margin_top = 0;
 			stack.expand = true;
 
 			var sidebar_box = new Box(Orientation.VERTICAL, 0);
@@ -171,7 +172,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			}
 		}
 
-		private class EmulatorPage: Grid
+		private class EmulatorPage: Box
 		{
 			private string _title;
 			public string title
@@ -192,6 +193,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			public Stack stack { get; construct; }
 			public Emulator emulator { get; construct set; }
 
+			private Grid grid;
 			private int rows = 0;
 
 			private Granite.Widgets.ModeButton mode;
@@ -202,6 +204,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			private Label executable_label;
 			private Entry arguments;
 			private Label arguments_label;
+			private Entry game_executable_pattern;
+			private Label game_executable_pattern_label;
 
 			private Button run_btn;
 			private Button save_btn;
@@ -213,17 +217,24 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 			construct
 			{
-				row_spacing = 4;
-				column_spacing = 8;
-
 				mode = new Granite.Widgets.ModeButton();
-				mode.margin_bottom = 8;
+				mode.margin_bottom = 12;
 				mode.halign = Align.CENTER;
 				mode.append_text(_("Executable"));
 				mode.append_text(_("Installer"));
 				mode.selected = 0;
-				attach(mode, 0, rows, 2, 1);
-				rows++;
+				add(mode);
+
+				grid = new Grid();
+				grid.expand = true;
+				grid.row_spacing = 4;
+				grid.column_spacing = 8;
+
+				var grid_scroll = new ScrolledWindow(null, null);
+				grid_scroll.expand = true;
+
+				grid_scroll.add(grid);
+				add(grid_scroll);
 
 				save_btn = new Button.with_label(_("Save"));
 				save_btn.halign = Align.END;
@@ -254,8 +265,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 				executable = add_filechooser(_("Executable"), _("Select executable"), FileChooserAction.OPEN, true, out executable_label);
 
 				arguments = add_entry(_("Arguments"), "utilities-terminal-symbolic", false, out arguments_label);
-
 				arguments.text = emulator.arguments ?? "$file $game_args";
+
+				arguments.tooltip_markup =
+					"""<span weight="600" size="smaller">%s</span>""".printf(_("Variables")) + "\n\n" +
+					"""<span weight="600">$file</span> - %s""".printf(_("Game executable")) + "\n" +
+					"""<span weight="600">$game_args</span> - %s""".printf(_("Game arguments"));
 
 				arguments.changed.connect(() => {
 					emulator.arguments = arguments.text.strip();
@@ -266,6 +281,14 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 				add_separator();
 
 				emudir = add_filechooser(_("Directory"), _("Select emulator directory"), FileChooserAction.SELECT_FOLDER, true);
+
+				add_separator();
+
+				game_executable_pattern = add_entry(_("Game executable pattern"), "folder-documents-symbolic", false, out game_executable_pattern_label);
+				game_executable_pattern.placeholder_text = "*.bin|*.rom|code/*.rpx";
+				game_executable_pattern.tooltip_text = _("Glob patterns separated with |");
+
+				game_executable_pattern.text = emulator.game_executable_pattern ?? "";
 
 				executable.file_set.connect(() => {
 					emulator.executable = executable.file;
@@ -307,7 +330,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 				var compat_tool = new CompatToolPicker(emulator, false, true);
 				compat_tool.no_show_all = true;
-				attach(compat_tool, 0, rows, 2, 1);
+				grid.attach(compat_tool, 0, rows, 2, 1);
 				rows++;
 
 				emulator.notify["use-compat"].connect(() => {
@@ -316,13 +339,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 				});
 
 				var btn_box = new Box(Orientation.HORIZONTAL, 0);
-				btn_box.expand = true;
 
 				btn_box.pack_start(run_btn);
 				btn_box.pack_end(save_btn);
 
-				attach(btn_box, 0, rows, 2, 1);
-				rows++;
+				add(btn_box);
 
 				run_btn.clicked.connect(run);
 				save_btn.clicked.connect(save);
@@ -341,11 +362,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 				emulator.name = title;
 				emulator.arguments = arguments.text.strip();
+				emulator.game_executable_pattern = game_executable_pattern.text.strip();
 
 				emulator.install_dir = emudir.file;
 
 				executable_label.label = mode.selected == 0 ? _("Executable") : _("Installer");
-				arguments.sensitive = arguments_label.sensitive = mode.selected == 0;
+				arguments.sensitive = arguments_label.sensitive = game_executable_pattern.sensitive = game_executable_pattern_label.sensitive = mode.selected == 0;
 
 				run_btn.sensitive = emulator.name.length > 0 && executable.file != null && mode.selected == 0 && emudir.file != null;
 				save_btn.sensitive = emulator.name.length > 0 && executable.file != null && ((mode.selected == 0 && emudir.file != null) || mode.selected == 1);
@@ -404,8 +426,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 				entry.primary_icon_name = icon;
 				entry.primary_icon_activatable = false;
 				entry.set_size_request(280, -1);
-				attach(label, 0, rows);
-				attach(entry, 1, rows);
+				grid.attach(label, 0, rows);
+				grid.attach(entry, 1, rows);
 				rows++;
 				return entry;
 			}
@@ -423,8 +445,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 				}
 				var entry = new FileChooserEntry(title, action, null, null, false, action == FileChooserAction.OPEN);
 				entry.set_size_request(280, -1);
-				attach(label, 0, rows);
-				attach(entry, 1, rows);
+				grid.attach(label, 0, rows);
+				grid.attach(entry, 1, rows);
 				rows++;
 				return entry;
 			}
@@ -433,7 +455,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			{
 				var separator = new Separator(Orientation.HORIZONTAL);
 				separator.margin_top = separator.margin_bottom = 4;
-				attach(separator, 0, rows, 2, 1);
+				grid.attach(separator, 0, rows, 2, 1);
 				rows++;
 			}
 
@@ -456,7 +478,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 				hbox.show_all();
 
-				attach(hbox, 0, rows, 2, 1);
+				grid.attach(hbox, 0, rows, 2, 1);
 				rows++;
 				return hbox;
 			}
