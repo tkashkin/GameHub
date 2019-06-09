@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-09 11:04+0300\n"
-"PO-Revision-Date: 2019-06-03 17:27+0000\n"
+"PO-Revision-Date: 2019-06-10 14:17+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -725,12 +725,10 @@ msgid "Arguments"
 msgstr "Extra opties"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#, fuzzy
 msgid "Game executable"
-msgstr "Kies uitvoerbaar bestand"
+msgstr "Uitvoerbaar bestand"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
-#, fuzzy
 msgid "Game arguments"
 msgstr "Extra opties"
 
@@ -745,13 +743,12 @@ msgid "Select emulator directory"
 msgstr "Kies emulatormap"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:287
-#, fuzzy
 msgid "Game executable pattern"
-msgstr "Kies uitvoerbaar bestand"
+msgstr "Uitvoerbaar bestandspatroon"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
 msgid "Glob patterns separated with |"
-msgstr ""
+msgstr "Scheid algemene patronen met |"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:328
 #: src/ui/dialogs/GamePropertiesDialog.vala:257
@@ -946,23 +943,20 @@ msgstr "Kapot installatiebestand: controlesom komt niet overeen voor"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:58
 #: src/ui/views/GamesView/AddGamePopover.vala:104
-#, fuzzy
 msgid "Import emulated games"
-msgstr "Geen door de gebruiker toegevoegde spellen"
+msgstr "Geëmuleerde spellen importeren"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
-#, fuzzy
 msgid "Select directory with emulated games"
-msgstr "Kies map"
+msgstr "Kies map met geëmuleerde spellen"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
-#, fuzzy
 msgid "Select all"
-msgstr "Kies installatiebestand"
+msgstr "Alles selecteren"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:92
 msgid "Detected games"
-msgstr ""
+msgstr "Aangetroffen spellen"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
