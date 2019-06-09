@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-03 02:34+0300\n"
+"POT-Creation-Date: 2019-06-09 11:04+0300\n"
 "PO-Revision-Date: 2019-06-08 23:29+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
@@ -115,7 +115,7 @@ msgid "Show logging options help"
 msgstr "Hilfe zu den Protokollierungsoptionen anzeigen"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:254
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:265
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Select executable"
 msgstr "Ausführbare Datei auswählen"
@@ -323,7 +323,7 @@ msgstr ""
 "Innoextract <b>%2$s</b> oder neuer installieren."
 
 #: src/data/compat/WineWrap.vala:61
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:234
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:245
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
@@ -415,7 +415,7 @@ msgstr "Fenstermodus"
 msgid "Disable fullscreen"
 msgstr "Vollbild deaktivieren"
 
-#: src/data/compat/RetroArch.vala:51
+#: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
 msgstr "Libretro-Kerndatei"
 
@@ -540,6 +540,7 @@ msgid "Bonus content"
 msgstr "Bonusinhalte"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:80
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
 msgid "Variables"
 msgstr "Variablen"
 
@@ -682,62 +683,82 @@ msgstr[0] "%u Kern gefunden"
 msgstr[1] "%u Kerne gefunden"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:44
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:170
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:171
 msgid "No custom emulators"
 msgstr "Keine benutzerdefinierten Emulatoren"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:166
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:167
 #, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
 msgstr[0] "%u benutzerdefinierter Emulator"
 msgstr[1] "%u benutzerdefinierte Emulatoren"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:222
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:254
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:347
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:265
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:369
 #: src/ui/dialogs/GamePropertiesDialog.vala:216
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
 #: src/ui/views/GamesView/AddGamePopover.vala:66
 #: src/ui/views/GamesView/AddGamePopover.vala:76
-#: src/ui/views/GamesView/AddGamePopover.vala:121
+#: src/ui/views/GamesView/AddGamePopover.vala:136
 msgid "Executable"
 msgstr "Ausführbare Datei"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:347
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:224
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:369
 #: src/ui/views/GamesView/AddGamePopover.vala:67
-#: src/ui/views/GamesView/AddGamePopover.vala:121
+#: src/ui/views/GamesView/AddGamePopover.vala:136
 msgid "Installer"
 msgstr "Installer"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:228
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:239
 msgid "Save"
 msgstr "Speichern"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:240
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
 #: src/ui/dialogs/GamePropertiesDialog.vala:130
 #: src/ui/dialogs/GamePropertiesDialog.vala:135
 #: src/ui/views/GamesView/AddGamePopover.vala:72
 msgid "Name"
 msgstr "Name"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:267
 #: src/ui/dialogs/GamePropertiesDialog.vala:239
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Arguments"
 msgstr "Argumente"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:268
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
+#, fuzzy
+msgid "Game executable"
+msgstr "Ausführbare Spieldatei auswählen"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
+#, fuzzy
+msgid "Game arguments"
+msgstr "Argumente"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:283
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:81
 msgid "Directory"
 msgstr "Verzeichnis"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:268
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:283
 msgid "Select emulator directory"
 msgstr "Emulatorverzeichnis auswählen"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:305
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:287
+#, fuzzy
+msgid "Game executable pattern"
+msgstr "Ausführbare Spieldatei auswählen"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
+msgid "Glob patterns separated with |"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:328
 #: src/ui/dialogs/GamePropertiesDialog.vala:257
 msgid "Force compatibility mode"
 msgstr "Kompatibilitätsmodus erzwingen"
@@ -803,6 +824,7 @@ msgid "Install"
 msgstr "Installieren"
 
 #: src/ui/dialogs/InstallDialog.vala:111
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:123
 msgid "Import"
 msgstr "Importieren"
 
@@ -926,6 +948,26 @@ msgstr "Mit Kompatibilitätsschicht ausführen"
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:72
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "Fehlerhafter Installer: Prüfsummenfehler in"
+
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:58
+#: src/ui/views/GamesView/AddGamePopover.vala:104
+#, fuzzy
+msgid "Import emulated games"
+msgstr "Keine vom Benutzer hinzugefügten Spiele"
+
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
+#, fuzzy
+msgid "Select directory with emulated games"
+msgstr "Ordner auswählen"
+
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
+#, fuzzy
+msgid "Select all"
+msgstr "Installationsprogramm auswählen"
+
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:92
+msgid "Detected games"
+msgstr ""
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"

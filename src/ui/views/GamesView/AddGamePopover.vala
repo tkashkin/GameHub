@@ -56,9 +56,9 @@ namespace GameHub.UI.Views.GamesView
 		construct
 		{
 			grid = new Grid();
-			grid.margin = 8;
 			grid.row_spacing = 4;
 			grid.column_spacing = 4;
+			grid.set_size_request(270, -1);
 
 			mode = new Granite.Widgets.ModeButton();
 			mode.margin_bottom = 8;
@@ -97,8 +97,23 @@ namespace GameHub.UI.Views.GamesView
 
 			add.clicked.connect(add_game);
 
-			child = grid;
-			grid.show_all();
+			var import_vbox = new Box(Orientation.VERTICAL, 4);
+			import_vbox.valign = Align.CENTER;
+			import_vbox.set_size_request(270, -1);
+
+			var emu_import_btn = new ActionButton("list-add-symbolic", "application-x-executable-symbolic", _("Import emulated games"));
+			import_vbox.add(emu_import_btn);
+			emu_import_btn.clicked.connect(import_emulated_games);
+
+			var hbox = new Box(Orientation.HORIZONTAL, 8);
+			hbox.margin = 8;
+
+			hbox.add(grid);
+			hbox.add(new Separator(Orientation.VERTICAL));
+			hbox.add(import_vbox);
+
+			child = hbox;
+			hbox.show_all();
 
 			name.grab_focus();
 		}
@@ -145,11 +160,22 @@ namespace GameHub.UI.Views.GamesView
 			}
 		}
 
+		private void import_emulated_games()
+		{
+			#if GTK_3_22
+			popdown();
+			#else
+			hide();
+			#endif
+			var dlg = new UI.Dialogs.ImportEmulatedGamesDialog();
+			dlg.game_added.connect(g => game_added(g));
+		}
+
 		private Entry add_entry(string text, string icon, bool required=true, out Label label=null)
 		{
 			label = new Label(text);
 			label.set_size_request(72, -1);
-			label.halign = Align.END;
+			label.hexpand = true;
 			label.xalign = 1;
 			label.margin = 4;
 			if(required)
@@ -170,7 +196,7 @@ namespace GameHub.UI.Views.GamesView
 		{
 			label = new Label(text);
 			label.set_size_request(72, -1);
-			label.halign = Align.END;
+			label.hexpand = true;
 			label.xalign = 1;
 			label.margin = 4;
 			if(required)
