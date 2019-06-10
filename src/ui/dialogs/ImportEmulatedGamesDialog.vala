@@ -33,8 +33,8 @@ namespace GameHub.UI.Dialogs
 {
 	public class ImportEmulatedGamesDialog: Dialog
 	{
-		private const string[] LIBRETRO_IGNORED_CORES = { "3dengine" };
-		private const string[] LIBRETRO_IGNORED_FILES = { "bin", "dat", "exe", "zip", "gz" };
+		private const string[] LIBRETRO_IGNORED_CORES = { "3dengine", "ffmpeg", "dosbox", "dosbox_svn", "dosbox_svn_glide" };
+		private const string[] LIBRETRO_IGNORED_FILES = { "bin", "dat", "exe", "zip", "7z", "gz" };
 
 		private const int RESPONSE_IMPORT = 10;
 
@@ -80,29 +80,10 @@ namespace GameHub.UI.Dialogs
 			dir_hbox.add(new HeaderLabel(_("Directory")));
 			dir_hbox.add(dir_chooser);
 
-			select_all = new CheckButton.with_label(_("Select all"));
-			select_all.active = true;
-			select_all.sensitive = false;
-			select_all.xalign = 0.5f;
-			select_all.toggled.connect(select_all_toggled);
-
-			var header_hbox = new Box(Orientation.HORIZONTAL, 12);
-			header_hbox.margin_start = header_hbox.margin_end = 8;
-
 			var header_label = new HeaderLabel(_("Detected games"));
+			header_label.margin_start = header_label.margin_end = 8;
 			header_label.xalign = 0;
 			header_label.hexpand = true;
-
-			status_label = new Label(null);
-			status_label.xalign = 1;
-			status_label.hexpand = true;
-
-			status_spinner = new Spinner();
-			status_spinner.halign = Align.END;
-
-			header_hbox.add(header_label);
-			header_hbox.add(status_label);
-			header_hbox.add(status_spinner);
 
 			found_list_scroll = new ScrolledWindow(null, null);
 			found_list_scroll.expand = true;
@@ -117,18 +98,44 @@ namespace GameHub.UI.Dialogs
 			found_list_scroll.add(found_list);
 
 			content.add(dir_hbox);
-			content.add(header_hbox);
+			content.add(header_label);
 			content.add(found_list_scroll);
+
+			var status_hbox = new Box(Orientation.HORIZONTAL, 10);
+			status_hbox.margin_start = 6;
+
+			select_all = new CheckButton.with_label(_("Select all"));
+			select_all.margin_start = 2;
+			select_all.active = true;
+			select_all.no_show_all = true;
+			select_all.visible = false;
+			select_all.xalign = 0.5f;
+			select_all.toggled.connect(select_all_toggled);
+
+			status_label = new Label(_("Select directory to import"));
+			status_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+			status_label.margin_start = 2;
+			status_label.xalign = 0;
+			status_label.hexpand = true;
+
+			status_spinner = new Spinner();
+			status_spinner.halign = Align.END;
+			status_spinner.no_show_all = true;
+			status_spinner.visible = false;
+
+			status_hbox.add(select_all);
+			status_hbox.add(status_spinner);
+			status_hbox.add(status_label);
 
 			import_btn = (Button) add_button(_("Import"), RESPONSE_IMPORT);
 			import_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
 			import_btn.sensitive = false;
 
 			var bbox = (ButtonBox) import_btn.get_parent();
-			bbox.margin_start = bbox.margin_end = 8;
-			bbox.add(select_all);
-			bbox.set_child_secondary(select_all, true);
-			bbox.set_child_non_homogeneous(select_all, true);
+			bbox.margin_end = 8;
+			bbox.add(status_hbox);
+			bbox.set_child_secondary(status_hbox, true);
+			bbox.set_child_non_homogeneous(status_hbox, true);
 
 			response.connect((source, response_id) => {
 				switch(response_id)
@@ -204,8 +211,9 @@ namespace GameHub.UI.Dialogs
 			if(!dir_chooser.sensitive || dir_chooser.file == null) return;
 
 			dir_chooser.sensitive = false;
-			select_all.sensitive = false;
+			select_all.visible = false;
 			found_list.sensitive = false;
+			status_spinner.visible = true;
 			status_spinner.start();
 
 			Utils.thread("ImportEmulatedGamesDialogSearch", () => {
@@ -215,8 +223,9 @@ namespace GameHub.UI.Dialogs
 				search_retroarch();
 
 				Idle.add(() => {
-					select_all.sensitive = true;
+					select_all.visible = true;
 					found_list.sensitive = true;
+					status_spinner.visible = false;
 					status_spinner.stop();
 					status_label.label = null;
 					update_selection();
@@ -298,10 +307,17 @@ namespace GameHub.UI.Dialogs
 
 					if(!("supported_extensions = \"" in full_info)) continue;
 
+					string? display_name = null;
+
 					var lines = full_info.split("\n");
 					foreach(var line in lines)
 					{
-						if("supported_extensions = \"" in line)
+						if("display_name = \"" in line)
+						{
+							display_name = line.replace("display_name = \"", "").replace("\"", "").strip();
+							status_label.label = "RetroArch: " + display_name;
+						}
+						else if("supported_extensions = \"" in line)
 						{
 							var exts_list = line.replace("supported_extensions = \"", "").replace("\"", "").strip();
 							if(exts_list.length > 0)
@@ -317,7 +333,7 @@ namespace GameHub.UI.Dialogs
 									foreach(var file in files)
 									{
 										debug("[search_retroarch] %s: %s", core, file);
-										var game = new EmulatedGame.libretro(FSUtils.file(file), core);
+										var game = new EmulatedGame.libretro(FSUtils.file(file), core, display_name);
 										Idle.add(() => {
 											add_row(new EmulatedGameRow(game));
 											return Source.REMOVE;
@@ -341,25 +357,28 @@ namespace GameHub.UI.Dialogs
 			public File file;
 
 			public Emulator? emulator = null;
-			public string? libretro_core = null;
 
+			public string? libretro_core = null;
 			public bool uses_libretro = false;
-			public string tool_name;
+
+			public string header;
+			public string? header_subtitle;
 
 			public EmulatedGame(File file, Emulator emulator)
 			{
 				this.file = file;
 				this.emulator = emulator;
 				this.uses_libretro = false;
-				this.tool_name = emulator.name;
+				this.header = emulator.name;
 			}
 
-			public EmulatedGame.libretro(File file, string core)
+			public EmulatedGame.libretro(File file, string core, string? display_name)
 			{
 				this.file = file;
 				this.libretro_core = core;
 				this.uses_libretro = true;
-				this.tool_name = "RetroArch: " + core;
+				this.header = "RetroArch: " + display_name ?? core;
+				if(display_name != null) this.header_subtitle = core;
 			}
 		}
 
@@ -409,9 +428,21 @@ namespace GameHub.UI.Dialogs
 
 			public void setup_header(EmulatedGameRow? prev)
 			{
-				if(prev == null || prev.game.tool_name != game.tool_name)
+				if(prev == null || prev.game.header != game.header)
 				{
-					set_header(new HeaderLabel(game.tool_name));
+					var hbox = new Box(Orientation.HORIZONTAL, 8);
+					var header = new HeaderLabel(game.header);
+					header.expand = true;
+					hbox.add(header);
+					if(game.header_subtitle != null)
+					{
+						var subtitle = new Label(game.header_subtitle);
+						subtitle.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+						subtitle.margin_start = subtitle.margin_end = 8;
+						hbox.add(subtitle);
+					}
+					hbox.show_all();
+					set_header(hbox);
 				}
 				else
 				{
@@ -423,7 +454,7 @@ namespace GameHub.UI.Dialogs
 			{
 				if(!import.active) return;
 
-				var g = new UserGame(title.text.strip() + " [%s]".printf(game.tool_name), game.file.get_parent(), game.file, "", false);
+				var g = new UserGame(title.text.strip() + " [%s]".printf(game.uses_libretro ? game.libretro_core : game.header), game.file.get_parent(), game.file, "", false);
 
 				if(game.uses_libretro)
 				{
