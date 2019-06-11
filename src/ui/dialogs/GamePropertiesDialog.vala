@@ -44,7 +44,6 @@ namespace GameHub.UI.Dialogs
 		private FileChooserEntry icon_entry;
 
 		private Box properties_box;
-		private Box image_search_links;
 
 		public GamePropertiesDialog(Game? game)
 		{
@@ -181,28 +180,28 @@ namespace GameHub.UI.Dialogs
 			properties_box.add(images_card);
 
 			image_entry = add_image_entry(_("Image URL"), "image-x-generic");
+			image_entry.hexpand = true;
+			image_entry.margin = 0;
 
-			properties_box.add(image_entry);
+			var images_download_btn = new MenuButton();
+			images_download_btn.image = new Image.from_icon_name("folder-download-symbolic", IconSize.BUTTON);
+			images_download_btn.tooltip_text = _("Download images");
+
+			var images_download_popover = new ImagesDownloadPopover(game, image_entry, images_download_btn);
+
+			var image_entry_hbox = new Box(Orientation.HORIZONTAL, 0);
+			image_entry_hbox.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
+			image_entry_hbox.margin = 4;
+
+			image_entry_hbox.add(image_entry);
+			image_entry_hbox.add(images_download_btn);
+
+			properties_box.add(image_entry_hbox);
 
 			icon_entry = add_image_entry(_("Icon URL"), "image-x-generic-symbolic");
 			icon_entry.margin_top = 0;
 
 			properties_box.add(icon_entry);
-
-			image_search_links = new Box(Orientation.HORIZONTAL, 8);
-			image_search_links.margin = 8;
-
-			var image_search_links_label = new Label(_("Search images:"));
-			image_search_links_label.halign = Align.START;
-			image_search_links_label.xalign = 0;
-			image_search_links_label.hexpand = true;
-			image_search_links.add(image_search_links_label);
-
-			add_image_search_link("SteamGridDB", @"http://www.steamgriddb.com/game/$(game.name)");
-			add_image_search_link("Jinx's SGVI", @"http://steam.cryotank.net/?s=$(game.name)");
-			add_image_search_link("Google", @"https://www.google.com/search?tbm=isch&tbs=isz:ex,iszw:460,iszh:215&q=$(game.name)");
-
-			properties_box.add(image_search_links);
 
 			image_view.load(game.image, "image");
 			icon_view.load(game.icon, "icon");
@@ -399,14 +398,6 @@ namespace GameHub.UI.Dialogs
 			entry.uri_set.connect(() => { set_image_url(false); set_icon_url(false); });
 
 			return entry;
-		}
-
-		private void add_image_search_link(string text, string url)
-		{
-			var link = new LinkButton.with_label(url, text);
-			link.halign = Align.START;
-			link.margin = 0;
-			image_search_links.add(link);
 		}
 
 		private Box add_switch(string text, bool enabled, owned SwitchAction action)

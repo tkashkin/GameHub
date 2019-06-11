@@ -77,6 +77,10 @@ sources = [
 
 	'data/adapters/GamesAdapter.vala',
 
+	'data/providers/ImagesProvider.vala',
+	'data/providers/images/SteamGridDB.vala',
+	'data/providers/images/JinxSGVI.vala',
+
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
 
@@ -125,6 +129,7 @@ sources = [
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
 	'ui/widgets/FileChooserEntry.vala',
+	'ui/widgets/ImagesDownloadPopover.vala',
 	'ui/widgets/CompatToolOptions.vala',
 	'ui/widgets/CompatToolPicker.vala',
 	'ui/widgets/TagRow.vala',

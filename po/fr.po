@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-09 11:04+0300\n"
+"POT-Creation-Date: 2019-06-12 02:48+0300\n"
 "PO-Revision-Date: 2019-02-11 14:11+0000\n"
 "Last-Translator: King Claudy <clocloranely@hotmail.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -97,25 +97,25 @@ msgstr "Journaliser les démarrages et arrêts des tâches d'arrière-plan"
 msgid "Verbose logging"
 msgstr "Journalisation détaillée"
 
-#: src/app.vala:226
+#: src/app.vala:228
 msgid "Game Options:"
 msgstr "Options de jeu :"
 
-#: src/app.vala:226
+#: src/app.vala:228
 msgid "Show game options help"
 msgstr "Afficher l’aide pour les options de jeu"
 
-#: src/app.vala:234
+#: src/app.vala:236
 msgid "Logging Options:"
 msgstr "Options de journalisation :"
 
-#: src/app.vala:234
+#: src/app.vala:236
 msgid "Show logging options help"
 msgstr "Afficher l’aide pour les options de journalisation"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:265
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Select executable"
 msgstr "Choisir l'exécutable"
 
@@ -430,6 +430,42 @@ msgstr "Émulateur"
 msgid "Launch in game directory"
 msgstr "Lancer dans le répertoire du jeu"
 
+#: src/data/providers/images/SteamGridDB.vala:102
+msgctxt "imagesource_steamgriddb_image_property"
+msgid "Style"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:103
+msgctxt "imagesource_steamgriddb_image_property"
+msgid "Score"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:107
+msgctxt "imagesource_steamgriddb_image_property"
+msgid "Author"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:119
+msgctxt "imagesource_steamgriddb_image_style"
+msgid "Alternate"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:120
+msgctxt "imagesource_steamgriddb_image_style"
+msgid "Blurred"
+msgstr ""
+
+#. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
+#: src/data/providers/images/SteamGridDB.vala:122
+msgctxt "imagesource_steamgriddb_image_style"
+msgid "Material"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:123
+msgctxt "imagesource_steamgriddb_image_style"
+msgid "No logo"
+msgstr ""
+
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
 #: src/ui/views/GamesView/GamesView.vala:248
@@ -705,8 +741,8 @@ msgstr[1] "Emulateur personnalisé"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:265
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:369
-#: src/ui/dialogs/GamePropertiesDialog.vala:216
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:215
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 #: src/ui/views/GamesView/AddGamePopover.vala:66
 #: src/ui/views/GamesView/AddGamePopover.vala:76
 #: src/ui/views/GamesView/AddGamePopover.vala:136
@@ -725,14 +761,14 @@ msgid "Save"
 msgstr "Sauvegarder"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
-#: src/ui/dialogs/GamePropertiesDialog.vala:130
-#: src/ui/dialogs/GamePropertiesDialog.vala:135
+#: src/ui/dialogs/GamePropertiesDialog.vala:129
+#: src/ui/dialogs/GamePropertiesDialog.vala:134
 #: src/ui/views/GamesView/AddGamePopover.vala:72
 msgid "Name"
 msgstr "Nom"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:267
-#: src/ui/dialogs/GamePropertiesDialog.vala:239
+#: src/ui/dialogs/GamePropertiesDialog.vala:238
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Arguments"
 msgstr "Arguments"
@@ -767,7 +803,7 @@ msgid "Glob patterns separated with |"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:328
-#: src/ui/dialogs/GamePropertiesDialog.vala:257
+#: src/ui/dialogs/GamePropertiesDialog.vala:256
 msgid "Force compatibility mode"
 msgstr "Force le mode de compatibilité"
 
@@ -834,7 +870,7 @@ msgid "Install"
 msgstr "Installer"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:123
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:130
 msgid "Import"
 msgstr "Importer"
 
@@ -856,53 +892,54 @@ msgstr "Taille de l'installateur : %s"
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:51
+#: src/ui/dialogs/GamePropertiesDialog.vala:50
 #, c-format
 msgid "%s: Properties"
 msgstr "%s : Propriétés"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:66
+#: src/ui/dialogs/GamePropertiesDialog.vala:65
 #: src/ui/views/GamesView/FiltersPopover.vala:153
 msgid "Tags"
 msgstr "Étiquettes"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:111
+#: src/ui/dialogs/GamePropertiesDialog.vala:110
 msgid "Add tag"
 msgstr "Ajouter une étiquette"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:149
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Images"
 msgstr "Images"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:183
+#: src/ui/dialogs/GamePropertiesDialog.vala:182
 msgid "Image URL"
 msgstr "URL de l’image"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:187
+#: src/ui/dialogs/GamePropertiesDialog.vala:188
+#, fuzzy
+msgid "Download images"
+msgstr "En cours de téléchargement"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 msgid "Icon URL"
 msgstr "URL de l’icone"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:195
-msgid "Search images:"
-msgstr "Rechercher des images :"
-
-#: src/ui/dialogs/GamePropertiesDialog.vala:252
+#: src/ui/dialogs/GamePropertiesDialog.vala:251
 msgid "Compatibility"
 msgstr "Compatibilité"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:274
+#: src/ui/dialogs/GamePropertiesDialog.vala:273
 msgid "Launch from terminal"
 msgstr "Lancer depuis le terminal"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:290
+#: src/ui/dialogs/GamePropertiesDialog.vala:289
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papier"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:292
+#: src/ui/dialogs/GamePropertiesDialog.vala:291
 msgid "Add to Steam"
 msgstr "Ajouter à Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:293
+#: src/ui/dialogs/GamePropertiesDialog.vala:292
 msgid "Add to the Steam library"
 msgstr "Ajouter à la bibliothèque Steam"
 
@@ -968,13 +1005,18 @@ msgid "Select directory with emulated games"
 msgstr "Choisir le dossier"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
+msgid "Detected games"
+msgstr ""
+
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 #, fuzzy
 msgid "Select all"
 msgstr "Sélectionner l'installateur"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:92
-msgid "Detected games"
-msgstr ""
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
+#, fuzzy
+msgid "Select directory to import"
+msgstr "Choisir le dossier"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
@@ -1251,6 +1293,17 @@ msgstr ""
 msgid "Select file"
 msgstr ""
 
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#, fuzzy
+msgid "No images"
+msgstr "Images"
+
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
+msgid ""
+"There are no images found for this game\n"
+"Make sure game name is correct"
+msgstr ""
+
 #: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
 msgstr ""
@@ -1315,6 +1368,9 @@ msgstr ""
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr ""
+
+#~ msgid "Search images:"
+#~ msgstr "Rechercher des images :"
 
 #~ msgid "Use symbolic icons instead of colored icons"
 #~ msgstr "Utilisez les icônes symboliques au lieu des icônes de couleur"

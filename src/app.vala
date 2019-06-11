@@ -137,6 +137,8 @@ namespace GameHub
 
 			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new User() };
 
+			Providers.ImageProviders = { new Providers.Images.SteamGridDB(), new Providers.Images.JinxSGVI() };
+
 			CompatTool[] tools = { new Compat.CustomScript(), new Compat.CustomEmulator(), new Compat.Innoextract(), new Compat.WineWrap(), new Compat.DOSBox(), new Compat.ScummVM(), new Compat.RetroArch() };
 			foreach(var appid in Compat.Proton.APPIDS)
 			{
