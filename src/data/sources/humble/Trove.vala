@@ -125,9 +125,9 @@ namespace GameHub.Data.Sources.Humble
 							});
 						}
 					}
-				}
 
-				delete html;
+					delete html;
+				}
 
 				Idle.add(load_games.callback);
 			});

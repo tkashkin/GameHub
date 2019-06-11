@@ -258,6 +258,11 @@ namespace GameHub.Utils
 			return parse_xml(load_remote_file(url, method, auth, headers, data));
 		}
 
+		public static async Xml.Doc* parse_remote_xml_file_async(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
+		{
+			return parse_xml(yield load_remote_file_async(url, method, auth, headers, data));
+		}
+
 		public static Html.Doc* parse_html_file(string path, string file="")
 		{
 			return parse_html(load_file(path, file), "file://" + path);
@@ -266,6 +271,11 @@ namespace GameHub.Utils
 		public static Html.Doc* parse_remote_html_file(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
 		{
 			return parse_html(load_remote_file(url, method, auth, headers, data), url);
+		}
+
+		public static async Html.Doc* parse_remote_html_file_async(string url, string method="GET", string? auth=null, HashMap<string, string>? headers=null, HashMap<string, string>? data=null)
+		{
+			return parse_html(yield load_remote_file_async(url, method, auth, headers, data), url);
 		}
 
 		public static string xml_node_to_string(Xml.Node* node)

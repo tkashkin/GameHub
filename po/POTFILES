@@ -29,6 +29,10 @@ src/data/compat/DOSBox.vala
 src/data/compat/ScummVM.vala
 src/data/compat/RetroArch.vala
 src/data/compat/CustomEmulator.vala
+src/data/adapters/GamesAdapter.vala
+src/data/providers/ImagesProvider.vala
+src/data/providers/images/SteamGridDB.vala
+src/data/providers/images/JinxSGVI.vala
 src/ui/windows/MainWindow.vala
 src/ui/windows/WebAuthWindow.vala
 src/ui/dialogs/SettingsDialog/SettingsDialog.vala
@@ -70,6 +74,7 @@ src/ui/views/GameDetailsView/blocks/SteamDetails.vala
 src/ui/widgets/AutoSizeImage.vala
 src/ui/widgets/ActionButton.vala
 src/ui/widgets/FileChooserEntry.vala
+src/ui/widgets/ImagesDownloadPopover.vala
 src/ui/widgets/CompatToolOptions.vala
 src/ui/widgets/CompatToolPicker.vala
 src/ui/widgets/TagRow.vala

@@ -38,7 +38,7 @@ namespace GameHub.Utils.Downloader.Soup
 		{
 			downloads = new HashTable<string, SoupDownload>(str_hash, str_equal);
 			dl_info = new HashTable<string, DownloadInfo>(str_hash, str_equal);
-			dl_queue = new ArrayQueue<string>((EqualDataFunc<string>) str_equal);
+			dl_queue = new ArrayQueue<string>();
 			session = new Session();
 			session.max_conns = 32;
 			session.max_conns_per_host = 16;
