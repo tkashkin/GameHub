@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-12 02:48+0300\n"
-"PO-Revision-Date: 2019-06-12 15:29+0000\n"
+"PO-Revision-Date: 2019-06-12 15:35+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -444,7 +444,6 @@ msgid "Author"
 msgstr "Utvikler"
 
 #: src/data/providers/images/SteamGridDB.vala:119
-#, fuzzy
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
 msgstr "Alternativt"
@@ -479,7 +478,7 @@ msgstr "Noen innstillinger vil tre i kraft etter omstart av programmet"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:63
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
-"Spillmappe inneholder mellomrom. Det kan forårsake problemer for noen spill."
+"Spillmappe inneholder mellomrom. Det kan forårsake problemer for noen spill"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:31
 msgid "Interface"
@@ -598,7 +597,6 @@ msgid "Enabled"
 msgstr "Påskrudd"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
-#, fuzzy
 msgid "Focus GameHub window with Guide button"
 msgstr "Fokuser GameHub-vinduet med Guide-knappen"
 
@@ -643,14 +641,12 @@ msgstr "Installasjonsmappe"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:76
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:65
-#, fuzzy
 msgid "Not installed"
 msgstr "Ikke installert"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:80
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
-#, fuzzy
 msgid "Not authenticated"
 msgstr "Identitetsbekreftelse kreves"
 
@@ -1094,10 +1090,10 @@ msgid "Back"
 msgstr "Tilbake"
 
 #: src/ui/views/GamesView/GamesView.vala:528
-#, fuzzy, c-format
+#, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] "ett spill"
+msgstr[0] "%u spill"
 msgstr[1] "%u spill"
 
 #: src/ui/views/GamesView/GamesView.vala:542
