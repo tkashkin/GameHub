@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-12 02:48+0300\n"
-"PO-Revision-Date: 2019-06-03 17:27+0000\n"
+"PO-Revision-Date: 2019-06-12 15:29+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -431,22 +431,23 @@ msgstr "Kjør i spillmappe"
 #: src/data/providers/images/SteamGridDB.vala:102
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "Stil"
 
 #: src/data/providers/images/SteamGridDB.vala:103
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "Poengsum"
 
 #: src/data/providers/images/SteamGridDB.vala:107
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "Utvikler"
 
 #: src/data/providers/images/SteamGridDB.vala:119
+#, fuzzy
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "Alternativt"
 
 #: src/data/providers/images/SteamGridDB.vala:120
 msgctxt "imagesource_steamgriddb_image_style"
@@ -457,12 +458,12 @@ msgstr ""
 #: src/data/providers/images/SteamGridDB.vala:122
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "Materielt"
 
 #: src/data/providers/images/SteamGridDB.vala:123
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "Ingen logo"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
@@ -997,7 +998,7 @@ msgstr "Velg mappe"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
 msgid "Detected games"
-msgstr ""
+msgstr "Oppdagede spill"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 #, fuzzy
