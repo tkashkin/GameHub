@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Automatically generated, 2018.
 # Leandro Stanger <leandrostanger@hotmail.com>, 2019.
+# Kassin Dornelles <kassin.dornelles@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-13 03:35+0300\n"
-"PO-Revision-Date: 2019-01-02 01:06+0000\n"
-"Last-Translator: Leandro Stanger <leandrostanger@hotmail.com>\n"
+"PO-Revision-Date: 2019-06-13 21:08+0000\n"
+"Last-Translator: Kassin Dornelles <kassin.dornelles@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,27 +18,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 3.7-dev\n"
 
 #: src/app.vala:88
 msgid "Show help"
-msgstr ""
+msgstr "Mostrar ajuda"
 
 #: src/app.vala:89
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Mostrar versão do aplicativo e sair"
 
 #: src/app.vala:90
+#, fuzzy
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Reinicie com o depurador do GDB ligado"
 
 #: src/app.vala:91
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "Mostrar registro completo do GDB"
 
 #: src/app.vala:92
+#, fuzzy
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "Tratar erros fatais como críticos e fechar a aplicação"
 
 #: src/app.vala:96
 msgid "Show main window"
@@ -49,17 +52,16 @@ msgid "Show application settings dialog"
 msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
 #: src/app.vala:98
-#, fuzzy
 msgid "Show about dialog"
-msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
+msgstr "Mostrar o dialogo de \"Sobre\""
 
 #: src/app.vala:99
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "Número máximo de threads em trabalho em segundo plano"
 
 #: src/app.vala:103
 msgid "Run game"
-msgstr "Jogo de corrida"
+msgstr "Executar o jogo"
 
 #: src/app.vala:104
 msgid "Show compatibility options dialog"
@@ -67,16 +69,15 @@ msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
 #: src/app.vala:105
 msgid "Open game details"
-msgstr ""
+msgstr "Abrir detalhes do jogo"
 
 #: src/app.vala:106
-#, fuzzy
 msgid "Open game properties"
-msgstr "Propriedades do jogo"
+msgstr "Abrir propriedades do jogo"
 
 #: src/app.vala:110
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Ativar log de depuração"
 
 #: src/app.vala:111
 msgid ""
@@ -94,24 +95,24 @@ msgstr ""
 
 #: src/app.vala:114
 msgid "Verbose logging"
-msgstr ""
+msgstr "Registro detalhado"
+
+#: src/app.vala:229
+msgid "Game Options:"
+msgstr "Opções do Jogo:"
 
 #: src/app.vala:229
 #, fuzzy
-msgid "Game Options:"
-msgstr "Propriedades do jogo"
-
-#: src/app.vala:229
 msgid "Show game options help"
-msgstr ""
+msgstr "Mostrar ajuda de opções de jogo"
 
 #: src/app.vala:237
 msgid "Logging Options:"
-msgstr ""
+msgstr "Opções de Logs:"
 
 #: src/app.vala:237
 msgid "Show logging options help"
-msgstr ""
+msgstr "Mostrar ajuda sobre logs"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
