@@ -37,9 +37,9 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		public abstract bool supports_game { get; }
 
-		protected void add_info_label(string title, string? text, bool multiline=true, bool markup=false, Container? parent=null)
+		protected Box? add_info_label(string title, string? text, bool multiline=true, bool markup=false, Container? parent=null)
 		{
-			if(text == null || text == "") return;
+			if(text == null || text == "") return null;
 
 			var title_label = new Granite.HeaderLabel(title);
 			title_label.set_size_request(multiline ? -1 : 128, -1);
@@ -70,6 +70,8 @@ namespace GameHub.UI.Views.GameDetailsView
 			box.add(title_label);
 			box.add(text_label);
 			(parent ?? this).add(box);
+
+			return box;
 		}
 	}
 }

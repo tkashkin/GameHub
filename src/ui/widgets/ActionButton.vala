@@ -76,6 +76,7 @@ namespace GameHub.UI.Widgets
 				label.valign = Align.CENTER;
 				label.xalign = 0;
 				label.ellipsize = Pango.EllipsizeMode.END;
+				label.use_markup = true;
 				box.add(label);
 				notify["text"].connect(() => {
 					label.label = text;

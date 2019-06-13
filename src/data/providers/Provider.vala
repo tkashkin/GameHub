@@ -26,6 +26,7 @@ namespace GameHub.Data.Providers
 		public virtual string id     { get { return ""; } }
 		public virtual string name   { get { return ""; } }
 		public virtual string url    { get { return ""; } }
+		public virtual string icon   { get { return "text-x-generic-symbolic"; } }
 
 		public abstract bool enabled { get; set; }
 	}

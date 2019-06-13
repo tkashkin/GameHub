@@ -62,6 +62,9 @@ namespace GameHub.UI.Dialogs
 			});
 			ui_settings.notify_property("dark-theme");
 
+			get_action_area().no_show_all = true;
+			get_action_area().visible = false;
+
 			show_all();
 		}
 	}

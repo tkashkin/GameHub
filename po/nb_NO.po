@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-13 03:35+0300\n"
+"POT-Creation-Date: 2019-06-14 00:02+0300\n"
 "PO-Revision-Date: 2019-06-12 15:35+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -471,11 +471,11 @@ msgstr "Ingen logo"
 msgid "Settings"
 msgstr "Innstillinger"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:57
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:64
 msgid "Some settings will be applied after application restart"
 msgstr "Noen innstillinger vil tre i kraft etter omstart av programmet"
 
-#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:63
+#: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:70
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "Spillmappe inneholder mellomrom. Det kan forårsake problemer for noen spill"
@@ -828,7 +828,7 @@ msgstr ""
 msgid "Image providers"
 msgstr "Spillegenskaper"
 
-#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:67
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
 msgid "Metadata providers"
 msgstr ""
 
@@ -1305,7 +1305,7 @@ msgctxt "time"
 msgid "%dm"
 msgstr "%dm"
 
-#: src/ui/views/GameDetailsView/blocks/Description.vala:49
+#: src/ui/views/GameDetailsView/blocks/Description.vala:51
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -1334,6 +1334,66 @@ msgstr "Sjanger"
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:80
 msgid "Genres"
 msgstr "Sjangre"
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:60
+#, c-format
+msgctxt "igdb"
+msgid "<b>%s</b> on IGDB"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:96
+msgctxt "igdb"
+msgid "Popularity"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
+msgctxt "igdb"
+msgid "Aggregated rating"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:99
+msgctxt "igdb"
+msgid "IGDB user rating"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:100
+msgctxt "igdb"
+msgid "Total rating"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
+#, fuzzy
+msgctxt "igdb"
+msgid "Platforms"
+msgstr "Plattform"
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:114
+#, fuzzy
+msgctxt "igdb"
+msgid "Genres"
+msgstr "Sjangre"
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:120
+msgctxt "igdb"
+msgid "Keywords"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
+msgctxt "igdb"
+msgid "Summary"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:132
+msgctxt "igdb"
+msgid "Storyline"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:153
+#, c-format
+msgid "Based on <b>%d</b> rating"
+msgid_plural "Based on <b>%d</b> ratings"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55

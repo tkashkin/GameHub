@@ -19,6 +19,7 @@ src/data/db/tables/Games.vala
 src/data/db/tables/Tags.vala
 src/data/db/tables/Merges.vala
 src/data/db/tables/Emulators.vala
+src/data/db/tables/IGDBData.vala
 src/data/CompatTool.vala
 src/data/compat/CustomScript.vala
 src/data/compat/Innoextract.vala
@@ -75,6 +76,7 @@ src/ui/views/GameDetailsView/blocks/Playtime.vala
 src/ui/views/GameDetailsView/blocks/Description.vala
 src/ui/views/GameDetailsView/blocks/GOGDetails.vala
 src/ui/views/GameDetailsView/blocks/SteamDetails.vala
+src/ui/views/GameDetailsView/blocks/IGDBInfo.vala
 src/ui/widgets/AutoSizeImage.vala
 src/ui/widgets/ActionButton.vala
 src/ui/widgets/FileChooserEntry.vala
