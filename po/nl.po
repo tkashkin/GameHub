@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-13 03:35+0300\n"
-"PO-Revision-Date: 2019-06-10 14:17+0000\n"
+"PO-Revision-Date: 2019-06-13 21:08+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -431,38 +431,38 @@ msgstr "Uitvoeren in spelmap"
 #: src/data/providers/images/SteamGridDB.vala:103
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "Stijl"
 
 #: src/data/providers/images/SteamGridDB.vala:104
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "Score"
 
 #: src/data/providers/images/SteamGridDB.vala:108
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "Maker"
 
 #: src/data/providers/images/SteamGridDB.vala:120
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "Alternatief"
 
 #: src/data/providers/images/SteamGridDB.vala:121
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "Vervaagd"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:123
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: src/data/providers/images/SteamGridDB.vala:124
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "Zonder logo"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
@@ -572,9 +572,8 @@ msgid "Bonus content"
 msgstr "Bonusinhoud"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
-#, fuzzy
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
-msgstr "Syntax: <b>$var</b> or <b>${var}</b>"
+msgstr "Variabele syntax: <b>$var</b> or <b>${var}</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
@@ -785,19 +784,16 @@ msgid "Force compatibility mode"
 msgstr "Comptabiliteitsmodus afdwingen"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:308
-#, fuzzy
 msgid "Game file patterns"
-msgstr "Uitvoerbaar bestandspatroon"
+msgstr "Uitvoerbaar bestandspatronen"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:316
-#, fuzzy
 msgid "Image"
-msgstr "Afbeeldingen"
+msgstr "Afbeelding"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:319
-#, fuzzy
 msgid "Icon"
-msgstr "Pictogram-URL"
+msgstr "Pictogram"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:326
 msgid ""
@@ -811,29 +807,27 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
-msgstr ""
+msgstr "Gegevens"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:39
 msgid "Providers"
-msgstr ""
+msgstr "Providers"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:40
 msgid "Third-party data providers"
-msgstr ""
+msgstr "Externe gegevensproviders"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
-#, fuzzy
 msgid "Image providers"
-msgstr "Speleigenschappen"
+msgstr "Afbeeldingsproviders"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:67
 msgid "Metadata providers"
-msgstr ""
+msgstr "Metagegevens-providers"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:135
-#, fuzzy
 msgid "Open website"
-msgstr "Website"
+msgstr "Website openen"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:35
 msgid "About"
@@ -940,9 +934,8 @@ msgid "Image URL"
 msgstr "Afbeeldings-URL"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:188
-#, fuzzy
 msgid "Download images"
-msgstr "Bezig met downloaden"
+msgstr "Afbeeldingen downloaden"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:201
 msgid "Icon URL"
@@ -1040,9 +1033,8 @@ msgid "Select all"
 msgstr "Alles selecteren"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:118
-#, fuzzy
 msgid "Select directory to import"
-msgstr "Kies map"
+msgstr "Kies de te importeren map"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
@@ -1174,14 +1166,13 @@ msgid "Privacy"
 msgstr "Privacy"
 
 #: src/ui/views/GamesView/GamesView.vala:731
-#, fuzzy
 msgid "Downloading images"
-msgstr "Bezig met downloaden"
+msgstr "Bezig met downloaden van afbeeldingen"
 
 #: src/ui/views/GamesView/GamesView.vala:745
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading image: %s"
-msgstr "Bezig met downloaden"
+msgstr "Bezig met downloaden van afbeelding: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
@@ -1211,9 +1202,8 @@ msgid "Select game directory"
 msgstr "Kies spelmap"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
-#, fuzzy
 msgid "Download game images"
-msgstr "Bezig met downloaden"
+msgstr "Spelafbeeldingen downloaden"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 msgid "Details"
@@ -1337,15 +1327,16 @@ msgid "Select file"
 msgstr "Kies bestand"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:72
-#, fuzzy
 msgid "No images"
-msgstr "Afbeeldingen"
+msgstr "Geen afbeeldingen"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
+"Er zijn geen afbeeldingen gevonden bij dit spel\n"
+"Controleer de naam van het spel"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
