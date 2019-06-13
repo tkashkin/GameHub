@@ -31,6 +31,8 @@ namespace GameHub.Data
 		public Installer? installer;
 
 		public string? game_executable_pattern { get; set; }
+		public string? game_image_pattern { get; set; }
+		public string? game_icon_pattern { get; set; }
 
 		public Emulator.empty(){}
 
@@ -59,6 +61,8 @@ namespace GameHub.Data
 			compat_tool_settings = Tables.Emulators.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Emulators.ARGUMENTS.get(s);
 			game_executable_pattern = Tables.Emulators.GAME_EXECUTABLE_PATTERN.get(s);
+			game_image_pattern = Tables.Emulators.GAME_IMAGE_PATTERN.get(s);
+			game_icon_pattern = Tables.Emulators.GAME_ICON_PATTERN.get(s);
 
 			update_status();
 		}

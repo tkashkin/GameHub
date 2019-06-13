@@ -77,9 +77,12 @@ sources = [
 
 	'data/adapters/GamesAdapter.vala',
 
+	'data/providers/Provider.vala',
 	'data/providers/ImagesProvider.vala',
+	'data/providers/DataProvider.vala',
 	'data/providers/images/SteamGridDB.vala',
 	'data/providers/images/JinxSGVI.vala',
+	'data/providers/data/IGDB.vala',
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
@@ -95,6 +98,7 @@ sources = [
 	'ui/dialogs/SettingsDialog/pages/sources/Humble.vala',
 	'ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala',
 	'ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala',
+	'ui/dialogs/SettingsDialog/pages/providers/Providers.vala',
 	'ui/dialogs/SettingsDialog/pages/About.vala',
 
 	'ui/dialogs/InstallDialog.vala',

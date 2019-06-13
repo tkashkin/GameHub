@@ -286,6 +286,9 @@ namespace GameHub.UI.Views.GamesView
 				games_adapter.add(g);
 				update_view();
 			});
+			add_game_popover.download_images.connect(() => {
+				download_images_async.begin();
+			});
 
 			titlebar.pack_start(view);
 
@@ -344,20 +347,7 @@ namespace GameHub.UI.Views.GamesView
 
 			status_overlay = new Granite.Widgets.OverlayBar(overlay);
 			games_adapter.notify["status"].connect(() => {
-				Idle.add(() => {
-					if(games_adapter.status != null && games_adapter.status.length > 0)
-					{
-						status_overlay.label = games_adapter.status;
-						status_overlay.active = true;
-						status_overlay.show();
-					}
-					else
-					{
-						status_overlay.active = false;
-						status_overlay.hide();
-					}
-					return Source.REMOVE;
-				}, Priority.LOW);
+				update_status(games_adapter.status);
 			});
 
 			show_all();
@@ -718,6 +708,54 @@ namespace GameHub.UI.Views.GamesView
 			return bar;
 		}
 
+		private void update_status(string? status)
+		{
+			Idle.add(() => {
+				if(status != null && status.length > 0)
+				{
+					status_overlay.label = status;
+					status_overlay.active = true;
+					status_overlay.show();
+				}
+				else
+				{
+					status_overlay.active = false;
+					status_overlay.hide();
+				}
+				return Source.REMOVE;
+			}, Priority.LOW);
+		}
+
+		private async void download_images_async()
+		{
+			update_status(_("Downloading images"));
+			var games = DB.Tables.Games.get_all();
+			foreach(var game in games)
+			{
+				if(game.image == null)
+				{
+					yield download_image(game);
+				}
+			}
+			update_status(null);
+		}
+
+		private async void download_image(Game game)
+		{
+			update_status(_("Downloading image: %s").printf(game.name));
+			foreach(var src in Providers.ImageProviders)
+			{
+				if(!src.enabled) continue;
+				var result = yield src.images(game);
+				if(result != null && result.images != null && result.images.size > 0)
+				{
+					game.image = result.images.get(0).url;
+					game.save();
+					return;
+				}
+			}
+		}
+
 		#if UNITY
 		private void update_downloads_progress()
 		{
@@ -810,7 +848,12 @@ namespace GameHub.UI.Views.GamesView
 			{
 				var b = Gamepad.Buttons.get(btn);
 				b.emit_key_event(press);
-				debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
+
+				if(GameHub.Application.log_verbose && !RunnableIsLaunched)
+				{
+					debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
+				}
+
 				ui_update_gamepad_mode();
 
 				if(controller_settings.focus_window && !press && b == Gamepad.BTN_GUIDE && !window.has_focus && !RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)

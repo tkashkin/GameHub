@@ -161,7 +161,6 @@ namespace GameHub.Settings
 				}
 			}
 
-
 			private static Steam? instance;
 			public static unowned Steam get_instance()
 			{
@@ -242,6 +241,66 @@ namespace GameHub.Settings
 				instance = new Controller();
 			}
 			return instance;
+		}
+	}
+
+	namespace Providers
+	{
+		public class Images: Granite.Services.Settings
+		{
+			public string[] disabled { get; set; }
+
+			public Images()
+			{
+				base(ProjectConfig.PROJECT_NAME + ".providers.images");
+			}
+
+			private static Images? instance;
+			public static unowned Images get_instance()
+			{
+				if(instance == null)
+				{
+					instance = new Images();
+				}
+				return instance;
+			}
+		}
+
+		namespace Data
+		{
+			public class IGDB: Granite.Services.Settings
+			{
+				public bool enabled { get; set; }
+				public string api_key { get; set; }
+
+				public IGDB()
+				{
+					base(ProjectConfig.PROJECT_NAME + ".providers.data.igdb");
+				}
+
+				protected override void verify(string key)
+				{
+					switch(key)
+					{
+						case "api-key":
+							if(api_key.length != 32)
+							{
+								schema.reset("api-key");
+							}
+							break;
+					}
+				}
+
+				private static IGDB? instance;
+				public static unowned IGDB get_instance()
+				{
+					if(instance == null)
+					{
+						instance = new IGDB();
+					}
+					return instance;
+				}
+			}
 		}
 	}
 }

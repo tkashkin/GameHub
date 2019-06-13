@@ -85,6 +85,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 			add_page("emulators/retroarch", new Pages.Emulators.RetroArch(this));
 			add_page("emulators/custom", new Pages.Emulators.Emulators(this));
+			
+			add_page("providers/providers", new Pages.Providers.Providers(this));
 
 			add_page("about", new Pages.About(this));
 

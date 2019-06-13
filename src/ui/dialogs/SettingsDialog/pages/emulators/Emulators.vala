@@ -28,8 +28,10 @@ using GameHub.Data.DB;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 {
-	public class Emulators: SettingsDialogPage
+	public class Emulators: SettingsPage
 	{
+		public SettingsDialog dialog { construct; protected get; }
+
 		private Stack stack;
 		private Button add_btn;
 		private Button remove_btn;
@@ -41,28 +43,18 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			Object(
 				dialog: dlg,
 				title: _("Emulators"),
-				description: _("No custom emulators"),
+				status: _("No custom emulators"),
 				icon_name: "application-x-executable-symbolic"
 			);
-			status = description;
 		}
 
 		construct
 		{
-			root_grid.margin = 0;
-			root_grid.row_spacing = 0;
-
-			header_grid.margin = 12;
-
-			content_area.orientation = Orientation.HORIZONTAL;
-			content_area.margin = 0;
-			content_area.column_spacing = 0;
-
 			var paths = FSUtils.Paths.Settings.get_instance();
 
+			var content_hbox = new Box(Orientation.HORIZONTAL, 0);
+
 			stack = new Stack();
-			stack.margin = 8;
-			stack.margin_top = 0;
 			stack.expand = true;
 
 			var sidebar_box = new Box(Orientation.VERTICAL, 0);
@@ -95,9 +87,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			sidebar_box.add(sidebar);
 			sidebar_box.add(actionbar);
 
-			content_area.add(sidebar_box);
-			content_area.add(new Separator(Orientation.VERTICAL));
-			content_area.add(stack);
+			content_hbox.add(sidebar_box);
+			content_hbox.add(new Separator(Orientation.VERTICAL));
+			content_hbox.add(stack);
+
+			add(content_hbox);
 
 			stack.notify["visible-child"].connect(() => {
 				var page = stack.visible_child as EmulatorPage;
@@ -128,7 +122,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			{
 				add_emu_page(emu);
 			}
-			update();
+
+			Idle.add(() => {
+				update();
+				return Source.REMOVE;
+			});
 		}
 
 		private void add_emu_page(Emulator? emulator=null)
@@ -164,11 +162,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			remove_btn.sensitive = count > 0;
 			if(count > 0)
 			{
-				status = description = ngettext("%u custom emulator", "%u custom emulators", count).printf(count);
+				status = ngettext("%u custom emulator", "%u custom emulators", count).printf(count);
 			}
 			else
 			{
-				status = description = _("No custom emulators");
+				status = _("No custom emulators");
 			}
 		}
 
@@ -204,8 +202,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			private Label executable_label;
 			private Entry arguments;
 			private Label arguments_label;
+
 			private Entry game_executable_pattern;
 			private Label game_executable_pattern_label;
+			private Entry game_image_pattern;
+			private Label game_image_pattern_label;
+			private Entry game_icon_pattern;
+			private Label game_icon_pattern_label;
 
 			private Button run_btn;
 			private Button save_btn;
@@ -217,20 +220,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 			construct
 			{
-				mode = new Granite.Widgets.ModeButton();
-				mode.margin_bottom = 12;
-				mode.halign = Align.CENTER;
-				mode.append_text(_("Executable"));
-				mode.append_text(_("Installer"));
-				mode.selected = 0;
-				add(mode);
-
 				grid = new Grid();
+				grid.margin = 6;
 				grid.expand = true;
 				grid.row_spacing = 4;
 				grid.column_spacing = 8;
 
 				var grid_scroll = new ScrolledWindow(null, null);
+				grid_scroll.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW);
+				grid_scroll.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+				grid_scroll.margin_start = grid_scroll.margin_end = 1;
 				grid_scroll.expand = true;
 
 				grid_scroll.add(grid);
@@ -239,14 +238,21 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 				save_btn = new Button.with_label(_("Save"));
 				save_btn.halign = Align.END;
 				save_btn.valign = Align.END;
-				save_btn.margin_top = 4;
 				save_btn.sensitive = false;
 
 				run_btn = new Button.with_label(_("Run"));
 				run_btn.halign = Align.START;
 				run_btn.valign = Align.END;
-				run_btn.margin_top = 4;
 				run_btn.sensitive = false;
+
+				mode = new Granite.Widgets.ModeButton();
+				mode.margin_bottom = 8;
+				mode.halign = Align.CENTER;
+				mode.append_text(_("Executable"));
+				mode.append_text(_("Installer"));
+				mode.selected = 0;
+				grid.attach(mode, 0, rows, 2, 1);
+				rows++;
 
 				name = add_entry(_("Name"), "insert-text-symbolic", true);
 
@@ -284,11 +290,66 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 				add_separator();
 
-				game_executable_pattern = add_entry(_("Game executable pattern"), "folder-documents-symbolic", false, out game_executable_pattern_label);
-				game_executable_pattern.placeholder_text = "*.bin|*.rom|code/*.rpx";
-				game_executable_pattern.tooltip_text = _("Glob patterns separated with |");
+				var compat_force_switch = add_switch(_("Force compatibility mode"), emulator.force_compat, f => { emulator.force_compat = f; });
+				compat_force_switch.no_show_all = true;
+
+				var compat_tool = new CompatToolPicker(emulator, false, true);
+				compat_tool.no_show_all = true;
+				grid.attach(compat_tool, 0, rows, 2, 1);
+				rows++;
+
+				emulator.notify["use-compat"].connect(() => {
+					compat_force_switch.visible = !emulator.needs_compat;
+					compat_tool.visible = emulator.use_compat;
+				});
+
+				add_separator();
+
+				var patterns_header = new HeaderLabel(_("Game file patterns"));
+				patterns_header.margin_start = patterns_header.margin_end = 4;
+				grid.attach(patterns_header, 0, rows, 2, 1);
+				rows++;
+
+				game_executable_pattern = add_entry(_("Executable"), "application-x-executable", false, out game_executable_pattern_label);
+				game_executable_pattern.placeholder_text = "*.bin|*.rom|./code/*.rpx";
+
+				game_image_pattern = add_entry(_("Image"), "image-x-generic", false, out game_image_pattern_label);
+				game_image_pattern.placeholder_text = "./cover.png|./meta/bootTvTex.tga";
+
+				game_icon_pattern = add_entry(_("Icon"), "image-x-generic-symbolic", false, out game_icon_pattern_label);
+				game_icon_pattern.placeholder_text = "./icon.png|./meta/iconTex.tga";
 
 				game_executable_pattern.text = emulator.game_executable_pattern ?? "";
+				game_image_pattern.text = emulator.game_image_pattern ?? "";
+				game_icon_pattern.text = emulator.game_icon_pattern ?? "";
+
+				var patterns_syntax = new Label(_("<b>findutils</b>-compatible glob patterns\n\n<b>•</b> Multiple patterns can be separated with <b>|</b>\n<b>•</b> Start pattern with <b>./</b> to match relative path\n<b>•</b> $<b>basename</b> variable will be replaced with game's executable name (without extension)"));
+				patterns_syntax.wrap = true;
+				patterns_syntax.use_markup = true;
+				patterns_syntax.xalign = 0;
+
+				var patterns_syntax_info = new InfoBar();
+				patterns_syntax_info.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+				patterns_syntax_info.get_style_context().add_class("settings-info");
+				patterns_syntax_info.message_type = MessageType.INFO;
+				patterns_syntax_info.get_content_area().add(patterns_syntax);
+
+				grid.attach(patterns_syntax_info, 0, rows, 2, 1);
+				rows++;
+
+				var btn_box = new Box(Orientation.HORIZONTAL, 0);
+				btn_box.margin_start = btn_box.margin_end = 8;
+				btn_box.margin_top = btn_box.margin_bottom = 4;
+
+				btn_box.pack_start(run_btn);
+				btn_box.pack_end(save_btn);
+
+				add(btn_box);
+
+				run_btn.clicked.connect(run);
+				save_btn.clicked.connect(save);
+
+				mode.mode_changed.connect(update);
 
 				executable.file_set.connect(() => {
 					emulator.executable = executable.file;
@@ -323,33 +384,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 					}
 				}
 
-				add_separator();
-
-				var compat_force_switch = add_switch(_("Force compatibility mode"), emulator.force_compat, f => { emulator.force_compat = f; });
-				compat_force_switch.no_show_all = true;
-
-				var compat_tool = new CompatToolPicker(emulator, false, true);
-				compat_tool.no_show_all = true;
-				grid.attach(compat_tool, 0, rows, 2, 1);
-				rows++;
-
-				emulator.notify["use-compat"].connect(() => {
-					compat_force_switch.visible = !emulator.needs_compat;
-					compat_tool.visible = emulator.use_compat;
-				});
-
-				var btn_box = new Box(Orientation.HORIZONTAL, 0);
-
-				btn_box.pack_start(run_btn);
-				btn_box.pack_end(save_btn);
-
-				add(btn_box);
-
-				run_btn.clicked.connect(run);
-				save_btn.clicked.connect(save);
-
-				mode.mode_changed.connect(update);
-
 				update();
 			}
 
@@ -363,11 +397,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 				emulator.name = title;
 				emulator.arguments = arguments.text.strip();
 				emulator.game_executable_pattern = game_executable_pattern.text.strip();
+				emulator.game_image_pattern = game_image_pattern.text.strip();
+				emulator.game_icon_pattern = game_icon_pattern.text.strip();
 
 				emulator.install_dir = emudir.file;
 
 				executable_label.label = mode.selected == 0 ? _("Executable") : _("Installer");
-				arguments.sensitive = arguments_label.sensitive = game_executable_pattern.sensitive = game_executable_pattern_label.sensitive = mode.selected == 0;
+				arguments.sensitive = arguments_label.sensitive = mode.selected == 0;
 
 				run_btn.sensitive = emulator.name.length > 0 && executable.file != null && mode.selected == 0 && emudir.file != null;
 				save_btn.sensitive = emulator.name.length > 0 && executable.file != null && ((mode.selected == 0 && emudir.file != null) || mode.selected == 1);
@@ -454,7 +490,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			private void add_separator()
 			{
 				var separator = new Separator(Orientation.HORIZONTAL);
-				separator.margin_top = separator.margin_bottom = 4;
+				separator.margin_top = separator.margin_bottom = 2;
 				grid.attach(separator, 0, rows, 2, 1);
 				rows++;
 			}

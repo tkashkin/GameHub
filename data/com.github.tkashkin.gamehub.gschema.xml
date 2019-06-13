@@ -176,4 +176,19 @@
 			<default>[]</default>
 		</key>
 	</schema>
+
+	<schema path="/com/github/tkashkin/gamehub/providers/images/" id="com.github.tkashkin.gamehub.providers.images" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="disabled" type="as">
+			<default>[]</default>
+		</key>
+	</schema>
+
+	<schema path="/com/github/tkashkin/gamehub/providers/data/igdb/" id="com.github.tkashkin.gamehub.providers.data.igdb" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="enabled" type="b">
+			<default>true</default>
+		</key>
+		<key name="api-key" type="s">
+			<default>'e0a54818580e4085b596c5aa613b1c53'</default>
+		</key>
+	</schema>
 </schemalist>
