@@ -25,8 +25,9 @@ namespace GameHub.Data.Providers.Images
 	{
 		private const string BASE_URL = "https://steam.cryotank.net";
 
-		public override string id { get { return "jinx_sgvi"; } }
+		public override string id   { get { return "jinx_sgvi"; } }
 		public override string name { get { return "Jinx's Steam Grid View Images"; } }
+		public override string url  { get { return BASE_URL; } }
 
 		public override async ImagesProvider.Result images(Game game)
 		{

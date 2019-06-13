@@ -104,7 +104,8 @@ namespace GameHub.UI.Widgets
 
 			warnings = new Box(Orientation.VERTICAL, 0);
 
-			actions = new Box(Orientation.HORIZONTAL, 4);
+			actions = new Box(Orientation.HORIZONTAL, 0);
+			actions.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
 
 			combo.changed.connect(() => {
 				if(model_size == 0) return;

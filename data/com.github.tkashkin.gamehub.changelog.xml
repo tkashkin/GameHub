@@ -1,4 +1,63 @@
-		<release type="development" version="0.14.0.master" date="2019-06-07" timestamp="1559926982" />
+		<release type="development" version="0.14.0.dev.local.b100729" date="2019-06-12" timestamp="1560353729" />
+		<release type="development" version="0.14.0.8.dev" date="2019-06-12" timestamp="1560353729">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [b100729]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [a535e9d]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [bfa122c]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.6.dev" date="2019-06-12" timestamp="1560297126">
+			<description>
+				<ul>
+					<li>Add game images providers [66e085e]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.5.dev" date="2019-06-10" timestamp="1560184838">
+			<description>
+				<ul>
+					<li>`ImportEmulatedGamesDialog` tweaks (#103) [843d4d2]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.4.dev" date="2019-06-10" timestamp="1560176270">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Dutch) [52186ff]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.3.dev" date="2019-06-09" timestamp="1560067849">
+			<description>
+				<ul>
+					<li>Add emulated games scanning (#103) [f5b3ad0]</li>
+					<li>Translated using Weblate (German) [9e366e0]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="stable" version="0.14.0.2.master" date="2019-06-08" timestamp="1559954564">
+			<description>
+				<ul>
+					<li>Fix Utils.get_language_name [96029f0]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="stable" version="0.14.0.1.master" date="2019-06-08" timestamp="1559951882">
+			<description>
+				<ul>
+					<li>Release 0.14.0 [6343d16]</li>
+					<li>[ci skip] Update AppStream data [72d1b55]</li>
+					<li>[ci skip] Bump version to 0.14.0 Update README.md Update screenshots [ff8ed17]</li>
+					<li>Merge branch 'master' of github.com:tkashkin/GameHub [1f713f3]</li>
+					<li>[ci skip] Merge pull request #172 from friday/issue-templates [fab595b]</li>
+					<li>Create git issue templates [600652a]</li>
+					<li>[ci skip] Update README.md [a242568]</li>
+					<li>Merge `dev` into `master` [cd4ff2c]</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.13.1.115.dev" date="2019-06-07" timestamp="1559926982">
 			<description>
 				<ul>

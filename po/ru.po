@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 02:48+0300\n"
+"POT-Creation-Date: 2019-06-13 03:35+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -96,30 +96,30 @@ msgstr "Выводить сообщения о запуске/остановке
 msgid "Verbose logging"
 msgstr "Подробные сообщения"
 
-#: src/app.vala:228
+#: src/app.vala:229
 msgid "Game Options:"
 msgstr "Параметры игр:"
 
-#: src/app.vala:228
+#: src/app.vala:229
 msgid "Show game options help"
 msgstr "Показать справку о параметрах игр"
 
-#: src/app.vala:236
+#: src/app.vala:237
 msgid "Logging Options:"
 msgstr "Параметры журналирования:"
 
-#: src/app.vala:236
+#: src/app.vala:237
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:265
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
 #: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Select executable"
 msgstr "Выберите исполняемый файл"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:342
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:345
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -320,7 +320,7 @@ msgstr ""
 "Установите innoextract <b>%2$s</b> или более новый."
 
 #: src/data/compat/WineWrap.vala:61
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:245
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
@@ -428,38 +428,38 @@ msgstr "Эмулятор"
 msgid "Launch in game directory"
 msgstr "Запускать в папке игры"
 
-#: src/data/providers/images/SteamGridDB.vala:102
+#: src/data/providers/images/SteamGridDB.vala:103
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
 msgstr "Стиль"
 
-#: src/data/providers/images/SteamGridDB.vala:103
+#: src/data/providers/images/SteamGridDB.vala:104
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
 msgstr "Счёт"
 
-#: src/data/providers/images/SteamGridDB.vala:107
+#: src/data/providers/images/SteamGridDB.vala:108
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
 msgstr "Автор"
 
-#: src/data/providers/images/SteamGridDB.vala:119
+#: src/data/providers/images/SteamGridDB.vala:120
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
 msgstr "Альтернативное"
 
-#: src/data/providers/images/SteamGridDB.vala:120
+#: src/data/providers/images/SteamGridDB.vala:121
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
 msgstr "Размытое"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-#: src/data/providers/images/SteamGridDB.vala:122
+#: src/data/providers/images/SteamGridDB.vala:123
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
 msgstr "Material"
 
-#: src/data/providers/images/SteamGridDB.vala:123
+#: src/data/providers/images/SteamGridDB.vala:124
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
 msgstr "Без логотипа"
@@ -467,7 +467,7 @@ msgstr "Без логотипа"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
 #: src/ui/views/GamesView/GamesView.vala:248
-#: src/ui/views/GamesView/GamesView.vala:606
+#: src/ui/views/GamesView/GamesView.vala:596
 msgid "Settings"
 msgstr "Настройки"
 
@@ -537,54 +537,49 @@ msgstr ""
 msgid "Use imported tags"
 msgstr "Использовать импортированные теги"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:48
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:51
 msgid "General"
 msgstr "Общие"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:49
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:52
 msgid "Collection"
 msgstr "Коллекция"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:62
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:82
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
 msgid "Collection directory"
 msgstr "Папка коллекции"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:67
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:75
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:70
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:87
 msgid "Game directory"
 msgstr "Папка игры"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:68
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:76
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Installers"
 msgstr "Установщики"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:69
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
 msgid "DLC"
 msgstr "DLC"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:70
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:89
 msgid "Bonus content"
 msgstr "Бонусный контент"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:80
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-msgid "Variables"
-msgstr "Переменные"
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
+msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
+msgstr "Синтаксис переменных: <b>$var</b> или <b>${var}</b>"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:81
-msgid "Syntax: <b>$var</b> or <b>${var}</b>"
-msgstr "Синтаксис: <b>$var</b> или <b>${var}</b>"
-
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:83
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
 msgstr "Название игры"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 msgid "Platform"
 msgstr "Платформа"
 
@@ -593,7 +588,7 @@ msgid "Controller"
 msgstr "Контроллер"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
 msgid "Enabled"
 msgstr "Включено"
 
@@ -605,15 +600,15 @@ msgstr "Фокусировать окно GameHub при нажатии кноп
 msgid "Controllers"
 msgstr "Контроллеры"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:74
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:75
 msgid "Move focus"
 msgstr "Перемещение фокуса"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:76
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:77
 msgid "Exit"
 msgstr "Выход"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:35
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:72
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:37
@@ -690,7 +685,7 @@ msgid "Load games from Humble Trove"
 msgstr "Загружать игры из Humble Trove"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:43
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:45
 msgid "Emulators"
 msgstr "Эмуляторы"
 
@@ -714,12 +709,12 @@ msgstr[0] "Найдено %u ядро"
 msgstr[1] "Найдено %u ядра"
 msgstr[2] "Найдено %u ядер"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:44
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:171
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:169
 msgid "No custom emulators"
 msgstr "Нет пользовательских эмуляторов"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:167
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:165
 #, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
@@ -727,71 +722,120 @@ msgstr[0] "%u пользовательский эмулятор"
 msgstr[1] "%u пользовательских эмулятора"
 msgstr[2] "%u пользовательских эмуляторов"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:265
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:369
-#: src/ui/dialogs/GamePropertiesDialog.vala:215
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
-#: src/ui/views/GamesView/AddGamePopover.vala:66
-#: src/ui/views/GamesView/AddGamePopover.vala:76
-#: src/ui/views/GamesView/AddGamePopover.vala:136
-msgid "Executable"
-msgstr "Исполняемый файл"
-
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:224
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:369
-#: src/ui/views/GamesView/AddGamePopover.vala:67
-#: src/ui/views/GamesView/AddGamePopover.vala:136
-msgid "Installer"
-msgstr "Установщик"
-
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:239
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:238
 msgid "Save"
 msgstr "Сохранить"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:313
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
+#: src/ui/dialogs/GamePropertiesDialog.vala:215
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/views/GamesView/AddGamePopover.vala:67
+#: src/ui/views/GamesView/AddGamePopover.vala:77
+#: src/ui/views/GamesView/AddGamePopover.vala:143
+msgid "Executable"
+msgstr "Исполняемый файл"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:252
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
+#: src/ui/views/GamesView/AddGamePopover.vala:68
+#: src/ui/views/GamesView/AddGamePopover.vala:143
+msgid "Installer"
+msgstr "Установщик"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:257
 #: src/ui/dialogs/GamePropertiesDialog.vala:129
 #: src/ui/dialogs/GamePropertiesDialog.vala:134
-#: src/ui/views/GamesView/AddGamePopover.vala:72
+#: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
 msgstr "Название"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:267
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
 #: src/ui/dialogs/GamePropertiesDialog.vala:238
-#: src/ui/views/GamesView/AddGamePopover.vala:77
+#: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Параметры"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:277
+msgid "Variables"
+msgstr "Переменные"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
 msgid "Game executable"
 msgstr "Исполняемый файл игры"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:279
 msgid "Game arguments"
 msgstr "Параметры игры"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:283
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
-#: src/ui/views/GamesView/AddGamePopover.vala:81
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:82
+#: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Directory"
 msgstr "Папка"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:283
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
 msgid "Select emulator directory"
 msgstr "Выберите папку эмулятора"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:287
-msgid "Game executable pattern"
-msgstr "Маска исполняемых файлов игр"
-
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
-msgid "Glob patterns separated with |"
-msgstr "Glob-маски, разделённые |"
-
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:328
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:293
 #: src/ui/dialogs/GamePropertiesDialog.vala:256
 msgid "Force compatibility mode"
 msgstr "Использовать режим совместимости"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:308
+msgid "Game file patterns"
+msgstr "Маски файлов игр"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:316
+msgid "Image"
+msgstr "Изображение"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:319
+msgid "Icon"
+msgstr "Иконка"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:326
+msgid ""
+"<b>findutils</b>-compatible glob patterns\n"
+"\n"
+"<b>•</b> Multiple patterns can be separated with <b>|</b>\n"
+"<b>•</b> Start pattern with <b>./</b> to match relative path\n"
+"<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
+"name (without extension)"
+msgstr ""
+"<b>findutils</b>-совместимые glob-маски\n"
+"\n"
+"<b>•</b> Несколько масок могут быть разделены <b>|</b>\n"
+"<b>•</b> Начните маску с <b>./</b>, чтобы использовать относительный путь\n"
+"<b>•</b> Переменная $<b>basename</b> будет заменена на имя исполняемого "
+"файла игры (без расширения)"
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
+msgid "Data"
+msgstr "Данные"
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:39
+msgid "Providers"
+msgstr "Провайдеры"
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:40
+msgid "Third-party data providers"
+msgstr "Сторонние источники данных"
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
+msgid "Image providers"
+msgstr "Источники изображений"
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:67
+msgid "Metadata providers"
+msgstr "Источники метаданных"
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:135
+msgid "Open website"
+msgstr "Открыть веб-сайт"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:35
 msgid "About"
@@ -854,7 +898,7 @@ msgid "Install"
 msgstr "Установить"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:130
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:133
 msgid "Import"
 msgstr "Импортировать"
 
@@ -979,24 +1023,24 @@ msgstr "Запустить, используя слой совместимост
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "повреждённый установщик: несовпадение контрольной суммы в файле"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:58
-#: src/ui/views/GamesView/AddGamePopover.vala:104
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:60
+#: src/ui/views/GamesView/AddGamePopover.vala:105
 msgid "Import emulated games"
 msgstr "Импортировать эмулируемые игры"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:77
 msgid "Select directory with emulated games"
 msgstr "Выберите папку с эмулируемыми играми"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:85
 msgid "Detected games"
 msgstr "Обнаруженные игры"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:110
 msgid "Select all"
 msgstr "Выделить всё"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:118
 msgid "Select directory to import"
 msgstr "Выберите папку для импорта"
 
@@ -1066,7 +1110,7 @@ msgid "Filters"
 msgstr "Фильтры"
 
 #: src/ui/views/GamesView/GamesView.vala:234
-#: src/ui/views/GamesView/AddGamePopover.vala:83
+#: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Добавить игру"
 
@@ -1074,16 +1118,16 @@ msgstr "Добавить игру"
 msgid "Search"
 msgstr "Поиск"
 
-#: src/ui/views/GamesView/GamesView.vala:340
+#: src/ui/views/GamesView/GamesView.vala:343
 msgid "Menu"
 msgstr "Меню"
 
-#: src/ui/views/GamesView/GamesView.vala:341
+#: src/ui/views/GamesView/GamesView.vala:344
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:82
 msgid "Back"
 msgstr "Назад"
 
-#: src/ui/views/GamesView/GamesView.vala:528
+#: src/ui/views/GamesView/GamesView.vala:518
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
@@ -1091,34 +1135,34 @@ msgstr[0] "%u игра"
 msgstr[1] "%u игры"
 msgstr[2] "%u игр"
 
-#: src/ui/views/GamesView/GamesView.vala:542
+#: src/ui/views/GamesView/GamesView.vala:532
 msgid "No user-added games"
 msgstr "Нет пользовательских игр"
 
-#: src/ui/views/GamesView/GamesView.vala:543
+#: src/ui/views/GamesView/GamesView.vala:533
 msgid "Add some games using plus button"
 msgstr "Добавьте игры с помощью кнопки +"
 
-#: src/ui/views/GamesView/GamesView.vala:547
+#: src/ui/views/GamesView/GamesView.vala:537
 #, c-format
 msgid "No %s games"
 msgstr "Нет игр из %s"
 
-#: src/ui/views/GamesView/GamesView.vala:548
+#: src/ui/views/GamesView/GamesView.vala:538
 msgid "Get some Linux-compatible games"
 msgstr "Получите игры, совместимые с Linux"
 
-#: src/ui/views/GamesView/GamesView.vala:558
+#: src/ui/views/GamesView/GamesView.vala:548
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Нет игр, соответствующих запросу «%s»"
 
-#: src/ui/views/GamesView/GamesView.vala:563
+#: src/ui/views/GamesView/GamesView.vala:553
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Нет игр из %1$s, соответствующих запросу «%2$s»"
 
-#: src/ui/views/GamesView/GamesView.vala:604
+#: src/ui/views/GamesView/GamesView.vala:594
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1126,9 +1170,18 @@ msgstr ""
 "Нет игр, загруженных из Steam. Настройте список игр как публичный или "
 "используйте свой API-ключ Steam в настройках."
 
-#: src/ui/views/GamesView/GamesView.vala:605
+#: src/ui/views/GamesView/GamesView.vala:595
 msgid "Privacy"
 msgstr "Приватность"
+
+#: src/ui/views/GamesView/GamesView.vala:731
+msgid "Downloading images"
+msgstr "Загрузка изображений"
+
+#: src/ui/views/GamesView/GamesView.vala:745
+#, c-format
+msgid "Downloading image: %s"
+msgstr "Загрузка изображений: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
@@ -1149,13 +1202,17 @@ msgstr "Отменить загрузку"
 msgid "Sort:"
 msgstr "Сортировка:"
 
-#: src/ui/views/GamesView/AddGamePopover.vala:76
+#: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Select game executable"
 msgstr "Выберите исполняемый файл игры"
 
-#: src/ui/views/GamesView/AddGamePopover.vala:81
+#: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Select game directory"
 msgstr "Выберите папку игры"
+
+#: src/ui/views/GamesView/AddGamePopover.vala:111
+msgid "Download game images"
+msgstr "Загрузить изображения игр"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 msgid "Details"
@@ -1354,6 +1411,9 @@ msgstr "Приостановлено: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Загрузка отменена"
+
+#~ msgid "Glob patterns separated with |"
+#~ msgstr "Glob-маски, разделённые |"
 
 #~ msgid "Search images:"
 #~ msgstr "Поиск изображений:"

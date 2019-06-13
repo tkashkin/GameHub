@@ -40,6 +40,8 @@ namespace GameHub.UI.Dialogs
 
 		public signal void game_added(UserGame game);
 
+		private HashMap<string, EmulatedGame> detected_games;
+
 		private Box content;
 
 		private FileChooserEntry dir_chooser;
@@ -93,7 +95,8 @@ namespace GameHub.UI.Dialogs
 			found_list.selection_mode = SelectionMode.NONE;
 			found_list.sensitive = false;
 
-			found_list.set_header_func((row, prev) => ((EmulatedGameRow) row).setup_header((EmulatedGameRow) prev));
+			found_list.set_sort_func((row, row2) => ((EmulatedGameRow) row).sort((EmulatedGameRow) row2));
+			found_list.set_header_func((row, prev) => ((EmulatedGameRow) row).header((EmulatedGameRow) prev));
 
 			found_list_scroll.add(found_list);
 
@@ -216,6 +219,10 @@ namespace GameHub.UI.Dialogs
 			status_spinner.visible = true;
 			status_spinner.start();
 
+			detected_games = new HashMap<string, EmulatedGame>();
+
+			found_list.foreach(r => r.destroy());
+
 			Utils.thread("ImportEmulatedGamesDialogSearch", () => {
 				debug("[ImportEmulatedGamesDialog] Starting search in '%s'", dir_chooser.file.get_path());
 
@@ -228,6 +235,12 @@ namespace GameHub.UI.Dialogs
 					status_spinner.visible = false;
 					status_spinner.stop();
 					status_label.label = null;
+
+					foreach(var game in detected_games.values)
+					{
+						add_row(new EmulatedGameRow(game));
+					}
+
 					update_selection();
 					return Source.REMOVE;
 				});
@@ -249,17 +262,51 @@ namespace GameHub.UI.Dialogs
 					var subpatterns = pattern.split("|");
 					foreach(var sp in subpatterns)
 					{
-						var files_list = Utils.run({ "find", root.get_path(), "-path", "*/" + sp }, null, null, false, true, false);
+						sp = sp.strip();
+						bool is_dir_based = sp.has_prefix("./");
+
+						if(is_dir_based)
+						{
+							if(sp == "./") continue;
+							sp = sp.substring(sp.index_of_nth_char(2));
+						}
+
+						var files_list = Utils.run({"find", root.get_path(), "-path", "*/" + sp}, null, null, false, true, false);
 						var files = files_list.split("\n");
 
-						foreach(var file in files)
+						foreach(var file_path in files)
 						{
-							debug("[search_emulators] %s: %s", emu.name, file);
-							var game = new EmulatedGame(FSUtils.file(file), emu);
-							Idle.add(() => {
-								add_row(new EmulatedGameRow(game));
-								return Source.REMOVE;
-							});
+							var file = FSUtils.file(file_path);
+							var dir = file.get_parent();
+							var name = file.get_basename();
+
+							if(is_dir_based)
+							{
+								if("/" in sp)
+								{
+									var sp_parts = sp.split("/");
+									for(int i = 0; i < sp_parts.length - 1; i++)
+									{
+										dir = dir.get_parent();
+									}
+								}
+								name = dir.get_basename();
+							}
+							else
+							{
+								var ext_index = name.last_index_of_char('.');
+								if(ext_index > 0)
+								{
+									name = name.substring(0, ext_index);
+								}
+							}
+
+							debug("[search_emulators: %s] '%s': %s [%s]", emu.name, name, file.get_path(), dir.get_path());
+
+							var tool = new EmulatedGame.Tool(emu);
+							var game = detected_games.has_key(file_path) ? detected_games.get(file_path) : new EmulatedGame(name, file, dir, is_dir_based ? dir.get_parent() : dir);
+							game.tools.add(tool);
+							detected_games.set(file_path, game);
 						}
 					}
 				}
@@ -307,41 +354,58 @@ namespace GameHub.UI.Dialogs
 
 					if(!("supported_extensions = \"" in full_info)) continue;
 
+					string? core_name = null;
 					string? display_name = null;
+					string? supported_extensions = null;
 
 					var lines = full_info.split("\n");
 					foreach(var line in lines)
 					{
-						if("display_name = \"" in line)
+						if("corename = \"" in line)
+						{
+							core_name = line.replace("corename = \"", "").replace("\"", "").strip();
+						}
+						else if("display_name = \"" in line)
 						{
 							display_name = line.replace("display_name = \"", "").replace("\"", "").strip();
 							status_label.label = "RetroArch: " + display_name;
 						}
 						else if("supported_extensions = \"" in line)
 						{
-							var exts_list = line.replace("supported_extensions = \"", "").replace("\"", "").strip();
-							if(exts_list.length > 0)
+							supported_extensions = line.replace("supported_extensions = \"", "").replace("\"", "").strip();
+						}
+					}
+
+					if(supported_extensions != null && supported_extensions.length > 0)
+					{
+						var exts = supported_extensions.split("|");
+						foreach(var ext in exts)
+						{
+							ext = ext.strip();
+							if(ext in LIBRETRO_IGNORED_FILES) continue;
+
+							var files_list = Utils.run({"find", root.get_path(), "-path", "*/*." + ext}, null, null, false, true, false);
+							var files = files_list.split("\n");
+
+							foreach(var file_path in files)
 							{
-								var exts = exts_list.split("|");
-								foreach(var ext in exts)
+								var file = FSUtils.file(file_path);
+								var dir = file.get_parent();
+								var name = file.get_basename();
+
+								var ext_index = name.last_index_of_char('.');
+								if(ext_index > 0)
 								{
-									if(ext in LIBRETRO_IGNORED_FILES) continue;
-
-									var files_list = Utils.run({ "find", root.get_path(), "-path", "*/*." + ext }, null, null, false, true, false);
-									var files = files_list.split("\n");
-
-									foreach(var file in files)
-									{
-										debug("[search_retroarch] %s: %s", core, file);
-										var game = new EmulatedGame.libretro(FSUtils.file(file), core, display_name);
-										Idle.add(() => {
-											add_row(new EmulatedGameRow(game));
-											return Source.REMOVE;
-										});
-									}
+									name = name.substring(0, ext_index);
 								}
+
+								debug("[search_retroarch: %s] '%s': %s [%s]", core, name, file.get_path(), dir.get_path());
+
+								var tool = new EmulatedGame.Tool.libretro(core, core_name, display_name);
+								var game = detected_games.has_key(file_path) ? detected_games.get(file_path) : new EmulatedGame(name, file, dir, dir);
+								game.tools.add(tool);
+								detected_games.set(file_path, game);
 							}
-							break;
 						}
 					}
 				}
@@ -352,33 +416,45 @@ namespace GameHub.UI.Dialogs
 			}
 		}
 
-		private class EmulatedGame
+		private class EmulatedGame: Object
 		{
+			public string name;
 			public File file;
+			public File directory;
+			public File parent_directory;
+			public ArrayList<Tool> tools;
 
-			public Emulator? emulator = null;
-
-			public string? libretro_core = null;
-			public bool uses_libretro = false;
-
-			public string header;
-			public string? header_subtitle;
-
-			public EmulatedGame(File file, Emulator emulator)
+			public EmulatedGame(string name, File file, File directory, File parent_directory)
 			{
+				this.name = name;
 				this.file = file;
-				this.emulator = emulator;
-				this.uses_libretro = false;
-				this.header = emulator.name;
+				this.directory = directory;
+				this.parent_directory = parent_directory;
+				this.tools = new ArrayList<Tool>();
 			}
 
-			public EmulatedGame.libretro(File file, string core, string? display_name)
+			public class Tool: Object
 			{
-				this.file = file;
-				this.libretro_core = core;
-				this.uses_libretro = true;
-				this.header = "RetroArch: " + display_name ?? core;
-				if(display_name != null) this.header_subtitle = core;
+				public string short_name;
+				public string name;
+				public Emulator? emulator = null;
+				public string? libretro_core = null;
+				public bool uses_libretro = false;
+
+				public Tool(Emulator emulator)
+				{
+					this.short_name = this.name = emulator.name;
+					this.emulator = emulator;
+					this.uses_libretro = false;
+				}
+
+				public Tool.libretro(string core, string? core_name, string? display_name)
+				{
+					this.short_name = "RetroArch: " + (core_name != null ? core_name : core);
+					this.name = "RetroArch: " + (display_name != null ? display_name : (core_name != null ? core_name : core));
+					this.libretro_core = core;
+					this.uses_libretro = true;
+				}
 			}
 		}
 
@@ -390,59 +466,98 @@ namespace GameHub.UI.Dialogs
 			public CheckButton import;
 			public Entry title;
 
+			private Gtk.ListStore tools_model;
+			private int tools_model_size = 0;
+			private Gtk.TreeIter tools_iter;
+			public ComboBox tools;
+
+			public EmulatedGame.Tool selected_tool;
+
 			public EmulatedGameRow(EmulatedGame game)
 			{
 				this.game = game;
 
-				var hbox = new Box(Orientation.HORIZONTAL, 8);
-				hbox.margin_start = hbox.margin_end = 8;
-				hbox.margin_top = hbox.margin_bottom = 4;
+				var grid = new Grid();
+				grid.column_spacing = 8;
+				grid.margin_start = grid.margin_end = 8;
+				grid.margin_top = grid.margin_bottom = 4;
 
 				import = new CheckButton();
 				import.active = true;
+
+				var title_hbox = new Box(Orientation.HORIZONTAL, 0);
+				title_hbox.expand = true;
+				title_hbox.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
 
 				title = new Entry();
 				title.expand = true;
 				title.xalign = 0;
 
-				title.text = game.file.get_basename();
+				title_hbox.add(title);
 
-				var ext_index = title.text.last_index_of_char('.');
-				if(ext_index > 0)
+				tools_model = new Gtk.ListStore(2, typeof(string), typeof(EmulatedGame.Tool));
+				foreach(var tool in game.tools)
 				{
-					title.text = title.text.substring(0, ext_index);
+					tools_model.append(out tools_iter);
+					tools_model.set(tools_iter, 0, tool.short_name);
+					tools_model.set(tools_iter, 1, tool);
+					tools_model_size++;
 				}
 
+				tools = new ComboBox.with_model(tools_model);
+				tools.set_size_request(128, -1);
+				tools.popup_fixed_width = false;
+
+				CellRendererText r_name = new CellRendererText();
+				r_name.ellipsize = Pango.EllipsizeMode.END;
+				r_name.width_chars = r_name.max_width_chars = 20;
+				r_name.xpad = 4;
+				tools.pack_start(r_name, true);
+				tools.add_attribute(r_name, "text", 0);
+
+				tools.changed.connect(() => {
+					if(tools_model_size == 0) return;
+					Value v;
+					tools.get_active_iter(out tools_iter);
+					tools_model.get_value(tools_iter, 1, out v);
+					selected_tool = v as EmulatedGame.Tool;
+					tools.tooltip_text = selected_tool.name;
+				});
+
+				tools.active = 0;
+				tools.sensitive = tools_model_size > 1;
+
+				title_hbox.add(tools);
+
+				title.text = game.name;
 				tooltip_text = game.file.get_path();
 
 				import.toggled.connect(() => {
-					title.sensitive = import.active;
+					title_hbox.sensitive = import.active;
 				});
 
-				hbox.add(import);
-				hbox.add(title);
+				grid.attach(import, 0, 0);
+				grid.attach(title_hbox, 1, 0);
 
-				child = hbox;
+				child = grid;
 				show_all();
 			}
 
-			public void setup_header(EmulatedGameRow? prev)
+			public int sort(EmulatedGameRow other)
 			{
-				if(prev == null || prev.game.header != game.header)
+				var dir = game.parent_directory.get_path();
+				var other_dir = other.game.parent_directory.get_path();
+				return strcmp(dir.collate_key_for_filename(), other_dir.collate_key_for_filename());
+			}
+
+			public void header(EmulatedGameRow? prev)
+			{
+				if(prev == null || prev.game.parent_directory.get_path() != game.parent_directory.get_path())
 				{
-					var hbox = new Box(Orientation.HORIZONTAL, 8);
-					var header = new HeaderLabel(game.header);
+					var header = new HeaderLabel(game.parent_directory.get_path());
 					header.expand = true;
-					hbox.add(header);
-					if(game.header_subtitle != null)
-					{
-						var subtitle = new Label(game.header_subtitle);
-						subtitle.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-						subtitle.margin_start = subtitle.margin_end = 8;
-						hbox.add(subtitle);
-					}
-					hbox.show_all();
-					set_header(hbox);
+					header.show_all();
+					set_header(header);
 				}
 				else
 				{
@@ -454,21 +569,74 @@ namespace GameHub.UI.Dialogs
 			{
 				if(!import.active) return;
 
-				var g = new UserGame(title.text.strip() + " [%s]".printf(game.uses_libretro ? game.libretro_core : game.header), game.file.get_parent(), game.file, "", false);
+				var g = new UserGame(title.text.strip(), game.directory, game.file, "", false);
 
-				if(game.uses_libretro)
+				if(selected_tool.uses_libretro)
 				{
 					g.compat_tool = "retroarch";
-					g.compat_tool_settings = "{\"compat_options_saved\":true,\"force_compat\":true,\"retroarch\":{\"options\":{\"core\":\"" + game.libretro_core + "\"}}}";
+					g.compat_tool_settings = "{\"compat_options_saved\":true,\"force_compat\":true,\"retroarch\":{\"options\":{\"core\":\"" + selected_tool.libretro_core + "\"}}}";
 				}
 				else
 				{
 					g.compat_tool = "emulator";
-					g.compat_tool_settings = "{\"compat_options_saved\":true,\"force_compat\":true,\"emulator\":{\"options\":{\"emulator\":\"" + game.emulator.name + "\"}}}";
+					g.compat_tool_settings = "{\"compat_options_saved\":true,\"force_compat\":true,\"emulator\":{\"options\":{\"emulator\":\"" + selected_tool.emulator.name + "\"}}}";
+
+					var basename = game.file.get_basename();
+					var ext_index = basename.last_index_of_char('.');
+					if(ext_index > 0)
+					{
+						basename = basename.substring(0, ext_index);
+					}
+
+					var image = find_by_pattern(selected_tool.emulator.game_image_pattern, game.directory, basename);
+					var icon  = find_by_pattern(selected_tool.emulator.game_icon_pattern,  game.directory, basename);
+
+					if(image != null)
+					{
+						g.image = image.get_uri();
+					}
+					if(icon != null)
+					{
+						g.icon = icon.get_uri();
+					}
 				}
 
 				g.save();
 				game_added(g);
+			}
+
+			private File? find_by_pattern(string? pattern, File directory, string basename)
+			{
+				if(pattern != null)
+				{
+					var subpatterns = pattern.split("|");
+					foreach(var sp in subpatterns)
+					{
+						sp = sp.strip();
+
+						if(sp.has_prefix("./"))
+						{
+							if(sp == "./") continue;
+							sp = sp.substring(sp.index_of_nth_char(2));
+						}
+
+						sp = sp.replace("${basename}", basename).replace("$basename", basename);
+
+						var files_list = Utils.run({"find", directory.get_path(), "-path", "*/" + sp}, null, null, false, true, false);
+						var files = files_list.split("\n");
+
+						foreach(var file_path in files)
+						{
+							var file = FSUtils.file(file_path);
+							if(file != null && file.query_exists())
+							{
+								return file;
+							}
+						}
+					}
+				}
+
+				return null;
 			}
 		}
 	}

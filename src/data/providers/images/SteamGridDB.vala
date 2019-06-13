@@ -26,8 +26,9 @@ namespace GameHub.Data.Providers.Images
 		private const string DOMAIN   = "https://steamgriddb.com";
 		private const string BASE_URL = DOMAIN + "/api/v2";
 
-		public override string id { get { return "steamgriddb"; } }
+		public override string id   { get { return "steamgriddb"; } }
 		public override string name { get { return "SteamGridDB"; } }
+		public override string url  { get { return DOMAIN; } }
 
 		public override async ImagesProvider.Result images(Game game)
 		{
@@ -35,7 +36,7 @@ namespace GameHub.Data.Providers.Images
 
 			var endpoint = "/grids/steam/" + game.id;
 
-			if(game is Data.Sources.Steam.SteamGame)
+			if(game is GameHub.Data.Sources.Steam.SteamGame)
 			{
 				var gid = yield game_id_by_steam_appid(game.id);
 				if(gid != null) result.url = DOMAIN + "/game/" + gid;

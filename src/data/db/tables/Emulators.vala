@@ -37,6 +37,8 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field COMPAT_TOOL_SETTINGS;
 		public static Table.Field ARGUMENTS;
 		public static Table.Field GAME_EXECUTABLE_PATTERN;
+		public static Table.Field GAME_IMAGE_PATTERN;
+		public static Table.Field GAME_ICON_PATTERN;
 
 		public Emulators()
 		{
@@ -50,6 +52,8 @@ namespace GameHub.Data.DB.Tables
 			COMPAT_TOOL_SETTINGS     = f(5);
 			ARGUMENTS                = f(6);
 			GAME_EXECUTABLE_PATTERN  = f(7);
+			GAME_IMAGE_PATTERN       = f(8);
+			GAME_ICON_PATTERN        = f(9);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -73,6 +77,11 @@ namespace GameHub.Data.DB.Tables
 					case 5:
 						db.exec("ALTER TABLE `emulators` ADD `game_executable_pattern` string");
 						break;
+
+					case 6:
+						db.exec("ALTER TABLE `emulators` ADD `game_image_pattern` string");
+						db.exec("ALTER TABLE `emulators` ADD `game_icon_pattern` string");
+						break;
 				}
 			}
 		}
@@ -91,8 +100,10 @@ namespace GameHub.Data.DB.Tables
 					`compat_tool`,
 					`compat_tool_settings`,
 					`arguments`,
-					`game_executable_pattern`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`game_executable_pattern`,
+					`game_image_pattern`,
+					`game_icon_pattern`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -108,6 +119,8 @@ namespace GameHub.Data.DB.Tables
 			COMPAT_TOOL_SETTINGS.bind(s, emu.compat_tool_settings);
 			ARGUMENTS.bind(s, emu.arguments);
 			GAME_EXECUTABLE_PATTERN.bind(s, emu.game_executable_pattern);
+			GAME_IMAGE_PATTERN.bind(s, emu.game_image_pattern);
+			GAME_ICON_PATTERN.bind(s, emu.game_icon_pattern);
 
 			res = s.step();
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 02:48+0300\n"
+"POT-Creation-Date: 2019-06-13 03:35+0300\n"
 "PO-Revision-Date: 2019-06-10 14:17+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -95,30 +95,30 @@ msgstr "Achtergronddiensten van loggen starten/stoppen"
 msgid "Verbose logging"
 msgstr "Uitgebreid loggen"
 
-#: src/app.vala:228
+#: src/app.vala:229
 msgid "Game Options:"
 msgstr "Spelopties:"
 
-#: src/app.vala:228
+#: src/app.vala:229
 msgid "Show game options help"
 msgstr "Hulp bij opties van spel tonen"
 
-#: src/app.vala:236
+#: src/app.vala:237
 msgid "Logging Options:"
 msgstr "Opties voor loggen:"
 
-#: src/app.vala:236
+#: src/app.vala:237
 msgid "Show logging options help"
 msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:265
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
 #: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Select executable"
 msgstr "Kies uitvoerbaar bestand"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:342
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:345
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -320,7 +320,7 @@ msgstr ""
 "Installeer innoextract <b>%2$s</b> of hoger."
 
 #: src/data/compat/WineWrap.vala:61
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:245
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
@@ -428,38 +428,38 @@ msgstr "Emulator"
 msgid "Launch in game directory"
 msgstr "Uitvoeren in spelmap"
 
-#: src/data/providers/images/SteamGridDB.vala:102
+#: src/data/providers/images/SteamGridDB.vala:103
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:103
+#: src/data/providers/images/SteamGridDB.vala:104
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:107
+#: src/data/providers/images/SteamGridDB.vala:108
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:119
+#: src/data/providers/images/SteamGridDB.vala:120
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:120
+#: src/data/providers/images/SteamGridDB.vala:121
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
 msgstr ""
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-#: src/data/providers/images/SteamGridDB.vala:122
+#: src/data/providers/images/SteamGridDB.vala:123
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:123
+#: src/data/providers/images/SteamGridDB.vala:124
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
 msgstr ""
@@ -467,7 +467,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
 #: src/ui/views/GamesView/GamesView.vala:248
-#: src/ui/views/GamesView/GamesView.vala:606
+#: src/ui/views/GamesView/GamesView.vala:596
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -537,54 +537,50 @@ msgstr "Comptabiliteit gebruiken en Windows-spellen aanmerken als compatibel"
 msgid "Use imported tags"
 msgstr "Geïmporteerde labels gebruiken"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:48
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:51
 msgid "General"
 msgstr "Algemeen"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:49
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:52
 msgid "Collection"
 msgstr "Verzameling"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:62
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:82
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
 msgid "Collection directory"
 msgstr "Verzamelingsmap"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:67
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:75
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:70
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:87
 msgid "Game directory"
 msgstr "Spelmap"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:68
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:76
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Installers"
 msgstr "Installatiebestanden"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:69
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
 msgid "DLC"
 msgstr "DLC"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:70
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:89
 msgid "Bonus content"
 msgstr "Bonusinhoud"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:80
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-msgid "Variables"
-msgstr "Variabelen"
-
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:81
-msgid "Syntax: <b>$var</b> or <b>${var}</b>"
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
+#, fuzzy
+msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
 msgstr "Syntax: <b>$var</b> or <b>${var}</b>"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:83
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
 msgstr "Spelnaam"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 msgid "Platform"
 msgstr "Platform"
 
@@ -593,7 +589,7 @@ msgid "Controller"
 msgstr "Controller"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
 msgid "Enabled"
 msgstr "Ingeschakeld"
 
@@ -605,15 +601,15 @@ msgstr "GameHub-venster focussen met Gids-knop"
 msgid "Controllers"
 msgstr "Controllers"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:74
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:75
 msgid "Move focus"
 msgstr "Focus verplaatsen"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:76
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:77
 msgid "Exit"
 msgstr "Afsluiten"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:35
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:72
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:37
@@ -690,7 +686,7 @@ msgid "Load games from Humble Trove"
 msgstr "Spellen laden uit Humble Trove"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:43
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:45
 msgid "Emulators"
 msgstr "Emulators"
 
@@ -713,83 +709,131 @@ msgid_plural "%u cores found"
 msgstr[0] "%u kern aangetroffen"
 msgstr[1] "%u kernen aangetroffen"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:44
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:171
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:169
 msgid "No custom emulators"
 msgstr "Geen aangepaste emulators"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:167
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:165
 #, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
 msgstr[0] "%u aangepaste emulator"
 msgstr[1] "%u aangepaste emulators"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:223
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:265
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:369
-#: src/ui/dialogs/GamePropertiesDialog.vala:215
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
-#: src/ui/views/GamesView/AddGamePopover.vala:66
-#: src/ui/views/GamesView/AddGamePopover.vala:76
-#: src/ui/views/GamesView/AddGamePopover.vala:136
-msgid "Executable"
-msgstr "Uitvoerbaar bestand"
-
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:224
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:369
-#: src/ui/views/GamesView/AddGamePopover.vala:67
-#: src/ui/views/GamesView/AddGamePopover.vala:136
-msgid "Installer"
-msgstr "Installatiebestand"
-
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:239
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:238
 msgid "Save"
 msgstr "Opslaan"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:313
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
+#: src/ui/dialogs/GamePropertiesDialog.vala:215
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/views/GamesView/AddGamePopover.vala:67
+#: src/ui/views/GamesView/AddGamePopover.vala:77
+#: src/ui/views/GamesView/AddGamePopover.vala:143
+msgid "Executable"
+msgstr "Uitvoerbaar bestand"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:252
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
+#: src/ui/views/GamesView/AddGamePopover.vala:68
+#: src/ui/views/GamesView/AddGamePopover.vala:143
+msgid "Installer"
+msgstr "Installatiebestand"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:257
 #: src/ui/dialogs/GamePropertiesDialog.vala:129
 #: src/ui/dialogs/GamePropertiesDialog.vala:134
-#: src/ui/views/GamesView/AddGamePopover.vala:72
+#: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
 msgstr "Naam"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:267
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
 #: src/ui/dialogs/GamePropertiesDialog.vala:238
-#: src/ui/views/GamesView/AddGamePopover.vala:77
+#: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Extra opties"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:277
+msgid "Variables"
+msgstr "Variabelen"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
 msgid "Game executable"
 msgstr "Uitvoerbaar bestand"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:279
 msgid "Game arguments"
 msgstr "Extra opties"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:283
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
-#: src/ui/views/GamesView/AddGamePopover.vala:81
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:82
+#: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Directory"
 msgstr "Map"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:283
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
 msgid "Select emulator directory"
 msgstr "Kies emulatormap"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:287
-msgid "Game executable pattern"
-msgstr "Uitvoerbaar bestandspatroon"
-
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
-msgid "Glob patterns separated with |"
-msgstr "Scheid algemene patronen met |"
-
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:328
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:293
 #: src/ui/dialogs/GamePropertiesDialog.vala:256
 msgid "Force compatibility mode"
 msgstr "Comptabiliteitsmodus afdwingen"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:308
+#, fuzzy
+msgid "Game file patterns"
+msgstr "Uitvoerbaar bestandspatroon"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:316
+#, fuzzy
+msgid "Image"
+msgstr "Afbeeldingen"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:319
+#, fuzzy
+msgid "Icon"
+msgstr "Pictogram-URL"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:326
+msgid ""
+"<b>findutils</b>-compatible glob patterns\n"
+"\n"
+"<b>•</b> Multiple patterns can be separated with <b>|</b>\n"
+"<b>•</b> Start pattern with <b>./</b> to match relative path\n"
+"<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
+"name (without extension)"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
+msgid "Data"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:39
+msgid "Providers"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:40
+msgid "Third-party data providers"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
+#, fuzzy
+msgid "Image providers"
+msgstr "Speleigenschappen"
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:67
+msgid "Metadata providers"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:135
+#, fuzzy
+msgid "Open website"
+msgstr "Website"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:35
 msgid "About"
@@ -852,7 +896,7 @@ msgid "Install"
 msgstr "Installeren"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:130
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:133
 msgid "Import"
 msgstr "Importeren"
 
@@ -978,24 +1022,24 @@ msgstr "Uitvoeren met comptabiliteit"
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "Kapot installatiebestand: controlesom komt niet overeen voor"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:58
-#: src/ui/views/GamesView/AddGamePopover.vala:104
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:60
+#: src/ui/views/GamesView/AddGamePopover.vala:105
 msgid "Import emulated games"
 msgstr "Geëmuleerde spellen importeren"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:77
 msgid "Select directory with emulated games"
 msgstr "Kies map met geëmuleerde spellen"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:85
 msgid "Detected games"
 msgstr "Aangetroffen spellen"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:110
 msgid "Select all"
 msgstr "Alles selecteren"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:118
 #, fuzzy
 msgid "Select directory to import"
 msgstr "Kies map"
@@ -1066,7 +1110,7 @@ msgid "Filters"
 msgstr "Filters"
 
 #: src/ui/views/GamesView/GamesView.vala:234
-#: src/ui/views/GamesView/AddGamePopover.vala:83
+#: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Spel toevoegen"
 
@@ -1074,50 +1118,50 @@ msgstr "Spel toevoegen"
 msgid "Search"
 msgstr "Zoeken"
 
-#: src/ui/views/GamesView/GamesView.vala:340
+#: src/ui/views/GamesView/GamesView.vala:343
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:341
+#: src/ui/views/GamesView/GamesView.vala:344
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:82
 msgid "Back"
 msgstr "Terug"
 
-#: src/ui/views/GamesView/GamesView.vala:528
+#: src/ui/views/GamesView/GamesView.vala:518
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spel"
 msgstr[1] "%u spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:542
+#: src/ui/views/GamesView/GamesView.vala:532
 msgid "No user-added games"
 msgstr "Geen door de gebruiker toegevoegde spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:543
+#: src/ui/views/GamesView/GamesView.vala:533
 msgid "Add some games using plus button"
 msgstr "Voeg spellen toe via de plus-knop"
 
-#: src/ui/views/GamesView/GamesView.vala:547
+#: src/ui/views/GamesView/GamesView.vala:537
 #, c-format
 msgid "No %s games"
 msgstr "Geen %s-spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:548
+#: src/ui/views/GamesView/GamesView.vala:538
 msgid "Get some Linux-compatible games"
 msgstr "Installeer met Linux compatibele spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:558
+#: src/ui/views/GamesView/GamesView.vala:548
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Er zijn geen spellen die overeenkomen met \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:563
+#: src/ui/views/GamesView/GamesView.vala:553
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Er zijn geen %1$s-spellen die overeenkomen met \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:604
+#: src/ui/views/GamesView/GamesView.vala:594
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1125,9 +1169,19 @@ msgstr ""
 "Er zijn geen spellen geladen vanuit Steam. Maak je spellijst openbaar of "
 "voeg je eigen Steam API-sleutel toe via de instellingen."
 
-#: src/ui/views/GamesView/GamesView.vala:605
+#: src/ui/views/GamesView/GamesView.vala:595
 msgid "Privacy"
 msgstr "Privacy"
+
+#: src/ui/views/GamesView/GamesView.vala:731
+#, fuzzy
+msgid "Downloading images"
+msgstr "Bezig met downloaden"
+
+#: src/ui/views/GamesView/GamesView.vala:745
+#, fuzzy, c-format
+msgid "Downloading image: %s"
+msgstr "Bezig met downloaden"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
@@ -1148,13 +1202,18 @@ msgstr "Downloaden annuleren"
 msgid "Sort:"
 msgstr "Sortering:"
 
-#: src/ui/views/GamesView/AddGamePopover.vala:76
+#: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Select game executable"
 msgstr "Kies uitvoerbaar bestand"
 
-#: src/ui/views/GamesView/AddGamePopover.vala:81
+#: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Select game directory"
 msgstr "Kies spelmap"
+
+#: src/ui/views/GamesView/AddGamePopover.vala:111
+#, fuzzy
+msgid "Download game images"
+msgstr "Bezig met downloaden"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 msgid "Details"
@@ -1352,6 +1411,9 @@ msgstr "Gepauzeerd: %d%% (%s/%s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Downloaden geannuleerd"
+
+#~ msgid "Glob patterns separated with |"
+#~ msgstr "Scheid algemene patronen met |"
 
 #~ msgid "Search images:"
 #~ msgstr "Afbeeldingen zoeken:"

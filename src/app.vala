@@ -138,6 +138,7 @@ namespace GameHub
 			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new User() };
 
 			Providers.ImageProviders = { new Providers.Images.SteamGridDB(), new Providers.Images.JinxSGVI() };
+			Providers.DataProviders  = { new Providers.Data.IGDB() };
 
 			CompatTool[] tools = { new Compat.CustomScript(), new Compat.CustomEmulator(), new Compat.Innoextract(), new Compat.WineWrap(), new Compat.DOSBox(), new Compat.ScummVM(), new Compat.RetroArch() };
 			foreach(var appid in Compat.Proton.APPIDS)
@@ -245,6 +246,7 @@ namespace GameHub
 			local_option_context.set_ignore_unknown_options(true);
 			local_option_context.set_help_enabled(false);
 			local_option_context.add_main_entries(local_options, ProjectConfig.GETTEXT_PACKAGE);
+			local_option_context.add_group(get_log_option_group());
 			local_option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
 
 			try

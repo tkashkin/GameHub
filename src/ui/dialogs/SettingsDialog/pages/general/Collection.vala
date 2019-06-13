@@ -41,6 +41,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 		private Entry humble_game_dir;
 		private Entry humble_installers;
 
+		private int syntax_info_grid_rows = 0;
+		private Grid syntax_info_grid;
+
 		public Collection(SettingsDialog dlg)
 		{
 			Object(
@@ -75,14 +78,23 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			humble_game_dir = add_entry(_("Game directory") + " ($game_dir)", humble.game_dir, v => { humble.game_dir = v; update(); }, "source-humble-symbolic").get_children().last().data as Entry;
 			humble_installers = add_entry(_("Installers"), humble.installers, v => { humble.installers = v; update(); }, "source-humble-symbolic").get_children().last().data as Entry;
 
-			add_separator();
+			syntax_info_grid = new Grid();
+			syntax_info_grid.column_spacing = 72;
 
-			add_header(_("Variables")).sensitive = false;
-			add_label(_("Syntax: <b>$var</b> or <b>${var}</b>"), true);
-			add_labels(" <b>•</b> $<b>root</b>", _("Collection directory"), true).sensitive = false;
-			add_labels(" <b>•</b> $<b>game</b>", _("Game name"), true).sensitive = false;
-			add_labels(" <b>•</b> $<b>game_dir</b>", _("Game directory"), true).sensitive = false;
-			add_labels(" <b>•</b> $<b>platform</b>, $<b>platform_name</b>", _("Platform"), true).sensitive = false;
+			syntax_info_label(_("Variable syntax: <b>$var</b> or <b>${var}</b>"));
+			syntax_info_label("<b>•</b> $<b>root</b>", _("Collection directory"));
+			syntax_info_label("<b>•</b> $<b>game</b>", _("Game name"));
+			syntax_info_label("<b>•</b> $<b>game_dir</b>", _("Game directory"));
+			syntax_info_label("<b>•</b> $<b>platform</b>, $<b>platform_name</b>", _("Platform"));
+
+			var syntax_info = new InfoBar();
+			syntax_info.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			syntax_info.get_style_context().add_class("settings-info");
+			syntax_info.message_type = MessageType.INFO;
+			syntax_info.get_content_area().add(syntax_info_grid);
+
+			add_widget(syntax_info);
+			syntax_info.margin = 0;
 
 			update();
 		}
@@ -116,5 +128,21 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			});
 		}
 
+		private void syntax_info_label(string variable, string? description=null)
+		{
+			var var_label = new Label(variable);
+			var_label.xalign = 0;
+			var_label.use_markup = true;
+			syntax_info_grid.attach(var_label, 0, syntax_info_grid_rows, description == null ? 2 : 1, 1);
+
+			if(description != null)
+			{
+				var desc_label = new Label(description);
+				desc_label.xalign = 0;
+				syntax_info_grid.attach(desc_label, 1, syntax_info_grid_rows);
+			}
+
+			syntax_info_grid_rows++;
+		}
 	}
 }

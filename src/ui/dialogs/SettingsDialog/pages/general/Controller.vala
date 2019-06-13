@@ -58,6 +58,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			controllers_header.margin_start = controllers_header.margin_end = 12;
 
 			controllers = add_widget(new ListBox());
+			controllers.selection_mode = SelectionMode.NONE;
 			controllers.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
 			controllers.expand = true;
 

@@ -30,9 +30,12 @@ src/data/compat/ScummVM.vala
 src/data/compat/RetroArch.vala
 src/data/compat/CustomEmulator.vala
 src/data/adapters/GamesAdapter.vala
+src/data/providers/Provider.vala
 src/data/providers/ImagesProvider.vala
+src/data/providers/DataProvider.vala
 src/data/providers/images/SteamGridDB.vala
 src/data/providers/images/JinxSGVI.vala
+src/data/providers/data/IGDB.vala
 src/ui/windows/MainWindow.vala
 src/ui/windows/WebAuthWindow.vala
 src/ui/dialogs/SettingsDialog/SettingsDialog.vala
@@ -46,6 +49,7 @@ src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala
 src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala
 src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala
 src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala
+src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala
 src/ui/dialogs/SettingsDialog/pages/About.vala
 src/ui/dialogs/InstallDialog.vala
 src/ui/dialogs/GameDetailsDialog.vala

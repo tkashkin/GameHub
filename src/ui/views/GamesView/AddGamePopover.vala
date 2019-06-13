@@ -32,6 +32,7 @@ namespace GameHub.UI.Views.GamesView
 	public class AddGamePopover: Popover
 	{
 		public signal void game_added(UserGame game);
+		public signal void download_images();
 
 		private Grid grid;
 		private int rows = 0;
@@ -101,9 +102,15 @@ namespace GameHub.UI.Views.GamesView
 			import_vbox.valign = Align.CENTER;
 			import_vbox.set_size_request(270, -1);
 
-			var emu_import_btn = new ActionButton("list-add-symbolic", "application-x-executable-symbolic", _("Import emulated games"));
+			var emu_import_btn = new ActionButton("list-add-symbolic", "application-x-executable-symbolic", _("Import emulated games"), true);
 			import_vbox.add(emu_import_btn);
 			emu_import_btn.clicked.connect(import_emulated_games);
+
+			import_vbox.add(new Separator(Orientation.HORIZONTAL));
+
+			var images_import_btn = new ActionButton("image-x-generic-symbolic", "folder-download-symbolic", _("Download game images"), true, true);
+			import_vbox.add(images_import_btn);
+			images_import_btn.clicked.connect(start_images_download);
 
 			var hbox = new Box(Orientation.HORIZONTAL, 8);
 			hbox.margin = 8;
@@ -169,6 +176,16 @@ namespace GameHub.UI.Views.GamesView
 			#endif
 			var dlg = new UI.Dialogs.ImportEmulatedGamesDialog();
 			dlg.game_added.connect(g => game_added(g));
+		}
+
+		private void start_images_download()
+		{
+			#if GTK_3_22
+			popdown();
+			#else
+			hide();
+			#endif
+			download_images();
 		}
 
 		private Entry add_entry(string text, string icon, bool required=true, out Label label=null)

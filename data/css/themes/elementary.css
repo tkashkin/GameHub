@@ -53,3 +53,8 @@ infobar.frame.compat-tool-warning
 {
 	margin: -1px -3px -1px -7px;
 }
+
+infobar.frame.settings-info
+{
+	margin: -1px -3px -1px -3px;
+}

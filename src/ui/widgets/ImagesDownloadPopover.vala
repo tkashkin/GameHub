@@ -104,6 +104,7 @@ namespace GameHub.UI.Widgets
 		{
 			foreach(var src in ImageProviders)
 			{
+				if(!src.enabled) continue;
 				var result = yield src.images(game);
 
 				if(result != null && result.images != null && result.images.size > 0)
