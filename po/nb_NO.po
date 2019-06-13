@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-13 03:35+0300\n"
-"PO-Revision-Date: 2019-06-13 21:08+0000\n"
+"PO-Revision-Date: 2019-06-15 15:56+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -451,7 +451,7 @@ msgstr "Alternativt"
 #: src/data/providers/images/SteamGridDB.vala:121
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "Sløret"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:123
@@ -571,9 +571,8 @@ msgid "Bonus content"
 msgstr "Bonusinnhold"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
-#, fuzzy
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
-msgstr "Syntaks: <b>$var</b> or <b>${var}</b>"
+msgstr "Variabel syntaks: <b>$var</b> eller <b>${var}</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
@@ -655,9 +654,8 @@ msgstr "Identitetsbekreftet som <b>%s</b>"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
-#, fuzzy
 msgid "Authenticated"
-msgstr "Identitetsbekrefter…"
+msgstr "Identitetsbekreftet"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
 msgid "Default"
@@ -762,14 +760,12 @@ msgid "Variables"
 msgstr "Variabler"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
-#, fuzzy
 msgid "Game executable"
-msgstr "Velg kjørbar spillfil"
+msgstr "Kjørbar spillfil"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:279
-#, fuzzy
 msgid "Game arguments"
-msgstr "Argumenter"
+msgstr "Spillargumenter"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:82
@@ -789,19 +785,18 @@ msgstr "Tving gjennom kompabilitetsmodus"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:308
 #, fuzzy
 msgid "Game file patterns"
-msgstr "Velg kjørbar spillfil"
+msgstr "Spillfilmønster"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:316
-#, fuzzy
 msgid "Image"
-msgstr "Bilder"
+msgstr "Bilde"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:319
-#, fuzzy
 msgid "Icon"
-msgstr "Ikonnettadresse"
+msgstr "Ikon"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:326
+#, fuzzy
 msgid ""
 "<b>findutils</b>-compatible glob patterns\n"
 "\n"
@@ -810,6 +805,12 @@ msgid ""
 "<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
 "name (without extension)"
 msgstr ""
+"<b>findutils</b>-kompatible glob-mønster\n"
+"\n"
+"<b>•</b> Flerfoldige mønster kan inndeles med <b>|</b>\n"
+"<b>•</b> Start mønsteret med <b>./</b> for å jamføre med relativ sti\n"
+"<b>•</b> $<b>basename</b>-variabel erstattes av navnet på spillets kjørbare "
+"fil (uten filendelse)"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
@@ -824,18 +825,16 @@ msgid "Third-party data providers"
 msgstr "Tredjeparts datatilbydere"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
-#, fuzzy
 msgid "Image providers"
-msgstr "Spillegenskaper"
+msgstr "Bildetilbydere"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
 msgid "Metadata providers"
 msgstr "Metadatatilbydere"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:135
-#, fuzzy
 msgid "Open website"
-msgstr "Nettside"
+msgstr "Åpne nettside"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:35
 msgid "About"
@@ -942,9 +941,8 @@ msgid "Image URL"
 msgstr "Bildenettadresse"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:188
-#, fuzzy
 msgid "Download images"
-msgstr "Laster ned"
+msgstr "Last ned bilder"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:201
 msgid "Icon URL"
@@ -1026,28 +1024,24 @@ msgstr "Skadet installasjonskandidat: sjekksum stemmer ikke overens i"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:60
 #: src/ui/views/GamesView/AddGamePopover.vala:105
-#, fuzzy
 msgid "Import emulated games"
-msgstr "Ingen brukertillagte spill"
+msgstr "Importer emulerte spill"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:77
-#, fuzzy
 msgid "Select directory with emulated games"
-msgstr "Velg mappe"
+msgstr "Velg mappe inneholdende emulerte spill"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:85
 msgid "Detected games"
 msgstr "Oppdagede spill"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:110
-#, fuzzy
 msgid "Select all"
-msgstr "Velg installasjonskandidat"
+msgstr "Velg alt"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:118
-#, fuzzy
 msgid "Select directory to import"
-msgstr "Velg mappe"
+msgstr "Velg mappe å importere"
 
 #: src/ui/views/WelcomeView.vala:51
 msgid "No enabled game sources"
@@ -1179,14 +1173,13 @@ msgid "Privacy"
 msgstr "Personvern"
 
 #: src/ui/views/GamesView/GamesView.vala:731
-#, fuzzy
 msgid "Downloading images"
-msgstr "Laster ned"
+msgstr "Laster ned bilder"
 
 #: src/ui/views/GamesView/GamesView.vala:745
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading image: %s"
-msgstr "Laster ned"
+msgstr "Laster ned bilde: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
@@ -1216,9 +1209,8 @@ msgid "Select game directory"
 msgstr "Velg spillmappe"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
-#, fuzzy
 msgid "Download game images"
-msgstr "Laster ned"
+msgstr "Last ned spillbilder"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 msgid "Details"
@@ -1339,61 +1331,60 @@ msgstr "Sjangre"
 #, c-format
 msgctxt "igdb"
 msgid "<b>%s</b> on IGDB"
-msgstr ""
+msgstr "<b>%s</b> på IGDB"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:96
 msgctxt "igdb"
 msgid "Popularity"
-msgstr ""
+msgstr "Popularitet"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
 msgctxt "igdb"
 msgid "Aggregated rating"
-msgstr ""
+msgstr "Samlet vurdering"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:99
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr ""
+msgstr "IGDB-brukervurdering"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:100
 msgctxt "igdb"
 msgid "Total rating"
-msgstr ""
+msgstr "Totalvurdering"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
-#, fuzzy
 msgctxt "igdb"
 msgid "Platforms"
-msgstr "Plattform"
+msgstr "Plattformer"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:114
 #, fuzzy
 msgctxt "igdb"
 msgid "Genres"
-msgstr "Sjangre"
+msgstr "Sjangere"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:120
 msgctxt "igdb"
 msgid "Keywords"
-msgstr ""
+msgstr "Nøkkelord"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
 msgid "Summary"
-msgstr ""
+msgstr "Sammendrag"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:132
 msgctxt "igdb"
 msgid "Storyline"
-msgstr ""
+msgstr "Handling"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:153
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Basert på én vurdering"
+msgstr[1] "Basert på <b>%d</b> vurderinger"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
@@ -1402,9 +1393,8 @@ msgid "Select file"
 msgstr "Velg fil"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:72
-#, fuzzy
 msgid "No images"
-msgstr "Bilder"
+msgstr "Ingen bilder"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid ""
