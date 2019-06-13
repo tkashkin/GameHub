@@ -58,20 +58,20 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 			image_providers = add_widget(new ListBox());
 			image_providers.selection_mode = SelectionMode.NONE;
 			image_providers.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			image_providers.get_style_context().add_class("flat-list");
 
 			image_providers.margin_start = 7;
 			image_providers.margin_end = 3;
 			image_providers.margin_top = 0;
 			image_providers.margin_bottom = 6;
 
-			var data_providers_header = add_header(_("Metadata providers") + " (Not implemented)");
-			data_providers_header.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+			var data_providers_header = add_header(_("Metadata providers"));
 			data_providers_header.margin_start = data_providers_header.margin_end = 12;
 
 			data_providers = add_widget(new ListBox());
-			data_providers.sensitive = false;
 			data_providers.selection_mode = SelectionMode.NONE;
 			data_providers.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			data_providers.get_style_context().add_class("flat-list");
 
 			data_providers.margin_start = 7;
 			data_providers.margin_end = 3;
@@ -114,7 +114,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 				grid.margin_start = grid.margin_end = 8;
 				grid.margin_top = grid.margin_bottom = 4;
 
-				var icon = new Image.from_icon_name(((provider is ImagesProvider) ? "image-x-generic-symbolic" : "text-x-generic-symbolic"), IconSize.LARGE_TOOLBAR);
+				var icon = new Image.from_icon_name(provider.icon, IconSize.LARGE_TOOLBAR);
 				icon.valign = Align.CENTER;
 
 				var name = new Label(provider.name);

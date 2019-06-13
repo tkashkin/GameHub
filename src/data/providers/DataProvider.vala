@@ -23,7 +23,9 @@ namespace GameHub.Data.Providers
 {
 	public abstract class DataProvider: Provider
 	{
-		public abstract async Result data(Game game);
+		public override string icon { get { return "text-x-generic-symbolic"; } }
+
+		public abstract async Result? data(Game game);
 
 		public abstract class Result: Object {}
 	}

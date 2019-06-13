@@ -23,6 +23,8 @@ namespace GameHub.Data.Providers
 {
 	public abstract class ImagesProvider: Provider
 	{
+		public override string icon { get { return "image-x-generic-symbolic"; } }
+
 		public override bool enabled
 		{
 			get { return !(id in Settings.Providers.Images.get_instance().disabled); }

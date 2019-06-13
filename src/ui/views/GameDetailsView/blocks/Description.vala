@@ -32,8 +32,9 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		private Granite.HeaderLabel description_header;
 		private WebView description;
 
-		private const string CSS_LIGHT = "background: rgb(245, 245, 245); color: rgb(66, 66, 66)";
-		private const string CSS_DARK = "background: rgb(59, 63, 69); color: white";
+		private const string CSS_LIGHT    = "background: rgb(245, 245, 245); color: rgb(66, 66, 66)";
+		private const string CSS_DARK     = "background: rgb(59, 63, 69); color: white";
+		private const string WRAPPER_HTML = "<html><body><div id=\"description\">%s</div><script>setInterval(function(){document.title = -1; document.title = document.getElementById('description').offsetHeight;},250);</script></body></html>";
 
 		public Description(Game game, bool is_dialog)
 		{
@@ -44,7 +45,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			if(!supports_game) return;
 
-			add(new Separator(Orientation.HORIZONTAL));
+			if(!Providers.Data.IGDB.instance.enabled)
+				add(new Separator(Orientation.HORIZONTAL));
 
 			description_header = new Granite.HeaderLabel(_("Description"));
 			description_header.margin_start = description_header.margin_end = 7;
@@ -65,12 +67,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			ui_settings.notify_property("dark-theme");
 
 			description.set_size_request(-1, -1);
-			var desc = game.description + "<script>setInterval(function(){document.title = -1; document.title = document.documentElement.clientHeight;},250);</script>";
+			var desc = WRAPPER_HTML.printf(game.description);
 			description.load_html(desc, null);
 			description.notify["title"].connect(e => {
 				description.set_size_request(-1, -1);
 				var height = int.parse(description.title);
-				description.set_size_request(-1, height);
+				description.set_size_request(-1, height + 8);
 			});
 
 			add(description_header);

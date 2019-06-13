@@ -46,6 +46,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			get_style_context().add_class("rounded");
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
+			var ui_settings = GameHub.Settings.UI.get_instance();
+			ui_settings.notify["dark-theme"].connect(() => {
+				get_style_context().remove_class("dark");
+				if(ui_settings.dark_theme) get_style_context().add_class("dark");
+			});
+			ui_settings.notify_property("dark-theme");
+
 			gravity = Gdk.Gravity.NORTH;
 			modal = true;
 
@@ -85,7 +92,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 			add_page("emulators/retroarch", new Pages.Emulators.RetroArch(this));
 			add_page("emulators/custom", new Pages.Emulators.Emulators(this));
-			
+
 			add_page("providers/providers", new Pages.Providers.Providers(this));
 
 			add_page("about", new Pages.About(this));

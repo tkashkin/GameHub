@@ -63,6 +63,7 @@ sources = [
 	'data/db/tables/Tags.vala',
 	'data/db/tables/Merges.vala',
 	'data/db/tables/Emulators.vala',
+	'data/db/tables/IGDBData.vala',
 
 	'data/CompatTool.vala',
 	'data/compat/CustomScript.vala',
@@ -129,6 +130,7 @@ sources = [
 	'ui/views/GameDetailsView/blocks/Description.vala',
 	'ui/views/GameDetailsView/blocks/GOGDetails.vala',
 	'ui/views/GameDetailsView/blocks/SteamDetails.vala',
+	'ui/views/GameDetailsView/blocks/IGDBInfo.vala',
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',

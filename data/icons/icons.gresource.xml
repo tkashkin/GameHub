@@ -17,6 +17,8 @@
 		<file alias="scalable/actions/tool-dosbox-symbolic.svg">symbolic/tools/dosbox.svg</file>
 		<file alias="scalable/actions/tool-scummvm-symbolic.svg">symbolic/tools/scummvm.svg</file>
 
+		<file alias="scalable/actions/provider-data-igdb.svg">normal/providers/data/IGDB.svg</file>
+
 		<file alias="scalable/actions/tag.svg">normal/tags/tag.svg</file>
 		<file alias="scalable/actions/tag-symbolic.svg">symbolic/tags/tag.svg</file>
 

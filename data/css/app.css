@@ -260,30 +260,30 @@ list:not(:backdrop) row:selected:focus label.category-label
 	border-bottom: 1px alpha(#333, 0.3) solid;
 }
 
-.gameinfo-background, .gameinfo-background viewport
+.gameinfo-background, .gameinfo-background :not(.igdb-data-container-scrollable-value) > viewport
 {
 	background-color: rgb(245, 245, 245);
 	color: rgb(66, 66, 66);
 }
-.gameinfo-background.dark, .gameinfo-background.dark viewport
+.gameinfo-background.dark, .gameinfo-background.dark :not(.igdb-data-container-scrollable-value) > viewport
 {
 	background-color: rgb(59, 63, 69);
 	color: white;
 }
 
-.gameinfo-background undershoot.left
+.gameinfo-background :not(.igdb-data-container-scrollable-value) > undershoot.left
 {
 	background: linear-gradient(to left, alpha(rgb(245, 245, 245), 0) 50%, rgb(245, 245, 245));
 }
-.gameinfo-background undershoot.right
+.gameinfo-background :not(.igdb-data-container-scrollable-value) > undershoot.right
 {
 	background: linear-gradient(to right, alpha(rgb(245, 245, 245), 0) 50%, rgb(245, 245, 245));
 }
-.gameinfo-background.dark undershoot.left
+.gameinfo-background.dark :not(.igdb-data-container-scrollable-value) > undershoot.left
 {
 	background: linear-gradient(to left, alpha(rgb(59, 63, 69), 0) 50%, rgb(59, 63, 69));
 }
-.gameinfo-background.dark undershoot.right
+.gameinfo-background.dark :not(.igdb-data-container-scrollable-value) > undershoot.right
 {
 	background: linear-gradient(to right, alpha(rgb(59, 63, 69), 0) 50%, rgb(59, 63, 69));
 }
@@ -548,4 +548,26 @@ dialog .sidebar list
 .settings-dialog .settings-pages-sidebar list
 {
 	background: shade(@theme_bg_color, 0.95);
+}
+
+.igdb-data-container
+{
+	background: alpha(#333, 0.05);
+	border-radius: 4px;
+	border: 1px alpha(#333, 0.3) solid;
+}
+.dark .igdb-data-container
+{
+	background: alpha(#333, 0.4);
+	border: 1px alpha(#333, 0.8) solid;
+}
+
+.flat-list .list-row:not(:last-child), .flat-list row:not(:last-child)
+{
+	border-bottom: 1px alpha(#333, 0.3) solid;
+}
+
+.dark .flat-list .list-row:not(:last-child), .dark .flat-list row:not(:last-child)
+{
+	border-bottom: 1px alpha(#333, 0.8) solid;
 }

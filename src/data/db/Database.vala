@@ -29,7 +29,7 @@ namespace GameHub.Data.DB
 {
 	public class Database
 	{
-		public const int VERSION = 7;
+		public const int VERSION = 8;
 		public static Table[] TABLES;
 
 		public static Database instance;
@@ -67,7 +67,7 @@ namespace GameHub.Data.DB
 				}
 			}
 
-			TABLES = { new Tables.Games(), new Tables.Tags(), new Tables.Merges(), new Tables.Emulators() };
+			TABLES = { new Tables.Games(), new Tables.Tags(), new Tables.Merges(), new Tables.Emulators(), new Tables.IGDBData() };
 
 			migrate();
 			init();
