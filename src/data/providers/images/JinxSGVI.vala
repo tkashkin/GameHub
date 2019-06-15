@@ -29,6 +29,12 @@ namespace GameHub.Data.Providers.Images
 		public override string name { get { return "Jinx's Steam Grid View Images"; } }
 		public override string url  { get { return BASE_URL; } }
 
+		public override bool enabled
+		{
+			get { return Settings.Providers.Images.JinxSGVI.get_instance().enabled; }
+			set { Settings.Providers.Images.JinxSGVI.get_instance().enabled = value; }
+		}
+
 		public override async ImagesProvider.Result images(Game game)
 		{
 			var result = new ImagesProvider.Result();

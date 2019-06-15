@@ -26,8 +26,10 @@ namespace GameHub.Data.Providers
 		public virtual string id     { get { return ""; } }
 		public virtual string name   { get { return ""; } }
 		public virtual string url    { get { return ""; } }
-		public virtual string icon   { get { return "text-x-generic-symbolic"; } }
+		public virtual string icon   { get { return "text-x-generic"; } }
 
 		public abstract bool enabled { get; set; }
+
+		public virtual Gtk.Widget? settings_widget { owned get { return null; } }
 	}
 }

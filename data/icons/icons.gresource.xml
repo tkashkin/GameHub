@@ -18,6 +18,7 @@
 		<file alias="scalable/actions/tool-scummvm-symbolic.svg">symbolic/tools/scummvm.svg</file>
 
 		<file alias="scalable/actions/provider-data-igdb.svg">normal/providers/data/IGDB.svg</file>
+		<file alias="scalable/actions/provider-images-steamgriddb.svg">normal/providers/images/SteamGridDB.svg</file>
 
 		<file alias="scalable/actions/tag.svg">normal/tags/tag.svg</file>
 		<file alias="scalable/actions/tag-symbolic.svg">symbolic/tags/tag.svg</file>
@@ -47,5 +48,22 @@
 		<file alias="scalable/actions/controller-button-trigger-right.svg">normal/controller/trigger-right.svg</file>
 		<file alias="scalable/actions/controller-button-grip-left.svg">normal/controller/grip-left.svg</file>
 		<file alias="scalable/actions/controller-button-grip-right.svg">normal/controller/grip-right.svg</file>
+
+		<file alias="scalable/actions/related-link-app-android-symbolic.svg">symbolic/related-links/app-android.svg</file>
+		<file alias="scalable/actions/related-link-app-ipad-symbolic.svg">symbolic/related-links/app-ipad.svg</file>
+		<file alias="scalable/actions/related-link-app-iphone-symbolic.svg">symbolic/related-links/app-iphone.svg</file>
+		<file alias="scalable/actions/related-link-discord-symbolic.svg">symbolic/related-links/discord.svg</file>
+		<file alias="scalable/actions/related-link-facebook-symbolic.svg">symbolic/related-links/facebook.svg</file>
+		<file alias="scalable/actions/related-link-google-plus-symbolic.svg">symbolic/related-links/google-plus.svg</file>
+		<file alias="scalable/actions/related-link-instagram-symbolic.svg">symbolic/related-links/instagram.svg</file>
+		<file alias="scalable/actions/related-link-linkedin-symbolic.svg">symbolic/related-links/linkedin.svg</file>
+		<file alias="scalable/actions/related-link-pinterest-symbolic.svg">symbolic/related-links/pinterest.svg</file>
+		<file alias="scalable/actions/related-link-reddit-symbolic.svg">symbolic/related-links/reddit.svg</file>
+		<file alias="scalable/actions/related-link-soundcloud-symbolic.svg">symbolic/related-links/soundcloud.svg</file>
+		<file alias="scalable/actions/related-link-tumblr-symbolic.svg">symbolic/related-links/tumblr.svg</file>
+		<file alias="scalable/actions/related-link-twitch-symbolic.svg">symbolic/related-links/twitch.svg</file>
+		<file alias="scalable/actions/related-link-twitter-symbolic.svg">symbolic/related-links/twitter.svg</file>
+		<file alias="scalable/actions/related-link-wikipedia-symbolic.svg">symbolic/related-links/wikipedia.svg</file>
+		<file alias="scalable/actions/related-link-youtube-symbolic.svg">symbolic/related-links/youtube.svg</file>
 	</gresource>
 </gresources>

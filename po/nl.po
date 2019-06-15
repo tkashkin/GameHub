@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-13 03:35+0300\n"
+"POT-Creation-Date: 2019-06-15 22:34+0300\n"
 "PO-Revision-Date: 2019-06-15 15:57+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -428,41 +428,92 @@ msgstr "Emulator"
 msgid "Launch in game directory"
 msgstr "Uitvoeren in spelmap"
 
-#: src/data/providers/images/SteamGridDB.vala:103
+#: src/data/providers/images/SteamGridDB.vala:108
+#: src/data/providers/data/IGDB.vala:332
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
+msgid "Default"
+msgstr "Standaard"
+
+#: src/data/providers/images/SteamGridDB.vala:115
+#: src/data/providers/data/IGDB.vala:339
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
+msgid "Restore default API key"
+msgstr "Standaard API-sleutel herstellen"
+
+#: src/data/providers/images/SteamGridDB.vala:126
+#: src/data/providers/data/IGDB.vala:350
+#, fuzzy
+msgid "API key"
+msgstr "Steam API-sleutel"
+
+#: src/data/providers/images/SteamGridDB.vala:134
+#: src/data/providers/data/IGDB.vala:358
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
+msgid "Generate key"
+msgstr "Sleutel genereren"
+
+#: src/data/providers/images/SteamGridDB.vala:165
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
 msgstr "Stijl"
 
-#: src/data/providers/images/SteamGridDB.vala:104
+#: src/data/providers/images/SteamGridDB.vala:166
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
 msgstr "Score"
 
-#: src/data/providers/images/SteamGridDB.vala:108
+#: src/data/providers/images/SteamGridDB.vala:170
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
 msgstr "Maker"
 
-#: src/data/providers/images/SteamGridDB.vala:120
+#: src/data/providers/images/SteamGridDB.vala:182
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
 msgstr "Alternatief"
 
-#: src/data/providers/images/SteamGridDB.vala:121
+#: src/data/providers/images/SteamGridDB.vala:183
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
 msgstr "Vervaagd"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-#: src/data/providers/images/SteamGridDB.vala:123
+#: src/data/providers/images/SteamGridDB.vala:185
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
 msgstr "Material"
 
-#: src/data/providers/images/SteamGridDB.vala:124
+#: src/data/providers/images/SteamGridDB.vala:186
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
 msgstr "Zonder logo"
+
+#: src/data/providers/data/IGDB.vala:258
+#, fuzzy
+msgctxt "igdb_related_link"
+msgid "Official website"
+msgstr "Website openen"
+
+#: src/data/providers/data/IGDB.vala:370
+msgctxt "igdb_preferred_description"
+msgid "When game has description, show description"
+msgstr ""
+
+#: src/data/providers/data/IGDB.vala:377
+#, fuzzy
+msgctxt "igdb_preferred_description"
+msgid "of game"
+msgstr "Geen spellen"
+
+#: src/data/providers/data/IGDB.vala:378
+msgctxt "igdb_preferred_description"
+msgid "from IGDB"
+msgstr ""
+
+#: src/data/providers/data/IGDB.vala:379
+msgctxt "igdb_preferred_description"
+msgid "both"
+msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
@@ -626,10 +677,6 @@ msgstr "Spelbronnen"
 msgid "Steam API keys have limited number of uses per day"
 msgstr "Steam API-sleutels mogen per dag slechts beperkt worden gebruikt"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
-msgid "Generate key"
-msgstr "Sleutel genereren"
-
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:52
 msgid "Installation directory"
 msgstr "Installatiemap"
@@ -657,14 +704,6 @@ msgstr "Geauthenticeerd als <b>%s</b>"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
 msgid "Authenticated"
 msgstr "Geacthenticeerd"
-
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
-msgid "Default"
-msgstr "Standaard"
-
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
-msgid "Restore default API key"
-msgstr "Standaard API-sleutel herstellen"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 msgid "Steam API key"
@@ -832,7 +871,7 @@ msgstr "Afbeeldingsproviders"
 msgid "Metadata providers"
 msgstr "Metagegevens-providers"
 
-#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:135
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
 msgstr "Website openen"
 
@@ -1327,58 +1366,58 @@ msgstr "Genre"
 msgid "Genres"
 msgstr "Genres"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:60
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:62
 #, c-format
 msgctxt "igdb"
 msgid "<b>%s</b> on IGDB"
 msgstr "<b>%s</b> op IGDB"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:96
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
 msgctxt "igdb"
 msgid "Popularity"
 msgstr "Populariteit"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:106
 msgctxt "igdb"
 msgid "Aggregated rating"
 msgstr "Algehele waardering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:99
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:107
 msgctxt "igdb"
 msgid "IGDB user rating"
 msgstr "IGDB-gebruikerswaardering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:100
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
 msgctxt "igdb"
 msgid "Total rating"
 msgstr "Totale waardering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "Platforms"
 msgstr "Platformen"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:114
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:122
 msgctxt "igdb"
 msgid "Genres"
 msgstr "Genres"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:120
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:128
 msgctxt "igdb"
 msgid "Keywords"
 msgstr "Trefwoorden"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:140
 msgctxt "igdb"
 msgid "Summary"
 msgstr "Samenvatting"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:132
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:151
 msgctxt "igdb"
 msgid "Storyline"
 msgstr "Verhaallijn"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:153
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:173
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
@@ -1391,17 +1430,21 @@ msgstr[1] "Op basis van <b>%d</b> waarderingen"
 msgid "Select file"
 msgstr "Kies bestand"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:78
 msgid "No images"
 msgstr "Geen afbeeldingen"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:78
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
 "Er zijn geen afbeeldingen gevonden bij dit spel\n"
 "Controleer de naam van het spel"
+
+#: src/ui/widgets/ImagesDownloadPopover.vala:99
+msgid "Search images:"
+msgstr "Afbeeldingen zoeken:"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
@@ -1470,9 +1513,6 @@ msgstr "Downloaden geannuleerd"
 
 #~ msgid "Glob patterns separated with |"
 #~ msgstr "Scheid algemene patronen met |"
-
-#~ msgid "Search images:"
-#~ msgstr "Afbeeldingen zoeken:"
 
 #~ msgid "About GameHub"
 #~ msgstr "Over GameHub"

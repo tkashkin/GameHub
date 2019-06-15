@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 00:02+0300\n"
+"POT-Creation-Date: 2019-06-15 22:34+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -428,41 +428,89 @@ msgstr "Эмулятор"
 msgid "Launch in game directory"
 msgstr "Запускать в папке игры"
 
-#: src/data/providers/images/SteamGridDB.vala:103
+#: src/data/providers/images/SteamGridDB.vala:108
+#: src/data/providers/data/IGDB.vala:332
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
+msgid "Default"
+msgstr "По умолчанию"
+
+#: src/data/providers/images/SteamGridDB.vala:115
+#: src/data/providers/data/IGDB.vala:339
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
+msgid "Restore default API key"
+msgstr "Восстановить API-ключ по умолчанию"
+
+#: src/data/providers/images/SteamGridDB.vala:126
+#: src/data/providers/data/IGDB.vala:350
+msgid "API key"
+msgstr "API-ключ"
+
+#: src/data/providers/images/SteamGridDB.vala:134
+#: src/data/providers/data/IGDB.vala:358
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
+msgid "Generate key"
+msgstr "Сгенерировать ключ"
+
+#: src/data/providers/images/SteamGridDB.vala:165
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
 msgstr "Стиль"
 
-#: src/data/providers/images/SteamGridDB.vala:104
+#: src/data/providers/images/SteamGridDB.vala:166
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
 msgstr "Счёт"
 
-#: src/data/providers/images/SteamGridDB.vala:108
+#: src/data/providers/images/SteamGridDB.vala:170
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
 msgstr "Автор"
 
-#: src/data/providers/images/SteamGridDB.vala:120
+#: src/data/providers/images/SteamGridDB.vala:182
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
 msgstr "Альтернативное"
 
-#: src/data/providers/images/SteamGridDB.vala:121
+#: src/data/providers/images/SteamGridDB.vala:183
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
 msgstr "Размытое"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-#: src/data/providers/images/SteamGridDB.vala:123
+#: src/data/providers/images/SteamGridDB.vala:185
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
 msgstr "Material"
 
-#: src/data/providers/images/SteamGridDB.vala:124
+#: src/data/providers/images/SteamGridDB.vala:186
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
 msgstr "Без логотипа"
+
+#: src/data/providers/data/IGDB.vala:258
+msgctxt "igdb_related_link"
+msgid "Official website"
+msgstr "Официальный веб-сайт"
+
+#: src/data/providers/data/IGDB.vala:370
+msgctxt "igdb_preferred_description"
+msgid "When game has description, show description"
+msgstr "Если игра имеет описание, показывать описание"
+
+#: src/data/providers/data/IGDB.vala:377
+msgctxt "igdb_preferred_description"
+msgid "of game"
+msgstr "игры"
+
+#: src/data/providers/data/IGDB.vala:378
+msgctxt "igdb_preferred_description"
+msgid "from IGDB"
+msgstr "с IGDB"
+
+#: src/data/providers/data/IGDB.vala:379
+msgctxt "igdb_preferred_description"
+msgid "both"
+msgstr "все"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
@@ -626,10 +674,6 @@ msgstr "Источники игр"
 msgid "Steam API keys have limited number of uses per day"
 msgstr "API-ключи Steam имеют ограничение на количество использований в день"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
-msgid "Generate key"
-msgstr "Сгенерировать ключ"
-
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:52
 msgid "Installation directory"
 msgstr "Папка установки"
@@ -657,14 +701,6 @@ msgstr "Авторизован как <b>%s</b>"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
 msgid "Authenticated"
 msgstr "Авторизован"
-
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
-msgid "Default"
-msgstr "По умолчанию"
-
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
-msgid "Restore default API key"
-msgstr "Восстановить API-ключ по умолчанию"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 msgid "Steam API key"
@@ -833,7 +869,7 @@ msgstr "Источники изображений"
 msgid "Metadata providers"
 msgstr "Источники метаданных"
 
-#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:135
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
 msgstr "Открыть веб-сайт"
 
@@ -1329,58 +1365,58 @@ msgstr "Жанр"
 msgid "Genres"
 msgstr "Жанры"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:60
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:62
 #, c-format
 msgctxt "igdb"
 msgid "<b>%s</b> on IGDB"
 msgstr "<b>%s</b> на IGDB"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:96
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
 msgctxt "igdb"
 msgid "Popularity"
 msgstr "Популярность"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:106
 msgctxt "igdb"
 msgid "Aggregated rating"
 msgstr "Рейтинг критиков"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:99
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:107
 msgctxt "igdb"
 msgid "IGDB user rating"
 msgstr "Рейтинг пользователей IGDB"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:100
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
 msgctxt "igdb"
 msgid "Total rating"
 msgstr "Общий рейтинг"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "Platforms"
 msgstr "Платформы"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:114
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:122
 msgctxt "igdb"
 msgid "Genres"
 msgstr "Жанры"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:120
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:128
 msgctxt "igdb"
 msgid "Keywords"
 msgstr "Ключевые слова"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:140
 msgctxt "igdb"
 msgid "Summary"
 msgstr "Описание"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:132
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:151
 msgctxt "igdb"
 msgid "Storyline"
 msgstr "Сюжет"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:153
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:173
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
@@ -1394,17 +1430,21 @@ msgstr[2] "На основе <b>%d</b> оценок"
 msgid "Select file"
 msgstr "Выбрать файл"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:78
 msgid "No images"
 msgstr "Нет изображений"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:78
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
 "Для этой игры нет подходящих изображений\n"
 "Убедитесь в правильности названия игры"
+
+#: src/ui/widgets/ImagesDownloadPopover.vala:99
+msgid "Search images:"
+msgstr "Поиск изображений:"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
@@ -1473,9 +1513,6 @@ msgstr "Загрузка отменена"
 
 #~ msgid "Glob patterns separated with |"
 #~ msgstr "Glob-маски, разделённые |"
-
-#~ msgid "Search images:"
-#~ msgstr "Поиск изображений:"
 
 #~ msgid "About GameHub"
 #~ msgstr "О GameHub"

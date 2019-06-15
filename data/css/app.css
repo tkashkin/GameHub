@@ -571,3 +571,12 @@ dialog .sidebar list
 {
 	border-bottom: 1px alpha(#333, 0.8) solid;
 }
+
+.provider-settings
+{
+	background: alpha(#333, 0.05);
+}
+.dark .provider-settings
+{
+	background: alpha(#333, 0.4);
+}

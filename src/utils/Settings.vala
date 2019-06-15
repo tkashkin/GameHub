@@ -246,23 +246,60 @@ namespace GameHub.Settings
 
 	namespace Providers
 	{
-		public class Images: Granite.Services.Settings
+		namespace Images
 		{
-			public string[] disabled { get; set; }
-
-			public Images()
+			public class SteamGridDB: Granite.Services.Settings
 			{
-				base(ProjectConfig.PROJECT_NAME + ".providers.images");
+				public bool enabled { get; set; }
+				public string api_key { get; set; }
+
+				public SteamGridDB()
+				{
+					base(ProjectConfig.PROJECT_NAME + ".providers.images.steamgriddb");
+				}
+
+				protected override void verify(string key)
+				{
+					switch(key)
+					{
+						case "api-key":
+							if(api_key.length != 32)
+							{
+								schema.reset("api-key");
+							}
+							break;
+					}
+				}
+
+				private static SteamGridDB? instance;
+				public static unowned SteamGridDB get_instance()
+				{
+					if(instance == null)
+					{
+						instance = new SteamGridDB();
+					}
+					return instance;
+				}
 			}
 
-			private static Images? instance;
-			public static unowned Images get_instance()
+			public class JinxSGVI: Granite.Services.Settings
 			{
-				if(instance == null)
+				public bool enabled { get; set; }
+
+				public JinxSGVI()
 				{
-					instance = new Images();
+					base(ProjectConfig.PROJECT_NAME + ".providers.images.jinx-sgvi");
 				}
-				return instance;
+
+				private static JinxSGVI? instance;
+				public static unowned JinxSGVI get_instance()
+				{
+					if(instance == null)
+					{
+						instance = new JinxSGVI();
+					}
+					return instance;
+				}
 			}
 		}
 
@@ -272,6 +309,7 @@ namespace GameHub.Settings
 			{
 				public bool enabled { get; set; }
 				public string api_key { get; set; }
+				public PreferredDescription preferred_description { get; set; }
 
 				public IGDB()
 				{
@@ -299,6 +337,11 @@ namespace GameHub.Settings
 						instance = new IGDB();
 					}
 					return instance;
+				}
+
+				public enum PreferredDescription
+				{
+					GAME = 0, IGDB = 1, BOTH = 2
 				}
 			}
 		}
