@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-13 03:35+0300\n"
-"PO-Revision-Date: 2019-06-13 21:08+0000\n"
+"PO-Revision-Date: 2019-06-15 15:57+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -804,6 +804,13 @@ msgid ""
 "<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
 "name (without extension)"
 msgstr ""
+"<b>findutils</b>-compatibele glob-patronen\n"
+"\n"
+"<b>•</b> Scheid meerdere patronen middels <b>|</b>\n"
+"<b>•</b> Begin een patroon met <b>./</b> om overeen te komen met het "
+"relatieve pad\n"
+"<b>•</b> De $<b>basename</b>-variabel wordt vervangen door de naam van het "
+"uitvoerbare bestand (zonder extensie)"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
@@ -1324,36 +1331,34 @@ msgstr "Genres"
 #, c-format
 msgctxt "igdb"
 msgid "<b>%s</b> on IGDB"
-msgstr ""
+msgstr "<b>%s</b> op IGDB"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:96
 msgctxt "igdb"
 msgid "Popularity"
-msgstr ""
+msgstr "Populariteit"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
 msgctxt "igdb"
 msgid "Aggregated rating"
-msgstr ""
+msgstr "Algehele waardering"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:99
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr ""
+msgstr "IGDB-gebruikerswaardering"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:100
 msgctxt "igdb"
 msgid "Total rating"
-msgstr ""
+msgstr "Totale waardering"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
-#, fuzzy
 msgctxt "igdb"
 msgid "Platforms"
-msgstr "Platform"
+msgstr "Platformen"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:114
-#, fuzzy
 msgctxt "igdb"
 msgid "Genres"
 msgstr "Genres"
@@ -1361,24 +1366,24 @@ msgstr "Genres"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:120
 msgctxt "igdb"
 msgid "Keywords"
-msgstr ""
+msgstr "Trefwoorden"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
 msgid "Summary"
-msgstr ""
+msgstr "Samenvatting"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:132
 msgctxt "igdb"
 msgid "Storyline"
-msgstr ""
+msgstr "Verhaallijn"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:153
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Op basis van <b>%d</b> waardering"
+msgstr[1] "Op basis van <b>%d</b> waarderingen"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
