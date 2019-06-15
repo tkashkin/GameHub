@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-13 03:35+0300\n"
 "PO-Revision-Date: 2019-06-15 15:56+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -796,7 +796,6 @@ msgid "Icon"
 msgstr "Ikon"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:326
-#, fuzzy
 msgid ""
 "<b>findutils</b>-compatible glob patterns\n"
 "\n"
