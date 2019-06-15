@@ -29,9 +29,11 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 {
 	public class IGDBInfo: GameDetailsBlock
 	{
-		public IGDBInfo(Game game, bool is_dialog)
+		public Description description_block { private get; construct; }
+
+		public IGDBInfo(Game game, Description desc, bool is_dialog)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL, is_dialog: is_dialog);
+			Object(game: game, orientation: Orientation.VERTICAL, description_block: desc, is_dialog: is_dialog);
 		}
 
 		construct
@@ -57,7 +59,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 				var links_hbox = new Box(Orientation.HORIZONTAL, 0);
 
-				var igdb_link = new ActionButton(Providers.Data.IGDB.instance.icon, null, C_("igdb", "<b>%s</b> on IGDB").printf((result.name ?? game.name).replace("&amp;", "&").replace("&", "&amp;")), true, true);
+				var igdb_link = new ActionButton(Providers.Data.IGDB.instance.icon, null, C_("igdb", "<b>%s</b> on IGDB").printf(result.name ?? game.name), true, true);
 				igdb_link.hexpand = true;
 				if(result.url != null)
 				{
@@ -77,7 +79,13 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				{
 					foreach(var site in result.websites)
 					{
-						var link = new ActionButton(site.category.icon(), null, site.url, false, true);
+						var category_desc = site.category.description();
+						var desc = """<span size="smaller">%s</span>""".printf(site.url);
+						if(category_desc != null)
+						{
+							desc = "%s\n%s".printf("""<span weight="600">%s</span>""".printf(category_desc), desc);
+						}
+						var link = new ActionButton(site.category.icon(), null, desc, false, true);
 						link.clicked.connect(() => {
 							Utils.open_uri(site.url);
 						});
@@ -120,16 +128,28 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					add_link_list(C_("igdb", "Keywords"), result.keywords, vbox);
 				}
 
-				if(result.summary != null)
-				{
-					vbox.add(new Separator(Orientation.HORIZONTAL));
-					add_label(C_("igdb", "Summary"), result.summary, true, false, vbox);
-				}
+				var preferred_desc = Settings.Providers.Data.IGDB.get_instance().preferred_description;
 
-				if(result.storyline != null)
+				var game_has_desc = description_block.supports_game && game.description != null;
+
+				if(preferred_desc != Settings.Providers.Data.IGDB.PreferredDescription.GAME || !game_has_desc)
 				{
-					vbox.add(new Separator(Orientation.HORIZONTAL));
-					add_label(C_("igdb", "Storyline"), result.storyline, true, false, vbox);
+					if(result.summary != null)
+					{
+						vbox.add(new Separator(Orientation.HORIZONTAL));
+						add_label(C_("igdb", "Summary"), result.summary, true, false, vbox);
+
+						if(preferred_desc == Settings.Providers.Data.IGDB.PreferredDescription.IGDB)
+						{
+							description_block.destroy();
+						}
+					}
+
+					if(result.storyline != null)
+					{
+						vbox.add(new Separator(Orientation.HORIZONTAL));
+						add_label(C_("igdb", "Storyline"), result.storyline, true, false, vbox);
+					}
 				}
 
 				vbox.show_all();

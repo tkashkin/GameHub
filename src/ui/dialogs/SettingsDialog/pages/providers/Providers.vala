@@ -109,8 +109,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 
 			construct
 			{
+				var root_vbox = new Box(Orientation.VERTICAL, 0);
+
 				var grid = new Grid();
-				grid.column_spacing = 8;
+				grid.column_spacing = 12;
 				grid.margin_start = grid.margin_end = 8;
 				grid.margin_top = grid.margin_bottom = 4;
 
@@ -144,10 +146,38 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 				grid.attach(open, 2, 0, 1, 2);
 				grid.attach(enabled_switch, 3, 0, 1, 2);
 
-				child = grid;
+				root_vbox.add(grid);
+
+				Revealer? provider_settings_revealer = null;
+				var provider_settings = provider.settings_widget;
+				if(provider_settings != null)
+				{
+					provider_settings_revealer = new Revealer();
+					provider_settings_revealer.transition_type = RevealerTransitionType.SLIDE_DOWN;
+					provider_settings_revealer.reveal_child = provider.enabled;
+
+					var provider_settings_wrapper = new Box(Orientation.VERTICAL, 0);
+					provider_settings_wrapper.get_style_context().add_class("provider-settings");
+
+					provider_settings.margin_top = provider_settings.margin_bottom = 4;
+					provider_settings.margin_start = 44;
+					provider_settings.margin_end = 8;
+
+					provider_settings_wrapper.add(provider_settings);
+					provider_settings_wrapper.show_all();
+
+					provider_settings_revealer.add(provider_settings_wrapper);
+					root_vbox.add(provider_settings_revealer);
+				}
+
+				child = root_vbox;
 
 				enabled_switch.notify["active"].connect(() => {
 					provider.enabled = enabled_switch.active;
+					if(provider_settings_revealer != null)
+					{
+						provider_settings_revealer.reveal_child = provider.enabled;
+					}
 				});
 
 				open.clicked.connect(() => {

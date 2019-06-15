@@ -177,11 +177,26 @@
 		</key>
 	</schema>
 
-	<schema path="/com/github/tkashkin/gamehub/providers/images/" id="com.github.tkashkin.gamehub.providers.images" gettext-domain="com.github.tkashkin.gamehub">
-		<key name="disabled" type="as">
-			<default>[]</default>
+	<schema path="/com/github/tkashkin/gamehub/providers/images/steamgriddb/" id="com.github.tkashkin.gamehub.providers.images.steamgriddb" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="enabled" type="b">
+			<default>true</default>
+		</key>
+		<key name="api-key" type="s">
+			<default>'711485c5b6c9b8ca87f6052f6dda04e8'</default>
 		</key>
 	</schema>
+
+	<schema path="/com/github/tkashkin/gamehub/providers/images/jinx-sgvi/" id="com.github.tkashkin.gamehub.providers.images.jinx-sgvi" gettext-domain="com.github.tkashkin.gamehub">
+		<key name="enabled" type="b">
+			<default>true</default>
+		</key>
+	</schema>
+
+	<enum id="com.github.tkashkin.gamehub.providers.data.igdb.preferred-description">
+		<value nick="Game" value="0" />
+		<value nick="IGDB" value="1" />
+		<value nick="Both" value="2" />
+	</enum>
 
 	<schema path="/com/github/tkashkin/gamehub/providers/data/igdb/" id="com.github.tkashkin.gamehub.providers.data.igdb" gettext-domain="com.github.tkashkin.gamehub">
 		<key name="enabled" type="b">
@@ -189,6 +204,9 @@
 		</key>
 		<key name="api-key" type="s">
 			<default>'e0a54818580e4085b596c5aa613b1c53'</default>
+		</key>
+		<key name="preferred-description" enum="com.github.tkashkin.gamehub.providers.data.igdb.preferred-description">
+			<default>"Game"</default>
 		</key>
 	</schema>
 </schemalist>

@@ -70,7 +70,7 @@ namespace GameHub.UI.Widgets
 
 			if(show_text)
 			{
-				var label = new Label(text);
+				var label = new Label(text.replace("&amp;", "&").replace("&", "&amp;"));
 				label.get_style_context().add_class(Granite.STYLE_CLASS_H3_LABEL);
 				label.halign = Align.START;
 				label.valign = Align.CENTER;
@@ -79,13 +79,13 @@ namespace GameHub.UI.Widgets
 				label.use_markup = true;
 				box.add(label);
 				notify["text"].connect(() => {
-					label.label = text;
+					label.label = text.replace("&amp;", "&").replace("&", "&amp;");
 				});
 			}
 
-			tooltip_text = text;
+			tooltip_markup = text.replace("&amp;", "&").replace("&", "&amp;");
 			notify["text"].connect(() => {
-				tooltip_text = text;
+				tooltip_markup = text.replace("&amp;", "&").replace("&", "&amp;");
 			});
 
 			notify["compact"].connect(() => {

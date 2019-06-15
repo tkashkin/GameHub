@@ -1,7 +1,16 @@
-com.github.tkashkin.gamehub (0.14.0-dev-local-b100729~elementary5.0) juno; urgency=low
-  * <no commit message>
+com.github.tkashkin.gamehub (0.14.0-11-dev~elementary5.0) juno; urgency=low
+  * Merge branch 'dev' of github.com:tkashkin/GameHub into dev [164e55c]
+  * IGDB integration [9f1d67c]
+  * Translated using Weblate (Norwegian Bokmål) [3f9c5dd]
+  * Translated using Weblate (Dutch) [362a848]
+  * Translated using Weblate (Portuguese (Brazil)) [2313120]
 
- -- Anatoliy Kashkin <tkashkin@gmail.com>  Wed, 12 Jun 2019 15:29:43 +0000
+ -- tkashkin <tkashkin@gmail.com>  Fri, 14 Jun 2019 00:10:49 +0300
+
+com.github.tkashkin.gamehub (0.14.0-9-dev~elementary5.0) juno; urgency=low
+  * Simplified `ImportEmulatedGamesDialog` (#103) Images and icon patterns for custom emulators Added button to download all missing images for games Added data providers page to settings [e4486e7]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 13 Jun 2019 03:45:27 +0300
 
 com.github.tkashkin.gamehub (0.14.0-8-dev~elementary5.0) juno; urgency=low
   * Translated using Weblate (Norwegian Bokmål) [b100729]
@@ -1589,4 +1598,3 @@ com.github.tkashkin.gamehub (0.1.3~elementary5.0) juno; urgency=low
   * Fix Steam config path\nUpdate .gitignore [17695d8]
 
  -- tkashkin <tkashkin@gmail.com>  Mon, 28 May 2018 02:30:49 +0300
-

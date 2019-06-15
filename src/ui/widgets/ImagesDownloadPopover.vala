@@ -34,6 +34,9 @@ namespace GameHub.UI.Widgets
 
 		public FileChooserEntry entry { get; construct; }
 
+		private Box vbox;
+		private Box search_links;
+
 		private Stack stack;
 		private Spinner spinner;
 		private Granite.Widgets.AlertView no_images_alert;
@@ -59,9 +62,12 @@ namespace GameHub.UI.Widgets
 
 		construct
 		{
+			vbox = new Box(Orientation.VERTICAL, 0);
+
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
 			stack.interpolate_size = true;
+			stack.no_show_all = true;
 
 			spinner = new Spinner();
 			spinner.halign = spinner.valign = Align.CENTER;
@@ -73,7 +79,7 @@ namespace GameHub.UI.Widgets
 			no_images_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 
 			images_scroll = new ScrolledWindow(null, null);
-			images_scroll.set_size_request(520, 380);
+			images_scroll.set_size_request(520, 480);
 
 			images = new Box(Orientation.VERTICAL, 0);
 			images.margin = 4;
@@ -87,8 +93,26 @@ namespace GameHub.UI.Widgets
 			spinner.show();
 			stack.visible_child = spinner;
 
-			child = stack;
+			search_links = new Box(Orientation.HORIZONTAL, 8);
+			search_links.margin = 8;
 
+			var search_links_label = new Label(_("Search images:"));
+			search_links_label.halign = Align.START;
+			search_links_label.xalign = 0;
+			search_links_label.hexpand = true;
+			search_links.add(search_links_label);
+
+			add_search_link("SteamGridDB", "https://steamgriddb.com/game/%s");
+			add_search_link("Jinx's SGVI", "https://steam.cryotank.net/?s=%s");
+			add_search_link("Google", "https://google.com/search?tbm=isch&tbs=isz:ex,iszw:460,iszh:215&q=%s");
+
+			vbox.add(stack);
+			vbox.add(new Separator(Orientation.HORIZONTAL));
+			vbox.add(search_links);
+
+			child = vbox;
+
+			vbox.show_all();
 			stack.show();
 		}
 
@@ -178,6 +202,14 @@ namespace GameHub.UI.Widgets
 				no_images_alert.show_all();
 				stack.visible_child = no_images_alert;
 			}
+		}
+
+		private void add_search_link(string text, string url)
+		{
+			var link = new LinkButton.with_label(url.printf(Uri.escape_string(game.name)), text);
+			link.halign = Align.START;
+			link.margin = 0;
+			search_links.add(link);
 		}
 
 		private class ImageItem: FlowBoxChild

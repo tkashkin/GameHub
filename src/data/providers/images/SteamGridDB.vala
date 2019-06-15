@@ -23,12 +23,20 @@ namespace GameHub.Data.Providers.Images
 {
 	public class SteamGridDB: ImagesProvider
 	{
-		private const string DOMAIN   = "https://steamgriddb.com";
-		private const string BASE_URL = DOMAIN + "/api/v2";
+		private const string DOMAIN       = "https://steamgriddb.com";
+		private const string BASE_URL     = DOMAIN + "/api/v2";
+		private const string API_KEY_PAGE = DOMAIN + "/profile/preferences";
 
 		public override string id   { get { return "steamgriddb"; } }
 		public override string name { get { return "SteamGridDB"; } }
 		public override string url  { get { return DOMAIN; } }
+		public override string icon { get { return "provider-images-steamgriddb"; } }
+
+		public override bool enabled
+		{
+			get { return Settings.Providers.Images.SteamGridDB.get_instance().enabled; }
+			set { Settings.Providers.Images.SteamGridDB.get_instance().enabled = value; }
+		}
 
 		public override async ImagesProvider.Result images(Game game)
 		{
@@ -49,7 +57,7 @@ namespace GameHub.Data.Providers.Images
 				result.url = DOMAIN + "/game/" + gid;
 			}
 
-			var root = yield Parser.parse_remote_json_file_async(BASE_URL + endpoint);
+			var root = yield Parser.parse_remote_json_file_async(BASE_URL + endpoint, "GET", Settings.Providers.Images.SteamGridDB.get_instance().api_key);
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return result;
 			var obj = root.get_object();
 			var data = obj.has_member("data") ? obj.get_array_member("data") : null;
@@ -68,7 +76,7 @@ namespace GameHub.Data.Providers.Images
 
 		private async string? game_id_by_name(string name)
 		{
-			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/search/autocomplete/" + Uri.escape_string(name));
+			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/search/autocomplete/" + Uri.escape_string(name), "GET", Settings.Providers.Images.SteamGridDB.get_instance().api_key);
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return null;
 			var obj = root.get_object();
 			var data = obj.has_member("data") ? obj.get_array_member("data") : null;
@@ -79,11 +87,65 @@ namespace GameHub.Data.Providers.Images
 
 		private async string? game_id_by_steam_appid(string appid)
 		{
-			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/games/steam/" + appid);
+			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/games/steam/" + appid, "GET", Settings.Providers.Images.SteamGridDB.get_instance().api_key);
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return null;
 			var obj = root.get_object();
 			var data = obj.has_member("data") ? obj.get_object_member("data") : null;
 			return data == null || !data.has_member("id") ? null : data.get_int_member("id").to_string();
+		}
+
+		public override Gtk.Widget? settings_widget
+		{
+			owned get
+			{
+				var settings = Settings.Providers.Images.SteamGridDB.get_instance();
+
+				var grid = new Gtk.Grid();
+				grid.column_spacing = 12;
+				grid.row_spacing = 4;
+
+				var entry = new Gtk.Entry();
+				entry.placeholder_text = _("Default");
+				entry.max_length = 32;
+				if(settings.api_key != settings.schema.get_default_value("api-key").get_string())
+				{
+					entry.text = settings.api_key;
+				}
+				entry.secondary_icon_name = "edit-delete-symbolic";
+				entry.secondary_icon_tooltip_text = _("Restore default API key");
+				entry.set_size_request(250, -1);
+
+				entry.notify["text"].connect(() => { settings.api_key = entry.text; });
+				entry.icon_press.connect((pos, e) => {
+					if(pos == Gtk.EntryIconPosition.SECONDARY)
+					{
+						entry.text = "";
+					}
+				});
+
+				var label = new Gtk.Label(_("API key"));
+				label.halign = Gtk.Align.START;
+				label.valign = Gtk.Align.CENTER;
+				label.hexpand = true;
+
+				var entry_wrapper = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+				entry_wrapper.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
+
+				var link = new Gtk.Button.with_label(_("Generate key"));
+				link.tooltip_text = API_KEY_PAGE;
+
+				link.clicked.connect(() => {
+					Utils.open_uri(API_KEY_PAGE);
+				});
+
+				entry_wrapper.add(entry);
+				entry_wrapper.add(link);
+
+				grid.attach(label, 0, 0);
+				grid.attach(entry_wrapper, 1, 0);
+
+				return grid;
+			}
 		}
 
 		public class Image: ImagesProvider.Image

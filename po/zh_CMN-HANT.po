@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 00:02+0300\n"
+"POT-Creation-Date: 2019-06-15 22:34+0300\n"
 "PO-Revision-Date: 2019-06-07 16:06+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -424,40 +424,89 @@ msgstr ""
 msgid "Launch in game directory"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:103
+#: src/data/providers/images/SteamGridDB.vala:108
+#: src/data/providers/data/IGDB.vala:332
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
+msgid "Default"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:115
+#: src/data/providers/data/IGDB.vala:339
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
+msgid "Restore default API key"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:126
+#: src/data/providers/data/IGDB.vala:350
+msgid "API key"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:134
+#: src/data/providers/data/IGDB.vala:358
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
+msgid "Generate key"
+msgstr ""
+
+#: src/data/providers/images/SteamGridDB.vala:165
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:104
+#: src/data/providers/images/SteamGridDB.vala:166
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:108
+#: src/data/providers/images/SteamGridDB.vala:170
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:120
+#: src/data/providers/images/SteamGridDB.vala:182
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:121
+#: src/data/providers/images/SteamGridDB.vala:183
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
 msgstr ""
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-#: src/data/providers/images/SteamGridDB.vala:123
+#: src/data/providers/images/SteamGridDB.vala:185
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:124
+#: src/data/providers/images/SteamGridDB.vala:186
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
+msgstr ""
+
+#: src/data/providers/data/IGDB.vala:258
+msgctxt "igdb_related_link"
+msgid "Official website"
+msgstr ""
+
+#: src/data/providers/data/IGDB.vala:370
+msgctxt "igdb_preferred_description"
+msgid "When game has description, show description"
+msgstr ""
+
+#: src/data/providers/data/IGDB.vala:377
+#, fuzzy
+msgctxt "igdb_preferred_description"
+msgid "of game"
+msgstr "运行游戏"
+
+#: src/data/providers/data/IGDB.vala:378
+msgctxt "igdb_preferred_description"
+msgid "from IGDB"
+msgstr ""
+
+#: src/data/providers/data/IGDB.vala:379
+msgctxt "igdb_preferred_description"
+msgid "both"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
@@ -620,10 +669,6 @@ msgstr ""
 msgid "Steam API keys have limited number of uses per day"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
-msgid "Generate key"
-msgstr ""
-
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:52
 msgid "Installation directory"
 msgstr ""
@@ -650,14 +695,6 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
 msgid "Authenticated"
-msgstr ""
-
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
-msgid "Default"
-msgstr ""
-
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
-msgid "Restore default API key"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
@@ -819,7 +856,7 @@ msgstr ""
 msgid "Metadata providers"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:135
+#: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
 msgstr ""
 
@@ -1314,58 +1351,58 @@ msgstr ""
 msgid "Genres"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:60
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:62
 #, c-format
 msgctxt "igdb"
 msgid "<b>%s</b> on IGDB"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:96
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
 msgctxt "igdb"
 msgid "Popularity"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:106
 msgctxt "igdb"
 msgid "Aggregated rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:99
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:107
 msgctxt "igdb"
 msgid "IGDB user rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:100
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
 msgctxt "igdb"
 msgid "Total rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "Platforms"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:114
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:122
 msgctxt "igdb"
 msgid "Genres"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:120
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:128
 msgctxt "igdb"
 msgid "Keywords"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:140
 msgctxt "igdb"
 msgid "Summary"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:132
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:151
 msgctxt "igdb"
 msgid "Storyline"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:153
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:173
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
@@ -1377,14 +1414,18 @@ msgstr[0] ""
 msgid "Select file"
 msgstr ""
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:78
 msgid "No images"
 msgstr ""
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:78
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
+msgstr ""
+
+#: src/ui/widgets/ImagesDownloadPopover.vala:99
+msgid "Search images:"
 msgstr ""
 
 #: src/ui/widgets/CompatToolPicker.vala:53

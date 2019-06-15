@@ -23,30 +23,7 @@ namespace GameHub.Data.Providers
 {
 	public abstract class ImagesProvider: Provider
 	{
-		public override string icon { get { return "image-x-generic-symbolic"; } }
-
-		public override bool enabled
-		{
-			get { return !(id in Settings.Providers.Images.get_instance().disabled); }
-			set
-			{
-				var disabled = Settings.Providers.Images.get_instance().disabled;
-				if(value && id in disabled)
-				{
-					string[] new_disabled = {};
-					foreach(var p in disabled)
-					{
-						if(p != id) new_disabled += p;
-					}
-					Settings.Providers.Images.get_instance().disabled = new_disabled;
-				}
-				else if(!value && !(id in disabled))
-				{
-					disabled += id;
-					Settings.Providers.Images.get_instance().disabled = disabled;
-				}
-			}
-		}
+		public override string icon { get { return "image-x-generic"; } }
 
 		public abstract async Result images(Game game);
 

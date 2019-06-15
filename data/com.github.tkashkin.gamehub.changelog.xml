@@ -1,4 +1,21 @@
-		<release type="development" version="0.14.0.dev.local.b100729" date="2019-06-12" timestamp="1560353729" />
+		<release type="development" version="0.14.0.11.dev" date="2019-06-14" timestamp="1560460249">
+			<description>
+				<ul>
+					<li>Merge branch 'dev' of github.com:tkashkin/GameHub into dev [164e55c]</li>
+					<li>IGDB integration [9f1d67c]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [3f9c5dd]</li>
+					<li>Translated using Weblate (Dutch) [362a848]</li>
+					<li>Translated using Weblate (Portuguese (Brazil)) [2313120]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.9.dev" date="2019-06-13" timestamp="1560386727">
+			<description>
+				<ul>
+					<li>Simplified `ImportEmulatedGamesDialog` (#103) Images and icon patterns for custom emulators Added button to download all missing images for games Added data providers page to settings [e4486e7]</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.14.0.8.dev" date="2019-06-12" timestamp="1560353729">
 			<description>
 				<ul>
