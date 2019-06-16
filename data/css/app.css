@@ -152,6 +152,26 @@
 	opacity: 1;
 }
 
+.gamecard .images-download-button
+{
+	color: white;
+	background: alpha(#333, 0.5);
+	border-radius: 50%;
+	border: none;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+	min-width: 28px;
+	min-height: 28px;
+	padding: 0;
+}
+.gamecard .images-download-button image
+{
+	opacity: 1;
+}
+.gamecard .images-download-button:checked
+{
+	background: alpha(#333, 0.8);
+}
+
 /* Some granite styles */
 .h1
 {

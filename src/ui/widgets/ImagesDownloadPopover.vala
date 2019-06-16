@@ -79,7 +79,7 @@ namespace GameHub.UI.Widgets
 			no_images_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 
 			images_scroll = new ScrolledWindow(null, null);
-			images_scroll.set_size_request(520, 480);
+			images_scroll.set_size_request(520, 400);
 
 			images = new Box(Orientation.VERTICAL, 0);
 			images.margin = 4;
