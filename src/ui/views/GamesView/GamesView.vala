@@ -26,6 +26,7 @@ using GameHub.Data.Adapters;
 using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Windows;
+using GameHub.Settings;
 
 namespace GameHub.UI.Views.GamesView
 {
@@ -70,8 +71,8 @@ namespace GameHub.UI.Views.GamesView
 		private MenuButton add_game_button;
 		private AddGamePopover add_game_popover;
 
-		private Settings.UI ui_settings;
-		private Settings.SavedState saved_state;
+		private Settings.UI.Appearance ui_settings;
+		private Settings.SavedState.GamesView saved_state;
 
 		#if MANETTE
 		private Manette.Monitor manette_monitor = new Manette.Monitor();
@@ -116,8 +117,8 @@ namespace GameHub.UI.Views.GamesView
 		{
 			instance = this;
 
-			ui_settings = Settings.UI.get_instance();
-			saved_state = Settings.SavedState.get_instance();
+			ui_settings = Settings.UI.Appearance.instance;
+			saved_state = Settings.SavedState.GamesView.instance;
 
 			foreach(var src in GameSources)
 			{
@@ -195,10 +196,22 @@ namespace GameHub.UI.Views.GamesView
 
 			filter.set_active(sources.size > 1 ? 0 : 1);
 
+			if(saved_state.filter_source.length > 0)
+			{
+				for(int i = 0; i < sources.size; i++)
+				{
+					if(sources[i].id == saved_state.filter_source)
+					{
+						filter.set_active(i + 1);
+						break;
+					}
+				}
+			}
+
 			downloads = new MenuButton();
 			downloads.valign = Align.CENTER;
 			Utils.set_accel_tooltip(downloads, _("Downloads"), ACCEL_DOWNLOADS);
-			downloads.image = new Image.from_icon_name("folder-download" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
+			downloads.image = new Image.from_icon_name("folder-download" + Settings.UI.Appearance.symbolic_icon_suffix, Settings.UI.Appearance.headerbar_icon_size);
 
 			downloads_popover = new Popover(downloads);
 			downloads_list = new ListBox();
@@ -224,7 +237,7 @@ namespace GameHub.UI.Views.GamesView
 			filters = new MenuButton();
 			filters.valign = Align.CENTER;
 			Utils.set_accel_tooltip(filters, _("Filters"), ACCEL_FILTERS);
-			filters.image = new Image.from_icon_name("tag" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
+			filters.image = new Image.from_icon_name("tag" + Settings.UI.Appearance.symbolic_icon_suffix, Settings.UI.Appearance.headerbar_icon_size);
 			filters_popover = new FiltersPopover(filters);
 			filters_popover.position = PositionType.BOTTOM;
 			filters.popover = filters_popover;
@@ -232,7 +245,7 @@ namespace GameHub.UI.Views.GamesView
 			add_game_button = new MenuButton();
 			add_game_button.valign = Align.CENTER;
 			Utils.set_accel_tooltip(add_game_button, _("Add game"), ACCEL_ADD_GAME);
-			add_game_button.image = new Image.from_icon_name("list-add" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
+			add_game_button.image = new Image.from_icon_name("list-add" + Settings.UI.Appearance.symbolic_icon_suffix, Settings.UI.Appearance.headerbar_icon_size);
 			add_game_popover = new AddGamePopover(add_game_button);
 			add_game_popover.position = PositionType.BOTTOM;
 			add_game_button.popover = add_game_popover;
@@ -246,7 +259,7 @@ namespace GameHub.UI.Views.GamesView
 			settings = new Button();
 			settings.valign = Align.CENTER;
 			Utils.set_accel_tooltip(settings, _("Settings"), Application.ACCEL_SETTINGS);
-			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
+			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.Appearance.symbolic_icon_suffix, Settings.UI.Appearance.headerbar_icon_size);
 			settings.action_name = Application.ACTION_PREFIX + Application.ACTION_SETTINGS;
 
 			games_list.row_selected.connect(row => {
@@ -265,16 +278,20 @@ namespace GameHub.UI.Views.GamesView
 			});
 			search.activate.connect(search_run_first_matching_game);
 
-			ui_settings.notify["symbolic-icons"].connect(() => {
-				(filters.image as Image).icon_name = "tag" + Settings.UI.symbolic_icon_suffix;
-				(add_game_button.image as Image).icon_name = "list-add" + Settings.UI.symbolic_icon_suffix;
-				(downloads.image as Image).icon_name = "folder-download" + Settings.UI.symbolic_icon_suffix;
-				(settings.image as Image).icon_name = "open-menu" + Settings.UI.symbolic_icon_suffix;
-				(filters.image as Image).icon_size = (add_game_button.image as Image).icon_size = (downloads.image as Image).icon_size = (settings.image as Image).icon_size = Settings.UI.headerbar_icon_size;
+			ui_settings.notify["icon-style"].connect(() => {
+				(filters.image as Image).icon_name = "tag" + Settings.UI.Appearance.symbolic_icon_suffix;
+				(add_game_button.image as Image).icon_name = "list-add" + Settings.UI.Appearance.symbolic_icon_suffix;
+				(downloads.image as Image).icon_name = "folder-download" + Settings.UI.Appearance.symbolic_icon_suffix;
+				(settings.image as Image).icon_name = "open-menu" + Settings.UI.Appearance.symbolic_icon_suffix;
+				(filters.image as Image).icon_size = (add_game_button.image as Image).icon_size = (downloads.image as Image).icon_size = (settings.image as Image).icon_size = Settings.UI.Appearance.headerbar_icon_size;
 			});
 
 			filters_popover.filters_changed.connect(() => {
 				games_adapter.filter_tags = filters_popover.selected_tags;
+				games_adapter.invalidate(true, false);
+			});
+			filters_popover.filter_platform_changed.connect(() => {
+				games_adapter.filter_platform = filters_popover.filter_platform;
 				games_adapter.invalidate(true, false);
 			});
 			filters_popover.sort_mode_changed.connect(() => {
@@ -406,7 +423,7 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			#if MANETTE
-			controller_settings = Settings.Controller.get_instance();
+			controller_settings = Settings.Controller.instance;
 			gamepad_mode_hidden_widgets.add(view);
 			gamepad_mode_hidden_widgets.add(downloads);
 			gamepad_mode_hidden_widgets.add(search);
@@ -426,6 +443,7 @@ namespace GameHub.UI.Views.GamesView
 			#endif
 
 			games_adapter.filter_tags = filters_popover.selected_tags;
+			games_adapter.filter_platform = filters_popover.filter_platform;
 			games_adapter.sort_mode = filters_popover.sort_mode;
 
 			load_games();
@@ -525,6 +543,8 @@ namespace GameHub.UI.Views.GamesView
 
 			games_list_details.preferred_source = src;
 
+			saved_state.filter_source = src == null ? "" : src.id;
+
 			if(src != null && src.games_count == 0)
 			{
 				if(src is GameHub.Data.Sources.User.User)
@@ -559,7 +579,7 @@ namespace GameHub.UI.Views.GamesView
 
 			var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
 			stack.set_visible_child(tab);
-			saved_state.games_view = view.selected == 0 ? Settings.GamesView.GRID : Settings.GamesView.LIST;
+			saved_state.style = view.selected == 0 ? Settings.SavedState.GamesView.Style.GRID : Settings.SavedState.GamesView.Style.LIST;
 
 			Timeout.add(100, () => { select_first_visible_game(); return Source.REMOVE; });
 		}
@@ -568,8 +588,8 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(view.opacity != 0 || stack.visible_child != empty_alert) return;
 
-			view.set_active(saved_state.games_view == Settings.GamesView.LIST ? 1 : 0);
-			stack.set_visible_child(saved_state.games_view == Settings.GamesView.LIST ? (Widget) games_list_paned : (Widget) games_grid_scrolled);
+			view.set_active(saved_state.style == Settings.SavedState.GamesView.Style.LIST ? 1 : 0);
+			stack.set_visible_child(saved_state.style == Settings.SavedState.GamesView.Style.LIST ? (Widget) games_list_paned : (Widget) games_grid_scrolled);
 
 			view.opacity = 1;
 			view.sensitive = true;
@@ -743,7 +763,7 @@ namespace GameHub.UI.Views.GamesView
 		private async void download_image(Game game)
 		{
 			update_status(_("Downloading image: %s").printf(game.name));
-			foreach(var src in Providers.ImageProviders)
+			foreach(var src in Data.Providers.ImageProviders)
 			{
 				if(!src.enabled) continue;
 				var result = yield src.images(game);

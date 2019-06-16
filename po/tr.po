@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-15 22:34+0300\n"
+"POT-Creation-Date: 2019-06-17 01:01+0300\n"
 "PO-Revision-Date: 2019-03-30 20:30+0000\n"
 "Last-Translator: Güner Acet <kurama632@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
@@ -19,105 +19,105 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6-dev\n"
 
-#: src/app.vala:88
+#: src/app.vala:89
 msgid "Show help"
 msgstr "Yardımı göster"
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Show application version and exit"
 msgstr "Uygulama versiyonunu göster ve çık"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Restart with GDB debugger attached"
 msgstr "GDB hata ayıklayıcısı ile birlikte yeniden başlat"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Show full GDB backtrace"
 msgstr "Tüm GDB geriye dönük izlemesini(olay yığını) göster"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Treat fatal errors as criticals and crash application"
 msgstr ""
 
-#: src/app.vala:96
+#: src/app.vala:97
 msgid "Show main window"
 msgstr "Ana pencereyi göster"
 
-#: src/app.vala:97
+#: src/app.vala:98
 msgid "Show application settings dialog"
 msgstr "Uygulama ayarları iletişim kutusunu göster"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show about dialog"
 msgstr ""
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Maximum number of background worker threads"
 msgstr "Arka planda çalışan iş parçacık sayısının üst limiti"
 
-#: src/app.vala:103
+#: src/app.vala:104
 msgid "Run game"
 msgstr "Oyunu çalıştır"
 
-#: src/app.vala:104
+#: src/app.vala:105
 msgid "Show compatibility options dialog"
 msgstr "Uyumluluk ayarları iletişim kutusunu göster"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Open game details"
 msgstr "Oyun ayrıntılarını aç"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Open game properties"
 msgstr "Oyun özelliklerini aç"
 
-#: src/app.vala:110
+#: src/app.vala:111
 msgid "Enable debug logging"
 msgstr "Hata ayıklama günlüğünü etkinleştirin"
 
-#: src/app.vala:111
+#: src/app.vala:112
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 "Kimlik doğrulama işlemi ve kimlik doğrulama belirteçleri gibi hassas bilgiler"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid "Log download manager"
 msgstr "Seyir kaydı indirme yöneticisi"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid "Log background workers start/stop"
 msgstr "Arka plan çalışma öbeklerinin seyir kaydını başlat/durdur"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Verbose logging"
 msgstr "Ayrıntılı günlük kaydı"
 
-#: src/app.vala:229
+#: src/app.vala:242
 msgid "Game Options:"
 msgstr "Oyun seçenekleri:"
 
-#: src/app.vala:229
+#: src/app.vala:242
 msgid "Show game options help"
 msgstr "Oyun seçenekleri yardımını göster"
 
-#: src/app.vala:237
+#: src/app.vala:250
 msgid "Logging Options:"
 msgstr "Günlüğe Kaydetme Seçenekleri:"
 
-#: src/app.vala:237
+#: src/app.vala:250
 msgid "Show logging options help"
 msgstr "Günlüğe kaydetme seçenekleri yardımını göster"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/dialogs/GamePropertiesDialog.vala:218
 msgid "Select executable"
 msgstr "Çalıştırma dosyasını seçiniz"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:345
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:362
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -153,7 +153,7 @@ msgid "Show file"
 msgstr "Dosyayı göster"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:132
-#: src/ui/views/GamesView/GameContextMenu.vala:144
+#: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Remove"
 msgstr "Kaldır"
@@ -228,21 +228,21 @@ msgstr ""
 msgid "%s games"
 msgstr ""
 
-#: src/data/adapters/GamesAdapter.vala:345
+#: src/data/adapters/GamesAdapter.vala:359
 msgctxt "status_header"
 msgid "Favorites"
 msgstr ""
 
-#: src/data/adapters/GamesAdapter.vala:373
+#: src/data/adapters/GamesAdapter.vala:387
 msgid "Merging games"
 msgstr ""
 
-#: src/data/adapters/GamesAdapter.vala:386
+#: src/data/adapters/GamesAdapter.vala:400
 #, c-format
 msgid "Merging games from %s"
 msgstr ""
 
-#: src/data/adapters/GamesAdapter.vala:430
+#: src/data/adapters/GamesAdapter.vala:444
 #, c-format
 msgid "Loading games from %s"
 msgstr ""
@@ -504,8 +504,8 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
-#: src/ui/views/GamesView/GamesView.vala:248
-#: src/ui/views/GamesView/GamesView.vala:596
+#: src/ui/views/GamesView/GamesView.vala:261
+#: src/ui/views/GamesView/GamesView.vala:616
 msgid "Settings"
 msgstr ""
 
@@ -533,15 +533,31 @@ msgstr ""
 msgid "Dark theme"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:44
-msgid "Symbolic icons"
-msgstr ""
-
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
-msgid "Compact list"
+msgctxt "icon_style"
+msgid "Theme-based"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:49
+msgctxt "icon_style"
+msgid "Symbolic"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:50
+msgctxt "icon_style"
+msgid "Colored"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
+msgctxt "icon_style"
+msgid "Icon style"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:63
+msgid "Compact list"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:64
 msgid "Show platform icons in grid view"
 msgstr ""
 
@@ -562,14 +578,6 @@ msgid "Merge games from different sources"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:50
-msgid "Show non-native games"
-msgstr ""
-
-#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:51
-msgid "Use compatibility layers and consider Windows games compatible"
-msgstr ""
-
-#: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:55
 msgid "Use imported tags"
 msgstr ""
 
@@ -579,6 +587,10 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:52
 msgid "Collection"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
+msgid "Empty"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
@@ -616,6 +628,7 @@ msgid "Game name"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
+#: src/ui/views/GamesView/FiltersPopover.vala:97
 msgid "Platform"
 msgstr ""
 
@@ -753,8 +766,8 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:313
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
-#: src/ui/dialogs/GamePropertiesDialog.vala:215
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/dialogs/GamePropertiesDialog.vala:214
+#: src/ui/dialogs/GamePropertiesDialog.vala:218
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -776,7 +789,7 @@ msgid "Name"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
-#: src/ui/dialogs/GamePropertiesDialog.vala:238
+#: src/ui/dialogs/GamePropertiesDialog.vala:237
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr ""
@@ -805,7 +818,7 @@ msgid "Select emulator directory"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:293
-#: src/ui/dialogs/GamePropertiesDialog.vala:256
+#: src/ui/dialogs/GamePropertiesDialog.vala:255
 msgid "Force compatibility mode"
 msgstr ""
 
@@ -911,7 +924,7 @@ msgid "Forks"
 msgstr ""
 
 #: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
-#: src/ui/views/GamesView/GameContextMenu.vala:49
+#: src/ui/views/GamesView/GameContextMenu.vala:50
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
 msgid "Install"
 msgstr ""
@@ -925,16 +938,16 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: src/ui/dialogs/InstallDialog.vala:213
+#: src/ui/dialogs/InstallDialog.vala:209
 msgid "Select installer"
 msgstr ""
 
-#: src/ui/dialogs/InstallDialog.vala:222
+#: src/ui/dialogs/InstallDialog.vala:218
 #, c-format
 msgid "Installer size: %s"
 msgstr ""
 
-#: src/ui/dialogs/InstallDialog.vala:326
+#: src/ui/dialogs/InstallDialog.vala:317
 msgid "Unknown"
 msgstr ""
 
@@ -944,7 +957,7 @@ msgid "%s: Properties"
 msgstr ""
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:65
-#: src/ui/views/GamesView/FiltersPopover.vala:153
+#: src/ui/views/GamesView/FiltersPopover.vala:194
 msgid "Tags"
 msgstr ""
 
@@ -956,36 +969,36 @@ msgstr ""
 msgid "Images"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:182
-msgid "Image URL"
-msgstr ""
-
-#: src/ui/dialogs/GamePropertiesDialog.vala:188
+#: src/ui/dialogs/GamePropertiesDialog.vala:185
 #, fuzzy
 msgid "Download images"
 msgstr "Seyir kaydı indirme yöneticisi"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:201
+#: src/ui/dialogs/GamePropertiesDialog.vala:192
+msgid "Image URL"
+msgstr ""
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:200
 msgid "Icon URL"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:251
+#: src/ui/dialogs/GamePropertiesDialog.vala:250
 msgid "Compatibility"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:273
+#: src/ui/dialogs/GamePropertiesDialog.vala:272
 msgid "Launch from terminal"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:289
+#: src/ui/dialogs/GamePropertiesDialog.vala:288
 msgid "Copy to clipboard"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:291
+#: src/ui/dialogs/GamePropertiesDialog.vala:290
 msgid "Add to Steam"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:292
+#: src/ui/dialogs/GamePropertiesDialog.vala:291
 msgid "Add to the Steam library"
 msgstr ""
 
@@ -1006,7 +1019,7 @@ msgid ""
 msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
-#: src/ui/views/GamesView/GameContextMenu.vala:64
+#: src/ui/views/GamesView/GameContextMenu.vala:65
 msgid "Overlays"
 msgstr ""
 
@@ -1031,7 +1044,7 @@ msgid "Open directory"
 msgstr ""
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
-#: src/ui/views/GamesView/GameContextMenu.vala:45
+#: src/ui/views/GamesView/GameContextMenu.vala:46
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
 msgid "Run with compatibility layer"
 msgstr ""
@@ -1101,102 +1114,102 @@ msgstr ""
 msgid "Return to GameHub after installing"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:132
+#: src/ui/views/GamesView/GamesView.vala:133
 msgid "No games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:132
+#: src/ui/views/GamesView/GamesView.vala:133
 msgid "Get some games or enable some game sources in settings"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:180
+#: src/ui/views/GamesView/GamesView.vala:181
 msgid "Grid view"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:181
+#: src/ui/views/GamesView/GamesView.vala:182
 msgid "List view"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:189
+#: src/ui/views/GamesView/GamesView.vala:190
 msgid "All games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:200
+#: src/ui/views/GamesView/GamesView.vala:213
 msgid "Downloads"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:226
+#: src/ui/views/GamesView/GamesView.vala:239
 msgid "Filters"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:234
+#: src/ui/views/GamesView/GamesView.vala:247
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:241
+#: src/ui/views/GamesView/GamesView.vala:254
 msgid "Search"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:343
+#: src/ui/views/GamesView/GamesView.vala:360
 msgid "Menu"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:344
+#: src/ui/views/GamesView/GamesView.vala:361
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:82
 msgid "Back"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:518
+#: src/ui/views/GamesView/GamesView.vala:536
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ui/views/GamesView/GamesView.vala:532
+#: src/ui/views/GamesView/GamesView.vala:552
 msgid "No user-added games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:533
+#: src/ui/views/GamesView/GamesView.vala:553
 msgid "Add some games using plus button"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:537
+#: src/ui/views/GamesView/GamesView.vala:557
 #, c-format
 msgid "No %s games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:538
+#: src/ui/views/GamesView/GamesView.vala:558
 msgid "Get some Linux-compatible games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:548
+#: src/ui/views/GamesView/GamesView.vala:568
 #, c-format
 msgid "No games matching “%s”"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:553
+#: src/ui/views/GamesView/GamesView.vala:573
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:594
+#: src/ui/views/GamesView/GamesView.vala:614
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:595
+#: src/ui/views/GamesView/GamesView.vala:615
 msgid "Privacy"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:731
+#: src/ui/views/GamesView/GamesView.vala:751
 #, fuzzy
 msgid "Downloading images"
 msgstr "Seyir kaydı indirme yöneticisi"
 
-#: src/ui/views/GamesView/GamesView.vala:745
+#: src/ui/views/GamesView/GamesView.vala:765
 #, fuzzy, c-format
 msgid "Downloading image: %s"
 msgstr "Seyir kaydı indirme yöneticisi"
@@ -1216,8 +1229,12 @@ msgstr ""
 msgid "Cancel download"
 msgstr ""
 
-#: src/ui/views/GamesView/FiltersPopover.vala:68
-msgid "Sort:"
+#: src/ui/views/GamesView/FiltersPopover.vala:72
+msgid "Sort"
+msgstr ""
+
+#: src/ui/views/GamesView/FiltersPopover.vala:306
+msgid "All platforms"
 msgstr ""
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
@@ -1233,40 +1250,40 @@ msgstr ""
 msgid "Download game images"
 msgstr "Seyir kaydı indirme yöneticisi"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:53
+#: src/ui/views/GamesView/GameContextMenu.vala:54
 msgid "Details"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:56
+#: src/ui/views/GamesView/GameContextMenu.vala:57
 msgctxt "game_context_menu"
 msgid "Favorite"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:60
+#: src/ui/views/GamesView/GameContextMenu.vala:61
 msgctxt "game_context_menu"
 msgid "Hidden"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:67
+#: src/ui/views/GamesView/GameContextMenu.vala:68
 msgid "Properties"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:121
+#: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
 msgid "Open installation directory"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:129
+#: src/ui/views/GamesView/GameContextMenu.vala:152
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
 msgid "Open installers collection directory"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:137
+#: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
 msgid "Open bonus collection directory"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:144
+#: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
 msgid "Uninstall"
 msgstr ""
@@ -1434,21 +1451,6 @@ msgstr ""
 msgid "Configure"
 msgstr ""
 
-#: src/utils/Settings.vala:43
-msgctxt "sort_mode"
-msgid "By name"
-msgstr ""
-
-#: src/utils/Settings.vala:44
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr ""
-
-#: src/utils/Settings.vala:45
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr ""
-
 #: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
 msgid "Queued"
@@ -1489,4 +1491,19 @@ msgstr ""
 #: src/utils/downloader/Downloader.vala:169
 msgctxt "dl_status"
 msgid "Download cancelled"
+msgstr ""
+
+#: src/settings/SavedState.vala:93
+msgctxt "sort_mode"
+msgid "By name"
+msgstr ""
+
+#: src/settings/SavedState.vala:94
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr ""
+
+#: src/settings/SavedState.vala:95
+msgctxt "sort_mode"
+msgid "By playtime"
 msgstr ""

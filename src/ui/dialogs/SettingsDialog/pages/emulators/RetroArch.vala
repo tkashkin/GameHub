@@ -40,7 +40,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 		construct
 		{
-			paths = FSUtils.Paths.Settings.get_instance();
+			paths = FSUtils.Paths.Settings.instance;
 
 			add_file_chooser(_("Libretro core directory"), FileChooserAction.SELECT_FOLDER, paths.libretro_core_dir, v => { paths.libretro_core_dir = v; update(); request_restart(); });
 			add_file_chooser(_("Libretro core info directory"), FileChooserAction.SELECT_FOLDER, paths.libretro_core_info_dir, v => { paths.libretro_core_info_dir = v; request_restart(); });

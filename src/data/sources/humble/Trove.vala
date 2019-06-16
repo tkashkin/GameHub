@@ -35,8 +35,8 @@ namespace GameHub.Data.Sources.Humble
 
 		public override bool enabled
 		{
-			get { return Settings.Auth.Humble.get_instance().enabled && Settings.Auth.Humble.get_instance().load_trove_games; }
-			set { Settings.Auth.Humble.get_instance().load_trove_games = value; }
+			get { return Settings.Auth.Humble.instance.enabled && Settings.Auth.Humble.instance.load_trove_games; }
+			set { Settings.Auth.Humble.instance.load_trove_games = value; }
 		}
 
 		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
@@ -60,7 +60,7 @@ namespace GameHub.Data.Sources.Humble
 					foreach(var g in cached)
 					{
 						if(g.platforms.size == 0) continue;
-						if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
+						if(!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(g))
 						{
 							_games.add(g);
 							if(game_loaded != null)
@@ -113,7 +113,7 @@ namespace GameHub.Data.Sources.Humble
 
 								if(game.platforms.size == 0) return;
 								bool is_new_game = !_games.contains(game);
-								if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
+								if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(game)))
 								{
 									_games.add(game);
 									if(game_loaded != null)

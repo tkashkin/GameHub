@@ -145,8 +145,13 @@ sources = [
 	'utils/FSUtils.vala',
 	'utils/FSOverlay.vala',
 	'utils/Parser.vala',
-	'utils/Settings.vala',
 	'utils/BinaryVDF.vala',
+
+	'settings/UI.vala',
+	'settings/SavedState.vala',
+	'settings/Auth.vala',
+	'settings/Providers.vala',
+	'settings/Controller.vala',
 
 	'utils/downloader/Downloader.vala',
 	'utils/downloader/SoupDownloader.vala'

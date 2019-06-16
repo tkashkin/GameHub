@@ -122,7 +122,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			});
 
 			get_style_context().add_class("gameinfo-background");
-			var ui_settings = GameHub.Settings.UI.get_instance();
+			var ui_settings = GameHub.Settings.UI.Appearance.instance;
 			ui_settings.notify["dark-theme"].connect(() => {
 				get_style_context().remove_class("dark");
 				if(ui_settings.dark_theme) get_style_context().add_class("dark");
@@ -176,7 +176,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(g == null) return;
 
-			var merges = Settings.UI.get_instance().merge_games ? Tables.Merges.get(game) : null;
+			var merges = Settings.UI.Behavior.instance.merge_games ? Tables.Merges.get(game) : null;
 			bool merged = merges != null && merges.size > 0;
 
 			stack_switcher.visible = merged;
@@ -188,7 +188,7 @@ namespace GameHub.UI.Views.GameDetailsView
 				foreach(var m in merges)
 				{
 					if(Game.is_equal(g, m)
-						|| (!Settings.UI.get_instance().show_unsupported_games && !m.is_supported(null, Settings.UI.get_instance().use_compat))
+						|| !m.is_supported(null)
 						|| (g is Sources.GOG.GOGGame.DLC && Game.is_equal((g as Sources.GOG.GOGGame.DLC).game, m)))
 					{
 						continue;

@@ -36,7 +36,7 @@ namespace GameHub.UI.Views
 
 		construct
 		{
-			var ui_settings = GameHub.Settings.UI.get_instance();
+			var ui_settings = GameHub.Settings.UI.Appearance.instance;
 
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
@@ -75,12 +75,12 @@ namespace GameHub.UI.Views
 			settings = new Button();
 			settings.valign = Align.CENTER;
 			Utils.set_accel_tooltip(settings, _("Settings"), Application.ACCEL_SETTINGS);
-			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.symbolic_icon_suffix, Settings.UI.headerbar_icon_size);
+			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.Appearance.symbolic_icon_suffix, Settings.UI.Appearance.headerbar_icon_size);
 			settings.action_name = Application.ACTION_PREFIX + Application.ACTION_SETTINGS;
 
 			ui_settings.notify["symbolic-icons"].connect(() => {
-				(settings.image as Image).icon_name = "open-menu" + Settings.UI.symbolic_icon_suffix;
-				(settings.image as Image).icon_size = Settings.UI.headerbar_icon_size;
+				(settings.image as Image).icon_name = "open-menu" + Settings.UI.Appearance.symbolic_icon_suffix;
+				(settings.image as Image).icon_size = Settings.UI.Appearance.headerbar_icon_size;
 			});
 
 			empty_alert.action_activated.connect(() => settings.clicked());

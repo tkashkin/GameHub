@@ -33,10 +33,14 @@ namespace GameHub.UI.Views.GamesView
 		public ArrayList<Tables.Tags.Tag> selected_tags { get; private set; }
 		public signal void filters_changed(ArrayList<Tables.Tags.Tag> selected_tags);
 
-		public SortMode sort_mode { get; private set; default = SortMode.NAME; }
-		public signal void sort_mode_changed(SortMode sort_mode);
+		public SavedState.GamesView.SortMode sort_mode { get; private set; default = SavedState.GamesView.SortMode.NAME; }
+		public signal void sort_mode_changed(SavedState.GamesView.SortMode sort_mode);
+
+		public SavedState.GamesView.PlatformFilter filter_platform { get; private set; default = SavedState.GamesView.PlatformFilter.ALL; }
+		public signal void filter_platform_changed(SavedState.GamesView.PlatformFilter filter_platform);
 
 		private Granite.Widgets.ModeButton sort_mode_button;
+		private Granite.Widgets.ModeButton platform_button;
 
 		private CheckButton tags_header_check;
 		private ListBox tags_list;
@@ -65,7 +69,7 @@ namespace GameHub.UI.Views.GamesView
 			var sort_image = new Image.from_icon_name("view-sort-descending-symbolic", IconSize.BUTTON);
 			sort_hbox.add(sort_image);
 
-			var sort_label = new HeaderLabel(_("Sort:"));
+			var sort_label = new HeaderLabel(_("Sort"));
 			sort_label.margin_end = 8;
 			sort_label.xpad = 0;
 			sort_label.halign = Align.START;
@@ -78,23 +82,60 @@ namespace GameHub.UI.Views.GamesView
 			sort_mode_button.halign = Align.END;
 			sort_mode_button.valign = Align.CENTER;
 			sort_mode_button.can_focus = true;
-			add_sort_mode(SortMode.NAME);
-			add_sort_mode(SortMode.LAST_LAUNCH);
-			add_sort_mode(SortMode.PLAYTIME);
+			add_sort_mode(SavedState.GamesView.SortMode.NAME);
+			add_sort_mode(SavedState.GamesView.SortMode.LAST_LAUNCH);
+			add_sort_mode(SavedState.GamesView.SortMode.PLAYTIME);
 			sort_hbox.add(sort_mode_button);
 
-			var saved_state = Settings.SavedState.get_instance();
+			var platform_hbox = new Box(Orientation.HORIZONTAL, 6);
+			platform_hbox.margin_start = platform_hbox.margin_end = 8;
+			platform_hbox.margin_top = platform_hbox.margin_bottom = 2;
+
+			var platform_image = new Image.from_icon_name("application-x-executable-symbolic", IconSize.BUTTON);
+			platform_hbox.add(platform_image);
+
+			var platform_label = new HeaderLabel(_("Platform"));
+			platform_label.margin_end = 8;
+			platform_label.xpad = 0;
+			platform_label.halign = Align.START;
+			platform_label.xalign = 0;
+			platform_label.hexpand = true;
+			platform_hbox.add(platform_label);
+
+			platform_button = new Granite.Widgets.ModeButton();
+			platform_button.get_style_context().add_class("filters-platform");
+			platform_button.halign = Align.END;
+			platform_button.valign = Align.CENTER;
+			platform_button.can_focus = true;
+
+			foreach(var p in SavedState.GamesView.PlatformFilter.FILTERS)
+			{
+				add_platform(p);
+			}
+
+			platform_hbox.add(platform_button);
+
+			var saved_state = SavedState.GamesView.instance;
 
 			sort_mode_button.set_active((int) saved_state.sort_mode);
 			sort_mode = saved_state.sort_mode;
 			sort_mode_button.mode_changed.connect(() => {
-				saved_state.sort_mode = (SortMode) sort_mode_button.selected;
+				saved_state.sort_mode = (SavedState.GamesView.SortMode) sort_mode_button.selected;
 				sort_mode = saved_state.sort_mode;
 				sort_mode_changed(sort_mode);
 			});
 
-			vbox.add(sort_hbox);
+			platform_button.set_active((int) saved_state.filter_platform);
+			filter_platform = saved_state.filter_platform;
+			platform_button.mode_changed.connect(() => {
+				saved_state.filter_platform = (SavedState.GamesView.PlatformFilter) platform_button.selected;
+				filter_platform = saved_state.filter_platform;
+				filter_platform_changed(filter_platform);
+			});
 
+			vbox.add(sort_hbox);
+			vbox.add(new Separator(Orientation.HORIZONTAL));
+			vbox.add(platform_hbox);
 			vbox.add(new Separator(Orientation.HORIZONTAL));
 
 			tags_list = new ListBox();
@@ -246,11 +287,24 @@ namespace GameHub.UI.Views.GamesView
 			is_updating = false;
 		}
 
-		private void add_sort_mode(SortMode mode)
+		private void add_sort_mode(SavedState.GamesView.SortMode mode)
 		{
 			var image = new Image.from_icon_name(mode.icon(), IconSize.MENU);
 			image.tooltip_text = mode.name();
 			sort_mode_button.append(image);
+		}
+
+		private void add_platform(SavedState.GamesView.PlatformFilter p)
+		{
+			Platform? platform = null;
+			if(p != SavedState.GamesView.PlatformFilter.ALL)
+			{
+				platform = p.platform();
+			}
+
+			var image = new Image.from_icon_name(platform == null ? "application-x-executable-symbolic" : platform.icon(), IconSize.MENU);
+			image.tooltip_text = platform == null ? _("All platforms") : platform.name();
+			platform_button.append(image);
 		}
 	}
 }

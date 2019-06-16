@@ -89,6 +89,10 @@ src/utils/ImageCache.vala
 src/utils/FSUtils.vala
 src/utils/FSOverlay.vala
 src/utils/Parser.vala
-src/utils/Settings.vala
 src/utils/downloader/Downloader.vala
 src/utils/downloader/SoupDownloader.vala
+src/settings/UI.vala
+src/settings/SavedState.vala
+src/settings/Auth.vala
+src/settings/Providers.vala
+src/settings/Controller.vala

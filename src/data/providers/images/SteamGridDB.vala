@@ -34,8 +34,8 @@ namespace GameHub.Data.Providers.Images
 
 		public override bool enabled
 		{
-			get { return Settings.Providers.Images.SteamGridDB.get_instance().enabled; }
-			set { Settings.Providers.Images.SteamGridDB.get_instance().enabled = value; }
+			get { return Settings.Providers.Images.SteamGridDB.instance.enabled; }
+			set { Settings.Providers.Images.SteamGridDB.instance.enabled = value; }
 		}
 
 		public override async ImagesProvider.Result images(Game game)
@@ -57,7 +57,7 @@ namespace GameHub.Data.Providers.Images
 				result.url = DOMAIN + "/game/" + gid;
 			}
 
-			var root = yield Parser.parse_remote_json_file_async(BASE_URL + endpoint, "GET", Settings.Providers.Images.SteamGridDB.get_instance().api_key);
+			var root = yield Parser.parse_remote_json_file_async(BASE_URL + endpoint, "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return result;
 			var obj = root.get_object();
 			var data = obj.has_member("data") ? obj.get_array_member("data") : null;
@@ -76,7 +76,7 @@ namespace GameHub.Data.Providers.Images
 
 		private async string? game_id_by_name(string name)
 		{
-			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/search/autocomplete/" + Uri.escape_string(name), "GET", Settings.Providers.Images.SteamGridDB.get_instance().api_key);
+			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/search/autocomplete/" + Uri.escape_string(name), "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return null;
 			var obj = root.get_object();
 			var data = obj.has_member("data") ? obj.get_array_member("data") : null;
@@ -87,7 +87,7 @@ namespace GameHub.Data.Providers.Images
 
 		private async string? game_id_by_steam_appid(string appid)
 		{
-			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/games/steam/" + appid, "GET", Settings.Providers.Images.SteamGridDB.get_instance().api_key);
+			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/games/steam/" + appid, "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return null;
 			var obj = root.get_object();
 			var data = obj.has_member("data") ? obj.get_object_member("data") : null;
@@ -98,7 +98,7 @@ namespace GameHub.Data.Providers.Images
 		{
 			owned get
 			{
-				var settings = Settings.Providers.Images.SteamGridDB.get_instance();
+				var settings = Settings.Providers.Images.SteamGridDB.instance;
 
 				var grid = new Gtk.Grid();
 				grid.column_spacing = 12;

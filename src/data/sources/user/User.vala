@@ -87,7 +87,7 @@ namespace GameHub.Data.Sources.User
 				{
 					foreach(var g in cached)
 					{
-						if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
+						if(!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(g))
 						{
 							g.update_game_info.begin();
 							_games.add(g);

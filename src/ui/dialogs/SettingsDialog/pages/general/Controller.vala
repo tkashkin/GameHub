@@ -48,7 +48,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			header_grid.margin_bottom = 0;
 			content_area.margin = 0;
 
-			settings = Settings.Controller.get_instance();
+			settings = Settings.Controller.instance;
 
 			var focus_switch = add_switch(_("Focus GameHub window with Guide button"), settings.focus_window, v => { settings.focus_window = v; update(); request_restart(); });
 			focus_switch.margin_start = 16;
@@ -115,7 +115,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 			construct
 			{
-				var settings = Settings.Controller.get_instance();
+				var settings = Settings.Controller.instance;
 
 				var hbox = new Box(Orientation.HORIZONTAL, 8);
 				hbox.margin_start = hbox.margin_end = 8;

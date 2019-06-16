@@ -55,7 +55,7 @@ namespace GameHub.UI.Dialogs
 			});
 
 			get_style_context().add_class("gameinfo-background");
-			var ui_settings = GameHub.Settings.UI.get_instance();
+			var ui_settings = GameHub.Settings.UI.Appearance.instance;
 			ui_settings.notify["dark-theme"].connect(() => {
 				get_style_context().remove_class("dark");
 				if(ui_settings.dark_theme) get_style_context().add_class("dark");

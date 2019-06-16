@@ -57,7 +57,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private string old_icon;
 
-		private GameHub.Settings.UI ui_settings;
+		private GameHub.Settings.UI.Appearance ui_settings;
 
 		public GameListRow(Game? game=null, GamesAdapter? adapter=null)
 		{
@@ -104,8 +104,8 @@ namespace GameHub.UI.Views.GamesView
 
 			notify["is-selected"].connect(update_icon);
 
-			ui_settings = GameHub.Settings.UI.get_instance();
-			ui_settings.notify["compact-list"].connect(update_compact_view);
+			ui_settings = GameHub.Settings.UI.Appearance.instance;
+			ui_settings.notify["list-compact"].connect(update_compact_view);
 			update_compact_view();
 
 			var ebox = new EventBox();
@@ -216,7 +216,7 @@ namespace GameHub.UI.Views.GamesView
 
 		public void update_compact_view()
 		{
-			var compact = ui_settings.compact_list;
+			var compact = ui_settings.list_compact;
 			var image_size = compact ? 16 : 36;
 			image.set_constraint(image_size, image_size, 1);
 			image.set_size_request(image_size, image_size);

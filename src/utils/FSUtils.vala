@@ -47,14 +47,17 @@ namespace GameHub.Utils
 					base(ProjectConfig.PROJECT_NAME + ".paths");
 				}
 
-				private static Settings? instance;
-				public static unowned Settings get_instance()
+				private static Settings _instance;
+				public static Settings instance
 				{
-					if(instance == null)
+					get
 					{
-						instance = new Settings();
+						if(_instance == null)
+						{
+							_instance = new Settings();
+						}
+						return _instance;
 					}
-					return instance;
 				}
 			}
 
@@ -75,7 +78,7 @@ namespace GameHub.Utils
 
 			public class Steam
 			{
-				public static string Home { owned get { return FSUtils.Paths.Settings.get_instance().steam_home; } }
+				public static string Home { owned get { return FSUtils.Paths.Settings.instance.steam_home; } }
 				public const string Config = "steam/config";
 				public const string LoginUsersVDF = FSUtils.Paths.Steam.Config + "/loginusers.vdf";
 
@@ -87,12 +90,12 @@ namespace GameHub.Utils
 
 			public class GOG
 			{
-				public static string Games { owned get { return FSUtils.Paths.Settings.get_instance().gog_games; } }
+				public static string Games { owned get { return FSUtils.Paths.Settings.instance.gog_games; } }
 			}
 
 			public class Humble
 			{
-				public static string Games { owned get { return FSUtils.Paths.Settings.get_instance().humble_games; } }
+				public static string Games { owned get { return FSUtils.Paths.Settings.instance.humble_games; } }
 
 				public const string Cache = FSUtils.Paths.Cache.Sources + "/humble";
 				public static string LoadedOrdersMD5 { owned get { return FSUtils.Paths.Humble.Cache + "/orders.md5"; } }
@@ -104,7 +107,7 @@ namespace GameHub.Utils
 
 				public static string expand_root()
 				{
-					return FSUtils.expand(get_instance().root);
+					return FSUtils.expand(instance.root);
 				}
 
 				public Collection()
@@ -112,14 +115,17 @@ namespace GameHub.Utils
 					base(ProjectConfig.PROJECT_NAME + ".paths.collection");
 				}
 
-				private static Collection? instance;
-				public static unowned Collection get_instance()
+				private static Collection? _instance;
+				public static unowned Collection instance
 				{
-					if(instance == null)
+					get
 					{
-						instance = new Collection();
+						if(_instance == null)
+						{
+							_instance = new Collection();
+						}
+						return _instance;
 					}
-					return instance;
 				}
 
 				public class GOG: Granite.Services.Settings
@@ -133,28 +139,28 @@ namespace GameHub.Utils
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
-						variables.set("root", Collection.get_instance().root);
+						variables.set("root", Collection.instance.root);
 						variables.set("game", g);
 						variables.set("platform_name", platform == null ? "" : platform.name());
 						variables.set("platform", platform == null ? "" : platform.id());
-						return FSUtils.expand(get_instance().game_dir, null, variables);
+						return FSUtils.expand(instance.game_dir, null, variables);
 					}
 					public static string expand_dlc(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
-						variables.set("root", Collection.get_instance().root);
+						variables.set("root", Collection.instance.root);
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
 						variables.set("game_dir", expand_game_dir(g, platform));
-						return FSUtils.expand(get_instance().dlc, null, variables);
+						return FSUtils.expand(instance.dlc, null, variables);
 					}
 					public static string expand_installers(string game, string? dlc=null, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var d = dlc == null ? null : dlc.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
-						variables.set("root", Collection.get_instance().root);
+						variables.set("root", Collection.instance.root);
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
 						if(d == null)
@@ -165,14 +171,14 @@ namespace GameHub.Utils
 						{
 							variables.set("game_dir", expand_dlc(g, platform) + "/" + d);
 						}
-						return FSUtils.expand(get_instance().installers, null, variables);
+						return FSUtils.expand(instance.installers, null, variables);
 					}
 					public static string expand_bonus(string game, string? dlc=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var d = dlc == null ? null : dlc.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
-						variables.set("root", Collection.get_instance().root);
+						variables.set("root", Collection.instance.root);
 						if(d == null)
 						{
 							variables.set("game_dir", expand_game_dir(g));
@@ -181,7 +187,7 @@ namespace GameHub.Utils
 						{
 							variables.set("game_dir", expand_dlc(g) + "/" + d);
 						}
-						return FSUtils.expand(get_instance().bonus, null, variables);
+						return FSUtils.expand(instance.bonus, null, variables);
 					}
 
 					public GOG()
@@ -189,14 +195,17 @@ namespace GameHub.Utils
 						base(ProjectConfig.PROJECT_NAME + ".paths.collection.gog");
 					}
 
-					private static GOG? instance;
-					public static unowned GOG get_instance()
+					private static GOG? _instance;
+					public static unowned GOG instance
 					{
-						if(instance == null)
+						get
 						{
-							instance = new GOG();
+							if(_instance == null)
+							{
+								_instance = new GOG();
+							}
+							return _instance;
 						}
-						return instance;
 					}
 				}
 
@@ -209,21 +218,21 @@ namespace GameHub.Utils
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
-						variables.set("root", Collection.get_instance().root);
+						variables.set("root", Collection.instance.root);
 						variables.set("game", g);
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
-						return FSUtils.expand(get_instance().game_dir, null, variables);
+						return FSUtils.expand(instance.game_dir, null, variables);
 					}
 					public static string expand_installers(string game, Platform? platform=null)
 					{
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
-						variables.set("root", Collection.get_instance().root);
+						variables.set("root", Collection.instance.root);
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
 						variables.set("game_dir", expand_game_dir(g, platform));
-						return FSUtils.expand(get_instance().installers, null, variables);
+						return FSUtils.expand(instance.installers, null, variables);
 					}
 
 					public Humble()
@@ -231,14 +240,17 @@ namespace GameHub.Utils
 						base(ProjectConfig.PROJECT_NAME + ".paths.collection.humble");
 					}
 
-					private static Humble? instance;
-					public static unowned Humble get_instance()
+					private static Humble? _instance;
+					public static unowned Humble instance
 					{
-						if(instance == null)
+						get
 						{
-							instance = new Humble();
+							if(_instance == null)
+							{
+								_instance = new Humble();
+							}
+							return _instance;
 						}
-						return instance;
 					}
 				}
 			}
@@ -388,7 +400,7 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.Humble.Cache);
 
 			#if FLATPAK
-			var paths = Paths.Settings.get_instance();
+			var paths = Paths.Settings.instance;
 			if(paths.steam_home == paths.schema.get_default_value("steam-home").get_string())
 			{
 				paths.steam_home = "/home/" + Environment.get_user_name() + "/.var/app/com.valvesoftware.Steam/.steam";

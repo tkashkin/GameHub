@@ -128,7 +128,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					add_link_list(C_("igdb", "Keywords"), result.keywords, vbox);
 				}
 
-				var preferred_desc = Settings.Providers.Data.IGDB.get_instance().preferred_description;
+				var preferred_desc = Settings.Providers.Data.IGDB.instance.preferred_description;
 
 				var game_has_desc = description_block.supports_game && game.description != null;
 

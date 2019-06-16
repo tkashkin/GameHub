@@ -20,6 +20,7 @@ using Gtk;
 using Gee;
 using GameHub.Data.DB;
 using GameHub.Utils;
+using GameHub.Settings;
 
 using GameHub.UI.Views.GamesView;
 
@@ -29,14 +30,13 @@ namespace GameHub.Data.Adapters
 	{
 		public signal void cache_loaded();
 
-		private Settings.UI ui_settings;
-		public bool filter_settings_show_unsupported = true;
-		public bool filter_settings_use_compat = true;
+		private Settings.UI.Behavior settings;
 		public bool filter_settings_merge = true;
 
 		public GameSource? filter_source { get; set; default = null; }
 		public ArrayList<Tables.Tags.Tag> filter_tags;
-		public Settings.SortMode sort_mode = Settings.SortMode.NAME;
+		public SavedState.GamesView.SortMode sort_mode = SavedState.GamesView.SortMode.NAME;
+		public SavedState.GamesView.PlatformFilter filter_platform = SavedState.GamesView.PlatformFilter.ALL;
 		public string filter_search_query = "";
 
 		private ArrayList<GameSource> sources = new ArrayList<GameSource>();
@@ -71,14 +71,10 @@ namespace GameHub.Data.Adapters
 			this.grid = grid;
 			this.list = list;
 
-			ui_settings = Settings.UI.get_instance();
-			filter_settings_show_unsupported = ui_settings.show_unsupported_games;
-			filter_settings_use_compat = ui_settings.use_compat;
-			filter_settings_merge = ui_settings.merge_games;
+			settings = Settings.UI.Behavior.instance;
+			filter_settings_merge = settings.merge_games;
 
-			ui_settings.notify["show-unsupported-games"].connect(() => invalidate());
-			ui_settings.notify["use-proton"].connect(() => invalidate());
-			ui_settings.notify["merge-games"].connect(() => invalidate());
+			settings.notify["merge-games"].connect(() => invalidate());
 
 			this.grid.set_filter_func(c => {
 				return filter((c as GameCard).game);
@@ -103,9 +99,7 @@ namespace GameHub.Data.Adapters
 
 		public void invalidate(bool filter=true, bool sort=true)
 		{
-			filter_settings_show_unsupported = ui_settings.show_unsupported_games;
-			filter_settings_use_compat = ui_settings.use_compat;
-			filter_settings_merge = ui_settings.merge_games;
+			filter_settings_merge = settings.merge_games;
 			if(filter)
 			{
 				grid.invalidate_filter();
@@ -237,14 +231,24 @@ namespace GameHub.Data.Adapters
 			}
 		}
 
-		public bool filter(Game game)
+		public bool filter(Game? game)
 		{
-			if(!filter_settings_show_unsupported && !game.is_supported(null, filter_settings_use_compat)) return false;
+			if(game == null) return false;
 
 			bool same_src = (filter_source == null || game == null || filter_source == game.source);
 			bool merged_src = false;
 
 			ArrayList<Game>? merges = null;
+
+			Platform[] platforms = {};
+
+			if(filter_platform != SavedState.GamesView.PlatformFilter.ALL)
+			{
+				foreach(var p in game.platforms)
+				{
+					if(!(p in platforms)) platforms += p;
+				}
+			}
 
 			if(filter_settings_merge)
 			{
@@ -256,11 +260,21 @@ namespace GameHub.Data.Adapters
 						if(g.source == filter_source)
 						{
 							merged_src = true;
-							break;
+							if(filter_platform == SavedState.GamesView.PlatformFilter.ALL || filter_source != null) break;
+						}
+
+						if(filter_platform != SavedState.GamesView.PlatformFilter.ALL && filter_source == null)
+						{
+							foreach(var p in g.platforms)
+							{
+								if(!(p in platforms)) platforms += p;
+							}
 						}
 					}
 				}
 			}
+
+			if(filter_platform != SavedState.GamesView.PlatformFilter.ALL && !(filter_platform.platform() in platforms)) return false;
 
 			bool tags_all_enabled = filter_tags == null || filter_tags.size == 0 || filter_tags.size == Tables.Tags.TAGS.size;
 			bool tags_all_except_hidden_enabled = filter_tags != null && filter_tags.size == Tables.Tags.TAGS.size - 1 && !(Tables.Tags.BUILTIN_HIDDEN in filter_tags);
@@ -292,7 +306,7 @@ namespace GameHub.Data.Adapters
 			return (same_src || merged_src) && (tags_all_enabled || tags_all_except_hidden_enabled || tags_match || tags_match_merged) && !hidden && Utils.strip_name(filter_search_query).casefold() in Utils.strip_name(game.name).casefold();
 		}
 
-		public int sort(Game game1, Game game2)
+		public int sort(Game? game1, Game? game2)
 		{
 			if(game1 != null && game2 != null)
 			{
@@ -314,12 +328,12 @@ namespace GameHub.Data.Adapters
 
 				switch(sort_mode)
 				{
-					case Settings.SortMode.LAST_LAUNCH:
+					case SavedState.GamesView.SortMode.LAST_LAUNCH:
 						if(game1.last_launch > game2.last_launch) return -1;
 						if(game1.last_launch < game2.last_launch) return 1;
 						break;
 
-					case Settings.SortMode.PLAYTIME:
+					case SavedState.GamesView.SortMode.PLAYTIME:
 						if(game1.playtime > game2.playtime) return -1;
 						if(game1.playtime < game2.playtime) return 1;
 						break;

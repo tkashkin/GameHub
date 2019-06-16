@@ -24,7 +24,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 {
 	public class About: SettingsPage
 	{
-		private Settings.UI ui_settings;
+		private Settings.UI.Appearance ui_settings;
 
 		private Box links_view;
 		private Box small_links_view;
@@ -41,7 +41,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 
 		construct
 		{
-			ui_settings = Settings.UI.get_instance();
+			ui_settings = Settings.UI.Appearance.instance;
 
 			var content_vbox = new Box(Orientation.VERTICAL, 8);
 			content_vbox.expand = true;
@@ -129,16 +129,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 
 		private void add_link(string title, string url, string icon="web-browser")
 		{
-			var button = new GameHub.UI.Widgets.ActionButton(icon + Settings.UI.symbolic_icon_suffix, null, title, true, ui_settings.symbolic_icons);
+			var button = new GameHub.UI.Widgets.ActionButton(icon + Settings.UI.Appearance.symbolic_icon_suffix, null, title, true, ui_settings.icon_style.is_symbolic());
 			button.tooltip_text = url;
 
 			button.clicked.connect(() => {
 				Utils.open_uri(url);
 			});
 
-			ui_settings.notify["symbolic-icons"].connect(() => {
-				button.icon = icon + Settings.UI.symbolic_icon_suffix;
-				button.compact = ui_settings.symbolic_icons;
+			ui_settings.notify["icon-style"].connect(() => {
+				button.icon = icon + Settings.UI.Appearance.symbolic_icon_suffix;
+				button.compact = ui_settings.icon_style.is_symbolic();
 			});
 
 			links_view.add(button);

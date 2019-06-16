@@ -58,7 +58,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			description.sensitive = false;
 			description.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
 
-			var ui_settings = GameHub.Settings.UI.get_instance();
+			var ui_settings = GameHub.Settings.UI.Appearance.instance;
 			ui_settings.notify["dark-theme"].connect(() => {
 				description.user_content_manager.remove_all_style_sheets();
 				var style = ui_settings.dark_theme ? CSS_DARK : CSS_LIGHT;

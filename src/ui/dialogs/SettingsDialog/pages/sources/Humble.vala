@@ -43,9 +43,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = FSUtils.Paths.Settings.get_instance();
+			var paths = FSUtils.Paths.Settings.instance;
 
-			humble_auth = Settings.Auth.Humble.get_instance();
+			humble_auth = Settings.Auth.Humble.instance;
 
 			add_switch(_("Load games from Humble Trove"), humble_auth.load_trove_games, v => { humble_auth.load_trove_games = v; update(); request_restart(); });
 
@@ -78,7 +78,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			content_area.sensitive = humble_auth.enabled;
 			logout_btn.sensitive = humble_auth.authenticated && humble_auth.access_token.length > 0;
 
-			if(" " in FSUtils.Paths.Settings.get_instance().humble_games)
+			if(" " in FSUtils.Paths.Settings.instance.humble_games)
 			{
 				games_dir_chooser.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
 				status_type = StatusType.ERROR;
