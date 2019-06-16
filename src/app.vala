@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gdk;
+using Gee;
 using Granite;
 
 using GameHub.Data;
@@ -124,6 +125,11 @@ namespace GameHub
 			set_accels_for_action(ACTION_PREFIX + ACTION_SETTINGS, { ACCEL_SETTINGS });
 		}
 
+		private const string[] THEME_SPECIFIC_STYLES = { "elementary" };
+		private Screen screen;
+		private Gtk.Settings gtk_settings;
+		private HashMap<string, CssProvider> theme_providers;
+
 		private void init()
 		{
 			if(Platforms != null && GameSources != null && CompatTools != null) return;
@@ -166,28 +172,35 @@ namespace GameHub
 
 			IconTheme.get_default().add_resource_path("/com/github/tkashkin/gamehub/icons");
 
-			var screen = Screen.get_default();
+			screen = Screen.get_default();
 
 			var app_provider = new CssProvider();
 			app_provider.load_from_resource("/com/github/tkashkin/gamehub/css/app.css");
-
-			var elementary_provider = new CssProvider();
-			elementary_provider.load_from_resource("/com/github/tkashkin/gamehub/css/themes/elementary.css");
-
 			StyleContext.add_provider_for_screen(screen, app_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-			var settings = Gtk.Settings.get_for_screen(screen);
-			settings.notify["gtk-theme-name"].connect(() => {
-				if(settings.gtk_theme_name == "elementary")
-				{
-					StyleContext.add_provider_for_screen(screen, elementary_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-				}
-				else
-				{
-					StyleContext.remove_provider_for_screen(screen, elementary_provider);
-				}
-			});
-			settings.notify_property("gtk-theme-name");
+			theme_providers = new HashMap<string, CssProvider>();
+			foreach(var theme in THEME_SPECIFIC_STYLES)
+			{
+				var provider = new CssProvider();
+				provider.load_from_resource(@"/com/github/tkashkin/gamehub/css/themes/$(theme).css");
+				theme_providers.set(theme, provider);
+			}
+
+			gtk_settings = Gtk.Settings.get_for_screen(screen);
+			gtk_settings.notify["gtk-theme-name"].connect(gtk_theme_handler);
+			gtk_theme_handler();
+		}
+
+		private void gtk_theme_handler()
+		{
+			foreach(var provider in theme_providers.values)
+			{
+				StyleContext.remove_provider_for_screen(screen, provider);
+			}
+			if(theme_providers.has_key(gtk_settings.gtk_theme_name))
+			{
+				StyleContext.add_provider_for_screen(screen, theme_providers.get(gtk_settings.gtk_theme_name), Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+			}
 		}
 
 		protected override void activate()

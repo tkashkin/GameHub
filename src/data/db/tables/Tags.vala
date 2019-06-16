@@ -109,18 +109,18 @@ namespace GameHub.Data.DB.Tables
 			DYNAMIC_TAGS.add(BUILTIN_UNINSTALLED);
 			DYNAMIC_TAGS.add(BUILTIN_INSTALLED);
 
-			var ui_settings = GameHub.Settings.UI.get_instance();
-			ui_settings.notify["use-imported-tags"].connect(() => {
+			var settings = GameHub.Settings.UI.Behavior.instance;
+			settings.notify["import-tags"].connect(() => {
 				foreach(var tag in TAGS)
 				{
 					if(tag.id.has_prefix(Tag.IMPORTED_GOG_PREFIX))
 					{
-						tag.enabled = ui_settings.use_imported_tags;
+						tag.enabled = settings.import_tags;
 					}
 				}
 				tags_updated();
 			});
-			ui_settings.notify_property("use-imported-tags");
+			settings.notify_property("import-tags");
 		}
 
 		public static bool add(Tag tag, bool replace=false)
@@ -149,7 +149,7 @@ namespace GameHub.Data.DB.Tables
 				TAGS.add(tag);
 				if(tag.id.has_prefix(Tag.IMPORTED_GOG_PREFIX))
 				{
-					tag.enabled = GameHub.Settings.UI.get_instance().use_imported_tags;
+					tag.enabled = GameHub.Settings.UI.Behavior.instance.import_tags;
 				}
 				instance.tags_updated();
 			}

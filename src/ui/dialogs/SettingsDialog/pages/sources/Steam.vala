@@ -41,9 +41,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = FSUtils.Paths.Settings.get_instance();
+			var paths = FSUtils.Paths.Settings.instance;
 
-			steam_auth = Settings.Auth.Steam.get_instance();
+			steam_auth = Settings.Auth.Steam.instance;
 
 			add_steam_apikey_entry();
 			add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey");
@@ -87,7 +87,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		protected void add_steam_apikey_entry()
 		{
-			var steam_auth = Settings.Auth.Steam.get_instance();
+			var steam_auth = Settings.Auth.Steam.instance;
 
 			var entry = new Entry();
 			entry.placeholder_text = _("Default");

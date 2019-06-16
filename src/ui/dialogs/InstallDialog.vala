@@ -148,14 +148,10 @@ namespace GameHub.UI.Dialogs
 
 			var sys_langs = Intl.get_language_names();
 
-			var compatible_installers = new ArrayList<Runnable.Installer>();
 			var compatible_platforms = new ArrayList<Platform>();
 
 			foreach(var installer in installers)
 			{
-				if(installer.platform.id() != CurrentPlatform.id() && !Settings.UI.get_instance().show_unsupported_games && !Settings.UI.get_instance().use_compat) continue;
-
-				compatible_installers.add(installer);
 				var row = new InstallerRow(runnable, installer);
 				installers_list.add(row);
 
@@ -208,7 +204,7 @@ namespace GameHub.UI.Dialogs
 				}
 			}
 
-			if(compatible_installers.size > 1)
+			if(installers.size > 1)
 			{
 				subtitle_label.label = _("Select installer");
 				content.add(installers_list);
@@ -219,50 +215,45 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				subtitle_label.label = _("Installer size: %s").printf(fsize(compatible_installers[0].full_size));
+				subtitle_label.label = _("Installer size: %s").printf(fsize(installers[0].full_size));
 			}
 
-			Revealer? compat_tool_revealer = null;
+			Revealer? compat_tool_revealer = new Revealer();
 
-			if(Settings.UI.get_instance().show_unsupported_games || Settings.UI.get_instance().use_compat)
+			var compat_tool_box = new Box(Orientation.VERTICAL, 4);
+
+			compat_tool_picker = new CompatToolPicker(runnable, true);
+			compat_tool_picker.margin_start = game != null && game.icon != null ? 4 : 0;
+			compat_tool_picker.margin_top = 8;
+
+			compat_tool_box.add(compat_tool_picker);
+			compat_tool_revealer.add(compat_tool_box);
+
+			if(installers.size > 1)
 			{
-				compat_tool_revealer = new Revealer();
+				compat_tool_revealer.reveal_child = false;
 
-				var compat_tool_box = new Box(Orientation.VERTICAL, 4);
-
-				compat_tool_picker = new CompatToolPicker(runnable, true);
-				compat_tool_picker.margin_start = game != null && game.icon != null ? 4 : 0;
-				compat_tool_picker.margin_top = 8;
-
-				compat_tool_box.add(compat_tool_picker);
-				compat_tool_revealer.add(compat_tool_box);
-
-				if(compatible_installers.size > 1)
-				{
-					compat_tool_revealer.reveal_child = false;
-
-					installers_list.row_selected.connect(r => {
-						var row = r as InstallerRow;
-						if(row == null)
-						{
-							compat_tool_revealer.reveal_child = false;
-						}
-						else
-						{
-							compat_tool_revealer.reveal_child = row.installer.platform == Platform.WINDOWS;
-						}
-					});
-				}
-				else
-				{
-					compat_tool_revealer.reveal_child = !runnable.is_supported(null, false) && runnable.is_supported(null, true);
-				}
-
-				content.add(compat_tool_revealer);
-
-				opts_list = new CompatToolOptions(runnable, compat_tool_picker, true);
-				compat_tool_box.add(opts_list);
+				installers_list.row_selected.connect(r => {
+					var row = r as InstallerRow;
+					if(row == null)
+					{
+						compat_tool_revealer.reveal_child = false;
+					}
+					else
+					{
+						compat_tool_revealer.reveal_child = row.installer.platform == Platform.WINDOWS;
+					}
+				});
 			}
+			else
+			{
+				compat_tool_revealer.reveal_child = !runnable.is_supported(null, false) && runnable.is_supported(null, true);
+			}
+
+			content.add(compat_tool_revealer);
+
+			opts_list = new CompatToolOptions(runnable, compat_tool_picker, true);
+			compat_tool_box.add(opts_list);
 
 			if(game is GameHub.Data.Sources.User.UserGame || runnable is GameHub.Data.Emulator)
 			{
@@ -290,8 +281,8 @@ namespace GameHub.UI.Dialogs
 
 					case ResponseType.ACCEPT:
 					case InstallDialog.RESPONSE_DOWNLOAD:
-						var installer = compatible_installers[0];
-						if(compatible_installers.size > 1)
+						var installer = installers[0];
+						if(installers.size > 1)
 						{
 							var row = installers_list.get_selected_row() as InstallerRow;
 							installer = row.installer;

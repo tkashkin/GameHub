@@ -50,7 +50,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 			header_grid.margin_bottom = 0;
 			content_area.margin = 0;
 
-			igdb = Settings.Providers.Data.IGDB.get_instance();
+			igdb = Settings.Providers.Data.IGDB.instance;
 
 			var image_providers_header = add_header(_("Image providers"));
 			image_providers_header.margin_start = image_providers_header.margin_end = 12;

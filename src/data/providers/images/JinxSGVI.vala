@@ -31,8 +31,8 @@ namespace GameHub.Data.Providers.Images
 
 		public override bool enabled
 		{
-			get { return Settings.Providers.Images.JinxSGVI.get_instance().enabled; }
-			set { Settings.Providers.Images.JinxSGVI.get_instance().enabled = value; }
+			get { return Settings.Providers.Images.JinxSGVI.instance.enabled; }
+			set { Settings.Providers.Images.JinxSGVI.instance.enabled = value; }
 		}
 
 		public override async ImagesProvider.Result images(Game game)

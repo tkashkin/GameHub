@@ -26,7 +26,7 @@ namespace GameHub.UI.Windows
 	{
 		public static MainWindow instance;
 
-		private SavedState saved_state;
+		private SavedState.Window saved_state;
 
 		public HeaderBar titlebar;
 		private Stack stack;
@@ -39,12 +39,6 @@ namespace GameHub.UI.Windows
 
 		construct
 		{
-			var ui_settings = Settings.UI.get_instance();
-			ui_settings.notify["dark-theme"].connect(() => {
-				Gtk.Settings.get_default().gtk_application_prefer_dark_theme = ui_settings.dark_theme;
-			});
-			ui_settings.notify_property("dark-theme");
-
 			title = "GameHub";
 
 			titlebar = new HeaderBar();
@@ -73,7 +67,7 @@ namespace GameHub.UI.Windows
 				current_view.on_window_focus();
 			});
 
-			saved_state = SavedState.get_instance();
+			saved_state = SavedState.Window.instance;
 
 			delete_event.connect(() => { quit(); return false; });
 
@@ -99,22 +93,22 @@ namespace GameHub.UI.Windows
 
 		private void restore_saved_state()
 		{
-			if(saved_state.window_width > -1)
-				default_width = saved_state.window_width;
-			if(saved_state.window_height > -1)
-				default_height = saved_state.window_height;
+			if(saved_state.width > -1)
+				default_width = saved_state.width;
+			if(saved_state.height > -1)
+				default_height = saved_state.height;
 
-			switch(saved_state.window_state)
+			switch(saved_state.state)
 			{
-				case Settings.WindowState.MAXIMIZED:
+				case SavedState.Window.State.MAXIMIZED:
 					maximize();
 					break;
-				case Settings.WindowState.FULLSCREEN:
+				case SavedState.Window.State.FULLSCREEN:
 					fullscreen();
 					break;
 				default:
-					if(saved_state.window_x > -1 && saved_state.window_y > -1)
-						move(saved_state.window_x, saved_state.window_y);
+					if(saved_state.x > -1 && saved_state.y > -1)
+						move(saved_state.x, saved_state.y);
 					break;
 			}
 		}
@@ -124,26 +118,26 @@ namespace GameHub.UI.Windows
 			var state = get_window().get_state();
 			if(Gdk.WindowState.MAXIMIZED in state)
 			{
-				saved_state.window_state = Settings.WindowState.MAXIMIZED;
+				saved_state.state = SavedState.Window.State.MAXIMIZED;
 			}
 			else if(Gdk.WindowState.FULLSCREEN in state)
 			{
-				saved_state.window_state = Settings.WindowState.FULLSCREEN;
+				saved_state.state = SavedState.Window.State.FULLSCREEN;
 			}
 			else
 			{
-				saved_state.window_state = Settings.WindowState.NORMAL;
+				saved_state.state = SavedState.Window.State.NORMAL;
 
 				int width, height;
 				get_size(out width, out height);
-				saved_state.window_width = width;
-				saved_state.window_height = height;
+				saved_state.width = width;
+				saved_state.height = height;
 			}
 
 			int x, y;
 			get_position(out x, out y);
-			saved_state.window_x = x;
-			saved_state.window_y = y;
+			saved_state.x = x;
+			saved_state.y = y;
 		}
 
 		private void quit()

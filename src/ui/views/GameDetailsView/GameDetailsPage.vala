@@ -272,7 +272,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_install.visible = s.state != Game.State.INSTALLED;
 			action_install.sensitive = s.state == Game.State.UNINSTALLED && game.is_installable;
 			action_run_with_compat.visible = s.state == Game.State.INSTALLED && game.use_compat;
-			action_run_with_compat.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning && Settings.UI.get_instance().use_compat;
+			action_run_with_compat.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
 			action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
 			action_run.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
 			action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
@@ -449,14 +449,14 @@ namespace GameHub.UI.Views.GameDetailsView
 		private delegate void Action();
 		private ActionButton add_action(string icon, string? icon_overlay, string title, Action action, bool primary=false)
 		{
-			var ui_settings = Settings.UI.get_instance();
-			var button = new ActionButton(icon + Settings.UI.symbolic_icon_suffix, icon_overlay, title, primary, ui_settings.symbolic_icons);
+			var ui_settings = Settings.UI.Appearance.instance;
+			var button = new ActionButton(icon + Settings.UI.Appearance.symbolic_icon_suffix, icon_overlay, title, primary, ui_settings.icon_style.is_symbolic());
 			button.hexpand = primary;
 			actions.add(button);
 			button.clicked.connect(() => action());
-			ui_settings.notify["symbolic-icons"].connect(() => {
-				button.icon = icon + Settings.UI.symbolic_icon_suffix;
-				button.compact = ui_settings.symbolic_icons;
+			ui_settings.notify["icon-style"].connect(() => {
+				button.icon = icon + Settings.UI.Appearance.symbolic_icon_suffix;
+				button.compact = ui_settings.icon_style.is_symbolic();
 			});
 			return button;
 		}

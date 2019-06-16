@@ -38,15 +38,35 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 		construct
 		{
-			var ui = Settings.UI.get_instance();
+			var settings = Settings.UI.Appearance.instance;
 
-			add_switch(_("Dark theme"), ui.dark_theme, v => { ui.dark_theme = v; });
-			add_switch(_("Symbolic icons"), ui.symbolic_icons, v => { ui.symbolic_icons = v; });
+			add_switch(_("Dark theme"), settings.dark_theme, v => { settings.dark_theme = v; });
+
+			var icon_style = new Granite.Widgets.ModeButton();
+			icon_style.homogeneous = false;
+			icon_style.halign = Align.END;
+			icon_style.append_text(C_("icon_style", "Theme-based"));
+			icon_style.append_text(C_("icon_style", "Symbolic"));
+			icon_style.append_text(C_("icon_style", "Colored"));
+
+			var icon_style_label = new Label(C_("icon_style", "Icon style"));
+			icon_style_label.halign = Align.START;
+			icon_style_label.hexpand = true;
+
+			var icon_style_hbox = new Box(Orientation.HORIZONTAL, 12);
+			icon_style_hbox.add(icon_style_label);
+			icon_style_hbox.add(icon_style);
+			add_widget(icon_style_hbox);
 
 			add_separator();
 
-			add_switch(_("Compact list"), ui.compact_list, v => { ui.compact_list = v; });
-			add_switch(_("Show platform icons in grid view"), ui.show_grid_icons, v => { ui.show_grid_icons = v; });
+			add_switch(_("Compact list"), settings.list_compact, v => { settings.list_compact = v; });
+			add_switch(_("Show platform icons in grid view"), settings.grid_platform_icons, v => { settings.grid_platform_icons = v; });
+
+			icon_style.selected = settings.icon_style;
+			icon_style.mode_changed.connect(() => {
+				settings.icon_style = (Settings.UI.Appearance.IconStyle) icon_style.selected;
+			});
 		}
 	}
 }

@@ -43,9 +43,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = FSUtils.Paths.Settings.get_instance();
+			var paths = FSUtils.Paths.Settings.instance;
 
-			gog_auth = Settings.Auth.GOG.get_instance();
+			gog_auth = Settings.Auth.GOG.instance;
 
 			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; request_restart(); update(); }).get_children().last().data as FileChooserEntry;
 
@@ -75,7 +75,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			content_area.sensitive = gog_auth.enabled;
 			logout_btn.sensitive = gog_auth.authenticated && gog_auth.access_token.length > 0;
 
-			if(" " in FSUtils.Paths.Settings.get_instance().gog_games)
+			if(" " in FSUtils.Paths.Settings.instance.gog_games)
 			{
 				games_dir_chooser.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
 				status_type = StatusType.ERROR;

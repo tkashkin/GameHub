@@ -46,7 +46,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			get_style_context().add_class("rounded");
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
-			var ui_settings = GameHub.Settings.UI.get_instance();
+			var ui_settings = GameHub.Settings.UI.Appearance.instance;
 			ui_settings.notify["dark-theme"].connect(() => {
 				get_style_context().remove_class("dark");
 				if(ui_settings.dark_theme) get_style_context().add_class("dark");
@@ -57,7 +57,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			modal = true;
 
 			var content = get_content_area();
-			content.set_size_request(800, 480);
+			content.set_size_request(860, 540);
 
 			restart_msg = new InfoBar();
 			restart_msg.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
@@ -146,7 +146,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		public void update_games_dir_space_message()
 		{
-			var paths = FSUtils.Paths.Settings.get_instance();
+			var paths = FSUtils.Paths.Settings.instance;
 			games_dir_space_msg_shown = " " in paths.gog_games || " " in paths.humble_games;
 			update_messages();
 		}

@@ -188,7 +188,7 @@ namespace GameHub.UI.Views.GamesView
 				switch(e.button)
 				{
 					case 1:
-						if(!Settings.UI.get_instance().grid_doubleclick || (Settings.UI.get_instance().grid_doubleclick && e.type == EventType.2BUTTON_PRESS))
+						if(!Settings.UI.Behavior.instance.grid_doubleclick || (Settings.UI.Behavior.instance.grid_doubleclick && e.type == EventType.2BUTTON_PRESS))
 						{
 							game.run_or_install.begin();
 						}
@@ -218,7 +218,7 @@ namespace GameHub.UI.Views.GamesView
 				return false;
 			});
 
-			Settings.UI.get_instance().notify["show-grid-icons"].connect(update_grid_icons);
+			Settings.UI.Appearance.instance.notify["grid-platform-icons"].connect(update_grid_icons);
 			update_grid_icons();
 		}
 
@@ -426,7 +426,7 @@ namespace GameHub.UI.Views.GamesView
 		private void update_grid_icons()
 		{
 			Idle.add(() => {
-				src_icons.visible = platform_icons.visible = Settings.UI.get_instance().show_grid_icons;
+				src_icons.visible = platform_icons.visible = Settings.UI.Appearance.instance.grid_platform_icons;
 				return Source.REMOVE;
 			}, Priority.LOW);
 		}

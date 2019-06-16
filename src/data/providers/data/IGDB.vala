@@ -36,8 +36,8 @@ namespace GameHub.Data.Providers.Data
 
 		public override bool enabled
 		{
-			get { return Settings.Providers.Data.IGDB.get_instance().enabled; }
-			set { Settings.Providers.Data.IGDB.get_instance().enabled = value; }
+			get { return Settings.Providers.Data.IGDB.instance.enabled; }
+			set { Settings.Providers.Data.IGDB.instance.enabled = value; }
 		}
 
 		public static IGDB instance;
@@ -56,7 +56,7 @@ namespace GameHub.Data.Providers.Data
 			}
 
 			var headers = new HashMap<string, string>();
-			headers.set("user-key", Settings.Providers.Data.IGDB.get_instance().api_key);
+			headers.set("user-key", Settings.Providers.Data.IGDB.instance.api_key);
 
 			var endpoint = "/games?search=%s&fields=%s".printf(Uri.escape_string(game.name), string.joinv(",", Fields.REQUEST_FIELDS));
 			var json = yield Parser.load_remote_file_async(API_BASE_URL + endpoint, "GET", null, headers);
@@ -322,7 +322,7 @@ namespace GameHub.Data.Providers.Data
 		{
 			owned get
 			{
-				var settings = Settings.Providers.Data.IGDB.get_instance();
+				var settings = Settings.Providers.Data.IGDB.instance;
 
 				var grid = new Gtk.Grid();
 				grid.column_spacing = 12;

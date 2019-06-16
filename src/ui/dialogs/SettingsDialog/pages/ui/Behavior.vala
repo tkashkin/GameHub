@@ -37,22 +37,17 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 		construct
 		{
-			var ui = Settings.UI.get_instance();
+			var settings = Settings.UI.Behavior.instance;
 
-			add_switch(_("Run games with double click"), ui.grid_doubleclick, v => { ui.grid_doubleclick = v; });
-
-			add_separator();
-
-			add_switch(_("Merge games from different sources"), ui.merge_games, v => { ui.merge_games = v; request_restart(); });
+			add_switch(_("Run games with double click"), settings.grid_doubleclick, v => { settings.grid_doubleclick = v; });
 
 			add_separator();
 
-			add_switch(_("Show non-native games"), ui.show_unsupported_games, v => { ui.show_unsupported_games = v; });
-			add_switch(_("Use compatibility layers and consider Windows games compatible"), ui.use_compat, v => { ui.use_compat = v; });
+			add_switch(_("Merge games from different sources"), settings.merge_games, v => { settings.merge_games = v; request_restart(); });
 
 			add_separator();
 
-			add_switch(_("Use imported tags"), ui.use_imported_tags, v => { ui.use_imported_tags = v; });
+			add_switch(_("Use imported tags"), settings.import_tags, v => { settings.import_tags = v; });
 		}
 	}
 }

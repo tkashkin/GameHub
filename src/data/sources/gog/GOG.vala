@@ -38,8 +38,8 @@ namespace GameHub.Data.Sources.GOG
 
 		public override bool enabled
 		{
-			get { return Settings.Auth.GOG.get_instance().enabled; }
-			set { Settings.Auth.GOG.get_instance().enabled = value; }
+			get { return settings.enabled; }
+			set { settings.enabled = value; }
 		}
 
 		public string? user_id { get; protected set; }
@@ -56,7 +56,7 @@ namespace GameHub.Data.Sources.GOG
 		{
 			instance = this;
 
-			settings = Settings.Auth.GOG.get_instance();
+			settings = Settings.Auth.GOG.instance;
 			var access_token = settings.access_token;
 			var refresh_token = settings.refresh_token;
 			if(access_token.length > 0 && refresh_token.length > 0)
@@ -275,7 +275,7 @@ namespace GameHub.Data.Sources.GOG
 								g.last_launch = int64.max(g.last_launch, s.last_launch);
 								g.playtime_source = s.playtime;
 							}
-							if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
+							if(!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(g))
 							{
 								_games.add(g);
 								if(game_loaded != null)
@@ -341,7 +341,7 @@ namespace GameHub.Data.Sources.GOG
 								game.last_launch = int64.max(game.last_launch, s.last_launch);
 								game.playtime_source = s.playtime;
 							}
-							if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game))
+							if(!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(game))
 							{
 								_games.add(game);
 								if(game_loaded != null)

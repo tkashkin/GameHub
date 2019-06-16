@@ -50,7 +50,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				dialog: dlg,
 				header: _("General"),
 				title: _("Collection"),
-				description: "",
+				description: _("Empty"),
 				icon_name: "folder-download"
 			);
 			status = description;
@@ -58,9 +58,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 		construct
 		{
-			collection = FSUtils.Paths.Collection.get_instance();
-			gog = FSUtils.Paths.Collection.GOG.get_instance();
-			humble = FSUtils.Paths.Collection.Humble.get_instance();
+			collection = FSUtils.Paths.Collection.instance;
+			gog = FSUtils.Paths.Collection.GOG.instance;
+			humble = FSUtils.Paths.Collection.Humble.instance;
 
 			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update(); }).get_children().last().data as FileChooserEntry;
 

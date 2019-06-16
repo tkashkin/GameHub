@@ -40,10 +40,11 @@ namespace GameHub.UI.Views.GamesView
 		construct
 		{
 			var run = new Gtk.MenuItem.with_label(_("Run"));
+			run.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
 			run.activate.connect(() => game.run.begin());
 
 			var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
-			run_with_compat.sensitive = Settings.UI.get_instance().use_compat;
+			run_with_compat.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
 			run_with_compat.activate.connect(() => game.run_with_compat.begin(true));
 
 			var install = new Gtk.MenuItem.with_label(_("Install"));
@@ -227,8 +228,9 @@ namespace GameHub.UI.Views.GamesView
 
 		private void add_merged_game_submenu(Game g)
 		{
-			var item = new Gtk.MenuItem.with_label("[%s] %s".printf(g.source.name, g.name));
-			item.get_style_context().add_class("menuitem-game-action");
+			var item = new Gtk.MenuItem.with_label("""<span weight="600" size="smaller">%s</span>%s""".printf(g.source.name, "\n" + g.name.replace("&amp;", "&").replace("&", "&amp;")));
+			((Label) item.get_child()).use_markup = true;
+			item.get_style_context().add_class("menuitem-merged-game");
 			item.submenu = new GameContextMenu(g, null, true);
 			add(item);
 		}

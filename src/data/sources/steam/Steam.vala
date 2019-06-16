@@ -51,8 +51,8 @@ namespace GameHub.Data.Sources.Steam
 
 		public override bool enabled
 		{
-			get { return Settings.Auth.Steam.get_instance().enabled; }
-			set { Settings.Auth.Steam.get_instance().enabled = value; }
+			get { return Settings.Auth.Steam.instance.enabled; }
+			set { Settings.Auth.Steam.instance.enabled = value; }
 		}
 
 		public string? user_id { get; protected set; }
@@ -127,7 +127,7 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async bool authenticate()
 		{
-			Settings.Auth.Steam.get_instance().authenticated = true;
+			Settings.Auth.Steam.instance.authenticated = true;
 
 			if(is_authenticated()) return true;
 
@@ -194,7 +194,7 @@ namespace GameHub.Data.Sources.Steam
 
 		public override bool can_authenticate_automatically()
 		{
-			return Settings.Auth.Steam.get_instance().authenticated && is_authenticated_in_steam_client;
+			return Settings.Auth.Steam.instance.authenticated && is_authenticated_in_steam_client;
 		}
 
 		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
@@ -203,7 +203,7 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async ArrayList<Game> load_games(Utils.FutureResult2<Game, bool>? game_loaded=null, Utils.Future? cache_loaded=null)
 		{
-			api_key = Settings.Auth.Steam.get_instance().api_key;
+			api_key = Settings.Auth.Steam.instance.api_key;
 
 			if(!is_authenticated() || _games.size > 0)
 			{
@@ -219,7 +219,7 @@ namespace GameHub.Data.Sources.Steam
 				{
 					foreach(var g in cached)
 					{
-						if(!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(g))
+						if(!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(g))
 						{
 							_games.add(g);
 							if(game_loaded != null)
@@ -263,7 +263,7 @@ namespace GameHub.Data.Sources.Steam
 				{
 					var game = new SteamGame(this, g);
 					bool is_new_game = !_games.contains(game);
-					if(is_new_game && (!Settings.UI.get_instance().merge_games || !Tables.Merges.is_game_merged(game)))
+					if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(game)))
 					{
 						_games.add(game);
 						if(game_loaded != null)

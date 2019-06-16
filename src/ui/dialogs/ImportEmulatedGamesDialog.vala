@@ -329,7 +329,7 @@ namespace GameHub.UI.Dialogs
 				return;
 			}
 
-			var core_info_dir = FSUtils.file(FSUtils.Paths.Settings.get_instance().libretro_core_info_dir);
+			var core_info_dir = FSUtils.file(FSUtils.Paths.Settings.instance.libretro_core_info_dir);
 
 			if(core_info_dir == null || !core_info_dir.query_exists())
 			{
