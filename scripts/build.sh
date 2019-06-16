@@ -23,6 +23,7 @@ _GPG_PACKAGE="gnupg1"
 
 export CFLAGS="$CFLAGS -O0"
 export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
+export DEBIAN_FRONTEND="noninteractive"
 
 if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_DEB_TARGET_DISTRO_NAMES=("xenial")
