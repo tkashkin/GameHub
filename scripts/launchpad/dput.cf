@@ -25,3 +25,10 @@ method = ftp
 incoming = ~tkashkin/ubuntu/gamehub/disco
 login = anonymous
 allow_unsigned_uploads = 1
+
+[gamehub_eoan]
+fqdn = ppa.launchpad.net
+method = ftp
+incoming = ~tkashkin/ubuntu/gamehub/eoan
+login = anonymous
+allow_unsigned_uploads = 1
