@@ -29,12 +29,12 @@ namespace GameHub.UI.Views.GamesView
 	public class GameContextMenu: Gtk.Menu
 	{
 		public Game game { get; construct; }
+		public Widget? target { get; construct; default = null; }
+		public bool is_merge_submenu { private get; construct; default = false; }
 
-		public Widget target { get; construct; }
-
-		public GameContextMenu(Game game, Widget target)
+		public GameContextMenu(Game game, Widget? target=null, bool is_merge_submenu=false)
 		{
-			Object(game: game, target: target);
+			Object(game: game, target: target, is_merge_submenu: is_merge_submenu);
 		}
 
 		construct
@@ -107,6 +107,28 @@ namespace GameHub.UI.Views.GamesView
 
 			if(!(game is Sources.GOG.GOGGame.DLC))
 			{
+				if(!is_merge_submenu)
+				{
+					var merges = DB.Tables.Merges.get(game);
+					var primary = DB.Tables.Merges.get_primary(game);
+					if(primary != null || (merges != null && merges.size > 0))
+					{
+						add(new Gtk.SeparatorMenuItem());
+						if(primary != null)
+						{
+							add_merged_game_submenu(primary);
+						}
+						if(merges != null)
+						{
+							foreach(var g in merges)
+							{
+								if(g == game) continue;
+								add_merged_game_submenu(g);
+							}
+						}
+					}
+				}
+
 				add(new Gtk.SeparatorMenuItem());
 				add(favorite);
 				add(hidden);
@@ -201,6 +223,14 @@ namespace GameHub.UI.Views.GamesView
 					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
 				}
 			}
+		}
+
+		private void add_merged_game_submenu(Game g)
+		{
+			var item = new Gtk.MenuItem.with_label("[%s] %s".printf(g.source.name, g.name));
+			item.get_style_context().add_class("menuitem-game-action");
+			item.submenu = new GameContextMenu(g, null, true);
+			add(item);
 		}
 	}
 }

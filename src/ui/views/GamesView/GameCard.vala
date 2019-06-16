@@ -277,7 +277,7 @@ namespace GameHub.UI.Views.GamesView
 		private void update(Game? vg)
 		{
 			_visible_game = vg;
-			
+
 			Idle.add(() => {
 				label.label = game.name;
 				src_icon.icon_name = game.source.icon;
@@ -299,8 +299,30 @@ namespace GameHub.UI.Views.GamesView
 				}
 				src_icons.show_all();
 
-				platform_icons.foreach(w => platform_icons.remove(w));
+				platform_icons.foreach(w => w.destroy());
+				Platform[] platforms = {};
 				foreach(var p in game.platforms)
+				{
+					if(!(p in platforms))
+					{
+						platforms += p;
+					}
+				}
+				if(adapter.filter_source == null && merges != null && merges.size > 0)
+				{
+					foreach(var g in merges)
+					{
+						if(g == game) continue;
+						foreach(var p in g.platforms)
+						{
+							if(!(p in platforms))
+							{
+								platforms += p;
+							}
+						}
+					}
+				}
+				foreach(var p in platforms)
 				{
 					var icon = new Image();
 					icon.icon_name = p.icon();
