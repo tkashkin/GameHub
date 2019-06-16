@@ -253,7 +253,8 @@ namespace GameHub.Data.Adapters
 			if(filter_settings_merge)
 			{
 				merges = Tables.Merges.get(game);
-				if(!same_src && merges != null && merges.size > 0)
+				var primary = Tables.Merges.get_primary(game);
+				if(merges != null && merges.size > 0)
 				{
 					foreach(var g in merges)
 					{
@@ -270,6 +271,13 @@ namespace GameHub.Data.Adapters
 								if(!(p in platforms)) platforms += p;
 							}
 						}
+					}
+				}
+				if(primary != null && filter_platform != SavedState.GamesView.PlatformFilter.ALL && filter_source == null)
+				{
+					foreach(var p in primary.platforms)
+					{
+						if(!(p in platforms)) platforms += p;
 					}
 				}
 			}
