@@ -176,27 +176,26 @@ namespace GameHub.UI.Dialogs
 			images_overlay.add_overlay(actions);
 			images_overlay.add_overlay(icon_view);
 
+			var images_download_btn = new MenuButton();
+			images_download_btn.get_style_context().add_class("images-download-button");
+			images_download_btn.margin = 8;
+			images_download_btn.halign = Align.END;
+			images_download_btn.valign = Align.START;
+			images_download_btn.image = new Image.from_icon_name("folder-download-symbolic", IconSize.BUTTON);
+			images_download_btn.tooltip_text = _("Download images");
+
+			images_overlay.add_overlay(images_download_btn);
+
 			images_card.add(images_overlay);
 			properties_box.add(images_card);
 
 			image_entry = add_image_entry(_("Image URL"), "image-x-generic");
 			image_entry.hexpand = true;
-			image_entry.margin = 0;
-
-			var images_download_btn = new MenuButton();
-			images_download_btn.image = new Image.from_icon_name("folder-download-symbolic", IconSize.BUTTON);
-			images_download_btn.tooltip_text = _("Download images");
+			image_entry.margin = 4;
 
 			var images_download_popover = new ImagesDownloadPopover(game, image_entry, images_download_btn);
 
-			var image_entry_hbox = new Box(Orientation.HORIZONTAL, 0);
-			image_entry_hbox.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
-			image_entry_hbox.margin = 4;
-
-			image_entry_hbox.add(image_entry);
-			image_entry_hbox.add(images_download_btn);
-
-			properties_box.add(image_entry_hbox);
+			properties_box.add(image_entry);
 
 			icon_entry = add_image_entry(_("Icon URL"), "image-x-generic-symbolic");
 			icon_entry.margin_top = 0;

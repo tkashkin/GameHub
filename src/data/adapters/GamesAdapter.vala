@@ -34,7 +34,7 @@ namespace GameHub.Data.Adapters
 		public bool filter_settings_use_compat = true;
 		public bool filter_settings_merge = true;
 
-		public GameSource? filter_source = null;
+		public GameSource? filter_source { get; set; default = null; }
 		public ArrayList<Tables.Tags.Tag> filter_tags;
 		public Settings.SortMode sort_mode = Settings.SortMode.NAME;
 		public string filter_search_query = "";
@@ -149,7 +149,7 @@ namespace GameHub.Data.Adapters
 		public void add(Game game, bool is_cached=false)
 		{
 			games.add(game);
-			var holder = new ViewHolder(game);
+			var holder = new ViewHolder(game, this);
 			lock(view_cache)
 			{
 				view_cache.set(game, holder);
@@ -488,13 +488,15 @@ namespace GameHub.Data.Adapters
 
 		private class ViewHolder
 		{
+			public GamesAdapter adapter;
 			public Game game;
 			public GameCard grid_card;
 			public GameListRow list_row;
 			public bool is_added;
 
-			public ViewHolder(Game game)
+			public ViewHolder(Game game, GamesAdapter adapter)
 			{
+				this.adapter = adapter;
 				this.game = game;
 				is_added = false;
 
@@ -509,8 +511,8 @@ namespace GameHub.Data.Adapters
 
 			public void init_views()
 			{
-				grid_card = new GameCard(game);
-				list_row = new GameListRow(game);
+				grid_card = new GameCard(game, adapter);
+				list_row = new GameListRow(game, adapter);
 			}
 
 			public void destroy()
