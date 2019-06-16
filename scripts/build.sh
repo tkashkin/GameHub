@@ -23,7 +23,6 @@ _GPG_PACKAGE="gnupg1"
 
 export CFLAGS="$CFLAGS -O0"
 export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
-export DEBIAN_FRONTEND="noninteractive"
 
 if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_DEB_TARGET_DISTRO_NAMES=("xenial")
@@ -32,8 +31,8 @@ if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_GPG_BINARY="gpg"
 	_GPG_PACKAGE="gnupg"
 elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
-	_DEB_TARGET_DISTRO_NAMES=("bionic" "cosmic" "disco")
-	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "18.10" "19.04")
+	_DEB_TARGET_DISTRO_NAMES=("bionic" "cosmic" "disco" "eoan")
+	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "18.10" "19.04" "19.10")
 	_BUILD_IMAGE="bionic"
 else
 	source "/etc/os-release"
@@ -98,17 +97,17 @@ deps()
 {
 	set +e
 	echo "[scripts/build.sh] Installing dependencies"
-	sudo add-apt-repository ppa:elementary-os/stable -y
-	sudo add-apt-repository ppa:elementary-os/os-patches -y
-	sudo add-apt-repository ppa:elementary-os/daily -y
-	sudo add-apt-repository ppa:vala-team/next -y
-	sudo apt update -qq
-	sudo apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
+	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:elementary-os/stable -y
+	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:elementary-os/os-patches -y
+	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:elementary-os/daily -y
+	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:vala-team/next -y
+	sudo DEBIAN_FRONTEND="noninteractive" apt update -qq
+	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
 	#sudo apt full-upgrade -y
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
-		sudo dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
+		sudo DEBIAN_FRONTEND="noninteractive" dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
 	else
-		sudo apt install -y libmanette-0.2-dev libxtst-dev libx11-dev
+		sudo DEBIAN_FRONTEND="noninteractive" apt install -y libmanette-0.2-dev libxtst-dev libx11-dev
 	fi
 }
 
@@ -322,7 +321,7 @@ build_flatpak()
 	mkdir -p "$_ROOT/build/flatpak"
 	cd "$_ROOT/flatpak"
 	echo "[scripts/build.sh] Installing flatpak"
-	sudo apt install -y flatpak flatpak-builder
+	sudo DEBIAN_FRONTEND="noninteractive" apt install -y flatpak flatpak-builder
 	flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	sed "s/\$BRANCH/$_GH_BRANCH/g; s/\$COMMIT_SHORT/$_GH_COMMIT_SHORT/g; s/\$COMMIT/$_GH_COMMIT/g" "$_GH_RDNN.json.in" > "$_GH_RDNN.json"
 	echo "[scripts/build.sh] Autoinstalling dependencies"

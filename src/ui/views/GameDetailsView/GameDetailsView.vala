@@ -216,7 +216,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			var page = new GameDetailsPage(g, this);
 			page.content.margin = content_margin;
-			stack.add_titled(page, g.full_id, @"$(g.source.name): $(g.name)");
+			stack.add_titled(page, g.full_id, @"[$(g.source.name)] $(g.name)");
 		}
 	}
 }

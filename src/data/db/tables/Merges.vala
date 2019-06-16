@@ -188,6 +188,46 @@ namespace GameHub.Data.DB.Tables
 			return null;
 		}
 
+		public static Game? get_primary(Game game)
+		{
+			unowned Sqlite.Database? db = Database.instance.db;
+			if(db == null) return null;
+
+			Statement s;
+
+			int res = db.prepare_v2("SELECT * FROM `merges` WHERE `merge` LIKE ? OR `merge` LIKE ? LIMIT 1", -1, out s);
+
+			if(res != Sqlite.OK)
+			{
+				warning("[Database.Merges.is_game_merged] Can't prepare SELECT query (%d): %s", db.errcode(), db.errmsg());
+				return null;
+			}
+
+			s.bind_text(1, @"%|$(game.full_id)|%");
+			s.bind_text(2, @"%|$(game.full_id)");
+
+			if((res = s.step()) == Sqlite.ROW)
+			{
+				var merge = s.column_text(0);
+
+				if(merge != null)
+				{
+					foreach(var gameid in merge.split("|"))
+					{
+						var gparts = gameid.split(":");
+						var gsrc = gparts[0];
+						var gid = gparts[1];
+
+						if(gsrc == null || gid == null) continue;
+
+						return Games.get(gsrc, gid);
+					}
+				}
+			}
+
+			return null;
+		}
+
 		public static bool is_game_merged(Game game)
 		{
 			unowned Sqlite.Database? db = Database.instance.db;
