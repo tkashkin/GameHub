@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-17 01:01+0300\n"
-"PO-Revision-Date: 2019-06-15 15:57+0000\n"
+"PO-Revision-Date: 2019-06-17 21:51+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -442,9 +442,8 @@ msgstr "Standaard API-sleutel herstellen"
 
 #: src/data/providers/images/SteamGridDB.vala:126
 #: src/data/providers/data/IGDB.vala:350
-#, fuzzy
 msgid "API key"
-msgstr "Steam API-sleutel"
+msgstr "API-sleutel"
 
 #: src/data/providers/images/SteamGridDB.vala:134
 #: src/data/providers/data/IGDB.vala:358
@@ -489,31 +488,29 @@ msgid "No logo"
 msgstr "Zonder logo"
 
 #: src/data/providers/data/IGDB.vala:258
-#, fuzzy
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr "Website openen"
+msgstr "Officiële website"
 
 #: src/data/providers/data/IGDB.vala:370
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr ""
+msgstr "Spelomschrijving tonen (inden beschikbaar)"
 
 #: src/data/providers/data/IGDB.vala:377
-#, fuzzy
 msgctxt "igdb_preferred_description"
 msgid "of game"
-msgstr "Geen spellen"
+msgstr "van spel"
 
 #: src/data/providers/data/IGDB.vala:378
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr ""
+msgstr "van IGDB"
 
 #: src/data/providers/data/IGDB.vala:379
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "beide"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
@@ -551,23 +548,22 @@ msgstr "Donker thema"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr ""
+msgstr "Op basis van thema"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:49
-#, fuzzy
 msgctxt "icon_style"
 msgid "Symbolic"
-msgstr "Symbolische pictogrammen"
+msgstr "Symbolisch"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:50
 msgctxt "icon_style"
 msgid "Colored"
-msgstr ""
+msgstr "Met kleur"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "Pictogramstijl"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:63
 msgid "Compact list"
@@ -607,7 +603,7 @@ msgstr "Verzameling"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
 msgid "Empty"
-msgstr ""
+msgstr "Leeg"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
@@ -1250,14 +1246,12 @@ msgid "Cancel download"
 msgstr "Downloaden annuleren"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:72
-#, fuzzy
 msgid "Sort"
-msgstr "Sortering:"
+msgstr "Sorteren"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:306
-#, fuzzy
 msgid "All platforms"
-msgstr "Platformen"
+msgstr "Alle platformen"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Select game executable"
