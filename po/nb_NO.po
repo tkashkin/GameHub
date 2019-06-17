@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-17 01:01+0300\n"
-"PO-Revision-Date: 2019-06-15 15:57+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2019-06-17 21:51+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -497,7 +497,7 @@ msgstr "Åpne nettside"
 #: src/data/providers/data/IGDB.vala:370
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr ""
+msgstr "Vis beskrivelse når spillet har det"
 
 #: src/data/providers/data/IGDB.vala:377
 #, fuzzy
@@ -508,12 +508,12 @@ msgstr "Ingen spill"
 #: src/data/providers/data/IGDB.vala:378
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr ""
+msgstr "fra IGDB"
 
 #: src/data/providers/data/IGDB.vala:379
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "begge"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
@@ -550,7 +550,7 @@ msgstr "Mørk drakt"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr ""
+msgstr "Drakt-basert"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:49
 #, fuzzy
@@ -561,12 +561,12 @@ msgstr "Symbolske ikoner"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:50
 msgctxt "icon_style"
 msgid "Colored"
-msgstr ""
+msgstr "Farget"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "Ikonstil"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:63
 msgid "Compact list"
@@ -606,7 +606,7 @@ msgstr "Samling"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
 msgid "Empty"
-msgstr ""
+msgstr "Tom"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
