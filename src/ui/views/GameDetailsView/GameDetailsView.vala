@@ -59,7 +59,7 @@ namespace GameHub.UI.Views.GameDetailsView
 		private Stack stack;
 
 		private Button back_button;
-		private StackSwitcher stack_switcher;
+		private ExtendedStackSwitcher stack_tabs;
 
 		private Revealer actions;
 
@@ -71,18 +71,18 @@ namespace GameHub.UI.Views.GameDetailsView
 			stack.transition_type = StackTransitionType.SLIDE_LEFT_RIGHT;
 			stack.expand = true;
 
-			stack_switcher = new StackSwitcher();
-			stack_switcher.valign = Align.CENTER;
-			stack_switcher.halign = Align.CENTER;
-			stack_switcher.expand = false;
-			stack_switcher.visible = false;
-			stack_switcher.stack = stack;
+			stack_tabs = new ExtendedStackSwitcher(stack);
+			stack_tabs.valign = Align.CENTER;
+			stack_tabs.halign = Align.CENTER;
+			stack_tabs.expand = false;
+			stack_tabs.visible = false;
 
 			back_button = new Button.with_label("");
 			back_button.tooltip_text = _("Back");
 			back_button.valign = Align.CENTER;
 			back_button.expand = false;
 			back_button.visible = false;
+			back_button.margin_top = back_button.margin_bottom = 6;
 			back_button.get_style_context().add_class(Granite.STYLE_CLASS_BACK_BUTTON);
 
 			back_button.clicked.connect(() => {
@@ -103,7 +103,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			var actionbar = new ActionBar();
 			actionbar.get_style_context().add_class("gameinfo-toolbar");
 			actionbar.pack_start(back_button);
-			actionbar.set_center_widget(stack_switcher);
+			actionbar.set_center_widget(stack_tabs);
 
 			actions.add(actionbar);
 
@@ -163,7 +163,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void update()
 		{
-			stack.foreach(p => stack.remove(p));
+			stack_tabs.clear();
 
 			back_button.visible = false;
 			if(navigation.size > 1)
@@ -176,10 +176,16 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(g == null) return;
 
+			var primary = Settings.UI.Behavior.instance.merge_games ? Tables.Merges.get_primary(game) : null;
 			var merges = Settings.UI.Behavior.instance.merge_games ? Tables.Merges.get(game) : null;
 			bool merged = merges != null && merges.size > 0;
 
-			stack_switcher.visible = merged;
+			stack_tabs.visible = merged || primary != null;
+
+			if(primary != null)
+			{
+				add_page(primary);
+			}
 
 			add_page(g);
 
@@ -198,9 +204,9 @@ namespace GameHub.UI.Views.GameDetailsView
 				}
 			}
 
-			stack_switcher.visible = stack.get_children().length() > 1;
+			stack_tabs.visible = stack.get_children().length() > 1;
 
-			actions.reveal_child = back_button.visible || stack_switcher.visible;
+			actions.reveal_child = back_button.visible || stack_tabs.visible;
 
 			stack.show_all();
 
@@ -214,9 +220,11 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			if(stack.get_child_by_name(g.full_id) != null) return;
 
+			var label = """<span weight="600" size="smaller">%s</span>%s""".printf(g.source.name, "\n" + g.name.replace("&amp;", "&").replace("&", "&amp;"));
+
 			var page = new GameDetailsPage(g, this);
 			page.content.margin = content_margin;
-			stack.add_titled(page, g.full_id, @"[$(g.source.name)] $(g.name)");
+			stack_tabs.add_tab(page, g.full_id, label, true, g.source.icon);
 		}
 	}
 }

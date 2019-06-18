@@ -280,34 +280,14 @@ list:not(:backdrop) row:selected:focus label.category-label
 	border-bottom: 1px alpha(#333, 0.3) solid;
 }
 
-.gameinfo-background, .gameinfo-background :not(.igdb-data-container-scrollable-value) > viewport
-{
-	background-color: rgb(245, 245, 245);
-	color: rgb(66, 66, 66);
-}
-.gameinfo-background.dark, .gameinfo-background.dark :not(.igdb-data-container-scrollable-value) > viewport
-{
-	background-color: rgb(59, 63, 69);
-	color: white;
-}
-
 .gameinfo-background :not(.igdb-data-container-scrollable-value) > undershoot.left
 {
-	background: linear-gradient(to left, alpha(rgb(245, 245, 245), 0) 50%, rgb(245, 245, 245));
+	background: linear-gradient(to left, alpha(@theme_bg_color, 0) 50%, @theme_bg_color);
 }
 .gameinfo-background :not(.igdb-data-container-scrollable-value) > undershoot.right
 {
-	background: linear-gradient(to right, alpha(rgb(245, 245, 245), 0) 50%, rgb(245, 245, 245));
+	background: linear-gradient(to right, alpha(@theme_bg_color, 0) 50%, @theme_bg_color);
 }
-.gameinfo-background.dark :not(.igdb-data-container-scrollable-value) > undershoot.left
-{
-	background: linear-gradient(to left, alpha(rgb(59, 63, 69), 0) 50%, rgb(59, 63, 69));
-}
-.gameinfo-background.dark :not(.igdb-data-container-scrollable-value) > undershoot.right
-{
-	background: linear-gradient(to right, alpha(rgb(59, 63, 69), 0) 50%, rgb(59, 63, 69));
-}
-
 .dl-progress-type-icon
 {
 	padding: 4px;
@@ -368,12 +348,12 @@ list.gameinfo-content-list row:hover
 .gameinfo-toolbar
 {
 	border: none;
-	border-bottom: 1px alpha(#333, 0.3) solid;
+	border-bottom: 1px shade(@theme_bg_color, 0.7) solid;
 	box-shadow: none;
 	border-radius: 0;
-	padding: 8px 16px;
+	padding: 2px 16px;
 	margin: 0;
-	background: alpha(#333, 0.1);
+	background: shade(@theme_bg_color, 0.95);
 }
 
 .gameinfo-toolbar revealer, .gameinfo-toolbar box
@@ -572,31 +552,17 @@ dialog .sidebar list
 
 .igdb-data-container
 {
-	background: alpha(#333, 0.05);
+	background: shade(@theme_bg_color, 0.95);
 	border-radius: 4px;
-	border: 1px alpha(#333, 0.3) solid;
-}
-.dark .igdb-data-container
-{
-	background: alpha(#333, 0.4);
-	border: 1px alpha(#333, 0.8) solid;
+	border: 1px shade(@theme_bg_color, 0.7) solid;
 }
 
 .flat-list .list-row:not(:last-child), .flat-list row:not(:last-child)
 {
-	border-bottom: 1px alpha(#333, 0.3) solid;
-}
-
-.dark .flat-list .list-row:not(:last-child), .dark .flat-list row:not(:last-child)
-{
-	border-bottom: 1px alpha(#333, 0.8) solid;
+	border-bottom: 1px shade(@theme_bg_color, 0.7) solid;
 }
 
 .provider-settings
 {
-	background: alpha(#333, 0.05);
-}
-.dark .provider-settings
-{
-	background: alpha(#333, 0.4);
+	background: alpha(shade(@theme_bg_color, 0.95), 0.5);
 }

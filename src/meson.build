@@ -135,6 +135,7 @@ sources = [
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
 	'ui/widgets/FileChooserEntry.vala',
+	'ui/widgets/ExtendedStackSwitcher.vala',
 	'ui/widgets/ImagesDownloadPopover.vala',
 	'ui/widgets/CompatToolOptions.vala',
 	'ui/widgets/CompatToolPicker.vala',

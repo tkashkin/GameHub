@@ -32,9 +32,10 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		private Granite.HeaderLabel description_header;
 		private WebView description;
 
-		private const string CSS_LIGHT    = "background: rgb(245, 245, 245); color: rgb(66, 66, 66)";
-		private const string CSS_DARK     = "background: rgb(59, 63, 69); color: white";
+		private const string CSS          = "body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; %s} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%; display: block;}";
+		private const string CSS_COLORS   = "background: %s; color: %s;";
 		private const string WRAPPER_HTML = "<html><body><div id=\"description\">%s</div><script>setInterval(function(){document.title = -1; document.title = document.getElementById('description').offsetHeight;},250);</script></body></html>";
+		private string? current_colors;
 
 		public Description(Game game, bool is_dialog)
 		{
@@ -52,19 +53,17 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			description_header.margin_start = description_header.margin_end = 7;
 			description_header.get_style_context().add_class("description-header");
 
+			get_style_context().add_class(Gtk.STYLE_CLASS_BACKGROUND);
+
 			description = new WebView();
 			description.hexpand = true;
 			description.vexpand = false;
 			description.sensitive = false;
 			description.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
 
-			var ui_settings = GameHub.Settings.UI.Appearance.instance;
-			ui_settings.notify["dark-theme"].connect(() => {
-				description.user_content_manager.remove_all_style_sheets();
-				var style = ui_settings.dark_theme ? CSS_DARK : CSS_LIGHT;
-				description.user_content_manager.add_style_sheet(new UserStyleSheet(@"body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; $(style)} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%; display: block;}", UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
-			});
-			ui_settings.notify_property("dark-theme");
+			update_colors();
+			state_flags_changed.connect(() => update_colors());
+			GameHub.Settings.UI.Appearance.instance.notify["dark-theme"].connect(() => update_colors());
 
 			description.set_size_request(-1, -1);
 			var desc = WRAPPER_HTML.printf(game.description);
@@ -77,6 +76,17 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			add(description_header);
 			add(description);
+		}
+
+		private void update_colors()
+		{
+			var colors = CSS_COLORS.printf(get_style_context().get_background_color(get_state_flags()).to_string(), get_style_context().get_color(get_state_flags()).to_string());
+			if(colors != current_colors)
+			{
+				description.user_content_manager.remove_all_style_sheets();
+				description.user_content_manager.add_style_sheet(new UserStyleSheet(CSS.printf(colors), UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
+				current_colors = colors;
+			}
 		}
 
 		public override bool supports_game { get { return game.description != null; } }

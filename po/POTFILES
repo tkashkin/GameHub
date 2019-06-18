@@ -80,6 +80,7 @@ src/ui/views/GameDetailsView/blocks/IGDBInfo.vala
 src/ui/widgets/AutoSizeImage.vala
 src/ui/widgets/ActionButton.vala
 src/ui/widgets/FileChooserEntry.vala
+src/ui/widgets/ExtendedStackSwitcher.vala
 src/ui/widgets/ImagesDownloadPopover.vala
 src/ui/widgets/CompatToolOptions.vala
 src/ui/widgets/CompatToolPicker.vala
