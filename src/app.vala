@@ -38,6 +38,7 @@ namespace GameHub
 		public static bool log_auth = false;
 		public static bool log_downloader = false;
 		public static bool log_workers = false;
+		public static bool log_no_filters = false;
 		public static bool log_verbose = false;
 
 		private static bool opt_help = false;
@@ -112,6 +113,7 @@ namespace GameHub
 			{ "log-auth", 0, 0, OptionArg.NONE, out log_auth, N_("Log authentication process and sensitive information like authentication tokens"), null },
 			{ "log-downloader", 0, 0, OptionArg.NONE, out log_downloader, N_("Log download manager"), null },
 			{ "log-workers", 0, 0, OptionArg.NONE, out log_workers, N_("Log background workers start/stop"), null },
+			{ "log-no-filters", 0, 0, OptionArg.NONE, out log_no_filters, N_("Disable log messages filtering"), null },
 			{ "verbose", 0, 0, OptionArg.NONE, out log_verbose, N_("Verbose logging"), null },
 			{ null }
 		};

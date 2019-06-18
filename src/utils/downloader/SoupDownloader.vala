@@ -46,7 +46,10 @@ namespace GameHub.Utils.Downloader.Soup
 
 		public override Download? get_download(File remote)
 		{
-			return downloads.get(remote.get_uri());
+			lock(downloads)
+			{
+				return downloads.get(remote.get_uri());
+			}
 		}
 
 		public override async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true, bool queue=true) throws Error
@@ -54,7 +57,7 @@ namespace GameHub.Utils.Downloader.Soup
 			if(remote == null || remote.get_uri() == null || remote.get_uri().length == 0) return null;
 
 			var uri = remote.get_uri();
-			SoupDownload download = downloads.get(uri);
+			SoupDownload? download = (SoupDownload?) get_download(remote);
 
 			if(download != null) return yield await_download(download);
 
@@ -71,14 +74,23 @@ namespace GameHub.Utils.Downloader.Soup
 
 			download = new SoupDownload(remote, local, tmp);
 			download.session = session;
-			downloads.set(uri, download);
+
+			lock(downloads)
+			{
+				downloads.set(uri, download);
+			}
 
 			download_started(download);
 
 			if(info != null)
 			{
 				info.download = download;
-				dl_info.set(uri, info);
+
+				lock(dl_info)
+				{
+					dl_info.set(uri, info);
+				}
+
 				dl_started(info);
 			}
 
@@ -112,9 +124,9 @@ namespace GameHub.Utils.Downloader.Soup
 			}
 			finally
 			{
-				downloads.remove(uri);
-				dl_info.remove(uri);
-				dl_queue.remove(uri);
+				lock(downloads) downloads.remove(uri);
+				lock(dl_info)   dl_info.remove(uri);
+				lock(dl_queue)  dl_queue.remove(uri);
 			}
 
 			if(download.local_tmp.query_exists())
@@ -357,18 +369,20 @@ namespace GameHub.Utils.Downloader.Soup
 
 		private async void await_queue(SoupDownload download)
 		{
-			if(download.remote.get_uri() in dl_queue) return;
-
-			dl_queue.add(download.remote.get_uri());
+			lock(dl_queue)
+			{
+				if(download.remote.get_uri() in dl_queue) return;
+				dl_queue.add(download.remote.get_uri());
+			}
 
 			var downloaded_id = downloaded.connect((downloader, downloaded) => {
-				dl_queue.remove(downloaded.remote.get_uri());
+				lock(dl_queue) dl_queue.remove(downloaded.remote.get_uri());
 			});
 			var download_cancelled_id = download_cancelled.connect((downloader, cancelled_download, error) => {
-				dl_queue.remove(cancelled_download.remote.get_uri());
+				lock(dl_queue) dl_queue.remove(cancelled_download.remote.get_uri());
 			});
 			var download_failed_id = download_failed.connect((downloader, failed_download, error) => {
-				dl_queue.remove(failed_download.remote.get_uri());
+				lock(dl_queue) dl_queue.remove(failed_download.remote.get_uri());
 			});
 
 			while(dl_queue.peek() != null && dl_queue.peek() != download.remote.get_uri() && !download.is_cancelled)
