@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-17 01:01+0300\n"
+"POT-Creation-Date: 2019-06-18 05:37+0300\n"
 "PO-Revision-Date: 2019-06-08 23:29+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
@@ -22,63 +22,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.7-dev\n"
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Show help"
 msgstr "Hilfe anzeigen"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show application version and exit"
 msgstr "Anwendungsversion anzeigen und beenden"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Restart with GDB debugger attached"
 msgstr "Neustart mit verbundenem GDB-Debugger"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Show full GDB backtrace"
 msgstr "Vollständige GDB-Backtrace anzeigen"
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Schwerwiegende Fehler als kritisch und Crash-Anwendung behandeln"
 
-#: src/app.vala:97
+#: src/app.vala:98
 msgid "Show main window"
 msgstr "Hauptfenster anzeigen"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show application settings dialog"
 msgstr "Dialogfeld für Anwendungseinstellungen anzeigen"
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Show about dialog"
 msgstr "Infodialog anzeigen"
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Maximum number of background worker threads"
 msgstr "Maximale Anzahl von Hintergrund-Worker-Threads"
 
-#: src/app.vala:104
+#: src/app.vala:105
 msgid "Run game"
 msgstr "Spiel starten"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Show compatibility options dialog"
 msgstr "Kompatibilitätsoptionen-Dialog anzeigen"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Open game details"
 msgstr "Spieldetails öffnen"
 
-#: src/app.vala:107
+#: src/app.vala:108
 msgid "Open game properties"
 msgstr "Spieleigenschaften öffnen"
 
-#: src/app.vala:111
+#: src/app.vala:112
 msgid "Enable debug logging"
 msgstr "Debug-Protokollierung aktivieren"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -86,31 +86,35 @@ msgstr ""
 "Den Authentifizierungsprozess und sensible Informationen wie "
 "Authentifizierungstoken protokollieren"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid "Log download manager"
 msgstr "Download-Manager protokollieren"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log background workers start/stop"
 msgstr "Start/Stopp von Hintergrund-Workern protokollieren"
 
-#: src/app.vala:115
+#: src/app.vala:116
+msgid "Disable log messages filtering"
+msgstr ""
+
+#: src/app.vala:117
 msgid "Verbose logging"
 msgstr "Ausführliche Protokollierung"
 
-#: src/app.vala:242
+#: src/app.vala:244
 msgid "Game Options:"
 msgstr "Spieloptionen:"
 
-#: src/app.vala:242
+#: src/app.vala:244
 msgid "Show game options help"
 msgstr "Hilfe zu den Spieloptionen anzeigen"
 
-#: src/app.vala:250
+#: src/app.vala:252
 msgid "Logging Options:"
 msgstr "Protokollierungsoptionen:"
 
-#: src/app.vala:250
+#: src/app.vala:252
 msgid "Show logging options help"
 msgstr "Hilfe zu den Protokollierungsoptionen anzeigen"
 
@@ -235,21 +239,21 @@ msgstr "Nicht installiert"
 msgid "%s games"
 msgstr "%s Spiele"
 
-#: src/data/adapters/GamesAdapter.vala:359
+#: src/data/adapters/GamesAdapter.vala:367
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Favoriten"
 
-#: src/data/adapters/GamesAdapter.vala:387
+#: src/data/adapters/GamesAdapter.vala:395
 msgid "Merging games"
 msgstr "Zusammenführung von Spielen"
 
-#: src/data/adapters/GamesAdapter.vala:400
+#: src/data/adapters/GamesAdapter.vala:408
 #, c-format
 msgid "Merging games from %s"
 msgstr "Zusammenführen von Spielen aus %s"
 
-#: src/data/adapters/GamesAdapter.vala:444
+#: src/data/adapters/GamesAdapter.vala:452
 #, c-format
 msgid "Loading games from %s"
 msgstr "Laden von Spielen aus %s"
@@ -1187,7 +1191,7 @@ msgid "Menu"
 msgstr "Menü"
 
 #: src/ui/views/GamesView/GamesView.vala:361
-#: src/ui/views/GameDetailsView/GameDetailsView.vala:82
+#: src/ui/views/GameDetailsView/GameDetailsView.vala:81
 msgid "Back"
 msgstr "Zurück"
 
@@ -1370,7 +1374,7 @@ msgctxt "time"
 msgid "%dm"
 msgstr "%d m"
 
-#: src/ui/views/GameDetailsView/blocks/Description.vala:51
+#: src/ui/views/GameDetailsView/blocks/Description.vala:52
 msgid "Description"
 msgstr "Beschreibung"
 

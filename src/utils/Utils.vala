@@ -403,7 +403,7 @@ namespace GameHub.Utils
 			WHITE
 		}
 
-		const string[] LOG_LEVEL_TO_STRING = {
+		private const string[] LOG_LEVEL_TO_STRING = {
 			"[DEBUG]\x001b[0m ",
 			"[INFO]\x001b[0m  ",
 			"[NOTIFY]\x001b[0m",
@@ -411,6 +411,9 @@ namespace GameHub.Utils
 			"[ERROR]\x001b[0m ",
 			"[FATAL]\x001b[0m "
 		};
+
+		private const string[] HIDDEN_DOMAINS  = { "GLib", "GLib-GIO", "Manette" };
+		private const string[] HIDDEN_MESSAGES = { "Loading settings from schema" };
 
 		static Mutex write_mutex;
 
@@ -505,6 +508,15 @@ namespace GameHub.Utils
 
 		private static void glib_log_func_granite(string? d, LogLevelFlags flags, string msg)
 		{
+			if(!GameHub.Application.log_no_filters)
+			{
+				if(d in HIDDEN_DOMAINS) return;
+				foreach(var hidden_msg in HIDDEN_MESSAGES)
+				{
+					if(hidden_msg in msg) return;
+				}
+			}
+
 			string domain;
 			if(d != null)
 				domain = "[%s] ".printf(d);
