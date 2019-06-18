@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-18 05:37+0300\n"
-"PO-Revision-Date: 2019-06-17 21:51+0000\n"
+"PO-Revision-Date: 2019-06-19 11:01+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7-dev\n"
+"X-Generator: Weblate 3.7\n"
 
 #: src/app.vala:90
 msgid "Show help"
@@ -93,7 +93,7 @@ msgstr "Achtergronddiensten van loggen starten/stoppen"
 
 #: src/app.vala:116
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Logberichtfiltering uitschakelen"
 
 #: src/app.vala:117
 msgid "Verbose logging"
