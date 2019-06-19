@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-18 05:37+0300\n"
-"PO-Revision-Date: 2019-02-11 14:11+0000\n"
-"Last-Translator: King Claudy <clocloranely@hotmail.fr>\n"
+"PO-Revision-Date: 2019-06-19 23:43+0000\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.5-dev\n"
+"X-Generator: Weblate 3.7\n"
 
 #: src/app.vala:90
 msgid "Show help"
@@ -44,14 +44,12 @@ msgid "Show main window"
 msgstr "Afficher la fenêtre principale"
 
 #: src/app.vala:99
-#, fuzzy
 msgid "Show application settings dialog"
-msgstr "Ouvrir les options de compatibilité"
+msgstr "Afficher les paramètres de l'application"
 
 #: src/app.vala:100
-#, fuzzy
 msgid "Show about dialog"
-msgstr "Ouvrir les options de compatibilité"
+msgstr "A propos de Gamehub"
 
 #: src/app.vala:101
 msgid "Maximum number of background worker threads"
@@ -170,9 +168,9 @@ msgid "Backup"
 msgstr "Sauvegarder"
 
 #: src/data/Runnable.vala:595
-#, fuzzy, c-format
+#, c-format
 msgid "%s: cannot detect main executable"
-msgstr "Choisir l'exécutable"
+msgstr "%s: n'a pas pu détecter l'executable"
 
 #: src/data/Runnable.vala:596
 msgid ""
@@ -398,9 +396,8 @@ msgid "Run taskmgr"
 msgstr "Lancer taskmgr"
 
 #: src/data/compat/Wine.vala:53
-#, fuzzy
 msgid "Wine prefix"
-msgstr "Arrêter les applications dans prefix"
+msgstr "Wine prefix"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
@@ -1494,54 +1491,54 @@ msgstr ""
 #: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr ""
+msgstr "Démarrage du téléchargement"
 
 #: src/utils/downloader/Downloader.vala:161
 msgctxt "dl_status"
 msgid "Download started"
-msgstr ""
+msgstr "Téléchargement démarré"
 
 #: src/utils/downloader/Downloader.vala:162
 msgctxt "dl_status"
 msgid "Download finished"
-msgstr ""
+msgstr "Téléchargement terminé"
 
 #: src/utils/downloader/Downloader.vala:163
 msgctxt "dl_status"
 msgid "Download failed"
-msgstr ""
+msgstr "Echec du téléchargement"
 
 #: src/utils/downloader/Downloader.vala:165
 #, c-format
 msgctxt "dl_status"
 msgid "Downloading: %d%% (%s / %s) [%s/s]"
-msgstr ""
+msgstr "Téléchargement:  %d%% (%s / %s) [%s/s]"
 
 #: src/utils/downloader/Downloader.vala:167
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
-msgstr ""
+msgstr "En pause: %d%% (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:169
 msgctxt "dl_status"
 msgid "Download cancelled"
-msgstr ""
+msgstr "Téléchargement annulé"
 
 #: src/settings/SavedState.vala:93
 msgctxt "sort_mode"
 msgid "By name"
-msgstr ""
+msgstr "Par nom"
 
 #: src/settings/SavedState.vala:94
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr ""
+msgstr "Par dernier démarrage"
 
 #: src/settings/SavedState.vala:95
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr ""
+msgstr "Par temps de jeu"
 
 #~ msgid "Show non-native games"
 #~ msgstr "Afficher les jeux non natifs"
