@@ -4,13 +4,14 @@
 # Automatically generated, 2018.
 # Leandro Stanger <leandrostanger@hotmail.com>, 2019.
 # Kassin Dornelles <kassin.dornelles@gmail.com>, 2019.
+# Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-18 05:37+0300\n"
-"PO-Revision-Date: 2019-06-13 21:08+0000\n"
-"Last-Translator: Kassin Dornelles <kassin.dornelles@gmail.com>\n"
+"PO-Revision-Date: 2019-06-19 23:43+0000\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.7-dev\n"
+"X-Generator: Weblate 3.7\n"
 
 #: src/app.vala:90
 msgid "Show help"
@@ -87,7 +88,7 @@ msgstr ""
 
 #: src/app.vala:114
 msgid "Log download manager"
-msgstr ""
+msgstr "Log do gerenciador de download"
 
 #: src/app.vala:115
 msgid "Log background workers start/stop"
@@ -181,6 +182,9 @@ msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"O arquivo executável principal deste jogo não pode ser detectado "
+"automaticamente.\n"
+"Por favor, defina o executável principal nas propriedades do jogo."
 
 #: src/data/Game.vala:478
 msgctxt "status"
@@ -225,7 +229,7 @@ msgstr "Instalando"
 #: src/data/Game.vala:499
 msgctxt "status_header"
 msgid "Downloading"
-msgstr "Baixar"
+msgstr "Baixando"
 
 #: src/data/Game.vala:501
 msgctxt "status_header"
@@ -278,6 +282,8 @@ msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
+"Não é possível obter o URL de download do Trove.\n"
+"Certifique-se de que sua assinatura do Humble Monthly esteja ativa."
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -318,6 +324,9 @@ msgid ""
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
+"O Innoextract <b>%1$s</b> não é suportado e pode não conseguir extrair "
+"alguns jogos corretamente.\n"
+"Instale o innoextract <b>%2$s</b> ou mais recente."
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
@@ -456,17 +465,17 @@ msgstr "Gerar chave"
 #: src/data/providers/images/SteamGridDB.vala:165
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "Estilo"
 
 #: src/data/providers/images/SteamGridDB.vala:166
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "Pontuação"
 
 #: src/data/providers/images/SteamGridDB.vala:170
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: src/data/providers/images/SteamGridDB.vala:182
 msgctxt "imagesource_steamgriddb_image_style"
@@ -476,7 +485,7 @@ msgstr ""
 #: src/data/providers/images/SteamGridDB.vala:183
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "Borrado"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:185
@@ -487,17 +496,17 @@ msgstr ""
 #: src/data/providers/images/SteamGridDB.vala:186
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "Sem logotipo"
 
 #: src/data/providers/data/IGDB.vala:258
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr ""
+msgstr "Website oficial"
 
 #: src/data/providers/data/IGDB.vala:370
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr ""
+msgstr "Quando o jogo tem descrição, mostra a descrição"
 
 #: src/data/providers/data/IGDB.vala:377
 #, fuzzy
@@ -508,12 +517,12 @@ msgstr "Sem jogos"
 #: src/data/providers/data/IGDB.vala:378
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr ""
+msgstr "do IGDB"
 
 #: src/data/providers/data/IGDB.vala:379
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "ambos"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:39
 #: src/ui/views/WelcomeView.vala:52 src/ui/views/WelcomeView.vala:77
@@ -607,7 +616,7 @@ msgstr "Coleção"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
 msgid "Empty"
-msgstr ""
+msgstr "Vazio"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
@@ -939,7 +948,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:103
 msgctxt "about_link"
 msgid "Contributors"
-msgstr ""
+msgstr "Contribuidores"
 
 #. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:106
@@ -1099,7 +1108,7 @@ msgstr "Selecione o diretório"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:85
 msgid "Detected games"
-msgstr ""
+msgstr "Jogos detectados"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:110
 #, fuzzy
@@ -1408,17 +1417,17 @@ msgstr "Gêneros"
 #, c-format
 msgctxt "igdb"
 msgid "<b>%s</b> on IGDB"
-msgstr ""
+msgstr "<b>%s</b> no IGDB"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
 msgctxt "igdb"
 msgid "Popularity"
-msgstr ""
+msgstr "Popularidade"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:106
 msgctxt "igdb"
 msgid "Aggregated rating"
-msgstr ""
+msgstr "Avaliação agregada"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:107
 msgctxt "igdb"
@@ -1428,12 +1437,12 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
 msgctxt "igdb"
 msgid "Total rating"
-msgstr ""
+msgstr "Avaliação total"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "Platforms"
-msgstr ""
+msgstr "Plataformas"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:122
 #, fuzzy
@@ -1444,24 +1453,24 @@ msgstr "Gêneros"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:128
 msgctxt "igdb"
 msgid "Keywords"
-msgstr ""
+msgstr "Palavras-chave"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:140
 msgctxt "igdb"
 msgid "Summary"
-msgstr ""
+msgstr "Resumo"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:151
 msgctxt "igdb"
 msgid "Storyline"
-msgstr ""
+msgstr "Enredo"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:173
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Baseado em <b>%d</b> avaliação"
+msgstr[1] "Baseado em <b>%d</b> avaliações"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
@@ -1479,6 +1488,8 @@ msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
+"Não foi encontrado imagens para este jogo\n"
+"Certifique-se de que o nome do jogo esteja correto"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:99
 msgid "Search images:"
@@ -1490,32 +1501,32 @@ msgstr "Camada de compatibilidade:"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
-msgstr ""
+msgstr "Configurar"
 
 #: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
 msgid "Queued"
-msgstr ""
+msgstr "Na fila"
 
 #: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr "Iniciando a baixar"
+msgstr "Iniciando o download"
 
 #: src/utils/downloader/Downloader.vala:161
 msgctxt "dl_status"
 msgid "Download started"
-msgstr "Começando a baixar"
+msgstr "Download iniciado"
 
 #: src/utils/downloader/Downloader.vala:162
 msgctxt "dl_status"
 msgid "Download finished"
-msgstr "Baixou com sucesso"
+msgstr "Download finalizado"
 
 #: src/utils/downloader/Downloader.vala:163
 msgctxt "dl_status"
 msgid "Download failed"
-msgstr "Falha ao baixar"
+msgstr "Falha no download"
 
 #: src/utils/downloader/Downloader.vala:165
 #, c-format
@@ -1537,7 +1548,7 @@ msgstr "Download cancelado"
 #: src/settings/SavedState.vala:93
 msgctxt "sort_mode"
 msgid "By name"
-msgstr "Por nome do jogo"
+msgstr "Por nome"
 
 #: src/settings/SavedState.vala:94
 msgctxt "sort_mode"
@@ -1547,7 +1558,7 @@ msgstr "Pelo último lançamento"
 #: src/settings/SavedState.vala:95
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr "Por playtime"
+msgstr "Por tempo jogado"
 
 #~ msgid "Show non-native games"
 #~ msgstr "Mostrar jogos não nativos"
