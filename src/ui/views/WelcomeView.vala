@@ -128,7 +128,7 @@ namespace GameHub.UI.Views
 
 				welcome.set_item_visible(index, !(src is Sources.Humble.Trove) && !(src is Sources.User.User) && src.enabled);
 
-				if(src is Sources.Humble.Trove || src is Sources.User.User || !src.enabled) continue;
+				if(src is Sources.Humble.Trove || !src.enabled) continue;
 				enabled_sources++;
 
 				if(src.is_installed(true))
