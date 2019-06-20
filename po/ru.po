@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-18 05:37+0300\n"
+"POT-Creation-Date: 2019-06-21 00:09+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -100,19 +100,19 @@ msgstr "Отключить фильтрацию отладочных сообщ�
 msgid "Verbose logging"
 msgstr "Подробные сообщения"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Game Options:"
 msgstr "Параметры игр:"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Show game options help"
 msgstr "Показать справку о параметрах игр"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Logging Options:"
 msgstr "Параметры журналирования:"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 
@@ -180,6 +180,11 @@ msgid ""
 msgstr ""
 "Исполняемый файл для этой игры невозможно определить автоматически.\n"
 "Укажите исполняемый файл в свойствах игры."
+
+#: src/data/Runnable.vala:820
+msgctxt "platform"
+msgid "Emulated"
+msgstr "Эмулируемые"
 
 #: src/data/Game.vala:478
 msgctxt "status"

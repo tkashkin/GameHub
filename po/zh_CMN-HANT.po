@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-18 05:37+0300\n"
+"POT-Creation-Date: 2019-06-21 00:09+0300\n"
 "PO-Revision-Date: 2019-06-07 16:06+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -97,19 +97,19 @@ msgstr ""
 msgid "Verbose logging"
 msgstr "详细记录"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Game Options:"
 msgstr "游戏选项："
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Show game options help"
 msgstr "显示游戏选项帮助"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Logging Options:"
 msgstr "记录选项："
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Show logging options help"
 msgstr "显示日志选项帮助"
 
@@ -177,6 +177,11 @@ msgid ""
 msgstr ""
 "无法自动检测此游戏的主要可执行文件。\n"
 "请在游戏属性中设置主要可执行文件。"
+
+#: src/data/Runnable.vala:820
+msgctxt "platform"
+msgid "Emulated"
+msgstr ""
 
 #: src/data/Game.vala:478
 msgctxt "status"

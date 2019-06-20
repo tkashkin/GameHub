@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-18 05:37+0300\n"
+"POT-Creation-Date: 2019-06-21 00:09+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -103,20 +103,20 @@ msgstr ""
 msgid "Verbose logging"
 msgstr ""
 
-#: src/app.vala:244
+#: src/app.vala:241
 #, fuzzy
 msgid "Game Options:"
 msgstr "Properti permainan"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Show game options help"
 msgstr ""
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Logging Options:"
 msgstr ""
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Show logging options help"
 msgstr ""
 
@@ -184,6 +184,12 @@ msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+
+#: src/data/Runnable.vala:820
+#, fuzzy
+msgctxt "platform"
+msgid "Emulated"
+msgstr "Emulator"
 
 #: src/data/Game.vala:478
 msgctxt "status"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-18 05:37+0300\n"
+"POT-Creation-Date: 2019-06-21 00:09+0300\n"
 "PO-Revision-Date: 2019-06-19 11:01+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -99,19 +99,19 @@ msgstr "Logberichtfiltering uitschakelen"
 msgid "Verbose logging"
 msgstr "Uitgebreid loggen"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Game Options:"
 msgstr "Spelopties:"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Show game options help"
 msgstr "Hulp bij opties van spel tonen"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Logging Options:"
 msgstr "Opties voor loggen:"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Show logging options help"
 msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 
@@ -180,6 +180,12 @@ msgstr ""
 "Het algemene uitvoerbare bestand van dit spel kan niet automatisch worden "
 "gedetecteerd.\n"
 "Stel dit handmatig in in de speleigenschappen."
+
+#: src/data/Runnable.vala:820
+#, fuzzy
+msgctxt "platform"
+msgid "Emulated"
+msgstr "Emulator"
 
 #: src/data/Game.vala:478
 msgctxt "status"

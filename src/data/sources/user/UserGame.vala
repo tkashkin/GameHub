@@ -84,7 +84,7 @@ namespace GameHub.Data.Sources.User
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
-				foreach(var p in Platforms)
+				foreach(var p in Platform.PLATFORMS)
 				{
 					if(pl == p.id())
 					{
@@ -122,7 +122,7 @@ namespace GameHub.Data.Sources.User
 				var i = Parser.parse_json(info).get_object();
 				installer = new Installer(this, File.new_for_path(i.get_string_member("installer")));
 			}
-			
+
 			save();
 		}
 

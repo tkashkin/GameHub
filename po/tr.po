@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-18 05:37+0300\n"
+"POT-Creation-Date: 2019-06-21 00:09+0300\n"
 "PO-Revision-Date: 2019-03-30 20:30+0000\n"
 "Last-Translator: Güner Acet <kurama632@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
@@ -98,19 +98,19 @@ msgstr ""
 msgid "Verbose logging"
 msgstr "Ayrıntılı günlük kaydı"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Game Options:"
 msgstr "Oyun seçenekleri:"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Show game options help"
 msgstr "Oyun seçenekleri yardımını göster"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Logging Options:"
 msgstr "Günlüğe Kaydetme Seçenekleri:"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Show logging options help"
 msgstr "Günlüğe kaydetme seçenekleri yardımını göster"
 
@@ -175,6 +175,11 @@ msgstr "%s: ana çalıştırılabilir dosya algılanamıyor"
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
+msgstr ""
+
+#: src/data/Runnable.vala:820
+msgctxt "platform"
+msgid "Emulated"
 msgstr ""
 
 #: src/data/Game.vala:478

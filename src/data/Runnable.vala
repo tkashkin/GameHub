@@ -56,7 +56,7 @@ namespace GameHub.Data
 		public ArrayList<Platform> platforms { get; protected set; default = new ArrayList<Platform>(); }
 		public virtual bool is_supported(Platform? platform=null, bool with_compat=true)
 		{
-			platform = platform ?? CurrentPlatform;
+			platform = platform ?? Platform.CURRENT;
 			if(platforms == null || platforms.size == 0 || platform in platforms) return true;
 			if(!with_compat) return false;
 			foreach(var tool in CompatTools)
@@ -354,7 +354,7 @@ namespace GameHub.Data
 			}
 
 			public string   id           { get; protected set; }
-			public Platform platform     { get; protected set; default = CurrentPlatform; }
+			public Platform platform     { get; protected set; default = Platform.CURRENT; }
 			public ArrayList<Part> parts { get; protected set; default = new ArrayList<Part>(); }
 			public int64    full_size    { get; protected set; default = 0; }
 			public string?  version      { get; protected set; }
@@ -793,15 +793,19 @@ namespace GameHub.Data
 
 	public enum Platform
 	{
-		LINUX, WINDOWS, MACOS;
+		LINUX, WINDOWS, MACOS, EMULATED;
+
+		public const Platform[] PLATFORMS = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS, Platform.EMULATED };
+		public const Platform CURRENT = Platform.LINUX;
 
 		public string id()
 		{
 			switch(this)
 			{
-				case Platform.LINUX: return "linux";
-				case Platform.WINDOWS: return "windows";
-				case Platform.MACOS: return "mac";
+				case Platform.LINUX:    return "linux";
+				case Platform.WINDOWS:  return "windows";
+				case Platform.MACOS:    return "mac";
+				case Platform.EMULATED: return "emulated";
 			}
 			assert_not_reached();
 		}
@@ -810,9 +814,10 @@ namespace GameHub.Data
 		{
 			switch(this)
 			{
-				case Platform.LINUX: return "Linux";
-				case Platform.WINDOWS: return "Windows";
-				case Platform.MACOS: return "macOS";
+				case Platform.LINUX:    return "Linux";
+				case Platform.WINDOWS:  return "Windows";
+				case Platform.MACOS:    return "macOS";
+				case Platform.EMULATED: return C_("platform", "Emulated");
 			}
 			assert_not_reached();
 		}
@@ -821,16 +826,14 @@ namespace GameHub.Data
 		{
 			switch(this)
 			{
-				case Platform.LINUX: return "platform-linux-symbolic";
-				case Platform.WINDOWS: return "platform-windows-symbolic";
-				case Platform.MACOS: return "platform-macos-symbolic";
+				case Platform.LINUX:    return "platform-linux-symbolic";
+				case Platform.WINDOWS:  return "platform-windows-symbolic";
+				case Platform.MACOS:    return "platform-macos-symbolic";
+				case Platform.EMULATED: return "gamehub-symbolic";
 			}
 			assert_not_reached();
 		}
 	}
-
-	public static Platform[] Platforms;
-	public static Platform CurrentPlatform;
 
 	public static bool RunnableIsLaunched = false;
 }

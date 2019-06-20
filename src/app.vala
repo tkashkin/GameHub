@@ -134,14 +134,11 @@ namespace GameHub
 
 		private void init()
 		{
-			if(Platforms != null && GameSources != null && CompatTools != null) return;
+			if(GameSources != null && CompatTools != null) return;
 
 			FSUtils.make_dirs();
 			ImageCache.init();
 			Database.create();
-
-			Platforms = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS };
-			CurrentPlatform = Platform.LINUX;
 
 			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new User() };
 

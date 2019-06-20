@@ -312,7 +312,7 @@ namespace GameHub.UI.Dialogs
 			content.add(properties_box);
 
 			get_content_area().add(content);
-			get_content_area().set_size_request(640, -1);
+			get_content_area().set_size_request(640, 480);
 
 			delete_event.connect(() => {
 				image_entry.activate();

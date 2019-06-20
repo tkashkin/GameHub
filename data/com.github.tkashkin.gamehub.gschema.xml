@@ -48,6 +48,7 @@
 			<value nick="Linux" value="1" />
 			<value nick="Windows" value="2" />
 			<value nick="macOS" value="3" />
+			<value nick="Emulated" value="4" />
 		</enum>
 
 		<schema path="/com/github/tkashkin/gamehub/saved-state/games-view/" id="com.github.tkashkin.gamehub.saved-state.games-view">

@@ -25,6 +25,7 @@ namespace GameHub.UI.Widgets
 	public class AutoSizeImage: DrawingArea
 	{
 		private Pixbuf? src;
+		private Pixbuf? scaled;
 
 		private int cmin = 0;
 		private int cmax = 0;
@@ -54,6 +55,7 @@ namespace GameHub.UI.Widgets
 		public void set_source(Pixbuf? buf)
 		{
 			src = buf;
+			scaled = src;
 			queue_draw();
 		}
 
@@ -110,16 +112,38 @@ namespace GameHub.UI.Widgets
 			var width = get_allocated_width() * scale_factor;
 			var height = get_allocated_height() * scale_factor;
 
-			if(src != null)
+			if(src != null && src.width > 0 && src.height > 0)
 			{
-				Pixbuf pixbuf = src;
-
 				if(src.width > cmin || src.height > cmin || src.width != src.height)
 				{
-					pixbuf = src.scale_simple(width, height, InterpType.BILINEAR);
+					var ratio = float.min((float) width / src.width, (float) height / src.height);
+					var new_width = (int) (src.width * ratio);
+					var new_height = (int) (src.height * ratio);
+
+					if(new_width < width)
+					{
+						new_height = (int) ((float) new_height / (float) new_width * (float) width);
+						new_width = width;
+					}
+
+					if(new_height < height)
+					{
+						new_width = (int) ((float) new_width / (float) new_height * (float) height);
+						new_height = height;
+					}
+
+					if(scaled.width != new_width && scaled.height != new_height)
+					{
+						scaled = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
+					}
 				}
-				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, 0, 0, width, height, corner_radius * scale_factor);
-				cairo_set_source_pixbuf(ctx, pixbuf, (width - pixbuf.width) / 2, (height - pixbuf.height) / 2);
+
+				var x = (width - scaled.width) / 2;
+				var y = (height - scaled.height) / 2;
+
+				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, int.max(x, 0), int.max(y, 0), int.min(scaled.width, width), int.min(scaled.height, height), corner_radius * scale_factor);
+				cairo_set_source_pixbuf(ctx, scaled, x, y);
+
 				ctx.clip();
 				ctx.paint();
 			}
