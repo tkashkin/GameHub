@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-18 05:37+0300\n"
-"PO-Revision-Date: 2019-06-19 23:43+0000\n"
+"PO-Revision-Date: 2019-06-20 19:41+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_BR/>\n"
@@ -173,9 +173,9 @@ msgid "Backup"
 msgstr "Cópia de segurança"
 
 #: src/data/Runnable.vala:595
-#, fuzzy, c-format
+#, c-format
 msgid "%s: cannot detect main executable"
-msgstr "Selecione o executável do jogo"
+msgstr "%s: não foi possível detectar o executável principal"
 
 #: src/data/Runnable.vala:596
 msgid ""
@@ -273,9 +273,9 @@ msgstr ""
 "Entre na sua conta no cliente Steam e retorne ao GameHub"
 
 #: src/data/sources/humble/HumbleGame.vala:330
-#, fuzzy, c-format
+#, c-format
 msgid "%s: no available installers"
-msgstr "%s: instalador corrompido"
+msgstr "%s: instaladores não disponíveis"
 
 #: src/data/sources/humble/HumbleGame.vala:331
 msgid ""
@@ -402,9 +402,8 @@ msgid "Run taskmgr"
 msgstr "Executar taskmgr"
 
 #: src/data/compat/Wine.vala:53
-#, fuzzy
 msgid "Wine prefix"
-msgstr "Mate aplicativos no prefixo"
+msgstr "Prefixo do wine"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
@@ -509,10 +508,9 @@ msgid "When game has description, show description"
 msgstr "Quando o jogo tem descrição, mostra a descrição"
 
 #: src/data/providers/data/IGDB.vala:377
-#, fuzzy
 msgctxt "igdb_preferred_description"
 msgid "of game"
-msgstr "Sem jogos"
+msgstr "do jogo"
 
 #: src/data/providers/data/IGDB.vala:378
 msgctxt "igdb_preferred_description"
@@ -553,9 +551,8 @@ msgid "General interface settings"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:43
-#, fuzzy
 msgid "Dark theme"
-msgstr "Use o tema escuro"
+msgstr "Tema escuro"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgctxt "icon_style"
@@ -606,9 +603,8 @@ msgid "Use imported tags"
 msgstr "Use tags importadas"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:51
-#, fuzzy
 msgid "General"
-msgstr "Gerar chave"
+msgstr "Geral"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:52
 msgid "Collection"
@@ -658,9 +654,8 @@ msgid "Platform"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
-#, fuzzy
 msgid "Controller"
-msgstr "Instalar"
+msgstr "Controle"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
@@ -672,9 +667,8 @@ msgid "Focus GameHub window with Guide button"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
-#, fuzzy
 msgid "Controllers"
-msgstr "Instalar"
+msgstr "Controles"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:75
 msgid "Move focus"
@@ -691,9 +685,8 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
-#, fuzzy
 msgid "Disabled"
-msgstr "Desativar esync"
+msgstr "Desativado"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
 #, fuzzy
@@ -719,9 +712,8 @@ msgstr "Não instalado"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:80
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
-#, fuzzy
 msgid "Not authenticated"
-msgstr "Autentificação requerida"
+msgstr "Não autenticado"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
@@ -732,9 +724,8 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
-#, fuzzy
 msgid "Authenticated"
-msgstr "Autenticando..."
+msgstr "Autenticado"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 msgid "Steam API key"
@@ -780,16 +771,15 @@ msgstr[1] ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:169
-#, fuzzy
 msgid "No custom emulators"
-msgstr "Emulador personalizado"
+msgstr "Nenhum emulador personalizado"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:165
-#, fuzzy, c-format
+#, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
-msgstr[0] "Emulador personalizado"
-msgstr[1] "Emulador personalizado"
+msgstr[0] "%u Emulador personalizado"
+msgstr[1] "%u Emuladores personalizados"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:238
 msgid "Save"
@@ -832,14 +822,12 @@ msgid "Variables"
 msgstr "Variáveis"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
-#, fuzzy
 msgid "Game executable"
-msgstr "Selecione o executável do jogo"
+msgstr "Executável do jogo"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:279
-#, fuzzy
 msgid "Game arguments"
-msgstr "Argumentos"
+msgstr "Argumentos do jogo"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:82
@@ -867,9 +855,8 @@ msgid "Image"
 msgstr "Imagens"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:319
-#, fuzzy
 msgid "Icon"
-msgstr "URL do ícone"
+msgstr "Ícone"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:326
 msgid ""
