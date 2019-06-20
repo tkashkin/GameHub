@@ -65,7 +65,7 @@ namespace GameHub.Data.Sources.Humble
 						foreach(var dl in downloads_node.get_array().get_elements())
 						{
 							var dl_platform = dl.get_object().get_string_member("platform");
-							foreach(var p in Platforms)
+							foreach(var p in Platform.PLATFORMS)
 							{
 								if(dl_platform == p.id())
 								{
@@ -78,7 +78,7 @@ namespace GameHub.Data.Sources.Humble
 					case Json.NodeType.OBJECT:
 						foreach(var dl_platform in downloads_node.get_object().get_members())
 						{
-							foreach(var p in Platforms)
+							foreach(var p in Platform.PLATFORMS)
 							{
 								if(dl_platform == p.id())
 								{
@@ -118,7 +118,7 @@ namespace GameHub.Data.Sources.Humble
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
-				foreach(var p in Platforms)
+				foreach(var p in Platform.PLATFORMS)
 				{
 					if(pl == p.id())
 					{
@@ -345,8 +345,8 @@ namespace GameHub.Data.Sources.Humble
 
 		private bool process_download(string id, string? dl_id, string os, Json.Object dl_struct)
 		{
-			var platform = CurrentPlatform;
-			foreach(var p in Platforms)
+			var platform = Platform.CURRENT;
+			foreach(var p in Platform.PLATFORMS)
 			{
 				if(os == p.id())
 				{

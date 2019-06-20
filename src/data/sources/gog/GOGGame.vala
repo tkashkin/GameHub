@@ -113,7 +113,7 @@ namespace GameHub.Data.Sources.GOG
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
-				foreach(var p in Platforms)
+				foreach(var p in Platform.PLATFORMS)
 				{
 					if(pl == p.id())
 					{
@@ -579,8 +579,8 @@ namespace GameHub.Data.Sources.GOG
 				lang_full = json.get_string_member("language_full");
 
 				var os = json.get_string_member("os");
-				platform = CurrentPlatform;
-				foreach(var p in Platforms)
+				platform = Platform.CURRENT;
+				foreach(var p in Platform.PLATFORMS)
 				{
 					if(os == p.id())
 					{

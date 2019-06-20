@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-18 05:37+0300\n"
+"POT-Creation-Date: 2019-06-21 00:09+0300\n"
 "PO-Revision-Date: 2019-06-07 16:03+0000\n"
 "Last-Translator: Antek Karaś <antos.karas@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
@@ -102,19 +102,19 @@ msgstr ""
 msgid "Verbose logging"
 msgstr "Pełne rejestrowanie"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Game Options:"
 msgstr "Opcje gry:"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Show game options help"
 msgstr "Pokaż pomoc dla opcji gry"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Logging Options:"
 msgstr "Opcje rejestrowania:"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Show logging options help"
 msgstr "Pokaż pomoc dotyczącą opcji rejestrowania"
 
@@ -182,6 +182,12 @@ msgid ""
 msgstr ""
 "Główny plik wykonywalny nie może zostać wykryty automatycznie.\n"
 "Proszę ustawić główny plik wykonywalny we właściwościach gry."
+
+#: src/data/Runnable.vala:820
+#, fuzzy
+msgctxt "platform"
+msgid "Emulated"
+msgstr "Emulator"
 
 #: src/data/Game.vala:478
 msgctxt "status"

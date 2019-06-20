@@ -70,7 +70,7 @@ namespace GameHub.UI.Views.GamesView
 			sort_hbox.add(sort_image);
 
 			var sort_label = new HeaderLabel(_("Sort"));
-			sort_label.margin_end = 8;
+			sort_label.margin_end = 2;
 			sort_label.xpad = 0;
 			sort_label.halign = Align.START;
 			sort_label.xalign = 0;
@@ -95,7 +95,7 @@ namespace GameHub.UI.Views.GamesView
 			platform_hbox.add(platform_image);
 
 			var platform_label = new HeaderLabel(_("Platform"));
-			platform_label.margin_end = 8;
+			platform_label.margin_end = 2;
 			platform_label.xpad = 0;
 			platform_label.halign = Align.START;
 			platform_label.xalign = 0;

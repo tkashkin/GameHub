@@ -104,7 +104,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			var game = "Game";
 
 			gog_game_dir.tooltip_text = FSUtils.Paths.Collection.GOG.expand_game_dir(game);
-			gog_installers.tooltip_text = FSUtils.Paths.Collection.GOG.expand_installers(game, null, CurrentPlatform);
+			gog_installers.tooltip_text = FSUtils.Paths.Collection.GOG.expand_installers(game, null, Platform.CURRENT);
 			gog_dlc.tooltip_text = FSUtils.Paths.Collection.GOG.expand_dlc(game);
 			gog_bonus.tooltip_text = FSUtils.Paths.Collection.GOG.expand_bonus(game);
 

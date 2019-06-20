@@ -601,7 +601,11 @@ namespace GameHub.UI.Dialogs
 					}
 				}
 
+				g.platforms.clear();
+				g.platforms.add(Platform.EMULATED);
+
 				g.save();
+				User.instance.add_game(g);
 				game_added(g);
 			}
 

@@ -138,8 +138,8 @@ namespace GameHub.UI.Dialogs
 					var i1 = item1.installer;
 					var i2 = item2.installer;
 
-					if(i1.platform.id() == CurrentPlatform.id() && i2.platform.id() != CurrentPlatform.id()) return -1;
-					if(i1.platform.id() != CurrentPlatform.id() && i2.platform.id() == CurrentPlatform.id()) return 1;
+					if(i1.platform.id() == Platform.CURRENT.id() && i2.platform.id() != Platform.CURRENT.id()) return -1;
+					if(i1.platform.id() != Platform.CURRENT.id() && i2.platform.id() == Platform.CURRENT.id()) return 1;
 
 					return i1.name.collate(i2.name);
 				}
@@ -164,7 +164,7 @@ namespace GameHub.UI.Dialogs
 				{
 					installers_list.select_row(row);
 				}
-				else if(installers_list.get_selected_row() == null && installer.platform.id() == CurrentPlatform.id())
+				else if(installers_list.get_selected_row() == null && installer.platform.id() == Platform.CURRENT.id())
 				{
 					installers_list.select_row(row);
 				}
@@ -187,16 +187,16 @@ namespace GameHub.UI.Dialogs
 						}
 					}
 				}
-				install_btn.sensitive = platforms_list.selected >= 0 && platforms_list.selected < Platforms.length && Platforms[platforms_list.selected] != Platform.MACOS;
+				install_btn.sensitive = platforms_list.selected >= 0 && platforms_list.selected < Platform.PLATFORMS.length && Platform.PLATFORMS[platforms_list.selected] != Platform.MACOS;
 			});
 
 			platforms_list.selected = -1;
-			for(int i = 0; i < Platforms.length; i++)
+			for(int i = 0; i < Platform.PLATFORMS.length; i++)
 			{
-				var icon = new Image.from_icon_name(Platforms[i].icon(), IconSize.BUTTON);
-				icon.tooltip_text = Platforms[i].name();
+				var icon = new Image.from_icon_name(Platform.PLATFORMS[i].icon(), IconSize.BUTTON);
+				icon.tooltip_text = Platform.PLATFORMS[i].name();
 				platforms_list.append(icon);
-				var is_compatible = Platforms[i] in compatible_platforms;
+				var is_compatible = Platform.PLATFORMS[i] in compatible_platforms;
 				platforms_list.set_item_visible(i, is_compatible);
 				if(is_compatible && platforms_list.selected < 0)
 				{
@@ -320,7 +320,7 @@ namespace GameHub.UI.Dialogs
 		private bool installers_filter(ListBoxRow row)
 		{
 			var item = row as InstallerRow;
-			return item != null && platforms_list.selected >= 0 && platforms_list.selected < Platforms.length && item.installer.platform == Platforms[platforms_list.selected];
+			return item != null && platforms_list.selected >= 0 && platforms_list.selected < Platform.PLATFORMS.length && item.installer.platform == Platform.PLATFORMS[platforms_list.selected];
 		}
 
 		private class InstallerRow: ListBoxRow

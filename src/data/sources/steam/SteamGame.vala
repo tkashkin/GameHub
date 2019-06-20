@@ -73,7 +73,7 @@ namespace GameHub.Data.Sources.Steam
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
 			foreach(var pl in pls)
 			{
-				foreach(var p in Platforms)
+				foreach(var p in Platform.PLATFORMS)
 				{
 					if(pl == p.id())
 					{
@@ -201,7 +201,7 @@ namespace GameHub.Data.Sources.Steam
 				return;
 			}
 
-			foreach(var p in Platforms)
+			foreach(var p in Platform.PLATFORMS)
 			{
 				if(platforms_json.get_boolean_member(p.id()))
 				{

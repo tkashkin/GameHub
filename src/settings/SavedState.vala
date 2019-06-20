@@ -111,17 +111,18 @@ namespace GameHub.Settings.SavedState
 
 		public enum PlatformFilter
 		{
-			ALL = 0, LINUX = 1, WINDOWS = 2, MACOS = 3;
+			ALL = 0, LINUX = 1, WINDOWS = 2, MACOS = 3, EMULATED = 4;
 
-			public const PlatformFilter[] FILTERS = { PlatformFilter.ALL, PlatformFilter.LINUX, PlatformFilter.WINDOWS, PlatformFilter.MACOS };
+			public const PlatformFilter[] FILTERS = { PlatformFilter.ALL, PlatformFilter.LINUX, PlatformFilter.WINDOWS, PlatformFilter.MACOS, PlatformFilter.EMULATED };
 
 			public Data.Platform platform()
 			{
 				switch(this)
 				{
-					case PlatformFilter.LINUX:   return Data.Platform.LINUX;
-					case PlatformFilter.WINDOWS: return Data.Platform.WINDOWS;
-					case PlatformFilter.MACOS:   return Data.Platform.MACOS;
+					case PlatformFilter.LINUX:    return Data.Platform.LINUX;
+					case PlatformFilter.WINDOWS:  return Data.Platform.WINDOWS;
+					case PlatformFilter.MACOS:    return Data.Platform.MACOS;
+					case PlatformFilter.EMULATED: return Data.Platform.EMULATED;
 				}
 				assert_not_reached();
 			}

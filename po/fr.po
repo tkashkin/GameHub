@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-18 05:37+0300\n"
+"POT-Creation-Date: 2019-06-21 00:09+0300\n"
 "PO-Revision-Date: 2019-06-19 23:43+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -99,19 +99,19 @@ msgstr ""
 msgid "Verbose logging"
 msgstr "Journalisation détaillée"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Game Options:"
 msgstr "Options de jeu :"
 
-#: src/app.vala:244
+#: src/app.vala:241
 msgid "Show game options help"
 msgstr "Afficher l’aide pour les options de jeu"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Logging Options:"
 msgstr "Options de journalisation :"
 
-#: src/app.vala:252
+#: src/app.vala:249
 msgid "Show logging options help"
 msgstr "Afficher l’aide pour les options de journalisation"
 
@@ -179,6 +179,12 @@ msgid ""
 msgstr ""
 "L’exécutable pour ce jeu ne peut être détecté automatiquement.\n"
 "Veuillez le choisir dans les propriétés du jeu."
+
+#: src/data/Runnable.vala:820
+#, fuzzy
+msgctxt "platform"
+msgid "Emulated"
+msgstr "Émulateur"
 
 #: src/data/Game.vala:478
 msgctxt "status"
