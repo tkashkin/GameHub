@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-21 00:09+0300\n"
-"PO-Revision-Date: 2019-06-19 11:01+0000\n"
+"PO-Revision-Date: 2019-06-21 19:41+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -182,10 +182,9 @@ msgstr ""
 "Stel dit handmatig in in de speleigenschappen."
 
 #: src/data/Runnable.vala:820
-#, fuzzy
 msgctxt "platform"
 msgid "Emulated"
-msgstr "Emulator"
+msgstr "Geëmuleerd"
 
 #: src/data/Game.vala:478
 msgctxt "status"
