@@ -238,7 +238,11 @@ namespace GameHub.UI.Views.GamesView
 			}
 
 			_game = new_game;
-			merges = Tables.Merges.get(_game);
+
+			if(Settings.UI.Behavior.instance.merge_games)
+			{
+				merges = Tables.Merges.get(_game);
+			}
 
 			if(adapter != null)
 			{
@@ -255,7 +259,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private void update_source(GameSource? source=null)
 		{
-			if(source == null || source == _game.source || merges == null || merges.size == 0)
+			if(!Settings.UI.Behavior.instance.merge_games || source == null || source == _game.source || merges == null || merges.size == 0)
 			{
 				update(_game);
 				return;
@@ -289,7 +293,7 @@ namespace GameHub.UI.Views.GamesView
 				{
 					add_src_icon(_game.source.icon);
 				}
-				if(merges != null && merges.size > 0)
+				if(Settings.UI.Behavior.instance.merge_games && merges != null && merges.size > 0)
 				{
 					foreach(var g in merges)
 					{
@@ -308,7 +312,7 @@ namespace GameHub.UI.Views.GamesView
 						platforms += p;
 					}
 				}
-				if(adapter.filter_source == null && merges != null && merges.size > 0)
+				if(Settings.UI.Behavior.instance.merge_games && adapter.filter_source == null && merges != null && merges.size > 0)
 				{
 					foreach(var g in merges)
 					{

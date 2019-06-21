@@ -277,6 +277,8 @@ namespace GameHub.UI.Dialogs
 						foreach(var file_path in files)
 						{
 							var file = FSUtils.file(file_path);
+							if(file.query_file_type(FileQueryInfoFlags.NONE) == FileType.DIRECTORY) continue;
+
 							var dir = file.get_parent();
 							var name = file.get_basename();
 
@@ -390,6 +392,8 @@ namespace GameHub.UI.Dialogs
 							foreach(var file_path in files)
 							{
 								var file = FSUtils.file(file_path);
+								if(file.query_file_type(FileQueryInfoFlags.NONE) == FileType.DIRECTORY) continue;
+
 								var dir = file.get_parent();
 								var name = file.get_basename();
 
