@@ -108,7 +108,7 @@ namespace GameHub.UI.Views.GamesView
 
 			if(!(game is Sources.GOG.GOGGame.DLC))
 			{
-				if(!is_merge_submenu)
+				if(Settings.UI.Behavior.instance.merge_games && !is_merge_submenu)
 				{
 					var merges = DB.Tables.Merges.get(game);
 					var primary = DB.Tables.Merges.get_primary(game);
