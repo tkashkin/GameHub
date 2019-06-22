@@ -32,7 +32,28 @@ namespace GameHub.UI.Widgets
 		private float ratio = 1;
 		private Orientation constraint = Orientation.HORIZONTAL;
 
+		public bool? scale = null;
+		private bool _scale = true;
+
 		public int corner_radius = 4;
+
+		public Pixbuf? source
+		{
+			get
+			{
+				return src;
+			}
+			set
+			{
+				src = value;
+				scaled = src;
+				if(src != null && src.width > 0 && src.height > 0)
+				{
+					_scale = scale ?? (src.width > cmin || src.height > cmin || src.width != src.height);
+				}
+				queue_draw();
+			}
+		}
 
 		public void set_constraint(int min, int max, float ratio = 1, Orientation orientation = Orientation.HORIZONTAL)
 		{
@@ -52,22 +73,15 @@ namespace GameHub.UI.Widgets
 			}
 		}
 
-		public void set_source(Pixbuf? buf)
-		{
-			src = buf;
-			scaled = src;
-			queue_draw();
-		}
-
 		public void load(string? url, string cache_prefix=ImageCache.DEFAULT_CACHED_FILE_PREFIX)
 		{
 			if(url == null || url == "")
 			{
-				set_source(null);
+				source = null;
 				return;
 			}
 			ImageCache.load.begin(url, cache_prefix, (obj, res) => {
-				set_source(ImageCache.load.end(res));
+				source = ImageCache.load.end(res);
 			});
 		}
 
@@ -114,7 +128,7 @@ namespace GameHub.UI.Widgets
 
 			if(src != null && src.width > 0 && src.height > 0)
 			{
-				if(src.width > cmin || src.height > cmin || src.width != src.height)
+				if(_scale)
 				{
 					var ratio = float.min((float) width / src.width, (float) height / src.height);
 					var new_width = (int) (src.width * ratio);
@@ -132,7 +146,7 @@ namespace GameHub.UI.Widgets
 						new_height = height;
 					}
 
-					if(scaled.width != new_width && scaled.height != new_height)
+					if(scaled.width != new_width || scaled.height != new_height)
 					{
 						scaled = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
 					}

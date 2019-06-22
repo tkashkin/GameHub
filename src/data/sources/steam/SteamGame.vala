@@ -203,7 +203,7 @@ namespace GameHub.Data.Sources.Steam
 
 			foreach(var p in Platform.PLATFORMS)
 			{
-				if(platforms_json.get_boolean_member(p.id()))
+				if(platforms_json.has_member(p.id()) && platforms_json.get_boolean_member(p.id()))
 				{
 					platforms.add(p);
 				}
@@ -212,7 +212,7 @@ namespace GameHub.Data.Sources.Steam
 			save();
 
 			update_status();
-			
+
 			game_info_updated = true;
 			game_info_updating = false;
 		}
