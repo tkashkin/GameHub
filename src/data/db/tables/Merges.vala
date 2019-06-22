@@ -64,7 +64,7 @@ namespace GameHub.Data.DB.Tables
 
 			Statement s;
 
-			int res = db.prepare_v2("SELECT rowid, * FROM `merges` WHERE `merge` LIKE ? OR `merge` LIKE ?", -1, out s);
+			int res = db.prepare_v2("SELECT rowid, * FROM `merges` WHERE `merge` LIKE ? OR `merge` LIKE ? OR `merge` LIKE ? OR `merge` LIKE ? OR `merge` LIKE ? OR `merge` LIKE ?", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -72,8 +72,12 @@ namespace GameHub.Data.DB.Tables
 				return false;
 			}
 
-			s.bind_text(1, @"%$(first.full_id)%");
-			s.bind_text(2, @"%$(second.full_id)%");
+			s.bind_text(1, @"$(first.full_id)|%");
+			s.bind_text(2, @"%|$(first.full_id)|%");
+			s.bind_text(3, @"%|$(first.full_id)");
+			s.bind_text(4, @"$(second.full_id)|%");
+			s.bind_text(5, @"%|$(second.full_id)|%");
+			s.bind_text(6, @"%|$(second.full_id)");
 
 			int64? row = null;
 			int merge_var = 1;
@@ -98,39 +102,19 @@ namespace GameHub.Data.DB.Tables
 				return false;
 			}
 
-			string new_merge = "";
-
-			var games = new ArrayList<Game>(Game.is_equal);
-			games.add(first);
-			games.add(second);
+			string[] games = {};
 			if(old_merge != null)
 			{
 				foreach(var gameid in old_merge.split("|"))
 				{
-					var gparts = gameid.split(":");
-					var gsrc = gparts[0];
-					var gid = gparts[1];
-
-					if(gsrc == null || gid == null) continue;
-
-					var game = Games.get(gsrc, gid);
-
-					if(game != null && !games.contains(game)) games.add(game);
+					if(!(gameid in games)) games += gameid;
 				}
 			}
 
-			foreach(var src in GameSources)
-			{
-				foreach(var game in games)
-				{
-					if(game.source.id == src.id)
-					{
-						if(new_merge != "") new_merge += "|";
-						new_merge += game.full_id;
-					}
-				}
-			}
+			if(!(first.full_id in games)) games += first.full_id;
+			if(!(second.full_id in games)) games += second.full_id;
 
+			var new_merge = string.joinv("|", games);
 			s.bind_text(merge_var, new_merge);
 
 			res = s.step();
@@ -161,13 +145,14 @@ namespace GameHub.Data.DB.Tables
 
 			s.bind_text(1, @"$(game.full_id)|%");
 
-			if((res = s.step()) == Sqlite.ROW)
+			ArrayList<Game>? games = null;
+			while((res = s.step()) == Sqlite.ROW)
 			{
-				var games = new ArrayList<Game>(Game.is_equal);
 				var merge = s.column_text(0);
-
 				if(merge != null)
 				{
+					if(games == null) games = new ArrayList<Game>(Game.is_equal);
+
 					foreach(var gameid in merge.split("|"))
 					{
 						var gparts = gameid.split(":");
@@ -181,11 +166,8 @@ namespace GameHub.Data.DB.Tables
 						if(g != null && !games.contains(g) && !Game.is_equal(game, g)) games.add(g);
 					}
 				}
-
-				return games;
 			}
-
-			return null;
+			return games;
 		}
 
 		public static Game? get_primary(Game game)
