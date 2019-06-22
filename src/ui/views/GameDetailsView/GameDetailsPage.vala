@@ -53,6 +53,7 @@ namespace GameHub.UI.Views.GameDetailsView
 		private Label status;
 		private ProgressBar download_progress;
 		private AutoSizeImage icon;
+		private Image no_icon_indicator;
 		private Image src_icon;
 
 		private Box platform_icons;
@@ -107,10 +108,23 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			var title_hbox = new Box(Orientation.HORIZONTAL, 15);
 
+			var icon_overlay = new Overlay();
+			icon_overlay.set_size_request(48, 48);
+			icon_overlay.valign = Align.START;
+
+			no_icon_indicator = new Image.from_icon_name("gamehub-symbolic", IconSize.DND);
+			no_icon_indicator.get_style_context().add_class("no-icon-indicator");
+			no_icon_indicator.halign = Align.CENTER;
+			no_icon_indicator.valign = Align.CENTER;
+			no_icon_indicator.opacity = 0.8;
+
 			icon = new AutoSizeImage();
-			icon.valign = Align.START;
+			icon.halign = Align.CENTER;
+			icon.valign = Align.CENTER;
 			icon.set_constraint(48, 48, 1);
-			icon.set_size_request(48, 48);
+
+			icon_overlay.add(no_icon_indicator);
+			icon_overlay.add_overlay(icon);
 
 			title = new Label(null);
 			title.halign = Align.START;
@@ -174,7 +188,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			title_vbox.add(hbox_inner);
 			title_vbox.add(download_progress);
 
-			title_hbox.add(icon);
+			title_hbox.add(icon_overlay);
 			title_hbox.add(title_vbox);
 
 			title_icons.add(platform_icons);
@@ -358,6 +372,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			set_visible_widgets(game.status);
 
 			icon.load(game.icon, "icon");
+			no_icon_indicator.visible = game.icon == null || icon.source == null;
 
 			stack.set_visible_child(content_scrolled);
 		}

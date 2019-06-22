@@ -49,7 +49,10 @@ namespace GameHub.UI.Views.GamesView
 
 		public signal void update_tags();
 
-		private AutoSizeImage image;
+		private Overlay icon_overlay;
+		private AutoSizeImage icon;
+		private Image no_icon_indicator;
+
 		private Label label;
 		private Label state_label;
 		private Image favorite_icon;
@@ -71,10 +74,23 @@ namespace GameHub.UI.Views.GamesView
 			var vbox = new Box(Orientation.VERTICAL, 0);
 			vbox.valign = Align.CENTER;
 
-			image = new AutoSizeImage();
-			image.valign = Align.CENTER;
+			icon_overlay = new Overlay();
 
-			hbox.add(image);
+			no_icon_indicator = new Image.from_icon_name("gamehub-symbolic", IconSize.BUTTON);
+			no_icon_indicator.get_style_context().add_class("no-icon-indicator");
+			no_icon_indicator.halign = Align.CENTER;
+			no_icon_indicator.valign = Align.CENTER;
+			no_icon_indicator.opacity = 0.8;
+
+			icon = new AutoSizeImage();
+			icon.halign = Align.CENTER;
+			icon.valign = Align.CENTER;
+			icon.scale = true;
+
+			icon_overlay.add(no_icon_indicator);
+			icon_overlay.add_overlay(icon);
+
+			hbox.add(icon_overlay);
 
 			var label_hbox = new Box(Orientation.HORIZONTAL, 4);
 
@@ -126,7 +142,7 @@ namespace GameHub.UI.Views.GamesView
 						break;
 
 					case 3:
-						new GameContextMenu(game, image).open(e, true);
+						new GameContextMenu(game, icon).open(e, true);
 						break;
 				}
 				return true;
@@ -220,18 +236,25 @@ namespace GameHub.UI.Views.GamesView
 		public void update_compact_view()
 		{
 			var compact = ui_settings.list_compact;
-			var image_size = compact ? 16 : 36;
-			image.set_constraint(image_size, image_size, 1);
-			image.set_size_request(image_size, image_size);
+			var is_gog_game = game is GameHub.Data.Sources.GOG.GOGGame;
+
+			// GOG icons are rounded, make them bigger to compensate visual difference
+			var image_size = compact ? (is_gog_game ? 18 : 16) : (is_gog_game ? 38 : 32);
+			var overlay_size = compact ? 18 : 38;
+
+			icon.set_constraint(image_size, image_size, 1);
+			icon_overlay.set_size_request(overlay_size, overlay_size);
+
 			state_label.visible = !compact;
 		}
 
 		private void update_icon()
 		{
-			image.queue_draw();
+			icon.queue_draw();
 			if(game.icon == old_icon) return;
 			old_icon = game.icon;
-			image.load(game.icon, "icon");
+			icon.load(game.icon, "icon");
+			no_icon_indicator.visible = game.icon == null || icon.source == null;
 		}
 	}
 }
