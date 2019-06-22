@@ -428,15 +428,18 @@ namespace GameHub.Data.Adapters
 		{
 			if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC) return;
 
+			if(Tables.Merges.is_game_merged(game) || Tables.Merges.is_game_merged(game2) || Tables.Merges.is_game_merged_as_primary(game2)) return;
+
 			bool name_match_exact = game.normalized_name.casefold() == game2.normalized_name.casefold();
 			bool name_match_fuzzy_prefix = game.source != src
 			                  && (Utils.strip_name(game.name, ":", true).casefold().has_prefix(game2.normalized_name.casefold() + ":")
 			                  || Utils.strip_name(game2.name, ":", true).casefold().has_prefix(game.normalized_name.casefold() + ":"));
 			if(name_match_exact || name_match_fuzzy_prefix)
 			{
-				Tables.Merges.add(game, game2);
 				debug("[Merge] Merging '%s' (%s) with '%s' (%s)", game.name, game.full_id, game2.name, game2.full_id);
+				Tables.Merges.add(game, game2);
 				remove(game2);
+				game.update_status();
 			}
 		}
 
