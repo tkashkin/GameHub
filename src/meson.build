@@ -151,6 +151,7 @@ sources = [
 	'settings/UI.vala',
 	'settings/SavedState.vala',
 	'settings/Auth.vala',
+	'settings/Compat.vala',
 	'settings/Providers.vala',
 	'settings/Controller.vala',
 

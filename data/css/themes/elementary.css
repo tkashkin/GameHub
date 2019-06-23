@@ -58,3 +58,29 @@ infobar.frame.settings-info
 {
 	margin: -1px -3px -1px -3px;
 }
+
+.import-emulated-games-dialog .select-all
+{
+	margin: 0;
+	padding: 0;
+}
+.import-emulated-games-dialog .select-all > check
+{
+	margin: 0 12px 0 0;
+	padding: 0;
+}
+.import-emulated-games-dialog .select-all > label
+{
+	margin: 0;
+	padding: 0;
+}
+.import-emulated-games-dialog .dialog-action-box
+{
+	margin: 0;
+	padding: 0 8px 2px 8px;
+}
+.import-emulated-games-dialog .dialog-action-area
+{
+	margin: 0;
+	padding: 0;
+}

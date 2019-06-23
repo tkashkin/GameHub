@@ -63,7 +63,7 @@ namespace GameHub.Data.Compat
 			has_cores = false;
 			core_option.options = cores;
 
-			var dir = FSUtils.file(FSUtils.Paths.Settings.instance.libretro_core_dir);
+			var dir = FSUtils.file(Settings.Compat.RetroArch.instance.core_dir);
 
 			if(dir == null || !dir.query_exists())
 			{
@@ -107,7 +107,7 @@ namespace GameHub.Data.Compat
 
 			if(!core.has_prefix("/"))
 			{
-				core = FSUtils.expand(FSUtils.Paths.Settings.instance.libretro_core_dir, core);
+				core = FSUtils.expand(Settings.Compat.RetroArch.instance.core_dir, core);
 			}
 			if(!core.has_suffix(LIBRETRO_CORE_SUFFIX))
 			{

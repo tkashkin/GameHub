@@ -566,3 +566,29 @@ dialog .sidebar list
 {
 	background: alpha(shade(@theme_bg_color, 0.95), 0.5);
 }
+
+.import-emulated-games-dialog .select-all
+{
+	margin: 0;
+	padding: 0;
+}
+.import-emulated-games-dialog .select-all > check
+{
+	margin: 0 16px 0 0;
+	padding: 0;
+}
+.import-emulated-games-dialog .select-all > label
+{
+	margin: 0;
+	padding: 0;
+}
+.import-emulated-games-dialog .dialog-action-box
+{
+	margin: 0;
+	padding: 0 8px 2px 8px;
+}
+.import-emulated-games-dialog .dialog-action-area
+{
+	margin: 0;
+	padding: 0 8px;
+}

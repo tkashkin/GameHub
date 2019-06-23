@@ -180,14 +180,6 @@
 				<default>'~/Games/HumbleBundle'</default>
 				<summary>Humble games directory</summary>
 			</key>
-			<key name="libretro-core-dir" type="s">
-				<default>'/usr/lib/libretro'</default>
-				<summary>libretro cores directory</summary>
-			</key>
-			<key name="libretro-core-info-dir" type="s">
-				<default>'/usr/share/libretro/info'</default>
-				<summary>libretro core info directory</summary>
-			</key>
 		</schema>
 
 	<!-- Paths / Collection -->
@@ -245,6 +237,26 @@
 			<key name="ignored-controllers" type="as">
 				<default>[]</default>
 				<summary>Ignored controllers list</summary>
+			</key>
+		</schema>
+
+	<!-- Compat / RetroArch -->
+		<schema path="/com/github/tkashkin/gamehub/compat/retroarch/" id="com.github.tkashkin.gamehub.compat.retroarch">
+			<key name="core-dir" type="s">
+				<default>'/usr/lib/libretro'</default>
+				<summary>libretro cores directory</summary>
+			</key>
+			<key name="core-info-dir" type="s">
+				<default>'/usr/share/libretro/info'</default>
+				<summary>libretro core info directory</summary>
+			</key>
+			<key name="cores-blacklist" type="s">
+				<default>'3dengine|ffmpeg|dosbox|dosbox_svn|dosbox_svn_glide'</default>
+				<summary>Ignored libretro cores list (separated by '|')</summary>
+			</key>
+			<key name="game-executable-extensions-blacklist" type="s">
+				<default>'bin|dat|exe|zip|7z|gz'</default>
+				<summary>Ignored game file extensions list (separated by '|')</summary>
 			</key>
 		</schema>
 

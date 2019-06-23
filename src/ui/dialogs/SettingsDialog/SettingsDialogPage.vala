@@ -80,7 +80,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			return add_widget(hbox);
 		}
 
-		protected Box add_entry(string text, string val, owned EntryAction action, string? icon=null)
+		protected Box add_entry(string? text, string val, owned EntryAction action, string? icon=null)
 		{
 			var entry = new Entry();
 			entry.text = val;
@@ -89,12 +89,20 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 			entry.primary_icon_name = icon;
 
-			var label = new Label(text);
-			label.halign = Align.START;
-			label.hexpand = true;
-
 			var hbox = new Box(Orientation.HORIZONTAL, 12);
-			hbox.add(label);
+
+			if(text != null)
+			{
+				var label = new Label(text);
+				label.halign = Align.START;
+				label.hexpand = true;
+				hbox.add(label);
+			}
+			else
+			{
+				entry.hexpand = true;
+			}
+
 			hbox.add(entry);
 			return add_widget(hbox);
 		}
