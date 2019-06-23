@@ -39,9 +39,6 @@ namespace GameHub.Utils
 				public string gog_games { get; set; }
 				public string humble_games { get; set; }
 
-				public string libretro_core_dir { get; set; }
-				public string libretro_core_info_dir { get; set; }
-
 				public Settings()
 				{
 					base(ProjectConfig.PROJECT_NAME + ".paths");

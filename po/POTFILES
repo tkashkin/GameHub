@@ -95,5 +95,6 @@ src/utils/downloader/SoupDownloader.vala
 src/settings/UI.vala
 src/settings/SavedState.vala
 src/settings/Auth.vala
+src/settings/Compat.vala
 src/settings/Providers.vala
 src/settings/Controller.vala

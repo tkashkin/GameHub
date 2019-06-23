@@ -33,9 +33,6 @@ namespace GameHub.UI.Dialogs
 {
 	public class ImportEmulatedGamesDialog: Dialog
 	{
-		private const string[] LIBRETRO_IGNORED_CORES = { "3dengine", "ffmpeg", "dosbox", "dosbox_svn", "dosbox_svn_glide" };
-		private const string[] LIBRETRO_IGNORED_FILES = { "bin", "dat", "exe", "zip", "7z", "gz" };
-
 		private const int RESPONSE_IMPORT = 10;
 
 		public signal void game_added(UserGame game);
@@ -64,6 +61,7 @@ namespace GameHub.UI.Dialogs
 		{
 			get_style_context().add_class("rounded");
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			get_style_context().add_class("import-emulated-games-dialog");
 
 			modal = true;
 
@@ -105,10 +103,9 @@ namespace GameHub.UI.Dialogs
 			content.add(found_list_scroll);
 
 			var status_hbox = new Box(Orientation.HORIZONTAL, 10);
-			status_hbox.margin_start = 6;
 
 			select_all = new CheckButton.with_label(_("Select all"));
-			select_all.margin_start = 2;
+			select_all.get_style_context().add_class("select-all");
 			select_all.active = true;
 			select_all.no_show_all = true;
 			select_all.visible = false;
@@ -117,7 +114,6 @@ namespace GameHub.UI.Dialogs
 
 			status_label = new Label(_("Select directory to import"));
 			status_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-			status_label.margin_start = 2;
 			status_label.xalign = 0;
 			status_label.hexpand = true;
 
@@ -135,7 +131,6 @@ namespace GameHub.UI.Dialogs
 			import_btn.sensitive = false;
 
 			var bbox = (ButtonBox) import_btn.get_parent();
-			bbox.margin_end = 8;
 			bbox.add(status_hbox);
 			bbox.set_child_secondary(status_hbox, true);
 			bbox.set_child_non_homogeneous(status_hbox, true);
@@ -271,13 +266,12 @@ namespace GameHub.UI.Dialogs
 							sp = sp.substring(sp.index_of_nth_char(2));
 						}
 
-						var files_list = Utils.run({"find", root.get_path(), "-path", "*/" + sp}, null, null, false, true, false);
+						var files_list = Utils.run({"find", root.get_path(), "-path", "*/" + sp, "-type", "f"}, null, null, false, true, false);
 						var files = files_list.split("\n");
 
 						foreach(var file_path in files)
 						{
 							var file = FSUtils.file(file_path);
-							if(file.query_file_type(FileQueryInfoFlags.NONE) == FileType.DIRECTORY) continue;
 
 							var dir = file.get_parent();
 							var name = file.get_basename();
@@ -331,7 +325,7 @@ namespace GameHub.UI.Dialogs
 				return;
 			}
 
-			var core_info_dir = FSUtils.file(FSUtils.Paths.Settings.instance.libretro_core_info_dir);
+			var core_info_dir = FSUtils.file(Settings.Compat.RetroArch.instance.core_info_dir);
 
 			if(core_info_dir == null || !core_info_dir.query_exists())
 			{
@@ -339,9 +333,12 @@ namespace GameHub.UI.Dialogs
 				return;
 			}
 
+			var ignored_cores = Settings.Compat.RetroArch.instance.cores_blacklist.split("|");
+			var ignored_extensions = Settings.Compat.RetroArch.instance.game_executable_extensions_blacklist.split("|");
+
 			foreach(var core in retroarch.cores)
 			{
-				if(core in LIBRETRO_IGNORED_CORES) continue;
+				if(core in ignored_cores) continue;
 
 				var info = core_info_dir.get_child(core + RetroArch.LIBRETRO_CORE_INFO_SUFFIX);
 
@@ -384,15 +381,14 @@ namespace GameHub.UI.Dialogs
 						foreach(var ext in exts)
 						{
 							ext = ext.strip();
-							if(ext in LIBRETRO_IGNORED_FILES) continue;
+							if(ext in ignored_extensions) continue;
 
-							var files_list = Utils.run({"find", root.get_path(), "-path", "*/*." + ext}, null, null, false, true, false);
+							var files_list = Utils.run({"find", root.get_path(), "-path", "*/*." + ext, "-type", "f"}, null, null, false, true, false);
 							var files = files_list.split("\n");
 
 							foreach(var file_path in files)
 							{
 								var file = FSUtils.file(file_path);
-								if(file.query_file_type(FileQueryInfoFlags.NONE) == FileType.DIRECTORY) continue;
 
 								var dir = file.get_parent();
 								var name = file.get_basename();
@@ -559,7 +555,10 @@ namespace GameHub.UI.Dialogs
 				if(prev == null || prev.game.parent_directory.get_path() != game.parent_directory.get_path())
 				{
 					var header = new HeaderLabel(game.parent_directory.get_path());
-					header.expand = true;
+					header.margin_end = 8;
+					header.ellipsize = Pango.EllipsizeMode.START;
+					header.tooltip_text = header.label;
+					header.expand = false;
 					header.show_all();
 					set_header(header);
 				}

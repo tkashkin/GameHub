@@ -24,7 +24,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 {
 	public class RetroArch: SettingsDialogPage
 	{
-		private FSUtils.Paths.Settings paths;
+		private Settings.Compat.RetroArch settings;
 
 		public RetroArch(SettingsDialog dlg)
 		{
@@ -40,10 +40,20 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 		construct
 		{
-			paths = FSUtils.Paths.Settings.instance;
+			settings = Settings.Compat.RetroArch.instance;
 
-			add_file_chooser(_("Libretro core directory"), FileChooserAction.SELECT_FOLDER, paths.libretro_core_dir, v => { paths.libretro_core_dir = v; update(); request_restart(); });
-			add_file_chooser(_("Libretro core info directory"), FileChooserAction.SELECT_FOLDER, paths.libretro_core_info_dir, v => { paths.libretro_core_info_dir = v; request_restart(); });
+			add_file_chooser(_("Libretro core directory"), FileChooserAction.SELECT_FOLDER, settings.core_dir, v => { settings.core_dir = v; update(); request_restart(); });
+			add_file_chooser(_("Libretro core info directory"), FileChooserAction.SELECT_FOLDER, settings.core_info_dir, v => { settings.core_info_dir = v; request_restart(); });
+
+			add_separator();
+
+			add_header(_("Ignored libretro cores"));
+			var cores_blacklist = add_entry(null, settings.cores_blacklist, v => { settings.cores_blacklist = v; update(); }, "application-x-executable-symbolic").get_children().last().data as Entry;
+			cores_blacklist.placeholder_text = settings.schema.get_default_value("cores-blacklist").get_string();
+
+			add_header(_("Ignored game file extensions"));
+			var game_executable_extensions_blacklist = add_entry(null, settings.game_executable_extensions_blacklist, v => { settings.game_executable_extensions_blacklist = v; update(); }, "package-x-generic-symbolic").get_children().last().data as Entry;
+			game_executable_extensions_blacklist.placeholder_text = settings.schema.get_default_value("game-executable-extensions-blacklist").get_string();
 
 			update();
 		}

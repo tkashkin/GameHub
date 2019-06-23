@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 00:09+0300\n"
+"POT-Creation-Date: 2019-06-23 07:47+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -160,7 +160,7 @@ msgstr "Показать файл"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Remove"
 msgstr "Удалить"
 
@@ -255,7 +255,7 @@ msgstr "Объединение игр"
 msgid "Merging games from %s"
 msgstr "Объединение игр из %s"
 
-#: src/data/adapters/GamesAdapter.vala:452
+#: src/data/adapters/GamesAdapter.vala:455
 #, c-format
 msgid "Loading games from %s"
 msgstr "Загрузка игр из %s"
@@ -332,7 +332,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
 msgid "Run"
 msgstr "Запустить"
 
@@ -701,7 +701,7 @@ msgstr "Папка установки"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:76
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
 msgstr "Не установлен"
 
@@ -754,11 +754,19 @@ msgstr "Папка ядер libretro"
 msgid "Libretro core info directory"
 msgstr "Папка информации о ядрах libretro"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:56
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
+msgid "Ignored libretro cores"
+msgstr "Игнорируемые ядра libretro"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
+msgid "Ignored game file extensions"
+msgstr "Игнорируемые расширения файлов игр"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
 msgstr "Ядра не найдены"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:60
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:70
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
@@ -828,7 +836,7 @@ msgid "Game arguments"
 msgstr "Параметры игры"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:82
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Directory"
 msgstr "Папка"
@@ -950,12 +958,12 @@ msgstr "Форки"
 
 #: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GamesView/GameContextMenu.vala:50
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
 msgid "Install"
 msgstr "Установить"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:133
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr "Импортировать"
 
@@ -1072,7 +1080,7 @@ msgstr "Открыть папку"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
 msgid "Run with compatibility layer"
 msgstr "Запустить, используя слой совместимости"
 
@@ -1080,24 +1088,24 @@ msgstr "Запустить, используя слой совместимост
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "повреждённый установщик: несовпадение контрольной суммы в файле"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:60
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
 msgid "Import emulated games"
 msgstr "Импортировать эмулируемые игры"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:77
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
 msgid "Select directory with emulated games"
 msgstr "Выберите папку с эмулируемыми играми"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:85
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
 msgid "Detected games"
 msgstr "Обнаруженные игры"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:110
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 msgid "Select all"
 msgstr "Выделить всё"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:118
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
 msgid "Select directory to import"
 msgstr "Выберите папку для импорта"
 
@@ -1241,17 +1249,17 @@ msgid "Downloading image: %s"
 msgstr "Загрузка изображений: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Приостановить загрузку"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:154
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Возобновить загрузку"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:134
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:160
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Отменить загрузку"
 
@@ -1294,30 +1302,30 @@ msgid "Properties"
 msgstr "Свойства"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
 msgid "Open installation directory"
 msgstr "Открыть папку установки"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:152
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
 msgid "Open installers collection directory"
 msgstr "Открыть папку коллекции установщиков"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
 msgid "Open bonus collection directory"
 msgstr "Открыть папку коллекции бонусного контента"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Uninstall"
 msgstr "Деинсталлировать"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
 msgid "Open store page"
 msgstr "Открыть страницу в магазине"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 msgid "Game properties"
 msgstr "Свойства игры"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 00:09+0300\n"
+"POT-Creation-Date: 2019-06-23 07:47+0300\n"
 "PO-Revision-Date: 2019-06-20 19:41+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -164,7 +164,7 @@ msgstr "Selecione o arquivo"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Remove"
 msgstr "Remover"
 
@@ -261,7 +261,7 @@ msgstr "Mesclando jogos"
 msgid "Merging games from %s"
 msgstr "Mesclando jogos de %s"
 
-#: src/data/adapters/GamesAdapter.vala:452
+#: src/data/adapters/GamesAdapter.vala:455
 #, c-format
 msgid "Loading games from %s"
 msgstr "Carregando jogos de %s"
@@ -338,7 +338,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
 msgid "Run"
 msgstr "Jogar"
 
@@ -710,7 +710,7 @@ msgstr "Diretório de instalação"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:76
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 #, fuzzy
 msgid "Not installed"
 msgstr "Não instalado"
@@ -764,11 +764,20 @@ msgstr "Diretório do núcleo do Libretro"
 msgid "Libretro core info directory"
 msgstr "Diretório de informações do núcleo do Libretro"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:56
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
+#, fuzzy
+msgid "Ignored libretro cores"
+msgstr "Arquivo principal do Libretro"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
+msgid "Ignored game file extensions"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:60
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:70
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
@@ -836,7 +845,7 @@ msgid "Game arguments"
 msgstr "Argumentos do jogo"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:82
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Directory"
 msgstr "Diretório"
@@ -956,12 +965,12 @@ msgstr ""
 
 #: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GamesView/GameContextMenu.vala:50
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
 msgid "Install"
 msgstr "Instalar"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:133
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr "Importar"
 
@@ -1080,7 +1089,7 @@ msgstr "Diretório aberto"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
 msgid "Run with compatibility layer"
 msgstr "Jogar com camada de compatibilidade do Windows"
 
@@ -1088,27 +1097,27 @@ msgstr "Jogar com camada de compatibilidade do Windows"
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "Instalador corrompido: incompatibilidade de soma de verificação em"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:60
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
 #, fuzzy
 msgid "Import emulated games"
 msgstr "Nenhum jogo adicionado pelo usuário"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:77
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
 #, fuzzy
 msgid "Select directory with emulated games"
 msgstr "Selecione o diretório"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:85
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
 msgid "Detected games"
 msgstr "Jogos detectados"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:110
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 #, fuzzy
 msgid "Select all"
 msgstr "Selecione o instalador"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:118
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
 #, fuzzy
 msgid "Select directory to import"
 msgstr "Selecione o diretório"
@@ -1254,17 +1263,17 @@ msgid "Downloading image: %s"
 msgstr "Baixar"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Pausar download"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:154
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Retomar download"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:134
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:160
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Cancelar o download"
 
@@ -1310,30 +1319,30 @@ msgid "Properties"
 msgstr "Propriedades"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
 msgid "Open installation directory"
 msgstr "Abra o diretório de instalação"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:152
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
 msgid "Open installers collection directory"
 msgstr "Abrir diretório de coleção de instaladores"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
 msgid "Open bonus collection directory"
 msgstr "Abra o diretório de coleção de bônus"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
 msgid "Open store page"
 msgstr "Abra a página da loja"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 msgid "Game properties"
 msgstr "Propriedades do jogo"
 

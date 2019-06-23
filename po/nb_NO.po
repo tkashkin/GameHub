@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 00:09+0300\n"
+"POT-Creation-Date: 2019-06-23 07:47+0300\n"
 "PO-Revision-Date: 2019-06-23 02:01+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -161,7 +161,7 @@ msgstr "Vis fil"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Remove"
 msgstr "Fjern"
 
@@ -257,7 +257,7 @@ msgstr "Fletter spill"
 msgid "Merging games from %s"
 msgstr "Fletter spill fra %s"
 
-#: src/data/adapters/GamesAdapter.vala:452
+#: src/data/adapters/GamesAdapter.vala:455
 #, c-format
 msgid "Loading games from %s"
 msgstr "Laster spill fra %s"
@@ -334,7 +334,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:210
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
 msgid "Run"
 msgstr "Kjør"
 
@@ -707,7 +707,7 @@ msgstr "Installasjonsmappe"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:76
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
 msgstr "Ikke installert"
 
@@ -760,11 +760,20 @@ msgstr "Libretro-kjernemappe"
 msgid "Libretro core info directory"
 msgstr "Libretro-kjerneinfomappe"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:56
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
+#, fuzzy
+msgid "Ignored libretro cores"
+msgstr "Libretro-kjernefil"
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
+msgid "Ignored game file extensions"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
 msgstr "Fant ingen kjerner"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:60
+#: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:70
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
@@ -832,7 +841,7 @@ msgid "Game arguments"
 msgstr "Spillargumenter"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:82
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Directory"
 msgstr "Mappe"
@@ -954,12 +963,12 @@ msgstr "Forgreninger"
 
 #: src/ui/dialogs/InstallDialog.vala:55 src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GamesView/GameContextMenu.vala:50
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:209
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
 msgid "Install"
 msgstr "Installer"
 
 #: src/ui/dialogs/InstallDialog.vala:111
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:133
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr "Importer"
 
@@ -1076,7 +1085,7 @@ msgstr "Åpne mappe"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:211
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
 msgid "Run with compatibility layer"
 msgstr "Kjør med kompabilitetslag"
 
@@ -1084,24 +1093,24 @@ msgstr "Kjør med kompabilitetslag"
 msgid "Corrupted installer: checksum mismatch in"
 msgstr "Skadet installasjonskandidat: sjekksum stemmer ikke overens i"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:60
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
 msgid "Import emulated games"
 msgstr "Importer emulerte spill"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:77
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
 msgid "Select directory with emulated games"
 msgstr "Velg mappe inneholdende emulerte spill"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:85
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
 msgid "Detected games"
 msgstr "Oppdagede spill"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:110
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 msgid "Select all"
 msgstr "Velg alt"
 
-#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:118
+#: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
 msgid "Select directory to import"
 msgstr "Velg mappe å importere"
 
@@ -1244,17 +1253,17 @@ msgid "Downloading image: %s"
 msgstr "Laster ned bilde: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:148
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Pause nedlasting"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:154
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Fortsett nedlasting"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:134
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:160
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Avbryt nedlasting"
 
@@ -1299,30 +1308,30 @@ msgid "Properties"
 msgstr "Egenskaper"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:212
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
 msgid "Open installation directory"
 msgstr "Åpne installasjonsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:152
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:213
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
 msgid "Open installers collection directory"
 msgstr "Åpne installasjonskandidatssamlingsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:214
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
 msgid "Open bonus collection directory"
 msgstr "Åpne bonussamlingsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:216
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Uninstall"
 msgstr "Avinstaller"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:215
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
 msgid "Open store page"
 msgstr "Åpne butikkside"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:217
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 msgid "Game properties"
 msgstr "Spillegenskaper"
 

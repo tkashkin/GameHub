@@ -412,7 +412,7 @@ namespace GameHub.Utils
 			"[FATAL]\x001b[0m "
 		};
 
-		private const string[] HIDDEN_DOMAINS  = { "GLib", "GLib-GIO", "Manette" };
+		private const string[] HIDDEN_DOMAINS  = { "GLib", "GLib-GIO", "GdkPixbuf", "Manette" };
 		private const string[] HIDDEN_MESSAGES = { "Loading settings from schema" };
 
 		static Mutex write_mutex;
@@ -506,16 +506,23 @@ namespace GameHub.Utils
 			glib_log_func_granite(d, flags, msg);
 		}
 
-		private static void glib_log_func_granite(string? d, LogLevelFlags flags, string msg)
+		private static bool glib_log_filter(string? d, LogLevelFlags flags, string msg)
 		{
 			if(!GameHub.Application.log_no_filters)
 			{
-				if(d in HIDDEN_DOMAINS) return;
+				if(d == "GLib-GIO" && msg.has_prefix("Settings schema '")) return true;
+				if(d in HIDDEN_DOMAINS) return false;
 				foreach(var hidden_msg in HIDDEN_MESSAGES)
 				{
-					if(hidden_msg in msg) return;
+					if(hidden_msg in msg) return false;
 				}
 			}
+			return true;
+		}
+
+		private static void glib_log_func_granite(string? d, LogLevelFlags flags, string msg)
+		{
+			if(!glib_log_filter(d, flags, msg)) return;
 
 			string domain;
 			if(d != null)
