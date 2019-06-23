@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-23 07:47+0300\n"
-"PO-Revision-Date: 2019-06-21 19:41+0000\n"
+"PO-Revision-Date: 2019-06-24 03:51+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7\n"
+"X-Generator: Weblate 3.7.1-dev\n"
 
 #: src/app.vala:90
 msgid "Show help"
@@ -756,13 +756,12 @@ msgid "Libretro core info directory"
 msgstr "Libretro-core-informatiemap"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
-#, fuzzy
 msgid "Ignored libretro cores"
-msgstr "Libretro-corebestand"
+msgstr "Genegeerde libretro-corebestanden"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
-msgstr ""
+msgstr "Genegeerde bestandsextensies"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
