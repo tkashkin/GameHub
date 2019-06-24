@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-23 07:47+0300\n"
-"PO-Revision-Date: 2019-06-24 03:51+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2019-06-25 00:00+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -182,10 +182,9 @@ msgstr ""
 "Sett den i spillets egenskaper."
 
 #: src/data/Runnable.vala:820
-#, fuzzy
 msgctxt "platform"
 msgid "Emulated"
-msgstr "Emulator"
+msgstr "Emulerte"
 
 #: src/data/Game.vala:478
 msgctxt "status"
@@ -498,10 +497,9 @@ msgid "No logo"
 msgstr "Ingen logo"
 
 #: src/data/providers/data/IGDB.vala:258
-#, fuzzy
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr "Åpne nettside"
+msgstr "Offisiell nettside"
 
 #: src/data/providers/data/IGDB.vala:370
 msgctxt "igdb_preferred_description"
@@ -509,10 +507,9 @@ msgid "When game has description, show description"
 msgstr "Vis beskrivelse når spillet har det"
 
 #: src/data/providers/data/IGDB.vala:377
-#, fuzzy
 msgctxt "igdb_preferred_description"
 msgid "of game"
-msgstr "Ingen spill"
+msgstr "av spill"
 
 #: src/data/providers/data/IGDB.vala:378
 msgctxt "igdb_preferred_description"
@@ -562,10 +559,9 @@ msgid "Theme-based"
 msgstr "Drakt-basert"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:49
-#, fuzzy
 msgctxt "icon_style"
 msgid "Symbolic"
-msgstr "Symbolske ikoner"
+msgstr "Symbolske"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:50
 msgctxt "icon_style"
@@ -759,13 +755,12 @@ msgid "Libretro core info directory"
 msgstr "Libretro-kjerneinfomappe"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
-#, fuzzy
 msgid "Ignored libretro cores"
-msgstr "Libretro-kjernefil"
+msgstr "Ignorerte libretro-kjerner"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
-msgstr ""
+msgstr "Ignorerte spillfilendelser"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
@@ -1266,14 +1261,12 @@ msgid "Cancel download"
 msgstr "Avbryt nedlasting"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:72
-#, fuzzy
 msgid "Sort"
-msgstr "Sortering:"
+msgstr "Sorter"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:306
-#, fuzzy
 msgid "All platforms"
-msgstr "Plattformer"
+msgstr "Alle plattformer"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Select game executable"
