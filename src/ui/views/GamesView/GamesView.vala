@@ -150,10 +150,14 @@ namespace GameHub.UI.Views.GamesView
 			games_list_paned = new Paned(Orientation.HORIZONTAL);
 
 			games_list = new ListBox();
-			games_list.selection_mode = SelectionMode.BROWSE;
+			games_list.selection_mode = SelectionMode.MULTIPLE;
 
 			games_list_details = new GameDetailsView.GameDetailsView(null);
 			games_list_details.content_margin = 16;
+
+			games_list_details.selected_games_view.download_images.connect(games => {
+				download_images_async.begin(games);
+			});
 
 			var games_list_scrolled = new ScrolledWindow(null, null);
 			games_list_scrolled.hscrollbar_policy = PolicyType.EXTERNAL;
@@ -262,9 +266,26 @@ namespace GameHub.UI.Views.GamesView
 			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.Appearance.symbolic_icon_suffix, Settings.UI.Appearance.headerbar_icon_size);
 			settings.action_name = Application.ACTION_PREFIX + Application.ACTION_SETTINGS;
 
-			games_list.row_selected.connect(row => {
-				var item = row as GameListRow;
-				games_list_details.game = item != null ? item.game : null;
+			games_list.selected_rows_changed.connect(() => {
+				var rows = games_list.get_selected_rows();
+
+				if(rows.length() == 1)
+				{
+					games_list_details.game = ((GameListRow) rows.data).game;
+				}
+				else if(rows.length() > 1)
+				{
+					var selected = new ArrayList<Game>();
+					foreach(var row in rows)
+					{
+						var game = ((GameListRow) row).game;
+						if(game != null)
+						{
+							selected.add(game);
+						}
+					}
+					games_list_details.selected_games = selected;
+				}
 			});
 
 			games_adapter = new GamesAdapter(games_grid, games_list);
@@ -304,7 +325,7 @@ namespace GameHub.UI.Views.GamesView
 				update_view();
 			});
 			add_game_popover.download_images.connect(() => {
-				download_images_async.begin();
+				download_images_async.begin(null);
 			});
 
 			titlebar.pack_start(view);
@@ -503,6 +524,7 @@ namespace GameHub.UI.Views.GamesView
 							card.grab_focus();
 						}
 					}
+					games_list.unselect_all();
 					var row = games_list.get_row_at_index(index);
 					if(row != null)
 					{
@@ -658,10 +680,21 @@ namespace GameHub.UI.Views.GamesView
 
 		private void select_first_visible_game()
 		{
-			var row = games_list.get_selected_row() as GameListRow?;
-			if(row != null && games_adapter.filter(row.game)) return;
+			GameListRow? row = null;
+
+			var rows = games_list.get_selected_rows();
+			if(rows != null && rows.length() > 0)
+			{
+				row = (GameListRow?) rows.data;
+				if(row != null && games_adapter.filter(row.game)) return;
+			}
+			games_list.unselect_all();
+
 			row = games_list.get_row_at_y(32) as GameListRow?;
-			if(row != null) games_list.select_row(row);
+			if(row != null)
+			{
+				games_list.select_row(row);
+			}
 
 			var cards = games_grid.get_selected_children();
 			var card = cards != null && cards.length() > 0 ? cards.first().data as GameCard? : null;
@@ -746,11 +779,11 @@ namespace GameHub.UI.Views.GamesView
 			}, Priority.LOW);
 		}
 
-		private async void download_images_async()
+		private async void download_images_async(ArrayList<Game>? games=null)
 		{
 			update_status(_("Downloading images"));
-			var games = DB.Tables.Games.get_all();
-			foreach(var game in games)
+			var _games = games ?? DB.Tables.Games.get_all();
+			foreach(var game in _games)
 			{
 				if(game.image == null)
 				{

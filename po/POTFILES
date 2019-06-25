@@ -69,6 +69,7 @@ src/ui/views/GamesView/FiltersPopover.vala
 src/ui/views/GamesView/AddGamePopover.vala
 src/ui/views/GamesView/GameContextMenu.vala
 src/ui/views/GameDetailsView/GameDetailsView.vala
+src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala
 src/ui/views/GameDetailsView/GameDetailsPage.vala
 src/ui/views/GameDetailsView/GameDetailsBlock.vala
 src/ui/views/GameDetailsView/blocks/Achievements.vala
@@ -84,6 +85,7 @@ src/ui/widgets/ExtendedStackSwitcher.vala
 src/ui/widgets/ImagesDownloadPopover.vala
 src/ui/widgets/CompatToolOptions.vala
 src/ui/widgets/CompatToolPicker.vala
+src/ui/widgets/GameTagsList.vala
 src/ui/widgets/TagRow.vala
 src/utils/Utils.vala
 src/utils/ImageCache.vala

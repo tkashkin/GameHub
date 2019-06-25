@@ -126,7 +126,7 @@ namespace GameHub.Data.Sources.User
 			save();
 		}
 
-		public override async void install()
+		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			yield update_game_info();
 
@@ -135,7 +135,7 @@ namespace GameHub.Data.Sources.User
 			var installers = new ArrayList<Runnable.Installer>();
 			installers.add(installer);
 
-			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers);
+			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode);
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 
@@ -146,8 +146,11 @@ namespace GameHub.Data.Sources.User
 				});
 			});
 
-			wnd.show_all();
-			wnd.present();
+			if(install_mode == Runnable.Installer.InstallMode.INTERACTIVE)
+			{
+				wnd.show_all();
+				wnd.present();
+			}
 
 			yield;
 		}

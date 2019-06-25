@@ -50,9 +50,11 @@ namespace GameHub.UI.Dialogs
 		private CompatToolPicker compat_tool_picker;
 		private CompatToolOptions opts_list;
 
-		public InstallDialog(Runnable runnable, ArrayList<Runnable.Installer> installers)
+		public Runnable.Installer.InstallMode install_mode { get; construct; }
+
+		public InstallDialog(Runnable runnable, ArrayList<Runnable.Installer> installers, Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
-			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Install"));
+			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Install"), install_mode: install_mode);
 
 			Game? game = null;
 
@@ -305,6 +307,17 @@ namespace GameHub.UI.Dialogs
 
 			get_content_area().add(hbox);
 			get_content_area().set_size_request(380, 96);
+
+			if(install_mode != Runnable.Installer.InstallMode.INTERACTIVE)
+			{
+				Idle.add(() => {
+					response(install_mode == Runnable.Installer.InstallMode.AUTOMATIC ? ResponseType.ACCEPT : InstallDialog.RESPONSE_DOWNLOAD);
+					hide();
+					return Source.REMOVE;
+				});
+				return;
+			}
+
 			show_all();
 		}
 

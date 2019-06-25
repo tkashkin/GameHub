@@ -64,7 +64,7 @@ namespace GameHub.UI.Views.GamesView
 
 		public GameListRow(Game? game=null, GamesAdapter? adapter=null)
 		{
-			Object(game: game, adapter: adapter);
+			Object(game: game, adapter: adapter, activatable: true, selectable: true);
 		}
 
 		construct
@@ -134,10 +134,28 @@ namespace GameHub.UI.Views.GamesView
 				switch(e.button)
 				{
 					case 1:
-						activate();
-						if(e.type == EventType.2BUTTON_PRESS)
+						var list = (ListBox) parent;
+
+						if(ModifierType.CONTROL_MASK in e.state)
 						{
-							game.run_or_install.begin();
+							if(is_selected())
+							{
+								list.unselect_row(this);
+							}
+							else
+							{
+								list.select_row(this);
+							}
+						}
+						else
+						{
+							list.unselect_all();
+							activate();
+
+							if(e.type == EventType.2BUTTON_PRESS)
+							{
+								game.run_or_install.begin();
+							}
 						}
 						break;
 

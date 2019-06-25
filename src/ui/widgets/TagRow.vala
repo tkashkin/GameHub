@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gdk;
+using Gee;
 using Granite;
 
 using GameHub.Data;
@@ -27,16 +28,16 @@ namespace GameHub.UI.Widgets
 {
 	public class TagRow: ListBoxRow
 	{
-		public Game? game;
+		public ArrayList<Game>? games;
 		public Tables.Tags.Tag tag;
-		public bool toggles_tag_for_game;
+		public bool toggles_tag_for_games;
 		private CheckButton check;
 
-		public TagRow(Tables.Tags.Tag tag, Game? game=null)
+		public TagRow(Tables.Tags.Tag tag, ArrayList<Game>? games=null)
 		{
-			this.game = game;
+			this.games = games;
 			this.tag = tag;
-			this.toggles_tag_for_game = game != null;
+			this.toggles_tag_for_games = games != null;
 
 			can_focus = true;
 
@@ -50,9 +51,15 @@ namespace GameHub.UI.Widgets
 			check = new CheckButton();
 			check.can_focus = false;
 
-			if(toggles_tag_for_game)
+			if(toggles_tag_for_games)
 			{
-				check.active = game.has_tag(tag);
+				var have_tag = 0;
+				foreach(var game in games)
+				{
+					if(game.has_tag(tag)) have_tag++;
+				}
+				check.active = have_tag > 0;
+				check.inconsistent = have_tag != 0 && have_tag != games.size;
 			}
 			else
 			{
@@ -102,10 +109,22 @@ namespace GameHub.UI.Widgets
 
 		private void toggle()
 		{
-			if(toggles_tag_for_game)
+			if(toggles_tag_for_games)
 			{
-				game.toggle_tag(tag);
-				check.active = game.has_tag(tag);
+				check.active = !check.active;
+				check.inconsistent = false;
+
+				foreach(var game in games)
+				{
+					if(check.active && !game.has_tag(tag))
+					{
+						game.add_tag(tag);
+					}
+					else if(!check.active && game.has_tag(tag))
+					{
+						game.remove_tag(tag);
+					}
+				}
 			}
 			else
 			{

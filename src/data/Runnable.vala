@@ -72,7 +72,7 @@ namespace GameHub.Data
 
 		public ArrayList<RunnableAction> actions { get; protected set; default = new ArrayList<RunnableAction>(); }
 
-		public abstract async void install();
+		public abstract async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE);
 		public abstract async void run();
 
 		public virtual async void run_with_compat(bool is_opened_from_menu=false)
@@ -734,6 +734,11 @@ namespace GameHub.Data
 					}
 					return InstallerType.UNKNOWN;
 				}
+			}
+
+			public enum InstallMode
+			{
+				INTERACTIVE, AUTOMATIC, AUTOMATIC_DOWNLOAD
 			}
 		}
 

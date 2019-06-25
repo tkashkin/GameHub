@@ -83,6 +83,9 @@ namespace GameHub.Utils
 				public const string LibraryFoldersVDF = "libraryfolders.vdf";
 
 				public const string RegistryVDF = "registry.vdf";
+
+				public const string AppInfoVDF = "steam/appcache/appinfo.vdf";
+				public const string PackageInfoVDF = "steam/appcache/packageinfo.vdf";
 			}
 
 			public class GOG
