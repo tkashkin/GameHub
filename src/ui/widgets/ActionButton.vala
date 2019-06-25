@@ -40,10 +40,11 @@ namespace GameHub.UI.Widgets
 			var box = new Box(Orientation.HORIZONTAL, 8);
 
 			var overlay = new Overlay();
-			overlay.valign = Align.START;
+			overlay.valign = Align.CENTER;
 			overlay.set_size_request(48, 48);
 
 			var image = new Image.from_icon_name(icon, IconSize.DIALOG);
+			image.valign = Align.CENTER;
 			overlay.add(image);
 
 			notify["icon"].connect(() => {

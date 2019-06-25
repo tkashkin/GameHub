@@ -132,6 +132,12 @@ namespace GameHub.Data.Sources.Steam
 			Steam.find_app_install_dir(id, out dir);
 			install_dir = dir;
 
+			var appinfo = Steam.get_appinfo(id);
+			if(appinfo != null)
+			{
+				//appinfo.show();
+			}
+
 			if(game_info_updated)
 			{
 				game_info_updating = false;
@@ -238,9 +244,10 @@ namespace GameHub.Data.Sources.Steam
 			status = new Game.Status(state, this);
 		}
 
-		public override async void install()
+		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
-			yield run();
+			Utils.open_uri(@"steam://install/$(id)");
+			update_status();
 		}
 
 		public override async void run()

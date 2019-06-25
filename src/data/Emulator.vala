@@ -93,7 +93,7 @@ namespace GameHub.Data
 			platforms.add(Platform.LINUX);
 		}
 
-		public override async void install()
+		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			update_status();
 
@@ -102,7 +102,7 @@ namespace GameHub.Data
 			var installers = new ArrayList<Runnable.Installer>();
 			installers.add(installer);
 
-			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers);
+			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode);
 
 			wnd.cancelled.connect(() => Idle.add(install.callback));
 

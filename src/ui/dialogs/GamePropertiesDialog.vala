@@ -33,9 +33,6 @@ namespace GameHub.UI.Dialogs
 		public Game? game { get; construct; }
 
 		private Box content;
-		private ListBox tags_list;
-		private ScrolledWindow tags_scrolled;
-		private Entry new_entry;
 
 		private Entry name_entry;
 		private AutoSizeImage image_view;
@@ -59,70 +56,6 @@ namespace GameHub.UI.Dialogs
 
 			content = new Box(Orientation.HORIZONTAL, 8);
 			content.margin_start = content.margin_end = 6;
-
-			var tags_box = new Box(Orientation.VERTICAL, 0);
-
-			var tags_header = new HeaderLabel(_("Tags"));
-			tags_header.xpad = 8;
-			tags_box.add(tags_header);
-
-			tags_list = new ListBox();
-			tags_list.get_style_context().add_class("tags-list");
-			tags_list.selection_mode = SelectionMode.NONE;
-
-			tags_list.set_sort_func((row1, row2) => {
-				var item1 = row1 as TagRow;
-				var item2 = row2 as TagRow;
-
-				if(row1 != null && row2 != null)
-				{
-					var t1 = item1.tag.id;
-					var t2 = item2.tag.id;
-
-					var b1 = t1.has_prefix(Tables.Tags.Tag.BUILTIN_PREFIX);
-					var b2 = t2.has_prefix(Tables.Tags.Tag.BUILTIN_PREFIX);
-					if(b1 && !b2) return -1;
-					if(!b1 && b2) return 1;
-
-					var u1 = t1.has_prefix(Tables.Tags.Tag.USER_PREFIX);
-					var u2 = t2.has_prefix(Tables.Tags.Tag.USER_PREFIX);
-					if(u1 && !u2) return -1;
-					if(!u1 && u2) return 1;
-
-					return item1.tag.name.collate(item1.tag.name);
-				}
-
-				return 0;
-			});
-
-			tags_scrolled = new ScrolledWindow(null, null);
-			tags_scrolled.vexpand = true;
-			#if GTK_3_22
-			tags_scrolled.propagate_natural_width = true;
-			tags_scrolled.propagate_natural_height = true;
-			tags_scrolled.max_content_height = 320;
-			#endif
-			tags_scrolled.add(tags_list);
-
-			tags_box.add(tags_scrolled);
-
-			new_entry = new Entry();
-			new_entry.placeholder_text = _("Add tag");
-			new_entry.primary_icon_name = "gh-tag-add-symbolic";
-			new_entry.primary_icon_activatable = false;
-			new_entry.secondary_icon_name = "list-add-symbolic";
-			new_entry.secondary_icon_activatable = true;
-			new_entry.margin = 4;
-
-			new_entry.icon_press.connect((icon, event) => {
-				if(icon == EntryIconPosition.SECONDARY && ((EventButton) event).button == 1)
-				{
-					add_tag();
-				}
-			});
-			new_entry.activate.connect(add_tag);
-
-			tags_box.add(new_entry);
 
 			properties_box = new Box(Orientation.VERTICAL, 0);
 
@@ -307,7 +240,7 @@ namespace GameHub.UI.Dialogs
 				}
 			});
 
-			content.add(tags_box);
+			content.add(new GameTagsList(game));
 			content.add(new Separator(Orientation.VERTICAL));
 			content.add(properties_box);
 
@@ -323,38 +256,7 @@ namespace GameHub.UI.Dialogs
 				destroy();
 			});
 
-			Tables.Tags.instance.tags_updated.connect(update);
-
-			update();
-
 			show_all();
-		}
-
-		private void update()
-		{
-			tags_list.foreach(w => w.destroy());
-
-			foreach(var tag in Tables.Tags.TAGS)
-			{
-				if(tag in Tables.Tags.DYNAMIC_TAGS || !tag.enabled) continue;
-				var row = new TagRow(tag, game);
-				tags_list.add(row);
-			}
-
-			tags_list.show_all();
-		}
-
-		private void add_tag()
-		{
-			var name = new_entry.text.strip();
-			if(name.length == 0) return;
-
-			new_entry.text = "";
-
-			var tag = new Tables.Tags.Tag.from_name(name);
-			Tables.Tags.add(tag);
-			game.add_tag(tag);
-			update();
 		}
 
 		private void set_image_url(bool replace=false)

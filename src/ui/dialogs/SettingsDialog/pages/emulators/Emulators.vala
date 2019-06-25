@@ -422,7 +422,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 					emulator.installer = new Emulator.Installer(emulator, emulator.executable);
 
 					emulator.executable = null;
-					emulator.install.begin((obj, res) => {
+					emulator.install.begin(Runnable.Installer.InstallMode.INTERACTIVE, (obj, res) => {
 						emulator.install.end(res);
 						sensitive = true;
 						mode.selected = 0;

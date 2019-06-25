@@ -216,9 +216,9 @@ namespace GameHub.UI.Views.GameDetailsView
 			stack.add(spinner);
 			stack.add(content_scrolled);
 
-			stack.set_visible_child(spinner);
-
 			add(stack);
+
+			stack.visible_child = spinner;
 
 			action_install = add_action("go-down", null, _("Install"), install_game, true);
 			action_run = add_action("media-playback-start", null, _("Run"), run_game, true);
@@ -328,7 +328,10 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(is_updated) return;
 
-			stack.set_visible_child(spinner);
+			if(spinner.parent == stack)
+			{
+				stack.visible_child = spinner;
+			}
 
 			if(game == null) return;
 
@@ -374,7 +377,10 @@ namespace GameHub.UI.Views.GameDetailsView
 			icon.load(game.icon, "icon");
 			no_icon_indicator.visible = game.icon == null || icon.source == null;
 
-			stack.set_visible_child(content_scrolled);
+			if(content_scrolled.parent == stack)
+			{
+				stack.visible_child = content_scrolled;
+			}
 		}
 
 		private void install_game()

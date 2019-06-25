@@ -31,6 +31,7 @@ namespace GameHub.UI.Views.GameDetailsView
 	public class GameDetailsView: BaseView
 	{
 		private Game? _game;
+		private ArrayList<Game>? _selected_games;
 
 		public GameSource? preferred_source { get; set; }
 
@@ -42,6 +43,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			set
 			{
 				_game = value;
+				_selected_games = null;
 				navigation.clear();
 				navigation.add(game);
 				Idle.add(() => {
@@ -51,10 +53,28 @@ namespace GameHub.UI.Views.GameDetailsView
 			}
 		}
 
+		public ArrayList<Game>? selected_games
+		{
+			get { return _selected_games; }
+			set
+			{
+				_selected_games = value;
+				_game = null;
+				Idle.add(() => {
+					update_selected_games();
+					return Source.REMOVE;
+				});
+			}
+		}
+
 		public GameDetailsView(Game? game=null)
 		{
 			Object(game: game);
 		}
+
+		private Stack root_stack;
+		public MultipleGamesDetailsView selected_games_view;
+		private Box game_box;
 
 		private Stack stack;
 
@@ -67,6 +87,10 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		construct
 		{
+			root_stack = new Stack();
+			root_stack.transition_type = StackTransitionType.NONE;
+			root_stack.expand = true;
+
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.SLIDE_LEFT_RIGHT;
 			stack.expand = true;
@@ -96,6 +120,8 @@ namespace GameHub.UI.Views.GameDetailsView
 				});
 			});
 
+			game_box = new Box(Orientation.VERTICAL, 0);
+
 			actions = new Revealer();
 			actions.transition_type = RevealerTransitionType.SLIDE_DOWN;
 			actions.reveal_child = false;
@@ -107,8 +133,17 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			actions.add(actionbar);
 
-			attach(actions, 0, 0);
-			attach(stack, 0, 1);
+			game_box.add(actions);
+			game_box.add(stack);
+
+			selected_games_view = new MultipleGamesDetailsView();
+
+			root_stack.add(selected_games_view);
+			root_stack.add(game_box);
+
+			root_stack.visible_child = game_box;
+
+			add(root_stack);
 
 			stack.notify["visible-child"].connect(() => {
 				var page = stack.visible_child as GameDetailsPage;
@@ -163,6 +198,8 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void update()
 		{
+			root_stack.visible_child = game_box;
+
 			stack_tabs.clear();
 
 			back_button.visible = false;
@@ -176,8 +213,8 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(g == null) return;
 
-			var primary = Settings.UI.Behavior.instance.merge_games ? Tables.Merges.get_primary(game) : null;
-			var merges = Settings.UI.Behavior.instance.merge_games ? Tables.Merges.get(game) : null;
+			var primary = Settings.UI.Behavior.instance.merge_games ? Tables.Merges.get_primary(g) : null;
+			var merges = Settings.UI.Behavior.instance.merge_games ? Tables.Merges.get(g) : null;
 			bool merged = merges != null && merges.size > 0;
 
 			stack_tabs.visible = merged || primary != null;
@@ -225,6 +262,13 @@ namespace GameHub.UI.Views.GameDetailsView
 			var page = new GameDetailsPage(g, this);
 			page.content.margin = content_margin;
 			stack_tabs.add_tab(page, g.full_id, label, true, g.source.icon);
+		}
+
+		private void update_selected_games()
+		{
+			if(selected_games == null) return;
+			selected_games_view.games = selected_games;
+			root_stack.visible_child = selected_games_view;
 		}
 	}
 }

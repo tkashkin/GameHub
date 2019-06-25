@@ -60,6 +60,9 @@ namespace GameHub.Data.Sources.Steam
 
 		private bool? installed = null;
 
+		private BinaryVDF.ListNode? appinfo;
+		private BinaryVDF.ListNode? packageinfo;
+
 		public bool is_authenticated_in_steam_client
 		{
 			get
@@ -213,6 +216,9 @@ namespace GameHub.Data.Sources.Steam
 			Utils.thread("SteamLoading", () => {
 				_games.clear();
 
+				appinfo = new AppInfoVDF(FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.AppInfoVDF)).read();
+				packageinfo = new PackageInfoVDF(FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.PackageInfoVDF)).read();
+
 				var cached = Tables.Games.get_all(this);
 				games_count = 0;
 				if(cached.size > 0)
@@ -281,6 +287,47 @@ namespace GameHub.Data.Sources.Steam
 						_games.get(_games.index_of(game)).playtime_source = g.get_object().get_int_member("playtime_forever");
 					}
 				}
+			}
+		}
+
+		public static BinaryVDF.ListNode? get_appinfo(string appid)
+		{
+			if(instance.appinfo != null)
+			{
+				return (BinaryVDF.ListNode?) instance.appinfo.get(appid);
+			}
+			return null;
+		}
+
+		public static string[]? get_packages_for_app(string appid)
+		{
+			if(instance.packageinfo == null) return null;
+			string[] pkgs = {};
+			foreach(var pkg in instance.packageinfo.nodes.values)
+			{
+				if(appid in ((PackageInfoVDF.PackageNode) pkg).appids)
+				{
+					pkgs += ((PackageInfoVDF.PackageNode) pkg).id;
+				}
+			}
+			return pkgs;
+		}
+
+		public static void install_multiple_apps(string[] appids)
+		{
+			if(instance.packageinfo == null) return;
+			var packages = "";
+			foreach(var appid in appids)
+			{
+				var pkgs = get_packages_for_app(appid);
+				foreach(var pkg in pkgs)
+				{
+					packages += "/" + pkg;
+				}
+			}
+			if(packages.length > 0)
+			{
+				Utils.open_uri("steam://subscriptioninstall" + packages);
 			}
 		}
 

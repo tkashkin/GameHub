@@ -122,6 +122,7 @@ sources = [
 	'ui/views/GamesView/GameContextMenu.vala',
 
 	'ui/views/GameDetailsView/GameDetailsView.vala',
+	'ui/views/GameDetailsView/MultipleGamesDetailsView.vala',
 	'ui/views/GameDetailsView/GameDetailsPage.vala',
 
 	'ui/views/GameDetailsView/GameDetailsBlock.vala',
@@ -139,6 +140,7 @@ sources = [
 	'ui/widgets/ImagesDownloadPopover.vala',
 	'ui/widgets/CompatToolOptions.vala',
 	'ui/widgets/CompatToolPicker.vala',
+	'ui/widgets/GameTagsList.vala',
 	'ui/widgets/TagRow.vala',
 
 	'utils/Utils.vala',
