@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-25 15:41+0300\n"
-"PO-Revision-Date: 2019-06-24 03:51+0000\n"
+"PO-Revision-Date: 2019-06-27 04:01+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -1324,40 +1324,40 @@ msgstr "Deïnstalleren"
 #, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d spel geselecteerd"
+msgstr[1] "%d spellen geselecteerd"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:146
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be installed"
 msgid_plural "%d games will be installed"
-msgstr[0] "%s: geen installatiebestanden beschikbaar"
-msgstr[1] "%s: geen installatiebestanden beschikbaar"
+msgstr[0] "Er wordt %d spel geïnstalleerd"
+msgstr[1] "Er worden %d spellen geïnstalleerd"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:156
 #, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Er wordt %d spel gedownload"
+msgstr[1] "Er worden %d spellen gedownload"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:163
 #, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Er wordt gezocht naar een afbeelding voor %d spel"
+msgstr[1] "Er wordt gezocht naar een afbeelding voor %d spellen"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:170
 #, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Er wordt %d spel verwijderd"
+msgstr[1] "Er worden %d spellen verwijderd"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:176
 msgid "Refresh"
-msgstr ""
+msgstr "Verversen"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:177
 #, c-format
@@ -1366,7 +1366,11 @@ msgid ""
 msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
 msgstr[0] ""
+"Er wordt %d spel verwijderd uit de databank. Herstart GameHub om nieuwe "
+"gegevens op te halen."
 msgstr[1] ""
+"Er worden %d spellen verwijderd uit de databank. Herstart GameHub om nieuwe "
+"gegevens op te halen."
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
 msgid "Open store page"
