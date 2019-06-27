@@ -17,7 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+
 
 namespace GameHub.Utils
 {
@@ -278,15 +278,6 @@ namespace GameHub.Utils
 
 	public static string get_relative_datetime(GLib.DateTime date_time)
 	{
-		var schema_source = SettingsSchemaSource.get_default();
-		if(schema_source != null)
-		{
-			var schema = schema_source.lookup("io.elementary.desktop.wingpanel.datetime", true);
-			if(schema != null)
-			{
-				return Granite.DateTime.get_relative_datetime(date_time);
-			}
-		}
 		return date_time.format("%x %R");
 	}
 
@@ -382,26 +373,83 @@ namespace GameHub.Utils
 		return string.joinv(delimiter, ver);
 	}
 
+	public static string accel_to_string(string accel)
+	{
+		uint accel_key;
+		Gdk.ModifierType accel_mods;
+		Gtk.accelerator_parse(accel, out accel_key, out accel_mods);
+
+		string[] arr = {};
+		if(Gdk.ModifierType.SUPER_MASK in accel_mods)   arr += "Super";
+		if(Gdk.ModifierType.SHIFT_MASK in accel_mods)   arr += "Shift";
+		if(Gdk.ModifierType.CONTROL_MASK in accel_mods) arr += "Ctrl";
+		if(Gdk.ModifierType.MOD1_MASK in accel_mods)    arr += "Alt";
+
+		switch(accel_key)
+		{
+			case Gdk.Key.Up:
+				arr += "↑";
+				break;
+			case Gdk.Key.Down:
+				arr += "↓";
+				break;
+			case Gdk.Key.Left:
+				arr += "←";
+				break;
+			case Gdk.Key.Right:
+				arr += "→";
+				break;
+			case Gdk.Key.Return:
+				arr += "Enter";
+				break;
+			default:
+				arr += Gtk.accelerator_get_label(accel_key, 0);
+				break;
+		}
+		return string.joinv(" + ", arr);
+	}
+
+	public static string markup_accel_tooltip(string[]? accels, string? description=null)
+	{
+		string[] parts = {};
+		if(description != null && description != "")
+		{
+			parts += description;
+		}
+		if(accels != null && accels.length > 0)
+		{
+			string[] unique_accels = {};
+			for(int i = 0; i < accels.length; i++)
+			{
+				if(accels[i] == "") continue;
+				var accel_string = accel_to_string(accels[i]);
+				if(!(accel_string in unique_accels))
+					unique_accels += accel_string;
+			}
+			if(unique_accels.length > 0)
+			{
+				var accel_label = string.joinv(", ", unique_accels);
+				var accel_markup = """<span weight="600" size="smaller" alpha="75%">%s</span>""".printf (accel_label);
+				parts += accel_markup;
+			}
+		}
+		return string.joinv("\n", parts);
+	}
+
 	public static void set_accel_tooltip(Widget widget, string tooltip, string accel)
 	{
-		widget.tooltip_markup = Granite.markup_accel_tooltip({ accel }, tooltip);
+		widget.tooltip_markup = markup_accel_tooltip({ accel }, tooltip);
 	}
 
 	private static string? distro;
 
-	public class Logger: Granite.Services.Logger
+	/* Based on Granite.Services.Logger */
+	public class Logger: Object
 	{
-		public enum ConsoleColor
-		{
-			BLACK,
-			RED,
-			GREEN,
-			YELLOW,
-			BLUE,
-			MAGENTA,
-			CYAN,
-			WHITE
-		}
+		public enum LogLevel { DEBUG, INFO, NOTIFY, WARN, ERROR, FATAL }
+		public enum ConsoleColor { BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE }
+
+		public static LogLevel DisplayLevel { get; set; default = LogLevel.WARN; }
 
 		private const string[] LOG_LEVEL_TO_STRING = {
 			"[DEBUG]\x001b[0m ",
@@ -421,9 +469,8 @@ namespace GameHub.Utils
 		static Regex msg_string_regex;
 		static Regex msg_block_regex;
 
-		public static new void initialize(string app_name)
+		public static void init()
 		{
-			Granite.Services.Logger.initialize(app_name);
 			try
 			{
 				msg_file_regex = new Regex("^.*\\.vala:\\d+: ");
@@ -434,7 +481,7 @@ namespace GameHub.Utils
 			Log.set_default_handler((LogFunc) glib_log_func);
 		}
 
-		static void write(Granite.Services.LogLevel level, owned string msg)
+		static void write(LogLevel level, owned string msg)
 		{
 			if(level < DisplayLevel) return;
 
@@ -448,26 +495,26 @@ namespace GameHub.Utils
 			write_mutex.unlock();
 		}
 
-		static void set_color_for_level(Granite.Services.LogLevel level)
+		static void set_color_for_level(LogLevel level)
 		{
 			switch(level)
 			{
-				case Granite.Services.LogLevel.DEBUG:
+				case LogLevel.DEBUG:
 					set_foreground(ConsoleColor.GREEN);
 					break;
-				case Granite.Services.LogLevel.INFO:
+				case LogLevel.INFO:
 					set_foreground(ConsoleColor.BLUE);
 					break;
-				case Granite.Services.LogLevel.NOTIFY:
+				case LogLevel.NOTIFY:
 					set_foreground(ConsoleColor.MAGENTA);
 					break;
-				case Granite.Services.LogLevel.WARN:
+				case LogLevel.WARN:
 					set_foreground(ConsoleColor.YELLOW);
 					break;
-				case Granite.Services.LogLevel.ERROR:
+				case LogLevel.ERROR:
 					set_foreground(ConsoleColor.RED);
 					break;
-				case Granite.Services.LogLevel.FATAL:
+				case LogLevel.FATAL:
 					set_background(ConsoleColor.RED);
 					set_foreground(ConsoleColor.WHITE);
 					break;
@@ -501,28 +548,9 @@ namespace GameHub.Utils
 			stdout.printf(color(c, foreground));
 		}
 
-		private static new void glib_log_func(string? d, LogLevelFlags flags, string msg)
+		private static void glib_log_func(string? d, LogLevelFlags flags, string msg)
 		{
-			glib_log_func_granite(d, flags, msg);
-		}
-
-		private static bool glib_log_filter(string? d, LogLevelFlags flags, string msg)
-		{
-			if(!GameHub.Application.log_no_filters)
-			{
-				if(d == "GLib-GIO" && msg.has_prefix("Settings schema '")) return true;
-				if(d in HIDDEN_DOMAINS) return false;
-				foreach(var hidden_msg in HIDDEN_MESSAGES)
-				{
-					if(hidden_msg in msg) return false;
-				}
-			}
-			return true;
-		}
-
-		private static void glib_log_func_granite(string? d, LogLevelFlags flags, string msg)
-		{
-			if(!glib_log_filter(d, flags, msg)) return;
+			if(!log_filter(d, flags, msg)) return;
 
 			string domain;
 			if(d != null)
@@ -540,7 +568,7 @@ namespace GameHub.Utils
 			}
 			catch(Error e){}
 
-			Granite.Services.LogLevel level;
+			LogLevel level;
 
 			// Strip internal flags to make it possible to use a switch statement
 			flags = (flags & LogLevelFlags.LEVEL_MASK);
@@ -548,29 +576,43 @@ namespace GameHub.Utils
 			switch(flags)
 			{
 				case LogLevelFlags.LEVEL_CRITICAL:
-					level = Granite.Services.LogLevel.FATAL;
+					level = LogLevel.FATAL;
 					break;
 
 				case LogLevelFlags.LEVEL_ERROR:
-					level = Granite.Services.LogLevel.ERROR;
+					level = LogLevel.ERROR;
 					break;
 
 				case LogLevelFlags.LEVEL_INFO:
 				case LogLevelFlags.LEVEL_MESSAGE:
-					level = Granite.Services.LogLevel.INFO;
+					level = LogLevel.INFO;
 					break;
 
 				case LogLevelFlags.LEVEL_DEBUG:
-					level = Granite.Services.LogLevel.DEBUG;
+					level = LogLevel.DEBUG;
 					break;
 
 				case LogLevelFlags.LEVEL_WARNING:
 				default:
-					level = Granite.Services.LogLevel.WARN;
+					level = LogLevel.WARN;
 					break;
 			}
 
 			write(level, message);
+		}
+
+		private static bool log_filter(string? d, LogLevelFlags flags, string msg)
+		{
+			if(!GameHub.Application.log_no_filters)
+			{
+				if(d == "GLib-GIO" && msg.has_prefix("Settings schema '")) return true;
+				if(d in HIDDEN_DOMAINS) return false;
+				foreach(var hidden_msg in HIDDEN_MESSAGES)
+				{
+					if(hidden_msg in msg) return false;
+				}
+			}
+			return true;
 		}
 	}
 }

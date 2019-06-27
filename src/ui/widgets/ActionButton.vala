@@ -71,8 +71,7 @@ namespace GameHub.UI.Widgets
 
 			if(show_text)
 			{
-				var label = new Label(text.replace("&amp;", "&").replace("&", "&amp;"));
-				label.get_style_context().add_class(Granite.STYLE_CLASS_H3_LABEL);
+				var label = Styled.H3Label(text.replace("&amp;", "&").replace("&", "&amp;"));
 				label.halign = Align.START;
 				label.valign = Align.CENTER;
 				label.xalign = 0;

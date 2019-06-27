@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 
 using GameHub.Data;
 using GameHub.Data.DB;
@@ -55,7 +55,7 @@ namespace GameHub.UI.Widgets
 
 		construct
 		{
-			var header = new HeaderLabel(_("Tags"));
+			var header = Styled.H4Label(_("Tags"));
 			header.xpad = 8;
 			add(header);
 

@@ -16,11 +16,11 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using Granite;
+
 
 namespace GameHub.Settings
 {
-	public class Controller: Granite.Services.Settings
+	public class Controller: SettingsSchema
 	{
 		public bool enabled { get; set; }
 		public bool focus_window { get; set; }

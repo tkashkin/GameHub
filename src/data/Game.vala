@@ -497,11 +497,18 @@ namespace GameHub.Data
 					}
 					else
 					{
-						FSUtils.mv_up(game.install_dir, @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.OVERLAYS_DIR)/$(BASE)");
-						game.overlays.clear();
-						game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(FSUtils.OVERLAYS_LIST).delete();
-						game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).delete();
-						game.notify_property("overlays-enabled");
+						try
+						{
+							FSUtils.mv_up(game.install_dir, @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.OVERLAYS_DIR)/$(BASE)");
+							game.overlays.clear();
+							game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(FSUtils.OVERLAYS_LIST).delete();
+							game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).delete();
+							game.notify_property("overlays-enabled");
+						}
+						catch(Error e)
+						{
+							warning("[Game.Overlay.remove] %s", e.message);
+						}
 					}
 				});
 			}

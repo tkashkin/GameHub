@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 using GameHub.Data;
 using GameHub.Data.Adapters;
 using GameHub.Data.DB;
@@ -83,10 +83,7 @@ namespace GameHub.UI.Views.GamesView
 		{
 			margin = 0;
 
-			card = new Frame(null);
-			card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
-			card.get_style_context().add_class("gamecard");
-			card.shadow_type = ShadowType.NONE;
+			card = Styled.Card("gamecard");
 			card.margin = 4;
 
 			child = card;

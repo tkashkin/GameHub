@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 
 using GameHub.Data;
 using GameHub.Data.DB;
@@ -59,7 +59,7 @@ namespace GameHub.UI.Dialogs
 
 			properties_box = new Box(Orientation.VERTICAL, 0);
 
-			var name_header = new HeaderLabel(_("Name"));
+			var name_header = Styled.H4Label(_("Name"));
 			name_header.xpad = 8;
 			properties_box.add(name_header);
 
@@ -78,15 +78,11 @@ namespace GameHub.UI.Dialogs
 				game.save();
 			});
 
-			var images_header = new HeaderLabel(_("Images"));
+			var images_header = Styled.H4Label(_("Images"));
 			images_header.xpad = 8;
 			properties_box.add(images_header);
 
-			var images_card = new Frame(null);
-			images_card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
-			images_card.get_style_context().add_class("gamecard");
-			images_card.get_style_context().add_class("static");
-			images_card.shadow_type = ShadowType.NONE;
+			var images_card = Styled.Card("gamecard", "static");
 			images_card.margin = 4;
 
 			icon_view = new AutoSizeImage();
@@ -144,7 +140,7 @@ namespace GameHub.UI.Dialogs
 
 			if(!(game is Data.Sources.Steam.SteamGame) && game.install_dir != null && game.install_dir.query_exists())
 			{
-				var executable_header = new HeaderLabel(_("Executable"));
+				var executable_header = Styled.H4Label(_("Executable"));
 				executable_header.xpad = 8;
 				properties_box.add(executable_header);
 
@@ -180,7 +176,7 @@ namespace GameHub.UI.Dialogs
 
 				properties_box.add(args_entry);
 
-				var compat_header = new HeaderLabel(_("Compatibility"));
+				var compat_header = Styled.H4Label(_("Compatibility"));
 				compat_header.no_show_all = true;
 				compat_header.xpad = 8;
 				properties_box.add(compat_header);
@@ -202,7 +198,7 @@ namespace GameHub.UI.Dialogs
 				game.notify_property("use-compat");
 			}
 
-			var gh_run_args_header = new HeaderLabel(_("Launch from terminal"));
+			var gh_run_args_header = Styled.H4Label(_("Launch from terminal"));
 			gh_run_args_header.xpad = 8;
 			properties_box.add(gh_run_args_header);
 

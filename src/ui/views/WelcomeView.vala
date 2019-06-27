@@ -17,7 +17,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+using GameHub.UI.Widgets;
+
 using GameHub.Data;
 using GameHub.Utils;
 
@@ -26,8 +27,8 @@ namespace GameHub.UI.Views
 	public class WelcomeView: BaseView
 	{
 		private Stack stack;
-		private Granite.Widgets.AlertView empty_alert;
-		private Granite.Widgets.Welcome welcome;
+		private AlertView empty_alert;
+		private Welcome welcome;
 
 		private Button skip_btn;
 		private Button settings;
@@ -48,12 +49,12 @@ namespace GameHub.UI.Views
 			spinner.valign = Align.CENTER;
 			stack.add(spinner);
 
-			empty_alert = new Granite.Widgets.AlertView(_("No enabled game sources"), _("Enable some game sources in settings"), "dialog-warning");
+			empty_alert = new AlertView(_("No enabled game sources"), _("Enable some game sources in settings"), "dialog-warning");
 			empty_alert.show_action(_("Settings"));
 
 			stack.add(empty_alert);
 
-			welcome = new Granite.Widgets.Welcome(_("All your games in one place"), _("Let's get started"));
+			welcome = new Welcome(_("All your games in one place"), _("Let's get started"));
 
 			welcome.activated.connect(index => {
 				on_entry_clicked.begin(index);

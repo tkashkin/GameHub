@@ -18,7 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gdk;
-using Granite;
+
 using GLib;
 using Gee;
 using GameHub.Utils;
@@ -61,12 +61,11 @@ namespace GameHub.UI.Dialogs
 			content = new Box(Orientation.VERTICAL, 0);
 			content.margin_bottom = 8;
 
-			title_label = new Label(game.name);
+			title_label = Styled.H2Label(game.name);
 			title_label.margin_start = 8;
 			title_label.halign = Align.START;
 			title_label.valign = Align.START;
 			title_label.hexpand = true;
-			title_label.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 			content.add(title_label);
 
 			subtitle_label = new Label(_("Corrupted installer: checksum mismatch in"));

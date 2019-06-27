@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 
 using GameHub.Data;
 using GameHub.Data.DB;
@@ -37,7 +37,7 @@ namespace GameHub.UI.Dialogs
 		private Stack stack;
 
 		private Box disabled_box;
-		private Granite.Widgets.AlertView disabled_alert;
+		private AlertView disabled_alert;
 		private Button enable_btn;
 
 		private Box content;
@@ -68,13 +68,13 @@ namespace GameHub.UI.Dialogs
 
 			disabled_box = new Box(Orientation.VERTICAL, 0);
 
-			disabled_alert = new Granite.Widgets.AlertView(_("Overlays are disabled"), _("Enable overlays to manage DLCs and mods\n\nEnabling will move game to the “base“ overlay"), "dialog-information");
+			disabled_alert = new AlertView(_("Overlays are disabled"), _("Enable overlays to manage DLCs and mods\n\nEnabling will move game to the “base“ overlay"), "dialog-information");
 			disabled_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 			disabled_alert.halign = Align.START;
 
 			disabled_box.add(disabled_alert);
 
-			var overlays_header = new HeaderLabel(_("Overlays"));
+			var overlays_header = Styled.H4Label(_("Overlays"));
 			overlays_header.xpad = 8;
 			content.add(overlays_header);
 

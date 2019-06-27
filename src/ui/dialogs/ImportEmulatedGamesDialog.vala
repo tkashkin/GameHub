@@ -18,7 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gdk;
-using Granite;
+
 using GLib;
 using Gee;
 using GameHub.Utils;
@@ -77,10 +77,10 @@ namespace GameHub.UI.Dialogs
 
 			dir_chooser.file_set.connect(start_search);
 
-			dir_hbox.add(new HeaderLabel(_("Directory")));
+			dir_hbox.add(Styled.H4Label(_("Directory")));
 			dir_hbox.add(dir_chooser);
 
-			var header_label = new HeaderLabel(_("Detected games"));
+			var header_label = Styled.H4Label(_("Detected games"));
 			header_label.margin_start = header_label.margin_end = 8;
 			header_label.xalign = 0;
 			header_label.hexpand = true;
@@ -554,7 +554,7 @@ namespace GameHub.UI.Dialogs
 			{
 				if(prev == null || prev.game.parent_directory.get_path() != game.parent_directory.get_path())
 				{
-					var header = new HeaderLabel(game.parent_directory.get_path());
+					var header = Styled.H4Label(game.parent_directory.get_path());
 					header.margin_end = 8;
 					header.ellipsize = Pango.EllipsizeMode.START;
 					header.tooltip_text = header.label;

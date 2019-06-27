@@ -20,11 +20,12 @@ using Gtk;
 using Gdk;
 using GLib;
 using Gee;
-using Granite;
+
 using GameHub.Data;
 using GameHub.Data.Adapters;
 using GameHub.Data.DB;
 using GameHub.Utils;
+using GameHub.UI.Widgets;
 using GameHub.UI.Windows;
 using GameHub.Settings;
 
@@ -42,7 +43,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private Stack stack;
 
-		private Granite.Widgets.AlertView empty_alert;
+		private AlertView empty_alert;
 
 		private ScrolledWindow games_grid_scrolled;
 		private FlowBox games_grid;
@@ -51,12 +52,12 @@ namespace GameHub.UI.Views.GamesView
 		private ListBox games_list;
 		private GameDetailsView.GameDetailsView games_list_details;
 
-		private Granite.Widgets.ModeButton view;
+		private ModeButton view;
 
-		private Granite.Widgets.ModeButton filter;
+		private ModeButton filter;
 		private SearchEntry search;
 
-		private Granite.Widgets.OverlayBar status_overlay;
+		private OverlayBar status_overlay;
 
 		private Button settings;
 
@@ -130,7 +131,7 @@ namespace GameHub.UI.Views.GamesView
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
 
-			empty_alert = new Granite.Widgets.AlertView(_("No games"), _("Get some games or enable some game sources in settings"), "dialog-warning");
+			empty_alert = new AlertView(_("No games"), _("Get some games or enable some game sources in settings"), "dialog-warning");
 
 			games_grid = new FlowBox();
 			games_grid.get_style_context().add_class("games-grid");
@@ -178,7 +179,7 @@ namespace GameHub.UI.Views.GamesView
 			attach(messages, 0, 0);
 			attach(overlay, 0, 1);
 
-			view = new Granite.Widgets.ModeButton();
+			view = new ModeButton();
 			view.halign = Align.CENTER;
 			view.valign = Align.CENTER;
 
@@ -187,7 +188,7 @@ namespace GameHub.UI.Views.GamesView
 
 			view.mode_changed.connect(update_view);
 
-			filter = new Granite.Widgets.ModeButton();
+			filter = new ModeButton();
 			filter.halign = Align.CENTER;
 			filter.valign = Align.CENTER;
 
@@ -383,7 +384,7 @@ namespace GameHub.UI.Views.GamesView
 			titlebar.pack_end(gamepad_image("a", _("Select")));
 			#endif
 
-			status_overlay = new Granite.Widgets.OverlayBar(overlay);
+			status_overlay = new OverlayBar(overlay);
 			games_adapter.notify["status"].connect(() => {
 				update_status(games_adapter.status);
 			});
@@ -955,7 +956,7 @@ namespace GameHub.UI.Views.GamesView
 
 			if(text != null)
 			{
-				var label = new HeaderLabel(text);
+				var label = Styled.H4Label(text);
 				var box = new Box(Orientation.HORIZONTAL, 8);
 				box.margin_start = box.margin_end = 4;
 				box.add(image);

@@ -17,7 +17,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+using GameHub.UI.Widgets;
+
 using GameHub.Utils;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
@@ -42,7 +43,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 			add_switch(_("Dark theme"), settings.dark_theme, v => { settings.dark_theme = v; });
 
-			var icon_style = new Granite.Widgets.ModeButton();
+			var icon_style = new ModeButton();
 			icon_style.homogeneous = false;
 			icon_style.halign = Align.END;
 			icon_style.append_text(C_("icon_style", "Theme-based"));

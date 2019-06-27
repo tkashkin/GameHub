@@ -17,9 +17,11 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+
 using Gdk;
 using Gee;
-using Granite;
+
 using WebKit;
 
 using GameHub.Data;
@@ -29,7 +31,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 {
 	public class Description: GameDetailsBlock
 	{
-		private Granite.HeaderLabel description_header;
+		private Label description_header;
 		private WebView description;
 
 		private const string CSS          = "body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; %s} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%; display: block;}";
@@ -49,9 +51,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			if(!Providers.Data.IGDB.instance.enabled)
 				add(new Separator(Orientation.HORIZONTAL));
 
-			description_header = new Granite.HeaderLabel(_("Description"));
+			description_header = Styled.H4Label(_("Description"), "description-header");
 			description_header.margin_start = description_header.margin_end = 7;
-			description_header.get_style_context().add_class("description-header");
 
 			get_style_context().add_class(Gtk.STYLE_CLASS_BACKGROUND);
 

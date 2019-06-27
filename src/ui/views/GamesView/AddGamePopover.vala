@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 using GameHub.Data;
 using GameHub.Data.DB;
 using GameHub.Utils;
@@ -39,7 +39,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private bool suppress_updates = false;
 
-		private Granite.Widgets.ModeButton mode;
+		private ModeButton mode;
 
 		private new Entry name;
 		private FileChooserEntry gamedir;
@@ -61,7 +61,7 @@ namespace GameHub.UI.Views.GamesView
 			grid.column_spacing = 4;
 			grid.set_size_request(270, -1);
 
-			mode = new Granite.Widgets.ModeButton();
+			mode = new ModeButton();
 			mode.margin_bottom = 8;
 			mode.halign = Align.CENTER;
 			mode.append_text(_("Executable"));

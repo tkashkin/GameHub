@@ -16,11 +16,11 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using Granite;
+
 
 namespace GameHub.Settings.SavedState
 {
-	public class Window: Granite.Services.Settings
+	public class Window: SettingsSchema
 	{
 		public int width { get; set; }
 		public int height { get; set; }
@@ -52,7 +52,7 @@ namespace GameHub.Settings.SavedState
 		}
 	}
 
-	public class GamesView: Granite.Services.Settings
+	public class GamesView: SettingsSchema
 	{
 		public GamesView.Style style { get; set; }
 		public GamesView.SortMode sort_mode { get; set; }

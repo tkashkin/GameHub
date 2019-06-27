@@ -21,6 +21,7 @@ using Gdk;
 using GLib;
 
 using GameHub.Data;
+using GameHub.Settings;
 
 namespace GameHub.Utils
 {
@@ -33,7 +34,7 @@ namespace GameHub.Utils
 
 		public class Paths
 		{
-			public class Settings: Granite.Services.Settings
+			public class Settings: GameHub.Settings.SettingsSchema
 			{
 				public string steam_home { get; set; }
 				public string gog_games { get; set; }
@@ -101,7 +102,7 @@ namespace GameHub.Utils
 				public static string LoadedOrdersMD5 { owned get { return FSUtils.Paths.Humble.Cache + "/orders.md5"; } }
 			}
 
-			public class Collection: Granite.Services.Settings
+			public class Collection: GameHub.Settings.SettingsSchema
 			{
 				public string root { get; set; }
 
@@ -128,7 +129,7 @@ namespace GameHub.Utils
 					}
 				}
 
-				public class GOG: Granite.Services.Settings
+				public class GOG: GameHub.Settings.SettingsSchema
 				{
 					public string game_dir { get; set; }
 					public string installers { get; set; }
@@ -209,7 +210,7 @@ namespace GameHub.Utils
 					}
 				}
 
-				public class Humble: Granite.Services.Settings
+				public class Humble: GameHub.Settings.SettingsSchema
 				{
 					public string game_dir { get; set; }
 					public string installers { get; set; }

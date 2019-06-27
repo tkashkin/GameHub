@@ -17,14 +17,13 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+using GameHub.UI.Widgets;
 
 using GameHub.Utils;
-using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog
 {
-	public abstract class SettingsDialogPage: SimpleSettingsPage
+	public abstract class SettingsDialogPage: SettingsSidebar.SimpleSettingsPage
 	{
 		public SettingsDialog dialog { construct; protected get; }
 
@@ -40,7 +39,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		construct
 		{
-			//margin_start = margin_end = 8;
 			content_area.orientation = Orientation.VERTICAL;
 			content_area.row_spacing = 0;
 
@@ -158,24 +156,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			return add_widget(hbox);
 		}
 
-		protected HeaderLabel add_header(string text)
+		protected Label add_header(string text)
 		{
-			var label = new HeaderLabel(text);
+			var label = Styled.H4Label(text);
 			label.xpad = 4;
 			label.halign = Align.START;
 			label.hexpand = true;
 			return add_widget(label);
-		}
-
-		protected CheckButton add_header_with_checkbox(string text, bool enabled, owned SwitchAction action)
-		{
-			var cb = new CheckButton.with_label(text);
-			cb.active = enabled;
-			cb.halign = Align.START;
-			cb.hexpand = true;
-			cb.notify["active"].connect(() => { action(cb.active); });
-			cb.get_style_context().add_class(Granite.STYLE_CLASS_H4_LABEL);
-			return add_widget(cb);
 		}
 
 		protected LinkButton add_link(string text, string uri)
@@ -211,7 +198,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		protected T add_widget<T>(T widget)
 		{
-			if(!(widget is HeaderLabel))
+			if(!((widget as Widget).get_style_context().has_class(StyleClass.Label.H4)))
 			{
 				(widget as Widget).margin = 4;
 				(widget as Widget).margin_end = 0;

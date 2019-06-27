@@ -18,11 +18,11 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gee;
-using Granite;
+
 
 namespace GameHub.UI.Widgets
 {
-	public class ExtendedStackSwitcher: Granite.Widgets.ModeButton
+	public class ExtendedStackSwitcher: ModeButton
 	{
 		public Stack stack { get; construct; }
 

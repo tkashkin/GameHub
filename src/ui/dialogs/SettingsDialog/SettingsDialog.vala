@@ -17,7 +17,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+using GameHub.UI.Widgets;
+
 using GameHub.Utils;
 
 namespace GameHub.UI.Dialogs.SettingsDialog
@@ -132,7 +133,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			});
 		}
 
-		private void add_page(string id, SettingsPage page)
+		private void add_page(string id, SettingsSidebar.SettingsPage page)
 		{
 			pages.add_named(page, id);
 		}

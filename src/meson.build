@@ -23,7 +23,6 @@ project_config = vcs_tag(
 )
 
 deps = [
-	dependency('granite', version: '>=5.2.0'),
 	dependency('gdk-3.0'),
 	dependency('webkit2gtk-4.0'),
 	dependency('glib-2.0'),
@@ -142,6 +141,12 @@ sources = [
 	'ui/widgets/CompatToolPicker.vala',
 	'ui/widgets/GameTagsList.vala',
 	'ui/widgets/TagRow.vala',
+	'ui/widgets/Styles.vala',
+	'ui/widgets/AlertView.vala',
+	'ui/widgets/ModeButton.vala',
+	'ui/widgets/OverlayBar.vala',
+	'ui/widgets/Welcome.vala',
+	'ui/widgets/SettingsSidebar.vala',
 
 	'utils/Utils.vala',
 	'utils/ImageCache.vala',
@@ -150,6 +155,7 @@ sources = [
 	'utils/Parser.vala',
 	'utils/BinaryVDF.vala',
 
+	'settings/Settings.vala',
 	'settings/UI.vala',
 	'settings/SavedState.vala',
 	'settings/Auth.vala',

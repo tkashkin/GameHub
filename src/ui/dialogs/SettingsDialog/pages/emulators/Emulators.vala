@@ -17,7 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+
 
 using GameHub.Data;
 using GameHub.Utils;
@@ -28,7 +28,7 @@ using GameHub.Data.DB;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 {
-	public class Emulators: SettingsPage
+	public class Emulators: SettingsSidebar.SettingsPage
 	{
 		public SettingsDialog dialog { construct; protected get; }
 
@@ -194,7 +194,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 			private Grid grid;
 			private int rows = 0;
 
-			private Granite.Widgets.ModeButton mode;
+			private ModeButton mode;
 
 			private new Entry name;
 			private FileChooserEntry emudir;
@@ -245,7 +245,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 				run_btn.valign = Align.END;
 				run_btn.sensitive = false;
 
-				mode = new Granite.Widgets.ModeButton();
+				mode = new ModeButton();
 				mode.margin_bottom = 8;
 				mode.halign = Align.CENTER;
 				mode.append_text(_("Executable"));
@@ -305,7 +305,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 				add_separator();
 
-				var patterns_header = new HeaderLabel(_("Game file patterns"));
+				var patterns_header = Styled.H4Label(_("Game file patterns"));
 				patterns_header.margin_start = patterns_header.margin_end = 4;
 				grid.attach(patterns_header, 0, rows, 2, 1);
 				rows++;

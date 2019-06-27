@@ -16,11 +16,9 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using Granite;
-
 namespace GameHub.Settings.Auth
 {
-	public class Steam: Granite.Services.Settings
+	public class Steam: SettingsSchema
 	{
 		public bool enabled { get; set; }
 		public bool authenticated { get; set; }
@@ -58,7 +56,7 @@ namespace GameHub.Settings.Auth
 		}
 	}
 
-	public class GOG: Granite.Services.Settings
+	public class GOG: SettingsSchema
 	{
 		public bool enabled { get; set; }
 		public bool authenticated { get; set; }
@@ -84,7 +82,7 @@ namespace GameHub.Settings.Auth
 		}
 	}
 
-	public class Humble: Granite.Services.Settings
+	public class Humble: SettingsSchema
 	{
 		public bool enabled { get; set; }
 		public bool authenticated { get; set; }

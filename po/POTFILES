@@ -87,6 +87,12 @@ src/ui/widgets/CompatToolOptions.vala
 src/ui/widgets/CompatToolPicker.vala
 src/ui/widgets/GameTagsList.vala
 src/ui/widgets/TagRow.vala
+src/ui/widgets/Styles.vala
+src/ui/widgets/AlertView.vala
+src/ui/widgets/ModeButton.vala
+src/ui/widgets/OverlayBar.vala
+src/ui/widgets/Welcome.vala
+src/ui/widgets/SettingsSidebar.vala
 src/utils/Utils.vala
 src/utils/ImageCache.vala
 src/utils/FSUtils.vala
@@ -94,6 +100,7 @@ src/utils/FSOverlay.vala
 src/utils/Parser.vala
 src/utils/downloader/Downloader.vala
 src/utils/downloader/SoupDownloader.vala
+src/settings/Settings.vala
 src/settings/UI.vala
 src/settings/SavedState.vala
 src/settings/Auth.vala

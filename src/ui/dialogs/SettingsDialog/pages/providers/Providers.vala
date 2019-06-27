@@ -17,7 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 using GameHub.Data.Providers;

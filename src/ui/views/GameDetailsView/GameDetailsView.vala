@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 using GameHub.Data;
 using GameHub.Data.DB;
 using GameHub.Utils;
@@ -107,7 +107,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			back_button.expand = false;
 			back_button.visible = false;
 			back_button.margin_top = back_button.margin_bottom = 6;
-			back_button.get_style_context().add_class(Granite.STYLE_CLASS_BACK_BUTTON);
+			StyleClass.add(back_button, StyleClass.BACK_BUTTON);
 
 			back_button.clicked.connect(() => {
 				if(navigation.size > 1)

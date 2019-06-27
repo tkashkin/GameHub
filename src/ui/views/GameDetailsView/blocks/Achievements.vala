@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 
 using GameHub.Data;
 using GameHub.Data.Sources.Steam;
@@ -52,9 +52,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			vbox.add(new Separator(Orientation.HORIZONTAL));
 
-			var header = new Granite.HeaderLabel(_("Achievements"));
+			var header = Styled.H4Label(_("Achievements"), "description-header");
 			header.margin_start = header.margin_end = 7;
-			header.get_style_context().add_class("description-header");
 
 			var achievements_scrolled = new ScrolledWindow(null, null);
 			achievements_scrolled.hscrollbar_policy = PolicyType.AUTOMATIC;

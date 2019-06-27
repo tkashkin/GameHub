@@ -102,7 +102,7 @@ deps()
 	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:elementary-os/daily -y
 	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:vala-team/next -y
 	sudo DEBIAN_FRONTEND="noninteractive" apt update -qq
-	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage elementary-sdk libgranite-dev libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
+	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage elementary-sdk libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
 	#sudo apt full-upgrade -y
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sudo DEBIAN_FRONTEND="noninteractive" dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
@@ -279,7 +279,7 @@ appimage_checkrt()
 	_mv_deps "libgtk-3.so.0" "$APPDIR/usr/lib" "$APPDIR/usr/optlib/libgtk-3.so.0/"
 
 	echo "[scripts/build.sh] Moving back non-GTK-specific dependencies"
-	find "$APPDIR/usr/lib/" -maxdepth 1 -type f -not -name "libgranite.so.*" -not -name "libwebkit2gtk-4.0.so.*" -print0 | while read -d $'\0' dep; do
+	find "$APPDIR/usr/lib/" -maxdepth 1 -type f -not -name "libwebkit2gtk-4.0.so.*" -print0 | while read -d $'\0' dep; do
 		_mv_deps "$(basename $dep)" "$APPDIR/usr/optlib/libgtk-3.so.0" "$APPDIR/usr/lib/" "false"
 	done
 
