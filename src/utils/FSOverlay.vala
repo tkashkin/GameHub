@@ -147,5 +147,38 @@ namespace GameHub.Utils
 				}
 			}
 		}
+
+		public enum RootPathSafety
+		{
+			SAFE, UNSAFE, RESTRICTED;
+
+			public static RootPathSafety for(File? root)
+			{
+				if(root == null || !root.query_exists()) return RESTRICTED;
+				var path = root.get_path().down();
+
+				if(!path.has_prefix("/home/") && !path.has_prefix("/mnt/") && !path.has_prefix("/media/") && !path.has_prefix("/run/media/"))
+				{
+					return RESTRICTED;
+				}
+
+				string[] safe_paths = {};
+
+				if(Data.Sources.GOG.GOG.instance.enabled)
+					safe_paths += FSUtils.Paths.GOG.Games.down();
+				if(Data.Sources.Humble.Humble.instance.enabled)
+					safe_paths += FSUtils.Paths.Humble.Games.down();
+
+				foreach(var safe_path in safe_paths)
+				{
+					if(path.has_prefix(safe_path))
+					{
+						return SAFE;
+					}
+				}
+
+				return UNSAFE;
+			}
+		}
 	}
 }

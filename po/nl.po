@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-25 15:41+0300\n"
+"POT-Creation-Date: 2019-06-27 15:34+0300\n"
 "PO-Revision-Date: 2019-06-27 04:01+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -186,52 +186,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Geëmuleerd"
 
-#: src/data/Game.vala:478
+#: src/data/Game.vala:527
 msgctxt "status"
 msgid "Running"
 msgstr "Actief"
 
-#: src/data/Game.vala:481
+#: src/data/Game.vala:530
 msgctxt "status"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:482
+#: src/data/Game.vala:531
 msgctxt "status"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:483
+#: src/data/Game.vala:532
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Bezig met verifiëren van integriteit"
 
-#: src/data/Game.vala:484
+#: src/data/Game.vala:533
 msgctxt "status"
 msgid "Download started"
 msgstr "Downloaden gestart"
 
-#: src/data/Game.vala:486
+#: src/data/Game.vala:535
 msgctxt "status"
 msgid "Not installed"
 msgstr "Niet-geïnstalleerd"
 
-#: src/data/Game.vala:496
+#: src/data/Game.vala:545
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:497
+#: src/data/Game.vala:546
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:499
+#: src/data/Game.vala:548
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Bezig met downloaden"
 
-#: src/data/Game.vala:501
+#: src/data/Game.vala:550
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
@@ -1028,16 +1028,16 @@ msgstr "Toevoegen aan Steam"
 msgid "Add to the Steam library"
 msgstr "Toevoegen aan de Steam-bibliotheek"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:52
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:53
 #, c-format
 msgid "%s: Overlays"
 msgstr "%s: Overlays"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:68
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid "Overlays are disabled"
 msgstr "Overlays zijn uitgeschakeld"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:68
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid ""
 "Enable overlays to manage DLCs and mods\n"
 "\n"
@@ -1047,30 +1047,52 @@ msgstr ""
 "\n"
 "Door dit in te schakelen wordt het spel verplaatst naar de \"base\"-overlay"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:71
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:65
 msgid "Overlays"
 msgstr "Overlays"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:99
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:105
 msgid "Overlay ID (directory name)"
 msgstr "Overlay-ID (mapnaam)"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:104
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:110
 msgid "Overlay name (optional)"
 msgstr "Overlay-naam (optioneel)"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:106
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
 msgstr "Toevoegen"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:121
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:127
 msgid "Enable overlays"
 msgstr "Overlays inschakelen"
 
-#: src/ui/dialogs/GameFSOverlaysDialog.vala:211
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:182
+#, c-format
+msgid ""
+"Overlay usage at this path may be unsafe\n"
+"Proceed at your own risk\n"
+"\n"
+"Path: <b>%s</b>"
+msgstr ""
+
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:187
+#, c-format
+msgid ""
+"Overlay usage at this path is not supported\n"
+"\n"
+"Path: <b>%s</b>"
+msgstr ""
+
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
 msgstr "Map openen"
+
+#: src/ui/dialogs/GameFSOverlaysDialog.vala:271
+#, fuzzy
+msgid "Remove overlay"
+msgstr "Overlays inschakelen"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46

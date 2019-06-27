@@ -300,6 +300,7 @@ namespace GameHub.Data
 			get
 			{
 				if(this is Sources.Steam.SteamGame) return false;
+				if(FSOverlay.RootPathSafety.for(install_dir) == FSOverlay.RootPathSafety.RESTRICTED) return false;
 				return install_dir != null && install_dir.query_exists()
 					&& install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(FSUtils.OVERLAYS_LIST).query_exists();
 			}
@@ -308,6 +309,7 @@ namespace GameHub.Data
 		public void enable_overlays()
 		{
 			if(this is Sources.Steam.SteamGame || install_dir == null || !install_dir.query_exists() || overlays_enabled) return;
+			if(FSOverlay.RootPathSafety.for(install_dir) == FSOverlay.RootPathSafety.RESTRICTED) return;
 
 			var base_overlay = new Overlay(this);
 
@@ -334,7 +336,12 @@ namespace GameHub.Data
 
 		public void save_overlays()
 		{
+			if(install_dir == null || !install_dir.query_exists() || overlays == null) return;
+			if(FSOverlay.RootPathSafety.for(install_dir) == FSOverlay.RootPathSafety.RESTRICTED) return;
+
 			var file = install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(FSUtils.OVERLAYS_LIST);
+
+			if(file == null || !file.get_parent().query_exists()) return;
 
 			var root_node = new Json.Node(Json.NodeType.OBJECT);
 			var root = new Json.Object();
@@ -442,6 +449,21 @@ namespace GameHub.Data
 			public string name    { get; construct; }
 			public bool   enabled { get; set; }
 
+			public bool removable
+			{
+				get
+				{
+					if(id == BASE && game.overlays != null)
+					{
+						foreach(var overlay in game.overlays)
+						{
+							if(overlay.id != BASE) return false;
+						}
+					}
+					return true;
+				}
+			}
+
 			public File?  directory;
 
 			public Overlay(Game game, string id=BASE, string? name=null, bool enabled=true)
@@ -455,6 +477,33 @@ namespace GameHub.Data
 				if(game is Sources.Steam.SteamGame || game.install_dir == null || !game.install_dir.query_exists()) return;
 
 				directory = FSUtils.mkdir(game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(id).get_path());
+			}
+
+			public void remove()
+			{
+				if(!removable) return;
+
+				game.umount_overlays.begin((obj, res) => {
+					game.umount_overlays.end(res);
+
+					if(id != BASE)
+					{
+						if(directory != null && directory.query_exists())
+						{
+							FSUtils.rm(directory.get_path(), null, "-rf");
+						}
+						game.overlays.remove(this);
+						game.save_overlays();
+					}
+					else
+					{
+						FSUtils.mv_up(game.install_dir, @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.OVERLAYS_DIR)/$(BASE)");
+						game.overlays.clear();
+						game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(FSUtils.OVERLAYS_LIST).delete();
+						game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).delete();
+						game.notify_property("overlays-enabled");
+					}
+				});
 			}
 		}
 

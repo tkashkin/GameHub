@@ -169,8 +169,11 @@ namespace GameHub.UI.Views.GamesView
 				add(new Gtk.SeparatorMenuItem());
 				add(uninstall);
 
-				add(new Gtk.SeparatorMenuItem());
-				add(fs_overlays);
+				if(!(game is Sources.Steam.SteamGame))
+				{
+					add(new Gtk.SeparatorMenuItem());
+					add(fs_overlays);
+				}
 			}
 
 			if(!(game is Sources.GOG.GOGGame.DLC))
