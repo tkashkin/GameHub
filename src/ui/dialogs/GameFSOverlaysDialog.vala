@@ -36,6 +36,7 @@ namespace GameHub.UI.Dialogs
 
 		private Stack stack;
 
+		private Box disabled_box;
 		private Granite.Widgets.AlertView disabled_alert;
 		private Button enable_btn;
 
@@ -65,8 +66,13 @@ namespace GameHub.UI.Dialogs
 			content = new Box(Orientation.VERTICAL, 0);
 			content.margin_start = content.margin_end = 6;
 
+			disabled_box = new Box(Orientation.VERTICAL, 0);
+
 			disabled_alert = new Granite.Widgets.AlertView(_("Overlays are disabled"), _("Enable overlays to manage DLCs and mods\n\nEnabling will move game to the “base“ overlay"), "dialog-information");
 			disabled_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+			disabled_alert.halign = Align.START;
+
+			disabled_box.add(disabled_alert);
 
 			var overlays_header = new HeaderLabel(_("Overlays"));
 			overlays_header.xpad = 8;
@@ -112,7 +118,7 @@ namespace GameHub.UI.Dialogs
 
 			content.add(add_box);
 
-			stack.add(disabled_alert);
+			stack.add(disabled_box);
 			stack.add(content);
 
 			get_content_area().add(stack);
@@ -157,17 +163,66 @@ namespace GameHub.UI.Dialogs
 		{
 			game.load_overlays();
 
-			stack.set_visible_child(game.overlays_enabled ? (Widget) content : disabled_alert);
-			enable_btn.visible = !game.overlays_enabled;
-
-			overlays_list.foreach(w => overlays_list.remove(w));
-
-			foreach(var overlay in game.overlays)
+			if(!game.overlays_enabled)
 			{
-				overlays_list.add(new OverlayRow(overlay));
-			}
+				disabled_box.foreach(w => {
+					if(w != disabled_alert)
+					{
+						w.destroy();
+					}
+				});
 
-			overlays_list.show_all();
+				if(game.install_dir != null && game.install_dir.query_exists())
+				{
+					var safety = FSOverlay.RootPathSafety.for(game.install_dir);
+
+					if(safety != FSOverlay.RootPathSafety.SAFE)
+					{
+						var message_type = MessageType.WARNING;
+						var message = _("Overlay usage at this path may be unsafe\nProceed at your own risk\n\nPath: <b>%s</b>");
+
+						if(safety == FSOverlay.RootPathSafety.RESTRICTED)
+						{
+							message_type = MessageType.ERROR;
+							message = _("Overlay usage at this path is not supported\n\nPath: <b>%s</b>");
+						}
+
+						var label = new Label(message.printf(game.install_dir.get_path()));
+						label.use_markup = true;
+
+						var msg = new InfoBar();
+						msg.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+						msg.get_content_area().add(label);
+						msg.message_type = message_type;
+						msg.show_all();
+						disabled_box.add(msg);
+					}
+
+					enable_btn.sensitive = safety != FSOverlay.RootPathSafety.RESTRICTED;
+				}
+				else
+				{
+					enable_btn.sensitive = false;
+				}
+
+				stack.visible_child = disabled_box;
+				enable_btn.visible = true;
+			}
+			else
+			{
+				stack.visible_child = content;
+				enable_btn.visible = false;
+				enable_btn.sensitive = false;
+
+				overlays_list.foreach(w => w.destroy());
+
+				foreach(var overlay in game.overlays)
+				{
+					overlays_list.add(new OverlayRow(overlay));
+				}
+
+				overlays_list.show_all();
+			}
 		}
 
 		private void add_overlay()
@@ -212,6 +267,12 @@ namespace GameHub.UI.Dialogs
 				open.valign = Align.CENTER;
 				open.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
+				var remove = new Button.from_icon_name("edit-delete-symbolic", IconSize.SMALL_TOOLBAR);
+				remove.tooltip_text = _("Remove overlay");
+				remove.sensitive = overlay.removable;
+				remove.valign = Align.CENTER;
+				remove.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+
 				var enabled = new Switch();
 				enabled.active = overlay.enabled;
 				enabled.sensitive = overlay.id != Game.Overlay.BASE;
@@ -220,17 +281,22 @@ namespace GameHub.UI.Dialogs
 				grid.attach(name, 0, 0);
 				grid.attach(id, 0, 1);
 				grid.attach(open, 1, 0, 1, 2);
-				grid.attach(enabled, 2, 0, 1, 2);
+				grid.attach(remove, 2, 0, 1, 2);
+				grid.attach(enabled, 3, 0, 1, 2);
 
 				child = grid;
+
+				open.clicked.connect(() => {
+					Utils.open_uri(overlay.directory.get_uri());
+				});
+
+				remove.clicked.connect(() => {
+					overlay.remove();
+				});
 
 				enabled.notify["active"].connect(() => {
 					overlay.enabled = enabled.active;
 					overlay.game.save_overlays();
-				});
-
-				open.clicked.connect(() => {
-					Utils.open_uri(overlay.directory.get_uri());
 				});
 			}
 		}

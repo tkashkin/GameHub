@@ -350,7 +350,7 @@ namespace GameHub.Utils
 			try
 			{
 				if(path == null || !path.get_child(dirname).query_exists() || path.get_child(dirname).query_file_type(FileQueryInfoFlags.NONE) != FileType.DIRECTORY) return;
-				var tmp_dir = path.get_child(dirname).set_display_name(".gh_" + dirname + "_" + Utils.md5(dirname)); // rename source dir in case there's a child with the same name
+				var tmp_dir = path.get_child(dirname).set_display_name(".gh_tmpdir_" + Utils.md5(dirname)); // rename source dir in case there's a child with the same name
 				FileInfo? finfo = null;
 				var enumerator = tmp_dir.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
 				while((finfo = enumerator.next_file()) != null)

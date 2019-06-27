@@ -26,6 +26,8 @@ namespace GameHub.Data.Sources.Humble
 	{
 		public const string AUTH_COOKIE = "_simpleauth_sess";
 
+		public static Humble instance;
+
 		public override string id { get { return "humble"; } }
 		public override string name { get { return "Humble Bundle"; } }
 		public override string icon { get { return "source-humble-symbolic"; } }
@@ -59,6 +61,8 @@ namespace GameHub.Data.Sources.Humble
 
 		public Humble()
 		{
+			instance = this;
+
 			settings = Settings.Auth.Humble.instance;
 			var access_token = settings.access_token;
 			if(access_token.length > 0)
