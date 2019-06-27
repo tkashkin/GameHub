@@ -286,7 +286,7 @@ namespace GameHub.UI.Dialogs
 						if(installers.size > 1)
 						{
 							var row = installers_list.get_selected_row() as InstallerRow;
-							installer = row.installer;
+							if(row != null) installer = row.installer;
 						}
 						is_finished = true;
 						if(opts_list != null)
