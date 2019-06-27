@@ -1,3 +1,161 @@
+		<release type="development" version="0.14.0.42.dev" date="2019-06-27" timestamp="1561653434">
+			<description>
+				<ul>
+					<li>Remove `granite` dependency [e7bffdf]</li>
+					<li>FS overlays can now be removed/disabled (#120, #254) `GameFSOverlaysDialog` will now show warning or error depending on game's `install_dir` (#254) [c7ddab0]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.40.dev" date="2019-06-27" timestamp="1561608090">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [d78eab3]</li>
+					<li>Translated using Weblate (Dutch) [5353619]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.39.dev" date="2019-06-25" timestamp="1561491165">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Greek) [371a9c9]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.38.dev" date="2019-06-25" timestamp="1561467429">
+			<description>
+				<ul>
+					<li>Allow multiple selection in games list Add actions for selected games (#262) Batch tag editing for selected games [f88b0a4]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [e1d59d3]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [78f5793]</li>
+					<li>Translated using Weblate (Dutch) [ad15bf6]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.35.dev" date="2019-06-23" timestamp="1561265457">
+			<description>
+				<ul>
+					<li>Add configurable blacklists for libretro cores and game file extensions (#103) [2729433]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.34.dev" date="2019-06-23" timestamp="1561255307">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [63cbf1b]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.33.dev" date="2019-06-22" timestamp="1561176711">
+			<description>
+				<ul>
+					<li>Games merging tweaks Update Humble Trove parsing (#32) [480c20f]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.32.dev" date="2019-06-22" timestamp="1561168210">
+			<description>
+				<ul>
+					<li>Fix trying to get nonexistent platform from Steam game info Show default icons for games in list and details [603316b]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.31.dev" date="2019-06-21" timestamp="1561150334">
+			<description>
+				<ul>
+					<li>Merge branch 'dev' of github.com:tkashkin/GameHub into dev [b19073e]</li>
+					<li>Only match files when importing emulated games (#258) Do not try to show merged games when merging is disabled (#259) [b126539]</li>
+					<li>Translated using Weblate (Dutch) [4f34efd]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.29.dev" date="2019-06-21" timestamp="1561070335">
+			<description>
+				<ul>
+					<li>Allow to skip WelcomeView when no sources are setup (#257) [4f32825]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.28.dev" date="2019-06-21" timestamp="1561065270">
+			<description>
+				<ul>
+					<li>Add `Emulated` as a separate platform (#103) Improved image scaling Fix images downloader popup being cut off in some cases (#249) [1543581]</li>
+					<li>Translated using Weblate (Portuguese (Brazil)) [1288cc9]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.26.dev" date="2019-06-20" timestamp="1560987831">
+			<description>
+				<ul>
+					<li>Translated using Weblate (French) [19ed4a5]</li>
+					<li>Translated using Weblate (Portuguese (Brazil)) [aa824d1]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.25.dev" date="2019-06-19" timestamp="1560942096">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Dutch) [ce65666]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.24.dev" date="2019-06-18" timestamp="1560832127">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Chinese (Traditional)) [da8a821]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.23.dev" date="2019-06-18" timestamp="1560825623">
+			<description>
+				<ul>
+					<li>Maybe fix #255 Add log filtering to hide useless debug messages [2713b16]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.22.dev" date="2019-06-18" timestamp="1560817192">
+			<description>
+				<ul>
+					<li>UI tweaks [42d2657]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.21.dev" date="2019-06-17" timestamp="1560808285">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [ec093ed]</li>
+					<li>Translated using Weblate (Dutch) [e8607ba]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.20.dev" date="2019-06-17" timestamp="1560727211">
+			<description>
+				<ul>
+					<li>Try to also match primary game platforms (#247) [74da09f]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.19.dev" date="2019-06-17" timestamp="1560722748">
+			<description>
+				<ul>
+					<li>`dconf` settings rework Theme-based icon style Filter games by platform [0f1c47b]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.0.18.dev" date="2019-06-16" timestamp="1560656371">
+			<description>
+				<ul>
+					<li>Update dput.cf [99e2a70]</li>
+					<li>List all platforms for merged games when source is not filtered (#247) Show submenus for merged games in `GameContextMenu` [2c240b9]</li>
+					<li>Fix dependency installation prompts in build script [adc63ca]</li>
+					<li>`GamePropertiesDialog` tweaks Update `GameCard` and `GameListRow` when filtered source changes (#247) [69132ad]</li>
+					<li>Fix SteamGridDB authentication (#249) IGDB description visibility settings [530e231]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [443a90b]</li>
+					<li>Translated using Weblate (Dutch) [d39b3e3]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [173ebcc]</li>
+					<li>Translated using Weblate (Norwegian Bokmål) [6b09afb]</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.14.0.11.dev" date="2019-06-14" timestamp="1560460249">
 			<description>
 				<ul>

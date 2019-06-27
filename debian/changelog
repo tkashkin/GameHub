@@ -1,3 +1,121 @@
+com.github.tkashkin.gamehub (0.14.0-42-dev~elementary5.0) juno; urgency=low
+  * Remove `granite` dependency [e7bffdf]
+  * FS overlays can now be removed/disabled (#120, #254) `GameFSOverlaysDialog` will now show warning or error depending on game's `install_dir` (#254) [c7ddab0]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 27 Jun 2019 19:37:14 +0300
+
+com.github.tkashkin.gamehub (0.14.0-40-dev~elementary5.0) juno; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [d78eab3]
+  * Translated using Weblate (Dutch) [5353619]
+
+ -- Allan Nordhøy <epost@anotheragency.no>  Tue, 25 Jun 2019 16:39:27 +0000
+
+com.github.tkashkin.gamehub (0.14.0-39-dev~elementary5.0) juno; urgency=low
+  * Added translation using Weblate (Greek) [371a9c9]
+
+ -- THANOS SIOURDAKIS <siourdakisthanos@gmail.com>  Tue, 25 Jun 2019 19:32:45 +0000
+
+com.github.tkashkin.gamehub (0.14.0-38-dev~elementary5.0) juno; urgency=low
+  * Allow multiple selection in games list Add actions for selected games (#262) Batch tag editing for selected games [f88b0a4]
+  * Translated using Weblate (Norwegian Bokmål) [e1d59d3]
+  * Translated using Weblate (Norwegian Bokmål) [78f5793]
+  * Translated using Weblate (Dutch) [ad15bf6]
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 25 Jun 2019 15:57:09 +0300
+
+com.github.tkashkin.gamehub (0.14.0-35-dev~elementary5.0) juno; urgency=low
+  * Add configurable blacklists for libretro cores and game file extensions (#103) [2729433]
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 23 Jun 2019 07:50:57 +0300
+
+com.github.tkashkin.gamehub (0.14.0-34-dev~elementary5.0) juno; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [63cbf1b]
+
+ -- Allan Nordhøy <epost@anotheragency.no>  Sat, 22 Jun 2019 01:19:26 +0000
+
+com.github.tkashkin.gamehub (0.14.0-33-dev~elementary5.0) juno; urgency=low
+  * Games merging tweaks Update Humble Trove parsing (#32) [480c20f]
+
+ -- tkashkin <tkashkin@gmail.com>  Sat, 22 Jun 2019 07:11:51 +0300
+
+com.github.tkashkin.gamehub (0.14.0-32-dev~elementary5.0) juno; urgency=low
+  * Fix trying to get nonexistent platform from Steam game info Show default icons for games in list and details [603316b]
+
+ -- tkashkin <tkashkin@gmail.com>  Sat, 22 Jun 2019 04:50:10 +0300
+
+com.github.tkashkin.gamehub (0.14.0-31-dev~elementary5.0) juno; urgency=low
+  * Merge branch 'dev' of github.com:tkashkin/GameHub into dev [b19073e]
+  * Only match files when importing emulated games (#258) Do not try to show merged games when merging is disabled (#259) [b126539]
+  * Translated using Weblate (Dutch) [4f34efd]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 21 Jun 2019 23:52:14 +0300
+
+com.github.tkashkin.gamehub (0.14.0-29-dev~elementary5.0) juno; urgency=low
+  * Allow to skip WelcomeView when no sources are setup (#257) [4f32825]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 21 Jun 2019 01:38:55 +0300
+
+com.github.tkashkin.gamehub (0.14.0-28-dev~elementary5.0) juno; urgency=low
+  * Add `Emulated` as a separate platform (#103) Improved image scaling Fix images downloader popup being cut off in some cases (#249) [1543581]
+  * Translated using Weblate (Portuguese (Brazil)) [1288cc9]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 21 Jun 2019 00:14:30 +0300
+
+com.github.tkashkin.gamehub (0.14.0-26-dev~elementary5.0) juno; urgency=low
+  * Translated using Weblate (French) [19ed4a5]
+  * Translated using Weblate (Portuguese (Brazil)) [aa824d1]
+
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Wed, 19 Jun 2019 23:40:49 +0000
+
+com.github.tkashkin.gamehub (0.14.0-25-dev~elementary5.0) juno; urgency=low
+  * Translated using Weblate (Dutch) [ce65666]
+
+ -- Heimen Stoffels <vistausss@outlook.com>  Tue, 18 Jun 2019 10:29:42 +0000
+
+com.github.tkashkin.gamehub (0.14.0-24-dev~elementary5.0) juno; urgency=low
+  * Added translation using Weblate (Chinese (Traditional)) [da8a821]
+
+ -- Jeff Huang <s8321414@gmail.com>  Tue, 18 Jun 2019 04:28:47 +0000
+
+com.github.tkashkin.gamehub (0.14.0-23-dev~elementary5.0) juno; urgency=low
+  * Maybe fix #255 Add log filtering to hide useless debug messages [2713b16]
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 18 Jun 2019 05:40:23 +0300
+
+com.github.tkashkin.gamehub (0.14.0-22-dev~elementary5.0) juno; urgency=low
+  * UI tweaks [42d2657]
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 18 Jun 2019 03:19:52 +0300
+
+com.github.tkashkin.gamehub (0.14.0-21-dev~elementary5.0) juno; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [ec093ed]
+  * Translated using Weblate (Dutch) [e8607ba]
+
+ -- Allan Nordhøy <epost@anotheragency.no>  Mon, 17 Jun 2019 07:30:09 +0000
+
+com.github.tkashkin.gamehub (0.14.0-20-dev~elementary5.0) juno; urgency=low
+  * Try to also match primary game platforms (#247) [74da09f]
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 17 Jun 2019 02:20:11 +0300
+
+com.github.tkashkin.gamehub (0.14.0-19-dev~elementary5.0) juno; urgency=low
+  * `dconf` settings rework Theme-based icon style Filter games by platform [0f1c47b]
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 17 Jun 2019 01:05:48 +0300
+
+com.github.tkashkin.gamehub (0.14.0-18-dev~elementary5.0) juno; urgency=low
+  * Update dput.cf [99e2a70]
+  * List all platforms for merged games when source is not filtered (#247) Show submenus for merged games in `GameContextMenu` [2c240b9]
+  * Fix dependency installation prompts in build script [adc63ca]
+  * `GamePropertiesDialog` tweaks Update `GameCard` and `GameListRow` when filtered source changes (#247) [69132ad]
+  * Fix SteamGridDB authentication (#249) IGDB description visibility settings [530e231]
+  * Translated using Weblate (Norwegian Bokmål) [443a90b]
+  * Translated using Weblate (Dutch) [d39b3e3]
+  * Translated using Weblate (Norwegian Bokmål) [173ebcc]
+  * Translated using Weblate (Norwegian Bokmål) [6b09afb]
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 16 Jun 2019 06:39:31 +0300
+
 com.github.tkashkin.gamehub (0.14.0-11-dev~elementary5.0) juno; urgency=low
   * Merge branch 'dev' of github.com:tkashkin/GameHub into dev [164e55c]
   * IGDB integration [9f1d67c]
