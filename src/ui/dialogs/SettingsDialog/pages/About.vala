@@ -17,12 +17,13 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+using GameHub.UI.Widgets;
+
 using GameHub.Utils;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 {
-	public class About: SettingsPage
+	public class About: SettingsSidebar.SettingsPage
 	{
 		private Settings.UI.Appearance ui_settings;
 
@@ -57,10 +58,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			appinfo_grid.row_spacing = 0;
 			appinfo_grid.column_spacing = 8;
 
-			var app_title = new Label("GameHub");
+			var app_title = Styled.H2Label("GameHub");
 			app_title.hexpand = true;
 			app_title.xalign = 0;
-			app_title.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
 			var app_version = new Label(ProjectConfig.VERSION);
 			app_version.hexpand = true;
@@ -75,11 +75,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 
 			app_info_copy.clicked.connect(copy_app_info);
 
-			var app_subtitle = new Label(_("All your games in one place"));
+			var app_subtitle = Styled.H3Label(_("All your games in one place"));
 			app_subtitle.margin_top = 4;
 			app_subtitle.hexpand = true;
 			app_subtitle.xalign = 0;
-			app_subtitle.get_style_context().add_class(Granite.STYLE_CLASS_H3_LABEL);
 
 			appinfo_grid.attach(app_title, 0, 0);
 			appinfo_grid.attach(app_version, 0, 1);

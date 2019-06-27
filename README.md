@@ -58,7 +58,6 @@ See [this issue](https://github.com/tkashkin/GameHub/issues/156) for more inform
 #### Build dependencies
 * `meson`
 * `valac`
-* `libgranite-dev`
 * `libgtk-3-dev`
 * `libglib2.0-dev`
 * `libwebkit2gtk-4.0-dev`
@@ -68,7 +67,7 @@ See [this issue](https://github.com/tkashkin/GameHub/issues/156) for more inform
 * `libsqlite3-dev`
 * `libxml2-dev`
 * `libpolkit-gobject-1-dev`
-* `libunity-dev` (optional, required for launcher icon quicklist, progress indicator and counter)
+* `libunity-dev` (optional, required for launcher icon quicklist, progress indicator and counter; pass `-Duse_libunity=true` to `meson` to use)
 * `libmanette-0.2-dev`, `libx11-dev`, `libxtst-dev` (optional, required for gamepad support)
 
 #### Building

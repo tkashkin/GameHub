@@ -16,11 +16,11 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using Granite;
+
 
 namespace GameHub.Settings.Compat
 {
-	public class RetroArch: Granite.Services.Settings
+	public class RetroArch: SettingsSchema
 	{
 		public string core_dir { get; set; }
 		public string core_info_dir { get; set; }

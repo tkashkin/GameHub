@@ -155,7 +155,7 @@ namespace GameHub.UI.Widgets
 				var x = (width - scaled.width) / 2;
 				var y = (height - scaled.height) / 2;
 
-				Granite.Drawing.Utilities.cairo_rounded_rectangle(ctx, int.max(x, 0), int.max(y, 0), int.min(scaled.width, width), int.min(scaled.height, height), corner_radius * scale_factor);
+				cairo_rounded_rectangle(ctx, int.max(x, 0), int.max(y, 0), int.min(scaled.width, width), int.min(scaled.height, height), corner_radius * scale_factor);
 				cairo_set_source_pixbuf(ctx, scaled, x, y);
 
 				ctx.clip();
@@ -163,6 +163,16 @@ namespace GameHub.UI.Widgets
 			}
 
 			return false;
+		}
+
+		private static void cairo_rounded_rectangle(Cairo.Context cr, double x, double y, double width, double height, double radius)
+		{
+			cr.move_to(x + radius, y);
+			cr.arc(x + width - radius, y + radius, radius, Math.PI * 1.5, Math.PI * 2);
+			cr.arc(x + width - radius, y + height - radius, radius, 0, Math.PI * 0.5);
+			cr.arc(x + radius, y + height - radius, radius, Math.PI * 0.5, Math.PI);
+			cr.arc(x + radius, y + radius, radius, Math.PI, Math.PI * 1.5);
+			cr.close_path();
 		}
 	}
 }

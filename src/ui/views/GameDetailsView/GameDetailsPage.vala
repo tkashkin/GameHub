@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
@@ -126,12 +126,11 @@ namespace GameHub.UI.Views.GameDetailsView
 			icon_overlay.add(no_icon_indicator);
 			icon_overlay.add_overlay(icon);
 
-			title = new Label(null);
+			title = Styled.H2Label(null);
 			title.halign = Align.START;
 			title.wrap = true;
 			title.xalign = 0;
 			title.hexpand = true;
-			title.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
 			status = new Label(null);
 			status.halign = Align.START;

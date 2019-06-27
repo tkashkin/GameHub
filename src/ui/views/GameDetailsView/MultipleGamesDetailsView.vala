@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 using GameHub.Data;
 using GameHub.Data.DB;
 using GameHub.Utils;
@@ -63,13 +63,12 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		construct
 		{
-			header = new Label(null);
+			header = Styled.H2Label(null);
 			header.halign = Align.START;
 			header.wrap = true;
 			header.xalign = 0;
 			header.hexpand = true;
 			header.margin = 24;
-			header.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
 			var actions_wrapper = new Box(Orientation.VERTICAL, 0);
 			actions_wrapper.expand = true;

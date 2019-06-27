@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 
 using GameHub.Data;
 using GameHub.Utils;
@@ -188,7 +188,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 		private Box? add_link_list(string title, Providers.Data.IGDB.Result.Link[] links, Container? parent=null)
 		{
-			var title_label = new Granite.HeaderLabel(title);
+			var title_label = Styled.H4Label(title);
 			title_label.set_size_request(128, -1);
 			title_label.valign = Align.CENTER;
 

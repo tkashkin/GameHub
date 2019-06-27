@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 
 using GameHub.Data;
 using GameHub.Data.Sources.Steam;
@@ -44,7 +44,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			var hbox = new Box(Orientation.HORIZONTAL, 0);
 
-			var header = new Granite.HeaderLabel(_("Playtime"));
+			var header = Styled.H4Label(_("Playtime"));
 
 			var add_separator = false;
 

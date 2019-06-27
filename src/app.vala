@@ -19,7 +19,6 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
 
 using GameHub.Data;
 using GameHub.Data.DB;
@@ -226,7 +225,7 @@ namespace GameHub
 
 			var app = new Application();
 
-			Utils.Logger.initialize("GameHub");
+			Utils.Logger.init();
 
 			var lang = Environment.get_variable("LC_ALL") ?? "";
 			Intl.setlocale(LocaleCategory.ALL, lang);
@@ -293,7 +292,7 @@ namespace GameHub
 				return true;
 			}
 
-			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
+			Logger.DisplayLevel = opt_debug_log ? Logger.LogLevel.DEBUG : Logger.LogLevel.INFO;
 
 			if(opt_gdb || opt_gdb_bt_full || opt_gdb_fatal_criticals)
 			{
@@ -362,7 +361,7 @@ namespace GameHub
 				warning(e.message);
 			}
 
-			Granite.Services.Logger.DisplayLevel = opt_debug_log ? Granite.Services.LogLevel.DEBUG : Granite.Services.LogLevel.INFO;
+			Logger.DisplayLevel = opt_debug_log ? Logger.LogLevel.DEBUG : Logger.LogLevel.INFO;
 
 			init();
 

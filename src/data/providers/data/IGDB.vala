@@ -372,7 +372,7 @@ namespace GameHub.Data.Providers.Data
 				desc_src_label.valign = Gtk.Align.CENTER;
 				desc_src_label.hexpand = true;
 
-				var desc_src = new Granite.Widgets.ModeButton();
+				var desc_src = new GameHub.UI.Widgets.ModeButton();
 				desc_src.homogeneous = false;
 				desc_src.append_text(C_("igdb_preferred_description", "of game"));
 				desc_src.append_text(C_("igdb_preferred_description", "from IGDB"));

@@ -17,7 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+
 
 using GameHub.Data;
 using GameHub.Data.Providers;
@@ -39,7 +39,7 @@ namespace GameHub.UI.Widgets
 
 		private Stack stack;
 		private Spinner spinner;
-		private Granite.Widgets.AlertView no_images_alert;
+		private AlertView no_images_alert;
 		private ScrolledWindow images_scroll;
 		private Box images;
 
@@ -75,7 +75,7 @@ namespace GameHub.UI.Widgets
 			spinner.margin = 16;
 			spinner.start();
 
-			no_images_alert = new Granite.Widgets.AlertView(_("No images"), _("There are no images found for this game\nMake sure game name is correct"), "dialog-information");
+			no_images_alert = new AlertView(_("No images"), _("There are no images found for this game\nMake sure game name is correct"), "dialog-information");
 			no_images_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 
 			images_scroll = new ScrolledWindow(null, null);
@@ -144,7 +144,7 @@ namespace GameHub.UI.Widgets
 					var header_hbox = new Box(Orientation.HORIZONTAL, 8);
 					header_hbox.margin_start = header_hbox.margin_end = 4;
 
-					var header = new HeaderLabel(src.name);
+					var header = Styled.H4Label(src.name);
 					header.hexpand = true;
 
 					header_hbox.add(header);
@@ -225,12 +225,8 @@ namespace GameHub.UI.Widgets
 			{
 				margin = 0;
 
-				var card = new Frame(null);
+				var card = Styled.Card("gamecard", "static");
 				card.sensitive = false;
-				card.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
-				card.get_style_context().add_class("gamecard");
-				card.get_style_context().add_class("static");
-				card.shadow_type = ShadowType.NONE;
 				card.margin = 4;
 
 				card.tooltip_markup = image.description;

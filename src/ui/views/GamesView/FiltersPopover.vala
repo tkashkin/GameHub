@@ -19,7 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
+
 using GameHub.Data;
 using GameHub.Data.DB;
 using GameHub.Utils;
@@ -39,8 +39,8 @@ namespace GameHub.UI.Views.GamesView
 		public SavedState.GamesView.PlatformFilter filter_platform { get; private set; default = SavedState.GamesView.PlatformFilter.ALL; }
 		public signal void filter_platform_changed(SavedState.GamesView.PlatformFilter filter_platform);
 
-		private Granite.Widgets.ModeButton sort_mode_button;
-		private Granite.Widgets.ModeButton platform_button;
+		private ModeButton sort_mode_button;
+		private ModeButton platform_button;
 
 		private CheckButton tags_header_check;
 		private ListBox tags_list;
@@ -69,7 +69,7 @@ namespace GameHub.UI.Views.GamesView
 			var sort_image = new Image.from_icon_name("view-sort-descending-symbolic", IconSize.BUTTON);
 			sort_hbox.add(sort_image);
 
-			var sort_label = new HeaderLabel(_("Sort"));
+			var sort_label = Styled.H4Label(_("Sort"));
 			sort_label.margin_end = 2;
 			sort_label.xpad = 0;
 			sort_label.halign = Align.START;
@@ -77,7 +77,7 @@ namespace GameHub.UI.Views.GamesView
 			sort_label.hexpand = true;
 			sort_hbox.add(sort_label);
 
-			sort_mode_button = new Granite.Widgets.ModeButton();
+			sort_mode_button = new ModeButton();
 			sort_mode_button.get_style_context().add_class("filters-sort-mode");
 			sort_mode_button.halign = Align.END;
 			sort_mode_button.valign = Align.CENTER;
@@ -94,7 +94,7 @@ namespace GameHub.UI.Views.GamesView
 			var platform_image = new Image.from_icon_name("application-x-executable-symbolic", IconSize.BUTTON);
 			platform_hbox.add(platform_image);
 
-			var platform_label = new HeaderLabel(_("Platform"));
+			var platform_label = Styled.H4Label(_("Platform"));
 			platform_label.margin_end = 2;
 			platform_label.xpad = 0;
 			platform_label.halign = Align.START;
@@ -102,7 +102,7 @@ namespace GameHub.UI.Views.GamesView
 			platform_label.hexpand = true;
 			platform_hbox.add(platform_label);
 
-			platform_button = new Granite.Widgets.ModeButton();
+			platform_button = new ModeButton();
 			platform_button.get_style_context().add_class("filters-platform");
 			platform_button.halign = Align.END;
 			platform_button.valign = Align.CENTER;
@@ -191,7 +191,7 @@ namespace GameHub.UI.Views.GamesView
 			tags_header_check = new CheckButton();
 			tags_header_check.can_focus = false;
 
-			var header = new HeaderLabel(_("Tags"));
+			var header = Styled.H4Label(_("Tags"));
 			header.halign = Align.START;
 			header.xalign = 0;
 			header.hexpand = true;

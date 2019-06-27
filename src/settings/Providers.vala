@@ -16,13 +16,13 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using Granite;
+
 
 namespace GameHub.Settings.Providers
 {
 	namespace Images
 	{
-		public class SteamGridDB: Granite.Services.Settings
+		public class SteamGridDB: SettingsSchema
 		{
 			public bool enabled { get; set; }
 			public string api_key { get; set; }
@@ -59,7 +59,7 @@ namespace GameHub.Settings.Providers
 			}
 		}
 
-		public class JinxSGVI: Granite.Services.Settings
+		public class JinxSGVI: SettingsSchema
 		{
 			public bool enabled { get; set; }
 
@@ -85,7 +85,7 @@ namespace GameHub.Settings.Providers
 
 	namespace Data
 	{
-		public class IGDB: Granite.Services.Settings
+		public class IGDB: SettingsSchema
 		{
 			public bool enabled { get; set; }
 			public string api_key { get; set; }

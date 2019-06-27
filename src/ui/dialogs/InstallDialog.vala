@@ -42,7 +42,7 @@ namespace GameHub.UI.Dialogs
 		private Label title_label;
 		private Label subtitle_label;
 
-		private Granite.Widgets.ModeButton platforms_list;
+		private ModeButton platforms_list;
 		private ListBox installers_list;
 
 		private bool is_finished = false;
@@ -73,13 +73,12 @@ namespace GameHub.UI.Dialogs
 
 			content = new Box(Orientation.VERTICAL, 0);
 
-			title_label = new Label(null);
+			title_label = Styled.H2Label(null);
 			title_label.margin_start = title_label.margin_end = 4;
 			title_label.halign = Align.START;
 			title_label.xalign = 0;
 			title_label.wrap = true;
 			title_label.max_width_chars = 36;
-			title_label.get_style_context().add_class(Granite.STYLE_CLASS_H2_LABEL);
 
 			var subtitle_hbox = new Box(Orientation.HORIZONTAL, 8);
 
@@ -123,7 +122,7 @@ namespace GameHub.UI.Dialogs
 				bbox.set_child_non_homogeneous(import_btn, true);
 			}
 
-			platforms_list = new Granite.Widgets.ModeButton();
+			platforms_list = new ModeButton();
 			platforms_list.get_style_context().add_class("installer-platforms-list");
 			platforms_list.halign = Align.END;
 			platforms_list.valign = Align.CENTER;

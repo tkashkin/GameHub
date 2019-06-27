@@ -36,41 +36,6 @@
 					"path": "bundled/libmanette-0.2.2.tar.gz"
 				}
 			]
-		},
-
-		{
-			"name": "libdee",
-			"build-options": { "cflags": "-Wno-error=misleading-indentation" },
-			"sources": [
-				{
-					"type": "archive",
-					"path": "bundled/dee-1.2.7.tar.gz"
-				}
-			]
-		},
-		{
-			"name": "libdbusmenu",
-			"config-opts": ["--enable-gtk", "--disable-dumper"],
-			"make-install-args": ["typelibdir=/app/lib/girepository-1.0"],
-			"sources": [
-				{
-					"type": "archive",
-					"path": "bundled/libdbusmenu-16.04.0.tar.gz"
-				}
-			]
-		},
-		{
-			"name": "libunity",
-			"sources": [
-				{
-					"type": "archive",
-					"path": "bundled/libunity_7.1.4+16.04.20180209.1.orig.tar.gz"
-				},
-				{
-					"type": "patch",
-					"path": "libunity.patch"
-				}
-			]
 		}
 	]
 }

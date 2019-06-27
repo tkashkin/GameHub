@@ -17,11 +17,11 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-using Granite;
+
 
 namespace GameHub.Settings.UI
 {
-	public class Appearance: Granite.Services.Settings
+	public class Appearance: SettingsSchema
 	{
 		public const string[] COLORED_ICONS_THEMES = { "elementary" };
 
@@ -99,7 +99,7 @@ namespace GameHub.Settings.UI
 		}
 	}
 
-	public class Behavior: Granite.Services.Settings
+	public class Behavior: SettingsSchema
 	{
 		public bool grid_doubleclick { get; set; }
 		public bool merge_games { get; set; }

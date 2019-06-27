@@ -19,11 +19,11 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using Granite;
 
 using GameHub.Data;
 using GameHub.Data.Sources.GOG;
 
+using GameHub.UI.Widgets;
 using GameHub.UI.Views.GamesView;
 
 using GameHub.Utils;
@@ -86,7 +86,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					bonuslist.add(new BonusContentRow(bonus));
 				}
 
-				var header = new Granite.HeaderLabel(_("Bonus content"));
+				var header = Styled.H4Label(_("Bonus content"));
 				header.margin_start = header.margin_end = 8;
 
 				downloads_visible = true;
@@ -113,7 +113,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					dlclist.add(new DLCRow(dlc, details_page));
 				}
 
-				var header = new Granite.HeaderLabel(_("DLC"));
+				var header = Styled.H4Label(_("DLC"));
 				header.margin_start = header.margin_end = 8;
 
 				downloads_visible = true;

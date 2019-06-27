@@ -22,6 +22,7 @@ using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.Settings;
 
+using GameHub.UI.Widgets;
 using GameHub.UI.Views.GamesView;
 
 namespace GameHub.Data.Adapters
@@ -364,8 +365,7 @@ namespace GameHub.Data.Adapters
 			if(prev_item != null && f == pf && (f || s == ps)) row.set_header(null);
 			else
 			{
-				var label = new Granite.HeaderLabel(f ? C_("status_header", "Favorites") : item.game.status.header);
-				label.get_style_context().add_class("games-list-header");
+				var label = Styled.H4Label(f ? C_("status_header", "Favorites") : item.game.status.header, "games-list-header");
 				list.size_allocate.connect(alloc => {
 					label.set_size_request(alloc.width, -1);
 				});
