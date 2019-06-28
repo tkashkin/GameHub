@@ -51,6 +51,7 @@ namespace GameHub.UI.Widgets
 			{
 				_games.add(game);
 			}
+			update();
 		}
 
 		construct
@@ -118,7 +119,6 @@ namespace GameHub.UI.Widgets
 			add(new_entry);
 
 			Tables.Tags.instance.tags_updated.connect(update);
-			update();
 
 			show_all();
 		}
