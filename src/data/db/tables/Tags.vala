@@ -163,6 +163,39 @@ namespace GameHub.Data.DB.Tables
 			return true;
 		}
 
+		public static bool remove(Tag tag)
+		{
+			unowned Sqlite.Database? db = Database.instance.db;
+			if(db == null) return false;
+
+			Statement s;
+			int res = db.prepare_v2("DELETE FROM `tags` WHERE `id` = ?", -1, out s);
+
+			if(res != Sqlite.OK)
+			{
+				warning("[Database.Tags.remove] Can't prepare DELETE query (%d): %s", db.errcode(), db.errmsg());
+				return false;
+			}
+
+			res = s.bind_text(1, tag.id);
+
+			res = s.step();
+
+			if(res != Sqlite.DONE)
+			{
+				warning("[Database.Tags.remove] Error (%d): %s", db.errcode(), db.errmsg());
+				return false;
+			}
+
+			if(TAGS.contains(tag))
+			{
+				TAGS.remove(tag);
+				instance.tags_updated();
+			}
+
+			return true;
+		}
+
 		public class Tag: Object
 		{
 			public const string BUILTIN_PREFIX      = "builtin:";
@@ -210,11 +243,12 @@ namespace GameHub.Data.DB.Tables
 				}
 			}
 
-			public string? id { get; construct set; }
-			public string? name { get; construct set; }
-			public string icon { get; construct set; }
-			public bool selected { get; construct set; default = true; }
-			public bool enabled { get; construct set; default = true; }
+			public string? id        { get; construct set; }
+			public string? name      { get; construct set; }
+			public string  icon      { get; construct set; }
+			public bool    selected  { get; construct set; default = true; }
+			public bool    enabled   { get; construct set; default = true; }
+			public bool    removable { get { return id != null && id.has_prefix(USER_PREFIX); } }
 
 			public Tag(string? id, string? name, string icon="gh-tag-symbolic", bool selected=true)
 			{
@@ -231,6 +265,11 @@ namespace GameHub.Data.DB.Tables
 			public Tag.from_name(string name)
 			{
 				this(USER_PREFIX + Utils.md5(name), name);
+			}
+
+			public bool remove()
+			{
+				return Tags.remove(this);
 			}
 
 			public static bool is_equal(Tag first, Tag second)

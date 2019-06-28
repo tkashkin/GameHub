@@ -80,11 +80,17 @@ namespace GameHub.UI.Widgets
 			box.add(name);
 			box.add(icon);
 
-			ebox.add_events(EventMask.BUTTON_RELEASE_MASK);
-			ebox.button_release_event.connect(e => {
-				if(e.button == 1)
+			ebox.add_events(EventMask.BUTTON_PRESS_MASK);
+			ebox.button_press_event.connect(e => {
+				switch(e.button)
 				{
-					toggle();
+					case 1:
+						toggle();
+						break;
+
+					case 3:
+						show_context_menu(e, true);
+						break;
 				}
 				return true;
 			});
@@ -131,6 +137,32 @@ namespace GameHub.UI.Widgets
 				check.active = !check.active;
 				tag.selected = check.active;
 			}
+		}
+
+		private void show_context_menu(Event e, bool at_pointer=true)
+		{
+			var menu = new Gtk.Menu();
+
+			var remove = new Gtk.MenuItem.with_label(_("Remove"));
+			remove.sensitive = tag.removable;
+			remove.activate.connect(() => tag.remove());
+
+			menu.add(remove);
+
+			menu.show_all();
+
+			#if GTK_3_22
+			if(at_pointer)
+			{
+				menu.popup_at_pointer(e);
+			}
+			else
+			{
+				menu.popup_at_widget(this, Gravity.SOUTH, Gravity.NORTH, e);
+			}
+			#else
+			menu.popup(null, null, null, 0, ((EventButton) e).time);
+			#endif
 		}
 	}
 }
