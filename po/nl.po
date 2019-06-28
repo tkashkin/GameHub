@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-27 20:45+0300\n"
-"PO-Revision-Date: 2019-06-27 04:01+0000\n"
+"PO-Revision-Date: 2019-06-30 11:50+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1-dev\n"
+"X-Generator: Weblate 3.7.1\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -1076,6 +1076,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Het gebruik van overlays binnen dit pad kan onveilig zijn.\n"
+"Doorgaan is op eigen risico.\n"
+"\n"
+"Pad: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1084,15 +1088,17 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Het gebruik van overlays binnen dit pad wordt niet ondersteund.\n"
+"\n"
+"Pad: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
 msgstr "Map openen"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
-#, fuzzy
 msgid "Remove overlay"
-msgstr "Overlays inschakelen"
+msgstr "Overlay verwijderen"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
