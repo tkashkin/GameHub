@@ -365,14 +365,19 @@ namespace GameHub.Data.Adapters
 			if(prev_item != null && f == pf && (f || s == ps)) row.set_header(null);
 			else
 			{
-				var label = Styled.H4Label(f ? C_("status_header", "Favorites") : item.game.status.header, "games-list-header");
-				list.size_allocate.connect(alloc => {
-					label.set_size_request(alloc.width, -1);
-				});
-				Allocation alloc;
-				list.get_allocation(out alloc);
-				label.set_size_request(alloc.width, -1);
-				row.set_header(label);
+				var header = new Box(Orientation.HORIZONTAL, 0);
+				StyleClass.add(header, "games-list-header");
+				if(prev_item == null) StyleClass.add(header, "first");
+				header.hexpand = true;
+
+				var label = Styled.H4Label(f ? C_("status_header", "Favorites") : item.game.status.header);
+				label.hexpand = true;
+				label.xalign = 0;
+				label.ellipsize = Pango.EllipsizeMode.END;
+
+				header.add(label);
+				header.show_all();
+				row.set_header(header);
 			}
 		}
 

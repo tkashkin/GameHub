@@ -274,10 +274,32 @@ list:not(:backdrop) row:selected:focus label.category-label
 
 .games-list-header
 {
-	background: alpha(#333, 0.1);
-	margin-top: -1px;
-	border-top: 1px alpha(#333, 0.3) solid;
-	border-bottom: 1px alpha(#333, 0.3) solid;
+	background: shade(@theme_bg_color, 0.95);
+	border-top: 1px shade(@theme_bg_color, 0.7) solid;
+	border-bottom: 1px shade(@theme_bg_color, 0.7) solid;
+}
+.games-list-header.first
+{
+	border-top: none;
+}
+.games-list-header > label
+{
+	padding: 6px 8px;
+}
+
+.game-list-row .title.bold
+{
+	font-weight: bold;
+}
+.game-list-row .status
+{
+	font-size: 8pt;
+	opacity: 0.8;
+}
+
+.game-list-row.dim
+{
+	opacity: 0.6;
 }
 
 .gameinfo-background :not(.igdb-data-container-scrollable-value) > undershoot.left

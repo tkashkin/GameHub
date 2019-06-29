@@ -161,7 +161,7 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			var games_list_scrolled = new ScrolledWindow(null, null);
-			games_list_scrolled.hscrollbar_policy = PolicyType.EXTERNAL;
+			games_list_scrolled.hscrollbar_policy = PolicyType.NEVER;
 			games_list_scrolled.add(games_list);
 			games_list_scrolled.set_size_request(220, -1);
 

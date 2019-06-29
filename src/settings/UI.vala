@@ -28,8 +28,11 @@ namespace GameHub.Settings.UI
 		public bool dark_theme { get; set; }
 		public Appearance.IconStyle icon_style { get; set; }
 
-		public bool list_compact { get; set; }
 		public bool grid_platform_icons { get; set; }
+
+		public string[] list_style_cache;
+		public string[] list_style { get; set; }
+		public signal void list_style_updated(string[] style);
 
 		public static string symbolic_icon_suffix
 		{
@@ -50,6 +53,14 @@ namespace GameHub.Settings.UI
 		public Appearance()
 		{
 			base(ProjectConfig.PROJECT_NAME + ".ui.appearance");
+			list_style_cache = list_style;
+		}
+
+		public void update_list_style(string[] new_style)
+		{
+			list_style_cache = new_style;
+			list_style_updated(list_style_cache);
+			list_style = list_style_cache;
 		}
 
 		public static Gtk.Settings gtk_settings;

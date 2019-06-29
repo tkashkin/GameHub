@@ -25,6 +25,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 {
 	public class Appearance: SettingsDialogPage
 	{
+		private Settings.UI.Appearance settings;
+
 		public Appearance(SettingsDialog dlg)
 		{
 			Object(
@@ -39,7 +41,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 		construct
 		{
-			var settings = Settings.UI.Appearance.instance;
+			settings = Settings.UI.Appearance.instance;
 
 			add_switch(_("Dark theme"), settings.dark_theme, v => { settings.dark_theme = v; });
 
@@ -59,15 +61,66 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			icon_style_hbox.add(icon_style);
 			add_widget(icon_style_hbox);
 
-			add_separator();
-
-			add_switch(_("Compact list"), settings.list_compact, v => { settings.list_compact = v; });
-			add_switch(_("Show platform icons in grid view"), settings.grid_platform_icons, v => { settings.grid_platform_icons = v; });
-
 			icon_style.selected = settings.icon_style;
 			icon_style.mode_changed.connect(() => {
 				settings.icon_style = (Settings.UI.Appearance.IconStyle) icon_style.selected;
 			});
+
+			add_switch(_("Show platform icons in grid view"), settings.grid_platform_icons, v => { settings.grid_platform_icons = v; });
+
+			add_separator();
+
+			var hbox = new Box(Orientation.HORIZONTAL, 8);
+
+			var list_installed = new Box(Orientation.VERTICAL, 4);
+			list_installed.hexpand = true;
+
+			var list_uninstalled = new Box(Orientation.VERTICAL, 4);
+			list_uninstalled.hexpand = true;
+
+			hbox.add(list_installed);
+			hbox.add(new Separator(Orientation.VERTICAL));
+			hbox.add(list_uninstalled);
+
+			add_widget(hbox);
+
+			list_installed.add(Styled.H4Label(_("Games list: installed")));
+			list_uninstalled.add(Styled.H4Label(_("Games list: not installed")));
+
+			add_list_style_checkbox(C_("list_style", "Show icon"), "installed-icon", list_installed);
+			add_list_style_checkbox(C_("list_style", "Bold title"), "installed-title-bold", list_installed);
+			add_list_style_checkbox(C_("list_style", "Show status"), "installed-status", list_installed);
+
+			add_list_style_checkbox(C_("list_style", "Show icon"), "uninstalled-icon", list_uninstalled);
+			add_list_style_checkbox(C_("list_style", "Bold title"), "uninstalled-title-bold", list_uninstalled);
+			add_list_style_checkbox(C_("list_style", "Show status"), "uninstalled-status", list_uninstalled);
+			add_list_style_checkbox(C_("list_style", "Dim"), "uninstalled-dim", list_uninstalled);
+		}
+
+		private CheckButton add_list_style_checkbox(string label, string style, Box parent)
+		{
+			var check = new CheckButton.with_label(label);
+			StyleClass.add(check, "default-padding");
+			parent.add(check);
+			check.active = style in settings.list_style;
+			check.toggled.connect(() => {
+				if(!check.active && style in settings.list_style)
+				{
+					string[] new_style = {};
+					foreach(var s in settings.list_style)
+					{
+						if(s != style) new_style += s;
+					}
+					settings.update_list_style(new_style);
+				}
+				else if(check.active && !(style in settings.list_style))
+				{
+					string[] new_style = settings.list_style;
+					new_style += style;
+					settings.update_list_style(new_style);
+				}
+			});
+			return check;
 		}
 	}
 }
