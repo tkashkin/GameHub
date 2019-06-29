@@ -64,7 +64,7 @@ namespace GameHub.UI.Widgets
 
 	namespace Styled
 	{
-		public Label Label(string? text, string main_class, va_list classes)
+		private Label label(string? text, string main_class, va_list classes)
 		{
 			var label = new Gtk.Label(text);
 			StyleClass.add(label, main_class);
@@ -72,21 +72,26 @@ namespace GameHub.UI.Widgets
 			return label;
 		}
 
+		public Label Label(string? text, string main_class, ...)
+		{
+			return label(text, main_class, va_list());
+		}
+
 		public Label H1Label(string? text, ...)
 		{
-			return Styled.Label(text, StyleClass.Label.H1, va_list());
+			return label(text, StyleClass.Label.H1, va_list());
 		}
 		public Label H2Label(string? text, ...)
 		{
-			return Styled.Label(text, StyleClass.Label.H2, va_list());
+			return label(text, StyleClass.Label.H2, va_list());
 		}
 		public Label H3Label(string? text, ...)
 		{
-			return Styled.Label(text, StyleClass.Label.H3, va_list());
+			return label(text, StyleClass.Label.H3, va_list());
 		}
 		public Label H4Label(string? text, ...)
 		{
-			var label = Styled.Label(text, StyleClass.Label.H4, va_list());
+			var label = label(text, StyleClass.Label.H4, va_list());
 			label.halign = Gtk.Align.START;
 			label.xalign = 0;
 			return label;

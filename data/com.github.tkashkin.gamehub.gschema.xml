@@ -86,9 +86,9 @@
 				<default>"Theme-based"</default>
 				<summary>Icon style</summary>
 			</key>
-			<key name="list-compact" type="b">
-				<default>false</default>
-				<summary>Compact list</summary>
+			<key name="list-style" type="as">
+				<default>['installed-icon', 'installed-title-bold', 'installed-status', 'uninstalled-icon', 'uninstalled-dim']</default>
+				<summary>List style</summary>
 			</key>
 			<key name="grid-platform-icons" type="b">
 				<default>true</default>
