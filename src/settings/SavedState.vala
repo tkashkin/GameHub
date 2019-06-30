@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
+using GameHub.Data.Adapters;
 
 namespace GameHub.Settings.SavedState
 {
@@ -55,9 +55,10 @@ namespace GameHub.Settings.SavedState
 	public class GamesView: SettingsSchema
 	{
 		public GamesView.Style style { get; set; }
-		public GamesView.SortMode sort_mode { get; set; }
+		public GamesAdapter.SortMode sort_mode { get; set; }
+		public GamesAdapter.GroupMode group_mode { get; set; }
 		public string filter_source { get; set; }
-		public GamesView.PlatformFilter filter_platform { get; set; }
+		public GamesAdapter.PlatformFilter filter_platform { get; set; }
 
 		public GamesView()
 		{
@@ -80,52 +81,6 @@ namespace GameHub.Settings.SavedState
 		public enum Style
 		{
 			GRID = 0, LIST = 1
-		}
-
-		public enum SortMode
-		{
-			NAME = 0, LAST_LAUNCH = 1, PLAYTIME = 2;
-
-			public string name()
-			{
-				switch(this)
-				{
-					case SortMode.NAME:        return C_("sort_mode", "By name");
-					case SortMode.LAST_LAUNCH: return C_("sort_mode", "By last launch");
-					case SortMode.PLAYTIME:    return C_("sort_mode", "By playtime");
-				}
-				assert_not_reached();
-			}
-
-			public string icon()
-			{
-				switch(this)
-				{
-					case SortMode.NAME:        return "insert-text-symbolic";
-					case SortMode.LAST_LAUNCH: return "document-open-recent-symbolic";
-					case SortMode.PLAYTIME:    return "preferences-system-time-symbolic";
-				}
-				assert_not_reached();
-			}
-		}
-
-		public enum PlatformFilter
-		{
-			ALL = 0, LINUX = 1, WINDOWS = 2, MACOS = 3, EMULATED = 4;
-
-			public const PlatformFilter[] FILTERS = { PlatformFilter.ALL, PlatformFilter.LINUX, PlatformFilter.WINDOWS, PlatformFilter.MACOS, PlatformFilter.EMULATED };
-
-			public Data.Platform platform()
-			{
-				switch(this)
-				{
-					case PlatformFilter.LINUX:    return Data.Platform.LINUX;
-					case PlatformFilter.WINDOWS:  return Data.Platform.WINDOWS;
-					case PlatformFilter.MACOS:    return Data.Platform.MACOS;
-					case PlatformFilter.EMULATED: return Data.Platform.EMULATED;
-				}
-				assert_not_reached();
-			}
 		}
 	}
 }

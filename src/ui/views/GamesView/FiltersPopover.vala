@@ -21,6 +21,7 @@ using Gdk;
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Adapters;
 using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
@@ -33,12 +34,16 @@ namespace GameHub.UI.Views.GamesView
 		public ArrayList<Tables.Tags.Tag> selected_tags { get; private set; }
 		public signal void filters_changed(ArrayList<Tables.Tags.Tag> selected_tags);
 
-		public SavedState.GamesView.SortMode sort_mode { get; private set; default = SavedState.GamesView.SortMode.NAME; }
-		public signal void sort_mode_changed(SavedState.GamesView.SortMode sort_mode);
+		public GamesAdapter.SortMode sort_mode { get; private set; default = GamesAdapter.SortMode.NAME; }
+		public signal void sort_mode_changed(Adapters.GamesAdapter.SortMode sort_mode);
 
-		public SavedState.GamesView.PlatformFilter filter_platform { get; private set; default = SavedState.GamesView.PlatformFilter.ALL; }
-		public signal void filter_platform_changed(SavedState.GamesView.PlatformFilter filter_platform);
+		public GamesAdapter.GroupMode group_mode { get; private set; default = GamesAdapter.GroupMode.STATUS; }
+		public signal void group_mode_changed(Adapters.GamesAdapter.GroupMode group_mode);
 
+		public GamesAdapter.PlatformFilter filter_platform { get; private set; default = GamesAdapter.PlatformFilter.ALL; }
+		public signal void filter_platform_changed(Adapters.GamesAdapter.PlatformFilter filter_platform);
+
+		private ModeButton group_mode_button;
 		private ModeButton sort_mode_button;
 		private ModeButton platform_button;
 
@@ -61,10 +66,35 @@ namespace GameHub.UI.Views.GamesView
 
 			var vbox = new Box(Orientation.VERTICAL, 0);
 
+			var group_hbox = new Box(Orientation.HORIZONTAL, 6);
+			group_hbox.margin_start = group_hbox.margin_end = 8;
+			group_hbox.margin_top = 4;
+			group_hbox.margin_bottom = 2;
+
+			var group_image = new Image.from_icon_name("view-continuous-symbolic", IconSize.BUTTON);
+			group_hbox.add(group_image);
+
+			var group_label = Styled.H4Label(_("Group"));
+			group_label.margin_end = 2;
+			group_label.xpad = 0;
+			group_label.halign = Align.START;
+			group_label.xalign = 0;
+			group_label.hexpand = true;
+			group_hbox.add(group_label);
+
+			group_mode_button = new ModeButton();
+			group_mode_button.get_style_context().add_class("icons-modebutton");
+			group_mode_button.halign = Align.END;
+			group_mode_button.valign = Align.CENTER;
+			group_mode_button.can_focus = true;
+			add_group_mode(GamesAdapter.GroupMode.NONE);
+			add_group_mode(GamesAdapter.GroupMode.STATUS);
+			add_group_mode(GamesAdapter.GroupMode.SOURCE);
+			group_hbox.add(group_mode_button);
+
 			var sort_hbox = new Box(Orientation.HORIZONTAL, 6);
 			sort_hbox.margin_start = sort_hbox.margin_end = 8;
-			sort_hbox.margin_top = 4;
-			sort_hbox.margin_bottom = 2;
+			sort_hbox.margin_top = sort_hbox.margin_bottom = 2;
 
 			var sort_image = new Image.from_icon_name("view-sort-descending-symbolic", IconSize.BUTTON);
 			sort_hbox.add(sort_image);
@@ -78,13 +108,13 @@ namespace GameHub.UI.Views.GamesView
 			sort_hbox.add(sort_label);
 
 			sort_mode_button = new ModeButton();
-			sort_mode_button.get_style_context().add_class("filters-sort-mode");
+			sort_mode_button.get_style_context().add_class("icons-modebutton");
 			sort_mode_button.halign = Align.END;
 			sort_mode_button.valign = Align.CENTER;
 			sort_mode_button.can_focus = true;
-			add_sort_mode(SavedState.GamesView.SortMode.NAME);
-			add_sort_mode(SavedState.GamesView.SortMode.LAST_LAUNCH);
-			add_sort_mode(SavedState.GamesView.SortMode.PLAYTIME);
+			add_sort_mode(GamesAdapter.SortMode.NAME);
+			add_sort_mode(GamesAdapter.SortMode.LAST_LAUNCH);
+			add_sort_mode(GamesAdapter.SortMode.PLAYTIME);
 			sort_hbox.add(sort_mode_button);
 
 			var platform_hbox = new Box(Orientation.HORIZONTAL, 6);
@@ -103,12 +133,12 @@ namespace GameHub.UI.Views.GamesView
 			platform_hbox.add(platform_label);
 
 			platform_button = new ModeButton();
-			platform_button.get_style_context().add_class("filters-platform");
+			platform_button.get_style_context().add_class("icons-modebutton");
 			platform_button.halign = Align.END;
 			platform_button.valign = Align.CENTER;
 			platform_button.can_focus = true;
 
-			foreach(var p in SavedState.GamesView.PlatformFilter.FILTERS)
+			foreach(var p in GamesAdapter.PlatformFilter.FILTERS)
 			{
 				add_platform(p);
 			}
@@ -117,10 +147,18 @@ namespace GameHub.UI.Views.GamesView
 
 			var saved_state = SavedState.GamesView.instance;
 
+			group_mode_button.set_active((int) saved_state.group_mode);
+			group_mode = saved_state.group_mode;
+			group_mode_button.mode_changed.connect(() => {
+				saved_state.group_mode = (GamesAdapter.GroupMode) group_mode_button.selected;
+				group_mode = saved_state.group_mode;
+				group_mode_changed(group_mode);
+			});
+
 			sort_mode_button.set_active((int) saved_state.sort_mode);
 			sort_mode = saved_state.sort_mode;
 			sort_mode_button.mode_changed.connect(() => {
-				saved_state.sort_mode = (SavedState.GamesView.SortMode) sort_mode_button.selected;
+				saved_state.sort_mode = (GamesAdapter.SortMode) sort_mode_button.selected;
 				sort_mode = saved_state.sort_mode;
 				sort_mode_changed(sort_mode);
 			});
@@ -128,11 +166,13 @@ namespace GameHub.UI.Views.GamesView
 			platform_button.set_active((int) saved_state.filter_platform);
 			filter_platform = saved_state.filter_platform;
 			platform_button.mode_changed.connect(() => {
-				saved_state.filter_platform = (SavedState.GamesView.PlatformFilter) platform_button.selected;
+				saved_state.filter_platform = (GamesAdapter.PlatformFilter) platform_button.selected;
 				filter_platform = saved_state.filter_platform;
 				filter_platform_changed(filter_platform);
 			});
 
+			vbox.add(group_hbox);
+			vbox.add(new Separator(Orientation.HORIZONTAL));
 			vbox.add(sort_hbox);
 			vbox.add(new Separator(Orientation.HORIZONTAL));
 			vbox.add(platform_hbox);
@@ -287,17 +327,24 @@ namespace GameHub.UI.Views.GamesView
 			is_updating = false;
 		}
 
-		private void add_sort_mode(SavedState.GamesView.SortMode mode)
+		private void add_sort_mode(GamesAdapter.SortMode mode)
 		{
 			var image = new Image.from_icon_name(mode.icon(), IconSize.MENU);
 			image.tooltip_text = mode.name();
 			sort_mode_button.append(image);
 		}
 
-		private void add_platform(SavedState.GamesView.PlatformFilter p)
+		private void add_group_mode(GamesAdapter.GroupMode mode)
+		{
+			var image = new Image.from_icon_name(mode.icon(), IconSize.MENU);
+			image.tooltip_text = mode.name();
+			group_mode_button.append(image);
+		}
+
+		private void add_platform(GamesAdapter.PlatformFilter p)
 		{
 			Platform? platform = null;
-			if(p != SavedState.GamesView.PlatformFilter.ALL)
+			if(p != GamesAdapter.PlatformFilter.ALL)
 			{
 				platform = p.platform();
 			}

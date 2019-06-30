@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-27 20:45+0300\n"
+"POT-Creation-Date: 2019-06-30 17:21+0300\n"
 "PO-Revision-Date: 2019-06-20 19:41+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -126,7 +126,7 @@ msgid "Select executable"
 msgstr "Selecione o executável"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:384
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:388
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -165,6 +165,7 @@ msgstr "Selecione o arquivo"
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Remover"
 
@@ -247,24 +248,61 @@ msgstr "Não instalado"
 msgid "%s games"
 msgstr "%s jogos"
 
-#: src/data/adapters/GamesAdapter.vala:368
+#: src/data/adapters/GamesAdapter.vala:424
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: src/data/adapters/GamesAdapter.vala:395
+#: src/data/adapters/GamesAdapter.vala:429
+#, fuzzy, c-format
+msgctxt "status_header"
+msgid "%s: Favorites"
+msgstr "Favoritos"
+
+#: src/data/adapters/GamesAdapter.vala:454
 msgid "Merging games"
 msgstr "Mesclando jogos"
 
-#: src/data/adapters/GamesAdapter.vala:408
+#: src/data/adapters/GamesAdapter.vala:467
 #, c-format
 msgid "Merging games from %s"
 msgstr "Mesclando jogos de %s"
 
-#: src/data/adapters/GamesAdapter.vala:455
+#: src/data/adapters/GamesAdapter.vala:514
 #, c-format
 msgid "Loading games from %s"
 msgstr "Carregando jogos de %s"
+
+#: src/data/adapters/GamesAdapter.vala:621
+msgctxt "sort_mode"
+msgid "By name"
+msgstr "Por nome"
+
+#: src/data/adapters/GamesAdapter.vala:622
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr "Pelo último lançamento"
+
+#: src/data/adapters/GamesAdapter.vala:623
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "Por tempo jogado"
+
+#: src/data/adapters/GamesAdapter.vala:648
+msgctxt "group_mode"
+msgid "Do not group"
+msgstr ""
+
+#: src/data/adapters/GamesAdapter.vala:649
+msgctxt "group_mode"
+msgid "By status"
+msgstr ""
+
+#: src/data/adapters/GamesAdapter.vala:650
+#, fuzzy
+msgctxt "group_mode"
+msgid "By source"
+msgstr "Propriedades do jogo"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
@@ -295,22 +333,22 @@ msgstr ""
 msgid "User games"
 msgstr "Jogos do usuário"
 
-#: src/data/db/tables/Tags.vala:192
+#: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: src/data/db/tables/Tags.vala:193
+#: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
 msgid "Not installed"
 msgstr "Não instalado"
 
-#: src/data/db/tables/Tags.vala:194
+#: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
 msgstr "Instalado"
 
-#: src/data/db/tables/Tags.vala:195
+#: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
 msgstr "Escondido"
@@ -531,7 +569,7 @@ msgstr "ambos"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
 #: src/ui/views/GamesView/GamesView.vala:266
-#: src/ui/views/GamesView/GamesView.vala:639
+#: src/ui/views/GamesView/GamesView.vala:644
 msgid "Settings"
 msgstr "Configurações"
 
@@ -544,49 +582,79 @@ msgstr ""
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:32
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
 msgid "Interface"
 msgstr "Interface"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:35
 msgid "Appearance"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "General interface settings"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:44
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:46
 msgid "Dark theme"
 msgstr "Tema escuro"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:49
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
 msgctxt "icon_style"
 msgid "Theme-based"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:50
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
 msgctxt "icon_style"
 msgid "Symbolic"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Colored"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Icon style"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:64
-msgid "Compact list"
-msgstr "Lista compacta"
-
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:69
 msgid "Show platform icons in grid view"
 msgstr "Mostrar ícones de plataforma na visualização em grade"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
+#, fuzzy
+msgid "Games list: installed"
+msgstr "%s: instaladores não disponíveis"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
+#, fuzzy
+msgid "Games list: not installed"
+msgstr "%s: instaladores não disponíveis"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
+#, fuzzy
+msgctxt "list_style"
+msgid "Show icon"
+msgstr "Selecione o arquivo"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
+msgctxt "list_style"
+msgid "Bold title"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
+msgctxt "list_style"
+msgid "Show status"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
+msgctxt "list_style"
+msgid "Dim"
+msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -655,7 +723,7 @@ msgid "Game name"
 msgstr "Nome do jogo"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
-#: src/ui/views/GamesView/FiltersPopover.vala:97
+#: src/ui/views/GamesView/FiltersPopover.vala:127
 msgid "Platform"
 msgstr ""
 
@@ -1213,50 +1281,50 @@ msgstr "Adicionar jogo"
 msgid "Search"
 msgstr "Procurar"
 
-#: src/ui/views/GamesView/GamesView.vala:382
+#: src/ui/views/GamesView/GamesView.vala:386
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:383
+#: src/ui/views/GamesView/GamesView.vala:387
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:105
 msgid "Back"
 msgstr "Voltar"
 
-#: src/ui/views/GamesView/GamesView.vala:559
+#: src/ui/views/GamesView/GamesView.vala:564
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u jogo"
 msgstr[1] "%u jogos"
 
-#: src/ui/views/GamesView/GamesView.vala:575
+#: src/ui/views/GamesView/GamesView.vala:580
 msgid "No user-added games"
 msgstr "Nenhum jogo adicionado pelo usuário"
 
-#: src/ui/views/GamesView/GamesView.vala:576
+#: src/ui/views/GamesView/GamesView.vala:581
 msgid "Add some games using plus button"
 msgstr "Adicione alguns jogos usando o botão mais"
 
-#: src/ui/views/GamesView/GamesView.vala:580
+#: src/ui/views/GamesView/GamesView.vala:585
 #, c-format
 msgid "No %s games"
 msgstr "Nenhum %s jogos"
 
-#: src/ui/views/GamesView/GamesView.vala:581
+#: src/ui/views/GamesView/GamesView.vala:586
 msgid "Get some Linux-compatible games"
 msgstr "Obtenha alguns jogos compatíveis com o Linux"
 
-#: src/ui/views/GamesView/GamesView.vala:591
+#: src/ui/views/GamesView/GamesView.vala:596
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Nenhum jogo corresponde a “%s”"
 
-#: src/ui/views/GamesView/GamesView.vala:596
+#: src/ui/views/GamesView/GamesView.vala:601
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Nenhum jogo %1$s que corresponde a “%2$s”"
 
-#: src/ui/views/GamesView/GamesView.vala:637
+#: src/ui/views/GamesView/GamesView.vala:642
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1264,16 +1332,16 @@ msgstr ""
 "Nenhum jogo foi carregado do Steam. Defina a privacidade da lista de jogos "
 "como pública ou use sua própria chave de API do Steam nas configurações."
 
-#: src/ui/views/GamesView/GamesView.vala:638
+#: src/ui/views/GamesView/GamesView.vala:643
 msgid "Privacy"
 msgstr "Privacidade"
 
-#: src/ui/views/GamesView/GamesView.vala:785
+#: src/ui/views/GamesView/GamesView.vala:790
 #, fuzzy
 msgid "Downloading images"
 msgstr "Baixar"
 
-#: src/ui/views/GamesView/GamesView.vala:799
+#: src/ui/views/GamesView/GamesView.vala:804
 #, fuzzy, c-format
 msgid "Downloading image: %s"
 msgstr "Baixar"
@@ -1293,17 +1361,21 @@ msgstr "Retomar download"
 msgid "Cancel download"
 msgstr "Cancelar o download"
 
-#: src/ui/views/GamesView/FiltersPopover.vala:72
+#: src/ui/views/GamesView/FiltersPopover.vala:77
+msgid "Group"
+msgstr ""
+
+#: src/ui/views/GamesView/FiltersPopover.vala:102
 #, fuzzy
 msgid "Sort"
 msgstr "Ordenar:"
 
-#: src/ui/views/GamesView/FiltersPopover.vala:194
-#: src/ui/widgets/GameTagsList.vala:58
+#: src/ui/views/GamesView/FiltersPopover.vala:234
+#: src/ui/widgets/GameTagsList.vala:59
 msgid "Tags"
 msgstr "Tags"
 
-#: src/ui/views/GamesView/FiltersPopover.vala:306
+#: src/ui/views/GamesView/FiltersPopover.vala:353
 #, fuzzy
 msgid "All platforms"
 msgstr "Todos os jogos"
@@ -1575,7 +1647,7 @@ msgstr "Camada de compatibilidade:"
 msgid "Configure"
 msgstr "Configurar"
 
-#: src/ui/widgets/GameTagsList.vala:103
+#: src/ui/widgets/GameTagsList.vala:104
 msgid "Add tag"
 msgstr "Adicionar etiqueta"
 
@@ -1621,20 +1693,8 @@ msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Download cancelado"
 
-#: src/settings/SavedState.vala:93
-msgctxt "sort_mode"
-msgid "By name"
-msgstr "Por nome"
-
-#: src/settings/SavedState.vala:94
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr "Pelo último lançamento"
-
-#: src/settings/SavedState.vala:95
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr "Por tempo jogado"
+#~ msgid "Compact list"
+#~ msgstr "Lista compacta"
 
 #~ msgid "Show non-native games"
 #~ msgstr "Mostrar jogos não nativos"

@@ -36,8 +36,9 @@ namespace GameHub.Data.Adapters
 
 		public GameSource? filter_source { get; set; default = null; }
 		public ArrayList<Tables.Tags.Tag> filter_tags;
-		public SavedState.GamesView.SortMode sort_mode = SavedState.GamesView.SortMode.NAME;
-		public SavedState.GamesView.PlatformFilter filter_platform = SavedState.GamesView.PlatformFilter.ALL;
+		public SortMode sort_mode = SortMode.NAME;
+		public GroupMode group_mode = GroupMode.STATUS;
+		public PlatformFilter filter_platform = PlatformFilter.ALL;
 		public string filter_search_query = "";
 
 		private ArrayList<GameSource> sources = new ArrayList<GameSource>();
@@ -98,7 +99,7 @@ namespace GameHub.Data.Adapters
 			#endif
 		}
 
-		public void invalidate(bool filter=true, bool sort=true)
+		public void invalidate(bool filter=true, bool sort=true, bool headers=true)
 		{
 			filter_settings_merge = settings.merge_games;
 			if(filter)
@@ -110,6 +111,10 @@ namespace GameHub.Data.Adapters
 			{
 				grid.invalidate_sort();
 				list.invalidate_sort();
+			}
+			if(headers)
+			{
+				list.invalidate_headers();
 			}
 		}
 
@@ -243,7 +248,7 @@ namespace GameHub.Data.Adapters
 
 			Platform[] platforms = {};
 
-			if(filter_platform != SavedState.GamesView.PlatformFilter.ALL)
+			if(filter_platform != PlatformFilter.ALL)
 			{
 				foreach(var p in game.platforms)
 				{
@@ -262,10 +267,10 @@ namespace GameHub.Data.Adapters
 						if(g.source == filter_source)
 						{
 							merged_src = true;
-							if(filter_platform == SavedState.GamesView.PlatformFilter.ALL || filter_source != null) break;
+							if(filter_platform == PlatformFilter.ALL || filter_source != null) break;
 						}
 
-						if(filter_platform != SavedState.GamesView.PlatformFilter.ALL && filter_source == null)
+						if(filter_platform != PlatformFilter.ALL && filter_source == null)
 						{
 							foreach(var p in g.platforms)
 							{
@@ -274,7 +279,7 @@ namespace GameHub.Data.Adapters
 						}
 					}
 				}
-				if(primary != null && filter_platform != SavedState.GamesView.PlatformFilter.ALL && filter_source == null)
+				if(primary != null && filter_platform != PlatformFilter.ALL && filter_source == null)
 				{
 					foreach(var p in primary.platforms)
 					{
@@ -283,7 +288,7 @@ namespace GameHub.Data.Adapters
 				}
 			}
 
-			if(filter_platform != SavedState.GamesView.PlatformFilter.ALL && !(filter_platform.platform() in platforms)) return false;
+			if(filter_platform != PlatformFilter.ALL && !(filter_platform.platform() in platforms)) return false;
 
 			bool tags_all_enabled = filter_tags == null || filter_tags.size == 0 || filter_tags.size == Tables.Tags.TAGS.size;
 			bool tags_all_except_hidden_enabled = filter_tags != null && filter_tags.size == Tables.Tags.TAGS.size - 1 && !(Tables.Tags.BUILTIN_HIDDEN in filter_tags);
@@ -328,21 +333,33 @@ namespace GameHub.Data.Adapters
 				if(f1 && !f2) return -1;
 				if(f2 && !f1) return 1;
 
-				if(s1 == Game.State.DOWNLOADING && s2 != Game.State.DOWNLOADING) return -1;
-				if(s1 != Game.State.DOWNLOADING && s2 == Game.State.DOWNLOADING) return 1;
-				if(s1 == Game.State.INSTALLING && s2 != Game.State.INSTALLING) return -1;
-				if(s1 != Game.State.INSTALLING && s2 == Game.State.INSTALLING) return 1;
-				if(s1 == Game.State.INSTALLED && s2 != Game.State.INSTALLED) return -1;
-				if(s1 != Game.State.INSTALLED && s2 == Game.State.INSTALLED) return 1;
+				switch(group_mode)
+				{
+					case GroupMode.STATUS:
+						if(s1 == Game.State.DOWNLOADING && s2 != Game.State.DOWNLOADING) return -1;
+						if(s1 != Game.State.DOWNLOADING && s2 == Game.State.DOWNLOADING) return 1;
+						if(s1 == Game.State.INSTALLING && s2 != Game.State.INSTALLING) return -1;
+						if(s1 != Game.State.INSTALLING && s2 == Game.State.INSTALLING) return 1;
+						if(s1 == Game.State.INSTALLED && s2 != Game.State.INSTALLED) return -1;
+						if(s1 != Game.State.INSTALLED && s2 == Game.State.INSTALLED) return 1;
+						break;
+
+					case GroupMode.SOURCE:
+						if(game1.source != game2.source)
+						{
+							return game1.source.id.collate(game2.source.id);
+						}
+						break;
+				}
 
 				switch(sort_mode)
 				{
-					case SavedState.GamesView.SortMode.LAST_LAUNCH:
+					case SortMode.LAST_LAUNCH:
 						if(game1.last_launch > game2.last_launch) return -1;
 						if(game1.last_launch < game2.last_launch) return 1;
 						break;
 
-					case SavedState.GamesView.SortMode.PLAYTIME:
+					case SortMode.PLAYTIME:
 						if(game1.playtime > game2.playtime) return -1;
 						if(game1.playtime < game2.playtime) return 1;
 						break;
@@ -355,6 +372,12 @@ namespace GameHub.Data.Adapters
 
 		private void list_header(ListBoxRow row, ListBoxRow? prev)
 		{
+			if(group_mode == GroupMode.NONE)
+			{
+				row.set_header(null);
+				return;
+			}
+
 			var item = row as GameListRow;
 			var prev_item = prev as GameListRow;
 			var s = item.game.status.state;
@@ -362,23 +385,54 @@ namespace GameHub.Data.Adapters
 			var f = item.game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 			var pf = prev_item != null ? prev_item.game.has_tag(Tables.Tags.BUILTIN_FAVORITES) : f;
 
-			if(prev_item != null && f == pf && (f || s == ps)) row.set_header(null);
-			else
+			if(group_mode == GroupMode.STATUS && prev_item != null && f == pf && (f || s == ps))
 			{
-				var header = new Box(Orientation.HORIZONTAL, 0);
-				StyleClass.add(header, "games-list-header");
-				if(prev_item == null) StyleClass.add(header, "first");
-				header.hexpand = true;
-
-				var label = Styled.H4Label(f ? C_("status_header", "Favorites") : item.game.status.header);
-				label.hexpand = true;
-				label.xalign = 0;
-				label.ellipsize = Pango.EllipsizeMode.END;
-
-				header.add(label);
-				header.show_all();
-				row.set_header(header);
+				row.set_header(null);
+				return;
 			}
+
+			var src = item.game.source;
+			var psrc = prev_item != null ? prev_item.game.source : src;
+
+			if(group_mode == GroupMode.SOURCE && prev_item != null && src == psrc && f == pf)
+			{
+				row.set_header(null);
+				return;
+			}
+
+			var header = new Box(Orientation.HORIZONTAL, 6);
+			StyleClass.add(header, "games-list-header");
+			if(prev_item == null) StyleClass.add(header, "first");
+			header.hexpand = true;
+
+			var label = Styled.H4Label(null);
+			label.hexpand = true;
+			label.xalign = 0;
+			label.ellipsize = Pango.EllipsizeMode.END;
+
+			switch(group_mode)
+			{
+				case GroupMode.STATUS:
+					if(f)
+					{
+						var icon = new Image.from_icon_name("gh-game-favorite-symbolic", IconSize.MENU);
+						icon.valign = icon.valign = Align.CENTER;
+						icon.pixel_size = 12;
+						icon.margin = 2;
+						header.add(icon);
+					}
+					label.label = f ? C_("status_header", "Favorites") : item.game.status.header;
+					break;
+
+				case GroupMode.SOURCE:
+					header.add(new Image.from_icon_name(src.icon, IconSize.MENU));
+					label.label = f ? C_("status_header", "%s: Favorites").printf(src.name) : src.name;
+					break;
+			}
+
+			header.add(label);
+			header.show_all();
+			row.set_header(header);
 		}
 
 		public bool has_filtered_views()
@@ -553,6 +607,79 @@ namespace GameHub.Data.Adapters
 					is_added = false;
 					return Source.REMOVE;
 				}, Priority.LOW);
+			}
+		}
+
+		public enum SortMode
+		{
+			NAME = 0, LAST_LAUNCH = 1, PLAYTIME = 2;
+
+			public string name()
+			{
+				switch(this)
+				{
+					case SortMode.NAME:        return C_("sort_mode", "By name");
+					case SortMode.LAST_LAUNCH: return C_("sort_mode", "By last launch");
+					case SortMode.PLAYTIME:    return C_("sort_mode", "By playtime");
+				}
+				assert_not_reached();
+			}
+
+			public string icon()
+			{
+				switch(this)
+				{
+					case SortMode.NAME:        return "insert-text-symbolic";
+					case SortMode.LAST_LAUNCH: return "document-open-recent-symbolic";
+					case SortMode.PLAYTIME:    return "preferences-system-time-symbolic";
+				}
+				assert_not_reached();
+			}
+		}
+
+		public enum GroupMode
+		{
+			NONE = 0, STATUS = 1, SOURCE = 2;
+
+			public string name()
+			{
+				switch(this)
+				{
+					case GroupMode.NONE:   return C_("group_mode", "Do not group");
+					case GroupMode.STATUS: return C_("group_mode", "By status");
+					case GroupMode.SOURCE: return C_("group_mode", "By source");
+				}
+				assert_not_reached();
+			}
+
+			public string icon()
+			{
+				switch(this)
+				{
+					case GroupMode.NONE:   return "process-stop-symbolic";
+					case GroupMode.STATUS: return "view-continuous-symbolic";
+					case GroupMode.SOURCE: return "sources-all-symbolic";
+				}
+				assert_not_reached();
+			}
+		}
+
+		public enum PlatformFilter
+		{
+			ALL = 0, LINUX = 1, WINDOWS = 2, MACOS = 3, EMULATED = 4;
+
+			public const PlatformFilter[] FILTERS = { PlatformFilter.ALL, PlatformFilter.LINUX, PlatformFilter.WINDOWS, PlatformFilter.MACOS, PlatformFilter.EMULATED };
+
+			public Data.Platform platform()
+			{
+				switch(this)
+				{
+					case PlatformFilter.LINUX:    return Data.Platform.LINUX;
+					case PlatformFilter.WINDOWS:  return Data.Platform.WINDOWS;
+					case PlatformFilter.MACOS:    return Data.Platform.MACOS;
+					case PlatformFilter.EMULATED: return Data.Platform.EMULATED;
+				}
+				assert_not_reached();
 			}
 		}
 	}

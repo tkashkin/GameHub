@@ -277,6 +277,7 @@ list:not(:backdrop) row:selected:focus label.category-label
 	background: shade(@theme_bg_color, 0.95);
 	border-top: 1px shade(@theme_bg_color, 0.7) solid;
 	border-bottom: 1px shade(@theme_bg_color, 0.7) solid;
+	padding: 6px 5px;
 }
 .games-list-header.first
 {
@@ -284,7 +285,7 @@ list:not(:backdrop) row:selected:focus label.category-label
 }
 .games-list-header > label
 {
-	padding: 6px 8px;
+	padding: 0 3px;
 }
 
 .game-list-row .title.bold
@@ -521,13 +522,13 @@ dialog .sidebar list
 	background: transparent;
 }
 
-.filters-sort-mode > *, .filters-platform > *, .installer-platforms-list > *
+.icons-modebutton > *, .installer-platforms-list > *
 {
 	padding: 4px;
 	min-width: 16px;
 	min-height: 16px;
 }
-.filters-sort-mode > * > image, .filters-platform > * > image, .installer-platforms-list > * > image
+.icons-modebutton > * > image, .installer-platforms-list > * > image
 {
 	padding: 0;
 	margin: 0;
