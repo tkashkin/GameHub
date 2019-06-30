@@ -295,7 +295,7 @@ namespace GameHub.UI.Views.GamesView
 			filter.mode_changed.connect(update_view);
 			search.search_changed.connect(() => {
 				games_adapter.filter_search_query = search.text;
-				games_adapter.invalidate(true, false);
+				games_adapter.invalidate(true, false, true);
 				update_view();
 			});
 			search.activate.connect(search_run_first_matching_game);
@@ -310,15 +310,19 @@ namespace GameHub.UI.Views.GamesView
 
 			filters_popover.filters_changed.connect(() => {
 				games_adapter.filter_tags = filters_popover.selected_tags;
-				games_adapter.invalidate(true, false);
+				games_adapter.invalidate(true, false, true);
 			});
 			filters_popover.filter_platform_changed.connect(() => {
 				games_adapter.filter_platform = filters_popover.filter_platform;
-				games_adapter.invalidate(true, false);
+				games_adapter.invalidate(true, false, true);
 			});
 			filters_popover.sort_mode_changed.connect(() => {
 				games_adapter.sort_mode = filters_popover.sort_mode;
-				games_adapter.invalidate(false, true);
+				games_adapter.invalidate(false, true, false);
+			});
+			filters_popover.group_mode_changed.connect(() => {
+				games_adapter.group_mode = filters_popover.group_mode;
+				games_adapter.invalidate(true, true, true);
 			});
 
 			add_game_popover.game_added.connect(g => {
@@ -467,6 +471,7 @@ namespace GameHub.UI.Views.GamesView
 			games_adapter.filter_tags = filters_popover.selected_tags;
 			games_adapter.filter_platform = filters_popover.filter_platform;
 			games_adapter.sort_mode = filters_popover.sort_mode;
+			games_adapter.group_mode = filters_popover.group_mode;
 
 			load_games();
 		}
@@ -561,7 +566,7 @@ namespace GameHub.UI.Views.GamesView
 			if(games_adapter.filter_source != src)
 			{
 				games_adapter.filter_source = src;
-				games_adapter.invalidate(true, false);
+				games_adapter.invalidate(true, false, true);
 			}
 
 			games_list_details.preferred_source = src;

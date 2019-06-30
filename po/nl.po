@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-27 20:45+0300\n"
+"POT-Creation-Date: 2019-06-30 17:21+0300\n"
 "PO-Revision-Date: 2019-06-27 04:01+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -122,7 +122,7 @@ msgid "Select executable"
 msgstr "Kies uitvoerbaar bestand"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:384
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:388
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -160,6 +160,7 @@ msgstr "Bestand tonen"
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Verwijderen"
 
@@ -241,24 +242,61 @@ msgstr "Niet geïnstalleerd"
 msgid "%s games"
 msgstr "%s spellen"
 
-#: src/data/adapters/GamesAdapter.vala:368
+#: src/data/adapters/GamesAdapter.vala:424
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Favorieten"
 
-#: src/data/adapters/GamesAdapter.vala:395
+#: src/data/adapters/GamesAdapter.vala:429
+#, fuzzy, c-format
+msgctxt "status_header"
+msgid "%s: Favorites"
+msgstr "Favorieten"
+
+#: src/data/adapters/GamesAdapter.vala:454
 msgid "Merging games"
 msgstr "Bezig met samenvoegen van spellen"
 
-#: src/data/adapters/GamesAdapter.vala:408
+#: src/data/adapters/GamesAdapter.vala:467
 #, c-format
 msgid "Merging games from %s"
 msgstr "Bezig met samenvoegen van spellen uit %s"
 
-#: src/data/adapters/GamesAdapter.vala:455
+#: src/data/adapters/GamesAdapter.vala:514
 #, c-format
 msgid "Loading games from %s"
 msgstr "Bezig met laden van spellen uit %s"
+
+#: src/data/adapters/GamesAdapter.vala:621
+msgctxt "sort_mode"
+msgid "By name"
+msgstr "Op naam"
+
+#: src/data/adapters/GamesAdapter.vala:622
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr "Op laatst opgestart"
+
+#: src/data/adapters/GamesAdapter.vala:623
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "Op speeltijd"
+
+#: src/data/adapters/GamesAdapter.vala:648
+msgctxt "group_mode"
+msgid "Do not group"
+msgstr ""
+
+#: src/data/adapters/GamesAdapter.vala:649
+msgctxt "group_mode"
+msgid "By status"
+msgstr ""
+
+#: src/data/adapters/GamesAdapter.vala:650
+#, fuzzy
+msgctxt "group_mode"
+msgid "By source"
+msgstr "Spelbronnen"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
@@ -289,22 +327,22 @@ msgstr ""
 msgid "User games"
 msgstr "Gebruikersspellen"
 
-#: src/data/db/tables/Tags.vala:192
+#: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
 msgstr "Favorieten"
 
-#: src/data/db/tables/Tags.vala:193
+#: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
 msgid "Not installed"
 msgstr "Niet-geïnstalleerd"
 
-#: src/data/db/tables/Tags.vala:194
+#: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/db/tables/Tags.vala:195
+#: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
 msgstr "Verborgen"
@@ -524,7 +562,7 @@ msgstr "beide"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
 #: src/ui/views/GamesView/GamesView.vala:266
-#: src/ui/views/GamesView/GamesView.vala:639
+#: src/ui/views/GamesView/GamesView.vala:644
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -538,49 +576,79 @@ msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "De spelmap bevat een spatie; dit kan problemen opleveren bij sommige spellen"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:32
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
 msgid "Interface"
 msgstr "Uiterlijk"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:35
 msgid "Appearance"
 msgstr "Uiterlijk"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "General interface settings"
 msgstr "Algemene instellingen"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:44
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:46
 msgid "Dark theme"
 msgstr "Donker thema"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:49
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
 msgctxt "icon_style"
 msgid "Theme-based"
 msgstr "Op basis van thema"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:50
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
 msgctxt "icon_style"
 msgid "Symbolic"
 msgstr "Symbolisch"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Colored"
 msgstr "Met kleur"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Icon style"
 msgstr "Pictogramstijl"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:64
-msgid "Compact list"
-msgstr "Compacte lijst"
-
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:65
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:69
 msgid "Show platform icons in grid view"
 msgstr "Platformpictogrammen tonen in rasterweergave"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
+#, fuzzy
+msgid "Games list: installed"
+msgstr "Er wordt %d spel geïnstalleerd"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
+#, fuzzy
+msgid "Games list: not installed"
+msgstr "Er wordt %d spel geïnstalleerd"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
+#, fuzzy
+msgctxt "list_style"
+msgid "Show icon"
+msgstr "Bestand tonen"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
+msgctxt "list_style"
+msgid "Bold title"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
+msgctxt "list_style"
+msgid "Show status"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
+msgctxt "list_style"
+msgid "Dim"
+msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -649,7 +717,7 @@ msgid "Game name"
 msgstr "Spelnaam"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
-#: src/ui/views/GamesView/FiltersPopover.vala:97
+#: src/ui/views/GamesView/FiltersPopover.vala:127
 msgid "Platform"
 msgstr "Platform"
 
@@ -1199,50 +1267,50 @@ msgstr "Spel toevoegen"
 msgid "Search"
 msgstr "Zoeken"
 
-#: src/ui/views/GamesView/GamesView.vala:382
+#: src/ui/views/GamesView/GamesView.vala:386
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:383
+#: src/ui/views/GamesView/GamesView.vala:387
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:105
 msgid "Back"
 msgstr "Terug"
 
-#: src/ui/views/GamesView/GamesView.vala:559
+#: src/ui/views/GamesView/GamesView.vala:564
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spel"
 msgstr[1] "%u spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:575
+#: src/ui/views/GamesView/GamesView.vala:580
 msgid "No user-added games"
 msgstr "Geen door de gebruiker toegevoegde spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:576
+#: src/ui/views/GamesView/GamesView.vala:581
 msgid "Add some games using plus button"
 msgstr "Voeg spellen toe via de plus-knop"
 
-#: src/ui/views/GamesView/GamesView.vala:580
+#: src/ui/views/GamesView/GamesView.vala:585
 #, c-format
 msgid "No %s games"
 msgstr "Geen %s-spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:581
+#: src/ui/views/GamesView/GamesView.vala:586
 msgid "Get some Linux-compatible games"
 msgstr "Installeer met Linux compatibele spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:591
+#: src/ui/views/GamesView/GamesView.vala:596
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Er zijn geen spellen die overeenkomen met \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:596
+#: src/ui/views/GamesView/GamesView.vala:601
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Er zijn geen %1$s-spellen die overeenkomen met \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:637
+#: src/ui/views/GamesView/GamesView.vala:642
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1250,15 +1318,15 @@ msgstr ""
 "Er zijn geen spellen geladen vanuit Steam. Maak je spellijst openbaar of "
 "voeg je eigen Steam API-sleutel toe via de instellingen."
 
-#: src/ui/views/GamesView/GamesView.vala:638
+#: src/ui/views/GamesView/GamesView.vala:643
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/ui/views/GamesView/GamesView.vala:785
+#: src/ui/views/GamesView/GamesView.vala:790
 msgid "Downloading images"
 msgstr "Bezig met downloaden van afbeeldingen"
 
-#: src/ui/views/GamesView/GamesView.vala:799
+#: src/ui/views/GamesView/GamesView.vala:804
 #, c-format
 msgid "Downloading image: %s"
 msgstr "Bezig met downloaden van afbeelding: %s"
@@ -1278,16 +1346,20 @@ msgstr "Downloaden hervatten"
 msgid "Cancel download"
 msgstr "Downloaden annuleren"
 
-#: src/ui/views/GamesView/FiltersPopover.vala:72
+#: src/ui/views/GamesView/FiltersPopover.vala:77
+msgid "Group"
+msgstr ""
+
+#: src/ui/views/GamesView/FiltersPopover.vala:102
 msgid "Sort"
 msgstr "Sorteren"
 
-#: src/ui/views/GamesView/FiltersPopover.vala:194
-#: src/ui/widgets/GameTagsList.vala:58
+#: src/ui/views/GamesView/FiltersPopover.vala:234
+#: src/ui/widgets/GameTagsList.vala:59
 msgid "Tags"
 msgstr "Labels"
 
-#: src/ui/views/GamesView/FiltersPopover.vala:306
+#: src/ui/views/GamesView/FiltersPopover.vala:353
 msgid "All platforms"
 msgstr "Alle platformen"
 
@@ -1559,7 +1631,7 @@ msgstr "Comptabiliteit:"
 msgid "Configure"
 msgstr "Instellen"
 
-#: src/ui/widgets/GameTagsList.vala:103
+#: src/ui/widgets/GameTagsList.vala:104
 msgid "Add tag"
 msgstr "Label toevoegen"
 
@@ -1605,20 +1677,8 @@ msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Downloaden geannuleerd"
 
-#: src/settings/SavedState.vala:93
-msgctxt "sort_mode"
-msgid "By name"
-msgstr "Op naam"
-
-#: src/settings/SavedState.vala:94
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr "Op laatst opgestart"
-
-#: src/settings/SavedState.vala:95
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr "Op speeltijd"
+#~ msgid "Compact list"
+#~ msgstr "Compacte lijst"
 
 #~ msgid "Show non-native games"
 #~ msgstr "Wine-spellen tonen"

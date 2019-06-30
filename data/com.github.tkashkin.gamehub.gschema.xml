@@ -43,6 +43,12 @@
 			<value nick="Playtime" value="2" />
 		</enum>
 
+		<enum id="com.github.tkashkin.gamehub.saved-state.games-view.group-modes">
+			<value nick="None" value="0" />
+			<value nick="Status" value="1" />
+			<value nick="Source" value="2" />
+		</enum>
+
 		<enum id="com.github.tkashkin.gamehub.saved-state.games-view.filter-platforms">
 			<value nick="All" value="0" />
 			<value nick="Linux" value="1" />
@@ -59,6 +65,10 @@
 			<key name="sort-mode" enum="com.github.tkashkin.gamehub.saved-state.games-view.sort-modes">
 				<default>"Name"</default>
 				<summary>Selected sort mode</summary>
+			</key>
+			<key name="group-mode" enum="com.github.tkashkin.gamehub.saved-state.games-view.group-modes">
+				<default>"Status"</default>
+				<summary>Selected group mode</summary>
 			</key>
 			<key name="filter-source" type="s">
 				<default>''</default>
