@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-30 17:21+0300\n"
-"PO-Revision-Date: 2019-06-27 04:01+0000\n"
+"PO-Revision-Date: 2019-07-01 07:42+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -285,12 +285,12 @@ msgstr "Etter spilltid"
 #: src/data/adapters/GamesAdapter.vala:648
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr ""
+msgstr "Ikke grupper"
 
 #: src/data/adapters/GamesAdapter.vala:649
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "Etter status"
 
 #: src/data/adapters/GamesAdapter.vala:650
 #, fuzzy
@@ -636,18 +636,18 @@ msgstr "Vis fil"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
 msgctxt "list_style"
 msgid "Bold title"
-msgstr ""
+msgstr "Fet tittel"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
 msgctxt "list_style"
 msgid "Show status"
-msgstr ""
+msgstr "Vis status"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
 msgctxt "list_style"
 msgid "Dim"
-msgstr ""
+msgstr "Demp"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -1353,7 +1353,7 @@ msgstr "Avbryt nedlasting"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:77
 msgid "Group"
-msgstr ""
+msgstr "Gruppe"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:102
 msgid "Sort"
