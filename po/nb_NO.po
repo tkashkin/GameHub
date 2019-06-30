@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1-dev\n"
+"X-Generator: Weblate 3.7.1\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -1142,6 +1142,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Overlagsbruk i denne stien kan være utrygt\n"
+"Fortsett på egen risiko\n"
+"\n"
+"Sti: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1150,6 +1154,9 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Overlagsbruk i denne stien støttes ikke\n"
+"\n"
+"Sti: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"

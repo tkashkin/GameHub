@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # wenxiaobai <chowhound_xb@163.com>, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
+# Elizabeth Sherrock <lizzyd710@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.7-dev\n"
+"X-Generator: Weblate 3.7.1\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -548,19 +549,19 @@ msgstr "运行游戏"
 #: src/data/providers/data/IGDB.vala:378
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr ""
+msgstr "从IGDB"
 
 #: src/data/providers/data/IGDB.vala:379
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "都"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
 #: src/ui/views/GamesView/GamesView.vala:266
 #: src/ui/views/GamesView/GamesView.vala:644
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
@@ -694,8 +695,9 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
+#, fuzzy
 msgid "DLC"
-msgstr ""
+msgstr "DLC"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:89
@@ -708,7 +710,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
-msgstr ""
+msgstr "游戏的名字"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 #: src/ui/views/GamesView/FiltersPopover.vala:127
@@ -848,7 +850,7 @@ msgstr[0] ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:238
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
@@ -874,7 +876,7 @@ msgstr ""
 #: src/ui/dialogs/GamePropertiesDialog.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
-msgstr ""
+msgstr "名字"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
 #: src/ui/dialogs/GamePropertiesDialog.vala:166
@@ -917,7 +919,7 @@ msgstr "选择可执行文件"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:316
 msgid "Image"
-msgstr ""
+msgstr "图片"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:319
 msgid "Icon"
@@ -959,7 +961,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:36
 msgid "About"
-msgstr ""
+msgstr "关于"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
 msgid "Copy application version and environment info"
@@ -1026,7 +1028,7 @@ msgstr ""
 #: src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:154
 msgid "Download"
-msgstr ""
+msgstr "下载"
 
 #: src/ui/dialogs/InstallDialog.vala:210
 msgid "Select installer"
@@ -1048,17 +1050,16 @@ msgstr ""
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:81
 msgid "Images"
-msgstr ""
+msgstr "图片"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:114
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
-#, fuzzy
 msgid "Download images"
-msgstr "正在下载"
+msgstr "下载图片"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:121
 msgid "Image URL"
-msgstr ""
+msgstr "图片的URL"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:129
 msgid "Icon URL"
@@ -1115,7 +1116,7 @@ msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
-msgstr ""
+msgstr "加"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
 msgid "Enable overlays"
@@ -1249,7 +1250,7 @@ msgstr ""
 #: src/ui/views/GamesView/GamesView.vala:252
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
-msgstr ""
+msgstr "加游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:259
 msgid "Search"
@@ -1268,7 +1269,7 @@ msgstr ""
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] ""
+msgstr[0] "%u个游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:580
 msgid "No user-added games"
@@ -1307,15 +1308,14 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:790
-#, fuzzy
+#: src/ui/views/GamesView/GamesView.vala:785
 msgid "Downloading images"
-msgstr "正在下载"
+msgstr "还在下载图片"
 
-#: src/ui/views/GamesView/GamesView.vala:804
-#, fuzzy, c-format
+#: src/ui/views/GamesView/GamesView.vala:799
+#, c-format
 msgid "Downloading image: %s"
-msgstr "正在下载"
+msgstr "还在下载图片：%s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
@@ -1358,9 +1358,8 @@ msgid "Select game directory"
 msgstr ""
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
-#, fuzzy
 msgid "Download game images"
-msgstr "正在下载"
+msgstr "下载游戏的图片"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:54
 msgid "Details"
@@ -1488,7 +1487,7 @@ msgstr ""
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr ""
+msgstr "%d分"
 
 #: src/ui/views/GameDetailsView/blocks/Description.vala:54
 msgid "Description"
@@ -1497,28 +1496,28 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:65
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:89
 msgid "Language"
-msgstr ""
+msgstr "语言"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:68
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:92
 msgid "Languages"
-msgstr ""
+msgstr "语言"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:59
 msgid "Category"
-msgstr ""
+msgstr "类"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:62
 msgid "Categories"
-msgstr ""
+msgstr "类"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:77
 msgid "Genre"
-msgstr ""
+msgstr "类型"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:80
 msgid "Genres"
-msgstr ""
+msgstr "类型"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:62
 #, c-format
@@ -1554,7 +1553,7 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:122
 msgctxt "igdb"
 msgid "Genres"
-msgstr ""
+msgstr "类型"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:128
 msgctxt "igdb"
@@ -1617,12 +1616,12 @@ msgstr ""
 #: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr ""
+msgstr "开始下载"
 
 #: src/utils/downloader/Downloader.vala:161
 msgctxt "dl_status"
 msgid "Download started"
-msgstr ""
+msgstr "下载开始玩了"
 
 #: src/utils/downloader/Downloader.vala:162
 msgctxt "dl_status"
