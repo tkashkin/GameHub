@@ -288,6 +288,15 @@ list:not(:backdrop) row:selected:focus label.category-label
 	padding: 0 3px;
 }
 
+.game-list-row
+{
+	padding: 0;
+	outline: none;
+}
+.game-list-row .title
+{
+	padding: 0;
+}
 .game-list-row .title.bold
 {
 	font-weight: bold;
@@ -296,6 +305,7 @@ list:not(:backdrop) row:selected:focus label.category-label
 {
 	font-size: 8pt;
 	opacity: 0.8;
+	padding: 0;
 }
 
 .game-list-row.dim
