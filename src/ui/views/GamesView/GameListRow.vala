@@ -266,7 +266,7 @@ namespace GameHub.UI.Views.GamesView
 		public void update_style(string[] style)
 		{
 			var is_gog_game = game is GameHub.Data.Sources.GOG.GOGGame;
-			var is_installed = game.status.state != Game.State.UNINSTALLED;
+			var is_installed = game != null && game.status != null && game.status.state != Game.State.UNINSTALLED;
 
 			var style_prefix = is_installed ? "installed" : "uninstalled";
 
@@ -305,7 +305,7 @@ namespace GameHub.UI.Views.GamesView
 		private void update_icon()
 		{
 			icon.queue_draw();
-			if(game.icon == old_icon) return;
+			if(game == null || game.icon == old_icon) return;
 			old_icon = game.icon;
 			icon.load(game.icon, "icon");
 			no_icon_indicator.visible = game.icon == null || icon.source == null;
