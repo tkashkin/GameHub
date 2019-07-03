@@ -32,11 +32,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		protected Grid root_grid;
 		protected Grid header_grid;
 
-		public SettingsDialogPage(SettingsDialog dlg)
-		{
-			Object(dialog: dlg);
-		}
-
 		construct
 		{
 			content_area.orientation = Orientation.VERTICAL;

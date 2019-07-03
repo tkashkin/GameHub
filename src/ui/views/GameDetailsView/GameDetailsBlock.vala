@@ -32,11 +32,6 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		public bool is_dialog { get; construct; }
 
-		public GameDetailsBlock(Game game, bool is_dialog)
-		{
-			Object(game: game, orientation: Orientation.VERTICAL, is_dialog: is_dialog);
-		}
-
 		public abstract bool supports_game { get; }
 
 		protected Box? add_info_label(string title, string? text, bool multiline=true, bool markup=false, Container? parent=null)
