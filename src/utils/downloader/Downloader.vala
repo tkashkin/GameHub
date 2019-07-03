@@ -106,7 +106,7 @@ namespace GameHub.Utils.Downloader
 			set { _status = value; status_change(_status); }
 		}
 
-		public Download(File remote, File local, File local_tmp)
+		protected Download(File remote, File local, File local_tmp)
 		{
 			this.remote = remote;
 			this.local = local;
@@ -118,7 +118,7 @@ namespace GameHub.Utils.Downloader
 
 	public abstract class PausableDownload: Download
 	{
-		public PausableDownload(File remote, File local, File local_tmp)
+		protected PausableDownload(File remote, File local, File local_tmp)
 		{
 			base(remote, local, local_tmp);
 		}
