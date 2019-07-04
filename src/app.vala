@@ -144,7 +144,7 @@ namespace GameHub
 			Providers.ImageProviders = { new Providers.Images.SteamGridDB(), new Providers.Images.JinxSGVI() };
 			Providers.DataProviders  = { new Providers.Data.IGDB() };
 
-			CompatTool[] tools = { new Compat.CustomScript(), new Compat.CustomEmulator(), new Compat.Innoextract(), new Compat.WineWrap(), new Compat.DOSBox(), new Compat.ScummVM(), new Compat.RetroArch() };
+			CompatTool[] tools = { new Compat.WineWrap(), new Compat.Innoextract(), new Compat.DOSBox(), new Compat.ScummVM() };
 			foreach(var appid in Compat.Proton.APPIDS)
 			{
 				tools += new Compat.Proton(appid);
@@ -165,6 +165,10 @@ namespace GameHub
 					tools += new Compat.Wine(wine_binary, wine_arch);
 				}
 			}
+
+			tools += new Compat.CustomEmulator();
+			tools += new Compat.RetroArch();
+			tools += new Compat.CustomScript();
 
 			CompatTools = tools;
 

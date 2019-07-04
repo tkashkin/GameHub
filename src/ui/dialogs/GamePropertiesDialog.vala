@@ -76,6 +76,7 @@ namespace GameHub.UI.Dialogs
 				game.name = name_entry.text.strip();
 				game.update_status();
 				game.save();
+				DB.Tables.IGDBData.remove(game);
 			});
 
 			var images_header = Styled.H4Label(_("Images"));
