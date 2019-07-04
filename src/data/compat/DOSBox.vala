@@ -84,9 +84,42 @@ namespace GameHub.Data.Compat
 			return configs;
 		}
 
+		private static bool is_dos_executable_mime(string type)
+		{
+			switch(type.strip())
+			{
+				case "application/x-dosexec":
+				case "application/x-ms-dos-executable":
+				case "application/dos-exe":
+					return true;
+			}
+			return false;
+		}
+
+		private static bool is_dos_executable(File? file)
+		{
+			if(file == null || !file.query_exists()) return false;
+			var finfo = file.query_info(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
+			var mime = finfo.get_content_type();
+
+			if(is_dos_executable_mime(mime)) return true;
+
+			var info = Utils.run({"file", "-bi", file.get_path()});
+			if(info != null && info.length > 0)
+			{
+				mime = info.split(";")[0];
+				if(mime != null && mime.length > 0)
+				{
+					return is_dos_executable_mime(mime);
+				}
+			}
+			return false;
+		}
+
 		public override bool can_run(Runnable runnable)
 		{
-			return installed && runnable is Game && runnable.install_dir != null && runnable.install_dir.query_exists() && find_configs(runnable.install_dir).size > 0;
+			return installed && runnable is Game && runnable.install_dir != null && runnable.install_dir.query_exists()
+				&& (is_dos_executable(runnable.executable) || find_configs(runnable.install_dir).size > 0);
 		}
 
 		public override async void run(Runnable runnable)
@@ -113,10 +146,22 @@ namespace GameHub.Data.Compat
 				}
 			}
 
-			foreach(var conf in configs)
+			if(configs.size > 0)
 			{
-				cmd += "-conf";
-				cmd += conf;
+				foreach(var conf in configs)
+				{
+					cmd += "-conf";
+					cmd += conf;
+				}
+			}
+			else if(runnable.executable != null)
+			{
+				cmd += "-c";
+				cmd += "mount c .";
+				cmd += "-c";
+				cmd += "c:";
+				cmd += "-c";
+				cmd += runnable.executable.get_path().replace(runnable.install_dir.get_path(), "").replace("/", "\\");
 			}
 
 			if(conf_windowed.query_exists() && opt_windowed != null && opt_windowed.enabled)
@@ -124,6 +169,8 @@ namespace GameHub.Data.Compat
 				cmd += "-conf";
 				cmd += conf_windowed.get_path();
 			}
+
+			cmd += "-exit";
 
 			bool bundled_win_dosbox_found = false;
 			foreach(var dirname in DOSBOX_WIN_EXECUTABLE_NAMES)
