@@ -139,8 +139,11 @@ namespace GameHub.Data
 				playtime_tracked += ((get_real_time() / 1000000) - last_launch) / 60;
 				save();
 
-				RunnableIsLaunched = is_running = false;
-				update_status();
+				Timeout.add_seconds(1, () => {
+					RunnableIsLaunched = is_running = false;
+					update_status();
+					return Source.REMOVE;
+				});
 			}
 		}
 
