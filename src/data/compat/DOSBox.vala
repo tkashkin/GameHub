@@ -84,33 +84,16 @@ namespace GameHub.Data.Compat
 			return configs;
 		}
 
-		private static bool is_dos_executable_mime(string type)
-		{
-			switch(type.strip())
-			{
-				case "application/x-dosexec":
-				case "application/x-ms-dos-executable":
-				case "application/dos-exe":
-					return true;
-			}
-			return false;
-		}
-
 		private static bool is_dos_executable(File? file)
 		{
 			if(file == null || !file.query_exists()) return false;
-			var finfo = file.query_info(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
-			var mime = finfo.get_content_type();
-
-			if(is_dos_executable_mime(mime)) return true;
-
-			var info = Utils.run({"file", "-bi", file.get_path()});
+			var info = Utils.run({"file", file.get_path()}, null, null, false, true, false);
 			if(info != null && info.length > 0)
 			{
-				mime = info.split(";")[0];
-				if(mime != null && mime.length > 0)
+				var type = info.split(":")[1];
+				if(type != null && type.length > 0)
 				{
-					return is_dos_executable_mime(mime);
+					return "DOS" in type;
 				}
 			}
 			return false;
@@ -162,6 +145,8 @@ namespace GameHub.Data.Compat
 				cmd += "c:";
 				cmd += "-c";
 				cmd += runnable.executable.get_path().replace(runnable.install_dir.get_path(), "").replace("/", "\\");
+				cmd += "-c";
+				cmd += "exit";
 			}
 
 			if(conf_windowed.query_exists() && opt_windowed != null && opt_windowed.enabled)
@@ -169,8 +154,6 @@ namespace GameHub.Data.Compat
 				cmd += "-conf";
 				cmd += conf_windowed.get_path();
 			}
-
-			cmd += "-exit";
 
 			bool bundled_win_dosbox_found = false;
 			foreach(var dirname in DOSBOX_WIN_EXECUTABLE_NAMES)

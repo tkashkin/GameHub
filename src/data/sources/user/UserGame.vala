@@ -37,7 +37,9 @@ namespace GameHub.Data.Sources.User
 			this.name = name;
 
 			platforms.clear();
-			platforms.add(exec.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX);
+
+			var path = exec.get_path().down();
+			platforms.add(path.has_suffix(".exe") || path.has_suffix(".bat") || path.has_suffix(".com") ? Platform.WINDOWS : Platform.LINUX);
 
 			install_dir = dir;
 

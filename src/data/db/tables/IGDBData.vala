@@ -113,5 +113,32 @@ namespace GameHub.Data.DB.Tables
 
 			return null;
 		}
+
+		public static bool remove(Game game)
+		{
+			unowned Sqlite.Database? db = Database.instance.db;
+			if(db == null) return false;
+
+			Statement s;
+			int res = db.prepare_v2("DELETE FROM `igdb_data` WHERE `game` = ?", -1, out s);
+
+			if(res != Sqlite.OK)
+			{
+				warning("[Database.IGDBData.remove] Can't prepare DELETE query (%d): %s", db.errcode(), db.errmsg());
+				return false;
+			}
+
+			res = s.bind_text(1, game.full_id);
+
+			res = s.step();
+
+			if(res != Sqlite.DONE)
+			{
+				warning("[Database.IGDBData.remove] Error (%d): %s", db.errcode(), db.errmsg());
+				return false;
+			}
+
+			return true;
+		}
 	}
 }
