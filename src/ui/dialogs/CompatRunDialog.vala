@@ -132,8 +132,11 @@ namespace GameHub.UI.Dialogs
 				emulated_game.update_status();
 				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, launch_in_game_dir, (obj, res) => {
 					compat_tool_picker.selected.run_emulator.end(res);
-					RunnableIsLaunched = game.is_running = emulated_game.is_running = false;
-					emulated_game.update_status();
+					Timeout.add_seconds(1, () => {
+						RunnableIsLaunched = game.is_running = emulated_game.is_running = false;
+						emulated_game.update_status();
+						return Source.REMOVE;
+					});
 					destroy();
 				});
 			}
@@ -144,8 +147,11 @@ namespace GameHub.UI.Dialogs
 				game.save();
 				compat_tool_picker.selected.run.begin(game, (obj, res) => {
 					compat_tool_picker.selected.run.end(res);
-					RunnableIsLaunched = game.is_running = false;
-					game.update_status();
+					Timeout.add_seconds(1, () => {
+						RunnableIsLaunched = game.is_running = false;
+						game.update_status();
+						return Source.REMOVE;
+					});
 					(game as Game).playtime_tracked += ((get_real_time() / 1000000) - (game as Game).last_launch) / 60;
 					game.save();
 					destroy();

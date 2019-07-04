@@ -179,7 +179,10 @@ namespace GameHub.Data
 
 				yield Utils.run_thread(get_args(null, executable), executable.get_parent().get_path(), null, true);
 
-				RunnableIsLaunched = is_running = false;
+				Timeout.add_seconds(1, () => {
+					RunnableIsLaunched = is_running = false;
+					return Source.REMOVE;
+				});
 			}
 		}
 
@@ -203,13 +206,16 @@ namespace GameHub.Data
 
 				var dir = game != null && launch_in_game_dir ? game.install_dir : install_dir;
 				yield Utils.run_thread(get_args(game, executable), dir.get_path(), null, true);
-				RunnableIsLaunched = is_running = false;
 
-				if(game != null)
-				{
-					game.is_running = false;
-					game.update_status();
-				}
+				Timeout.add_seconds(1, () => {
+					RunnableIsLaunched = is_running = false;
+					if(game != null)
+					{
+						game.is_running = false;
+						game.update_status();
+					}
+					return Source.REMOVE;
+				});
 			}
 		}
 
