@@ -26,14 +26,17 @@ namespace GameHub.UI.Windows
 {
 	public class WebAuthWindow: Window
 	{
-		private WebView webview;
+		public WebView webview;
 
 		private bool is_finished = false;
 
 		public signal void finished(string url);
 		public signal void canceled();
 
-		public WebAuthWindow(string source, string url, string? success_url_prefix, string? success_cookie_name=null)
+		private const string GOG_CSS = "body { background-color: #d2d2d2 !important; } ._modal__box { box-shadow: none !important; vertical-align: top !important; margin-top: 0 !important; } ._modal__control, .form__buttons-container, .form__separator { display: none !important; }";
+		private const string HUMBLE_CSS = ".banner, .navigation-container-v2, .simple-white-navbar, .tabbar, .site-footer, .evidon-banner, .inner-main-wrapper > *:not(.js-login-form), .options-divider, .ssi-options, .footer-section { display:none !important; } body { overflow: hidden !important; }";
+
+		public WebAuthWindow(string source, string url, string? success_url_prefix=null, string? success_cookie_name=null)
 		{
 			Object(transient_for: Windows.MainWindow.instance);
 
@@ -64,12 +67,13 @@ namespace GameHub.UI.Windows
 			webview.get_settings().enable_smooth_scrolling = true;
 			webview.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
 
-			var style = ".banner,.navigation-container-v2,.tabbar,.base-main-wrapper,.site-footer,.evidon-banner{display:none !important}body{overflow:hidden !important}";
-			string[] whitelist = {"https://*.humblebundle.com/*"};
-			webview.user_content_manager.add_style_sheet(new UserStyleSheet(style, UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, whitelist, null));
+			webview.user_content_manager.add_style_sheet(new UserStyleSheet(GOG_CSS, UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, {"https://*.gog.com/*"}, null));
+			webview.user_content_manager.add_style_sheet(new UserStyleSheet(HUMBLE_CSS, UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, {"https://*.humblebundle.com/*"}, null));
 
 			webview.load_changed.connect(e => {
 				var uri = webview.get_uri();
+				if(uri == null) return;
+
 				titlebar.title = webview.title;
 				titlebar.subtitle = uri.split("?")[0];
 				titlebar.tooltip_text = uri;
