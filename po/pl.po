@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-30 17:21+0300\n"
+"POT-Creation-Date: 2019-07-05 18:26+0300\n"
 "PO-Revision-Date: 2019-06-07 16:03+0000\n"
 "Last-Translator: Antek Karaś <antos.karas@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
@@ -102,25 +102,25 @@ msgstr ""
 msgid "Verbose logging"
 msgstr "Pełne rejestrowanie"
 
-#: src/app.vala:240
+#: src/app.vala:244
 msgid "Game Options:"
 msgstr "Opcje gry:"
 
-#: src/app.vala:240
+#: src/app.vala:244
 msgid "Show game options help"
 msgstr "Pokaż pomoc dla opcji gry"
 
-#: src/app.vala:248
+#: src/app.vala:252
 msgid "Logging Options:"
 msgstr "Opcje rejestrowania:"
 
-#: src/app.vala:248
+#: src/app.vala:252
 msgid "Show logging options help"
 msgstr "Pokaż pomoc dotyczącą opcji rejestrowania"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Select executable"
 msgstr "Wybierz plik wykonywalny"
 
@@ -190,52 +190,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Emulator"
 
-#: src/data/Game.vala:534
+#: src/data/Game.vala:537
 msgctxt "status"
 msgid "Running"
 msgstr "Działa"
 
-#: src/data/Game.vala:537
+#: src/data/Game.vala:540
 msgctxt "status"
 msgid "Installed"
 msgstr "Zainstalowany"
 
-#: src/data/Game.vala:538
+#: src/data/Game.vala:541
 msgctxt "status"
 msgid "Installing"
 msgstr "Instalowanie"
 
-#: src/data/Game.vala:539
+#: src/data/Game.vala:542
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Weryfikowanie integralności instalatora"
 
-#: src/data/Game.vala:540
+#: src/data/Game.vala:543
 msgctxt "status"
 msgid "Download started"
 msgstr "Pobieranie rozpoczęte"
 
-#: src/data/Game.vala:542
+#: src/data/Game.vala:545
 msgctxt "status"
 msgid "Not installed"
 msgstr "Nie zainstalowany"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:555
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Zainstalowany"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:556
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Instalowanie"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:558
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Pobieranie"
 
-#: src/data/Game.vala:557
+#: src/data/Game.vala:560
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Nie zainstalowano"
@@ -449,14 +449,6 @@ msgstr "Zmienne środowiska"
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
 msgstr "InnoSetup opcje domyślne"
-
-#: src/data/compat/DOSBox.vala:52
-msgid "Windowed"
-msgstr "W oknie"
-
-#: src/data/compat/DOSBox.vala:52
-msgid "Disable fullscreen"
-msgstr "Wyłącz pełen ekran"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
@@ -721,8 +713,9 @@ msgstr "Nazwa gry"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 #: src/ui/views/GamesView/FiltersPopover.vala:127
+#, fuzzy
 msgid "Platform"
-msgstr ""
+msgstr "Wszystkie gry"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
 #, fuzzy
@@ -791,9 +784,9 @@ msgstr "Uwierzytelnienie wymagane"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
-#, c-format
+#, fuzzy, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr ""
+msgstr "Uwierzytelnianie..."
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
@@ -876,8 +869,8 @@ msgstr "Zapisz"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:313
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
-#: src/ui/dialogs/GamePropertiesDialog.vala:143
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:144
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -899,7 +892,7 @@ msgid "Name"
 msgstr "Nazwa"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
-#: src/ui/dialogs/GamePropertiesDialog.vala:166
+#: src/ui/dialogs/GamePropertiesDialog.vala:167
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Argumenty"
@@ -929,7 +922,7 @@ msgid "Select emulator directory"
 msgstr "Wybierz katalog emulatora"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:293
-#: src/ui/dialogs/GamePropertiesDialog.vala:184
+#: src/ui/dialogs/GamePropertiesDialog.vala:185
 msgid "Force compatibility mode"
 msgstr "Wymuś warstwę kompatybilności"
 
@@ -963,12 +956,14 @@ msgid "Data"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:39
+#, fuzzy
 msgid "Providers"
-msgstr ""
+msgstr "Właściwości gry"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:40
+#, fuzzy
 msgid "Third-party data providers"
-msgstr ""
+msgstr "Właściwości gry"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
 #, fuzzy
@@ -976,8 +971,9 @@ msgid "Image providers"
 msgstr "Właściwości gry"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
+#, fuzzy
 msgid "Metadata providers"
-msgstr ""
+msgstr "Właściwości gry"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
@@ -1024,9 +1020,10 @@ msgid "Issues"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:102
+#, fuzzy
 msgctxt "about_link"
 msgid "Contributors"
-msgstr ""
+msgstr "Instalator"
 
 #. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:105
@@ -1074,41 +1071,41 @@ msgstr "Nieznany"
 msgid "%s: Properties"
 msgstr "%s: Właściwości"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:81
+#: src/ui/dialogs/GamePropertiesDialog.vala:82
 msgid "Images"
 msgstr "Obrazy"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:114
+#: src/ui/dialogs/GamePropertiesDialog.vala:115
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 #, fuzzy
 msgid "Download images"
 msgstr "Pobieranie"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:121
+#: src/ui/dialogs/GamePropertiesDialog.vala:122
 msgid "Image URL"
 msgstr "URL obrazu"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:129
+#: src/ui/dialogs/GamePropertiesDialog.vala:130
 msgid "Icon URL"
 msgstr "URL ikony"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:179
+#: src/ui/dialogs/GamePropertiesDialog.vala:180
 msgid "Compatibility"
 msgstr "Kompatybilność"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:201
+#: src/ui/dialogs/GamePropertiesDialog.vala:202
 msgid "Launch from terminal"
 msgstr "Uruchom z terminala"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:217
+#: src/ui/dialogs/GamePropertiesDialog.vala:218
 msgid "Copy to clipboard"
 msgstr "Kopiuj do schowka"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Add to Steam"
 msgstr "Dodaj do Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:221
 msgid "Add to the Steam library"
 msgstr "Dodaj do biblioteki Steam"
 
@@ -1200,8 +1197,9 @@ msgid "Select directory with emulated games"
 msgstr "Wybierz katalog"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
+#, fuzzy
 msgid "Detected games"
-msgstr ""
+msgstr "Brak gier dodanych przez użytkownika"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 #, fuzzy
@@ -1440,12 +1438,12 @@ msgid "Uninstall"
 msgstr "Odinstaluj"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:101
-#, c-format
+#, fuzzy, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%s: niema dostępnych instalatorów"
+msgstr[1] "%s: niema dostępnych instalatorów"
+msgstr[2] "%s: niema dostępnych instalatorów"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:145
 #, fuzzy, c-format
@@ -1456,28 +1454,28 @@ msgstr[1] "%s: niema dostępnych instalatorów"
 msgstr[2] "%s: niema dostępnych instalatorów"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:155
-#, c-format
+#, fuzzy, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%s: niema dostępnych instalatorów"
+msgstr[1] "%s: niema dostępnych instalatorów"
+msgstr[2] "%s: niema dostępnych instalatorów"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:162
-#, c-format
+#, fuzzy, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%s: niema dostępnych instalatorów"
+msgstr[1] "%s: niema dostępnych instalatorów"
+msgstr[2] "%s: niema dostępnych instalatorów"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:169
-#, c-format
+#, fuzzy, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%s: niema dostępnych instalatorów"
+msgstr[1] "%s: niema dostępnych instalatorów"
+msgstr[2] "%s: niema dostępnych instalatorów"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:175
 msgid "Refresh"
@@ -1597,9 +1595,10 @@ msgid "Total rating"
 msgstr ""
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
+#, fuzzy
 msgctxt "igdb"
 msgid "Platforms"
-msgstr ""
+msgstr "Wszystkie gry"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:122
 #, fuzzy
@@ -1704,6 +1703,12 @@ msgstr "Wstrzymano: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Pobieranie anulowane"
+
+#~ msgid "Disable fullscreen"
+#~ msgstr "Wyłącz pełen ekran"
+
+#~ msgid "Windowed"
+#~ msgstr "W oknie"
 
 #~ msgid "Compact list"
 #~ msgstr "Podręczna lista"

@@ -24,13 +24,9 @@ namespace GameHub.Data.Compat
 {
 	public class DOSBox: CompatTool
 	{
-		private static string[] DOSBOX_WIN_EXECUTABLE_NAMES = {"DOSBox", "dosbox", "DOSBOX"};
-		private static string[] DOSBOX_WIN_EXECUTABLE_EXTENSIONS = {".exe", ".EXE"};
-
 		public string binary { get; construct; default = "dosbox"; }
 
-		private File conf_windowed;
-		private CompatTool.BoolOption? opt_windowed;
+		private HashMap<File, CompatTool.BoolOption> additional_configs = new HashMap<File, CompatTool.BoolOption>();
 
 		public DOSBox(string binary="dosbox")
 		{
@@ -46,11 +42,90 @@ namespace GameHub.Data.Compat
 			executable = Utils.find_executable(binary);
 			installed = executable != null && executable.query_exists();
 
-			conf_windowed = FSUtils.file(ProjectConfig.DATADIR + "/" + ProjectConfig.PROJECT_NAME, "compat/dosbox/windowed.conf");
-			if(conf_windowed.query_exists())
+			init();
+		}
+
+		private void init()
+		{
+			CompatTool.Option[] options = {};
+			additional_configs.clear();
+
+			var data_path = ProjectConfig.PROJECT_NAME + "/compat/dosbox";
+
+			string[] data_dirs = { ProjectConfig.DATADIR };
+			var user_data_dir = Environment.get_user_data_dir();
+			var system_data_dirs = Environment.get_system_data_dirs();
+
+			if(user_data_dir != null && user_data_dir.length > 0)
 			{
-				opt_windowed = new CompatTool.BoolOption(_("Windowed"), _("Disable fullscreen"), true);
-				options = { opt_windowed };
+				if(!(user_data_dir in data_dirs)) data_dirs += user_data_dir;
+			}
+
+			if(system_data_dirs != null && system_data_dirs.length > 0)
+			{
+				foreach(var system_data_dir in system_data_dirs)
+				{
+					if(!(system_data_dir in data_dirs)) data_dirs += system_data_dir;
+				}
+			}
+
+			foreach(var dir in data_dirs)
+			{
+				var data_dir = FSUtils.file(dir, data_path);
+				if(data_dir == null || !data_dir.query_exists()) continue;
+
+				if(GameHub.Application.log_verbose)
+				{
+					debug("[DOSBox.init] Config directory: '%s'", data_dir.get_path());
+				}
+
+				try
+				{
+					FileInfo? finfo = null;
+					var enumerator = data_dir.enumerate_children("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+					while((finfo = enumerator.next_file()) != null)
+					{
+						var fname = finfo.get_name();
+						if(fname.down().has_suffix(".conf"))
+						{
+							var conf = data_dir.get_child(fname);
+							var description = fname;
+							bool enabled = false;
+
+							string contents;
+							FileUtils.get_contents(conf.get_path(), out contents);
+							var lines = contents.split("\n");
+
+							foreach(var line in lines)
+							{
+								if(line.has_prefix("[")) break;
+
+								if("description=" in line)
+								{
+									description = line.replace("description=", "").strip();
+								}
+								else if("enabled=true" in line)
+								{
+									enabled = true;
+								}
+							}
+
+							if(GameHub.Application.log_verbose)
+							{
+								debug("[DOSBox.init] Config: '%s'; description: '%s'; enabled: %s", conf.get_path(), description, enabled.to_string());
+							}
+
+							var opt = new CompatTool.BoolOption(conf.get_path(), description, enabled);
+							options += opt;
+							additional_configs.set(conf, opt);
+						}
+					}
+				}
+				catch(Error e)
+				{
+					warning("[DOSBox.init] %s", e.message);
+				}
+				this.options = options;
 			}
 		}
 
@@ -70,7 +145,7 @@ namespace GameHub.Data.Compat
 				while((finfo = enumerator.next_file()) != null)
 				{
 					var fname = finfo.get_name();
-					if(fname.has_suffix(".conf"))
+					if(fname.down().has_suffix(".conf"))
 					{
 						configs.add(dir.get_child(fname).get_path());
 					}
@@ -139,39 +214,31 @@ namespace GameHub.Data.Compat
 			}
 			else if(runnable.executable != null)
 			{
+				var dos_path = runnable.executable.get_path().replace(runnable.install_dir.get_path(), "").replace("/", "\\");
+				var dos_cmdline = dos_path + ((runnable.arguments != null && runnable.arguments.length > 0) ? " " + runnable.arguments : "");
 				cmd += "-c";
 				cmd += "mount c .";
 				cmd += "-c";
 				cmd += "c:";
 				cmd += "-c";
-				cmd += runnable.executable.get_path().replace(runnable.install_dir.get_path(), "").replace("/", "\\");
+				cmd += "call " + dos_cmdline;
 				cmd += "-c";
 				cmd += "exit";
 			}
 
-			if(conf_windowed.query_exists() && opt_windowed != null && opt_windowed.enabled)
+			foreach(var conf in additional_configs.entries)
 			{
-				cmd += "-conf";
-				cmd += conf_windowed.get_path();
+				if(conf.key.query_exists() && conf.value.enabled)
+				{
+					cmd += "-conf";
+					cmd += conf.key.get_path();
+				}
 			}
 
-			bool bundled_win_dosbox_found = false;
-			foreach(var dirname in DOSBOX_WIN_EXECUTABLE_NAMES)
+			var bundled_win_dosbox = FSUtils.find_case_insensitive(runnable.install_dir, "dosbox/dosbox.exe");
+			if(bundled_win_dosbox != null && bundled_win_dosbox.query_exists())
 			{
-				foreach(var exename in DOSBOX_WIN_EXECUTABLE_NAMES)
-				{
-					foreach(var exeext in DOSBOX_WIN_EXECUTABLE_EXTENSIONS)
-					{
-						if(runnable.install_dir.get_child(dirname).get_child(exename + exeext).query_exists())
-						{
-							wdir = runnable.install_dir.get_child(dirname);
-							bundled_win_dosbox_found = true;
-							break;
-						}
-					}
-					if(bundled_win_dosbox_found) break;
-				}
-				if(bundled_win_dosbox_found) break;
+				wdir = bundled_win_dosbox.get_parent();
 			}
 
 			yield Utils.run_thread(cmd, wdir.get_path());
