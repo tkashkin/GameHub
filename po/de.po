@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-30 17:21+0300\n"
+"POT-Creation-Date: 2019-07-05 18:26+0300\n"
 "PO-Revision-Date: 2019-06-08 23:29+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
@@ -102,25 +102,25 @@ msgstr ""
 msgid "Verbose logging"
 msgstr "Ausführliche Protokollierung"
 
-#: src/app.vala:240
+#: src/app.vala:244
 msgid "Game Options:"
 msgstr "Spieloptionen:"
 
-#: src/app.vala:240
+#: src/app.vala:244
 msgid "Show game options help"
 msgstr "Hilfe zu den Spieloptionen anzeigen"
 
-#: src/app.vala:248
+#: src/app.vala:252
 msgid "Logging Options:"
 msgstr "Protokollierungsoptionen:"
 
-#: src/app.vala:248
+#: src/app.vala:252
 msgid "Show logging options help"
 msgstr "Hilfe zu den Protokollierungsoptionen anzeigen"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Select executable"
 msgstr "Ausführbare Datei auswählen"
 
@@ -191,52 +191,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Emulator"
 
-#: src/data/Game.vala:534
+#: src/data/Game.vala:537
 msgctxt "status"
 msgid "Running"
 msgstr "Läuft"
 
-#: src/data/Game.vala:537
+#: src/data/Game.vala:540
 msgctxt "status"
 msgid "Installed"
 msgstr "Installiert"
 
-#: src/data/Game.vala:538
+#: src/data/Game.vala:541
 msgctxt "status"
 msgid "Installing"
 msgstr "Installation"
 
-#: src/data/Game.vala:539
+#: src/data/Game.vala:542
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Integrität des Installers wird überprüft"
 
-#: src/data/Game.vala:540
+#: src/data/Game.vala:543
 msgctxt "status"
 msgid "Download started"
 msgstr "Download gestartet"
 
-#: src/data/Game.vala:542
+#: src/data/Game.vala:545
 msgctxt "status"
 msgid "Not installed"
 msgstr "Nicht installiert"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:555
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Installiert"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:556
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Installation"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:558
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Herunterladen"
 
-#: src/data/Game.vala:557
+#: src/data/Game.vala:560
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Nicht installiert"
@@ -454,14 +454,6 @@ msgstr "Umgebungsvariablen"
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
 msgstr "Standardoptionen für InnoSetup"
-
-#: src/data/compat/DOSBox.vala:52
-msgid "Windowed"
-msgstr "Fenstermodus"
-
-#: src/data/compat/DOSBox.vala:52
-msgid "Disable fullscreen"
-msgstr "Vollbild deaktivieren"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
@@ -873,8 +865,8 @@ msgstr "Speichern"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:313
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
-#: src/ui/dialogs/GamePropertiesDialog.vala:143
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:144
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -896,7 +888,7 @@ msgid "Name"
 msgstr "Name"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
-#: src/ui/dialogs/GamePropertiesDialog.vala:166
+#: src/ui/dialogs/GamePropertiesDialog.vala:167
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Argumente"
@@ -926,7 +918,7 @@ msgid "Select emulator directory"
 msgstr "Emulatorverzeichnis auswählen"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:293
-#: src/ui/dialogs/GamePropertiesDialog.vala:184
+#: src/ui/dialogs/GamePropertiesDialog.vala:185
 msgid "Force compatibility mode"
 msgstr "Kompatibilitätsmodus erzwingen"
 
@@ -960,12 +952,14 @@ msgid "Data"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:39
+#, fuzzy
 msgid "Providers"
-msgstr ""
+msgstr "Spieleigenschaften"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:40
+#, fuzzy
 msgid "Third-party data providers"
-msgstr ""
+msgstr "Spieleigenschaften"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
 #, fuzzy
@@ -973,8 +967,9 @@ msgid "Image providers"
 msgstr "Spieleigenschaften"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
+#, fuzzy
 msgid "Metadata providers"
-msgstr ""
+msgstr "Spieleigenschaften"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 #, fuzzy
@@ -1070,41 +1065,41 @@ msgstr "Unbekannt"
 msgid "%s: Properties"
 msgstr "%s: Eigenschaften"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:81
+#: src/ui/dialogs/GamePropertiesDialog.vala:82
 msgid "Images"
 msgstr "Bilder"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:114
+#: src/ui/dialogs/GamePropertiesDialog.vala:115
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 #, fuzzy
 msgid "Download images"
 msgstr "Herunterladen"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:121
+#: src/ui/dialogs/GamePropertiesDialog.vala:122
 msgid "Image URL"
 msgstr "Bild-URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:129
+#: src/ui/dialogs/GamePropertiesDialog.vala:130
 msgid "Icon URL"
 msgstr "Symbol-URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:179
+#: src/ui/dialogs/GamePropertiesDialog.vala:180
 msgid "Compatibility"
 msgstr "Kompatibilität"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:201
+#: src/ui/dialogs/GamePropertiesDialog.vala:202
 msgid "Launch from terminal"
 msgstr "Vom Terminal starten"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:217
+#: src/ui/dialogs/GamePropertiesDialog.vala:218
 msgid "Copy to clipboard"
 msgstr "In die Zwischenablage kopieren"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Add to Steam"
 msgstr "Zu Steam hinzufügen"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:221
 msgid "Add to the Steam library"
 msgstr "Zur Steam-Bibliothek hinzufügen"
 
@@ -1196,8 +1191,9 @@ msgid "Select directory with emulated games"
 msgstr "Ordner auswählen"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
+#, fuzzy
 msgid "Detected games"
-msgstr ""
+msgstr "Keine vom Benutzer hinzugefügten Spiele"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 #, fuzzy
@@ -1437,11 +1433,11 @@ msgid "Uninstall"
 msgstr "Deinstallieren"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:101
-#, c-format
+#, fuzzy, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s: keine Installationsprogramme verfügbare"
+msgstr[1] "%s: keine Installationsprogramme verfügbare"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:145
 #, fuzzy, c-format
@@ -1451,25 +1447,25 @@ msgstr[0] "%s: keine Installationsprogramme verfügbare"
 msgstr[1] "%s: keine Installationsprogramme verfügbare"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:155
-#, c-format
+#, fuzzy, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s: keine Installationsprogramme verfügbare"
+msgstr[1] "%s: keine Installationsprogramme verfügbare"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:162
-#, c-format
+#, fuzzy, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s: keine Installationsprogramme verfügbare"
+msgstr[1] "%s: keine Installationsprogramme verfügbare"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:169
-#, c-format
+#, fuzzy, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s: keine Installationsprogramme verfügbare"
+msgstr[1] "%s: keine Installationsprogramme verfügbare"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:175
 msgid "Refresh"
@@ -1695,6 +1691,12 @@ msgstr "Angehalten: %d %% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Download abgebrochen"
+
+#~ msgid "Disable fullscreen"
+#~ msgstr "Vollbild deaktivieren"
+
+#~ msgid "Windowed"
+#~ msgstr "Fenstermodus"
 
 #~ msgid "Compact list"
 #~ msgstr "Kompakte Liste"

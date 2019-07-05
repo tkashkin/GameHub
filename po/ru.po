@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-30 17:21+0300\n"
+"POT-Creation-Date: 2019-07-05 18:26+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -100,25 +100,25 @@ msgstr "Отключить фильтрацию отладочных сообщ�
 msgid "Verbose logging"
 msgstr "Подробные сообщения"
 
-#: src/app.vala:240
+#: src/app.vala:244
 msgid "Game Options:"
 msgstr "Параметры игр:"
 
-#: src/app.vala:240
+#: src/app.vala:244
 msgid "Show game options help"
 msgstr "Показать справку о параметрах игр"
 
-#: src/app.vala:248
+#: src/app.vala:252
 msgid "Logging Options:"
 msgstr "Параметры журналирования:"
 
-#: src/app.vala:248
+#: src/app.vala:252
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Select executable"
 msgstr "Выберите исполняемый файл"
 
@@ -187,52 +187,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Эмулируемые"
 
-#: src/data/Game.vala:534
+#: src/data/Game.vala:537
 msgctxt "status"
 msgid "Running"
 msgstr "Запущена"
 
-#: src/data/Game.vala:537
+#: src/data/Game.vala:540
 msgctxt "status"
 msgid "Installed"
 msgstr "Установлена"
 
-#: src/data/Game.vala:538
+#: src/data/Game.vala:541
 msgctxt "status"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:539
+#: src/data/Game.vala:542
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Проверка целостности установщика"
 
-#: src/data/Game.vala:540
+#: src/data/Game.vala:543
 msgctxt "status"
 msgid "Download started"
 msgstr "Загрузка начата"
 
-#: src/data/Game.vala:542
+#: src/data/Game.vala:545
 msgctxt "status"
 msgid "Not installed"
 msgstr "Не установлена"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:555
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Установленные"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:556
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Установка"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:558
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Загрузка"
 
-#: src/data/Game.vala:557
+#: src/data/Game.vala:560
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Не установленные"
@@ -449,14 +449,6 @@ msgstr "Переменные окружения"
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
 msgstr "Опции по умолчанию для InnoSetup"
-
-#: src/data/compat/DOSBox.vala:52
-msgid "Windowed"
-msgstr "Оконный режим"
-
-#: src/data/compat/DOSBox.vala:52
-msgid "Disable fullscreen"
-msgstr "Выключить полноэкранный режим"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
@@ -859,8 +851,8 @@ msgstr "Сохранить"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:313
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
-#: src/ui/dialogs/GamePropertiesDialog.vala:143
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:144
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -882,7 +874,7 @@ msgid "Name"
 msgstr "Название"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
-#: src/ui/dialogs/GamePropertiesDialog.vala:166
+#: src/ui/dialogs/GamePropertiesDialog.vala:167
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Параметры"
@@ -910,7 +902,7 @@ msgid "Select emulator directory"
 msgstr "Выберите папку эмулятора"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:293
-#: src/ui/dialogs/GamePropertiesDialog.vala:184
+#: src/ui/dialogs/GamePropertiesDialog.vala:185
 msgid "Force compatibility mode"
 msgstr "Использовать режим совместимости"
 
@@ -1055,40 +1047,40 @@ msgstr "Неизвестно"
 msgid "%s: Properties"
 msgstr "%s: Свойства"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:81
+#: src/ui/dialogs/GamePropertiesDialog.vala:82
 msgid "Images"
 msgstr "Изображения"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:114
+#: src/ui/dialogs/GamePropertiesDialog.vala:115
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 msgid "Download images"
 msgstr "Загрузить изображения"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:121
+#: src/ui/dialogs/GamePropertiesDialog.vala:122
 msgid "Image URL"
 msgstr "URL изображения"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:129
+#: src/ui/dialogs/GamePropertiesDialog.vala:130
 msgid "Icon URL"
 msgstr "URL иконки"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:179
+#: src/ui/dialogs/GamePropertiesDialog.vala:180
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:201
+#: src/ui/dialogs/GamePropertiesDialog.vala:202
 msgid "Launch from terminal"
 msgstr "Запустить из терминала"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:217
+#: src/ui/dialogs/GamePropertiesDialog.vala:218
 msgid "Copy to clipboard"
 msgstr "Копировать в буфер обмена"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Add to Steam"
 msgstr "Добавить в Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:221
 msgid "Add to the Steam library"
 msgstr "Добавить в библиотеку Steam"
 
@@ -1688,6 +1680,12 @@ msgstr "Приостановлено: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Загрузка отменена"
+
+#~ msgid "Disable fullscreen"
+#~ msgstr "Выключить полноэкранный режим"
+
+#~ msgid "Windowed"
+#~ msgstr "Оконный режим"
 
 #~ msgid "Compact list"
 #~ msgstr "Компактный список"

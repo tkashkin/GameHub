@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-30 17:21+0300\n"
+"POT-Creation-Date: 2019-07-05 18:26+0300\n"
 "PO-Revision-Date: 2019-06-07 16:06+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -98,25 +98,25 @@ msgstr ""
 msgid "Verbose logging"
 msgstr "详细记录"
 
-#: src/app.vala:240
+#: src/app.vala:244
 msgid "Game Options:"
 msgstr "游戏选项："
 
-#: src/app.vala:240
+#: src/app.vala:244
 msgid "Show game options help"
 msgstr "显示游戏选项帮助"
 
-#: src/app.vala:248
+#: src/app.vala:252
 msgid "Logging Options:"
 msgstr "记录选项："
 
-#: src/app.vala:248
+#: src/app.vala:252
 msgid "Show logging options help"
 msgstr "显示日志选项帮助"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Select executable"
 msgstr "选择可执行文件"
 
@@ -185,52 +185,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr ""
 
-#: src/data/Game.vala:534
+#: src/data/Game.vala:537
 msgctxt "status"
 msgid "Running"
 msgstr "正在运行"
 
-#: src/data/Game.vala:537
+#: src/data/Game.vala:540
 msgctxt "status"
 msgid "Installed"
 msgstr "安装"
 
-#: src/data/Game.vala:538
+#: src/data/Game.vala:541
 msgctxt "status"
 msgid "Installing"
 msgstr "安装"
 
-#: src/data/Game.vala:539
+#: src/data/Game.vala:542
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "验证安装程序完整性"
 
-#: src/data/Game.vala:540
+#: src/data/Game.vala:543
 msgctxt "status"
 msgid "Download started"
 msgstr "下载已开始"
 
-#: src/data/Game.vala:542
+#: src/data/Game.vala:545
 msgctxt "status"
 msgid "Not installed"
 msgstr "未安装"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:555
 msgctxt "status_header"
 msgid "Installed"
 msgstr "安装"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:556
 msgctxt "status_header"
 msgid "Installing"
 msgstr "安装"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:558
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "正在下载"
 
-#: src/data/Game.vala:557
+#: src/data/Game.vala:560
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "未安装"
@@ -266,9 +266,10 @@ msgid "Loading games from %s"
 msgstr "正在从%s加载游戏"
 
 #: src/data/adapters/GamesAdapter.vala:621
+#, fuzzy
 msgctxt "sort_mode"
 msgid "By name"
-msgstr ""
+msgstr "游戏的名字"
 
 #: src/data/adapters/GamesAdapter.vala:622
 msgctxt "sort_mode"
@@ -380,10 +381,12 @@ msgid "Kill apps in prefix"
 msgstr "终止前缀中的应用程序"
 
 #: src/data/compat/Proton.vala:44
+#, fuzzy
 msgid "Proton prefix"
-msgstr ""
+msgstr "终止前缀中的应用程序"
 
 #: src/data/compat/Proton.vala:50
+#, fuzzy
 msgid "Disable esync"
 msgstr "禁用esync"
 
@@ -436,8 +439,9 @@ msgid "Run taskmgr"
 msgstr "运行任务管理器"
 
 #: src/data/compat/Wine.vala:53
+#, fuzzy
 msgid "Wine prefix"
-msgstr ""
+msgstr "终止前缀中的应用程序"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
@@ -447,17 +451,10 @@ msgstr "环境变量"
 msgid "InnoSetup default options"
 msgstr "InnoSetup默认选项"
 
-#: src/data/compat/DOSBox.vala:52
-msgid "Windowed"
-msgstr ""
-
-#: src/data/compat/DOSBox.vala:52
-msgid "Disable fullscreen"
-msgstr ""
-
 #: src/data/compat/RetroArch.vala:53
+#, fuzzy
 msgid "Libretro core file"
-msgstr ""
+msgstr "打开前缀目录"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
@@ -468,8 +465,9 @@ msgid "Emulator"
 msgstr ""
 
 #: src/data/compat/CustomEmulator.vala:49
+#, fuzzy
 msgid "Launch in game directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/data/providers/images/SteamGridDB.vala:108
 #: src/data/providers/data/IGDB.vala:332
@@ -658,8 +656,9 @@ msgid "Run games with double click"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:46
+#, fuzzy
 msgid "Merge games from different sources"
-msgstr ""
+msgstr "正在合并来自%s的游戏"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:50
 msgid "Use imported tags"
@@ -670,8 +669,9 @@ msgid "General"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:52
+#, fuzzy
 msgid "Collection"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
 msgid "Empty"
@@ -679,19 +679,22 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
+#, fuzzy
 msgid "Collection directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:70
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:87
+#, fuzzy
 msgid "Game directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
+#, fuzzy
 msgid "Installers"
-msgstr ""
+msgstr "安装"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
@@ -718,8 +721,9 @@ msgid "Platform"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
+#, fuzzy
 msgid "Controller"
-msgstr ""
+msgstr "安装"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
@@ -731,8 +735,9 @@ msgid "Focus GameHub window with Guide button"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
+#, fuzzy
 msgid "Controllers"
-msgstr ""
+msgstr "安装"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:75
 msgid "Move focus"
@@ -753,28 +758,32 @@ msgid "Disabled"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
+#, fuzzy
 msgid "Game sources"
-msgstr ""
+msgstr "打开游戏属性"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
 msgid "Steam API keys have limited number of uses per day"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:52
+#, fuzzy
 msgid "Installation directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:76
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
+#, fuzzy
 msgid "Not installed"
-msgstr ""
+msgstr "未安装"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:80
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
+#, fuzzy
 msgid "Not authenticated"
-msgstr ""
+msgstr "未安装"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
@@ -794,8 +803,9 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
+#, fuzzy
 msgid "Games directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:59
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:63
@@ -803,8 +813,9 @@ msgid "Logout"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:50
+#, fuzzy
 msgid "Load games from Humble Trove"
-msgstr ""
+msgstr "正在从%s加载游戏"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:45
@@ -812,12 +823,14 @@ msgid "Emulators"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
+#, fuzzy
 msgid "Libretro core directory"
-msgstr ""
+msgstr "打开前缀目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
+#, fuzzy
 msgid "Libretro core info directory"
-msgstr ""
+msgstr "打开前缀目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
@@ -856,20 +869,22 @@ msgstr "保存"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:313
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
-#: src/ui/dialogs/GamePropertiesDialog.vala:143
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:144
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
+#, fuzzy
 msgid "Executable"
-msgstr ""
+msgstr "选择可执行文件"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:252
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
 #: src/ui/views/GamesView/AddGamePopover.vala:68
 #: src/ui/views/GamesView/AddGamePopover.vala:143
+#, fuzzy
 msgid "Installer"
-msgstr ""
+msgstr "安装"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:257
 #: src/ui/dialogs/GamePropertiesDialog.vala:62
@@ -879,10 +894,11 @@ msgid "Name"
 msgstr "名字"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
-#: src/ui/dialogs/GamePropertiesDialog.vala:166
+#: src/ui/dialogs/GamePropertiesDialog.vala:167
 #: src/ui/views/GamesView/AddGamePopover.vala:78
+#, fuzzy
 msgid "Arguments"
-msgstr ""
+msgstr "游戏的名字"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:277
 msgid "Variables"
@@ -894,23 +910,27 @@ msgid "Game executable"
 msgstr "选择可执行文件"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:279
+#, fuzzy
 msgid "Game arguments"
-msgstr ""
+msgstr "游戏的名字"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
+#, fuzzy
 msgid "Directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
+#, fuzzy
 msgid "Select emulator directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:293
-#: src/ui/dialogs/GamePropertiesDialog.vala:184
+#: src/ui/dialogs/GamePropertiesDialog.vala:185
+#, fuzzy
 msgid "Force compatibility mode"
-msgstr ""
+msgstr "显示兼容性选项对话框"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:308
 #, fuzzy
@@ -948,8 +968,9 @@ msgid "Third-party data providers"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
+#, fuzzy
 msgid "Image providers"
-msgstr ""
+msgstr "打开游戏属性"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
 msgid "Metadata providers"
@@ -964,8 +985,9 @@ msgid "About"
 msgstr "关于"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
+#, fuzzy
 msgid "Copy application version and environment info"
-msgstr ""
+msgstr "显示版本并退出"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:78
 #: src/ui/views/WelcomeView.vala:57
@@ -988,9 +1010,10 @@ msgid "Report a problem"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:95
+#, fuzzy
 msgctxt "about_link"
 msgid "Suggest translations"
-msgstr ""
+msgstr "静默安装"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:101
 msgctxt "about_link"
@@ -1017,8 +1040,9 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:50
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:222
+#, fuzzy
 msgid "Install"
-msgstr ""
+msgstr "安装"
 
 #: src/ui/dialogs/InstallDialog.vala:112
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
@@ -1031,59 +1055,63 @@ msgid "Download"
 msgstr "下载"
 
 #: src/ui/dialogs/InstallDialog.vala:210
+#, fuzzy
 msgid "Select installer"
-msgstr ""
+msgstr "选择"
 
 #: src/ui/dialogs/InstallDialog.vala:219
-#, c-format
+#, fuzzy, c-format
 msgid "Installer size: %s"
-msgstr ""
+msgstr "安装"
 
 #: src/ui/dialogs/InstallDialog.vala:329
 msgid "Unknown"
 msgstr ""
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:47
-#, c-format
+#, fuzzy, c-format
 msgid "%s: Properties"
-msgstr ""
+msgstr "收藏夹"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:81
+#: src/ui/dialogs/GamePropertiesDialog.vala:82
 msgid "Images"
 msgstr "图片"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:114
+#: src/ui/dialogs/GamePropertiesDialog.vala:115
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 msgid "Download images"
 msgstr "下载图片"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:121
+#: src/ui/dialogs/GamePropertiesDialog.vala:122
 msgid "Image URL"
 msgstr "图片的URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:129
+#: src/ui/dialogs/GamePropertiesDialog.vala:130
 msgid "Icon URL"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:179
+#: src/ui/dialogs/GamePropertiesDialog.vala:180
+#, fuzzy
 msgid "Compatibility"
-msgstr ""
+msgstr "禁用DirectX 11兼容层"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:201
+#: src/ui/dialogs/GamePropertiesDialog.vala:202
 msgid "Launch from terminal"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:217
+#: src/ui/dialogs/GamePropertiesDialog.vala:218
 msgid "Copy to clipboard"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
-msgid "Add to Steam"
-msgstr ""
-
 #: src/ui/dialogs/GamePropertiesDialog.vala:220
+#, fuzzy
+msgid "Add to Steam"
+msgstr "加游戏"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:221
+#, fuzzy
 msgid "Add to the Steam library"
-msgstr ""
+msgstr "加游戏"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:53
 #, c-format
@@ -1103,8 +1131,9 @@ msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:65
+#, fuzzy
 msgid "Overlays"
-msgstr ""
+msgstr "删除"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:105
 msgid "Overlay ID (directory name)"
@@ -1119,8 +1148,9 @@ msgid "Add"
 msgstr "加"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
+#, fuzzy
 msgid "Enable overlays"
-msgstr ""
+msgstr "删除"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:182
 #, c-format
@@ -1140,8 +1170,9 @@ msgid ""
 msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
+#, fuzzy
 msgid "Open directory"
-msgstr ""
+msgstr "打开前缀目录"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
 #, fuzzy
@@ -1151,17 +1182,20 @@ msgstr "删除"
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
+#, fuzzy
 msgid "Run with compatibility layer"
-msgstr ""
+msgstr "禁用DirectX 11兼容层"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
+#, fuzzy
 msgid "Corrupted installer: checksum mismatch in"
-msgstr ""
+msgstr "校验和不匹配 %s"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
+#, fuzzy
 msgid "Import emulated games"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
 #, fuzzy
@@ -1169,8 +1203,9 @@ msgid "Select directory with emulated games"
 msgstr "选择目录"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
+#, fuzzy
 msgid "Detected games"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 #, fuzzy
@@ -1183,8 +1218,9 @@ msgid "Select directory to import"
 msgstr "选择目录"
 
 #: src/ui/views/WelcomeView.vala:52
+#, fuzzy
 msgid "No enabled game sources"
-msgstr ""
+msgstr "用户游戏"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "Enable some game sources in settings"
@@ -1211,17 +1247,18 @@ msgid "Authenticating..."
 msgstr ""
 
 #: src/ui/views/WelcomeView.vala:163
-#, c-format
+#, fuzzy, c-format
 msgid "Install %s"
-msgstr ""
+msgstr "安装"
 
 #: src/ui/views/WelcomeView.vala:164
 msgid "Return to GameHub after installing"
 msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:134
+#, fuzzy
 msgid "No games"
-msgstr ""
+msgstr "运行游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:134
 msgid "Get some games or enable some game sources in settings"
@@ -1236,12 +1273,14 @@ msgid "List view"
 msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:195
+#, fuzzy
 msgid "All games"
-msgstr ""
+msgstr "%s 游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:218
+#, fuzzy
 msgid "Downloads"
-msgstr ""
+msgstr "下载"
 
 #: src/ui/views/GamesView/GamesView.vala:244
 msgid "Filters"
@@ -1262,8 +1301,9 @@ msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:387
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:105
+#, fuzzy
 msgid "Back"
-msgstr ""
+msgstr "备份"
 
 #: src/ui/views/GamesView/GamesView.vala:564
 #, c-format
@@ -1272,17 +1312,18 @@ msgid_plural "%u games"
 msgstr[0] "%u个游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:580
+#, fuzzy
 msgid "No user-added games"
-msgstr ""
+msgstr "用户游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:581
 msgid "Add some games using plus button"
 msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:585
-#, c-format
+#, fuzzy, c-format
 msgid "No %s games"
-msgstr ""
+msgstr "%s 游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:586
 msgid "Get some Linux-compatible games"
@@ -1308,29 +1349,32 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:785
+#: src/ui/views/GamesView/GamesView.vala:790
 msgid "Downloading images"
 msgstr "还在下载图片"
 
-#: src/ui/views/GamesView/GamesView.vala:799
+#: src/ui/views/GamesView/GamesView.vala:804
 #, c-format
 msgid "Downloading image: %s"
 msgstr "还在下载图片：%s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
+#, fuzzy
 msgid "Pause download"
-msgstr ""
+msgstr "开始下载"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:129
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:167
+#, fuzzy
 msgid "Resume download"
-msgstr ""
+msgstr "下载"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:134
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:173
+#, fuzzy
 msgid "Cancel download"
-msgstr ""
+msgstr "开始下载"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:77
 msgid "Group"
@@ -1346,16 +1390,19 @@ msgid "Tags"
 msgstr ""
 
 #: src/ui/views/GamesView/FiltersPopover.vala:353
+#, fuzzy
 msgid "All platforms"
-msgstr ""
+msgstr "%s 游戏"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
+#, fuzzy
 msgid "Select game executable"
-msgstr ""
+msgstr "选择可执行文件"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:82
+#, fuzzy
 msgid "Select game directory"
-msgstr ""
+msgstr "选择目录"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
 msgid "Download game images"
@@ -1366,45 +1413,52 @@ msgid "Details"
 msgstr ""
 
 #: src/ui/views/GamesView/GameContextMenu.vala:57
+#, fuzzy
 msgctxt "game_context_menu"
 msgid "Favorite"
-msgstr ""
+msgstr "收藏夹"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:61
+#, fuzzy
 msgctxt "game_context_menu"
 msgid "Hidden"
-msgstr ""
+msgstr "隐藏的"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:68
+#, fuzzy
 msgid "Properties"
-msgstr ""
+msgstr "打开游戏属性"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:144
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
+#, fuzzy
 msgid "Open installation directory"
-msgstr ""
+msgstr "打开前缀目录"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:152
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
+#, fuzzy
 msgid "Open installers collection directory"
-msgstr ""
+msgstr "打开前缀目录"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
+#, fuzzy
 msgid "Open bonus collection directory"
-msgstr ""
+msgstr "打开前缀目录"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#, fuzzy
 msgid "Uninstall"
-msgstr ""
+msgstr "安装"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:101
-#, c-format
+#, fuzzy, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] ""
+msgstr[0] "%s: 没有可用的安装程序"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:145
 #, fuzzy, c-format
@@ -1413,22 +1467,22 @@ msgid_plural "%d games will be installed"
 msgstr[0] "%s: 没有可用的安装程序"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:155
-#, c-format
+#, fuzzy, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] ""
+msgstr[0] "%s: 没有可用的安装程序"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:162
-#, c-format
+#, fuzzy, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] ""
+msgstr[0] "%s: 没有可用的安装程序"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:169
-#, c-format
+#, fuzzy, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] ""
+msgstr[0] "%s: 没有可用的安装程序"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:175
 msgid "Refresh"
@@ -1447,8 +1501,9 @@ msgid "Open store page"
 msgstr ""
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
+#, fuzzy
 msgid "Game properties"
-msgstr ""
+msgstr "打开游戏属性"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:55
 msgid "Achievements"
@@ -1478,10 +1533,10 @@ msgid "Last launch"
 msgstr ""
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:82
-#, c-format
+#, fuzzy, c-format
 msgctxt "time"
 msgid "%dh"
-msgstr ""
+msgstr "%d分"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:82
 #, c-format
@@ -1579,12 +1634,14 @@ msgstr[0] ""
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
+#, fuzzy
 msgid "Select file"
-msgstr ""
+msgstr "选择"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:78
+#, fuzzy
 msgid "No images"
-msgstr ""
+msgstr "下载图片"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:78
 msgid ""
@@ -1593,20 +1650,23 @@ msgid ""
 msgstr ""
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:99
+#, fuzzy
 msgid "Search images:"
-msgstr ""
+msgstr "下载图片"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
+#, fuzzy
 msgid "Compatibility layer:"
-msgstr ""
+msgstr "禁用DirectX 11兼容层"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
 msgstr ""
 
 #: src/ui/widgets/GameTagsList.vala:104
+#, fuzzy
 msgid "Add tag"
-msgstr ""
+msgstr "加游戏"
 
 #: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
@@ -1624,14 +1684,16 @@ msgid "Download started"
 msgstr "下载开始玩了"
 
 #: src/utils/downloader/Downloader.vala:162
+#, fuzzy
 msgctxt "dl_status"
 msgid "Download finished"
-msgstr ""
+msgstr "下载开始玩了"
 
 #: src/utils/downloader/Downloader.vala:163
+#, fuzzy
 msgctxt "dl_status"
 msgid "Download failed"
-msgstr ""
+msgstr "下载开始玩了"
 
 #: src/utils/downloader/Downloader.vala:165
 #, c-format
@@ -1646,6 +1708,7 @@ msgid "Paused: %d%% (%s / %s)"
 msgstr ""
 
 #: src/utils/downloader/Downloader.vala:169
+#, fuzzy
 msgctxt "dl_status"
 msgid "Download cancelled"
-msgstr ""
+msgstr "下载开始玩了"
