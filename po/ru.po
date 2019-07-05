@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-05 18:26+0300\n"
+"POT-Creation-Date: 2019-07-05 20:47+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -159,8 +159,8 @@ msgid "Show file"
 msgstr "Показать файл"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
-#: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#: src/ui/views/GamesView/GameContextMenu.vala:166
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Удалить"
@@ -368,8 +368,8 @@ msgstr ""
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:101
-#: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
+#: src/ui/views/GamesView/GameContextMenu.vala:53
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
 msgid "Run"
 msgstr "Запустить"
 
@@ -1013,9 +1013,9 @@ msgid "Forks"
 msgstr "Форки"
 
 #: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
-#: src/ui/views/GamesView/GameContextMenu.vala:50
+#: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:222
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
 msgid "Install"
 msgstr "Установить"
 
@@ -1104,7 +1104,7 @@ msgstr ""
 "Включение приведёт к перемещению файлов игры в оверлей «base»"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
-#: src/ui/views/GamesView/GameContextMenu.vala:65
+#: src/ui/views/GamesView/GameContextMenu.vala:174
 msgid "Overlays"
 msgstr "Оверлеи"
 
@@ -1158,7 +1158,7 @@ msgstr "Удалить оверлей"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
 msgid "Run with compatibility layer"
 msgstr "Запустить, используя слой совместимости"
 
@@ -1327,17 +1327,17 @@ msgid "Downloading image: %s"
 msgstr "Загрузка изображений: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Приостановить загрузку"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:167
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Возобновить загрузку"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:134
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:173
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Отменить загрузку"
 
@@ -1370,44 +1370,49 @@ msgstr "Выберите папку игры"
 msgid "Download game images"
 msgstr "Загрузить изображения игр"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:54
+#: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
 msgstr "Подробности"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:57
+#: src/ui/views/GamesView/GameContextMenu.vala:116
 msgctxt "game_context_menu"
 msgid "Favorite"
 msgstr "Избранная"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:61
+#: src/ui/views/GamesView/GameContextMenu.vala:120
 msgctxt "game_context_menu"
 msgid "Hidden"
 msgstr "Скрытая"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:68
-msgid "Properties"
-msgstr "Свойства"
-
-#: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
+#: src/ui/views/GamesView/GameContextMenu.vala:132
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
 msgid "Open installation directory"
 msgstr "Открыть папку установки"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:152
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
+#: src/ui/views/GamesView/GameContextMenu.vala:141
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
 msgid "Open installers collection directory"
 msgstr "Открыть папку коллекции установщиков"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:160
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
+#: src/ui/views/GamesView/GameContextMenu.vala:150
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
 msgid "Open bonus collection directory"
 msgstr "Открыть папку коллекции бонусного контента"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
+#: src/ui/views/GamesView/GameContextMenu.vala:159
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+msgid "Open screenshots directory"
+msgstr "Открыть папку скриншотов"
+
+#: src/ui/views/GamesView/GameContextMenu.vala:166
+#: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 msgid "Uninstall"
 msgstr "Деинсталлировать"
+
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+msgid "Properties"
+msgstr "Свойства"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:101
 #, c-format
@@ -1469,11 +1474,11 @@ msgstr[2] ""
 "%d игр будут удалены из базы данных. Перезапустите GameHub, чтобы загрузить "
 "новые данные"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Open store page"
 msgstr "Открыть страницу в магазине"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:232
 msgid "Game properties"
 msgstr "Свойства игры"
 

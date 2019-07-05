@@ -32,6 +32,8 @@ namespace GameHub.Data.Sources.Steam
 
 		public bool is_updating { get; set; default = false; }
 
+		public File? screenshots_dir { get; protected set; default = null; }
+
 		public SteamGame(Steam src, Json.Node json_node)
 		{
 			source = src;
@@ -137,6 +139,8 @@ namespace GameHub.Data.Sources.Steam
 			{
 				//appinfo.show();
 			}
+
+			screenshots_dir = FSUtils.find_case_insensitive(Steam.get_userdata_dir(), @"760/remote/$(id)/screenshots");
 
 			if(game_info_updated)
 			{

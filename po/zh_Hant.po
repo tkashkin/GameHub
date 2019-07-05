@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-05 18:26+0300\n"
+"POT-Creation-Date: 2019-07-05 20:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -153,8 +153,8 @@ msgid "Show file"
 msgstr ""
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
-#: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#: src/ui/views/GamesView/GameContextMenu.vala:166
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr ""
@@ -353,8 +353,8 @@ msgstr ""
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:101
-#: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
+#: src/ui/views/GamesView/GameContextMenu.vala:53
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
 msgid "Run"
 msgstr ""
 
@@ -987,9 +987,9 @@ msgid "Forks"
 msgstr ""
 
 #: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
-#: src/ui/views/GamesView/GameContextMenu.vala:50
+#: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:222
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
 msgid "Install"
 msgstr ""
 
@@ -1075,7 +1075,7 @@ msgid ""
 msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
-#: src/ui/views/GamesView/GameContextMenu.vala:65
+#: src/ui/views/GamesView/GameContextMenu.vala:174
 msgid "Overlays"
 msgstr ""
 
@@ -1122,7 +1122,7 @@ msgstr ""
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
 msgid "Run with compatibility layer"
 msgstr ""
 
@@ -1287,17 +1287,17 @@ msgid "Downloading image: %s"
 msgstr ""
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr ""
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:167
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr ""
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:134
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:173
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr ""
 
@@ -1330,43 +1330,48 @@ msgstr ""
 msgid "Download game images"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:54
+#: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:57
+#: src/ui/views/GamesView/GameContextMenu.vala:116
 msgctxt "game_context_menu"
 msgid "Favorite"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:61
+#: src/ui/views/GamesView/GameContextMenu.vala:120
 msgctxt "game_context_menu"
 msgid "Hidden"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:68
-msgid "Properties"
-msgstr ""
-
-#: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
+#: src/ui/views/GamesView/GameContextMenu.vala:132
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
 msgid "Open installation directory"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:152
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
+#: src/ui/views/GamesView/GameContextMenu.vala:141
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
 msgid "Open installers collection directory"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:160
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
+#: src/ui/views/GamesView/GameContextMenu.vala:150
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
 msgid "Open bonus collection directory"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
+#: src/ui/views/GamesView/GameContextMenu.vala:159
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+msgid "Open screenshots directory"
+msgstr ""
+
+#: src/ui/views/GamesView/GameContextMenu.vala:166
+#: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 msgid "Uninstall"
+msgstr ""
+
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+msgid "Properties"
 msgstr ""
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:101
@@ -1411,11 +1416,11 @@ msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
 msgstr[0] ""
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Open store page"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:232
 msgid "Game properties"
 msgstr ""
 

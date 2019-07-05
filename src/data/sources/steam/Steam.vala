@@ -418,13 +418,16 @@ namespace GameHub.Data.Sources.Steam
 			return id - 76561197960265728;
 		}
 
-		public static void add_game_shortcut(Game game)
+		public static File? get_userdata_dir()
 		{
 			uint64 communityid = uint64.parse(instance.user_id);
 			uint64 steamid3 = communityid_to_steamid3(communityid);
+			return FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), @"steam/userdata/$(steamid3)");
+		}
 
-			var config_dir = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), @"steam/userdata/$(steamid3)/config");
-
+		public static void add_game_shortcut(Game game)
+		{
+			var config_dir = FSUtils.find_case_insensitive(get_userdata_dir(), "config");
 			if(config_dir == null || !config_dir.query_exists()) return;
 
 			var shortcuts = FSUtils.find_case_insensitive(config_dir, "shortcuts.vdf") ?? FSUtils.file(config_dir.get_path(), "shortcuts.vdf");

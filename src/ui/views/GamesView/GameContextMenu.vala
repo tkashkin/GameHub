@@ -39,43 +39,20 @@ namespace GameHub.UI.Views.GamesView
 
 		construct
 		{
-			var run = new Gtk.MenuItem.with_label(_("Run"));
-			run.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
-			run.activate.connect(() => game.run.begin());
-
-			var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
-			run_with_compat.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
-			run_with_compat.activate.connect(() => game.run_with_compat.begin(true));
-
-			var install = new Gtk.MenuItem.with_label(_("Install"));
-			install.sensitive = game.is_installable;
-			install.activate.connect(() => game.install.begin());
-
-			var details = new Gtk.MenuItem.with_label(_("Details"));
-			details.activate.connect(() => new Dialogs.GameDetailsDialog(game).show_all());
-
-			var favorite = new Gtk.CheckMenuItem.with_label(C_("game_context_menu", "Favorite"));
-			favorite.active = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
-			favorite.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_FAVORITES));
-
-			var hidden = new Gtk.CheckMenuItem.with_label(C_("game_context_menu", "Hidden"));
-			hidden.active = game.has_tag(Tables.Tags.BUILTIN_HIDDEN);
-			hidden.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_HIDDEN));
-
-			var fs_overlays = new Gtk.MenuItem.with_label(_("Overlays"));
-			fs_overlays.activate.connect(() => new Dialogs.GameFSOverlaysDialog(game).show_all());
-
-			var properties = new Gtk.MenuItem.with_label(_("Properties"));
-			properties.activate.connect(() => new Dialogs.GamePropertiesDialog(game).show_all());
-
 			if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
 			{
 				if(game.use_compat)
 				{
+					var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
+					run_with_compat.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
+					run_with_compat.activate.connect(() => game.run_with_compat.begin(true));
 					add(run_with_compat);
 				}
 				else
 				{
+					var run = new Gtk.MenuItem.with_label(_("Run"));
+					run.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
+					run.activate.connect(() => game.run.begin());
 					add(run);
 				}
 				add(new Gtk.SeparatorMenuItem());
@@ -100,10 +77,15 @@ namespace GameHub.UI.Views.GamesView
 			}
 			else if(game.status.state == Game.State.UNINSTALLED)
 			{
+				var install = new Gtk.MenuItem.with_label(_("Install"));
+				install.sensitive = game.is_installable;
+				install.activate.connect(() => game.install.begin());
 				add(install);
 				add(new Gtk.SeparatorMenuItem());
 			}
 
+			var details = new Gtk.MenuItem.with_label(_("Details"));
+			details.activate.connect(() => new Dialogs.GameDetailsDialog(game).show_all());
 			add(details);
 
 			if(!(game is Sources.GOG.GOGGame.DLC))
@@ -131,7 +113,13 @@ namespace GameHub.UI.Views.GamesView
 				}
 
 				add(new Gtk.SeparatorMenuItem());
+				var favorite = new Gtk.CheckMenuItem.with_label(C_("game_context_menu", "Favorite"));
+				favorite.active = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
+				favorite.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_FAVORITES));
 				add(favorite);
+				var hidden = new Gtk.CheckMenuItem.with_label(C_("game_context_menu", "Hidden"));
+				hidden.active = game.has_tag(Tables.Tags.BUILTIN_HIDDEN);
+				hidden.toggled.connect(() => game.toggle_tag(Tables.Tags.BUILTIN_HIDDEN));
 				add(hidden);
 			}
 
@@ -141,25 +129,36 @@ namespace GameHub.UI.Views.GamesView
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;
-				var open_directory = new Gtk.MenuItem.with_label(_("Open installation directory"));
-				open_directory.activate.connect(open_game_directory);
-				add(open_directory);
+				var open_dir = new Gtk.MenuItem.with_label(_("Open installation directory"));
+				open_dir.activate.connect(open_game_directory);
+				add(open_dir);
 			}
+
 			if(game.installers_dir != null && game.installers_dir.query_exists())
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;
-				var open_installers_directory = new Gtk.MenuItem.with_label(_("Open installers collection directory"));
-				open_installers_directory.activate.connect(open_installer_collection_directory);
-				add(open_installers_directory);
+				var open_installers_dir = new Gtk.MenuItem.with_label(_("Open installers collection directory"));
+				open_installers_dir.activate.connect(open_installer_collection_directory);
+				add(open_installers_dir);
 			}
+
 			if(game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists())
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;
-				var open_bonuses_directory = new Gtk.MenuItem.with_label(_("Open bonus collection directory"));
-				open_bonuses_directory.activate.connect(open_bonus_collection_directory);
-				add(open_bonuses_directory);
+				var open_bonuses_dir = new Gtk.MenuItem.with_label(_("Open bonus collection directory"));
+				open_bonuses_dir.activate.connect(open_bonus_collection_directory);
+				add(open_bonuses_dir);
+			}
+
+			if(game is GameHub.Data.Sources.Steam.SteamGame && (game as GameHub.Data.Sources.Steam.SteamGame).screenshots_dir != null && (game as GameHub.Data.Sources.Steam.SteamGame).screenshots_dir.query_exists())
+			{
+				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
+				add_dirs_separator = false;
+				var open_screenshots_dir = new Gtk.MenuItem.with_label(_("Open screenshots directory"));
+				open_screenshots_dir.activate.connect(open_screenshots_directory);
+				add(open_screenshots_dir);
 			}
 
 			if((game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame) && !(game is Sources.GOG.GOGGame.DLC))
@@ -172,6 +171,8 @@ namespace GameHub.UI.Views.GamesView
 				if(!(game is Sources.Steam.SteamGame))
 				{
 					add(new Gtk.SeparatorMenuItem());
+					var fs_overlays = new Gtk.MenuItem.with_label(_("Overlays"));
+					fs_overlays.activate.connect(() => new Dialogs.GameFSOverlaysDialog(game).show_all());
 					add(fs_overlays);
 				}
 			}
@@ -179,6 +180,8 @@ namespace GameHub.UI.Views.GamesView
 			if(!(game is Sources.GOG.GOGGame.DLC))
 			{
 				add(new Gtk.SeparatorMenuItem());
+				var properties = new Gtk.MenuItem.with_label(_("Properties"));
+				properties.activate.connect(() => new Dialogs.GamePropertiesDialog(game).show_all());
 				add(properties);
 			}
 
@@ -225,6 +228,18 @@ namespace GameHub.UI.Views.GamesView
 				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
 				{
 					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
+				}
+			}
+		}
+
+		private void open_screenshots_directory()
+		{
+			if(game != null && game is GameHub.Data.Sources.Steam.SteamGame)
+			{
+				var steam_game = game as GameHub.Data.Sources.Steam.SteamGame;
+				if(steam_game != null && steam_game.screenshots_dir != null && steam_game.screenshots_dir.query_exists())
+				{
+					Utils.open_uri(steam_game.screenshots_dir.get_uri());
 				}
 			}
 		}

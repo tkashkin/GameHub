@@ -71,6 +71,7 @@ namespace GameHub.UI.Views.GameDetailsView
 		private ActionButton action_open_directory;
 		private ActionButton action_open_installer_collection_directory;
 		private ActionButton action_open_bonus_collection_directory;
+		private ActionButton action_open_screenshots_directory;
 		private ActionButton action_open_store_page;
 		private ActionButton action_uninstall;
 
@@ -225,6 +226,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_open_directory = add_action("folder", null, _("Open installation directory"), open_game_directory);
 			action_open_installer_collection_directory = add_action("folder-download", null, _("Open installers collection directory"), open_installer_collection_directory);
 			action_open_bonus_collection_directory = add_action("folder-documents", null, _("Open bonus collection directory"), open_bonus_collection_directory);
+			action_open_screenshots_directory = add_action("folder-pictures", null, _("Open screenshots directory"), open_screenshots_directory);
 			action_open_store_page = add_action("web-browser", null, _("Open store page"), open_game_store_page);
 			action_uninstall = add_action("edit-delete", null, (game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"), uninstall_game);
 			action_properties = add_action("system-run", null, _("Game properties"), game_properties);
@@ -291,6 +293,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
 			action_open_installer_collection_directory.visible = game.installers_dir != null && game.installers_dir.query_exists();
 			action_open_bonus_collection_directory.visible = game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists();
+			action_open_screenshots_directory.visible = game is GameHub.Data.Sources.Steam.SteamGame && (game as GameHub.Data.Sources.Steam.SteamGame).screenshots_dir != null && (game as GameHub.Data.Sources.Steam.SteamGame).screenshots_dir.query_exists();
 			action_open_store_page.visible = game.store_page != null;
 			action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
 			action_properties.visible = !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
@@ -422,6 +425,18 @@ namespace GameHub.UI.Views.GameDetailsView
 				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
 				{
 					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
+				}
+			}
+		}
+
+		private void open_screenshots_directory()
+		{
+			if(_game != null && game is GameHub.Data.Sources.Steam.SteamGame)
+			{
+				var steam_game = game as GameHub.Data.Sources.Steam.SteamGame;
+				if(steam_game != null && steam_game.screenshots_dir != null && steam_game.screenshots_dir.query_exists())
+				{
+					Utils.open_uri(steam_game.screenshots_dir.get_uri());
 				}
 			}
 		}
