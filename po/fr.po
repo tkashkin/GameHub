@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-05 18:26+0300\n"
+"POT-Creation-Date: 2019-07-05 20:47+0300\n"
 "PO-Revision-Date: 2019-06-19 23:43+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -158,8 +158,8 @@ msgid "Show file"
 msgstr "Afficher le fichier"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
-#: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#: src/ui/views/GamesView/GameContextMenu.vala:166
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Enlever"
@@ -369,8 +369,8 @@ msgstr ""
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:101
-#: src/ui/views/GamesView/GameContextMenu.vala:42
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
+#: src/ui/views/GamesView/GameContextMenu.vala:53
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
 msgid "Run"
 msgstr "Lancer"
 
@@ -1034,9 +1034,9 @@ msgid "Forks"
 msgstr ""
 
 #: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
-#: src/ui/views/GamesView/GameContextMenu.vala:50
+#: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:222
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
 msgid "Install"
 msgstr "Installer"
 
@@ -1124,7 +1124,7 @@ msgid ""
 msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
-#: src/ui/views/GamesView/GameContextMenu.vala:65
+#: src/ui/views/GamesView/GameContextMenu.vala:174
 #, fuzzy
 msgid "Overlays"
 msgstr "%s: Superpositions"
@@ -1178,7 +1178,7 @@ msgstr "Enlever"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
 #, fuzzy
 msgid "Run with compatibility layer"
 msgstr "Désactiver le niveau de compatibilité DirectX 11"
@@ -1360,19 +1360,19 @@ msgid "Downloading image: %s"
 msgstr "En cours de téléchargement"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:124
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:161
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 #, fuzzy
 msgid "Pause download"
 msgstr "Démarrage du téléchargement"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:129
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:167
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 #, fuzzy
 msgid "Resume download"
 msgstr "En cours de téléchargement"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:134
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:173
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 #, fuzzy
 msgid "Cancel download"
 msgstr "Démarrage du téléchargement"
@@ -1410,51 +1410,57 @@ msgstr "Choisir le dossier"
 msgid "Download game images"
 msgstr "En cours de téléchargement"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:54
+#: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
 msgstr ""
 
-#: src/ui/views/GamesView/GameContextMenu.vala:57
+#: src/ui/views/GamesView/GameContextMenu.vala:116
 #, fuzzy
 msgctxt "game_context_menu"
 msgid "Favorite"
 msgstr "Favoris"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:61
+#: src/ui/views/GamesView/GameContextMenu.vala:120
 #, fuzzy
 msgctxt "game_context_menu"
 msgid "Hidden"
 msgstr "Caché"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:68
-#, fuzzy
-msgid "Properties"
-msgstr "%s : Propriétés"
-
-#: src/ui/views/GamesView/GameContextMenu.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
+#: src/ui/views/GamesView/GameContextMenu.vala:132
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
 #, fuzzy
 msgid "Open installation directory"
 msgstr "Répertoire d'installation"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:152
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
+#: src/ui/views/GamesView/GameContextMenu.vala:141
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
 #, fuzzy
 msgid "Open installers collection directory"
 msgstr "Répertoire d'installation"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:160
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
+#: src/ui/views/GamesView/GameContextMenu.vala:150
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
 #, fuzzy
 msgid "Open bonus collection directory"
 msgstr "Dossier de la ludothèque"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
+#: src/ui/views/GamesView/GameContextMenu.vala:159
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#, fuzzy
+msgid "Open screenshots directory"
+msgstr "Ouvrir le dossier prefix"
+
+#: src/ui/views/GamesView/GameContextMenu.vala:166
+#: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 #, fuzzy
 msgid "Uninstall"
 msgstr "Installer"
+
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+#, fuzzy
+msgid "Properties"
+msgstr "%s : Propriétés"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:101
 #, fuzzy, c-format
@@ -1504,11 +1510,11 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
 msgid "Open store page"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:232
 #, fuzzy
 msgid "Game properties"
 msgstr "Ouvrir les propriétés du jeu"
