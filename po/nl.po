@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-05 20:47+0300\n"
-"PO-Revision-Date: 2019-07-01 07:42+0000\n"
+"PO-Revision-Date: 2019-07-07 01:07+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -1400,9 +1400,8 @@ msgstr "Open bonusverzamelmap"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:159
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
-#, fuzzy
 msgid "Open screenshots directory"
-msgstr "Wine-profielmap openen"
+msgstr "Schermafdrukmap openen"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:166
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
