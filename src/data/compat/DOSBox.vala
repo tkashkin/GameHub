@@ -56,6 +56,12 @@ namespace GameHub.Data.Compat
 			var user_data_dir = Environment.get_user_data_dir();
 			var system_data_dirs = Environment.get_system_data_dirs();
 
+			if(GameHub.Application.log_verbose)
+			{
+				debug("[DOSBox.init] ProjectConfig.DATADIR: '%s'", ProjectConfig.DATADIR);
+				debug("[DOSBox.init] user_data_dir: '%s'", user_data_dir);
+			}
+
 			if(user_data_dir != null && user_data_dir.length > 0)
 			{
 				if(!(user_data_dir in data_dirs)) data_dirs += user_data_dir;
@@ -65,8 +71,17 @@ namespace GameHub.Data.Compat
 			{
 				foreach(var system_data_dir in system_data_dirs)
 				{
+					if(GameHub.Application.log_verbose)
+					{
+						debug("[DOSBox.init] system_data_dir: '%s'", system_data_dir);
+					}
 					if(!(system_data_dir in data_dirs)) data_dirs += system_data_dir;
 				}
+			}
+
+			if(GameHub.Application.log_verbose)
+			{
+				debug("[DOSBox.init] data_dirs: {'%s'}", string.joinv("', '", data_dirs));
 			}
 
 			foreach(var dir in data_dirs)
@@ -162,14 +177,10 @@ namespace GameHub.Data.Compat
 		private static bool is_dos_executable(File? file)
 		{
 			if(file == null || !file.query_exists()) return false;
-			var info = Utils.run({"file", file.get_path()}, null, null, false, true, false);
-			if(info != null && info.length > 0)
+			var type = Utils.run({"file", "-b", file.get_path()}, null, null, false, true, false);
+			if(type != null && type.length > 0)
 			{
-				var type = info.split(":")[1];
-				if(type != null && type.length > 0)
-				{
-					return "DOS" in type;
-				}
+				return "DOS" in type;
 			}
 			return false;
 		}
