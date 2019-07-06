@@ -52,7 +52,7 @@ namespace GameHub.Data.Compat
 
 			var data_path = ProjectConfig.PROJECT_NAME + "/compat/dosbox";
 
-			string[] data_dirs = { ProjectConfig.DATADIR };
+			string[] data_dirs = { FSUtils.file(ProjectConfig.DATADIR, data_path).get_path() };
 			var user_data_dir = Environment.get_user_data_dir();
 			var system_data_dirs = Environment.get_system_data_dirs();
 
@@ -64,7 +64,8 @@ namespace GameHub.Data.Compat
 
 			if(user_data_dir != null && user_data_dir.length > 0)
 			{
-				if(!(user_data_dir in data_dirs)) data_dirs += user_data_dir;
+				var dir = FSUtils.file(user_data_dir, data_path).get_path();
+				if(!(dir in data_dirs)) data_dirs += dir;
 			}
 
 			if(system_data_dirs != null && system_data_dirs.length > 0)
@@ -75,7 +76,8 @@ namespace GameHub.Data.Compat
 					{
 						debug("[DOSBox.init] system_data_dir: '%s'", system_data_dir);
 					}
-					if(!(system_data_dir in data_dirs)) data_dirs += system_data_dir;
+					var dir = FSUtils.file(system_data_dir, data_path).get_path();
+					if(!(dir in data_dirs)) data_dirs += dir;
 				}
 			}
 
@@ -86,7 +88,7 @@ namespace GameHub.Data.Compat
 
 			foreach(var dir in data_dirs)
 			{
-				var data_dir = FSUtils.file(dir, data_path);
+				var data_dir = FSUtils.file(dir);
 				if(data_dir == null || !data_dir.query_exists()) continue;
 
 				if(GameHub.Application.log_verbose)
