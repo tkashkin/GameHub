@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-05 20:47+0300\n"
-"PO-Revision-Date: 2019-07-01 07:42+0000\n"
+"PO-Revision-Date: 2019-07-07 01:07+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -248,10 +248,10 @@ msgid "Favorites"
 msgstr "Favoritter"
 
 #: src/data/adapters/GamesAdapter.vala:429
-#, fuzzy, c-format
+#, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr "Favoritter"
+msgstr "%s: Favoritter"
 
 #: src/data/adapters/GamesAdapter.vala:454
 msgid "Merging games"
@@ -293,10 +293,9 @@ msgid "By status"
 msgstr "Etter status"
 
 #: src/data/adapters/GamesAdapter.vala:650
-#, fuzzy
 msgctxt "group_mode"
 msgid "By source"
-msgstr "Spillkilder"
+msgstr "Etter kilde"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
@@ -610,19 +609,18 @@ msgstr "Vis plattformsikoner i rutenettvisning"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
 #, fuzzy
 msgid "Games list: installed"
-msgstr "%d spill vil bli installert"
+msgstr "Spilliste: Installert"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
 #, fuzzy
 msgid "Games list: not installed"
-msgstr "%d spill vil bli installert"
+msgstr "Spilliste: Ikke installert"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
-#, fuzzy
 msgctxt "list_style"
 msgid "Show icon"
-msgstr "Vis fil"
+msgstr "Vis ikon"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
@@ -1155,9 +1153,8 @@ msgid "Open directory"
 msgstr "Åpne mappe"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
-#, fuzzy
 msgid "Remove overlay"
-msgstr "Skru på overlag"
+msgstr "Fjern overlag"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
@@ -1403,9 +1400,8 @@ msgstr "Åpne bonussamlingsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:159
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
-#, fuzzy
 msgid "Open screenshots directory"
-msgstr "Åpne prefiks-mappe"
+msgstr "Åpne skjermavbildningsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:166
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
