@@ -4,13 +4,14 @@
 # wenxiaobai <chowhound_xb@163.com>, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 # Elizabeth Sherrock <lizzyd710@gmail.com>, 2019.
+# tofuHero <zhao1397172935@foxmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-05 20:47+0300\n"
-"PO-Revision-Date: 2019-06-07 16:06+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2019-07-09 02:01+0000\n"
+"Last-Translator: tofuHero <zhao1397172935@foxmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gamehub/translations/zh_CMN-HANT/>\n"
 "Language: zh_CMN-HANT\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -92,7 +93,7 @@ msgstr "日志后台工作开始/停止"
 
 #: src/app.vala:115
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "禁用日志信息过滤"
 
 #: src/app.vala:116
 msgid "Verbose logging"
