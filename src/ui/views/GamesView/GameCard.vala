@@ -256,23 +256,35 @@ namespace GameHub.UI.Views.GamesView
 
 		private void update_source(GameSource? source=null)
 		{
-			if(!Settings.UI.Behavior.instance.merge_games || source == null || source == _game.source || merges == null || merges.size == 0)
+			if(!Settings.UI.Behavior.instance.merge_games || merges == null || merges.size == 0)
 			{
 				update(_game);
 				return;
 			}
 
+			var vg = _game;
+
 			if(merges != null && merges.size > 0)
 			{
 				foreach(var g in merges)
 				{
-					if(g.source == source)
+					if(vg is Sources.User.UserGame) break;
+					if(source == null)
 					{
-						update(g);
+						if(g.status.state > vg.status.state || g is Sources.User.UserGame)
+						{
+							vg = g;
+						}
+					}
+					else if(g.source == source)
+					{
+						vg = g;
 						break;
 					}
 				}
 			}
+
+			update(vg);
 		}
 
 		private void update(Game? vg)

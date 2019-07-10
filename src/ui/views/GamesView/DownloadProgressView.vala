@@ -53,6 +53,7 @@ namespace GameHub.UI.Views.GamesView
 			hbox.margin = 8;
 			var hbox_inner = new Box(Orientation.HORIZONTAL, 8);
 			var hbox_actions = new Box(Orientation.HORIZONTAL, 0);
+			hbox_actions.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
 			hbox_actions.vexpand = false;
 			hbox_actions.valign = Align.CENTER;
 
