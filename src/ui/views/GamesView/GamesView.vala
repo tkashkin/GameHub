@@ -639,7 +639,7 @@ namespace GameHub.UI.Views.GamesView
 			games_adapter.load_games(src => {
 				if(src.games_count == 0 && src is GameHub.Data.Sources.Steam.Steam)
 				{
-					var msg = message(_("No games were loaded from Steam. Set your games list privacy to public or use your own Steam API key in settings."), MessageType.WARNING);
+					var msg = add_message(_("No games were loaded from Steam. Set your games list privacy to public or use your own Steam API key in settings."), MessageType.WARNING);
 					msg.add_button(_("Privacy"), 1);
 					msg.add_button(_("Settings"), 2);
 
@@ -744,7 +744,7 @@ namespace GameHub.UI.Views.GamesView
 			}
 		}
 
-		private InfoBar message(string text, MessageType type=MessageType.OTHER)
+		public InfoBar add_message(string text, MessageType type=MessageType.OTHER)
 		{
 			var bar = new InfoBar();
 			bar.message_type = type;

@@ -41,39 +41,127 @@ namespace GameHub.Data.Providers.Data
 		}
 
 		public static IGDB instance;
+		private bool request_quota_reached;
+
 		public IGDB()
 		{
 			instance = this;
+			request_quota_reached = false;
 		}
 
 		public override async DataProvider.Result? data(Game game)
 		{
 			var cached = DB.Tables.IGDBData.get(game);
 
-			if(cached != null)
+			bool error = false;
+			uint status = 0;
+			string? err_msg = null;
+
+			if(cached != null && cached.length > 0)
 			{
-				return yield parse(game, cached);
+				var res = yield parse(game, cached, out error, out status, out err_msg);
+				if(error || res == null)
+				{
+					DB.Tables.IGDBData.remove(game);
+				}
+				if(res != null) return res;
 			}
+
+			if(request_quota_reached) return null;
 
 			var headers = new HashMap<string, string>();
 			headers.set("user-key", Settings.Providers.Data.IGDB.instance.api_key);
 
 			var endpoint = "/games?search=%s&fields=%s".printf(Uri.escape_string(game.name), string.joinv(",", Fields.REQUEST_FIELDS));
-			var json = yield Parser.load_remote_file_async(API_BASE_URL + endpoint, "GET", null, headers);
+			var json = yield Parser.load_remote_file_async(API_BASE_URL + endpoint, "GET", null, headers, null, out status);
 
-			DB.Tables.IGDBData.add(game, json);
+			var res = yield parse(game, json, out error, out status, out err_msg);
 
-			return yield parse(game, json);
+			if(!error)
+			{
+				DB.Tables.IGDBData.add(game, json);
+			}
+			else
+			{
+				show_error(status, err_msg);
+			}
+
+			return res;
 		}
 
-		private async DataProvider.Result? parse(Game game, string data)
+		private async DataProvider.Result? parse(Game game, string json, out bool error, out uint status, out string? err_msg)
 		{
-			var json_root = Parser.parse_json(data);
+			error = false;
+			status = 0;
+			err_msg = null;
+
+			var json_root = Parser.parse_json(json);
 			if(json_root == null || json_root.get_node_type() != Json.NodeType.ARRAY) return null;
 			var json_array = json_root.get_array();
 			if(json_array == null || json_array.get_length() < 1) return null;
 
-			return new Result(json_array.get_object_element(0));
+			var obj = json_array.get_object_element(0);
+
+			if(is_error(obj, out status, out err_msg))
+			{
+				error = true;
+				return null;
+			}
+
+			return new Result(obj);
+		}
+
+		private bool is_error(Json.Object? obj, out uint status, out string? err_msg)
+		{
+			status = 0;
+			err_msg = null;
+
+			if(obj == null) return true;
+
+			err_msg = obj.has_member("cause") ? obj.get_string_member("cause") : null;
+
+			if(err_msg != null)
+			{
+				status = obj.has_member("status") ? (uint) obj.get_int_member("status") : 0;
+				warning(@"[IGDB] Error $(status): $(err_msg)");
+				return true;
+			}
+			return false;
+		}
+
+		private void show_error(uint status, string? err_msg)
+		{
+			if(request_quota_reached) return;
+			if(status == 403 && err_msg != null && "request limit" in err_msg)
+			{
+				request_quota_reached = true;
+				if(UI.Views.GamesView.GamesView.instance == null) return;
+				Idle.add(() => {
+					var msg = UI.Views.GamesView.GamesView.instance.add_message(_("Monthly IGDB request quota has been reached. Set your own API key to use IGDB data or disable IGDB."), Gtk.MessageType.WARNING);
+					msg.add_button(_("Settings"), 1);
+
+					msg.close.connect(() => {
+						#if GTK_3_22
+						msg.revealed = false;
+						#endif
+						Timeout.add(250, () => { msg.destroy(); return Source.REMOVE; });
+					});
+
+					msg.response.connect(r => {
+						switch(r)
+						{
+							case 1:
+								new UI.Dialogs.SettingsDialog.SettingsDialog("providers/providers");
+								break;
+
+							case Gtk.ResponseType.CLOSE:
+								msg.close();
+								break;
+						}
+					});
+					return Source.REMOVE;
+				});
+			}
 		}
 
 		public class Result: DataProvider.Result

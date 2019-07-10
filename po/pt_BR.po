@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-05 20:47+0300\n"
+"POT-Creation-Date: 2019-07-11 02:55+0300\n"
 "PO-Revision-Date: 2019-06-20 19:41+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -164,7 +164,7 @@ msgid "Show file"
 msgstr "Selecione o arquivo"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
-#: src/ui/views/GamesView/GameContextMenu.vala:166
+#: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
@@ -476,25 +476,25 @@ msgid "Launch in game directory"
 msgstr "Lançamento no diretório do jogo"
 
 #: src/data/providers/images/SteamGridDB.vala:108
-#: src/data/providers/data/IGDB.vala:332
+#: src/data/providers/data/IGDB.vala:420
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
 msgid "Default"
 msgstr "Padrão"
 
 #: src/data/providers/images/SteamGridDB.vala:115
-#: src/data/providers/data/IGDB.vala:339
+#: src/data/providers/data/IGDB.vala:427
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
 msgid "Restore default API key"
 msgstr "Restaurar chave de API padrão"
 
 #: src/data/providers/images/SteamGridDB.vala:126
-#: src/data/providers/data/IGDB.vala:350
+#: src/data/providers/data/IGDB.vala:438
 #, fuzzy
 msgid "API key"
 msgstr "Chave da API do Steam"
 
 #: src/data/providers/images/SteamGridDB.vala:134
-#: src/data/providers/data/IGDB.vala:358
+#: src/data/providers/data/IGDB.vala:446
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
 msgid "Generate key"
 msgstr "Gerar chave"
@@ -535,37 +535,44 @@ msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
 msgstr "Sem logotipo"
 
-#: src/data/providers/data/IGDB.vala:258
-msgctxt "igdb_related_link"
-msgid "Official website"
-msgstr "Website oficial"
+#: src/data/providers/data/IGDB.vala:140
+msgid ""
+"Monthly IGDB request quota has been reached. Set your own API key to use "
+"IGDB data or disable IGDB."
+msgstr ""
 
-#: src/data/providers/data/IGDB.vala:370
-msgctxt "igdb_preferred_description"
-msgid "When game has description, show description"
-msgstr "Quando o jogo tem descrição, mostra a descrição"
-
-#: src/data/providers/data/IGDB.vala:377
-msgctxt "igdb_preferred_description"
-msgid "of game"
-msgstr "do jogo"
-
-#: src/data/providers/data/IGDB.vala:378
-msgctxt "igdb_preferred_description"
-msgid "from IGDB"
-msgstr "do IGDB"
-
-#: src/data/providers/data/IGDB.vala:379
-msgctxt "igdb_preferred_description"
-msgid "both"
-msgstr "ambos"
-
+#: src/data/providers/data/IGDB.vala:141
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
 #: src/ui/views/GamesView/GamesView.vala:266
 #: src/ui/views/GamesView/GamesView.vala:644
 msgid "Settings"
 msgstr "Configurações"
+
+#: src/data/providers/data/IGDB.vala:346
+msgctxt "igdb_related_link"
+msgid "Official website"
+msgstr "Website oficial"
+
+#: src/data/providers/data/IGDB.vala:458
+msgctxt "igdb_preferred_description"
+msgid "When game has description, show description"
+msgstr "Quando o jogo tem descrição, mostra a descrição"
+
+#: src/data/providers/data/IGDB.vala:465
+msgctxt "igdb_preferred_description"
+msgid "of game"
+msgstr "do jogo"
+
+#: src/data/providers/data/IGDB.vala:466
+msgctxt "igdb_preferred_description"
+msgid "from IGDB"
+msgstr "do IGDB"
+
+#: src/data/providers/data/IGDB.vala:467
+msgctxt "igdb_preferred_description"
+msgid "both"
+msgstr "ambos"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
@@ -1126,7 +1133,7 @@ msgstr ""
 "Ativar moverá o jogo para a sobreposição de “base”"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
-#: src/ui/views/GamesView/GameContextMenu.vala:174
+#: src/ui/views/GamesView/GameContextMenu.vala:175
 msgid "Overlays"
 msgstr "Sobreposições"
 
@@ -1347,17 +1354,17 @@ msgstr "Baixar"
 msgid "Downloading image: %s"
 msgstr "Baixar"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:124
+#: src/ui/views/GamesView/DownloadProgressView.vala:125
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Pausar download"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:129
+#: src/ui/views/GamesView/DownloadProgressView.vala:130
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Retomar download"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:134
+#: src/ui/views/GamesView/DownloadProgressView.vala:135
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Cancelar o download"
@@ -1398,44 +1405,44 @@ msgstr "Baixar"
 msgid "Details"
 msgstr "Detalhes"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:116
+#: src/ui/views/GamesView/GameContextMenu.vala:117
 msgctxt "game_context_menu"
 msgid "Favorite"
 msgstr "Favorito"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:120
+#: src/ui/views/GamesView/GameContextMenu.vala:121
 msgctxt "game_context_menu"
 msgid "Hidden"
 msgstr "Escondido"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:132
+#: src/ui/views/GamesView/GameContextMenu.vala:133
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
 msgid "Open installation directory"
 msgstr "Abra o diretório de instalação"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:141
+#: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
 msgid "Open installers collection directory"
 msgstr "Abrir diretório de coleção de instaladores"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:150
+#: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
 msgid "Open bonus collection directory"
 msgstr "Abra o diretório de coleção de bônus"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:159
+#: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
 #, fuzzy
 msgid "Open screenshots directory"
 msgstr "Abrir diretório de prefixo"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:166
+#: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:183
+#: src/ui/views/GamesView/GameContextMenu.vala:184
 msgid "Properties"
 msgstr "Propriedades"
 

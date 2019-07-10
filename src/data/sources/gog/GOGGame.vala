@@ -468,7 +468,7 @@ namespace GameHub.Data.Sources.GOG
 		private bool loading_achievements = false;
 		public override async ArrayList<Game.Achievement>? load_achievements()
 		{
-			if(achievements != null || loading_achievements)
+			if(achievements != null || loading_achievements || GOG.instance == null || GOG.instance.user_id == null)
 			{
 				return achievements;
 			}
