@@ -135,7 +135,7 @@ namespace GameHub.Data.DB.Tables
 
 			Statement s;
 
-			int res = db.prepare_v2("SELECT * FROM `merges` WHERE `merge` LIKE ? LIMIT 1", -1, out s);
+			int res = db.prepare_v2("SELECT * FROM `merges` WHERE `merge` LIKE ?", -1, out s);
 
 			if(res != Sqlite.OK)
 			{

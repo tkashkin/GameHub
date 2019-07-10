@@ -138,8 +138,8 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			selected_games_view = new MultipleGamesDetailsView();
 
-			root_stack.add(selected_games_view);
 			root_stack.add(game_box);
+			root_stack.add(selected_games_view);
 
 			root_stack.visible_child = game_box;
 
@@ -219,12 +219,17 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			stack_tabs.visible = merged || primary != null;
 
+			add_page(g);
+
 			if(primary != null)
 			{
-				add_page(primary);
+				if(!Game.is_equal(g, primary))
+				{
+					add_page(primary);
+				}
+				merges = Tables.Merges.get(primary);
+				merged = merges != null && merges.size > 0;
 			}
-
-			add_page(g);
 
 			if(merged)
 			{

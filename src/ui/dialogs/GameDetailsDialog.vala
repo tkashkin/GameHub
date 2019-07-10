@@ -43,7 +43,10 @@ namespace GameHub.UI.Dialogs
 			var content = get_content_area();
 			content.set_size_request(560, -1);
 
-			content.add(new GameHub.UI.Views.GameDetailsView.GameDetailsView(game));
+			var details_view = new GameHub.UI.Views.GameDetailsView.GameDetailsView(game);
+			details_view.preferred_source = game.source;
+
+			content.add(details_view);
 
 			response.connect((source, response_id) => {
 				switch(response_id)

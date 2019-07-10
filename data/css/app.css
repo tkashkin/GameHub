@@ -57,7 +57,10 @@
 	opacity: 1;
 }
 
-.gamecard.downloading GtkLabel.status, .gamecard.downloading label.status
+.gamecard.downloading GtkLabel.status, .gamecard.downloading label.status,
+.gamecard.downloading.hover GtkLabel.status, .gamecard.downloading.hover label.status,
+.games-grid flowboxchild:focus .gamecard.downloading GtkLabel.status, .games-grid flowboxchild:focus .gamecard.downloading label.status,
+.games-grid flowboxchild:selected .gamecard.downloading GtkLabel.status, .games-grid flowboxchild:selected .gamecard.downloading label.status
 {
 	margin-bottom: 8px;
 	opacity: 1;
@@ -324,9 +327,10 @@ list:not(:backdrop) row:selected:focus label.category-label
 .dl-progress-type-icon
 {
 	padding: 4px;
-	background-color: #ddd;
+	background-color: shade(@theme_bg_color, 0.95);
 	border-radius: 50%;
-	border: 1px #aaa solid;
+	border: 1px shade(@theme_bg_color, 0.75) solid;
+	color: @theme_fg_color;
 }
 
 GtkListBox.gameinfo-content-list,

@@ -100,6 +100,7 @@ namespace GameHub.UI.Views.GamesView
 						if(primary != null)
 						{
 							add_merged_game_submenu(primary);
+							merges = DB.Tables.Merges.get(primary);
 						}
 						if(merges != null)
 						{
