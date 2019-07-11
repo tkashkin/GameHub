@@ -11,7 +11,7 @@ export GSETTINGS_SCHEMA_DIR="$APPDIR/usr/share/glib-2.0/schemas/:$GSETTINGS_SCHE
 
 export LD_LIBRARY_PATH="$APPDIR/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0:$LD_LIBRARY_PATH"
 
-[ -e "$APPDIR/checkrt.sh" ] && . "$APPDIR/checkrt.sh" || echo "[AppRun] Skipping CheckRT"
+[ -e "$APPDIR/checkrt.sh" ] && . "$APPDIR/checkrt.sh" || echo "[AppRun ] Skipping CheckRT"
 
 echo "[AppRun ] Starting GameHub"
 
