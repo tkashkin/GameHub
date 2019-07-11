@@ -101,6 +101,11 @@ namespace GameHub.Utils
 		string[] ccmd = cmd;
 		#endif
 
+		#if APPIMAGE
+		cenv = Environ.unset_variable(cenv, "LD_LIBRARY_PATH");
+		cenv = Environ.unset_variable(cenv, "LD_PRELOAD");
+		#endif
+
 		try
 		{
 			if(log) debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
@@ -147,6 +152,11 @@ namespace GameHub.Utils
 		}
 		#else
 		string[] ccmd = cmd;
+		#endif
+
+		#if APPIMAGE
+		cenv = Environ.unset_variable(cenv, "LD_LIBRARY_PATH");
+		cenv = Environ.unset_variable(cenv, "LD_PRELOAD");
 		#endif
 
 		try
