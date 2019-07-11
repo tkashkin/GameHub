@@ -32,8 +32,6 @@ namespace GameHub.UI.Widgets
 
 		public Game game { get; construct; }
 
-		public FileChooserEntry entry { get; construct; }
-
 		private Box vbox;
 		private Box search_links;
 
@@ -45,9 +43,9 @@ namespace GameHub.UI.Widgets
 
 		private bool images_load_started = false;
 
-		public ImagesDownloadPopover(Game game, FileChooserEntry entry, MenuButton button)
+		public ImagesDownloadPopover(Game game, MenuButton button)
 		{
-			Object(game: game, relative_to: button, entry: entry);
+			Object(game: game, relative_to: button);
 			button.popover = this;
 			position = PositionType.LEFT;
 
@@ -169,7 +167,8 @@ namespace GameHub.UI.Widgets
 					flow.selection_mode = SelectionMode.SINGLE;
 
 					flow.child_activated.connect(item => {
-						entry.select_file_path(((ImageItem) item).image.url);
+						game.image = ((ImageItem) item).image.url;
+						game.save();
 						#if GTK_3_22
 						popdown();
 						#else

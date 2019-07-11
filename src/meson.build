@@ -125,6 +125,7 @@ sources = [
 	'ui/views/GameDetailsView/GameDetailsPage.vala',
 
 	'ui/views/GameDetailsView/GameDetailsBlock.vala',
+	'ui/views/GameDetailsView/blocks/Artwork.vala',
 	'ui/views/GameDetailsView/blocks/Playtime.vala',
 	'ui/views/GameDetailsView/blocks/Achievements.vala',
 	'ui/views/GameDetailsView/blocks/Description.vala',

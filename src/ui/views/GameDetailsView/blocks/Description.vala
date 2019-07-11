@@ -31,7 +31,6 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 {
 	public class Description: GameDetailsBlock
 	{
-		private Label description_header;
 		private WebView description;
 
 		private const string CSS          = "body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; %s} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%; display: block;}";
@@ -41,18 +40,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 		public Description(Game game, bool is_dialog)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL, is_dialog: is_dialog);
+			Object(game: game, orientation: Orientation.VERTICAL, text_max_width: is_dialog ? 80 : -1);
 		}
 
 		construct
 		{
 			if(!supports_game) return;
-
-			if(!Providers.Data.IGDB.instance.enabled)
-				add(new Separator(Orientation.HORIZONTAL));
-
-			description_header = Styled.H4Label(_("Description"), "description-header");
-			description_header.margin_start = description_header.margin_end = 7;
 
 			get_style_context().add_class(Gtk.STYLE_CLASS_BACKGROUND);
 
@@ -75,8 +68,10 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				description.set_size_request(-1, height + 8);
 			});
 
-			add(description_header);
 			add(description);
+
+			show_all();
+			if(parent != null) parent.queue_draw();
 		}
 
 		private void update_colors()

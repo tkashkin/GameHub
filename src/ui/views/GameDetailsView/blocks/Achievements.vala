@@ -37,20 +37,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 		public Achievements(Game game, bool is_dialog)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL, is_dialog: is_dialog);
+			Object(game: game, orientation: Orientation.VERTICAL, text_max_width: is_dialog ? 80 : -1);
 		}
 
 		construct
 		{
 			if(!supports_game) return;
-
-			var revealer = new Revealer();
-			revealer.transition_type = RevealerTransitionType.SLIDE_DOWN;
-			revealer.reveal_child = false;
-
-			var vbox = new Box(Orientation.VERTICAL, 0);
-
-			vbox.add(new Separator(Orientation.HORIZONTAL));
 
 			var header = Styled.H4Label(_("Achievements"), "description-header");
 			header.margin_start = header.margin_end = 7;
@@ -66,21 +58,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			achievements_scrolled.add(achievements_box);
 
-			vbox.add(header);
-			vbox.add(achievements_scrolled);
-
-			revealer.add(vbox);
-
-			add(revealer);
-
 			game.load_achievements.begin((obj, res) => {
 				game.load_achievements.end(res);
 
-				revealer.set_reveal_child(game.achievements != null && game.achievements.size > 0);
+				if(game.achievements == null || game.achievements.size < 1) return;
 
-				if(!revealer.reveal_child) return;
-
-				achievements_box.foreach(a => achievements_box.remove(a));
+				achievements_box.foreach(a => a.destroy());
 
 				foreach(var achievement in game.achievements)
 				{
@@ -112,6 +95,14 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					achievements_box.add(image);
 				}
 				achievements_box.show_all();
+
+				Idle.add(() => {
+					add(header);
+					add(achievements_scrolled);
+					show_all();
+					if(parent != null) parent.queue_draw();
+					return Source.REMOVE;
+				});
 			});
 		}
 

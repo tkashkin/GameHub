@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-11 02:55+0300\n"
+"POT-Creation-Date: 2019-07-12 01:19+0300\n"
 "PO-Revision-Date: 2019-06-19 23:43+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
@@ -159,7 +159,7 @@ msgstr "Afficher le fichier"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:242
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Enlever"
@@ -370,7 +370,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:101
 #: src/ui/views/GamesView/GameContextMenu.vala:53
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:235
 msgid "Run"
 msgstr "Lancer"
 
@@ -468,25 +468,25 @@ msgid "Launch in game directory"
 msgstr "Lancer dans le répertoire du jeu"
 
 #: src/data/providers/images/SteamGridDB.vala:108
-#: src/data/providers/data/IGDB.vala:420
+#: src/data/providers/data/IGDB.vala:424
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
 msgid "Default"
 msgstr "Par défaut"
 
 #: src/data/providers/images/SteamGridDB.vala:115
-#: src/data/providers/data/IGDB.vala:427
+#: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
 msgid "Restore default API key"
 msgstr "Restaurer la clé par défaut de l'API"
 
 #: src/data/providers/images/SteamGridDB.vala:126
-#: src/data/providers/data/IGDB.vala:438
+#: src/data/providers/data/IGDB.vala:442
 #, fuzzy
 msgid "API key"
 msgstr "Clé de l'API Steam"
 
 #: src/data/providers/images/SteamGridDB.vala:134
-#: src/data/providers/data/IGDB.vala:446
+#: src/data/providers/data/IGDB.vala:450
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
 msgid "Generate key"
 msgstr "Générer la clé"
@@ -541,28 +541,28 @@ msgstr ""
 msgid "Settings"
 msgstr "Paramètres"
 
-#: src/data/providers/data/IGDB.vala:346
+#: src/data/providers/data/IGDB.vala:349
 msgctxt "igdb_related_link"
 msgid "Official website"
 msgstr ""
 
-#: src/data/providers/data/IGDB.vala:458
+#: src/data/providers/data/IGDB.vala:462
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
 msgstr ""
 
-#: src/data/providers/data/IGDB.vala:465
+#: src/data/providers/data/IGDB.vala:469
 #, fuzzy
 msgctxt "igdb_preferred_description"
 msgid "of game"
 msgstr "%u jeu"
 
-#: src/data/providers/data/IGDB.vala:466
+#: src/data/providers/data/IGDB.vala:470
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
 msgstr ""
 
-#: src/data/providers/data/IGDB.vala:467
+#: src/data/providers/data/IGDB.vala:471
 msgctxt "igdb_preferred_description"
 msgid "both"
 msgstr ""
@@ -703,12 +703,12 @@ msgid "Installers"
 msgstr "Installateurs"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:99
 msgid "DLC"
 msgstr "DLC"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:89
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:132
 msgid "Bonus content"
 msgstr "Contenu bonus"
 
@@ -1043,7 +1043,7 @@ msgstr ""
 #: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Install"
 msgstr "Installer"
 
@@ -1082,6 +1082,7 @@ msgstr "Images"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:115
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:59
 #, fuzzy
 msgid "Download images"
 msgstr "En cours de téléchargement"
@@ -1185,7 +1186,7 @@ msgstr "Enlever"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:236
 #, fuzzy
 msgid "Run with compatibility layer"
 msgstr "Désactiver le niveau de compatibilité DirectX 11"
@@ -1367,19 +1368,19 @@ msgid "Downloading image: %s"
 msgstr "En cours de téléchargement"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:125
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:163
 #, fuzzy
 msgid "Pause download"
 msgstr "Démarrage du téléchargement"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:130
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:169
 #, fuzzy
 msgid "Resume download"
 msgstr "En cours de téléchargement"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:135
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:175
 #, fuzzy
 msgid "Cancel download"
 msgstr "Démarrage du téléchargement"
@@ -1434,32 +1435,32 @@ msgid "Hidden"
 msgstr "Caché"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:133
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
 #, fuzzy
 msgid "Open installation directory"
 msgstr "Répertoire d'installation"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:142
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
 #, fuzzy
 msgid "Open installers collection directory"
 msgstr "Répertoire d'installation"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:239
 #, fuzzy
 msgid "Open bonus collection directory"
 msgstr "Dossier de la ludothèque"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 #, fuzzy
 msgid "Open screenshots directory"
 msgstr "Ouvrir le dossier prefix"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:242
 #, fuzzy
 msgid "Uninstall"
 msgstr "Installer"
@@ -1517,25 +1518,25 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 msgid "Open store page"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:232
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:243
 #, fuzzy
 msgid "Game properties"
 msgstr "Ouvrir les propriétés du jeu"
 
-#: src/ui/views/GameDetailsView/blocks/Achievements.vala:55
+#: src/ui/views/GameDetailsView/blocks/Achievements.vala:47
 msgid "Achievements"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/Achievements.vala:103
+#: src/ui/views/GameDetailsView/blocks/Achievements.vala:86
 #, c-format
 msgid "Unlocked: %s"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/Achievements.vala:108
+#: src/ui/views/GameDetailsView/blocks/Achievements.vala:91
 #, c-format
 msgid "Global percentage: %g%%"
 msgstr ""
@@ -1568,93 +1569,93 @@ msgctxt "time"
 msgid "%dm"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/Description.vala:54
-msgid "Description"
-msgstr ""
-
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:65
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:89
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:68
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:92
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:80
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:59
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:62
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:74
 msgid "Categories"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:77
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:90
 msgid "Genre"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:80
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:93
 msgid "Genres"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:62
-#, c-format
-msgctxt "igdb"
-msgid "<b>%s</b> on IGDB"
-msgstr ""
-
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:68
 msgctxt "igdb"
 msgid "Popularity"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:106
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:74
 msgctxt "igdb"
 msgid "Aggregated rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:107
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:75
 msgctxt "igdb"
 msgid "IGDB user rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:76
 msgctxt "igdb"
 msgid "Total rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:85
+msgctxt "igdb"
+msgid "Release date"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:92
 msgctxt "igdb"
 msgid "Platforms"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:122
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
 msgctxt "igdb"
 msgid "Genres"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:128
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
 msgctxt "igdb"
 msgid "Keywords"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:140
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:111
 msgctxt "igdb"
-msgid "Summary"
+msgid "Links"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:151
-msgctxt "igdb"
-msgid "Storyline"
-msgstr ""
-
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:173
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:158
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
 msgstr[0] ""
 msgstr[1] ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:240
+msgctxt "igdb"
+msgid "Summary"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:251
+msgctxt "igdb"
+msgid "Storyline"
+msgstr ""
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
@@ -1663,18 +1664,18 @@ msgstr[1] ""
 msgid "Select file"
 msgstr "Sélectionner l'installateur"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:78
+#: src/ui/widgets/ImagesDownloadPopover.vala:76
 #, fuzzy
 msgid "No images"
 msgstr "Images"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:78
+#: src/ui/widgets/ImagesDownloadPopover.vala:76
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:99
+#: src/ui/widgets/ImagesDownloadPopover.vala:97
 msgid "Search images:"
 msgstr "Rechercher des images :"
 

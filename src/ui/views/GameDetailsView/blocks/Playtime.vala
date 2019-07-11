@@ -33,16 +33,16 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 {
 	public class Playtime: GameDetailsBlock
 	{
-		public Playtime(Game game, bool is_dialog)
+		public Playtime(Game game)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL, is_dialog: is_dialog);
+			Object(game: game, orientation: Orientation.VERTICAL, text_max_width: 48);
 		}
 
 		construct
 		{
 			if(!supports_game) return;
 
-			var hbox = new Box(Orientation.HORIZONTAL, 0);
+			get_style_context().add_class("gameinfo-sidebar-block");
 
 			var header = Styled.H4Label(_("Playtime"));
 
@@ -50,15 +50,15 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			if(game.playtime_tracked > 0)
 			{
-				add_info_label(_("Playtime (local)"), minutes_to_string(game.playtime_tracked), false, false, hbox);
+				add_info_label(_("Playtime (local)"), minutes_to_string(game.playtime_tracked), false, false);
 				add_separator = true;
 			}
 
 			if(game.playtime_source > 0)
 			{
-				if(add_separator) hbox.add(new Separator(Orientation.VERTICAL));
+				if(add_separator) add(new Separator(Orientation.HORIZONTAL));
 				add_separator = true;
-				add_info_label(_("Playtime"), minutes_to_string(game.playtime_source), false, false, hbox);
+				add_info_label(_("Playtime"), minutes_to_string(game.playtime_source), false, false);
 			}
 
 			if(game.last_launch > 0)
@@ -66,13 +66,13 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				var date = new GLib.DateTime.from_unix_local(game.last_launch);
 				if(date != null)
 				{
-					if(add_separator) hbox.add(new Separator(Orientation.VERTICAL));
-					add_info_label(_("Last launch"), Utils.get_relative_datetime(date), false, false, hbox);
+					if(add_separator) add(new Separator(Orientation.HORIZONTAL));
+					add_info_label(_("Last launch"), Utils.get_relative_datetime(date), false, false);
 				}
 			}
 
-			add(new Separator(Orientation.HORIZONTAL));
-			add(hbox);
+			show_all();
+			if(parent != null) parent.queue_draw();
 		}
 
 		private string minutes_to_string(int64 min)
