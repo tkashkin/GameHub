@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-11 02:55+0300\n"
-"PO-Revision-Date: 2019-07-09 02:01+0000\n"
-"Last-Translator: tofuHero <zhao1397172935@foxmail.com>\n"
+"PO-Revision-Date: 2019-07-11 16:11+0000\n"
+"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gamehub/translations/zh_CMN-HANT/>\n"
 "Language: zh_CMN-HANT\n"
@@ -93,7 +93,7 @@ msgstr "日志后台工作开始/停止"
 
 #: src/app.vala:115
 msgid "Disable log messages filtering"
-msgstr "禁用日志信息过滤"
+msgstr "关闭日志信息过滤"
 
 #: src/app.vala:116
 msgid "Verbose logging"
@@ -184,7 +184,7 @@ msgstr ""
 #: src/data/Runnable.vala:825
 msgctxt "platform"
 msgid "Emulated"
-msgstr ""
+msgstr "模拟器"
 
 #: src/data/Game.vala:537
 msgctxt "status"
@@ -267,35 +267,34 @@ msgid "Loading games from %s"
 msgstr "正在从%s加载游戏"
 
 #: src/data/adapters/GamesAdapter.vala:621
-#, fuzzy
 msgctxt "sort_mode"
 msgid "By name"
-msgstr "游戏的名字"
+msgstr "游戏名"
 
 #: src/data/adapters/GamesAdapter.vala:622
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr ""
+msgstr "最后一次运行"
 
 #: src/data/adapters/GamesAdapter.vala:623
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr ""
+msgstr "游戏时间"
 
 #: src/data/adapters/GamesAdapter.vala:648
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr ""
+msgstr "不分组"
 
 #: src/data/adapters/GamesAdapter.vala:649
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "按状态"
 
 #: src/data/adapters/GamesAdapter.vala:650
 msgctxt "group_mode"
 msgid "By source"
-msgstr ""
+msgstr "按来源"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
@@ -382,9 +381,8 @@ msgid "Kill apps in prefix"
 msgstr "终止前缀中的应用程序"
 
 #: src/data/compat/Proton.vala:44
-#, fuzzy
 msgid "Proton prefix"
-msgstr "终止前缀中的应用程序"
+msgstr "Proton 前缀"
 
 #: src/data/compat/Proton.vala:50
 #, fuzzy
@@ -393,7 +391,7 @@ msgstr "禁用esync"
 
 #: src/data/compat/Proton.vala:51
 msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr ""
+msgstr "强制使用 LARGE_ADDRESS_AWARE 标志"
 
 #: src/data/compat/Proton.vala:52
 msgid "Disable DirectX 11 compatibility layer"
