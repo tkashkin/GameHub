@@ -20,7 +20,6 @@ using Gtk;
 using Gdk;
 using Gee;
 
-
 using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
@@ -30,37 +29,25 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 	public class IGDBInfo: GameDetailsBlock
 	{
 		public Description description_block { private get; construct; }
+		public IGDBDescription description { get; construct; }
 
 		public IGDBInfo(Game game, Description desc, bool is_dialog)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL, description_block: desc, is_dialog: is_dialog);
+			Object(game: game, orientation: Orientation.VERTICAL, description_block: desc, text_max_width: 48, description: new IGDBDescription(game, desc, is_dialog));
 		}
 
 		construct
 		{
 			if(!supports_game) return;
 
-			var revealer = new Revealer();
-			revealer.transition_type = RevealerTransitionType.SLIDE_DOWN;
-			revealer.transition_duration = 100;
-			revealer.reveal_child = false;
-
-			var vbox = new Box(Orientation.VERTICAL, 0);
-			vbox.get_style_context().add_class("igdb-data-container");
-			vbox.margin_top = vbox.margin_bottom = 4;
-
-			revealer.add(vbox);
-			add(revealer);
+			get_style_context().add_class("igdb-data-container");
 
 			Providers.Data.IGDB.instance.data.begin(game, (obj, res) => {
 				var result = Providers.Data.IGDB.instance.data.end(res) as Providers.Data.IGDB.Result?;
 
 				if(result == null) return;
 
-				var links_hbox = new Box(Orientation.HORIZONTAL, 0);
-
-				var igdb_link = new ActionButton(Providers.Data.IGDB.instance.icon, null, C_("igdb", "<b>%s</b> on IGDB").printf(result.name ?? game.name), true, true);
-				igdb_link.hexpand = true;
+				var igdb_link = new ActionButton(Providers.Data.IGDB.instance.icon, null, "IGDB", true, true);
 				if(result.url != null)
 				{
 					igdb_link.tooltip_text = result.url;
@@ -73,10 +60,69 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					igdb_link.sensitive = false;
 				}
 
-				links_hbox.add(igdb_link);
+				add(igdb_link);
+
+				if(result.popularity != null)
+				{
+					add(new Separator(Orientation.HORIZONTAL));
+					add_label(C_("igdb", "Popularity"), "%.1f".printf(result.popularity), false, true);
+				}
+
+				if((result.aggregated_rating_count != null && result.aggregated_rating_count > 0) || (result.igdb_rating_count != null && result.igdb_rating_count > 0) || (result.total_rating_count != null && result.total_rating_count > 0))
+				{
+					add(new Separator(Orientation.HORIZONTAL));
+					add_rating(C_("igdb", "Aggregated rating"), result.aggregated_rating, result.aggregated_rating_count);
+					add_rating(C_("igdb", "IGDB user rating"), result.igdb_rating, result.igdb_rating_count);
+					add_rating(C_("igdb", "Total rating"), result.total_rating, result.total_rating_count);
+				}
+
+				if(result.release_date != null)
+				{
+					var date = new DateTime.from_unix_utc(result.release_date);
+					if(date != null)
+					{
+						add(new Separator(Orientation.HORIZONTAL));
+						add_label(C_("igdb", "Release date"), date.format("%x"), false, true);
+					}
+				}
+
+				if(result.platforms != null)
+				{
+					add(new Separator(Orientation.HORIZONTAL));
+					add_link_list(C_("igdb", "Platforms"), result.platforms);
+				}
+
+				if(result.genres != null)
+				{
+					add(new Separator(Orientation.HORIZONTAL));
+					add_link_list(C_("igdb", "Genres"), result.genres);
+				}
+
+				if(result.keywords != null)
+				{
+					add(new Separator(Orientation.HORIZONTAL));
+					add_link_list(C_("igdb", "Keywords"), result.keywords);
+				}
 
 				if(result.websites != null)
 				{
+					add(new Separator(Orientation.HORIZONTAL));
+
+					var links_label = Styled.H4Label(C_("igdb", "Links"));
+					links_label.margin_start = links_label.margin_end = 7;
+					links_label.get_style_context().add_class("igdb-data-container-scrollable-header");
+					links_label.valign = Align.START;
+					add(links_label);
+
+					var links_scroll = new ScrolledWindow(null, null);
+					links_scroll.get_style_context().add_class("igdb-data-container-scrollable-value");
+					links_scroll.vscrollbar_policy = PolicyType.NEVER;
+					links_scroll.hexpand = true;
+
+					var links_box = new Box(Orientation.HORIZONTAL, 0);
+					links_box.get_style_context().add_class("gameinfo-multiline-value");
+					links_box.margin_start = links_box.margin_end = 3;
+
 					foreach(var site in result.websites)
 					{
 						var category_desc = site.category.description();
@@ -89,86 +135,25 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 						link.clicked.connect(() => {
 							Utils.open_uri(site.url);
 						});
-						links_hbox.add(link);
-					}
-				}
-
-				vbox.add(links_hbox);
-
-				if(result.popularity != null)
-				{
-					vbox.add(new Separator(Orientation.HORIZONTAL));
-
-					var rating_hbox = new Box(Orientation.HORIZONTAL, 0);
-
-					add_label(C_("igdb", "Popularity"), "<b>%.1f</b>".printf(result.popularity), false, true, rating_hbox);
-
-					add_rating(C_("igdb", "Aggregated rating"), result.aggregated_rating, result.aggregated_rating_count, rating_hbox);
-					add_rating(C_("igdb", "IGDB user rating"), result.igdb_rating, result.igdb_rating_count, rating_hbox);
-					add_rating(C_("igdb", "Total rating"), result.total_rating, result.total_rating_count, rating_hbox);
-
-					vbox.add(rating_hbox);
-				}
-
-				if(result.platforms != null)
-				{
-					vbox.add(new Separator(Orientation.HORIZONTAL));
-					add_link_list(C_("igdb", "Platforms"), result.platforms, vbox);
-				}
-
-				if(result.genres != null)
-				{
-					vbox.add(new Separator(Orientation.HORIZONTAL));
-					add_link_list(C_("igdb", "Genres"), result.genres, vbox);
-				}
-
-				if(result.keywords != null)
-				{
-					vbox.add(new Separator(Orientation.HORIZONTAL));
-					add_link_list(C_("igdb", "Keywords"), result.keywords, vbox);
-				}
-
-				var preferred_desc = Settings.Providers.Data.IGDB.instance.preferred_description;
-
-				var game_has_desc = description_block.supports_game && game.description != null;
-
-				if(preferred_desc != Settings.Providers.Data.IGDB.PreferredDescription.GAME || !game_has_desc)
-				{
-					if(result.summary != null)
-					{
-						vbox.add(new Separator(Orientation.HORIZONTAL));
-						add_label(C_("igdb", "Summary"), result.summary, true, false, vbox);
-
-						if(preferred_desc == Settings.Providers.Data.IGDB.PreferredDescription.IGDB)
-						{
-							description_block.destroy();
-						}
+						links_box.add(link);
 					}
 
-					if(result.storyline != null)
-					{
-						vbox.add(new Separator(Orientation.HORIZONTAL));
-						add_label(C_("igdb", "Storyline"), result.storyline, true, false, vbox);
-					}
+					links_scroll.add(links_box);
+					add(links_scroll);
 				}
 
-				vbox.show_all();
+				description.result = result;
 
-				Idle.add(() => {
-					vbox.vexpand = true;
-					revealer.set_reveal_child(true);
-					vbox.vexpand = false;
-					return Source.REMOVE;
-				});
+				show_all();
+				parent.queue_draw();
 			});
 		}
 
 		public override bool supports_game { get { return Providers.Data.IGDB.instance.enabled; } }
 
-		private void add_rating(string label, double? rating, int? count, Box parent)
+		private void add_rating(string label, double? rating, int? count, Box? parent=null)
 		{
 			if(rating == null || count == null || count < 1) return;
-			parent.add(new Separator(Orientation.VERTICAL));
 			var box = add_label(label, "<b>%.1f</b> / 100".printf(rating), false, true, parent);
 			box.tooltip_markup = ngettext("Based on <b>%d</b> rating", "Based on <b>%d</b> ratings", count).printf(count);
 		}
@@ -180,8 +165,6 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			{
 				box.margin_start -= 1;
 				box.margin_end -= 1;
-				if(multiline)
-					box.margin_bottom = 8;
 			}
 			return box;
 		}
@@ -189,15 +172,19 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		private Box? add_link_list(string title, Providers.Data.IGDB.Result.Link[] links, Container? parent=null)
 		{
 			var title_label = Styled.H4Label(title);
+			title_label.margin_start = title_label.margin_end = 7;
+			title_label.get_style_context().add_class("igdb-data-container-scrollable-header");
 			title_label.set_size_request(128, -1);
 			title_label.valign = Align.CENTER;
 
 			var links_scroll = new ScrolledWindow(null, null);
 			links_scroll.get_style_context().add_class("igdb-data-container-scrollable-value");
+			links_scroll.vscrollbar_policy = PolicyType.NEVER;
 			links_scroll.hexpand = true;
 
 			var links_box = new Box(Orientation.HORIZONTAL, 0);
-			links_box.get_style_context().add_class("gameinfo-singleline-value");
+			links_box.margin_start = links_box.margin_end = 7;
+			links_box.get_style_context().add_class("gameinfo-multiline-value");
 			links_box.hexpand = false;
 
 			foreach(var link in links)
@@ -213,13 +200,75 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			links_scroll.add(links_box);
 
-			var box = new Box(Orientation.HORIZONTAL, 16);
-			box.margin_start = links_box.margin_end = 7;
+			var box = new Box(Orientation.VERTICAL, 0);
 			box.add(title_label);
 			box.add(links_scroll);
 			(parent ?? this).add(box);
 
 			return box;
+		}
+
+		public class IGDBDescription: GameDetailsBlock
+		{
+			public Description description_block { private get; construct; }
+			public Providers.Data.IGDB.Result? result { get; set; }
+
+			public IGDBDescription(Game game, Description desc, bool is_dialog)
+			{
+				Object(game: game, orientation: Orientation.VERTICAL, description_block: desc, text_max_width: is_dialog ? 80 : -1);
+			}
+
+			construct
+			{
+				if(!supports_game) return;
+
+				get_style_context().add_class("igdb-data-container");
+
+				notify["result"].connect(() => {
+					this.hide();
+					this.foreach(w => w.destroy());
+
+					if(result == null) return;
+
+					var preferred_desc = Settings.Providers.Data.IGDB.instance.preferred_description;
+					var game_has_desc = description_block.supports_game && game.description != null;
+
+					if(preferred_desc != Settings.Providers.Data.IGDB.PreferredDescription.GAME || !game_has_desc)
+					{
+						if(result.summary != null)
+						{
+							add_label(C_("igdb", "Summary"), result.summary, true, false);
+
+							if(preferred_desc == Settings.Providers.Data.IGDB.PreferredDescription.IGDB)
+							{
+								description_block.destroy();
+							}
+						}
+
+						if(result.storyline != null)
+						{
+							if(result.summary != null) add(new Separator(Orientation.HORIZONTAL));
+							add_label(C_("igdb", "Storyline"), result.storyline, true, false);
+						}
+
+						show_all();
+						if(parent != null) parent.queue_draw();
+					}
+				});
+			}
+
+			public override bool supports_game { get { return Providers.Data.IGDB.instance.enabled; } }
+
+			private Box? add_label(string title, string? text, bool multiline=true, bool markup=false, Container? parent=null)
+			{
+				var box = add_info_label(title, text, multiline, markup, parent);
+				if(box != null)
+				{
+					box.margin_start -= 1;
+					box.margin_end -= 1;
+				}
+				return box;
+			}
 		}
 	}
 }

@@ -169,6 +169,7 @@ namespace GameHub.Data.Providers.Data
 			public int?        id                      = null;
 			public string?     name                    = null;
 			public string?     url                     = null;
+			public int64?      release_date            = null;
 			public Website[]?  websites                = null;
 
 			public Link[]?     platforms               = null;
@@ -196,6 +197,8 @@ namespace GameHub.Data.Providers.Data
 					name = obj.get_string_member(Fields.NAME);
 				if(obj.has_member(Fields.URL))
 					url = obj.get_string_member(Fields.URL);
+				if(obj.has_member(Fields.RELEASE_DATE))
+					release_date = obj.get_int_member(Fields.RELEASE_DATE);
 
 				if(obj.has_member(Fields.SUMMARY))
 					summary = obj.get_string_member(Fields.SUMMARY);
@@ -372,7 +375,7 @@ namespace GameHub.Data.Providers.Data
 		private class Fields
 		{
 			public const string[] REQUEST_FIELDS = {
-				ID, NAME, URL, WEBSITES + _EXPAND,
+				ID, NAME, URL, RELEASE_DATE, WEBSITES + _EXPAND,
 				PLATFORMS + _EXPAND,
 				SUMMARY, STORYLINE,
 				GENRES + _EXPAND, KEYWORDS + _EXPAND,
@@ -386,6 +389,7 @@ namespace GameHub.Data.Providers.Data
 			public const string   ID                      = "id";
 			public const string   NAME                    = "name";
 			public const string   URL                     = "url";
+			public const string   RELEASE_DATE            = "first_release_date";
 			public const string   WEBSITES                = "websites";
 
 			public const string   PLATFORMS               = "platforms";

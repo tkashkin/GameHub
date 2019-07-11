@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-11 02:55+0300\n"
+"POT-Creation-Date: 2019-07-12 01:19+0300\n"
 "PO-Revision-Date: 2019-07-11 16:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -160,7 +160,7 @@ msgstr "Vis fil"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:242
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Fjern"
@@ -369,7 +369,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
 #: src/ui/dialogs/CompatRunDialog.vala:101
 #: src/ui/views/GamesView/GameContextMenu.vala:53
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:224
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:235
 msgid "Run"
 msgstr "Kjør"
 
@@ -467,24 +467,24 @@ msgid "Launch in game directory"
 msgstr "Kjør i spillmappe"
 
 #: src/data/providers/images/SteamGridDB.vala:108
-#: src/data/providers/data/IGDB.vala:420
+#: src/data/providers/data/IGDB.vala:424
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
 msgid "Default"
 msgstr "Forvalg"
 
 #: src/data/providers/images/SteamGridDB.vala:115
-#: src/data/providers/data/IGDB.vala:427
+#: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
 msgid "Restore default API key"
 msgstr "Gjenopprett forvalgt API-nøkkel"
 
 #: src/data/providers/images/SteamGridDB.vala:126
-#: src/data/providers/data/IGDB.vala:438
+#: src/data/providers/data/IGDB.vala:442
 msgid "API key"
 msgstr "API-nøkkel"
 
 #: src/data/providers/images/SteamGridDB.vala:134
-#: src/data/providers/data/IGDB.vala:446
+#: src/data/providers/data/IGDB.vala:450
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
 msgid "Generate key"
 msgstr "Generer nøkkel"
@@ -541,27 +541,27 @@ msgstr ""
 msgid "Settings"
 msgstr "Innstillinger"
 
-#: src/data/providers/data/IGDB.vala:346
+#: src/data/providers/data/IGDB.vala:349
 msgctxt "igdb_related_link"
 msgid "Official website"
 msgstr "Offisiell nettside"
 
-#: src/data/providers/data/IGDB.vala:458
+#: src/data/providers/data/IGDB.vala:462
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
 msgstr "Vis beskrivelse når spillet har det"
 
-#: src/data/providers/data/IGDB.vala:465
+#: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "of game"
 msgstr "av spill"
 
-#: src/data/providers/data/IGDB.vala:466
+#: src/data/providers/data/IGDB.vala:470
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
 msgstr "fra IGDB"
 
-#: src/data/providers/data/IGDB.vala:467
+#: src/data/providers/data/IGDB.vala:471
 msgctxt "igdb_preferred_description"
 msgid "both"
 msgstr "begge"
@@ -697,12 +697,12 @@ msgid "Installers"
 msgstr "Installasjonskandidater"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:116
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:99
 msgid "DLC"
 msgstr "Nedlastbart innhold"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:89
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:132
 msgid "Bonus content"
 msgstr "Bonusinnhold"
 
@@ -1024,7 +1024,7 @@ msgstr "Forgreninger"
 #: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:223
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Install"
 msgstr "Installer"
 
@@ -1062,6 +1062,7 @@ msgstr "Bilder"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:115
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:59
 msgid "Download images"
 msgstr "Last ned bilder"
 
@@ -1167,7 +1168,7 @@ msgstr "Fjern overlag"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:225
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:236
 msgid "Run with compatibility layer"
 msgstr "Kjør med kompabilitetslag"
 
@@ -1335,17 +1336,17 @@ msgid "Downloading image: %s"
 msgstr "Laster ned bilde: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:125
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:163
 msgid "Pause download"
 msgstr "Pause nedlasting"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:130
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:169
 msgid "Resume download"
 msgstr "Fortsett nedlasting"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:135
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:175
 msgid "Cancel download"
 msgstr "Avbryt nedlasting"
 
@@ -1393,28 +1394,28 @@ msgid "Hidden"
 msgstr "Skjult"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:133
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:226
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
 msgid "Open installation directory"
 msgstr "Åpne installasjonsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:142
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:227
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
 msgid "Open installers collection directory"
 msgstr "Åpne installasjonskandidatssamlingsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:228
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:239
 msgid "Open bonus collection directory"
 msgstr "Åpne bonussamlingsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:229
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 msgid "Open screenshots directory"
 msgstr "Åpne skjermavbildningsmappe"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:231
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:242
 msgid "Uninstall"
 msgstr "Avinstaller"
 
@@ -1474,24 +1475,24 @@ msgstr[1] ""
 "%d spill vil bli fjernet fra databasen. Start GameHub på ny for å hente ny "
 "data"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:230
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 msgid "Open store page"
 msgstr "Åpne butikkside"
 
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:232
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:243
 msgid "Game properties"
 msgstr "Spillegenskaper"
 
-#: src/ui/views/GameDetailsView/blocks/Achievements.vala:55
+#: src/ui/views/GameDetailsView/blocks/Achievements.vala:47
 msgid "Achievements"
 msgstr "Prestasjoner"
 
-#: src/ui/views/GameDetailsView/blocks/Achievements.vala:103
+#: src/ui/views/GameDetailsView/blocks/Achievements.vala:86
 #, c-format
 msgid "Unlocked: %s"
 msgstr "Opplåst: %s"
 
-#: src/ui/views/GameDetailsView/blocks/Achievements.vala:108
+#: src/ui/views/GameDetailsView/blocks/Achievements.vala:91
 #, c-format
 msgid "Global percentage: %g%%"
 msgstr "Global prosentsats: %g%%"
@@ -1521,93 +1522,93 @@ msgctxt "time"
 msgid "%dm"
 msgstr "%dm"
 
-#: src/ui/views/GameDetailsView/blocks/Description.vala:54
-msgid "Description"
-msgstr "Beskrivelse"
-
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:65
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:89
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
 msgstr "Språk"
 
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:68
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:92
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:80
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
 msgstr "Språk"
 
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:59
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
 msgstr "Kategori"
 
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:62
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:74
 msgid "Categories"
 msgstr "Kategorier"
 
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:77
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:90
 msgid "Genre"
 msgstr "Sjanger"
 
-#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:80
+#: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:93
 msgid "Genres"
 msgstr "Sjangre"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:62
-#, c-format
-msgctxt "igdb"
-msgid "<b>%s</b> on IGDB"
-msgstr "<b>%s</b> på IGDB"
-
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:68
 msgctxt "igdb"
 msgid "Popularity"
 msgstr "Popularitet"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:106
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:74
 msgctxt "igdb"
 msgid "Aggregated rating"
 msgstr "Samlet vurdering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:107
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:75
 msgctxt "igdb"
 msgid "IGDB user rating"
 msgstr "IGDB-brukervurdering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:108
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:76
 msgctxt "igdb"
 msgid "Total rating"
 msgstr "Totalvurdering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:85
+msgctxt "igdb"
+msgid "Release date"
+msgstr ""
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:92
 msgctxt "igdb"
 msgid "Platforms"
 msgstr "Plattformer"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:122
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
 msgctxt "igdb"
 msgid "Genres"
 msgstr "Sjangere"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:128
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
 msgctxt "igdb"
 msgid "Keywords"
 msgstr "Nøkkelord"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:140
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:111
 msgctxt "igdb"
-msgid "Summary"
-msgstr "Sammendrag"
+msgid "Links"
+msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:151
-msgctxt "igdb"
-msgid "Storyline"
-msgstr "Handling"
-
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:173
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:158
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
 msgstr[0] "Basert på én vurdering"
 msgstr[1] "Basert på <b>%d</b> vurderinger"
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:240
+msgctxt "igdb"
+msgid "Summary"
+msgstr "Sammendrag"
+
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:251
+msgctxt "igdb"
+msgid "Storyline"
+msgstr "Handling"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
@@ -1615,11 +1616,11 @@ msgstr[1] "Basert på <b>%d</b> vurderinger"
 msgid "Select file"
 msgstr "Velg fil"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:78
+#: src/ui/widgets/ImagesDownloadPopover.vala:76
 msgid "No images"
 msgstr "Ingen bilder"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:78
+#: src/ui/widgets/ImagesDownloadPopover.vala:76
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
@@ -1627,7 +1628,7 @@ msgstr ""
 "Fant ikke noen bilder for dette spillet\n"
 "Forsikre deg om at spillnavnet er riktig"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:99
+#: src/ui/widgets/ImagesDownloadPopover.vala:97
 msgid "Search images:"
 msgstr "Søk etter bilder:"
 
@@ -1684,6 +1685,13 @@ msgstr "Pauset: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Nedlasting avbrutt"
+
+#~ msgid "Description"
+#~ msgstr "Beskrivelse"
+
+#~ msgctxt "igdb"
+#~ msgid "<b>%s</b> on IGDB"
+#~ msgstr "<b>%s</b> på IGDB"
 
 #~ msgid "Disable fullscreen"
 #~ msgstr "Skru av fullskjermsvisning"

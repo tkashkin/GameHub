@@ -34,22 +34,34 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 	{
 		public GameDetailsPage details_page { get; construct; }
 
-		public GOGDetails(Game game, GameDetailsPage page, bool is_dialog)
+		public GOGDetails(Game game, GameDetailsPage page)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL, details_page: page, is_dialog: is_dialog);
+			Object(game: game, orientation: Orientation.VERTICAL, details_page: page, text_max_width: 48);
 		}
 
 		construct
 		{
 			if(!supports_game) return;
 
-			add(new Separator(Orientation.HORIZONTAL));
-
 			var gog_game = game as GOGGame;
 
 			var root = Parser.parse_json(game.info_detailed);
 
 			if(root == null || gog_game == null) return;
+
+			get_style_context().add_class("gameinfo-sidebar-block");
+
+			var link = new ActionButton(game.source.icon, null, "GOG", true, true);
+			if(game.store_page != null)
+			{
+				link.tooltip_text = game.store_page;
+				link.clicked.connect(() => {
+					Utils.open_uri(game.store_page);
+				});
+			}
+
+			add(link);
+			add(new Separator(Orientation.HORIZONTAL));
 
 			var sys_langs = Intl.get_language_names();
 			var langs = root.get_object().get_object_member("languages");
@@ -67,41 +79,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				{
 					langs_label = _("Languages");
 				}
-				add_info_label(langs_label, langs_string, false, true);
-			}
-
-			var dlbox = new Box(Orientation.HORIZONTAL, 0);
-
-			var downloads_visible = false;
-
-			if(gog_game.bonus_content != null && gog_game.bonus_content.size > 0)
-			{
-				var bonusbox = new Box(Orientation.VERTICAL, 0);
-				var bonuslist = new ListBox();
-				bonuslist.selection_mode = SelectionMode.NONE;
-				bonuslist.get_style_context().add_class("gameinfo-content-list");
-
-				foreach(var bonus in gog_game.bonus_content)
-				{
-					bonuslist.add(new BonusContentRow(bonus));
-				}
-
-				var header = Styled.H4Label(_("Bonus content"));
-				header.margin_start = header.margin_end = 8;
-
-				downloads_visible = true;
-				bonusbox.add(header);
-				bonusbox.add(bonuslist);
-
-				dlbox.add(bonusbox);
+				add_info_label(langs_label, langs_string, langs_string.contains(","), true);
 			}
 
 			if(gog_game.dlc != null && gog_game.dlc.size > 0)
 			{
-				if(downloads_visible)
-				{
-					dlbox.add(new Separator(Orientation.VERTICAL));
-				}
+				add(new Separator(Orientation.HORIZONTAL));
 
 				var dlcbox = new Box(Orientation.VERTICAL, 0);
 				var dlclist = new ListBox();
@@ -116,19 +99,57 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				var header = Styled.H4Label(_("DLC"));
 				header.margin_start = header.margin_end = 8;
 
-				downloads_visible = true;
 				dlcbox.add(header);
 				dlcbox.add(dlclist);
-
-				dlbox.add(dlcbox);
+				add(dlcbox);
 			}
 
-			if(downloads_visible)
+			if(gog_game.bonus_content != null && gog_game.bonus_content.size > 0)
 			{
 				add(new Separator(Orientation.HORIZONTAL));
+
+				var bonuslist_scrolled = new ScrolledWindow(null, null);
+				bonuslist_scrolled.hscrollbar_policy = PolicyType.NEVER;
+				bonuslist_scrolled.set_size_request(420, 64);
+
+				#if GTK_3_22
+				bonuslist_scrolled.propagate_natural_width = true;
+				bonuslist_scrolled.propagate_natural_height = true;
+				bonuslist_scrolled.max_content_height = 720;
+				#endif
+
+				var bonuslist = new ListBox();
+				bonuslist.selection_mode = SelectionMode.NONE;
+				bonuslist.get_style_context().add_class("gameinfo-content-list");
+
+				foreach(var bonus in gog_game.bonus_content)
+				{
+					bonuslist.add(new BonusContentRow(bonus));
+				}
+
+				bonuslist_scrolled.add(bonuslist);
+
+				var bonus_popover_button = new ActionButton("folder-download-symbolic", null, _("Bonus content"), true, true);
+
+				var bonus_popover = new Popover(bonus_popover_button);
+				bonus_popover.position = PositionType.LEFT;
+
+				bonus_popover.add(bonuslist_scrolled);
+				bonuslist_scrolled.show_all();
+
+				bonus_popover_button.clicked.connect(() => {
+					#if GTK_3_22
+					bonus_popover.popup();
+					#else
+					bonus_popover.show();
+					#endif
+				});
+
+				add(bonus_popover_button);
 			}
 
-			add(dlbox);
+			show_all();
+			if(parent != null) parent.queue_draw();
 		}
 
 		public override bool supports_game { get { return (game is GOGGame) && game.info_detailed != null && game.info_detailed.length > 0; } }
@@ -150,7 +171,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 				var box = new Box(Orientation.HORIZONTAL, 8);
 				box.margin_start = box.margin_end = 8;
-				box.margin_top = box.margin_bottom = 4;
+				box.margin_top = box.margin_bottom = 8;
 
 				var icon = new Image.from_icon_name(bonus.icon, IconSize.BUTTON);
 
@@ -250,7 +271,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 				var ebox = new EventBox();
 				ebox.margin_start = ebox.margin_end = 8;
-				ebox.margin_top = ebox.margin_bottom = 4;
+				ebox.margin_top = ebox.margin_bottom = 6;
 
 				var box = new Box(Orientation.HORIZONTAL, 8);
 

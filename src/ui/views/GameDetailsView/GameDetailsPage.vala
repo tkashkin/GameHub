@@ -76,6 +76,7 @@ namespace GameHub.UI.Views.GameDetailsView
 		private ActionButton action_uninstall;
 
 		private Box blocks;
+		private Box sidebar;
 
 		construct
 		{
@@ -202,14 +203,24 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			content.add(title_hbox_eventbox);
 
-			blocks = new Box(Orientation.VERTICAL, 0);
-			blocks.hexpand = false;
-
 			actions = new Box(Orientation.HORIZONTAL, 0);
 			actions.margin_top = actions.margin_bottom = 16;
 
 			content.add(actions);
-			content.add(blocks);
+
+			var blocks_hbox = new Box(Orientation.HORIZONTAL, 8);
+
+			blocks = new Box(Orientation.VERTICAL, 0);
+			blocks.hexpand = true;
+
+			sidebar = new Box(Orientation.VERTICAL, 6);
+			sidebar.hexpand = false;
+			sidebar.halign = Align.END;
+
+			blocks_hbox.add(blocks);
+			blocks_hbox.add(sidebar);
+
+			content.add(blocks_hbox);
 
 			content_scrolled.add(content);
 
@@ -355,10 +366,25 @@ namespace GameHub.UI.Views.GameDetailsView
 			}
 			platform_icons.show_all();
 
-			blocks.foreach(b => blocks.remove(b));
+			blocks.foreach(b => b.destroy());
+			sidebar.foreach(b => b.destroy());
 
 			var desc = new Blocks.Description(game, is_dialog);
-			GameDetailsBlock[] blk = { new Blocks.Playtime(game, is_dialog), new Blocks.Achievements(game, is_dialog), new Blocks.GOGDetails(game, this, is_dialog), new Blocks.SteamDetails(game, is_dialog), new Blocks.IGDBInfo(game, desc, is_dialog), desc };
+			var igdb = new Blocks.IGDBInfo(game, desc, is_dialog);
+
+			GameDetailsBlock[] blk = {
+				new Blocks.Achievements(game, is_dialog),
+				igdb.description,
+				desc
+			};
+			GameDetailsBlock[] sidebar_blk = {
+				new Blocks.Artwork(game),
+				new Blocks.Playtime(game),
+				igdb,
+				new Blocks.SteamDetails(game),
+				new Blocks.GOGDetails(game, this)
+			};
+
 			foreach(var b in blk)
 			{
 				if(b.supports_game)
@@ -366,7 +392,13 @@ namespace GameHub.UI.Views.GameDetailsView
 					blocks.add(b);
 				}
 			}
-			blocks.show_all();
+			foreach(var b in sidebar_blk)
+			{
+				if(b.supports_game)
+				{
+					sidebar.add(b);
+				}
+			}
 
 			game.status_change.connect(s => {
 				Idle.add(() => {

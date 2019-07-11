@@ -123,7 +123,7 @@ namespace GameHub.UI.Dialogs
 			image_entry.hexpand = true;
 			image_entry.margin = 4;
 
-			var images_download_popover = new ImagesDownloadPopover(game, image_entry, images_download_btn);
+			var images_download_popover = new ImagesDownloadPopover(game, images_download_btn);
 
 			properties_box.add(image_entry);
 

@@ -30,7 +30,7 @@ namespace GameHub.UI.Views.GameDetailsView
 	{
 		public Game game { get; construct; }
 
-		public bool is_dialog { get; construct; }
+		public int text_max_width { get; construct; }
 
 		public abstract bool supports_game { get; }
 
@@ -43,24 +43,13 @@ namespace GameHub.UI.Views.GameDetailsView
 			title_label.valign = Align.START;
 
 			var text_label = new Label(text);
+			text_label.get_style_context().add_class(multiline ? "gameinfo-multiline-value" : "gameinfo-singleline-value");
 			text_label.halign = Align.START;
 			text_label.hexpand = false;
 			text_label.wrap = true;
 			text_label.xalign = 0;
-			text_label.max_width_chars = is_dialog ? 120 : -1;
+			text_label.max_width_chars = text_max_width;
 			text_label.use_markup = markup;
-
-			if(!multiline)
-			{
-				text_label.get_style_context().add_class("gameinfo-singleline-value");
-			}
-
-			if(parent != null)
-			{
-				text_label.hexpand = true;
-				//text_label.halign = Align.END;
-				//text_label.xalign = 1;
-			}
 
 			var box = new Box(multiline ? Orientation.VERTICAL : Orientation.HORIZONTAL, multiline ? 0 : 16);
 			box.margin_start = box.margin_end = 8;
