@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-12 01:19+0300\n"
-"PO-Revision-Date: 2019-07-11 16:11+0000\n"
+"PO-Revision-Date: 2019-07-13 09:02+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -1571,7 +1571,7 @@ msgstr "Totale waardering"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:85
 msgctxt "igdb"
 msgid "Release date"
-msgstr ""
+msgstr "Verschijningsdatum"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:92
 msgctxt "igdb"
@@ -1591,7 +1591,7 @@ msgstr "Trefwoorden"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:111
 msgctxt "igdb"
 msgid "Links"
-msgstr ""
+msgstr "Links"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:158
 #, c-format
