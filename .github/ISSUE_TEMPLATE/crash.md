@@ -28,8 +28,8 @@ To get version and environment info either:
 * Run this in your terminal: `com.github.tkashkin.gamehub -v`
 or:
 * Open GameHub settings
-* Click About button in top right of settings dialog
-* Click Copy button in top right of about dialog
+* Open About page of settings dialog
+* Click Copy button in top right of about page
 -->
 ```
 PASTE VERSION INFO HERE
@@ -40,10 +40,10 @@ PASTE VERSION INFO HERE
 <!--
 To get the GDB log, follow these steps:
 
-1. Close GameHub if it's running.
-2. Run this in your terminal: `com.github.tkashkin.gamehub --gdb`
-3. Once the app has crashed (become unresponsive), type "bt full" (and press enter) to get a backtrace.
-4. Type "q" to quit the debugger (or "c" to continue until the app quits)
+1. Close GameHub if it's running
+2. Install GDB if it's not already installed
+3. Run this in your terminal: `com.github.tkashkin.gamehub --gdb`
+4. Reproduce crash
 5. Copy the log and paste below
 -->
 

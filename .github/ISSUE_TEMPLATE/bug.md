@@ -36,8 +36,8 @@ To get version and environment info either:
 * Run this in your terminal: `com.github.tkashkin.gamehub -v`
 or:
 * Open GameHub settings
-* Click About button in top right of settings dialog
-* Click Copy button in top right of about dialog
+* Open About page of settings dialog
+* Click Copy button in top right of about page
 -->
 ```
 PASTE VERSION INFO HERE

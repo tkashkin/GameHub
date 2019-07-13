@@ -1,3 +1,109 @@
+com.github.tkashkin.gamehub (0.14.1-25-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [526c6f8]
+  * Translated using Weblate (Dutch) [ad827dc]
+
+ -- Allan Nordhøy <epost@anotheragency.no>  Thu, 11 Jul 2019 22:51:43 +0000
+
+com.github.tkashkin.gamehub (0.14.1-24-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Game details view improvements [c77df04]
+  * Translated using Weblate (Chinese (Simplified)) [bece03f]
+  * Translated using Weblate (Norwegian Bokmål) [aed8a1a]
+  * Translated using Weblate (Dutch) [2462da6]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 12 Jul 2019 01:23:28 +0300
+
+com.github.tkashkin.gamehub (0.14.1-23-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Unset ld env variables in `Utils.run*` for AppImage builds (#267) [bd9635c]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 11 Jul 2019 03:09:29 +0300
+
+com.github.tkashkin.gamehub (0.14.1-22-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Add IGDB request quota warning [f9fb59c]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 11 Jul 2019 02:59:39 +0300
+
+com.github.tkashkin.gamehub (0.14.1-21-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Prioritize user games over installed games over uninstalled games when all sources are shown (#282) Fix some merging bugs [8ac1f27]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 10 Jul 2019 23:05:59 +0300
+
+com.github.tkashkin.gamehub (0.14.1-20-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Chinese (Simplified)) [de84182]
+
+ -- tofuHero <zhao1397172935@foxmail.com>  Mon, 8 Jul 2019 01:21:06 +0000
+
+com.github.tkashkin.gamehub (0.14.1-19-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [aa1d50d]
+  * Translated using Weblate (Dutch) [8a917b4]
+
+ -- Allan Nordhøy <epost@anotheragency.no>  Sat, 6 Jul 2019 00:16:54 +0000
+
+com.github.tkashkin.gamehub (0.14.1-18-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Fix slashes for DOSBox data_dirs (#279) [ff9270b]
+
+ -- tkashkin <tkashkin@gmail.com>  Sat, 6 Jul 2019 20:33:46 +0300
+
+com.github.tkashkin.gamehub (0.14.1-17-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * DOSBox: verbose logging for data_dirs (#279) [2f7c584]
+
+ -- tkashkin <tkashkin@gmail.com>  Sat, 6 Jul 2019 19:37:42 +0300
+
+com.github.tkashkin.gamehub (0.14.1-16-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Add 'Open screenshots directory' action for Steam games (#277) [8865f62]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 5 Jul 2019 20:48:47 +0300
+
+com.github.tkashkin.gamehub (0.14.1-15-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * DOSBox improvements (#273) [c6bb7a8]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 5 Jul 2019 18:30:02 +0300
+
+com.github.tkashkin.gamehub (0.14.1-14-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Add timeout after exiting game to prevent immediate restart due to keypresses (#275) [5dc13a8]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 4 Jul 2019 23:47:41 +0300
+
+com.github.tkashkin.gamehub (0.14.1-13-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Add DOS exe/bat/com support to DOSBox CompatTool (#273) Reorder CompatTools Clear IGDB data cache for game when games is renamed (#274) [b286d46]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 4 Jul 2019 22:59:22 +0300
+
+com.github.tkashkin.gamehub (0.14.1-12-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Allow to run executables in DOSBox without configs (#273) [e4b9623]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 4 Jul 2019 20:16:20 +0300
+
+com.github.tkashkin.gamehub (0.14.1-11-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Fix Humble authentication page styles (#272) [2b9cb90]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 4 Jul 2019 12:12:42 +0300
+
+com.github.tkashkin.gamehub (0.14.1-10-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Fix build with newer Vala compiler (#271) [9d0ff03]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 3 Jul 2019 20:25:44 +0300
+
+com.github.tkashkin.gamehub (0.14.1-9-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Fix segfault in `GameListRow.update_style` (#255) [34b0109]
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 2 Jul 2019 23:06:46 +0300
+
+com.github.tkashkin.gamehub (0.14.1-8-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Reduce games list paddings (#265) [5c2fccf]
+  * Translated using Weblate (Norwegian Bokmål) [c199c12]
+  * Translated using Weblate (Dutch) [26a6755]
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 1 Jul 2019 10:51:09 +0300
+
+com.github.tkashkin.gamehub (0.14.1-6-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Merge translations [15a67ea]
+  * Games list grouping options (#265) [5572bc1]
+  * Translated using Weblate (Chinese (Simplified)) [bf75533]
+  * Translated using Weblate (Norwegian Bokmål) [164b834]
+  * Translated using Weblate (Dutch) [4c7b155]
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 30 Jun 2019 17:30:25 +0300
+
 com.github.tkashkin.gamehub (0.14.1-4-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
   * Additional games list style options (#265) [e1292ae]
 
