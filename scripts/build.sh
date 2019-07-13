@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _GH_RDNN="com.github.tkashkin.gamehub"
-_GH_VERSION="0.14.1"
+_GH_VERSION="0.14.2"
 
 _GH_BRANCH="${APPVEYOR_REPO_BRANCH:-$(git symbolic-ref --short -q HEAD)}"
 _GH_COMMIT="$(git rev-parse HEAD)"
@@ -234,7 +234,7 @@ appimage()
 	unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
 	export VERSION="${_BUILD_IMAGE}-${_VERSION}"
 	export LD_LIBRARY_PATH=$APPDIR/usr/lib:$LD_LIBRARY_PATH
-	"./$_LINUXDEPLOYQT" "$APPDIR/usr/share/applications/$_GH_RDNN.desktop" -appimage -no-plugins -no-copy-copyright-files -verbose=2
+	"./$_LINUXDEPLOYQT" "$APPDIR/usr/share/applications/$_GH_RDNN.desktop" -appimage -no-plugins -no-copy-copyright-files
 }
 
 appimage_tweak()
