@@ -5,13 +5,14 @@
 # Leandro Stanger <leandrostanger@hotmail.com>, 2019.
 # Kassin Dornelles <kassin.dornelles@gmail.com>, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
+# Wilker Santana da Silva <wilker@tutamail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-12 01:19+0300\n"
-"PO-Revision-Date: 2019-06-20 19:41+0000\n"
-"Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
+"PO-Revision-Date: 2019-07-23 15:08+0000\n"
+"Last-Translator: Wilker Santana da Silva <wilker@tutamail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.7\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -30,16 +31,14 @@ msgid "Show application version and exit"
 msgstr "Mostrar versão do aplicativo e sair"
 
 #: src/app.vala:91
-#, fuzzy
 msgid "Restart with GDB debugger attached"
-msgstr "Reinicie com o depurador do GDB ligado"
+msgstr "Reiniciar com o depurador do GDB vinculado"
 
 #: src/app.vala:92
 msgid "Show full GDB backtrace"
 msgstr "Mostrar registro completo do GDB"
 
 #: src/app.vala:93
-#, fuzzy
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Tratar erros fatais como críticos e fechar a aplicação"
 
@@ -48,9 +47,8 @@ msgid "Show main window"
 msgstr "Mostrar janela principal"
 
 #: src/app.vala:98
-#, fuzzy
 msgid "Show application settings dialog"
-msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
+msgstr "Mostrar diálogo de opções do aplicativo"
 
 #: src/app.vala:99
 msgid "Show about dialog"
@@ -85,19 +83,20 @@ msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Registrar processo de autenticação e informações sensíveis como tokens de "
+"autenticação"
 
 #: src/app.vala:113
 msgid "Log download manager"
 msgstr "Log do gerenciador de download"
 
 #: src/app.vala:114
-#, fuzzy
 msgid "Log background workers start/stop"
-msgstr "Número máximo de threads em trabalho em segundo plano"
+msgstr "Registrar trabalhadores de fundo iniciar/parar"
 
 #: src/app.vala:115
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Desativar filtro de registro de mensagens"
 
 #: src/app.vala:116
 msgid "Verbose logging"
@@ -108,7 +107,6 @@ msgid "Game Options:"
 msgstr "Opções do Jogo:"
 
 #: src/app.vala:244
-#, fuzzy
 msgid "Show game options help"
 msgstr "Mostrar ajuda de opções de jogo"
 
@@ -159,9 +157,8 @@ msgid "Checksum mismatch in %s"
 msgstr "Incompatibilidade de soma de verificação em %s"
 
 #: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:125
-#, fuzzy
 msgid "Show file"
-msgstr "Selecione o arquivo"
+msgstr "Exibir arquivo"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
@@ -189,10 +186,9 @@ msgstr ""
 "Por favor, defina o executável principal nas propriedades do jogo."
 
 #: src/data/Runnable.vala:825
-#, fuzzy
 msgctxt "platform"
 msgid "Emulated"
-msgstr "Emulador"
+msgstr "Emulado"
 
 #: src/data/Game.vala:537
 msgctxt "status"
@@ -255,10 +251,10 @@ msgid "Favorites"
 msgstr "Favoritos"
 
 #: src/data/adapters/GamesAdapter.vala:429
-#, fuzzy, c-format
+#, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr "Favoritos"
+msgstr "%s: Favoritos"
 
 #: src/data/adapters/GamesAdapter.vala:454
 msgid "Merging games"
@@ -292,18 +288,17 @@ msgstr "Por tempo jogado"
 #: src/data/adapters/GamesAdapter.vala:648
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr ""
+msgstr "Não agrupar"
 
 #: src/data/adapters/GamesAdapter.vala:649
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "Por status"
 
 #: src/data/adapters/GamesAdapter.vala:650
-#, fuzzy
 msgctxt "group_mode"
 msgid "By source"
-msgstr "Propriedades do jogo"
+msgstr "Por fonte"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
@@ -391,9 +386,8 @@ msgid "Kill apps in prefix"
 msgstr "Mate aplicativos no prefixo"
 
 #: src/data/compat/Proton.vala:44
-#, fuzzy
 msgid "Proton prefix"
-msgstr "Prefixo do wine"
+msgstr "Prefixo do Proton"
 
 #: src/data/compat/Proton.vala:50
 msgid "Disable esync"
@@ -489,9 +483,8 @@ msgstr "Restaurar chave de API padrão"
 
 #: src/data/providers/images/SteamGridDB.vala:126
 #: src/data/providers/data/IGDB.vala:442
-#, fuzzy
 msgid "API key"
-msgstr "Chave da API do Steam"
+msgstr "Chave de API"
 
 #: src/data/providers/images/SteamGridDB.vala:134
 #: src/data/providers/data/IGDB.vala:450
@@ -517,7 +510,7 @@ msgstr "Autor"
 #: src/data/providers/images/SteamGridDB.vala:182
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "Alternado"
 
 #: src/data/providers/images/SteamGridDB.vala:183
 msgctxt "imagesource_steamgriddb_image_style"
@@ -528,7 +521,7 @@ msgstr "Borrado"
 #: src/data/providers/images/SteamGridDB.vala:185
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: src/data/providers/images/SteamGridDB.vala:186
 msgctxt "imagesource_steamgriddb_image_style"
@@ -540,6 +533,8 @@ msgid ""
 "Monthly IGDB request quota has been reached. Set your own API key to use "
 "IGDB data or disable IGDB."
 msgstr ""
+"Cota mensal de pedidos do IGDB foi alcançada. Defina sua própria chave de "
+"API para usar dados do IGDB ou desative IGDB."
 
 #: src/data/providers/data/IGDB.vala:141
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
@@ -582,6 +577,8 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:71
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
+"Diretório de jogos contém espaço. Isso pode causar problemas para alguns "
+"jogos"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
 msgid "Interface"
@@ -589,11 +586,11 @@ msgstr "Interface"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:35
 msgid "Appearance"
-msgstr ""
+msgstr "Aparência"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "General interface settings"
-msgstr ""
+msgstr "Configurações gerais da interface"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:46
 msgid "Dark theme"
@@ -602,72 +599,69 @@ msgstr "Tema escuro"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr ""
+msgstr "Baseado no tema"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
 msgctxt "icon_style"
 msgid "Symbolic"
-msgstr ""
+msgstr "Simbólico"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Colored"
-msgstr ""
+msgstr "Colorido"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "Estilo de ícone"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:69
 msgid "Show platform icons in grid view"
 msgstr "Mostrar ícones de plataforma na visualização em grade"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
-#, fuzzy
 msgid "Games list: installed"
-msgstr "%s: instaladores não disponíveis"
+msgstr "Lista de jogos: instalados"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
-#, fuzzy
 msgid "Games list: not installed"
-msgstr "%s: instaladores não disponíveis"
+msgstr "Lista de jogos: não instalados"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
-#, fuzzy
 msgctxt "list_style"
 msgid "Show icon"
-msgstr "Selecione o arquivo"
+msgstr "Exibir ícone"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
 msgctxt "list_style"
 msgid "Bold title"
-msgstr ""
+msgstr "Título em negrito"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
 msgctxt "list_style"
 msgid "Show status"
-msgstr ""
+msgstr "Exibir status"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
 msgctxt "list_style"
 msgid "Dim"
-msgstr ""
+msgstr "Escura"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
-msgstr ""
+msgstr "Comportamento"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
 msgid "Behavior settings"
-msgstr ""
+msgstr "Configurações de comportamento"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:42
 msgid "Run games with double click"
-msgstr ""
+msgstr "Executar jogos com duplo clique"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:46
 msgid "Merge games from different sources"
@@ -717,7 +711,7 @@ msgstr "Conteúdo de bônus"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
-msgstr ""
+msgstr "Syntax de variável: <b>$var</b> ou <b>${var}</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
@@ -725,9 +719,8 @@ msgstr "Nome do jogo"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 #: src/ui/views/GamesView/FiltersPopover.vala:127
-#, fuzzy
 msgid "Platform"
-msgstr "Plataformas"
+msgstr "Plataforma"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
 msgid "Controller"
@@ -740,7 +733,7 @@ msgstr "Ativado"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
 msgid "Focus GameHub window with Guide button"
-msgstr ""
+msgstr "Dar foco à janela do GameHub com o botão Guia"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
@@ -748,11 +741,11 @@ msgstr "Controles"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:75
 msgid "Move focus"
-msgstr ""
+msgstr "Mover foco"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:77
 msgid "Exit"
-msgstr ""
+msgstr "Sair"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:35
@@ -765,9 +758,8 @@ msgid "Disabled"
 msgstr "Desativado"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
-#, fuzzy
 msgid "Game sources"
-msgstr "Propriedades do jogo"
+msgstr "Fontes de jogos"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
 msgid "Steam API keys have limited number of uses per day"
@@ -781,7 +773,6 @@ msgstr "Diretório de instalação"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:76
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
-#, fuzzy
 msgid "Not installed"
 msgstr "Não instalado"
 
@@ -793,9 +784,9 @@ msgstr "Não autenticado"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
-#, fuzzy, c-format
+#, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr "Autenticado"
+msgstr "Autenticado como <b>%s</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
@@ -835,24 +826,23 @@ msgid "Libretro core info directory"
 msgstr "Diretório de informações do núcleo do Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
-#, fuzzy
 msgid "Ignored libretro cores"
-msgstr "Arquivo principal do Libretro"
+msgstr "Ignorados núcleos de Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
-msgstr ""
+msgstr "Extenções de arquivos de jogos ignoradas"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
-msgstr ""
+msgstr "Nenhum núcleo encontrado"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:70
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u núcleo encontrado"
+msgstr[1] "%u núcleos encontrados"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:169
@@ -930,14 +920,12 @@ msgid "Force compatibility mode"
 msgstr "Forçar o modo de compatibilidade"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:308
-#, fuzzy
 msgid "Game file patterns"
-msgstr "Selecione o executável do jogo"
+msgstr "Sequências de arquivos de jogos"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:316
-#, fuzzy
 msgid "Image"
-msgstr "Imagens"
+msgstr "Imagem"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:319
 msgid "Icon"
@@ -952,44 +940,46 @@ msgid ""
 "<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
 "name (without extension)"
 msgstr ""
+"Sequências de glob compatíveis com <b>findutils</b>\n"
+"<ul>\n"
+"<li>Várias sequências podem ser combinadas com <b>|</b></li>\n"
+"<li>Inicie sequência com <b>./</b> para referenciar um caminho relativo</li>"
+"\n"
+"<li>A variável <b>$basename</b> será substituída pelo nome do executável do "
+"jogo (sem extensão)</li>\n"
+"</ul>"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
-msgstr ""
+msgstr "Dados"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:39
-#, fuzzy
 msgid "Providers"
-msgstr "Propriedades do jogo"
+msgstr "Provedores"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:40
-#, fuzzy
 msgid "Third-party data providers"
-msgstr "Propriedades do jogo"
+msgstr "Provedores de dados de terceiros"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
-#, fuzzy
 msgid "Image providers"
-msgstr "Propriedades do jogo"
+msgstr "Provedores de imagens"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
-#, fuzzy
 msgid "Metadata providers"
-msgstr "Propriedades do jogo"
+msgstr "Provedores de metadados"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
-#, fuzzy
 msgid "Open website"
-msgstr "Website oficial"
+msgstr "Abrir website"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:36
 msgid "About"
-msgstr ""
+msgstr "Sobre"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
-#, fuzzy
 msgid "Copy application version and environment info"
-msgstr "Mostrar versão do aplicativo e sair"
+msgstr "Copiar versão do aplicativo e informações do ambiente"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:78
 #: src/ui/views/WelcomeView.vala:57
@@ -997,31 +987,29 @@ msgid "All your games in one place"
 msgstr "Todos os seus jogos em um só lugar"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:92
-#, fuzzy
 msgctxt "about_link"
 msgid "Website"
-msgstr "Website oficial"
+msgstr "Website"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:93
 msgctxt "about_link"
 msgid "Source code on GitHub"
-msgstr ""
+msgstr "Código-fonte no Github"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:94
 msgctxt "about_link"
 msgid "Report a problem"
-msgstr ""
+msgstr "Relatar um problema"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:95
-#, fuzzy
 msgctxt "about_link"
 msgid "Suggest translations"
-msgstr "Instalação silenciosa"
+msgstr "Surgerir traduções"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:101
 msgctxt "about_link"
 msgid "Issues"
-msgstr ""
+msgstr "Questões"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:102
 msgctxt "about_link"
@@ -1032,12 +1020,12 @@ msgstr "Contribuidores"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:105
 msgctxt "about_link"
 msgid "Pulse"
-msgstr ""
+msgstr "Pulse"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:106
 msgctxt "about_link"
 msgid "Forks"
-msgstr ""
+msgstr "Garfos"
 
 #: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
 #: src/ui/views/GamesView/GameContextMenu.vala:80
@@ -1053,7 +1041,6 @@ msgstr "Importar"
 
 #: src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:154
-#, fuzzy
 msgid "Download"
 msgstr "Transferências"
 
@@ -1082,9 +1069,8 @@ msgstr "Imagens"
 #: src/ui/dialogs/GamePropertiesDialog.vala:115
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 #: src/ui/views/GameDetailsView/blocks/Artwork.vala:59
-#, fuzzy
 msgid "Download images"
-msgstr "Baixar"
+msgstr "Baixar imagens"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:122
 msgid "Image URL"
@@ -1162,6 +1148,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"O uso de sobreposições neste caminho pode ser inseguro\n"
+"Prossiga por sua conta e risco\n"
+"\n"
+"Caminho: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1170,15 +1160,17 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"O uso de sobreposições neste caminho não é suportado\n"
+"\n"
+"Caminho: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
 msgstr "Diretório aberto"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
-#, fuzzy
 msgid "Remove overlay"
-msgstr "Ativar sobreposições"
+msgstr "Remover sobreposições"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
@@ -1192,28 +1184,24 @@ msgstr "Instalador corrompido: incompatibilidade de soma de verificação em"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
-#, fuzzy
 msgid "Import emulated games"
-msgstr "Nenhum jogo adicionado pelo usuário"
+msgstr "Importar jogos emulados"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
-#, fuzzy
 msgid "Select directory with emulated games"
-msgstr "Selecione o diretório"
+msgstr "Selecionar diretório com jogos emulados"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
 msgid "Detected games"
 msgstr "Jogos detectados"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
-#, fuzzy
 msgid "Select all"
-msgstr "Selecione o instalador"
+msgstr "Selecionar tudo"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
-#, fuzzy
 msgid "Select directory to import"
-msgstr "Selecione o diretório"
+msgstr "Selecione o diretório para importar"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1346,14 +1334,13 @@ msgid "Privacy"
 msgstr "Privacidade"
 
 #: src/ui/views/GamesView/GamesView.vala:790
-#, fuzzy
 msgid "Downloading images"
-msgstr "Baixar"
+msgstr "Baixando imagens"
 
 #: src/ui/views/GamesView/GamesView.vala:804
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading image: %s"
-msgstr "Baixar"
+msgstr "Baixando imagem: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:125
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:163
@@ -1372,12 +1359,11 @@ msgstr "Cancelar o download"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:77
 msgid "Group"
-msgstr ""
+msgstr "Agrupar"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:102
-#, fuzzy
 msgid "Sort"
-msgstr "Ordenar:"
+msgstr "Ordenar"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
 #: src/ui/widgets/GameTagsList.vala:59
@@ -1385,9 +1371,8 @@ msgid "Tags"
 msgstr "Tags"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:353
-#, fuzzy
 msgid "All platforms"
-msgstr "Todos os jogos"
+msgstr "Todas as plataformas"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Select game executable"
@@ -1398,9 +1383,8 @@ msgid "Select game directory"
 msgstr "Selecione o diretório do jogo"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
-#, fuzzy
 msgid "Download game images"
-msgstr "Baixar"
+msgstr "Baixar imagens de jogos"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
@@ -1433,9 +1417,8 @@ msgstr "Abra o diretório de coleção de bônus"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
-#, fuzzy
 msgid "Open screenshots directory"
-msgstr "Abrir diretório de prefixo"
+msgstr "Abrir diretório de capturas de tela"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
@@ -1448,43 +1431,43 @@ msgid "Properties"
 msgstr "Propriedades"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:101
-#, fuzzy, c-format
+#, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] "%s: instaladores não disponíveis"
-msgstr[1] "%s: instaladores não disponíveis"
+msgstr[0] "%d jogo selecionado"
+msgstr[1] "%d jogos selecionados"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:145
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be installed"
 msgid_plural "%d games will be installed"
-msgstr[0] "%s: instaladores não disponíveis"
-msgstr[1] "%s: instaladores não disponíveis"
+msgstr[0] "%d jogo será instalado"
+msgstr[1] "%d jogos serão instalados"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:155
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] "%s: instaladores não disponíveis"
-msgstr[1] "%s: instaladores não disponíveis"
+msgstr[0] "%d jogo será baixado"
+msgstr[1] "%d jogos serão baixados"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:162
-#, fuzzy, c-format
+#, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] "%s: instaladores não disponíveis"
-msgstr[1] "%s: instaladores não disponíveis"
+msgstr[0] "Imagem para %d jogo será pesquisada"
+msgstr[1] "Imagens para %d jogos serão pesquisadas"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:169
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] "%s: instaladores não disponíveis"
-msgstr[1] "%s: instaladores não disponíveis"
+msgstr[0] "%d jogo será desinstalado"
+msgstr[1] "%d jogos serão desinstalados"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:175
 msgid "Refresh"
-msgstr ""
+msgstr "Recarregar"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:176
 #, c-format
@@ -1493,7 +1476,11 @@ msgid ""
 msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
 msgstr[0] ""
+"%d jogo será removido da base de dados. Reinicie o GameHub para buscar novos "
+"dados"
 msgstr[1] ""
+"%d jogos serão removidos da base de dados. Reinicie o GameHub para buscar "
+"novos dados"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 msgid "Open store page"
@@ -1581,7 +1568,7 @@ msgstr "Avaliação agregada"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:75
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr ""
+msgstr "Nota de usuários no IGDB"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:76
 msgctxt "igdb"
@@ -1591,7 +1578,7 @@ msgstr "Avaliação total"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:85
 msgctxt "igdb"
 msgid "Release date"
-msgstr ""
+msgstr "Data de lançamento"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:92
 msgctxt "igdb"
@@ -1599,7 +1586,6 @@ msgid "Platforms"
 msgstr "Plataformas"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
-#, fuzzy
 msgctxt "igdb"
 msgid "Genres"
 msgstr "Gêneros"
@@ -1612,7 +1598,7 @@ msgstr "Palavras-chave"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:111
 msgctxt "igdb"
 msgid "Links"
-msgstr ""
+msgstr "Links"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:158
 #, c-format
@@ -1638,9 +1624,8 @@ msgid "Select file"
 msgstr "Selecione o arquivo"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:76
-#, fuzzy
 msgid "No images"
-msgstr "Imagens"
+msgstr "Sem imagens"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:76
 msgid ""
