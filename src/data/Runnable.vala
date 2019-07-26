@@ -345,7 +345,6 @@ namespace GameHub.Data
 							case ChecksumType.MD5: return "md5";
 							case ChecksumType.SHA1: return "sha1";
 							case ChecksumType.SHA256: return "sha256";
-							case ChecksumType.SHA384: return "sha384";
 							case ChecksumType.SHA512: return "sha512";
 						}
 						return null;

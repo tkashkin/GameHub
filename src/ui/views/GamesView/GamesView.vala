@@ -547,7 +547,9 @@ namespace GameHub.UI.Views.GamesView
 					break;
 
 				case ACTION_EXIT:
+					#if MANETTE
 					Gamepad.reset();
+					#endif
 					window.destroy();
 					break;
 			}

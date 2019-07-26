@@ -552,11 +552,14 @@ namespace GameHub.Data.Sources.GOG
 				this.image_unlocked = image_unlocked;
 				this.unlocked = unlocked;
 				this.global_percentage = global_percentage;
+
+				#if GLIB_2_56
 				if(unlock_date != null)
 				{
 					this.unlock_date = new DateTime.from_iso8601(unlock_date, new TimeZone.utc());
 					this.unlock_time = Utils.get_relative_datetime(this.unlock_date);
 				}
+				#endif
 			}
 		}
 
