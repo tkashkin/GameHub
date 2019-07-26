@@ -25,7 +25,6 @@ project_config = vcs_tag(
 deps = [
 	dependency('gdk-3.0'),
 	dependency('webkit2gtk-4.0'),
-	dependency('glib-2.0'),
 	dependency('json-glib-1.0'),
 	dependency('gee-0.8'),
 	dependency('sqlite3'),
@@ -167,6 +166,14 @@ sources = [
 	'utils/downloader/Downloader.vala',
 	'utils/downloader/SoupDownloader.vala'
 ]
+
+glib256 = dependency('glib-2.0', version: '>=2.56', required: false)
+if glib256.found()
+	add_global_arguments('-D', 'GLIB_2_56', language: 'vala')
+	deps += glib256
+else
+	deps += dependency('glib-2.0')
+endif
 
 gtk322 = dependency('gtk+-3.0', version: '>=3.22', required: false)
 if gtk322.found()
