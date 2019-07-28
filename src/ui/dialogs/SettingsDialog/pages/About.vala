@@ -89,10 +89,17 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			links_view.expand = true;
 			links_view.margin = 4;
 
-			add_link(C_("about_link", "Website"), "https://tkashkin.tk/projects/gamehub", "web-browser");
-			add_link(C_("about_link", "Source code on GitHub"), "https://github.com/tkashkin/GameHub", "text-x-script");
-			add_link(C_("about_link", "Report a problem"), "https://github.com/tkashkin/GameHub/issues/new/choose", "dialog-warning");
-			add_link(C_("about_link", "Suggest translations"), "https://hosted.weblate.org/engage/gamehub", "preferences-desktop-locale");
+			add_link(C_("about_link", "Website"), "https://tkashkin.tk/projects/gamehub", "web-browser-symbolic");
+
+			var source_mirrors = new Box(Orientation.HORIZONTAL, 0);
+
+			add_link(C_("about_link", "Source code on GitHub"), "https://github.com/tkashkin/GameHub", "about-link-github-symbolic", source_mirrors).hexpand = true;
+			add_link("repo.or.cz", "https://repo.or.cz/GameHub.git", "about-link-git-symbolic", source_mirrors).hexpand = false;
+
+			links_view.add(source_mirrors);
+
+			add_link(C_("about_link", "Report a problem"), "https://github.com/tkashkin/GameHub/issues/new/choose", "dialog-warning-symbolic");
+			add_link(C_("about_link", "Suggest translations"), "https://hosted.weblate.org/engage/gamehub", "preferences-desktop-locale-symbolic");
 
 			small_links_view = new Box(Orientation.HORIZONTAL, 8);
 			small_links_view.margin = 8;
@@ -117,30 +124,44 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 
 		private void copy_app_info()
 		{
-			var info = "Version: %s\n".printf(ProjectConfig.VERSION) +
-			           "Branch:  %s\n".printf(ProjectConfig.GIT_BRANCH) +
-			           "Commit:  %s (%s)\n".printf(ProjectConfig.GIT_COMMIT_SHORT, ProjectConfig.GIT_COMMIT) +
-			           "Distro:  %s\n".printf(Utils.get_distro()) +
-			           "DE:      %s".printf(Utils.get_desktop_environment() ?? "unknown");
+			var info = "- GameHub\n" +
+				"    Version: %s\n".printf(ProjectConfig.VERSION) +
+				"    Branch:  %s\n".printf(ProjectConfig.GIT_BRANCH);
+
+			if(ProjectConfig.GIT_COMMIT != null && ProjectConfig.GIT_COMMIT.length > 0)
+			{
+				info += "    Commit:  %s\n".printf(ProjectConfig.GIT_COMMIT);
+			}
+
+			info += "- Environment\n";
+			#if OS_LINUX
+			info += "    Distro:  %s\n".printf(Utils.get_distro());
+			info += "    DE:      %s\n".printf(Utils.get_desktop_environment() ?? "unknown");
+			#else
+			info += "    OS:      %s\n".printf(Utils.get_distro());
+			#endif
+			info += "    GTK:     %u.%u.%u\n".printf(Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version());
+
+			var settings = Gtk.Settings.get_default();
+			if(settings != null)
+			{
+				info += "    Themes:  %s | %s".printf(settings.gtk_theme_name, settings.gtk_icon_theme_name);
+			}
 
 			Clipboard.get_default(Gdk.Display.get_default()).set_text(info, info.length);
 		}
 
-		private void add_link(string title, string url, string icon="web-browser")
+		private GameHub.UI.Widgets.ActionButton add_link(string title, string url, string icon="web-browser", Container? parent=null)
 		{
-			var button = new GameHub.UI.Widgets.ActionButton(icon + Settings.UI.Appearance.symbolic_icon_suffix, null, title, true, ui_settings.icon_style.is_symbolic());
+			var button = new GameHub.UI.Widgets.ActionButton(icon, null, title, true, true);
 			button.tooltip_text = url;
 
 			button.clicked.connect(() => {
 				Utils.open_uri(url);
 			});
 
-			ui_settings.notify["icon-style"].connect(() => {
-				button.icon = icon + Settings.UI.Appearance.symbolic_icon_suffix;
-				button.compact = ui_settings.icon_style.is_symbolic();
-			});
-
-			links_view.add(button);
+			(parent ?? links_view).add(button);
+			return button;
 		}
 
 		private void add_small_link(string title, string url)

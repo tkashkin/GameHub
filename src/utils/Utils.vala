@@ -81,8 +81,8 @@ namespace GameHub.Utils
 
 	public static string run(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool capture_output=false, bool log=true)
 	{
-		string stdout = "";
-		string stderr = "";
+		string sout = "";
+		string serr = "";
 
 		var cdir = dir ?? Environment.get_home_dir();
 		var cenv = env ?? Environ.get();
@@ -108,17 +108,21 @@ namespace GameHub.Utils
 
 		try
 		{
+			#if OS_WINDOWS
+			log = true;
+			#endif
+
 			if(log) debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
 
 			if(capture_output)
 			{
-				Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out stdout, out stderr);
-				stdout = stdout.strip();
-				stderr = stderr.strip();
+				Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out sout, out serr);
+				sout = sout.strip();
+				serr = serr.strip();
 				if(log)
 				{
-					if(stdout.length > 0) print(stdout + "\n");
-					if(stderr.length > 0) warning(stderr);
+					if(sout.length > 0) print(sout + "\n");
+					if(serr.length > 0) warning(serr);
 				}
 			}
 			else
@@ -130,7 +134,7 @@ namespace GameHub.Utils
 		{
 			warning("[Utils.run] %s", e.message);
 		}
-		return stdout;
+		return sout;
 	}
 
 	public static async void run_async(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool wait=true, bool log=true)
@@ -179,22 +183,22 @@ namespace GameHub.Utils
 
 	public static async string run_thread(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool capture_output=false, bool log=true)
 	{
-		string stdout = "";
+		string sout = "";
 
 		Utils.thread("Utils.run_thread", () => {
-			stdout = Utils.run(cmd, dir, env, override_runtime, capture_output, log);
+			sout = Utils.run(cmd, dir, env, override_runtime, capture_output, log);
 			Idle.add(run_thread.callback);
 		}, log);
 
 		yield;
-		return stdout;
+		return sout;
 	}
 
 	public static File? find_executable(string? name)
 	{
 		if(name == null || name.length == 0) return null;
 		var which = Environment.find_program_in_path(name) ?? run({ "which", name }, null, null, false, true, false);
-		if(which.length == 0 || !which.has_prefix("/"))
+		if(which == null || which.length == 0 || !which.has_prefix("/"))
 		{
 			return null;
 		}
@@ -220,16 +224,52 @@ namespace GameHub.Utils
 	public static string get_distro()
 	{
 		if(distro != null) return distro;
-		distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}, null, null, false, true, false).replace("\"", "");
-		#if APPIMAGE
-		distro = "[AppImage] " + distro;
-		#elif FLATPAK
-		distro = "[Flatpak] " + distro;
-		#elif SNAP
-		distro = "[Snap] " + distro;
+
+		#if OS_LINUX
+			distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}, null, null, false, true, false).replace("\"", "");
+			#if APPIMAGE
+				distro = "[AppImage] " + distro;
+			#elif FLATPAK
+				distro = "[Flatpak] " + distro;
+			#elif SNAP
+				distro = "[Snap] " + distro;
+			#endif
+		#elif OS_WINDOWS
+			distro = "Windows " + win32_get_os_version();
+		#elif OS_MACOS
+			distro = "macOS";
+		#else
+			distro = "unknown";
 		#endif
+
 		return distro;
 	}
+
+	#if OS_WINDOWS
+	private struct win32_OSVERSIONINFOW
+	{
+		uint size;
+		uint major;
+		uint minor;
+		uint build;
+		uint platform;
+		uint16 sp_version[128];
+	}
+	[CCode(cname="RtlGetVersion")]
+	private static extern uint32 win32_rtl_get_version(out win32_OSVERSIONINFOW ver);
+	public static string? win32_get_os_version()
+	{
+		win32_OSVERSIONINFOW ver = new win32_OSVERSIONINFOW();
+		ver.size = (uint) sizeof(win32_OSVERSIONINFOW);
+		win32_rtl_get_version(out ver);
+		var result = "%u.%u.%u".printf(ver.major, ver.minor, ver.build);
+		if(ver.sp_version[0] != 0)
+		{
+			result += " " + ((string) ver.sp_version);
+		}
+		return result;
+	}
+	#endif
 
 	public static string? get_desktop_environment()
 	{
@@ -238,7 +278,11 @@ namespace GameHub.Utils
 
 	public static string get_language_name()
 	{
+		#if OS_LINUX
 		return Posix.nl_langinfo((Posix.NLItem) 786439); // _NL_IDENTIFICATION_LANGUAGE
+		#else
+		return "English";
+		#endif
 	}
 
 	public static bool is_package_installed(string package)

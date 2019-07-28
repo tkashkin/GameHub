@@ -123,6 +123,7 @@ namespace GameHub.Utils
 
 		private async void polkit_authenticate()
 		{
+			#if POLKIT
 			if(permission == null)
 			{
 				try
@@ -146,6 +147,7 @@ namespace GameHub.Utils
 					warning("[FSOverlay.polkit_authenticate] %s", e.message);
 				}
 			}
+			#endif
 		}
 
 		public enum RootPathSafety

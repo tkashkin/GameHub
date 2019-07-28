@@ -800,7 +800,14 @@ namespace GameHub.Data
 		LINUX, WINDOWS, MACOS, EMULATED;
 
 		public const Platform[] PLATFORMS = { Platform.LINUX, Platform.WINDOWS, Platform.MACOS, Platform.EMULATED };
+
+		#if OS_LINUX
 		public const Platform CURRENT = Platform.LINUX;
+		#elif OS_WINDOWS
+		public const Platform CURRENT = Platform.WINDOWS;
+		#elif OS_MACOS
+		public const Platform CURRENT = Platform.MACOS;
+		#endif
 
 		public string id()
 		{

@@ -18,15 +18,20 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using GLib;
-using WebKit;
 using Soup;
 using GameHub.Utils;
+
+#if WEBKIT2GTK
+using WebKit;
+#endif
 
 namespace GameHub.UI.Windows
 {
 	public class WebAuthWindow: Window
 	{
+		#if WEBKIT2GTK
 		public WebView webview;
+		#endif
 
 		private bool is_finished = false;
 
@@ -58,6 +63,7 @@ namespace GameHub.UI.Windows
 				debug("[WebAuth/%s] Authenticating at `%s`; success_url_prefix: `%s`; success_cookie_name: `%s`", source, url, success_url_prefix, success_cookie_name);
 			}
 
+			#if WEBKIT2GTK
 			webview = new WebView();
 
 			var cookies_file = FSUtils.expand(FSUtils.Paths.Cache.Cookies);
@@ -130,6 +136,7 @@ namespace GameHub.UI.Windows
 			webview.load_uri(url);
 
 			add(webview);
+			#endif
 
 			destroy.connect(() => { if(!is_finished) canceled(); });
 		}

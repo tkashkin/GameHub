@@ -234,6 +234,7 @@ namespace GameHub
 			var lang = Environment.get_variable("LC_ALL") ?? "";
 			Intl.setlocale(LocaleCategory.ALL, lang);
 			Intl.bindtextdomain(ProjectConfig.GETTEXT_PACKAGE, ProjectConfig.GETTEXT_DIR);
+			Intl.bind_textdomain_codeset(ProjectConfig.GETTEXT_PACKAGE, "UTF-8");
 			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);
 
 			return app.run(args);
@@ -427,11 +428,28 @@ namespace GameHub
 
 		private void print_version(bool plain)
 		{
-			println(plain, "Version: %s", ProjectConfig.VERSION);
-			println(plain, "Branch:  %s", ProjectConfig.GIT_BRANCH);
-			println(plain, "Commit:  %s (%s)", ProjectConfig.GIT_COMMIT_SHORT, ProjectConfig.GIT_COMMIT);
-			println(plain, "Distro:  %s", Utils.get_distro());
-			println(plain, "DE:      %s", Utils.get_desktop_environment() ?? "unknown");
+			println(plain, "- GameHub");
+			println(plain, "    Version: %s", ProjectConfig.VERSION);
+			println(plain, "    Branch:  %s", ProjectConfig.GIT_BRANCH);
+			if(ProjectConfig.GIT_COMMIT != null && ProjectConfig.GIT_COMMIT.length > 0)
+			{
+				println(plain, "    Commit:  %s", ProjectConfig.GIT_COMMIT);
+			}
+
+			println(plain, "- Environment");
+			#if OS_LINUX
+			println(plain, "    Distro:  %s", Utils.get_distro());
+			println(plain, "    DE:      %s", Utils.get_desktop_environment() ?? "unknown");
+			#else
+			println(plain, "    OS:      %s", Utils.get_distro());
+			#endif
+			println(plain, "    GTK:     %u.%u.%u", Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version());
+
+			var settings = Gtk.Settings.get_default();
+			if(settings != null)
+			{
+				println(plain, "    Themes:  %s | %s", settings.gtk_theme_name, settings.gtk_icon_theme_name);
+			}
 		}
 
 		private static void action_settings(SimpleAction action, Variant? args)
