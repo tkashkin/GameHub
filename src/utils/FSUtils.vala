@@ -270,7 +270,11 @@ namespace GameHub.Utils
 			}
 			expanded_path = Utils.replace_prefix(expanded_path, "~/.cache", Environment.get_user_cache_dir());
 			expanded_path = Utils.replace_prefix(expanded_path, "~", Environment.get_home_dir());
-			return expanded_path + (file != null && file != "" ? "/" + file : "");
+			expanded_path = expanded_path + (file != null && file != "" ? "/" + file : "");
+			#if OS_WINDOWS
+			expanded_path = expanded_path.replace("/", "\\");
+			#endif
+			return expanded_path;
 		}
 
 		public static File? file(string? path, string? file=null, HashMap<string, string>? variables=null)
@@ -415,9 +419,6 @@ namespace GameHub.Utils
 				paths.humble_games = Environment.get_user_data_dir() + "/games/HumbleBundle";
 			}
 			#endif
-
-			FSUtils.rm(FSUtils.Paths.Collection.GOG.expand_installers("*"), ".goutputstream-*");
-			FSUtils.rm(FSUtils.Paths.Collection.Humble.expand_installers("*"), ".goutputstream-*");
 		}
 	}
 }

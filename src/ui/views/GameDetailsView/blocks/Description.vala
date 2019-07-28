@@ -22,7 +22,9 @@ using GameHub.UI.Widgets;
 using Gdk;
 using Gee;
 
+#if WEBKIT2GTK
 using WebKit;
+#endif
 
 using GameHub.Data;
 using GameHub.Data.Sources.Humble;
@@ -31,7 +33,9 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 {
 	public class Description: GameDetailsBlock
 	{
+		#if WEBKIT2GTK
 		private WebView description;
+		#endif
 
 		private const string CSS          = "body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; %s} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%; display: block;}";
 		private const string CSS_COLORS   = "background: %s; color: %s;";
@@ -49,6 +53,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			get_style_context().add_class(Gtk.STYLE_CLASS_BACKGROUND);
 
+			#if WEBKIT2GTK
 			description = new WebView();
 			description.hexpand = true;
 			description.vexpand = false;
@@ -69,6 +74,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			});
 
 			add(description);
+			#endif
 
 			show_all();
 			if(parent != null) parent.queue_draw();
@@ -76,6 +82,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 		private void update_colors()
 		{
+			#if WEBKIT2GTK
 			var colors = CSS_COLORS.printf(get_style_context().get_background_color(get_state_flags()).to_string(), get_style_context().get_color(get_state_flags()).to_string());
 			if(colors != current_colors)
 			{
@@ -83,6 +90,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				description.user_content_manager.add_style_sheet(new UserStyleSheet(CSS.printf(colors), UserContentInjectedFrames.TOP_FRAME, UserStyleLevel.USER, null, null));
 				current_colors = colors;
 			}
+			#endif
 		}
 
 		public override bool supports_game { get { return game.description != null; } }

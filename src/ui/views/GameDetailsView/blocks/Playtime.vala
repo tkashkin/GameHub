@@ -20,7 +20,6 @@ using Gtk;
 using Gdk;
 using Gee;
 
-
 using GameHub.Data;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;

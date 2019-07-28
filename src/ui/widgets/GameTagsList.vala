@@ -70,8 +70,13 @@ namespace GameHub.UI.Widgets
 
 				if(row1 != null && row2 != null)
 				{
-					var t1 = item1.tag.id;
-					var t2 = item2.tag.id;
+					var tag1 = item1.tag;
+					var tag2 = item2.tag;
+
+					if(tag1 == null || tag2 == null) return 0;
+
+					var t1 = tag1.id;
+					var t2 = tag2.id;
 
 					var b1 = t1.has_prefix(Tables.Tags.Tag.BUILTIN_PREFIX);
 					var b2 = t2.has_prefix(Tables.Tags.Tag.BUILTIN_PREFIX);
@@ -83,7 +88,8 @@ namespace GameHub.UI.Widgets
 					if(u1 && !u2) return -1;
 					if(!u1 && u2) return 1;
 
-					return item1.tag.name.collate(item1.tag.name);
+					if(tag1.name == null || tag1.name.length == 0 || tag2.name == null || tag2.name.length == 0) return 0;
+					return tag1.name.collate(tag2.name);
 				}
 
 				return 0;

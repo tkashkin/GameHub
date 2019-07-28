@@ -24,7 +24,6 @@ using GameHub.Data;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 using GameHub.UI.Views.GamesView;
-using WebKit;
 
 namespace GameHub.UI.Views.GameDetailsView
 {

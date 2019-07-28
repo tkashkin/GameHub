@@ -24,12 +24,10 @@ project_config = vcs_tag(
 
 deps = [
 	dependency('gdk-3.0'),
-	dependency('webkit2gtk-4.0'),
 	dependency('json-glib-1.0'),
 	dependency('gee-0.8'),
 	dependency('sqlite3'),
 	dependency('libxml-2.0'),
-	dependency('polkit-gobject-1'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
@@ -167,6 +165,15 @@ sources = [
 	'utils/downloader/SoupDownloader.vala'
 ]
 
+if get_option('os') == 'linux'
+	add_global_arguments('-D', 'OS_LINUX', language: 'vala')
+elif get_option('os') == 'windows'
+	add_global_arguments('-D', 'OS_WINDOWS', language: 'vala')
+	deps += meson.get_compiler('c').find_library('ntdll')
+elif get_option('os') == 'macos'
+	add_global_arguments('-D', 'OS_MACOS', language: 'vala')
+endif
+
 glib256 = dependency('glib-2.0', version: '>=2.56', required: false)
 if glib256.found()
 	add_global_arguments('-D', 'GLIB_2_56', language: 'vala')
@@ -190,6 +197,21 @@ if soup260.found()
 	deps += soup260
 else
 	deps += dependency('libsoup-2.4')
+endif
+
+webkit2gtk = dependency('webkit2gtk-4.0', required: false)
+if webkit2gtk.found()
+	add_global_arguments('-D', 'WEBKIT2GTK', language: 'vala')
+	deps += webkit2gtk
+endif
+
+if get_option('os') == 'linux' and get_option('use_overlayfs')
+	add_global_arguments('-D', 'OVERLAYFS', language: 'vala')
+	polkit = dependency('polkit-gobject-1', required: false)
+	if polkit.found()
+		add_global_arguments('-D', 'POLKIT', language: 'vala')
+		deps += polkit
+	endif
 endif
 
 if get_option('use_libunity')
@@ -221,5 +243,6 @@ executable(
 	css_gresource,
 
 	dependencies: deps,
-	install: true
+	install: true,
+	gui_app: true
 )

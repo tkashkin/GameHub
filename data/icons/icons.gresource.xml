@@ -65,5 +65,8 @@
 		<file alias="scalable/actions/related-link-twitter-symbolic.svg">symbolic/related-links/twitter.svg</file>
 		<file alias="scalable/actions/related-link-wikipedia-symbolic.svg">symbolic/related-links/wikipedia.svg</file>
 		<file alias="scalable/actions/related-link-youtube-symbolic.svg">symbolic/related-links/youtube.svg</file>
+
+		<file alias="scalable/actions/about-link-git-symbolic.svg">symbolic/about-links/git.svg</file>
+		<file alias="scalable/actions/about-link-github-symbolic.svg">symbolic/about-links/github.svg</file>
 	</gresource>
 </gresources>
