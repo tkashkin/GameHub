@@ -94,7 +94,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			var source_mirrors = new Box(Orientation.HORIZONTAL, 0);
 
 			add_link(C_("about_link", "Source code on GitHub"), "https://github.com/tkashkin/GameHub", "about-link-github-symbolic", source_mirrors).hexpand = true;
-			add_link("repo.or.cz", "https://repo.or.cz/GameHub.git", "about-link-git-symbolic", source_mirrors).hexpand = false;
+			add_link(null, "https://git.froggi.es/tkashkin/gamehub", "about-link-git.froggi.es", source_mirrors).hexpand = false;
+			add_link(null, "https://repo.or.cz/GameHub.git", "about-link-git-symbolic", source_mirrors).hexpand = false;
 
 			links_view.add(source_mirrors);
 
@@ -151,9 +152,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			Clipboard.get_default(Gdk.Display.get_default()).set_text(info, info.length);
 		}
 
-		private GameHub.UI.Widgets.ActionButton add_link(string title, string url, string icon="web-browser", Container? parent=null)
+		private GameHub.UI.Widgets.ActionButton add_link(string? title, string url, string icon="web-browser", Container? parent=null)
 		{
-			var button = new GameHub.UI.Widgets.ActionButton(icon, null, title, true, true);
+			var button = new GameHub.UI.Widgets.ActionButton(icon, null, title ?? url, title != null, true);
 			button.tooltip_text = url;
 
 			button.clicked.connect(() => {
