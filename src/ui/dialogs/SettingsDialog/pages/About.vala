@@ -94,8 +94,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			var source_mirrors = new Box(Orientation.HORIZONTAL, 0);
 
 			add_link(C_("about_link", "Source code on GitHub"), "https://github.com/tkashkin/GameHub", "about-link-github-symbolic", source_mirrors).hexpand = true;
-			add_link(null, "https://git.froggi.es/tkashkin/gamehub", "about-link-git.froggi.es", source_mirrors).hexpand = false;
+			add_link(null, "https://codeberg.org/tkashkin/GameHub", "about-link-codeberg.org", source_mirrors).hexpand = false;
 			add_link(null, "https://repo.or.cz/GameHub.git", "about-link-git-symbolic", source_mirrors).hexpand = false;
+			add_link(null, "https://git.froggi.es/tkashkin/gamehub", "about-link-git.froggi.es", source_mirrors).hexpand = false;
 
 			links_view.add(source_mirrors);
 

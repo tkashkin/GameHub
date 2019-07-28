@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 100 58">
+	<path d="M4 60L30 4l24 21 6.3-7.2 34 43" stroke="#232185d0" stroke-width="4" fill="#23fafafa" />
+	<path d="M26 30l9-10.29 7.43 6.5M40 33l4 3.5 9.8-11.2" stroke="#232185d0" stroke-width="4" fill="none" />
+	<text x="16" y="53" font-family="Lato" font-weight="bold" font-size="14.5" fill="#23107BB5">codeberg</text>
+</svg>
