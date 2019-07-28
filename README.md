@@ -1,5 +1,5 @@
 # [GameHub](https://tkashkin.tk/projects/gamehub) [![Build status](https://ci.appveyor.com/api/projects/status/cgw5hc4kos4uvmy9/branch/master?svg=true)](https://ci.appveyor.com/project/tkashkin/gamehub/branch/master) [![Translation status](https://hosted.weblate.org/widgets/gamehub/-/translations/svg-badge.svg)](https://hosted.weblate.org/engage/gamehub/?utm_source=widget)
-Mirrors: [GitHub](https://github.com/tkashkin/GameHub), [repo.or.cz](https://repo.or.cz/GameHub.git)
+Mirrors: [GitHub](https://github.com/tkashkin/GameHub), [git.froggi.es](https://git.froggi.es/tkashkin/gamehub), [repo.or.cz](https://repo.or.cz/GameHub.git)
 
 Unified library for all your games.
 

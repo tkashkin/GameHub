@@ -68,5 +68,6 @@
 
 		<file alias="scalable/actions/about-link-git-symbolic.svg">symbolic/about-links/git.svg</file>
 		<file alias="scalable/actions/about-link-github-symbolic.svg">symbolic/about-links/github.svg</file>
+		<file alias="scalable/actions/about-link-git.froggi.es.svg">symbolic/about-links/git.froggi.es.svg</file>
 	</gresource>
 </gresources>
