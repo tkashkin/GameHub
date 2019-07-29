@@ -245,7 +245,7 @@ namespace GameHub.Data
 					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE);
 				}
 				dirs += install_dir;
-				mount_overlays();
+				mount_overlays.begin();
 			}
 			foreach(var dir in dirs)
 			{
@@ -395,7 +395,7 @@ namespace GameHub.Data
 			}
 		}
 
-		public void mount_overlays(File? persist=null)
+		public async void mount_overlays(File? persist=null)
 		{
 			if(!overlays_enabled) return;
 			load_overlays();
@@ -418,9 +418,9 @@ namespace GameHub.Data
 			fs_overlay = new FSOverlay(merged_dir, dirs, persist_dir, work_dir);
 			if(fs_overlay.options != fs_overlay_last_options)
 			{
-				fs_overlay.mount.begin();
+				fs_overlay_last_options = fs_overlay.options;
+				yield fs_overlay.mount();
 			}
-			fs_overlay_last_options = fs_overlay.options;
 		}
 
 		public async void umount_overlays()
