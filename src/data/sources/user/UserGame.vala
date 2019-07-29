@@ -117,7 +117,7 @@ namespace GameHub.Data.Sources.User
 		{
 			update_status();
 
-			mount_overlays();
+			yield mount_overlays();
 
 			if(installer == null && info != null && info.length > 0)
 			{

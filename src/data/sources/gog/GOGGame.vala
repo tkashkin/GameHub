@@ -147,7 +147,7 @@ namespace GameHub.Data.Sources.GOG
 
 			update_status();
 
-			mount_overlays();
+			yield mount_overlays();
 
 			if(info_detailed == null || info_detailed.length == 0)
 			{
@@ -964,7 +964,7 @@ namespace GameHub.Data.Sources.GOG
 
 				game.overlays.add(dlc_overlay);
 				game.save_overlays();
-				game.mount_overlays();
+				yield game.mount_overlays();
 			}
 		}
 	}

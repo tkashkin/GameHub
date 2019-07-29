@@ -154,12 +154,24 @@ namespace GameHub.Utils
 		{
 			SAFE, UNSAFE, RESTRICTED;
 
+			private const string[] ALLOWED_PATHS = { "/home/", "/mnt/", "/media/", "/run/media/", "/opt/", "/var/opt/" };
+
 			public static RootPathSafety for(File? root)
 			{
 				if(root == null || !root.query_exists()) return RESTRICTED;
 				var path = root.get_path().down();
 
-				if(!path.has_prefix("/home/") && !path.has_prefix("/mnt/") && !path.has_prefix("/media/") && !path.has_prefix("/run/media/"))
+				var allowed = false;
+				foreach(var prefix in ALLOWED_PATHS)
+				{
+					if(path.has_prefix(prefix))
+					{
+						allowed = true;
+						break;
+					}
+				}
+
+				if(!allowed)
 				{
 					return RESTRICTED;
 				}
