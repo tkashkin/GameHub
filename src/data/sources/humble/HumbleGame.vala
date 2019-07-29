@@ -183,7 +183,7 @@ namespace GameHub.Data.Sources.Humble
 
 			update_status();
 
-			mount_overlays();
+			yield mount_overlays();
 
 			if((icon == null || icon == "") && (info != null && info.length > 0))
 			{
