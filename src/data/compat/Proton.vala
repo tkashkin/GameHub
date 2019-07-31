@@ -16,28 +16,31 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using GameHub.Utils;
+using Gee;
 
 using GameHub.Data.Sources.Steam;
+using GameHub.Utils;
 
 namespace GameHub.Data.Compat
 {
 	public class Proton: Wine
 	{
-		public const string[] APPIDS = {"1054830", "996510", "961940", "930400", "858280"}; // 4.2, 3.16 Beta, 3.16, 3.7 Beta, 3.7
 		public const string LATEST = "latest";
 
-		public string appid { get; construct; }
+		public string appid { get; construct set; }
+		public string? appname { get; construct set; }
 
-		public Proton(string appid)
+		public bool is_latest { get; construct set; default = false; }
+
+		public Proton(string appid, string? appname=null)
 		{
-			Object(appid: appid, binary: "", arch: "");
+			Object(appid: appid, appname: appname, is_latest: appid == LATEST, binary: "", arch: "");
 		}
 
 		construct
 		{
 			id = @"proton_$(appid)";
-			name = "Proton";
+			name = appname ?? "Proton";
 			icon = "source-steam-symbolic";
 			installed = false;
 
@@ -64,8 +67,17 @@ namespace GameHub.Data.Compat
 				new CompatTool.BoolOption("/NOGUI", _("No GUI"), false)
 			};
 
-			if(appid == Proton.LATEST)
+			if(!is_latest)
 			{
+				init();
+			}
+		}
+
+		public void init()
+		{
+			if(is_latest)
+			{
+				name = "Proton (latest)";
 				foreach(var tool in CompatTools)
 				{
 					if(tool is Proton)
@@ -74,7 +86,6 @@ namespace GameHub.Data.Compat
 						if(proton.installed)
 						{
 							appid = proton.appid;
-							name = "Proton (latest)";
 							executable = proton.executable;
 							installed = true;
 							wine_binary = proton.wine_binary;
@@ -90,11 +101,15 @@ namespace GameHub.Data.Compat
 				{
 					if(proton_dir != null)
 					{
-						name = proton_dir.get_basename();
+						name = appname ?? proton_dir.get_basename();
 						executable = proton_dir.get_child("proton");
 						installed = executable.query_exists();
 						wine_binary = proton_dir.get_child("dist/bin/wine");
 					}
+				}
+				else
+				{
+					name = appname ?? "Proton";
 				}
 			}
 
@@ -226,6 +241,61 @@ namespace GameHub.Data.Compat
 			if(!cmd.query_exists())
 			{
 				yield Utils.run_thread({ executable.get_path(), "run", cmd.get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
+			}
+		}
+
+		public void install_app()
+		{
+			if(!is_latest && !installed)
+			{
+				Steam.install_app(appid);
+			}
+		}
+
+		public static void find_proton_versions()
+		{
+			if(Steam.instance == null) return;
+
+			Steam.instance.load_appinfo();
+
+			if(Steam.instance.appinfo == null) return;
+
+			ArrayList<Proton> versions = new ArrayList<Proton>();
+
+			foreach(var app_node in Steam.instance.appinfo.nodes.values)
+			{
+				if(app_node != null && app_node is BinaryVDF.ListNode)
+				{
+					var app = (BinaryVDF.ListNode) app_node;
+					var common = (BinaryVDF.ListNode) app.get_nested({"appinfo", "common"});
+
+					if(common != null)
+					{
+						var name = ((BinaryVDF.StringNode) common.get("name")).value;
+						var type = ((BinaryVDF.StringNode) common.get("type")).value;
+
+						if(type.down() == "tool" && name.down().has_prefix("proton "))
+						{
+							versions.add(new Proton(app.key, name));
+						}
+					}
+				}
+			}
+
+			if(versions.size > 0)
+			{
+				versions.sort((first, second) => {
+					return int.parse(second.appid) - int.parse(first.appid);
+				});
+
+				CompatTool[] tools = CompatTools;
+
+				foreach(var proton in versions)
+				{
+					tools += proton;
+				}
+
+				CompatTools = tools;
 			}
 		}
 	}

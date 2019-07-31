@@ -60,8 +60,8 @@ namespace GameHub.Data.Sources.Steam
 
 		private bool? installed = null;
 
-		private BinaryVDF.ListNode? appinfo;
-		private BinaryVDF.ListNode? packageinfo;
+		public BinaryVDF.ListNode? appinfo;
+		public BinaryVDF.ListNode? packageinfo;
 
 		public bool is_authenticated_in_steam_client
 		{
@@ -200,6 +200,18 @@ namespace GameHub.Data.Sources.Steam
 			return Settings.Auth.Steam.instance.authenticated && is_authenticated_in_steam_client;
 		}
 
+		public void load_appinfo()
+		{
+			if(appinfo == null)
+			{
+				appinfo = new AppInfoVDF(FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.AppInfoVDF)).read();
+			}
+			if(packageinfo == null)
+			{
+				packageinfo = new PackageInfoVDF(FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.PackageInfoVDF)).read();
+			}
+		}
+
 		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
 
 		public override ArrayList<Game> games { get { return _games; } }
@@ -216,8 +228,7 @@ namespace GameHub.Data.Sources.Steam
 			Utils.thread("SteamLoading", () => {
 				_games.clear();
 
-				appinfo = new AppInfoVDF(FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.AppInfoVDF)).read();
-				packageinfo = new PackageInfoVDF(FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.PackageInfoVDF)).read();
+				load_appinfo();
 
 				var cached = Tables.Games.get_all(this);
 				games_count = 0;
@@ -311,6 +322,11 @@ namespace GameHub.Data.Sources.Steam
 				}
 			}
 			return pkgs;
+		}
+
+		public static void install_app(string appid)
+		{
+			Utils.open_uri(@"steam://install/$(appid)");
 		}
 
 		public static void install_multiple_apps(string[] appids)
