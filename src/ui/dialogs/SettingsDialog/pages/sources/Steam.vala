@@ -18,6 +18,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 
+using GameHub.Data;
+using GameHub.Data.Compat;
+
 using GameHub.Utils;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
@@ -25,6 +28,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 	public class Steam: SettingsDialogPage
 	{
 		private Settings.Auth.Steam steam_auth;
+
+		private ListBox proton;
 
 		public Steam(SettingsDialog dlg)
 		{
@@ -41,15 +46,34 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
+			root_grid.margin = 0;
+			header_grid.margin = 12;
+			header_grid.margin_bottom = 0;
+			content_area.margin = 0;
+
 			var paths = FSUtils.Paths.Settings.instance;
 
 			steam_auth = Settings.Auth.Steam.instance;
 
 			add_steam_apikey_entry();
-			add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey");
+			adjust_margins(add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey"));
 
-			add_separator();
-			add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; request_restart(); }, false);
+			adjust_margins(add_separator());
+
+			adjust_margins(add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; request_restart(); }, false));
+
+			var proton_header = add_header("Proton");
+			proton_header.margin_start = proton_header.margin_end = 12;
+
+			proton = add_widget(new ListBox());
+			proton.selection_mode = SelectionMode.NONE;
+			proton.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			proton.expand = true;
+
+			proton.margin_start = 7;
+			proton.margin_end = 3;
+			proton.margin_top = 0;
+			proton.margin_bottom = 6;
 
 			status_switch.active = steam_auth.enabled;
 			status_switch.notify["active"].connect(() => {
@@ -83,9 +107,97 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			{
 				status = description = steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated");
 			}
+
+			proton.foreach(r => {
+				if(r != null) r.destroy();
+			});
+
+			foreach(var tool in CompatTools)
+			{
+				if(tool is Proton)
+				{
+					var p = tool as Proton;
+					if(p != null && !p.is_latest)
+					{
+						proton.add(new ProtonRow(p, this));
+					}
+				}
+			}
+
+			proton.show_all();
 		}
 
-		protected void add_steam_apikey_entry()
+		private class ProtonRow: ListBoxRow
+		{
+			public Proton proton { get; construct; }
+
+			public Steam page { private get; construct; }
+
+			public ProtonRow(Proton proton, Steam page)
+			{
+				Object(proton: proton, page: page);
+			}
+
+			construct
+			{
+				var grid = new Grid();
+				grid.column_spacing = 12;
+				grid.margin_start = grid.margin_end = 8;
+				grid.margin_top = grid.margin_bottom = 4;
+
+				var icon = new Image.from_icon_name("source-steam-symbolic", IconSize.LARGE_TOOLBAR);
+				icon.valign = Align.CENTER;
+
+				var name = new Label(proton.name);
+				name.get_style_context().add_class("category-label");
+				name.set_size_request(96, -1);
+				name.hexpand = false;
+				name.xalign = 0;
+				name.valign = Align.CENTER;
+
+				var appid = new Label(proton.appid);
+				appid.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+				appid.hexpand = true;
+				appid.xalign = 0;
+				appid.valign = Align.CENTER;
+
+				var status = new Label(_("Not installed"));
+				status.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+				status.hexpand = true;
+				status.ellipsize = Pango.EllipsizeMode.MIDDLE;
+				status.xalign = 0;
+				status.valign = Align.CENTER;
+
+				var install = new Button.with_label(_("Install"));
+				install.valign = Align.CENTER;
+				install.sensitive = false;
+
+				grid.attach(icon, 0, 0, 1, 2);
+				grid.attach(name, 1, 0);
+				grid.attach(appid, 2, 0);
+				grid.attach(status, 1, 1, 2, 1);
+
+				if(proton.installed && proton.executable != null)
+				{
+					status.label = status.tooltip_text = proton.executable.get_path();
+				}
+				else
+				{
+					install.sensitive = true;
+					grid.attach(install, 3, 0, 1, 2);
+
+					install.clicked.connect(() => {
+						install.sensitive = false;
+						page.request_restart();
+						proton.install_app();
+					});
+				}
+
+				child = grid;
+			}
+		}
+
+		protected Box add_steam_apikey_entry()
 		{
 			var steam_auth = Settings.Auth.Steam.instance;
 
@@ -117,6 +229,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			hbox.add(label);
 			hbox.add(entry);
 			add_widget(hbox);
+
+			adjust_margins(hbox);
+
+			return hbox;
+		}
+
+		private void adjust_margins(Widget w)
+		{
+			w.margin_start = 16;
+			w.margin_end = 12;
 		}
 	}
 }
