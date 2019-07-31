@@ -158,9 +158,10 @@ namespace GameHub.Utils
 			public Node? get_nested(string[] keys, Node? def=null)
 			{
 				ListNode? list = this;
+				Node? node = null;
 				foreach(var key in keys)
 				{
-					var node = list.get(key);
+					node = list.get(key);
 					if(node != null && node is ListNode)
 					{
 						list = (ListNode) node;
@@ -170,7 +171,7 @@ namespace GameHub.Utils
 						return node ?? def;
 					}
 				}
-				return def;
+				return node ?? def;
 			}
 
 			public override void show(int indent=0)

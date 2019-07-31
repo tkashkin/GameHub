@@ -250,7 +250,7 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
-			Utils.open_uri(@"steam://install/$(id)");
+			Steam.install_app(id);
 			update_status();
 		}
 
