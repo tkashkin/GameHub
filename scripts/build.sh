@@ -31,8 +31,8 @@ if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_GPG_BINARY="gpg"
 	_GPG_PACKAGE="gnupg"
 elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
-	_DEB_TARGET_DISTRO_NAMES=("bionic" "cosmic" "disco" "eoan")
-	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "18.10" "19.04" "19.10")
+	_DEB_TARGET_DISTRO_NAMES=("bionic" "disco" "eoan")
+	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "19.04" "19.10")
 	_BUILD_IMAGE="bionic"
 else
 	source "/etc/os-release"
