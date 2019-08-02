@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-28 14:19+0300\n"
-"PO-Revision-Date: 2019-08-02 13:52+0000\n"
+"PO-Revision-Date: 2019-08-03 20:23+0000\n"
 "Last-Translator: Goudarz Jafari <goudarz.jafari@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/gamehub/"
 "translations/fa/>\n"
@@ -264,17 +264,17 @@ msgstr "بارگیری بازی‌ها از %s"
 #: src/data/adapters/GamesAdapter.vala:621
 msgctxt "sort_mode"
 msgid "By name"
-msgstr "بر اساس نام"
+msgstr "براساس نام"
 
 #: src/data/adapters/GamesAdapter.vala:622
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr "بر اساس آخرین راه‌اندازی"
+msgstr "براساس آخرین راه‌اندازی"
 
 #: src/data/adapters/GamesAdapter.vala:623
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr "بر اساس زمان بازی"
+msgstr "براساس زمان بازی"
 
 #: src/data/adapters/GamesAdapter.vala:648
 msgctxt "group_mode"
@@ -284,22 +284,24 @@ msgstr ""
 #: src/data/adapters/GamesAdapter.vala:649
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "براساس وضعیت"
 
 #: src/data/adapters/GamesAdapter.vala:650
 msgctxt "group_mode"
 msgid "By source"
-msgstr ""
+msgstr "براساس منبع"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr ""
+msgstr "استیم آی‌دی شما از پرونده پیکربندی استیم خوانده می‌شود"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
+"پرونده پیکربندی استیم یافت نشد.\n"
+"وارد حساب کاربری خود در استیم کلاینت شوید و به GameHub بازگردید"
 
 #: src/data/sources/humble/HumbleGame.vala:330
 #, c-format
@@ -319,7 +321,7 @@ msgstr ""
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "مورد علاقه‌ها"
 
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
@@ -338,11 +340,11 @@ msgstr ""
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit script"
-msgstr ""
+msgstr "ویرایش اسکریپت"
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit custom script"
-msgstr ""
+msgstr "ویرایش اسکریپت سفارشی"
 
 #: src/data/compat/Innoextract.vala:55
 #, c-format
@@ -362,7 +364,7 @@ msgstr "اجرا"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "نمایش منوی WineWrap"
 
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:116
 #: src/data/compat/Wine.vala:87
@@ -451,7 +453,7 @@ msgstr ""
 
 #: src/data/compat/CustomEmulator.vala:49
 msgid "Launch in game directory"
-msgstr ""
+msgstr "راه‌اندازی در دایرکتوری بازی"
 
 #: src/data/providers/images/SteamGridDB.vala:108
 #: src/data/providers/data/IGDB.vala:424
@@ -524,17 +526,17 @@ msgstr ""
 #: src/ui/views/GamesView/GamesView.vala:266
 #: src/ui/views/GamesView/GamesView.vala:646
 msgid "Settings"
-msgstr ""
+msgstr "تنظیمات"
 
 #: src/data/providers/data/IGDB.vala:349
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr ""
+msgstr "وب‌سایت رسمی"
 
 #: src/data/providers/data/IGDB.vala:462
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr ""
+msgstr "هنگامی که بازی توضیحی دارد، توضیحات را نشان دهید"
 
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
@@ -549,7 +551,7 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:471
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "هر دو"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
