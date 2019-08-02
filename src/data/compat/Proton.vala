@@ -267,16 +267,24 @@ namespace GameHub.Data.Compat
 				if(app_node != null && app_node is BinaryVDF.ListNode)
 				{
 					var app = (BinaryVDF.ListNode) app_node;
-					var common = (BinaryVDF.ListNode) app.get_nested({"appinfo", "common"});
+					var common_node = app.get_nested({"appinfo", "common"});
 
-					if(common != null)
+					if(common_node != null && common_node is BinaryVDF.ListNode)
 					{
-						var name = ((BinaryVDF.StringNode) common.get("name")).value;
-						var type = ((BinaryVDF.StringNode) common.get("type")).value;
+						var common = (BinaryVDF.ListNode) common_node;
 
-						if(type.down() == "tool" && name.down().has_prefix("proton "))
+						var name_node = common.get("name");
+						var type_node = common.get("type");
+
+						if(name_node != null && name_node is BinaryVDF.StringNode && type_node != null && type_node is BinaryVDF.StringNode)
 						{
-							versions.add(new Proton(app.key, name));
+							var name = ((BinaryVDF.StringNode) name_node).value;
+							var type = ((BinaryVDF.StringNode) type_node).value;
+
+							if(type != null && type.down() == "tool" && name != null && name.down().has_prefix("proton "))
+							{
+								versions.add(new Proton(app.key, name));
+							}
 						}
 					}
 				}
