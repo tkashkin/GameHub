@@ -239,17 +239,21 @@ namespace GameHub.Data
 			File[] dirs = { install_dir };
 			if(overlays_enabled)
 			{
-				dirs = { install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged") };
+				dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(Overlay.BASE);
 				if(from_all_overlays)
 				{
-					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE);
+					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
+					foreach(var overlay in overlays)
+					{
+						if(overlay.id == Overlay.BASE) continue;
+						dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(overlay.id);
+					}
 				}
-				dirs += install_dir;
 				mount_overlays.begin();
 			}
+			var variables = new HashMap<string, string>();
 			foreach(var dir in dirs)
 			{
-				var variables = new HashMap<string, string>();
 				variables.set("game_dir", dir.get_path());
 				var file = FSUtils.file(path, null, variables);
 				if(file != null && file.query_exists())
@@ -277,7 +281,7 @@ namespace GameHub.Data
 					{
 						dirs = {
 							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged"),
-							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE),
+							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(Overlay.BASE),
 							install_dir
 						};
 					}

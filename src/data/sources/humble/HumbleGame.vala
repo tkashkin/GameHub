@@ -93,6 +93,8 @@ namespace GameHub.Data.Sources.Humble
 			install_dir = null;
 			executable_path = "$game_dir/start.sh";
 			info_detailed = @"{\"order\":\"$(order_id)\"}";
+
+			mount_overlays.begin();
 			update_status();
 		}
 
@@ -152,6 +154,7 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
+			mount_overlays.begin();
 			update_status();
 		}
 
@@ -181,9 +184,8 @@ namespace GameHub.Data.Sources.Humble
 			if(game_info_updating) return;
 			game_info_updating = true;
 
-			update_status();
-
 			yield mount_overlays();
+			update_status();
 
 			if((icon == null || icon == "") && (info != null && info.length > 0))
 			{
