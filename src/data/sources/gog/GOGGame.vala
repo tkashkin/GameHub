@@ -88,6 +88,8 @@ namespace GameHub.Data.Sources.GOG
 
 			install_dir = null;
 			executable_path = "$game_dir/start.sh";
+
+			mount_overlays.begin();
 			update_status();
 		}
 
@@ -137,6 +139,7 @@ namespace GameHub.Data.Sources.GOG
 				}
 			}
 
+			mount_overlays.begin();
 			update_status();
 		}
 
@@ -145,9 +148,8 @@ namespace GameHub.Data.Sources.GOG
 			if(game_info_updating) return;
 			game_info_updating = true;
 
-			update_status();
-
 			yield mount_overlays();
+			update_status();
 
 			if(info_detailed == null || info_detailed.length == 0)
 			{
@@ -374,8 +376,8 @@ namespace GameHub.Data.Sources.GOG
 			var state = Game.State.UNINSTALLED;
 
 			var gameinfo = get_file("gameinfo", false);
-			var goggame = get_file(@"goggame-$(id).info", false);
-			var gh_marker = get_file(@".gamehub_$(id)", false);
+			var goggame = get_file(@"goggame-$(id).info");
+			var gh_marker = get_file(@".gamehub_$(id)");
 
 			var files = new ArrayList<File>();
 
