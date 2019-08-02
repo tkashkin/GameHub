@@ -7,22 +7,24 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-28 14:19+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-08-02 13:52+0000\n"
+"Last-Translator: Goudarz Jafari <goudarz.jafari@gmail.com>\n"
+"Language-Team: Persian <https://hosted.weblate.org/projects/gamehub/"
+"translations/fa/>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
-msgstr ""
+msgstr "نمایش راهنما"
 
 #: src/app.vala:90
 msgid "Show application version and exit"
-msgstr ""
+msgstr "نمایش نسخه برنامه و خروج"
 
 #: src/app.vala:91
 msgid "Restart with GDB debugger attached"
@@ -38,7 +40,7 @@ msgstr ""
 
 #: src/app.vala:97
 msgid "Show main window"
-msgstr ""
+msgstr "نمایش پنجره اصلی"
 
 #: src/app.vala:98
 msgid "Show application settings dialog"
@@ -54,7 +56,7 @@ msgstr ""
 
 #: src/app.vala:104
 msgid "Run game"
-msgstr ""
+msgstr "اجرای بازی"
 
 #: src/app.vala:105
 msgid "Show compatibility options dialog"
@@ -62,7 +64,7 @@ msgstr ""
 
 #: src/app.vala:106
 msgid "Open game details"
-msgstr ""
+msgstr "جزئیات بازی را باز کن"
 
 #: src/app.vala:107
 msgid "Open game properties"
@@ -96,11 +98,11 @@ msgstr ""
 
 #: src/app.vala:245
 msgid "Game Options:"
-msgstr ""
+msgstr "تنظیمات بازی:"
 
 #: src/app.vala:245
 msgid "Show game options help"
-msgstr ""
+msgstr "نمایش راهنمای تنظیمات بازی"
 
 #: src/app.vala:253
 msgid "Logging Options:"
@@ -121,17 +123,17 @@ msgstr ""
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "انتخاب کنید"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/data/Runnable.vala:163 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "انصراف"
 
 #: src/data/Runnable.vala:149 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr ""
+msgstr "دایرکتوری را انتخاب کنید"
 
 #: src/data/Runnable.vala:404
 #, c-format
@@ -150,18 +152,18 @@ msgstr ""
 
 #: src/data/Runnable.vala:442 src/ui/dialogs/CorruptedInstallerDialog.vala:125
 msgid "Show file"
-msgstr ""
+msgstr "نمایش فایل"
 
 #: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
-msgstr ""
+msgstr "حذف"
 
 #: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
-msgstr ""
+msgstr "پشتیبان گیری"
 
 #: src/data/Runnable.vala:594
 #, c-format
@@ -182,17 +184,17 @@ msgstr ""
 #: src/data/Game.vala:537
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "در حال اجرا"
 
 #: src/data/Game.vala:540
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "نصب شده"
 
 #: src/data/Game.vala:541
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "در حال نصب"
 
 #: src/data/Game.vala:542
 msgctxt "status"
@@ -202,48 +204,48 @@ msgstr ""
 #: src/data/Game.vala:543
 msgctxt "status"
 msgid "Download started"
-msgstr ""
+msgstr "دانلود شروع شد"
 
 #: src/data/Game.vala:545
 msgctxt "status"
 msgid "Not installed"
-msgstr ""
+msgstr "نصب نشد"
 
 #: src/data/Game.vala:555
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "نصب شده"
 
 #: src/data/Game.vala:556
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "در حال نصب"
 
 #: src/data/Game.vala:558
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "در حال دانلود"
 
 #: src/data/Game.vala:560
 msgctxt "status_header"
 msgid "Not installed"
-msgstr ""
+msgstr "نصب نشد"
 
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr ""
+msgstr "%s بازی"
 
 #: src/data/adapters/GamesAdapter.vala:424
 msgctxt "status_header"
 msgid "Favorites"
-msgstr ""
+msgstr "مورد علاقه‌ها"
 
 #: src/data/adapters/GamesAdapter.vala:429
 #, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr ""
+msgstr "%s: مورد علاقه"
 
 #: src/data/adapters/GamesAdapter.vala:454
 msgid "Merging games"
@@ -257,22 +259,22 @@ msgstr ""
 #: src/data/adapters/GamesAdapter.vala:514
 #, c-format
 msgid "Loading games from %s"
-msgstr ""
+msgstr "بارگیری بازی‌ها از %s"
 
 #: src/data/adapters/GamesAdapter.vala:621
 msgctxt "sort_mode"
 msgid "By name"
-msgstr ""
+msgstr "بر اساس نام"
 
 #: src/data/adapters/GamesAdapter.vala:622
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr ""
+msgstr "بر اساس آخرین راه‌اندازی"
 
 #: src/data/adapters/GamesAdapter.vala:623
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr ""
+msgstr "بر اساس زمان بازی"
 
 #: src/data/adapters/GamesAdapter.vala:648
 msgctxt "group_mode"
@@ -322,12 +324,12 @@ msgstr ""
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
 msgid "Not installed"
-msgstr ""
+msgstr "نصب نشد"
 
 #: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
-msgstr ""
+msgstr "نصب شده"
 
 #: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
@@ -356,7 +358,7 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
-msgstr ""
+msgstr "اجرا"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
@@ -455,7 +457,7 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:424
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
 msgid "Default"
-msgstr ""
+msgstr "پیش‌فرض"
 
 #: src/data/providers/images/SteamGridDB.vala:115
 #: src/data/providers/data/IGDB.vala:431
