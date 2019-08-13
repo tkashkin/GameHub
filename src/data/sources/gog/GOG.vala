@@ -155,7 +155,7 @@ namespace GameHub.Data.Sources.GOG
 			return user_token != null;
 		}
 
-		private async bool refresh_token()
+		public async bool refresh_token()
 		{
 			if(user_refresh_token == null)
 			{
