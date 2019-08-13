@@ -155,7 +155,23 @@ namespace GameHub.Data.Sources.GOG
 			{
 				var lang = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
 				var url = @"https://api.gog.com/products/$(id)?expand=downloads,description,expanded_dlcs" + (lang != null && lang.length > 0 ? "&locale=" + lang : "");
-				info_detailed = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token));
+
+				while(true)
+				{
+					uint status = 0;
+					var json = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token, null, null, out status));
+
+					if(status == 200 && json != null && json.length > 0)
+					{
+						info_detailed = json;
+						break;
+					}
+
+					if(status == 401)
+					{
+						yield ((GOG) source).refresh_token();
+					}
+				}
 			}
 
 			var root = Parser.parse_json(info_detailed);
@@ -470,18 +486,30 @@ namespace GameHub.Data.Sources.GOG
 		private bool loading_achievements = false;
 		public override async ArrayList<Game.Achievement>? load_achievements()
 		{
-			if(achievements != null || loading_achievements || GOG.instance == null || GOG.instance.user_id == null)
+			if(achievements != null || loading_achievements || source == null || ((GOG) source).user_id == null)
 			{
 				return achievements;
 			}
 
 			loading_achievements = true;
 
-			var url = @"https://gameplay.gog.com/clients/$(id)/users/$(GOG.instance.user_id)/achievements";
+			Json.Node? root = null;
+			Json.Object? root_obj = null;
 
-			var root = (yield Parser.parse_remote_json_file_async(url, "GET", GOG.instance.user_token));
-			var root_obj = root != null && root.get_node_type() == Json.NodeType.OBJECT
-				? root.get_object() : null;
+			while(true)
+			{
+				var url = "https://gameplay.gog.com/clients/%s/users/%s/achievements".printf(id, ((GOG) source).user_id);
+				uint status = 0;
+
+				root = (yield Parser.parse_remote_json_file_async(url, "GET", ((GOG) source).user_token, null, null, out status));
+				root_obj = root != null && root.get_node_type() == Json.NodeType.OBJECT ? root.get_object() : null;
+
+				if(status == 200 && root_obj != null) break;
+				if(status == 401)
+				{
+					yield ((GOG) source).refresh_token();
+				}
+			}
 
 			if(root_obj == null || !root_obj.has_member("items"))
 			{
@@ -682,7 +710,7 @@ namespace GameHub.Data.Sources.GOG
 				is_hidden = json.has_member("isHidden") && json.get_boolean_member("isHidden");
 				name = json.has_member("name") ? json.get_string_member("name") : game.name;
 
-				var type = json.has_member("type") ? json.get_string_member("type") : "FileTask";
+				var type = json.has_member("type") ? json.get_string_member("type") : "filetask";
 
 				if(type.down() == "filetask")
 				{
@@ -800,7 +828,21 @@ namespace GameHub.Data.Sources.GOG
 
 			public async File? download()
 			{
-				var root_node = yield Parser.parse_remote_json_file_async(file, "GET", ((GOG) game.source).user_token);
+				Json.Node? root_node = null;
+
+				while(true)
+				{
+					uint status = 0;
+
+					root_node = yield Parser.parse_remote_json_file_async(file, "GET", ((GOG) game.source).user_token, null, null, out status);
+
+					if(status == 200 && root_node != null) break;
+					if(status == 401)
+					{
+						yield ((GOG) game.source).refresh_token();
+					}
+				}
+
 				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return null;
 				var root = root_node.get_object();
 				if(root == null || !root.has_member("downlink")) return null;
@@ -956,7 +998,7 @@ namespace GameHub.Data.Sources.GOG
 				game.enable_overlays();
 				var dlc_overlay = new Game.Overlay(game, "dlc_" + id, "DLC: " + name, true);
 
-				game.mount_overlays(dlc_overlay.directory);
+				yield game.mount_overlays(dlc_overlay.directory);
 
 				install_dir = game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
 
