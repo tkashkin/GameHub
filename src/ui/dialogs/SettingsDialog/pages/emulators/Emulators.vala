@@ -68,7 +68,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 			var actionbar = new ActionBar();
 			actionbar.vexpand = false;
-			actionbar.get_style_context().add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR);
 
 			add_btn = new Button.from_icon_name("list-add-symbolic", IconSize.MENU);
 			add_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);

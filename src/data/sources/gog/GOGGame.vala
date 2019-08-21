@@ -161,16 +161,16 @@ namespace GameHub.Data.Sources.GOG
 					uint status = 0;
 					var json = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token, null, null, out status));
 
-					if(status == 200 && json != null && json.length > 0)
+					if(status == Soup.Status.OK && json != null && json.length > 0)
 					{
 						info_detailed = json;
 						break;
 					}
-
-					if(status == 401)
+					else if(status == Soup.Status.UNAUTHORIZED)
 					{
 						yield ((GOG) source).refresh_token();
 					}
+					else break;
 				}
 			}
 
@@ -504,11 +504,11 @@ namespace GameHub.Data.Sources.GOG
 				root = (yield Parser.parse_remote_json_file_async(url, "GET", ((GOG) source).user_token, null, null, out status));
 				root_obj = root != null && root.get_node_type() == Json.NodeType.OBJECT ? root.get_object() : null;
 
-				if(status == 200 && root_obj != null) break;
-				if(status == 401)
+				if(status == Soup.Status.UNAUTHORIZED)
 				{
 					yield ((GOG) source).refresh_token();
 				}
+				else break;
 			}
 
 			if(root_obj == null || !root_obj.has_member("items"))
@@ -836,11 +836,11 @@ namespace GameHub.Data.Sources.GOG
 
 					root_node = yield Parser.parse_remote_json_file_async(file, "GET", ((GOG) game.source).user_token, null, null, out status);
 
-					if(status == 200 && root_node != null) break;
-					if(status == 401)
+					if(status == Soup.Status.UNAUTHORIZED)
 					{
 						yield ((GOG) game.source).refresh_token();
 					}
+					else break;
 				}
 
 				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return null;

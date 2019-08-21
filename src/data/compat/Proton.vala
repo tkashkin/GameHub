@@ -142,11 +142,7 @@ namespace GameHub.Data.Compat
 			{
 				cmd = { executable.get_path(), "run", "msiexec", "/i", file.get_path() };
 			}
-			if(args != null)
-			{
-				foreach(var arg in args) cmd += arg;
-			}
-			yield Utils.run_thread(cmd, dir.get_path(), prepare_env(runnable, parse_opts));
+			yield Utils.run_thread(combine_cmd_with_args(cmd, runnable, args), dir.get_path(), prepare_env(runnable, parse_opts));
 		}
 
 		public override File get_default_wineprefix(Runnable runnable)

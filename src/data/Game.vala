@@ -122,6 +122,11 @@ namespace GameHub.Data
 					var args = Utils.parse_args(arguments);
 					if(args != null)
 					{
+						if("$command" in args || "${command}" in args)
+						{
+							cmd = {};
+							variables.set("command", executable.get_path());
+						}
 						foreach(var arg in args)
 						{
 							if("$" in arg)
