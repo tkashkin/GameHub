@@ -65,10 +65,6 @@ namespace GameHub.UI.Views.GamesView
 
 		private Box actions;
 
-		public const int CARD_WIDTH_MIN = 320;
-		public const int CARD_WIDTH_MAX = 680;
-		public const float CARD_RATIO = 0.467f; // 460x215
-
 		private Frame progress_bar;
 
 		private Image no_image_indicator;
@@ -91,7 +87,6 @@ namespace GameHub.UI.Views.GamesView
 			content = new Overlay();
 
 			image = new AutoSizeImage();
-			image.set_constraint(CARD_WIDTH_MIN, CARD_WIDTH_MAX, CARD_RATIO);
 
 			src_icons = new Box(Orientation.HORIZONTAL, 4);
 			src_icons.valign = Align.START;
@@ -217,6 +212,10 @@ namespace GameHub.UI.Views.GamesView
 
 			Settings.UI.Appearance.instance.notify["grid-platform-icons"].connect(update_grid_icons);
 			update_grid_icons();
+
+			Settings.UI.Appearance.instance.notify["grid-card-width"].connect(update_image_constraints);
+			Settings.UI.Appearance.instance.notify["grid-card-height"].connect(update_image_constraints);
+			update_image_constraints();
 		}
 
 		private ulong status_handler_id;
@@ -442,6 +441,16 @@ namespace GameHub.UI.Views.GamesView
 				src_icons.visible = platform_icons.visible = Settings.UI.Appearance.instance.grid_platform_icons;
 				return Source.REMOVE;
 			}, Priority.LOW);
+		}
+
+		private void update_image_constraints()
+		{
+			var w = Settings.UI.Appearance.instance.grid_card_width;
+			var h = Settings.UI.Appearance.instance.grid_card_height;
+			var ratio = (float) h / w;
+			var min = (int) (w / 1.5f);
+			var max = (int) (w * 1.5f);
+			image.set_constraint(min, max, ratio);
 		}
 
 		private void open_context_menu(Event e, bool at_pointer=true)

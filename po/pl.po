@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 05:53+0300\n"
+"POT-Creation-Date: 2019-08-21 11:08+0300\n"
 "PO-Revision-Date: 2019-06-07 16:03+0000\n"
 "Last-Translator: Antek Karaś <antos.karas@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
@@ -120,12 +120,12 @@ msgstr "Pokaż pomoc dotyczącą opcji rejestrowania"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 msgid "Select executable"
 msgstr "Wybierz plik wykonywalny"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:388
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:389
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -535,8 +535,8 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:141
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:266
-#: src/ui/views/GamesView/GamesView.vala:646
+#: src/ui/views/GamesView/GamesView.vala:267
+#: src/ui/views/GamesView/GamesView.vala:647
 msgid "Settings"
 msgstr "Ustawienia"
 
@@ -576,80 +576,106 @@ msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "Katalog gier zawiera spację. To może powodować problemy dla niektórych gier"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
 msgstr "Interfejs"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:35
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 #, fuzzy
 msgid "Dark theme"
 msgstr "Użyj ciemnego motywu"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:69
-msgid "Show platform icons in grid view"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
+#, fuzzy
+msgid "Game card"
+msgstr "Nazwa gry"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
+#, fuzzy
+msgid "Show platform icons"
 msgstr "Pokaż ikonę platformy w widoku siatki"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
+msgctxt "grid_size"
+msgid "Card size"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
+msgctxt "grid_size_preset"
+msgid "Presets"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 #, fuzzy
 msgid "Games list: installed"
 msgstr "%s: niema dostępnych instalatorów"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:140
 #, fuzzy
 msgid "Games list: not installed"
 msgstr "%s: niema dostępnych instalatorów"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:142
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:146
 #, fuzzy
 msgctxt "list_style"
 msgid "Show icon"
 msgstr "Pokaż plik"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:143
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:147
 msgctxt "list_style"
 msgid "Bold title"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:144
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
 msgctxt "list_style"
 msgid "Show status"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
 msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
+#, fuzzy
+msgid "Grid options"
+msgstr "Opcje gry:"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
+#, fuzzy
+msgid "List options"
+msgstr "Opcje rejestrowania:"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -885,8 +911,8 @@ msgstr "Zapisz"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:312
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
-#: src/ui/dialogs/GamePropertiesDialog.vala:144
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/GamePropertiesDialog.vala:143
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -908,7 +934,7 @@ msgid "Name"
 msgstr "Nazwa"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:167
+#: src/ui/dialogs/GamePropertiesDialog.vala:166
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Argumenty"
@@ -938,7 +964,7 @@ msgid "Select emulator directory"
 msgstr "Wybierz katalog emulatora"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:185
+#: src/ui/dialogs/GamePropertiesDialog.vala:184
 msgid "Force compatibility mode"
 msgstr "Wymuś warstwę kompatybilności"
 
@@ -1084,38 +1110,38 @@ msgstr "%s: Właściwości"
 msgid "Images"
 msgstr "Obrazy"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:115
+#: src/ui/dialogs/GamePropertiesDialog.vala:114
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
-#: src/ui/views/GameDetailsView/blocks/Artwork.vala:59
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:60
 #, fuzzy
 msgid "Download images"
 msgstr "Pobieranie"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:122
+#: src/ui/dialogs/GamePropertiesDialog.vala:121
 msgid "Image URL"
 msgstr "URL obrazu"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:130
+#: src/ui/dialogs/GamePropertiesDialog.vala:129
 msgid "Icon URL"
 msgstr "URL ikony"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:180
+#: src/ui/dialogs/GamePropertiesDialog.vala:179
 msgid "Compatibility"
 msgstr "Kompatybilność"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:202
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 msgid "Launch from terminal"
 msgstr "Uruchom z terminala"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:218
+#: src/ui/dialogs/GamePropertiesDialog.vala:217
 msgid "Copy to clipboard"
 msgstr "Kopiuj do schowka"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Add to Steam"
 msgstr "Dodaj do Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:221
+#: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Add to the Steam library"
 msgstr "Dodaj do biblioteki Steam"
 
@@ -1266,45 +1292,45 @@ msgstr "Brak gier"
 msgid "Get some games or enable some game sources in settings"
 msgstr "Zdobądź trochę gier lub aktywuj trochę źródeł gier w opcjach"
 
-#: src/ui/views/GamesView/GamesView.vala:186
+#: src/ui/views/GamesView/GamesView.vala:187
 msgid "Grid view"
 msgstr "Widok siatki"
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:188
 msgid "List view"
 msgstr "Widok listy"
 
-#: src/ui/views/GamesView/GamesView.vala:195
+#: src/ui/views/GamesView/GamesView.vala:196
 msgid "All games"
 msgstr "Wszystkie gry"
 
-#: src/ui/views/GamesView/GamesView.vala:218
+#: src/ui/views/GamesView/GamesView.vala:219
 msgid "Downloads"
 msgstr "Pobrane"
 
-#: src/ui/views/GamesView/GamesView.vala:244
+#: src/ui/views/GamesView/GamesView.vala:245
 msgid "Filters"
 msgstr "Filtry"
 
-#: src/ui/views/GamesView/GamesView.vala:252
+#: src/ui/views/GamesView/GamesView.vala:253
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Dodaj grę"
 
-#: src/ui/views/GamesView/GamesView.vala:259
+#: src/ui/views/GamesView/GamesView.vala:260
 msgid "Search"
 msgstr "Wyszukaj"
 
-#: src/ui/views/GamesView/GamesView.vala:386
+#: src/ui/views/GamesView/GamesView.vala:387
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:387
+#: src/ui/views/GamesView/GamesView.vala:388
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Powrót"
 
-#: src/ui/views/GamesView/GamesView.vala:566
+#: src/ui/views/GamesView/GamesView.vala:567
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
@@ -1312,34 +1338,34 @@ msgstr[0] "%u gra"
 msgstr[1] "%u gry"
 msgstr[2] "%u gier"
 
-#: src/ui/views/GamesView/GamesView.vala:582
+#: src/ui/views/GamesView/GamesView.vala:583
 msgid "No user-added games"
 msgstr "Brak gier dodanych przez użytkownika"
 
-#: src/ui/views/GamesView/GamesView.vala:583
+#: src/ui/views/GamesView/GamesView.vala:584
 msgid "Add some games using plus button"
 msgstr "Dodaj jakieś gry używając przycisku plusa"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:588
 #, c-format
 msgid "No %s games"
 msgstr "Brak %s gier"
 
-#: src/ui/views/GamesView/GamesView.vala:588
+#: src/ui/views/GamesView/GamesView.vala:589
 msgid "Get some Linux-compatible games"
 msgstr "Zdobądź jakieś gry kompatybilne z Linuksem"
 
-#: src/ui/views/GamesView/GamesView.vala:598
+#: src/ui/views/GamesView/GamesView.vala:599
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Brak pasujących gier “%s”"
 
-#: src/ui/views/GamesView/GamesView.vala:603
+#: src/ui/views/GamesView/GamesView.vala:604
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Brak %1$s pasujących gier “%2$s”"
 
-#: src/ui/views/GamesView/GamesView.vala:644
+#: src/ui/views/GamesView/GamesView.vala:645
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1347,16 +1373,16 @@ msgstr ""
 "Gry nie zostały wczytane ze Steam. Ustaw prywatność swojej listy gier na "
 "publiczną lub użyj własnego klucza Steam API w opcjach."
 
-#: src/ui/views/GamesView/GamesView.vala:645
+#: src/ui/views/GamesView/GamesView.vala:646
 msgid "Privacy"
 msgstr "Prywatność"
 
-#: src/ui/views/GamesView/GamesView.vala:792
+#: src/ui/views/GamesView/GamesView.vala:793
 #, fuzzy
 msgid "Downloading images"
 msgstr "Pobieranie"
 
-#: src/ui/views/GamesView/GamesView.vala:806
+#: src/ui/views/GamesView/GamesView.vala:807
 #, fuzzy, c-format
 msgid "Downloading image: %s"
 msgstr "Pobieranie"
@@ -1651,18 +1677,18 @@ msgstr ""
 msgid "Select file"
 msgstr "Wybierz pliki"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 #, fuzzy
 msgid "No images"
 msgstr "Obrazy"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:97
+#: src/ui/widgets/ImagesDownloadPopover.vala:93
 msgid "Search images:"
 msgstr "Wyszukaj grafikę:"
 
@@ -1719,6 +1745,36 @@ msgstr "Wstrzymano: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Pobieranie anulowane"
+
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr ""
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr ""
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr ""
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr ""
 
 #~ msgid "Description"
 #~ msgstr "Opis"

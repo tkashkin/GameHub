@@ -26,10 +26,6 @@ namespace GameHub.UI.Widgets
 {
 	class ImagesDownloadPopover: Popover
 	{
-		private const int CARD_WIDTH_MIN = 180;
-		private const int CARD_WIDTH_MAX = 520;
-		private const float CARD_RATIO = 0.467f; // 460x215
-
 		public Game game { get; construct; }
 
 		private Box vbox;
@@ -231,12 +227,19 @@ namespace GameHub.UI.Widgets
 				card.tooltip_markup = image.description;
 
 				var img = new AutoSizeImage();
-				img.set_constraint(CARD_WIDTH_MIN, CARD_WIDTH_MAX, CARD_RATIO);
 				img.load(image.url, "image");
 
 				card.add(img);
 
 				child = card;
+
+				var w = Settings.UI.Appearance.instance.grid_card_width;
+				var h = Settings.UI.Appearance.instance.grid_card_height;
+				var ratio = (float) h / w;
+				var min = (int) (w / 2f);
+				var max = (int) (w - 1.5f);
+				img.set_constraint(min, max, ratio);
+
 				show_all();
 			}
 		}

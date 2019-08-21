@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 05:53+0300\n"
+"POT-Creation-Date: 2019-08-21 11:08+0300\n"
 "PO-Revision-Date: 2019-07-13 09:02+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -118,12 +118,12 @@ msgstr "Vis hjelp for loggføringsvalg"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 msgid "Select executable"
 msgstr "Velg kjørbar fil"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:388
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:389
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -536,8 +536,8 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:141
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:266
-#: src/ui/views/GamesView/GamesView.vala:646
+#: src/ui/views/GamesView/GamesView.vala:267
+#: src/ui/views/GamesView/GamesView.vala:647
 msgid "Settings"
 msgstr "Innstillinger"
 
@@ -575,78 +575,104 @@ msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "Spillmappe inneholder mellomrom. Det kan forårsake problemer for noen spill"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
 msgstr "Grensesnitt"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:35
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
 msgstr "Utseende"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
 msgstr "Generelle grensesnittsinnstillinger"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgid "Dark theme"
 msgstr "Mørk drakt"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
 msgstr "Drakt-basert"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
 msgstr "Symbolske"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
 msgstr "Farget"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
 msgstr "Ikonstil"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:69
-msgid "Show platform icons in grid view"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
+#, fuzzy
+msgid "Game card"
+msgstr "Spillnavn"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
+#, fuzzy
+msgid "Show platform icons"
 msgstr "Vis plattformsikoner i rutenettvisning"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
+msgctxt "grid_size"
+msgid "Card size"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
+msgctxt "grid_size_preset"
+msgid "Presets"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 #, fuzzy
 msgid "Games list: installed"
 msgstr "Spilliste: Installert"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:140
 #, fuzzy
 msgid "Games list: not installed"
 msgstr "Spilliste: Ikke installert"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:142
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:146
 msgctxt "list_style"
 msgid "Show icon"
 msgstr "Vis ikon"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:143
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:147
 msgctxt "list_style"
 msgid "Bold title"
 msgstr "Fet tittel"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:144
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
 msgctxt "list_style"
 msgid "Show status"
 msgstr "Vis status"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
 msgstr "Demp"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
+#, fuzzy
+msgid "Grid options"
+msgstr "Spillegenskaper:"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
+#, fuzzy
+msgid "List options"
+msgstr "Loggføringsvalg:"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -869,8 +895,8 @@ msgstr "Lagre"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:312
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
-#: src/ui/dialogs/GamePropertiesDialog.vala:144
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/GamePropertiesDialog.vala:143
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -892,7 +918,7 @@ msgid "Name"
 msgstr "Navn"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:167
+#: src/ui/dialogs/GamePropertiesDialog.vala:166
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Argumenter"
@@ -920,7 +946,7 @@ msgid "Select emulator directory"
 msgstr "Velg emulatormappe"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:185
+#: src/ui/dialogs/GamePropertiesDialog.vala:184
 msgid "Force compatibility mode"
 msgstr "Tving gjennom kompabilitetsmodus"
 
@@ -1062,37 +1088,37 @@ msgstr "%s: Egenskaper"
 msgid "Images"
 msgstr "Bilder"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:115
+#: src/ui/dialogs/GamePropertiesDialog.vala:114
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
-#: src/ui/views/GameDetailsView/blocks/Artwork.vala:59
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:60
 msgid "Download images"
 msgstr "Last ned bilder"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:122
+#: src/ui/dialogs/GamePropertiesDialog.vala:121
 msgid "Image URL"
 msgstr "Bildenettadresse"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:130
+#: src/ui/dialogs/GamePropertiesDialog.vala:129
 msgid "Icon URL"
 msgstr "Ikonnettadresse"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:180
+#: src/ui/dialogs/GamePropertiesDialog.vala:179
 msgid "Compatibility"
 msgstr "Kompabilitet"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:202
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 msgid "Launch from terminal"
 msgstr "Kjør fra terminal"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:218
+#: src/ui/dialogs/GamePropertiesDialog.vala:217
 msgid "Copy to clipboard"
 msgstr "Kopier til utklippstavle"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Add to Steam"
 msgstr "Legg til på Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:221
+#: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Add to the Steam library"
 msgstr "Legg til i Steam-bibliotek"
 
@@ -1244,79 +1270,79 @@ msgstr "Ingen spill"
 msgid "Get some games or enable some game sources in settings"
 msgstr "Hent noen spill eller skru på noen spillkilder i innstillingene"
 
-#: src/ui/views/GamesView/GamesView.vala:186
+#: src/ui/views/GamesView/GamesView.vala:187
 msgid "Grid view"
 msgstr "Rutenettvisning"
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:188
 msgid "List view"
 msgstr "Listevisning"
 
-#: src/ui/views/GamesView/GamesView.vala:195
+#: src/ui/views/GamesView/GamesView.vala:196
 msgid "All games"
 msgstr "Alle spill"
 
-#: src/ui/views/GamesView/GamesView.vala:218
+#: src/ui/views/GamesView/GamesView.vala:219
 msgid "Downloads"
 msgstr "Nedlastinger"
 
-#: src/ui/views/GamesView/GamesView.vala:244
+#: src/ui/views/GamesView/GamesView.vala:245
 msgid "Filters"
 msgstr "Filtre"
 
-#: src/ui/views/GamesView/GamesView.vala:252
+#: src/ui/views/GamesView/GamesView.vala:253
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Legg til spill"
 
-#: src/ui/views/GamesView/GamesView.vala:259
+#: src/ui/views/GamesView/GamesView.vala:260
 msgid "Search"
 msgstr "Søk"
 
-#: src/ui/views/GamesView/GamesView.vala:386
+#: src/ui/views/GamesView/GamesView.vala:387
 msgid "Menu"
 msgstr "Meny"
 
-#: src/ui/views/GamesView/GamesView.vala:387
+#: src/ui/views/GamesView/GamesView.vala:388
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Tilbake"
 
-#: src/ui/views/GamesView/GamesView.vala:566
+#: src/ui/views/GamesView/GamesView.vala:567
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spill"
 msgstr[1] "%u spill"
 
-#: src/ui/views/GamesView/GamesView.vala:582
+#: src/ui/views/GamesView/GamesView.vala:583
 msgid "No user-added games"
 msgstr "Ingen brukertillagte spill"
 
-#: src/ui/views/GamesView/GamesView.vala:583
+#: src/ui/views/GamesView/GamesView.vala:584
 msgid "Add some games using plus button"
 msgstr "Legg till noen spill med pluss-knappen"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:588
 #, c-format
 msgid "No %s games"
 msgstr "Ingen %s-spill"
 
-#: src/ui/views/GamesView/GamesView.vala:588
+#: src/ui/views/GamesView/GamesView.vala:589
 msgid "Get some Linux-compatible games"
 msgstr "Hent noen Linux-kompatible spill"
 
-#: src/ui/views/GamesView/GamesView.vala:598
+#: src/ui/views/GamesView/GamesView.vala:599
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Ingen spill samsvarer med \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:603
+#: src/ui/views/GamesView/GamesView.vala:604
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Ingen %1$s-spill samsvarer med \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:644
+#: src/ui/views/GamesView/GamesView.vala:645
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1324,15 +1350,15 @@ msgstr ""
 "Ingen spill ble innlastet fra Steam. Sett ditt spilllistepersonvern til "
 "\"offentlig\" for å bruke din egen Steam-API-nøkkel i innstillingene."
 
-#: src/ui/views/GamesView/GamesView.vala:645
+#: src/ui/views/GamesView/GamesView.vala:646
 msgid "Privacy"
 msgstr "Personvern"
 
-#: src/ui/views/GamesView/GamesView.vala:792
+#: src/ui/views/GamesView/GamesView.vala:793
 msgid "Downloading images"
 msgstr "Laster ned bilder"
 
-#: src/ui/views/GamesView/GamesView.vala:806
+#: src/ui/views/GamesView/GamesView.vala:807
 #, c-format
 msgid "Downloading image: %s"
 msgstr "Laster ned bilde: %s"
@@ -1618,11 +1644,11 @@ msgstr "Handling"
 msgid "Select file"
 msgstr "Velg fil"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid "No images"
 msgstr "Ingen bilder"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
@@ -1630,7 +1656,7 @@ msgstr ""
 "Fant ikke noen bilder for dette spillet\n"
 "Forsikre deg om at spillnavnet er riktig"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:97
+#: src/ui/widgets/ImagesDownloadPopover.vala:93
 msgid "Search images:"
 msgstr "Søk etter bilder:"
 
@@ -1687,6 +1713,36 @@ msgstr "Pauset: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Nedlasting avbrutt"
+
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr ""
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr ""
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr ""
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr ""
 
 #~ msgid "Description"
 #~ msgstr "Beskrivelse"

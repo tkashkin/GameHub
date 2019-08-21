@@ -104,6 +104,14 @@
 				<default>true</default>
 				<summary>Show platform icons in grid view</summary>
 			</key>
+			<key name="grid-card-width" type="i">
+				<default>460</default>
+				<summary>Grid view game card width</summary>
+			</key>
+			<key name="grid-card-height" type="i">
+				<default>215</default>
+				<summary>Grid view game card height</summary>
+			</key>
 		</schema>
 
 	<!-- UI / Behavior -->

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 05:53+0300\n"
+"POT-Creation-Date: 2019-08-21 11:08+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -128,13 +128,13 @@ msgstr "Properti permainan"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 #, fuzzy
 msgid "Select executable"
 msgstr "Pilih permainan yang dapat dieksekusi"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:388
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:389
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -545,8 +545,8 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:141
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:266
-#: src/ui/views/GamesView/GamesView.vala:646
+#: src/ui/views/GamesView/GamesView.vala:267
+#: src/ui/views/GamesView/GamesView.vala:647
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -584,80 +584,106 @@ msgstr "Beberapa pengaturan akan diterapkan setelah aplikasi dimulai ulang"
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
 msgstr "Antarmuka"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:35
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 #, fuzzy
 msgid "Dark theme"
 msgstr "Gunakan tema gelap"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:69
-msgid "Show platform icons in grid view"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
+#, fuzzy
+msgid "Game card"
+msgstr "Nama permainan"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
+#, fuzzy
+msgid "Show platform icons"
 msgstr "Tampilkan ikon platform di tampilan grid"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
+msgctxt "grid_size"
+msgid "Card size"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
+msgctxt "grid_size_preset"
+msgid "Presets"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 #, fuzzy
 msgid "Games list: installed"
 msgstr "Tidak terpasang"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:140
 #, fuzzy
 msgid "Games list: not installed"
 msgstr "Tidak terpasang"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:142
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:146
 #, fuzzy
 msgctxt "list_style"
 msgid "Show icon"
 msgstr "Pilih berkas"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:143
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:147
 msgctxt "list_style"
 msgid "Bold title"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:144
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
 msgctxt "list_style"
 msgid "Show status"
 msgstr ""
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
 msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
+#, fuzzy
+msgid "Grid options"
+msgstr "Properti permainan"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
+#, fuzzy
+msgid "List options"
+msgstr "Properti permainan"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -889,8 +915,8 @@ msgstr "Simpan"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:312
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
-#: src/ui/dialogs/GamePropertiesDialog.vala:144
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/GamePropertiesDialog.vala:143
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -913,7 +939,7 @@ msgid "Name"
 msgstr "Nama"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:167
+#: src/ui/dialogs/GamePropertiesDialog.vala:166
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Argumen"
@@ -943,7 +969,7 @@ msgid "Select emulator directory"
 msgstr "Pilih direktori emulator"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:185
+#: src/ui/dialogs/GamePropertiesDialog.vala:184
 msgid "Force compatibility mode"
 msgstr "Paksakan mode pengguna yang ada"
 
@@ -1091,39 +1117,39 @@ msgstr "%s: Properti"
 msgid "Images"
 msgstr "Gambar"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:115
+#: src/ui/dialogs/GamePropertiesDialog.vala:114
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
-#: src/ui/views/GameDetailsView/blocks/Artwork.vala:59
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:60
 #, fuzzy
 msgid "Download images"
 msgstr "Mengunduh"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:122
+#: src/ui/dialogs/GamePropertiesDialog.vala:121
 msgid "Image URL"
 msgstr "URL gambar"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:130
+#: src/ui/dialogs/GamePropertiesDialog.vala:129
 msgid "Icon URL"
 msgstr "URL ikon"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:180
+#: src/ui/dialogs/GamePropertiesDialog.vala:179
 msgid "Compatibility"
 msgstr "Kompatibilitas"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:202
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 msgid "Launch from terminal"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:218
+#: src/ui/dialogs/GamePropertiesDialog.vala:217
 msgid "Copy to clipboard"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 #, fuzzy
 msgid "Add to Steam"
 msgstr "Tambahkan tanda"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:221
+#: src/ui/dialogs/GamePropertiesDialog.vala:220
 #, fuzzy
 msgid "Add to the Steam library"
 msgstr "Tambahkan tanda"
@@ -1276,79 +1302,79 @@ msgstr ""
 "Dapatkan beberapa permainan atau aktifkan beberapa sumber permainan di "
 "pengaturan"
 
-#: src/ui/views/GamesView/GamesView.vala:186
+#: src/ui/views/GamesView/GamesView.vala:187
 msgid "Grid view"
 msgstr "Tilikan kisi"
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:188
 msgid "List view"
 msgstr "Tilikan daftar"
 
-#: src/ui/views/GamesView/GamesView.vala:195
+#: src/ui/views/GamesView/GamesView.vala:196
 msgid "All games"
 msgstr "Semua permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:218
+#: src/ui/views/GamesView/GamesView.vala:219
 msgid "Downloads"
 msgstr "Unduh"
 
-#: src/ui/views/GamesView/GamesView.vala:244
+#: src/ui/views/GamesView/GamesView.vala:245
 msgid "Filters"
 msgstr "Penyaring"
 
-#: src/ui/views/GamesView/GamesView.vala:252
+#: src/ui/views/GamesView/GamesView.vala:253
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Tambah permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:259
+#: src/ui/views/GamesView/GamesView.vala:260
 msgid "Search"
 msgstr "Cari"
 
-#: src/ui/views/GamesView/GamesView.vala:386
+#: src/ui/views/GamesView/GamesView.vala:387
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:387
+#: src/ui/views/GamesView/GamesView.vala:388
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Kembali"
 
-#: src/ui/views/GamesView/GamesView.vala:566
+#: src/ui/views/GamesView/GamesView.vala:567
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u permainan"
 msgstr[1] "%u permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:582
+#: src/ui/views/GamesView/GamesView.vala:583
 msgid "No user-added games"
 msgstr "Tidak ada game yang ditambahkan pengguna"
 
-#: src/ui/views/GamesView/GamesView.vala:583
+#: src/ui/views/GamesView/GamesView.vala:584
 msgid "Add some games using plus button"
 msgstr "Tambahkan beberapa game menggunakan tombol plus"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:588
 #, c-format
 msgid "No %s games"
 msgstr "Tidak ada %s permainan"
 
-#: src/ui/views/GamesView/GamesView.vala:588
+#: src/ui/views/GamesView/GamesView.vala:589
 msgid "Get some Linux-compatible games"
 msgstr "Dapatkan beberapa permainan Linux yang kompatibel"
 
-#: src/ui/views/GamesView/GamesView.vala:598
+#: src/ui/views/GamesView/GamesView.vala:599
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Tidak ada permainan yang cocok dengan “%s”"
 
-#: src/ui/views/GamesView/GamesView.vala:603
+#: src/ui/views/GamesView/GamesView.vala:604
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Tidak ada permainan dari %1$s yang cocok dengan “%2$s”"
 
-#: src/ui/views/GamesView/GamesView.vala:644
+#: src/ui/views/GamesView/GamesView.vala:645
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1356,16 +1382,16 @@ msgstr ""
 "Tidak ada permainan yang dimuat dari Steam. Setel privasi daftar permainan "
 "anda ke publik atau gunakan kunci API Steam anda sendiri dalam pengaturan."
 
-#: src/ui/views/GamesView/GamesView.vala:645
+#: src/ui/views/GamesView/GamesView.vala:646
 msgid "Privacy"
 msgstr "Privasi"
 
-#: src/ui/views/GamesView/GamesView.vala:792
+#: src/ui/views/GamesView/GamesView.vala:793
 #, fuzzy
 msgid "Downloading images"
 msgstr "Mengunduh"
 
-#: src/ui/views/GamesView/GamesView.vala:806
+#: src/ui/views/GamesView/GamesView.vala:807
 #, fuzzy, c-format
 msgid "Downloading image: %s"
 msgstr "Mengunduh"
@@ -1647,18 +1673,18 @@ msgstr ""
 msgid "Select file"
 msgstr "Pilih berkas"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 #, fuzzy
 msgid "No images"
 msgstr "Gambar"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:97
+#: src/ui/widgets/ImagesDownloadPopover.vala:93
 msgid "Search images:"
 msgstr "Cari gambar:"
 
@@ -1715,6 +1741,36 @@ msgstr "Dijeda: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Unduhan dibatalkan"
+
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr ""
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr ""
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr ""
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr ""
 
 #~ msgid "Description"
 #~ msgstr "Deskripsi"
