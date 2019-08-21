@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 05:53+0300\n"
+"POT-Creation-Date: 2019-08-21 11:08+0300\n"
 "PO-Revision-Date: 2019-07-13 09:02+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -117,12 +117,12 @@ msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 msgid "Select executable"
 msgstr "Kies uitvoerbaar bestand"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:388
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:389
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -536,8 +536,8 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:141
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:266
-#: src/ui/views/GamesView/GamesView.vala:646
+#: src/ui/views/GamesView/GamesView.vala:267
+#: src/ui/views/GamesView/GamesView.vala:647
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -576,76 +576,102 @@ msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "De spelmap bevat een spatie; dit kan problemen opleveren bij sommige spellen"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
 msgstr "Uiterlijk"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:35
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
 msgstr "Uiterlijk"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
 msgstr "Algemene instellingen"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgid "Dark theme"
 msgstr "Donker thema"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
 msgstr "Op basis van thema"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
 msgstr "Symbolisch"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
 msgstr "Met kleur"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
 msgstr "Pictogramstijl"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:69
-msgid "Show platform icons in grid view"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
+#, fuzzy
+msgid "Game card"
+msgstr "Spelnaam"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
+#, fuzzy
+msgid "Show platform icons"
 msgstr "Platformpictogrammen tonen in rasterweergave"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
+msgctxt "grid_size"
+msgid "Card size"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
+msgctxt "grid_size_preset"
+msgid "Presets"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 msgid "Games list: installed"
 msgstr "Spellenlijst: geïnstalleerd"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:140
 msgid "Games list: not installed"
 msgstr "Spellenlijst: niet geïnstalleerd"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:142
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:146
 msgctxt "list_style"
 msgid "Show icon"
 msgstr "Pictogram tonen"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:143
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:147
 msgctxt "list_style"
 msgid "Bold title"
 msgstr "Vetgedrukte titel"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:144
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
 msgctxt "list_style"
 msgid "Show status"
 msgstr "Status tonen"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
 msgstr "Dimmen"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
+#, fuzzy
+msgid "Grid options"
+msgstr "Spelopties:"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
+#, fuzzy
+msgid "List options"
+msgstr "Opties voor loggen:"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -868,8 +894,8 @@ msgstr "Opslaan"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:312
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
-#: src/ui/dialogs/GamePropertiesDialog.vala:144
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/GamePropertiesDialog.vala:143
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -891,7 +917,7 @@ msgid "Name"
 msgstr "Naam"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:167
+#: src/ui/dialogs/GamePropertiesDialog.vala:166
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Extra opties"
@@ -919,7 +945,7 @@ msgid "Select emulator directory"
 msgstr "Kies emulatormap"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:185
+#: src/ui/dialogs/GamePropertiesDialog.vala:184
 msgid "Force compatibility mode"
 msgstr "Comptabiliteitsmodus afdwingen"
 
@@ -1062,37 +1088,37 @@ msgstr "%s: Eigenschappen"
 msgid "Images"
 msgstr "Afbeeldingen"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:115
+#: src/ui/dialogs/GamePropertiesDialog.vala:114
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
-#: src/ui/views/GameDetailsView/blocks/Artwork.vala:59
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:60
 msgid "Download images"
 msgstr "Afbeeldingen downloaden"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:122
+#: src/ui/dialogs/GamePropertiesDialog.vala:121
 msgid "Image URL"
 msgstr "Afbeeldings-URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:130
+#: src/ui/dialogs/GamePropertiesDialog.vala:129
 msgid "Icon URL"
 msgstr "Pictogram-URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:180
+#: src/ui/dialogs/GamePropertiesDialog.vala:179
 msgid "Compatibility"
 msgstr "Comptabiliteit"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:202
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 msgid "Launch from terminal"
 msgstr "Opstarten in terminalvenster"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:218
+#: src/ui/dialogs/GamePropertiesDialog.vala:217
 msgid "Copy to clipboard"
 msgstr "Kopiëren naar klembord"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Add to Steam"
 msgstr "Toevoegen aan Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:221
+#: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Add to the Steam library"
 msgstr "Toevoegen aan de Steam-bibliotheek"
 
@@ -1244,79 +1270,79 @@ msgstr "Geen spellen"
 msgid "Get some games or enable some game sources in settings"
 msgstr "Installeer spellen of schakel spelbronnen in via de instellingen"
 
-#: src/ui/views/GamesView/GamesView.vala:186
+#: src/ui/views/GamesView/GamesView.vala:187
 msgid "Grid view"
 msgstr "Rasterweergave"
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:188
 msgid "List view"
 msgstr "Lijstweergave"
 
-#: src/ui/views/GamesView/GamesView.vala:195
+#: src/ui/views/GamesView/GamesView.vala:196
 msgid "All games"
 msgstr "Alle spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:218
+#: src/ui/views/GamesView/GamesView.vala:219
 msgid "Downloads"
 msgstr "Downloads"
 
-#: src/ui/views/GamesView/GamesView.vala:244
+#: src/ui/views/GamesView/GamesView.vala:245
 msgid "Filters"
 msgstr "Filters"
 
-#: src/ui/views/GamesView/GamesView.vala:252
+#: src/ui/views/GamesView/GamesView.vala:253
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Spel toevoegen"
 
-#: src/ui/views/GamesView/GamesView.vala:259
+#: src/ui/views/GamesView/GamesView.vala:260
 msgid "Search"
 msgstr "Zoeken"
 
-#: src/ui/views/GamesView/GamesView.vala:386
+#: src/ui/views/GamesView/GamesView.vala:387
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:387
+#: src/ui/views/GamesView/GamesView.vala:388
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Terug"
 
-#: src/ui/views/GamesView/GamesView.vala:566
+#: src/ui/views/GamesView/GamesView.vala:567
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spel"
 msgstr[1] "%u spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:582
+#: src/ui/views/GamesView/GamesView.vala:583
 msgid "No user-added games"
 msgstr "Geen door de gebruiker toegevoegde spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:583
+#: src/ui/views/GamesView/GamesView.vala:584
 msgid "Add some games using plus button"
 msgstr "Voeg spellen toe via de plus-knop"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:588
 #, c-format
 msgid "No %s games"
 msgstr "Geen %s-spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:588
+#: src/ui/views/GamesView/GamesView.vala:589
 msgid "Get some Linux-compatible games"
 msgstr "Installeer met Linux compatibele spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:598
+#: src/ui/views/GamesView/GamesView.vala:599
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Er zijn geen spellen die overeenkomen met \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:603
+#: src/ui/views/GamesView/GamesView.vala:604
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Er zijn geen %1$s-spellen die overeenkomen met \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:644
+#: src/ui/views/GamesView/GamesView.vala:645
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1324,15 +1350,15 @@ msgstr ""
 "Er zijn geen spellen geladen vanuit Steam. Maak je spellijst openbaar of "
 "voeg je eigen Steam API-sleutel toe via de instellingen."
 
-#: src/ui/views/GamesView/GamesView.vala:645
+#: src/ui/views/GamesView/GamesView.vala:646
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/ui/views/GamesView/GamesView.vala:792
+#: src/ui/views/GamesView/GamesView.vala:793
 msgid "Downloading images"
 msgstr "Bezig met downloaden van afbeeldingen"
 
-#: src/ui/views/GamesView/GamesView.vala:806
+#: src/ui/views/GamesView/GamesView.vala:807
 #, c-format
 msgid "Downloading image: %s"
 msgstr "Bezig met downloaden van afbeelding: %s"
@@ -1618,11 +1644,11 @@ msgstr "Verhaallijn"
 msgid "Select file"
 msgstr "Kies bestand"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid "No images"
 msgstr "Geen afbeeldingen"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
@@ -1630,7 +1656,7 @@ msgstr ""
 "Er zijn geen afbeeldingen gevonden bij dit spel\n"
 "Controleer de naam van het spel"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:97
+#: src/ui/widgets/ImagesDownloadPopover.vala:93
 msgid "Search images:"
 msgstr "Afbeeldingen zoeken:"
 
@@ -1687,6 +1713,36 @@ msgstr "Gepauzeerd: %d%% (%s/%s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Downloaden geannuleerd"
+
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr ""
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr ""
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr ""
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr ""
 
 #~ msgid "Description"
 #~ msgstr "Omschrijving"

@@ -62,22 +62,22 @@ namespace GameHub.UI.Widgets
 			StyleClass.add(this, Gtk.STYLE_CLASS_LINKED, "raised");
 		}
 
-		public int append_pixbuf(Gdk.Pixbuf pixbuf)
+		public int append_pixbuf(Gdk.Pixbuf pixbuf, string? tooltip=null, bool tooltip_markup=false)
 		{
-			return append(new Image.from_pixbuf(pixbuf));
+			return append(new Image.from_pixbuf(pixbuf), tooltip, tooltip_markup);
 		}
 
-		public int append_text(string text)
+		public int append_text(string text, string? tooltip=null, bool tooltip_markup=false)
 		{
-			return append(new Label(text));
+			return append(new Label(text), tooltip, tooltip_markup);
 		}
 
-		public int append_icon(string icon_name, IconSize size)
+		public int append_icon(string icon_name, IconSize size, string? tooltip=null, bool tooltip_markup=false)
 		{
-			return append(new Image.from_icon_name(icon_name, size));
+			return append(new Image.from_icon_name(icon_name, size), tooltip, tooltip_markup);
 		}
 
-		public int append(Widget w)
+		public int append(Widget w, string? tooltip=null, bool tooltip_markup=false)
 		{
 			int index;
 			for(index = item_map.size; item_map.has_key(index); index++);
@@ -104,6 +104,14 @@ namespace GameHub.UI.Widgets
 			item.show_all();
 
 			mode_added(index, w);
+
+			if(tooltip != null)
+			{
+				if(tooltip_markup)
+					w.tooltip_markup = tooltip;
+				else
+					w.tooltip_text = tooltip;
+			}
 
 			return index;
 		}
