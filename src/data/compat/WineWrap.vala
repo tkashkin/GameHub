@@ -136,7 +136,10 @@ namespace GameHub.Data.Compat
 		private async void action(Runnable runnable, string action)
 		{
 			if(!can_run(runnable)) return;
-			yield Utils.run_thread({ runnable.install_dir.get_child("start.sh").get_path(), action }, runnable.install_dir.get_path());
+
+			string[] cmd = { runnable.install_dir.get_child("start.sh").get_path(), action };
+
+			yield Utils.run_thread(combine_cmd_with_args(cmd, runnable), runnable.install_dir.get_path());
 		}
 	}
 }

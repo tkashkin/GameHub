@@ -102,7 +102,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var sidebar = new SettingsSidebar(pages);
 			sidebar.get_style_context().add_class("settings-pages-sidebar");
 
-			var content_hbox = new Box(Orientation.HORIZONTAL, 0);
+			var content_hbox = new Box(Orientation.HORIZONTAL, 1);
 			var content_root = new Box(Orientation.VERTICAL, 0);
 
 			content_root.add(restart_msg);
