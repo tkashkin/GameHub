@@ -65,15 +65,27 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			var proton_header = add_header("Proton");
 			proton_header.margin_start = proton_header.margin_end = 12;
 
-			proton = add_widget(new ListBox());
-			proton.selection_mode = SelectionMode.NONE;
-			proton.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			proton.expand = true;
+			var proton_scroll = add_widget(new ScrolledWindow(null, null));
+			proton_scroll.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			proton_scroll.hscrollbar_policy = PolicyType.NEVER;
 
-			proton.margin_start = 7;
-			proton.margin_end = 3;
-			proton.margin_top = 0;
-			proton.margin_bottom = 6;
+			proton_scroll.margin_start = 7;
+			proton_scroll.margin_end = 3;
+			proton_scroll.margin_top = 0;
+			proton_scroll.margin_bottom = 6;
+
+			proton = new ListBox();
+			proton.selection_mode = SelectionMode.NONE;
+			proton.get_style_context().add_class("separated-list");
+
+			proton_scroll.add(proton);
+
+			#if GTK_3_22
+			proton_scroll.propagate_natural_width = true;
+			proton_scroll.propagate_natural_height = true;
+			#else
+			proton_scroll.expand = true;
+			#endif
 
 			status_switch.active = steam_auth.enabled;
 			status_switch.notify["active"].connect(() => {

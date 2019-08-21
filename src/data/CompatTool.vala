@@ -47,6 +47,45 @@ namespace GameHub.Data
 		public virtual async void run_action(Runnable runnable, Runnable.RunnableAction action){}
 		public virtual async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false){}
 
+		protected string[] combine_cmd_with_args(string[] cmd, Runnable runnable, string[]? args_override=null)
+		{
+			string[] full_cmd = cmd;
+
+			var args = args_override ?? Utils.parse_args(runnable.arguments);
+			if(args != null)
+			{
+				if("$command" in args || "${command}" in args)
+				{
+					full_cmd = {};
+				}
+
+				var variables = new HashMap<string, string>();
+				variables.set("game", runnable.name.replace(": ", " - ").replace(":", ""));
+				variables.set("game_dir", runnable.install_dir.get_path());
+
+				foreach(var arg in args)
+				{
+					if(arg == "$command" || arg == "${command}")
+					{
+						foreach(var a in cmd)
+						{
+							full_cmd += a;
+						}
+					}
+					else
+					{
+						if("$" in arg)
+						{
+							arg = FSUtils.expand(arg, null, variables);
+						}
+						full_cmd += arg;
+					}
+				}
+			}
+
+			return full_cmd;
+		}
+
 		public static CompatTool? by_id(string? id)
 		{
 			foreach(var tool in CompatTools)

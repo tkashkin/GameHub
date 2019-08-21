@@ -146,25 +146,36 @@ namespace GameHub.Data
 					variables.set("game_dir", "");
 				}
 				var args = Utils.parse_args(arguments);
-				foreach(var arg in args)
+				if(args != null)
 				{
-					if(arg == "$game_args")
+					if(exec != null && ("$command" in args || "${command}" in args))
 					{
-						if(game != null)
+						result_args = {};
+						variables.set("command", exec.get_path());
+					}
+					foreach(var arg in args)
+					{
+						if(arg == "$game_args" || arg == "${game_args}")
 						{
-							var game_args = Utils.parse_args(game.arguments);
-							foreach(var game_arg in game_args)
+							if(game != null)
 							{
-								result_args += game_arg;
+								var game_args = Utils.parse_args(game.arguments);
+								if(game_args != null)
+								{
+									foreach(var game_arg in game_args)
+									{
+										result_args += game_arg;
+									}
+								}
 							}
+							continue;
 						}
-						continue;
+						if("$" in arg)
+						{
+							arg = FSUtils.expand(arg, null, variables);
+						}
+						result_args += arg;
 					}
-					if("$" in arg)
-					{
-						arg = FSUtils.expand(arg, null, variables);
-					}
-					result_args += arg;
 				}
 			}
 
@@ -243,7 +254,7 @@ namespace GameHub.Data
 			{
 				emu_name = emu.name;
 				id = "installer";
-				platform = installer.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
+				platform = installer.get_path().down().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
 				parts.add(new Runnable.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
 			}
 		}
