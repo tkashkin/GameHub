@@ -28,6 +28,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 {
 	public class Artwork: GameDetailsBlock
 	{
+		private AutoSizeImage image_view;
+
 		public Artwork(Game game)
 		{
 			Object(game: game, orientation: Orientation.VERTICAL, text_max_width: 48);
@@ -37,9 +39,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			var card = Styled.Card("gamecard", "static");
 
-			var image_view = new AutoSizeImage();
+			image_view = new AutoSizeImage();
 			image_view.hexpand = false;
-			image_view.set_constraint(360, 360, 0.467f);
 
 			var actions = new Box(Orientation.VERTICAL, 0);
 			actions.get_style_context().add_class("actions");
@@ -70,7 +71,20 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				image_view.load(game.image, "image");
 			});
 
+			Settings.UI.Appearance.instance.notify["grid-card-width"].connect(update_image_constraints);
+			Settings.UI.Appearance.instance.notify["grid-card-height"].connect(update_image_constraints);
+			update_image_constraints();
+
 			show_all();
+			if(parent != null) parent.queue_draw();
+		}
+
+		private void update_image_constraints()
+		{
+			var w = Settings.UI.Appearance.instance.grid_card_width;
+			var h = Settings.UI.Appearance.instance.grid_card_height;
+			var ratio = (float) h / w;
+			image_view.set_constraint(360, 360, ratio);
 			if(parent != null) parent.queue_draw();
 		}
 
