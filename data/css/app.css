@@ -208,6 +208,7 @@
 GtkList .h4, list .h4
 {
 	padding-left: 6px;
+	padding-right: 6px;
 }
 GtkButton GtkLabel, button label
 {
@@ -551,13 +552,21 @@ dialog .sidebar list
 	margin: 0;
 }
 
-.menuitem-game-action, .menuitem-merged-game
+.menuitem-game-action:dir(ltr), .menuitem-merged-game:dir(ltr)
 {
 	border-left: 8px alpha(#888, 0.2) solid;
 }
-.menuitem-game-action > label, .menuitem-merged-game > label
+.menuitem-game-action > label:dir(ltr), .menuitem-merged-game > label:dir(ltr)
 {
 	margin-left: -8px;
+}
+.menuitem-game-action:dir(rtl), .menuitem-merged-game:dir(rtl)
+{
+	border-right: 8px alpha(#888, 0.2) solid;
+}
+.menuitem-game-action > label:dir(rtl), .menuitem-merged-game > label:dir(rtl)
+{
+	margin-right: -8px;
 }
 .menuitem-game-action.primary
 {
@@ -569,7 +578,16 @@ dialog .sidebar list
 	min-width: 32px;
 }
 
-.settings-dialog
+.settings-dialog actionbar, .settings-dialog actionbar > revealer
+{
+	padding: 0;
+}
+.settings-dialog actionbar > revealer > box
+{
+	padding: 4px;
+}
+
+.settings-dialog:dir(ltr)
 {
 	background-image: linear-gradient(to right,
 		                              shade(@theme_bg_color, 0.95) 202px,
@@ -577,7 +595,7 @@ dialog .sidebar list
 	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
 	                                  transparent 204px, transparent);
 }
-.settings-dialog headerbar
+.settings-dialog headerbar:dir(ltr)
 {
 	background-image: linear-gradient(to right,
 		                              alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
@@ -585,6 +603,23 @@ dialog .sidebar list
 	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
 	                                  transparent 204px, transparent);
 }
+.settings-dialog:dir(rtl)
+{
+	background-image: linear-gradient(to left,
+		                              shade(@theme_bg_color, 0.95) 202px,
+	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
+	                                  transparent 204px, transparent);
+}
+.settings-dialog headerbar:dir(rtl)
+{
+	background-image: linear-gradient(to left,
+		                              alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
+	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
+	                                  transparent 204px, transparent);
+}
+
 .settings-dialog .settings-pages-sidebar list
 {
 	background: shade(@theme_bg_color, 0.95);
@@ -605,6 +640,11 @@ dialog .sidebar list
 .flat-list .list-row:not(:last-child), .flat-list row:not(:last-child)
 {
 	border-bottom: 1px shade(@theme_bg_color, 0.7) solid;
+}
+
+.separated-list .list-row:not(:last-child), .separated-list row:not(:last-child)
+{
+	border-bottom: 1px shade(@theme_bg_color, 0.9) solid;
 }
 
 .provider-settings
