@@ -176,6 +176,21 @@
 			</key>
 		</schema>
 
+		<schema path="/com/github/tkashkin/gamehub/auth/itch/" id="com.github.tkashkin.gamehub.auth.itch">
+			<key name="enabled" type="b">
+				<default>true</default>
+				<summary>Is Itch enabled</summary>
+			</key>
+			<key name="authenticated" type="b">
+				<default>false</default>
+				<summary>Did user agree to read Itch configs</summary>
+			</key>
+			<key name="api-key" type="s">
+				<default>''</default>
+				<summary>Itch API key</summary>
+			</key>
+		</schema>
+
 	<!-- Paths -->
 		<schema path="/com/github/tkashkin/gamehub/paths/" id="com.github.tkashkin.gamehub.paths">
 			<key name="steam-home" type="s">
