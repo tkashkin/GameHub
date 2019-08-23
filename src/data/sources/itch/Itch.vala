@@ -125,7 +125,6 @@ namespace GameHub.Data.Sources.Itch
 		}
 
 		private ArrayList<Game> _games = new ArrayList<Game>(null);
-		public int games_count { get { return _games.size; } }
 
 		public override ArrayList<Game> games { get { return _games; } }
 
@@ -144,6 +143,8 @@ namespace GameHub.Data.Sources.Itch
 				if(game_loaded != null) {
 					game_loaded(game, false);
 				}
+				_games.add(game);
+				games_count = _games.size;
 			}
 
 			if(cache_loaded != null)
