@@ -158,7 +158,13 @@ namespace GameHub.Utils
 		public static Json.Object? json_object(Json.Node? root, string[] keys)
 		{
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return null;
-			Json.Object? obj = root.get_object();
+			return json_nested_object(root.get_object(), keys);
+		}
+
+		public static Json.Object? json_nested_object(Json.Object? root, string[] keys)
+		{
+			if(root == null) return null;
+			Json.Object? obj = root;
 
 			foreach(var key in keys)
 			{
@@ -285,6 +291,19 @@ namespace GameHub.Utils
 			var buf = new Xml.Buffer();
 			buf.node_dump(node->doc, node, 0, 1);
 			return buf.content();
+		}
+
+		public delegate void JsonBulderDelegate(Json.Builder builder);
+		public static Json.Node json(JsonBulderDelegate? d=null)
+		{
+			var builder = new Json.Builder();
+			builder.begin_object();
+			if(d != null)
+			{
+				d(builder);
+			}
+			builder.end_object();
+			return builder.get_root();
 		}
 	}
 }

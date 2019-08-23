@@ -30,7 +30,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		{
 			Object(
 				dialog: dlg,
-				title: "Itch",
+				title: "itch.io",
 				description: _("Disabled"),
 				icon_name: "source-itch-symbolic",
 				activatable: true
@@ -46,6 +46,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			add_apikey_entry();
 			add_link(_("Generate key"), "https://itch.io/api-keys");
+
+			add_separator();
+
+			add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.itch_home, v => { paths.itch_home = v; request_restart(); }, false);
 
 			status_switch.active = itch_auth.enabled;
 			status_switch.notify["active"].connect(() => {
@@ -96,7 +100,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			entry.notify["text"].connect(() => { itch_auth.api_key = entry.text; request_restart(); });
 
-			var label = new Label(_("Itch API key"));
+			var label = new Label(_("API key"));
 			label.halign = Align.START;
 			label.hexpand = true;
 

@@ -54,9 +54,7 @@ sources = [
 	'data/sources/itch/Itch.vala',
 	'data/sources/itch/ItchGame.vala',
 	'data/sources/itch/ButlerDaemon.vala',
-	'data/sources/itch/ButlerConnection.vala',
-	'data/sources/itch/ButlerJsonrpcClient.vala',
-	'data/sources/itch/Utils.vala',
+	'data/sources/itch/ButlerClient.vala',
 
 	'data/sources/user/User.vala',
 	'data/sources/user/UserGame.vala',
