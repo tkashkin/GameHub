@@ -40,7 +40,6 @@ namespace GameHub.Data.Sources.Itch
 
 			id = json_obj.get_int_member("id").to_string();
 			name = json_obj.get_string_member("title");
-			print("%s\n", name);
 			icon = json_obj.get_string_member("coverUrl");
 			store_page = json_obj.get_string_member("url");
 
