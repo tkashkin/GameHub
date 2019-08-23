@@ -187,15 +187,15 @@
 		<schema path="/com/github/tkashkin/gamehub/auth/itch/" id="com.github.tkashkin.gamehub.auth.itch">
 			<key name="enabled" type="b">
 				<default>true</default>
-				<summary>Is Itch enabled</summary>
+				<summary>Is itch.io enabled</summary>
 			</key>
 			<key name="authenticated" type="b">
 				<default>false</default>
-				<summary>Did user agree to read Itch configs</summary>
+				<summary>Did user agree to read itch.io configs</summary>
 			</key>
 			<key name="api-key" type="s">
 				<default>''</default>
-				<summary>Itch API key</summary>
+				<summary>itch.io API key</summary>
 			</key>
 		</schema>
 
@@ -212,6 +212,10 @@
 			<key name="humble-games" type="s">
 				<default>'~/Games/HumbleBundle'</default>
 				<summary>Humble games directory</summary>
+			</key>
+			<key name="itch-home" type="s">
+				<default>'~/.config/itch'</default>
+				<summary>itch.io config/installation directory</summary>
 			</key>
 		</schema>
 

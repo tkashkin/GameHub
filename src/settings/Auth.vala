@@ -120,10 +120,6 @@ namespace GameHub.Settings.Auth
 			base(ProjectConfig.PROJECT_NAME + ".auth.itch");
 		}
 
-		protected override void verify(string key)
-		{
-		}
-
 		private static Itch? _instance;
 		public static unowned Itch instance
 		{
