@@ -112,21 +112,46 @@ namespace GameHub.Data.Sources.Itch
 						var obj = root.get_object();
 						if(obj == null) continue;
 
-						var message_id = obj.has_member("id") ? (int) obj.get_int_member("id") : 0;
-						var result = obj.has_member("result") ? obj.get_object_member("result") : null;
+						const int NO_ID = -1;
+						var error_message = obj.has_member("error") ? (string?) obj.get_string_member("error") : null;
+						var message_id = obj.has_member("id") ? (int) obj.get_int_member("id") : NO_ID;
+						var result = obj.has_member("result") ? (Json.Object?) obj.get_object_member("result") : null;
+						var params = obj.has_member("params") ? (Json.Object?) obj.get_object_member("params") : null;
+						var method = obj.has_member("method") ? (string?) obj.get_string_member("method") : null;
 
-						messages.set(message_id, result);
-
-						if(Application.log_verbose)
-						{
-							debug("[ButlerClient: res %d] %s", message_id, json);
+						if(error_message != null && message_id != NO_ID) {
+							// failure response
+							error("[ButlerClient: err %d] %s", message_id, error_message);
+							// TODO handle failed call
+						} else if(result != null && message_id != NO_ID) {
+							// success response
+							messages.set(message_id, result);
+							if(Application.log_verbose)
+							{
+								debug("[ButlerClient: res %d] %s", message_id, json);
+							}
+						} else if(message_id != NO_ID) {
+							// server request
+							warning("[ButlerClient: srv %d] %s", message_id, json);
+							// TODO handle server call
+						} else if(params != null && method != null) {
+							// notification
+							info("[ButlerClient: ntf] %s", json);
+							// TODO handle notification
+						} else {
+							warning("[ButlerClient: ???] %s", json);
 						}
+
 					}
 					catch(Error e)
 					{
 						warning("[ButlerClient] Error while handling messages: %s", e.message);
 					}
 				}
+			}
+
+			void handle_log_notification(string level, string message)
+			{
 			}
 
 			public async Json.Object? get_reply(int message_id)
