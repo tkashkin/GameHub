@@ -125,6 +125,7 @@ namespace GameHub.Data.Sources.Itch
 		}
 
 		private ArrayList<Game> _games = new ArrayList<Game>(null);
+		public int games_count { get { return _games.size; } }
 
 		public override ArrayList<Game> games { get { return _games; } }
 
@@ -138,9 +139,18 @@ namespace GameHub.Data.Sources.Itch
 			ArrayList<Json.Node> items = yield butler_daemon.get_owned_keys(user_id, true);
 
 			_games.clear();
-			_games.add_all_iterator(items.map<Game>((node) => {
-				return new ItchGame(this, node);
-			}));
+			foreach(var node in items) {
+				var game = new ItchGame(this, node);
+				if(game_loaded != null) {
+					game_loaded(game, false);
+				}
+			}
+
+			if(cache_loaded != null)
+			{
+				cache_loaded();
+			}
+			
 			return _games;
 		}
 
