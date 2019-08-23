@@ -46,6 +46,17 @@ namespace GameHub.Data.Sources.Itch
 
 			image = icon;
 
+			var platforms_obj = json_obj.get_object_member("platforms");
+			if(platforms_obj.has_member("windows")) {
+				platforms.add(Platform.WINDOWS);
+			}
+			if(platforms_obj.has_member("linux")) {
+				platforms.add(Platform.LINUX);
+			}
+			if(platforms_obj.has_member("osx")) {
+				platforms.add(Platform.MACOS);
+			}
+
 			info = Json.to_string(json_node, false);
 
 
