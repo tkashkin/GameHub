@@ -140,6 +140,7 @@ namespace GameHub.UI.Views.GamesView
 			games_grid.activate_on_single_click = false;
 			games_grid.homogeneous = true;
 			games_grid.min_children_per_line = 2;
+			games_grid.max_children_per_line = 32;
 			games_grid.selection_mode = SelectionMode.BROWSE;
 			games_grid.valign = Align.START;
 

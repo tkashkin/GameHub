@@ -61,6 +61,8 @@ namespace GameHub.Data.Sources.User
 			}
 
 			((User) source).add_game(this);
+
+			mount_overlays.begin();
 			update_status();
 		}
 
@@ -110,14 +112,14 @@ namespace GameHub.Data.Sources.User
 				}
 			}
 
+			mount_overlays.begin();
 			update_status();
 		}
 
 		public override async void update_game_info()
 		{
+			yield mount_overlays();
 			update_status();
-
-			mount_overlays();
 
 			if(installer == null && info != null && info.length > 0)
 			{
@@ -203,7 +205,7 @@ namespace GameHub.Data.Sources.User
 			{
 				game_name = game.name;
 				id = "installer";
-				platform = installer.get_path().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
+				platform = installer.get_path().down().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
 				parts.add(new Runnable.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
 			}
 		}

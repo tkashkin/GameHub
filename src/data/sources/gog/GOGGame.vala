@@ -88,6 +88,8 @@ namespace GameHub.Data.Sources.GOG
 
 			install_dir = null;
 			executable_path = "$game_dir/start.sh";
+
+			mount_overlays.begin();
 			update_status();
 		}
 
@@ -137,6 +139,7 @@ namespace GameHub.Data.Sources.GOG
 				}
 			}
 
+			mount_overlays.begin();
 			update_status();
 		}
 
@@ -145,15 +148,30 @@ namespace GameHub.Data.Sources.GOG
 			if(game_info_updating) return;
 			game_info_updating = true;
 
+			yield mount_overlays();
 			update_status();
-
-			mount_overlays();
 
 			if(info_detailed == null || info_detailed.length == 0)
 			{
 				var lang = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
 				var url = @"https://api.gog.com/products/$(id)?expand=downloads,description,expanded_dlcs" + (lang != null && lang.length > 0 ? "&locale=" + lang : "");
-				info_detailed = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token));
+
+				while(true)
+				{
+					uint status = 0;
+					var json = (yield Parser.load_remote_file_async(url, "GET", ((GOG) source).user_token, null, null, out status));
+
+					if(status == Soup.Status.OK && json != null && json.length > 0)
+					{
+						info_detailed = json;
+						break;
+					}
+					else if(status == Soup.Status.UNAUTHORIZED)
+					{
+						yield ((GOG) source).refresh_token();
+					}
+					else break;
+				}
 			}
 
 			var root = Parser.parse_json(info_detailed);
@@ -374,8 +392,8 @@ namespace GameHub.Data.Sources.GOG
 			var state = Game.State.UNINSTALLED;
 
 			var gameinfo = get_file("gameinfo", false);
-			var goggame = get_file(@"goggame-$(id).info", false);
-			var gh_marker = get_file(@".gamehub_$(id)", false);
+			var goggame = get_file(@"goggame-$(id).info");
+			var gh_marker = get_file(@".gamehub_$(id)");
 
 			var files = new ArrayList<File>();
 
@@ -468,18 +486,30 @@ namespace GameHub.Data.Sources.GOG
 		private bool loading_achievements = false;
 		public override async ArrayList<Game.Achievement>? load_achievements()
 		{
-			if(achievements != null || loading_achievements || GOG.instance == null || GOG.instance.user_id == null)
+			if(achievements != null || loading_achievements || source == null || ((GOG) source).user_id == null)
 			{
 				return achievements;
 			}
 
 			loading_achievements = true;
 
-			var url = @"https://gameplay.gog.com/clients/$(id)/users/$(GOG.instance.user_id)/achievements";
+			Json.Node? root = null;
+			Json.Object? root_obj = null;
 
-			var root = (yield Parser.parse_remote_json_file_async(url, "GET", GOG.instance.user_token));
-			var root_obj = root != null && root.get_node_type() == Json.NodeType.OBJECT
-				? root.get_object() : null;
+			while(true)
+			{
+				var url = "https://gameplay.gog.com/clients/%s/users/%s/achievements".printf(id, ((GOG) source).user_id);
+				uint status = 0;
+
+				root = (yield Parser.parse_remote_json_file_async(url, "GET", ((GOG) source).user_token, null, null, out status));
+				root_obj = root != null && root.get_node_type() == Json.NodeType.OBJECT ? root.get_object() : null;
+
+				if(status == Soup.Status.UNAUTHORIZED)
+				{
+					yield ((GOG) source).refresh_token();
+				}
+				else break;
+			}
 
 			if(root_obj == null || !root_obj.has_member("items"))
 			{
@@ -680,7 +710,7 @@ namespace GameHub.Data.Sources.GOG
 				is_hidden = json.has_member("isHidden") && json.get_boolean_member("isHidden");
 				name = json.has_member("name") ? json.get_string_member("name") : game.name;
 
-				var type = json.has_member("type") ? json.get_string_member("type") : "FileTask";
+				var type = json.has_member("type") ? json.get_string_member("type") : "filetask";
 
 				if(type.down() == "filetask")
 				{
@@ -798,7 +828,21 @@ namespace GameHub.Data.Sources.GOG
 
 			public async File? download()
 			{
-				var root_node = yield Parser.parse_remote_json_file_async(file, "GET", ((GOG) game.source).user_token);
+				Json.Node? root_node = null;
+
+				while(true)
+				{
+					uint status = 0;
+
+					root_node = yield Parser.parse_remote_json_file_async(file, "GET", ((GOG) game.source).user_token, null, null, out status);
+
+					if(status == Soup.Status.UNAUTHORIZED)
+					{
+						yield ((GOG) game.source).refresh_token();
+					}
+					else break;
+				}
+
 				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return null;
 				var root = root_node.get_object();
 				if(root == null || !root.has_member("downlink")) return null;
@@ -954,7 +998,7 @@ namespace GameHub.Data.Sources.GOG
 				game.enable_overlays();
 				var dlc_overlay = new Game.Overlay(game, "dlc_" + id, "DLC: " + name, true);
 
-				game.mount_overlays(dlc_overlay.directory);
+				yield game.mount_overlays(dlc_overlay.directory);
 
 				install_dir = game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
 
@@ -964,7 +1008,7 @@ namespace GameHub.Data.Sources.GOG
 
 				game.overlays.add(dlc_overlay);
 				game.save_overlays();
-				game.mount_overlays();
+				yield game.mount_overlays();
 			}
 		}
 	}

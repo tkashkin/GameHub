@@ -122,6 +122,11 @@ namespace GameHub.Data
 					var args = Utils.parse_args(arguments);
 					if(args != null)
 					{
+						if("$command" in args || "${command}" in args)
+						{
+							cmd = {};
+							variables.set("command", executable.get_path());
+						}
 						foreach(var arg in args)
 						{
 							if("$" in arg)
@@ -239,17 +244,21 @@ namespace GameHub.Data
 			File[] dirs = { install_dir };
 			if(overlays_enabled)
 			{
-				dirs = { install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged") };
 				if(from_all_overlays)
 				{
-					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE);
+					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
+					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(Overlay.BASE);
+					foreach(var overlay in overlays)
+					{
+						if(overlay.id == Overlay.BASE) continue;
+						dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(overlay.id);
+					}
 				}
-				dirs += install_dir;
-				mount_overlays();
+				mount_overlays.begin();
 			}
+			var variables = new HashMap<string, string>();
 			foreach(var dir in dirs)
 			{
-				var variables = new HashMap<string, string>();
 				variables.set("game_dir", dir.get_path());
 				var file = FSUtils.file(path, null, variables);
 				if(file != null && file.query_exists())
@@ -277,7 +286,7 @@ namespace GameHub.Data
 					{
 						dirs = {
 							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged"),
-							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(Overlay.BASE),
+							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(Overlay.BASE),
 							install_dir
 						};
 					}
@@ -395,7 +404,7 @@ namespace GameHub.Data
 			}
 		}
 
-		public void mount_overlays(File? persist=null)
+		public async void mount_overlays(File? persist=null)
 		{
 			if(!overlays_enabled) return;
 			load_overlays();
@@ -418,9 +427,9 @@ namespace GameHub.Data
 			fs_overlay = new FSOverlay(merged_dir, dirs, persist_dir, work_dir);
 			if(fs_overlay.options != fs_overlay_last_options)
 			{
-				fs_overlay.mount.begin();
+				fs_overlay_last_options = fs_overlay.options;
+				yield fs_overlay.mount();
 			}
-			fs_overlay_last_options = fs_overlay.options;
 		}
 
 		public async void umount_overlays()

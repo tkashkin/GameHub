@@ -139,7 +139,7 @@ namespace GameHub.UI.Dialogs
 
 			destroy.connect(() => {
 				game.save_overlays();
-				game.mount_overlays();
+				game.mount_overlays.begin();
 			});
 
 			show_all();

@@ -145,15 +145,13 @@ namespace GameHub
 			Providers.ImageProviders = { new Providers.Images.SteamGridDB(), new Providers.Images.JinxSGVI() };
 			Providers.DataProviders  = { new Providers.Data.IGDB() };
 
-			CompatTool[] tools = { new Compat.WineWrap(), new Compat.Innoextract(), new Compat.DOSBox(), new Compat.ScummVM() };
-			foreach(var appid in Compat.Proton.APPIDS)
-			{
-				tools += new Compat.Proton(appid);
-			}
+			var proton_latest = new Compat.Proton(Compat.Proton.LATEST);
 
-			CompatTools = tools;
+			CompatTools = { new Compat.WineWrap(), new Compat.Innoextract(), new Compat.DOSBox(), new Compat.ScummVM(), proton_latest };
 
-			tools += new Compat.Proton(Compat.Proton.LATEST);
+			Compat.Proton.find_proton_versions();
+
+			CompatTool[] tools = CompatTools;
 
 			string[] wine_binaries = { "wine"/*, "wine64", "wine32"*/ };
 			string[] wine_arches = { "win64", "win32" };
@@ -172,6 +170,8 @@ namespace GameHub
 			tools += new Compat.CustomScript();
 
 			CompatTools = tools;
+
+			proton_latest.init();
 
 			IconTheme.get_default().add_resource_path("/com/github/tkashkin/gamehub/icons");
 
