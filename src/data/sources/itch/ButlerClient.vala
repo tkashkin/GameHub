@@ -150,10 +150,6 @@ namespace GameHub.Data.Sources.Itch
 				}
 			}
 
-			void handle_log_notification(string level, string message)
-			{
-			}
-
 			public async Json.Object? get_reply(int message_id)
 			{
 				while(!messages.has_key(message_id))
