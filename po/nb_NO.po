@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-28 14:19+0300\n"
+"POT-Creation-Date: 2019-08-21 11:08+0300\n"
 "PO-Revision-Date: 2019-07-13 09:02+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -117,13 +117,13 @@ msgid "Show logging options help"
 msgstr "Vis hjelp for loggføringsvalg"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 msgid "Select executable"
 msgstr "Velg kjørbar fil"
 
 #: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:388
+#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:389
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -187,52 +187,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Emulerte"
 
-#: src/data/Game.vala:537
+#: src/data/Game.vala:546
 msgctxt "status"
 msgid "Running"
 msgstr "Kjører"
 
-#: src/data/Game.vala:540
+#: src/data/Game.vala:549
 msgctxt "status"
 msgid "Installed"
 msgstr "Installert"
 
-#: src/data/Game.vala:541
+#: src/data/Game.vala:550
 msgctxt "status"
 msgid "Installing"
 msgstr "Installerer"
 
-#: src/data/Game.vala:542
+#: src/data/Game.vala:551
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Bekrefter installasjonskandidatfila"
 
-#: src/data/Game.vala:543
+#: src/data/Game.vala:552
 msgctxt "status"
 msgid "Download started"
 msgstr "Nedlasting startet"
 
-#: src/data/Game.vala:545
+#: src/data/Game.vala:554
 msgctxt "status"
 msgid "Not installed"
 msgstr "Ikke installert"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:564
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Installert"
 
-#: src/data/Game.vala:556
+#: src/data/Game.vala:565
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Installerer"
 
-#: src/data/Game.vala:558
+#: src/data/Game.vala:567
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Laster ned"
 
-#: src/data/Game.vala:560
+#: src/data/Game.vala:569
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Ikke installert"
@@ -309,12 +309,12 @@ msgstr ""
 "Fant ikke Steamoppsettsfilen.\n"
 "Logg inn på din konto i Steamklienten og kom tilbake til GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:330
+#: src/data/sources/humble/HumbleGame.vala:332
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: Ingen tilgjengelige installasjonskandidater"
 
-#: src/data/sources/humble/HumbleGame.vala:331
+#: src/data/sources/humble/HumbleGame.vala:333
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -366,7 +366,7 @@ msgstr ""
 "Installer innoextract <b>%2$s</b> eller nyere."
 
 #: src/data/compat/WineWrap.vala:61
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:243
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
 #: src/ui/dialogs/CompatRunDialog.vala:101
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
@@ -377,64 +377,64 @@ msgstr "Kjør"
 msgid "Show WineWrap menu"
 msgstr "Vis WineWrap-meny"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:116
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:131
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "Drep programmer i prefiks"
 
-#: src/data/compat/Proton.vala:44
+#: src/data/compat/Proton.vala:47
 msgid "Proton prefix"
 msgstr "Proton-prefiks"
 
-#: src/data/compat/Proton.vala:50
+#: src/data/compat/Proton.vala:53
 msgid "Disable esync"
 msgstr "Skru av esync"
 
-#: src/data/compat/Proton.vala:51
+#: src/data/compat/Proton.vala:54
 msgid "Force LARGE_ADDRESS_AWARE flag"
 msgstr "Påtving LARGE_ADDRESS_AWARE-flagg"
 
-#: src/data/compat/Proton.vala:52
+#: src/data/compat/Proton.vala:55
 msgid "Disable DirectX 11 compatibility layer"
 msgstr "Skru av DirextX 11-kompabilitetslag"
 
-#: src/data/compat/Proton.vala:53
+#: src/data/compat/Proton.vala:56
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
 msgstr "Bruk WineD3D11 som DirectX 11-kompabilitetslag"
 
-#: src/data/compat/Proton.vala:54
+#: src/data/compat/Proton.vala:57
 msgid "Show DXVK info overlay"
 msgstr "Vis DXVK-infooverlag"
 
-#: src/data/compat/Proton.vala:61 src/data/compat/Wine.vala:66
+#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
 msgid "Silent installation"
 msgstr "Stille installasjon"
 
-#: src/data/compat/Proton.vala:62 src/data/compat/Wine.vala:67
+#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
 msgstr "Veldig stille installasjon"
 
-#: src/data/compat/Proton.vala:63 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
 msgstr "Undertrykk meldinger"
 
-#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:69
+#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
 msgid "No GUI"
 msgstr "Inget grensesnitt"
 
-#: src/data/compat/Proton.vala:104 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
 msgstr "Åpne prefiks-mappe"
 
-#: src/data/compat/Proton.vala:107 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
 msgstr "Kjør winecfg"
 
-#: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
 msgstr "Kjør winetricks"
 
-#: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
 msgstr "Kjør taskmgr"
 
@@ -468,13 +468,13 @@ msgstr "Kjør i spillmappe"
 
 #: src/data/providers/images/SteamGridDB.vala:108
 #: src/data/providers/data/IGDB.vala:424
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:93
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
 msgstr "Forvalg"
 
 #: src/data/providers/images/SteamGridDB.vala:115
 #: src/data/providers/data/IGDB.vala:431
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:101
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
 msgstr "Gjenopprett forvalgt API-nøkkel"
 
@@ -485,7 +485,7 @@ msgstr "API-nøkkel"
 
 #: src/data/providers/images/SteamGridDB.vala:134
 #: src/data/providers/data/IGDB.vala:450
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Generate key"
 msgstr "Generer nøkkel"
 
@@ -536,8 +536,8 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:141
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:266
-#: src/ui/views/GamesView/GamesView.vala:646
+#: src/ui/views/GamesView/GamesView.vala:267
+#: src/ui/views/GamesView/GamesView.vala:647
 msgid "Settings"
 msgstr "Innstillinger"
 
@@ -575,78 +575,104 @@ msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
 "Spillmappe inneholder mellomrom. Det kan forårsake problemer for noen spill"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:34
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
 msgstr "Grensesnitt"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:35
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
 msgstr "Utseende"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
 msgstr "Generelle grensesnittsinnstillinger"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:46
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgid "Dark theme"
 msgstr "Mørk drakt"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:51
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
 msgstr "Drakt-basert"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
 msgstr "Symbolske"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
 msgstr "Farget"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
 msgstr "Ikonstil"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:69
-msgid "Show platform icons in grid view"
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
+#, fuzzy
+msgid "Game card"
+msgstr "Spillnavn"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
+#, fuzzy
+msgid "Show platform icons"
 msgstr "Vis plattformsikoner i rutenettvisning"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:87
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
+msgctxt "grid_size"
+msgid "Card size"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
+msgctxt "grid_size_preset"
+msgid "Presets"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 #, fuzzy
 msgid "Games list: installed"
 msgstr "Spilliste: Installert"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:88
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:140
 #, fuzzy
 msgid "Games list: not installed"
 msgstr "Spilliste: Ikke installert"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:90
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:94
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:142
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:146
 msgctxt "list_style"
 msgid "Show icon"
 msgstr "Vis ikon"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:91
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:143
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:147
 msgctxt "list_style"
 msgid "Bold title"
 msgstr "Fet tittel"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:92
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:96
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:144
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
 msgctxt "list_style"
 msgid "Show status"
 msgstr "Vis status"
 
-#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:97
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
 msgstr "Demp"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
+#, fuzzy
+msgid "Grid options"
+msgstr "Spillegenskaper:"
+
+#: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
+#, fuzzy
+msgid "List options"
+msgstr "Loggføringsvalg:"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -724,7 +750,7 @@ msgid "Controller"
 msgstr "Kontroller"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
 msgid "Enabled"
 msgstr "Påskrudd"
 
@@ -736,17 +762,17 @@ msgstr "Fokuser GameHub-vinduet med Guide-knappen"
 msgid "Controllers"
 msgstr "Kontrollere"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:75
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
 msgstr "Flytt fokus"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:77
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 msgid "Exit"
 msgstr "Avslutt"
 
-#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:92
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:35
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:72
+#: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:40
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:108
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
@@ -754,43 +780,52 @@ msgstr "Avslutt"
 msgid "Disabled"
 msgstr "Avskrudd"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
 msgstr "Spillkilder"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:49
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Steam API keys have limited number of uses per day"
 msgstr "API-nøkler fra Steam kan brukes kun et par ganger om dagen"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:52
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
 msgid "Installation directory"
 msgstr "Installasjonsmappe"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:76
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
 msgstr "Ikke installert"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:80
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
 msgid "Not authenticated"
 msgstr "Identitetsbekreftelse kreves"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #, c-format
 msgid "Authenticated as <b>%s</b>"
 msgstr "Identitetsbekreftet som <b>%s</b>"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:84
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
 msgid "Authenticated"
 msgstr "Identitetsbekreftet"
 
-#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
+#: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
+#: src/ui/views/GamesView/GameContextMenu.vala:80
+#: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
+#: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
+msgid "Install"
+msgstr "Installer"
+
+#: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:236
 msgid "Steam API key"
 msgstr "API-nøkkel fra Steam"
 
@@ -841,93 +876,93 @@ msgstr[0] "Fant én kjerne"
 msgstr[1] "Fant %u kjerner"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:169
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:168
 msgid "No custom emulators"
 msgstr "Ingen egendefinerte emulatorer"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:165
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:164
 #, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
 msgstr[0] "én egendefinert emulator"
 msgstr[1] "%u egendefinerte emulatorer"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:238
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
 msgstr "Lagre"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:271
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:313
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
-#: src/ui/dialogs/GamePropertiesDialog.vala:144
-#: src/ui/dialogs/GamePropertiesDialog.vala:148
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:250
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:312
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
+#: src/ui/dialogs/GamePropertiesDialog.vala:143
+#: src/ui/dialogs/GamePropertiesDialog.vala:147
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
 msgid "Executable"
 msgstr "Kjørbar fil"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:252
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:405
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
 #: src/ui/views/GamesView/AddGamePopover.vala:68
 #: src/ui/views/GamesView/AddGamePopover.vala:143
 msgid "Installer"
 msgstr "Installasjonskandidat"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:257
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
 #: src/ui/dialogs/GamePropertiesDialog.vala:62
 #: src/ui/dialogs/GamePropertiesDialog.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
 msgstr "Navn"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:273
-#: src/ui/dialogs/GamePropertiesDialog.vala:167
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
+#: src/ui/dialogs/GamePropertiesDialog.vala:166
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Argumenter"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:277
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:276
 msgid "Variables"
 msgstr "Variabler"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:277
 msgid "Game executable"
 msgstr "Kjørbar spillfil"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:279
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
 msgid "Game arguments"
 msgstr "Spillargumenter"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Directory"
 msgstr "Mappe"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:289
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 msgid "Select emulator directory"
 msgstr "Velg emulatormappe"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:293
-#: src/ui/dialogs/GamePropertiesDialog.vala:185
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
+#: src/ui/dialogs/GamePropertiesDialog.vala:184
 msgid "Force compatibility mode"
 msgstr "Tving gjennom kompabilitetsmodus"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:308
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:307
 msgid "Game file patterns"
 msgstr "Spillfilmønster"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:316
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:315
 msgid "Image"
 msgstr "Bilde"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:319
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:318
 msgid "Icon"
 msgstr "Ikon"
 
-#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:326
+#: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:325
 msgid ""
 "<b>findutils</b>-compatible glob patterns\n"
 "\n"
@@ -990,43 +1025,36 @@ msgctxt "about_link"
 msgid "Source code on GitHub"
 msgstr "Kildekode på GitHub"
 
-#: src/ui/dialogs/SettingsDialog/pages/About.vala:101
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:103
 msgctxt "about_link"
 msgid "Report a problem"
 msgstr "Innrapporter et problem"
 
-#: src/ui/dialogs/SettingsDialog/pages/About.vala:102
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:104
 msgctxt "about_link"
 msgid "Suggest translations"
 msgstr "Foreslå oversettelser"
 
-#: src/ui/dialogs/SettingsDialog/pages/About.vala:108
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:110
 msgctxt "about_link"
 msgid "Issues"
 msgstr "Problemer"
 
-#: src/ui/dialogs/SettingsDialog/pages/About.vala:109
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:111
 msgctxt "about_link"
 msgid "Contributors"
 msgstr "Bidragsytere"
 
 #. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
-#: src/ui/dialogs/SettingsDialog/pages/About.vala:112
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:114
 msgctxt "about_link"
 msgid "Pulse"
 msgstr "Puls"
 
-#: src/ui/dialogs/SettingsDialog/pages/About.vala:113
+#: src/ui/dialogs/SettingsDialog/pages/About.vala:115
 msgctxt "about_link"
 msgid "Forks"
 msgstr "Forgreninger"
-
-#: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
-#: src/ui/views/GamesView/GameContextMenu.vala:80
-#: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
-#: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
-msgid "Install"
-msgstr "Installer"
 
 #: src/ui/dialogs/InstallDialog.vala:112
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
@@ -1060,37 +1088,37 @@ msgstr "%s: Egenskaper"
 msgid "Images"
 msgstr "Bilder"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:115
+#: src/ui/dialogs/GamePropertiesDialog.vala:114
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
-#: src/ui/views/GameDetailsView/blocks/Artwork.vala:59
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:60
 msgid "Download images"
 msgstr "Last ned bilder"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:122
+#: src/ui/dialogs/GamePropertiesDialog.vala:121
 msgid "Image URL"
 msgstr "Bildenettadresse"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:130
+#: src/ui/dialogs/GamePropertiesDialog.vala:129
 msgid "Icon URL"
 msgstr "Ikonnettadresse"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:180
+#: src/ui/dialogs/GamePropertiesDialog.vala:179
 msgid "Compatibility"
 msgstr "Kompabilitet"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:202
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 msgid "Launch from terminal"
 msgstr "Kjør fra terminal"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:218
+#: src/ui/dialogs/GamePropertiesDialog.vala:217
 msgid "Copy to clipboard"
 msgstr "Kopier til utklippstavle"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Add to Steam"
 msgstr "Legg til på Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:221
+#: src/ui/dialogs/GamePropertiesDialog.vala:220
 msgid "Add to the Steam library"
 msgstr "Legg til i Steam-bibliotek"
 
@@ -1242,79 +1270,79 @@ msgstr "Ingen spill"
 msgid "Get some games or enable some game sources in settings"
 msgstr "Hent noen spill eller skru på noen spillkilder i innstillingene"
 
-#: src/ui/views/GamesView/GamesView.vala:186
+#: src/ui/views/GamesView/GamesView.vala:187
 msgid "Grid view"
 msgstr "Rutenettvisning"
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:188
 msgid "List view"
 msgstr "Listevisning"
 
-#: src/ui/views/GamesView/GamesView.vala:195
+#: src/ui/views/GamesView/GamesView.vala:196
 msgid "All games"
 msgstr "Alle spill"
 
-#: src/ui/views/GamesView/GamesView.vala:218
+#: src/ui/views/GamesView/GamesView.vala:219
 msgid "Downloads"
 msgstr "Nedlastinger"
 
-#: src/ui/views/GamesView/GamesView.vala:244
+#: src/ui/views/GamesView/GamesView.vala:245
 msgid "Filters"
 msgstr "Filtre"
 
-#: src/ui/views/GamesView/GamesView.vala:252
+#: src/ui/views/GamesView/GamesView.vala:253
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Legg til spill"
 
-#: src/ui/views/GamesView/GamesView.vala:259
+#: src/ui/views/GamesView/GamesView.vala:260
 msgid "Search"
 msgstr "Søk"
 
-#: src/ui/views/GamesView/GamesView.vala:386
+#: src/ui/views/GamesView/GamesView.vala:387
 msgid "Menu"
 msgstr "Meny"
 
-#: src/ui/views/GamesView/GamesView.vala:387
+#: src/ui/views/GamesView/GamesView.vala:388
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Tilbake"
 
-#: src/ui/views/GamesView/GamesView.vala:566
+#: src/ui/views/GamesView/GamesView.vala:567
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spill"
 msgstr[1] "%u spill"
 
-#: src/ui/views/GamesView/GamesView.vala:582
+#: src/ui/views/GamesView/GamesView.vala:583
 msgid "No user-added games"
 msgstr "Ingen brukertillagte spill"
 
-#: src/ui/views/GamesView/GamesView.vala:583
+#: src/ui/views/GamesView/GamesView.vala:584
 msgid "Add some games using plus button"
 msgstr "Legg till noen spill med pluss-knappen"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:588
 #, c-format
 msgid "No %s games"
 msgstr "Ingen %s-spill"
 
-#: src/ui/views/GamesView/GamesView.vala:588
+#: src/ui/views/GamesView/GamesView.vala:589
 msgid "Get some Linux-compatible games"
 msgstr "Hent noen Linux-kompatible spill"
 
-#: src/ui/views/GamesView/GamesView.vala:598
+#: src/ui/views/GamesView/GamesView.vala:599
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Ingen spill samsvarer med \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:603
+#: src/ui/views/GamesView/GamesView.vala:604
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Ingen %1$s-spill samsvarer med \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:644
+#: src/ui/views/GamesView/GamesView.vala:645
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1322,15 +1350,15 @@ msgstr ""
 "Ingen spill ble innlastet fra Steam. Sett ditt spilllistepersonvern til "
 "\"offentlig\" for å bruke din egen Steam-API-nøkkel i innstillingene."
 
-#: src/ui/views/GamesView/GamesView.vala:645
+#: src/ui/views/GamesView/GamesView.vala:646
 msgid "Privacy"
 msgstr "Personvern"
 
-#: src/ui/views/GamesView/GamesView.vala:792
+#: src/ui/views/GamesView/GamesView.vala:793
 msgid "Downloading images"
 msgstr "Laster ned bilder"
 
-#: src/ui/views/GamesView/GamesView.vala:806
+#: src/ui/views/GamesView/GamesView.vala:807
 #, c-format
 msgid "Downloading image: %s"
 msgstr "Laster ned bilde: %s"
@@ -1616,11 +1644,11 @@ msgstr "Handling"
 msgid "Select file"
 msgstr "Velg fil"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid "No images"
 msgstr "Ingen bilder"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:76
+#: src/ui/widgets/ImagesDownloadPopover.vala:72
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
@@ -1628,7 +1656,7 @@ msgstr ""
 "Fant ikke noen bilder for dette spillet\n"
 "Forsikre deg om at spillnavnet er riktig"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:97
+#: src/ui/widgets/ImagesDownloadPopover.vala:93
 msgid "Search images:"
 msgstr "Søk etter bilder:"
 
@@ -1685,6 +1713,36 @@ msgstr "Pauset: %d%% (%s / %s)"
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Nedlasting avbrutt"
+
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr ""
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr ""
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr ""
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr ""
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr ""
 
 #~ msgid "Description"
 #~ msgstr "Beskrivelse"

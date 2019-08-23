@@ -94,7 +94,6 @@ namespace GameHub.UI.Dialogs
 
 			image_view = new AutoSizeImage();
 			image_view.hexpand = false;
-			image_view.set_constraint(360, 400, 0.467f);
 
 			var actions = new Box(Orientation.VERTICAL, 0);
 			actions.get_style_context().add_class("actions");
@@ -253,6 +252,10 @@ namespace GameHub.UI.Dialogs
 				destroy();
 			});
 
+			Settings.UI.Appearance.instance.notify["grid-card-width"].connect(update_image_constraints);
+			Settings.UI.Appearance.instance.notify["grid-card-height"].connect(update_image_constraints);
+			update_image_constraints();
+
 			show_all();
 		}
 
@@ -282,6 +285,16 @@ namespace GameHub.UI.Dialogs
 			{
 				icon_view.load(url, "icon");
 			}
+		}
+
+		private void update_image_constraints()
+		{
+			var w = Settings.UI.Appearance.instance.grid_card_width;
+			var h = Settings.UI.Appearance.instance.grid_card_height;
+			var ratio = (float) h / w;
+			var min = (int) (w / 1.5f);
+			var max = (int) (w * 1.5f);
+			image_view.set_constraint(min, max, ratio);
 		}
 
 		private FileChooserEntry add_image_entry(string text, string icon)

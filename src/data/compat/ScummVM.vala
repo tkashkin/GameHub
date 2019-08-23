@@ -71,7 +71,9 @@ namespace GameHub.Data.Compat
 				dir = data_dir;
 			}
 
-			yield Utils.run_thread({ executable.get_path(), "--auto-detect" }, dir.get_path());
+			string[] cmd = { executable.get_path(), "--auto-detect" };
+
+			yield Utils.run_thread(combine_cmd_with_args(cmd, runnable), dir.get_path());
 		}
 	}
 }

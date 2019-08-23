@@ -30,6 +30,9 @@ namespace GameHub.Settings.UI
 
 		public bool grid_platform_icons { get; set; }
 
+		public int grid_card_width  { get; set; }
+		public int grid_card_height { get; set; }
+
 		public string[] list_style_cache;
 		public string[] list_style { get; set; }
 		public signal void list_style_updated(string[] style);
@@ -106,6 +109,89 @@ namespace GameHub.Settings.UI
 			public IconSize headerbar_icon_size()
 			{
 				return is_symbolic() ? IconSize.SMALL_TOOLBAR : IconSize.LARGE_TOOLBAR;
+			}
+		}
+
+		public enum GameGridSizePreset
+		{
+			STEAM = 0, STEAM_VERTICAL = 1, GOG = 2, GOG_VERTICAL = 3, SQUARE = 4, CUSTOM = 5;
+
+			public const GameGridSizePreset[] PRESETS = { STEAM, STEAM_VERTICAL, GOG, GOG_VERTICAL, SQUARE, CUSTOM };
+
+			public int width()
+			{
+				switch(this)
+				{
+					case STEAM:          return 460;
+					case STEAM_VERTICAL: return 300;
+					case GOG:            return 392;
+					case GOG_VERTICAL:   return 342;
+					case SQUARE:         return 320;
+					case CUSTOM:         return -1;
+				}
+				assert_not_reached();
+			}
+
+			public int height()
+			{
+				switch(this)
+				{
+					case STEAM:          return 215;
+					case STEAM_VERTICAL: return 450;
+					case GOG:            return 220;
+					case GOG_VERTICAL:   return 482;
+					case SQUARE:         return 320;
+					case CUSTOM:         return -1;
+				}
+				assert_not_reached();
+			}
+
+			public string name()
+			{
+				switch(this)
+				{
+					case STEAM:          return C_("grid_size_preset", "Steam");
+					case STEAM_VERTICAL: return C_("grid_size_preset", "Steam (vertical)");
+					case GOG:            return C_("grid_size_preset", "GOG");
+					case GOG_VERTICAL:   return C_("grid_size_preset", "GOG (vertical)");
+					case SQUARE:         return C_("grid_size_preset", "Square");
+					case CUSTOM:         return C_("grid_size_preset", "Custom");
+				}
+				assert_not_reached();
+			}
+
+			public string icon()
+			{
+				switch(this)
+				{
+					case STEAM, STEAM_VERTICAL: return "source-steam-symbolic";
+					case GOG, GOG_VERTICAL:     return "source-gog-symbolic";
+					case SQUARE:                return "image-x-generic-symbolic";
+					case CUSTOM:                return "document-properties-symbolic";
+				}
+				assert_not_reached();
+			}
+
+			public string? description()
+			{
+				var desc = name();
+				if(this != CUSTOM)
+				{
+					desc += "\n" + """<span size="smaller" weight="600">%d × %d</span>""".printf(width(), height());
+				}
+				return desc;
+			}
+
+			public static GameGridSizePreset from_size(int? w, int? h)
+			{
+				foreach(var preset in PRESETS)
+				{
+					if(w == preset.width() && h == preset.height())
+					{
+						return preset;
+					}
+				}
+				return CUSTOM;
 			}
 		}
 	}

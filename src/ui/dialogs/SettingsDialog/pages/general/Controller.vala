@@ -57,20 +57,34 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			var controllers_header = add_header(_("Controllers"));
 			controllers_header.margin_start = controllers_header.margin_end = 12;
 
-			controllers = add_widget(new ListBox());
-			controllers.selection_mode = SelectionMode.NONE;
-			controllers.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			controllers.expand = true;
+			var controllers_scroll = add_widget(new ScrolledWindow(null, null));
+			controllers_scroll.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			controllers_scroll.hscrollbar_policy = PolicyType.NEVER;
 
-			controllers.margin_start = 7;
-			controllers.margin_end = 3;
-			controllers.margin_top = 0;
-			controllers.margin_bottom = 6;
+			controllers_scroll.margin_start = 7;
+			controllers_scroll.margin_end = 3;
+			controllers_scroll.margin_top = 0;
+			controllers_scroll.margin_bottom = 6;
+
+			controllers = new ListBox();
+			controllers.selection_mode = SelectionMode.NONE;
+			controllers.get_style_context().add_class("separated-list");
+
+			controllers_scroll.add(controllers);
 
 			shortcuts_grid = add_widget(new Grid());
+			shortcuts_grid.valign = Align.END;
 			shortcuts_grid.column_spacing = 12;
 			shortcuts_grid.margin_start = 16;
 			shortcuts_grid.margin_end = 12;
+
+			#if GTK_3_22
+			controllers_scroll.propagate_natural_width = true;
+			controllers_scroll.propagate_natural_height = true;
+			shortcuts_grid.expand = true;
+			#else
+			controllers_scroll.expand = true;
+			#endif
 
 			add_shortcut(0, 0, _("Move focus"), "trigger-left", "/", "trigger-right");
 			shortcuts_grid.add(new Separator(Orientation.VERTICAL));
@@ -127,6 +141,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				var name = new Label(controller);
 				name.get_style_context().add_class("category-label");
 				name.hexpand = true;
+				name.ellipsize = Pango.EllipsizeMode.END;
 				name.xalign = 0;
 				name.valign = Align.CENTER;
 

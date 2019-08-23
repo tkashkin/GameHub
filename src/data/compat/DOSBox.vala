@@ -254,7 +254,7 @@ namespace GameHub.Data.Compat
 				wdir = bundled_win_dosbox.get_parent();
 			}
 
-			yield Utils.run_thread(cmd, wdir.get_path());
+			yield Utils.run_thread(combine_cmd_with_args(cmd, runnable), wdir.get_path());
 		}
 	}
 }

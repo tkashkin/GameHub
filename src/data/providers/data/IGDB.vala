@@ -132,7 +132,7 @@ namespace GameHub.Data.Providers.Data
 		private void show_error(uint status, string? err_msg)
 		{
 			if(request_quota_reached) return;
-			if(status == 403 && err_msg != null && "request limit" in err_msg)
+			if(status == Soup.Status.FORBIDDEN && err_msg != null && "request limit" in err_msg)
 			{
 				request_quota_reached = true;
 				if(UI.Views.GamesView.GamesView.instance == null) return;

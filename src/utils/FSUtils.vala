@@ -265,7 +265,10 @@ namespace GameHub.Utils
 			{
 				foreach(var v in variables.entries)
 				{
-					expanded_path = expanded_path.replace("${" + v.key + "}", v.value).replace("$" + v.key, v.value);
+					if(v.key != null && v.value != null)
+					{
+						expanded_path = expanded_path.replace("${" + v.key + "}", v.value).replace("$" + v.key, v.value);
+					}
 				}
 			}
 			expanded_path = Utils.replace_prefix(expanded_path, "~/.cache", Environment.get_user_cache_dir());
