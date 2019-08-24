@@ -42,11 +42,11 @@ namespace GameHub.Data.Sources.Itch
 			receiver = new Receiver(socket_connection.input_stream);
 		}
 
-		public async Json.Object? call(string method, Json.Node? params=null)
+		public async Json.Object? call(string method, Json.Node? params=null, out Json.Object? error = null)
 		{
 			message_id++;
 			sender.send(message_id, method, params);
-			return (yield receiver.get_reply(message_id));
+			return (yield receiver.get_reply(message_id, out error));
 		}
 
 		private class Sender
@@ -87,13 +87,13 @@ namespace GameHub.Data.Sources.Itch
 		private class Receiver
 		{
 			private DataInputStream stream;
-			private HashMap<int, Json.Object?> messages;
+			private HashMap<int, Response?> responses;
 
 			public Receiver(InputStream input_stream)
 			{
 				stream = new DataInputStream(input_stream);
 				stream.set_newline_type(DataStreamNewlineType.LF);
-				messages = new HashMap<int, Json.Object>();
+				responses = new HashMap<int, Response?>();
 				Utils.thread("ItchButlerClientReceiver", () => {
 					handle_messages.begin();
 				}, false);
@@ -121,11 +121,11 @@ namespace GameHub.Data.Sources.Itch
 
 						if(error_info != null && message_id != NO_ID) {
 							// failure response
+							responses.set(message_id, {error_info, false});
 							warning("[ButlerClient: err %d] %s", message_id, json);
-							// TODO handle failed call
 						} else if(result != null && message_id != NO_ID) {
 							// success response
-							messages.set(message_id, result);
+							responses.set(message_id, {result, true});
 							if(Application.log_verbose)
 							{
 								debug("[ButlerClient: res %d] %s", message_id, json);
@@ -150,15 +150,27 @@ namespace GameHub.Data.Sources.Itch
 				}
 			}
 
-			public async Json.Object? get_reply(int message_id)
+			public async Json.Object? get_reply(int message_id, out Json.Object? error = null)
 			{
-				while(!messages.has_key(message_id))
+				while(!responses.has_key(message_id))
 				{
 					yield Utils.sleep_async(100);
 				}
-				Json.Object? message;
-				messages.unset(message_id, out message);
-				return message;
+				Response response;
+				responses.unset(message_id, out response);
+
+				if(response.successful) {
+					return response.content;
+				} else {
+					error = response.content;
+					return null;
+				}
+			}
+
+			struct Response
+			{
+				Json.Object content;
+				bool successful;
 			}
 		}
 	}
