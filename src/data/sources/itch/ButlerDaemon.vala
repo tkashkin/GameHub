@@ -189,5 +189,33 @@ namespace GameHub.Data.Sources.Itch
                 .set_member_name("stagingFolder").add_string_value(staging_folder)
             ));
         }
+
+        public async HashMap<int, ArrayList<int>> get_caves(int? game_id = null)
+        {
+            var result = yield client.call("Fetch.Caves", Parser.json(j => {
+                if(game_id != null) {
+                    j.set_member_name("filters").begin_object()
+                        .set_member_name("gameId").add_int_value(game_id)
+                        .end_object();
+                }
+            }));
+
+            var caves = new HashMap<int, ArrayList<int>>();
+            result.get_array_member("items").foreach_element((array, index, node) => {
+                var cave = node.get_object();
+                var cave_game_id = (int) cave.get_object_member("game").get_int_member("id");
+                var cave_id = (int) cave.get_int_member("id");
+
+                ArrayList<int> caves_for_game;
+                if(caves.has_key(cave_game_id)) {
+                    caves_for_game = caves.get(cave_game_id);
+                } else {
+                    caves_for_game = new ArrayList<int>();
+                    caves.set(cave_game_id, caves_for_game);
+                }
+                caves_for_game.add(cave_id);
+            });
+            return caves;
+        }
 	}
 }

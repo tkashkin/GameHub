@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gee;
 using GameHub.Utils;
+using GameHub.Data;
 
 namespace GameHub.Data.Sources.Itch
 {
@@ -136,10 +137,13 @@ namespace GameHub.Data.Sources.Itch
 			}
 
 			ArrayList<Json.Node> items = yield butler_daemon.get_owned_keys(user_id, true);
+			var caves = yield butler_daemon.get_caves();
 
 			_games.clear();
 			foreach(var node in items) {
 				var game = new ItchGame(this, node);
+				game.update_caves(caves);
+
 				if(game_loaded != null) {
 					game_loaded(game, false);
 				}
@@ -155,11 +159,14 @@ namespace GameHub.Data.Sources.Itch
 			return _games;
 		}
 
-		public async void install_game(string name, int id)
+		public async void install_game(ItchGame game)
 		{
-			string install_dir = FSUtils.Paths.Collection.Itch.instance.expand_game_dir(name);
+			string install_dir = FSUtils.Paths.Collection.Itch.instance.expand_game_dir(game.name);
 			FSUtils.mkdir(install_dir);
-			yield butler_daemon.install(id, install_dir);
+
+			yield butler_daemon.install(game.int_id, install_dir);
+
+			game.update_caves(yield butler_daemon.get_caves(game.int_id));
 		}
 
 		private async void butler_connect()
