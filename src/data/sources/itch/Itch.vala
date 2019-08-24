@@ -161,12 +161,20 @@ namespace GameHub.Data.Sources.Itch
 
 		public async void install_game(ItchGame game)
 		{
+			yield butler_daemon.install(game.int_id, make_game_dir(game));
+			game.update_caves(yield butler_daemon.get_caves(game.int_id));
+		}
+
+		public async void run_game(ItchGame game)
+		{
+			yield butler_daemon.run(game.get_cave(), make_game_dir(game));
+		}
+
+		private string make_game_dir(ItchGame game)
+		{
 			string install_dir = FSUtils.Paths.Collection.Itch.instance.expand_game_dir(game.name);
 			FSUtils.mkdir(install_dir);
-
-			yield butler_daemon.install(game.int_id, install_dir);
-
-			game.update_caves(yield butler_daemon.get_caves(game.int_id));
+			return install_dir;
 		}
 
 		private async void butler_connect()

@@ -190,7 +190,7 @@ namespace GameHub.Data.Sources.Itch
             ));
         }
 
-        public async HashMap<int, ArrayList<int>> get_caves(int? game_id = null)
+        public async HashMap<int, ArrayList<string>> get_caves(int? game_id = null)
         {
             var result = yield client.call("Fetch.Caves", Parser.json(j => {
                 if(game_id != null) {
@@ -200,22 +200,30 @@ namespace GameHub.Data.Sources.Itch
                 }
             }));
 
-            var caves = new HashMap<int, ArrayList<int>>();
+            var caves = new HashMap<int, ArrayList<string>>();
             result.get_array_member("items").foreach_element((array, index, node) => {
                 var cave = node.get_object();
                 var cave_game_id = (int) cave.get_object_member("game").get_int_member("id");
-                var cave_id = (int) cave.get_int_member("id");
+                var cave_id = cave.get_string_member("id");
 
-                ArrayList<int> caves_for_game;
+                ArrayList<string> caves_for_game;
                 if(caves.has_key(cave_game_id)) {
                     caves_for_game = caves.get(cave_game_id);
                 } else {
-                    caves_for_game = new ArrayList<int>();
+                    caves_for_game = new ArrayList<string>();
                     caves.set(cave_game_id, caves_for_game);
                 }
                 caves_for_game.add(cave_id);
             });
             return caves;
+        }
+
+        public async void run(string cave_id, string prereqs_dir)
+        {
+            yield client.call("Launch", Parser.json(j => j
+                .set_member_name("caveId").add_string_value(cave_id)
+                .set_member_name("prereqsDir").add_string_value(prereqs_dir)
+            ));
         }
 	}
 }

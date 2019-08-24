@@ -118,8 +118,8 @@ namespace GameHub.Data.Sources.Itch
 		{
 		}
 
-		private ArrayList<int> caves = new ArrayList<int>();
-		public void update_caves(HashMap<int, ArrayList<int>> caves_map)
+		private ArrayList<string> caves = new ArrayList<string>();
+		public void update_caves(HashMap<int, ArrayList<string>> caves_map)
 		{
 			if(caves_map.has_key(int_id)) {
 				caves = caves_map.get(int_id);
@@ -129,13 +129,20 @@ namespace GameHub.Data.Sources.Itch
 			update_status();
 		}
 
+		public string get_cave()
+		{
+			if(caves.size > 0) {
+				return caves.first();
+			}
+			return null;
+		}
 
 		public override void update_status()
 		{
 			if(caves.size > 0) {
-				status = new Game.Status(Game.State.INSTALLED);
+				status = new Game.Status(Game.State.INSTALLED, this);
 			} else {
-				status = new Game.Status(Game.State.UNINSTALLED);
+				status = new Game.Status(Game.State.UNINSTALLED, this);
 			}
 		}
 
@@ -146,6 +153,7 @@ namespace GameHub.Data.Sources.Itch
 
 		public override async void run()
 		{
+			yield ((Itch) source).run_game(this);
 		}
 
 		public override async void run_with_compat(bool is_opened_from_menu=false)
