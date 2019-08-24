@@ -113,15 +113,15 @@ namespace GameHub.Data.Sources.Itch
 						if(obj == null) continue;
 
 						const int NO_ID = -1;
-						var error_message = obj.has_member("error") ? (string?) obj.get_string_member("error") : null;
+						var error_info = obj.has_member("error") ? (Json.Object?) obj.get_object_member("error") : null;
 						var message_id = obj.has_member("id") ? (int) obj.get_int_member("id") : NO_ID;
 						var result = obj.has_member("result") ? (Json.Object?) obj.get_object_member("result") : null;
 						var params = obj.has_member("params") ? (Json.Object?) obj.get_object_member("params") : null;
 						var method = obj.has_member("method") ? (string?) obj.get_string_member("method") : null;
 
-						if(error_message != null && message_id != NO_ID) {
+						if(error_info != null && message_id != NO_ID) {
 							// failure response
-							error("[ButlerClient: err %d] %s", message_id, error_message);
+							warning("[ButlerClient: err %d] %s", message_id, json);
 							// TODO handle failed call
 						} else if(result != null && message_id != NO_ID) {
 							// success response
