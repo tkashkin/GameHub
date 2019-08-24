@@ -123,6 +123,7 @@ namespace GameHub.Data.Sources.Itch
 
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
+			yield ((Itch) source).install_game(name, int.parse(id));
 		}
 
 		public override async void run()

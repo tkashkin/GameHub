@@ -268,6 +268,40 @@ namespace GameHub.Utils
 						}
 					}
 				}
+
+				public class Itch: GameHub.Settings.SettingsSchema
+				{
+					public string game_dir { get; set; }
+
+					public static string expand_game_dir(string game, Platform? platform=null)
+					{
+						var g = game.replace(": ", " - ").replace(":", "");
+						var variables = new HashMap<string, string>();
+						variables.set("root", Collection.instance.root);
+						variables.set("game", g);
+						variables.set("platform_name", platform == null ? "." : platform.name());
+						variables.set("platform", platform == null ? "." : platform.id());
+						return FSUtils.expand(instance.game_dir, null, variables);
+					}
+
+					public Itch()
+					{
+						base(ProjectConfig.PROJECT_NAME + ".paths.collection.itch");
+					}
+
+					private static Itch? _instance;
+					public static unowned Itch instance
+					{
+						get
+						{
+							if(_instance == null)
+							{
+								_instance = new Itch();
+							}
+							return _instance;
+						}
+					}
+				}
 			}
 		}
 

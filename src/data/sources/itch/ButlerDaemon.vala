@@ -152,6 +152,42 @@ namespace GameHub.Data.Sources.Itch
 			}
 
 			return items;
-		}
+        }
+        
+        public async void install(int game_id, string path)
+        {
+            var install_plan_result = yield client.call("Install.Plan", Parser.json(j => j
+                .set_member_name("gameId").add_int_value(game_id)
+            ));
+            var upload_id = install_plan_result
+                .get_object_member("info")
+                .get_object_member("upload")
+                .get_int_member("id");
+
+            var add_location_result = yield client.call("Install.Locations.Add", Parser.json(j => j
+                .set_member_name("path").add_string_value(path)
+            ));
+            var install_location_id = add_location_result
+                .get_object_member("installLocation")
+                .get_string_member("id");
+
+            var install_queue_result = yield client.call("Install.Queue", Parser.json(j => j
+                .set_member_name("game").begin_object()
+                    .set_member_name("id").add_int_value(game_id)
+                    .end_object()
+                .set_member_name("upload").begin_object()
+                    .set_member_name("id").add_int_value(upload_id)
+                    .end_object()
+                .set_member_name("installLocationId").add_string_value(install_location_id)
+                .set_member_name("queueDownload").add_boolean_value(true)
+            ));
+            var install_id = install_queue_result.get_string_member("id");
+            var staging_folder = install_queue_result.get_string_member("stagingFolder");
+
+            yield client.call("Install.Perform", Parser.json(j => j
+                .set_member_name("id").add_string_value(install_id)
+                .set_member_name("stagingFolder").add_string_value(staging_folder)
+            ));
+        }
 	}
 }
