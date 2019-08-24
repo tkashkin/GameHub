@@ -25,6 +25,7 @@ namespace GameHub.Data.Sources.Itch
 {
 	public class ItchGame: Game
 	{
+		public int int_id { get { return int.parse(id); } }
 		private bool game_info_updating = false;
 		private bool game_info_updated = false;
 
@@ -117,13 +118,30 @@ namespace GameHub.Data.Sources.Itch
 		{
 		}
 
+		private ArrayList<int> caves = new ArrayList<int>();
+		public void update_caves(HashMap<int, ArrayList<int>> caves_map)
+		{
+			if(caves_map.has_key(int_id)) {
+				caves = caves_map.get(int_id);
+			} else {
+				caves.clear();
+			}
+			update_status();
+		}
+
+
 		public override void update_status()
 		{
+			if(caves.size > 0) {
+				status = new Game.Status(Game.State.INSTALLED);
+			} else {
+				status = new Game.Status(Game.State.UNINSTALLED);
+			}
 		}
 
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
-			yield ((Itch) source).install_game(name, int.parse(id));
+			yield ((Itch) source).install_game(this);
 		}
 
 		public override async void run()
