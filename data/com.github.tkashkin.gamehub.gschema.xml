@@ -257,6 +257,13 @@
 			</key>
 		</schema>
 
+		<schema path="/com/github/tkashkin/gamehub/paths/collection/itch/" id="com.github.tkashkin.gamehub.paths.collection.itch">
+			<key name="game-dir" type="s">
+				<default>'$root/Itch/$game'</default>
+				<summary>itch.io collection: game directory</summary>
+			</key>
+		</schema>
+
 	<!-- Controller -->
 		<schema path="/com/github/tkashkin/gamehub/controller/" id="com.github.tkashkin.gamehub.controller">
 			<key name="enabled" type="b">

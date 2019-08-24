@@ -155,6 +155,13 @@ namespace GameHub.Data.Sources.Itch
 			return _games;
 		}
 
+		public async void install_game(string name, int id)
+		{
+			string install_dir = FSUtils.Paths.Collection.Itch.instance.expand_game_dir(name);
+			FSUtils.mkdir(install_dir);
+			yield butler_daemon.install(id, install_dir);
+		}
+
 		private async void butler_connect()
 		{
 			if(butler_daemon == null && butler_executable != null || butler_executable.query_exists())
