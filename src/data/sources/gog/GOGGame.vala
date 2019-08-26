@@ -307,38 +307,8 @@ namespace GameHub.Data.Sources.GOG
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			yield update_game_info();
-
 			if(installers == null || installers.size < 1) return;
-
-			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode);
-
-			wnd.cancelled.connect(() => Idle.add(install.callback));
-
-			wnd.install.connect((installer, dl_only, tool) => {
-				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-
-				if(installer.parts.size > 0)
-				{
-					FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
-				}
-
-				installer.install.begin(this, dl_only, tool, (obj, res) => {
-					installer.install.end(res);
-					Idle.add(install.callback);
-				});
-			});
-
-			wnd.import.connect(() => {
-				import();
-				Idle.add(install.callback);
-			});
-
-			if(install_mode == Runnable.Installer.InstallMode.INTERACTIVE)
-			{
-				wnd.show_all();
-				wnd.present();
-			}
-
+			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;
 		}
 
@@ -593,7 +563,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 		}
 
-		public class Installer: Runnable.Installer
+		public class Installer: Runnable.DownloadableInstaller
 		{
 			private GOGGame game;
 			private Json.Object json;
@@ -683,7 +653,7 @@ namespace GameHub.Data.Sources.GOG
 										delete checksum_root;
 									}
 
-									parts.add(new Runnable.Installer.Part(id, url, size, remote, local, hash, hash_type));
+									parts.add(new Runnable.DownloadableInstaller.Part(id, url, size, remote, local, hash, hash_type));
 								}
 							}
 

@@ -113,35 +113,73 @@ namespace GameHub.Data.Sources.Itch
 						if(obj == null) continue;
 
 						const int NO_ID = -1;
-						var error_info = obj.has_member("error") ? (Json.Object?) obj.get_object_member("error") : null;
+						var error_info = obj.has_member("error") ? obj.get_object_member("error") : null;
 						var message_id = obj.has_member("id") ? (int) obj.get_int_member("id") : NO_ID;
-						var result = obj.has_member("result") ? (Json.Object?) obj.get_object_member("result") : null;
-						var params = obj.has_member("params") ? (Json.Object?) obj.get_object_member("params") : null;
-						var method = obj.has_member("method") ? (string?) obj.get_string_member("method") : null;
+						var result = obj.has_member("result") ? obj.get_object_member("result") : null;
+						var params = obj.has_member("params") ? obj.get_object_member("params") : null;
+						var method = obj.has_member("method") ? obj.get_string_member("method") : null;
 
-						if(error_info != null && message_id != NO_ID) {
+						if(error_info != null && message_id != NO_ID)
+						{
 							// failure response
 							responses.set(message_id, {error_info, false});
 							warning("[ButlerClient: err %d] %s", message_id, json);
-						} else if(result != null && message_id != NO_ID) {
+						}
+						else if(result != null && message_id != NO_ID)
+						{
 							// success response
 							responses.set(message_id, {result, true});
 							if(Application.log_verbose)
 							{
 								debug("[ButlerClient: res %d] %s", message_id, json);
 							}
-						} else if(message_id != NO_ID) {
+						}
+						else if(message_id != NO_ID)
+						{
 							// server request
 							warning("[ButlerClient: srv %d] %s", message_id, json);
 							// TODO handle server call
-						} else if(params != null && method != null) {
+						}
+						else if(params != null && method != null)
+						{
 							// notification
-							info("[ButlerClient: ntf] %s", json);
-							// TODO handle notification
-						} else {
+							switch(method.down())
+							{
+								case "log":
+									var log_level = params.has_member("level") ? params.get_string_member("level") : "info";
+									var log_message = "[ButlerClient: log] " + params.get_string_member("message");
+									switch(log_level.down())
+									{
+										case "info":
+											info(log_message);
+											break;
+
+										case "debug":
+											if(Application.log_verbose)
+											{
+												debug(log_message);
+											}
+											break;
+
+										case "warning":
+										case "error":
+											warning(log_message);
+											break;
+									}
+									break;
+
+								default:
+									if(Application.log_verbose)
+									{
+										debug("[ButlerClient: ntf] %s", json);
+									}
+									break;
+							}
+						}
+						else
+						{
 							warning("[ButlerClient: ???] %s", json);
 						}
-
 					}
 					catch(Error e)
 					{
@@ -150,8 +188,9 @@ namespace GameHub.Data.Sources.Itch
 				}
 			}
 
-			public async Json.Object? get_reply(int message_id, out Json.Object? error = null)
+			public async Json.Object? get_reply(int message_id, out Json.Object? error=null)
 			{
+				error = null;
 				while(!responses.has_key(message_id))
 				{
 					yield Utils.sleep_async(100);
@@ -159,9 +198,12 @@ namespace GameHub.Data.Sources.Itch
 				Response response;
 				responses.unset(message_id, out response);
 
-				if(response.successful) {
+				if(response.successful)
+				{
 					return response.content;
-				} else {
+				}
+				else
+				{
 					error = response.content;
 					return null;
 				}

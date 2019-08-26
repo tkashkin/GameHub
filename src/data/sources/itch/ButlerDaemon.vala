@@ -142,7 +142,6 @@ namespace GameHub.Data.Sources.Itch
 			ArrayList<Json.Node> items = new ArrayList<Json.Node>();
 
 			var arr = res.has_member("items") ? res.get_array_member("items") : null;
-
 			if(arr != null)
 			{
 				arr.foreach_element((array, index, node) => {
@@ -152,78 +151,94 @@ namespace GameHub.Data.Sources.Itch
 			}
 
 			return items;
-        }
-        
-        public async void install(int game_id, string path)
-        {
-            var install_plan_result = yield client.call("Install.Plan", Parser.json(j => j
-                .set_member_name("gameId").add_int_value(game_id)
-            ));
-            var upload_id = install_plan_result
-                .get_object_member("info")
-                .get_object_member("upload")
-                .get_int_member("id");
+		}
 
-            var add_location_result = yield client.call("Install.Locations.Add", Parser.json(j => j
-                .set_member_name("path").add_string_value(path)
-            ));
-            var install_location_id = add_location_result
-                .get_object_member("installLocation")
-                .get_string_member("id");
+		public async HashMap<int, ArrayList<string>> get_caves(int? game_id=null, out ArrayList<Json.Node> installed_games=null)
+		{
+			var result = yield client.call("Fetch.Caves", Parser.json(j => {
+				if(game_id != null)
+				{
+					j.set_member_name("filters").begin_object()
+						.set_member_name("gameId").add_int_value(game_id)
+						.end_object();
+				}
+			}));
 
-            var install_queue_result = yield client.call("Install.Queue", Parser.json(j => j
-                .set_member_name("game").begin_object()
-                    .set_member_name("id").add_int_value(game_id)
-                    .end_object()
-                .set_member_name("upload").begin_object()
-                    .set_member_name("id").add_int_value(upload_id)
-                    .end_object()
-                .set_member_name("installLocationId").add_string_value(install_location_id)
-                .set_member_name("queueDownload").add_boolean_value(true)
-            ));
-            var install_id = install_queue_result.get_string_member("id");
-            var staging_folder = install_queue_result.get_string_member("stagingFolder");
+			var caves = new HashMap<int, ArrayList<string>>();
 
-            yield client.call("Install.Perform", Parser.json(j => j
-                .set_member_name("id").add_string_value(install_id)
-                .set_member_name("stagingFolder").add_string_value(staging_folder)
-            ));
-        }
+			var installed = new ArrayList<Json.Node>();
 
-        public async HashMap<int, ArrayList<string>> get_caves(int? game_id = null)
-        {
-            var result = yield client.call("Fetch.Caves", Parser.json(j => {
-                if(game_id != null) {
-                    j.set_member_name("filters").begin_object()
-                        .set_member_name("gameId").add_int_value(game_id)
-                        .end_object();
-                }
-            }));
+			var arr = result.has_member("items") ? result.get_array_member("items") : null;
+			if(arr != null)
+			{
+				arr.foreach_element((array, index, node) => {
+					var cave = node.get_object();
+					var cave_id = cave.get_string_member("id");
+					var game = cave.get_member("game");
+					var cave_game_id = (int) game.get_object().get_int_member("id");
 
-            var caves = new HashMap<int, ArrayList<string>>();
-            result.get_array_member("items").foreach_element((array, index, node) => {
-                var cave = node.get_object();
-                var cave_game_id = (int) cave.get_object_member("game").get_int_member("id");
-                var cave_id = cave.get_string_member("id");
+					installed.add(game);
 
-                ArrayList<string> caves_for_game;
-                if(caves.has_key(cave_game_id)) {
-                    caves_for_game = caves.get(cave_game_id);
-                } else {
-                    caves_for_game = new ArrayList<string>();
-                    caves.set(cave_game_id, caves_for_game);
-                }
-                caves_for_game.add(cave_id);
-            });
-            return caves;
-        }
+					ArrayList<string> caves_for_game;
+					if(caves.has_key(cave_game_id))
+					{
+						caves_for_game = caves.get(cave_game_id);
+					}
+					else
+					{
+						caves_for_game = new ArrayList<string>();
+						caves.set(cave_game_id, caves_for_game);
+					}
+					caves_for_game.add(cave_id);
+				});
+			}
 
-        public async void run(string cave_id, string prereqs_dir)
-        {
-            yield client.call("Launch", Parser.json(j => j
-                .set_member_name("caveId").add_string_value(cave_id)
-                .set_member_name("prereqsDir").add_string_value(prereqs_dir)
-            ));
-        }
+			installed_games = installed;
+			return caves;
+		}
+
+		public async void install(int game_id, string path)
+		{
+			var install_plan_result = yield client.call("Install.Plan", Parser.json(j => j
+				.set_member_name("gameId").add_int_value(game_id)
+			));
+			var upload_id = install_plan_result
+				.get_object_member("info")
+				.get_object_member("upload")
+				.get_int_member("id");
+
+			var add_location_result = yield client.call("Install.Locations.Add", Parser.json(j => j
+				.set_member_name("path").add_string_value(path)
+			));
+			var install_location_id = add_location_result
+				.get_object_member("installLocation")
+				.get_string_member("id");
+
+			var install_queue_result = yield client.call("Install.Queue", Parser.json(j => j
+				.set_member_name("game").begin_object()
+					.set_member_name("id").add_int_value(game_id)
+					.end_object()
+				.set_member_name("upload").begin_object()
+					.set_member_name("id").add_int_value(upload_id)
+					.end_object()
+				.set_member_name("installLocationId").add_string_value(install_location_id)
+				.set_member_name("queueDownload").add_boolean_value(true)
+			));
+			var install_id = install_queue_result.get_string_member("id");
+			var staging_folder = install_queue_result.get_string_member("stagingFolder");
+
+			yield client.call("Install.Perform", Parser.json(j => j
+				.set_member_name("id").add_string_value(install_id)
+				.set_member_name("stagingFolder").add_string_value(staging_folder)
+			));
+		}
+
+		public async void run(string cave_id, string prereqs_dir)
+		{
+			yield client.call("Launch", Parser.json(j => j
+				.set_member_name("caveId").add_string_value(cave_id)
+				.set_member_name("prereqsDir").add_string_value(prereqs_dir)
+			));
+		}
 	}
 }

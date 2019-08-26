@@ -20,6 +20,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 using GameHub.Utils;
 using GameHub.Data;
+using GameHub.Data.DB;
 
 namespace GameHub.Data.Sources.Itch
 {
@@ -125,7 +126,7 @@ namespace GameHub.Data.Sources.Itch
 			return Settings.Auth.Itch.instance.authenticated && Settings.Auth.Itch.instance.api_key != null && Settings.Auth.Itch.instance.api_key.length > 0;
 		}
 
-		private ArrayList<Game> _games = new ArrayList<Game>(null);
+		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
 
 		public override ArrayList<Game> games { get { return _games; } }
 
@@ -136,27 +137,77 @@ namespace GameHub.Data.Sources.Itch
 				return _games;
 			}
 
-			ArrayList<Json.Node> items = yield butler_daemon.get_owned_keys(user_id, true);
-			var caves = yield butler_daemon.get_caves();
+			Utils.thread("ItchLoading", () => {
+				_games.clear();
 
-			_games.clear();
-			foreach(var node in items) {
-				var game = new ItchGame(this, node);
-				game.update_caves(caves);
-
-				if(game_loaded != null) {
-					game_loaded(game, false);
+				var cached = Tables.Games.get_all(this);
+				games_count = 0;
+				if(cached.size > 0)
+				{
+					foreach(var g in cached)
+					{
+						if(!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(g))
+						{
+							_games.add(g);
+							if(game_loaded != null)
+							{
+								game_loaded(g, true);
+							}
+						}
+						games_count++;
+					}
 				}
-				_games.add(game);
-				games_count = _games.size;
+
+				if(cache_loaded != null)
+				{
+					cache_loaded();
+				}
+
+				load_games_from_butler.begin(game_loaded, (obj, res) => {
+					load_games_from_butler.end(res);
+					Idle.add(load_games.callback);
+				});
+			});
+
+			yield;
+
+			return _games;
+		}
+
+		private async void load_games_from_butler(Utils.FutureResult2<Game, bool>? game_loaded=null)
+		{
+			ArrayList<Json.Node> owned_games = yield butler_daemon.get_owned_keys(user_id, true);
+			ArrayList<Json.Node> installed_games;
+
+			var caves = yield butler_daemon.get_caves(null, out installed_games);
+
+			ArrayList<Json.Node>[] game_arrays = { owned_games, installed_games };
+			foreach(var arr in game_arrays)
+			{
+				foreach(var node in arr)
+				{
+					var game = new ItchGame(this, node);
+					bool is_new_game = !_games.contains(game);
+					if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(game)))
+					{
+						_games.add(game);
+						if(game_loaded != null)
+						{
+							game_loaded(game, false);
+						}
+					}
+					if(is_new_game)
+					{
+						games_count++;
+						game.save();
+					}
+				}
 			}
 
-			if(cache_loaded != null)
+			foreach(var g in _games)
 			{
-				cache_loaded();
+				((ItchGame) g).update_caves(caves);
 			}
-			
-			return _games;
 		}
 
 		public async void install_game(ItchGame game)
@@ -172,7 +223,7 @@ namespace GameHub.Data.Sources.Itch
 
 		private string make_game_dir(ItchGame game)
 		{
-			string install_dir = FSUtils.Paths.Collection.Itch.instance.expand_game_dir(game.name);
+			string install_dir = FSUtils.Paths.Collection.Itch.expand_game_dir(game.name);
 			FSUtils.mkdir(install_dir);
 			return install_dir;
 		}

@@ -75,7 +75,7 @@ namespace GameHub.Data.Sources.User
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
-			install_dir = FSUtils.file(Tables.Games.INSTALL_PATH.get(s));
+			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
 			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
@@ -133,29 +133,10 @@ namespace GameHub.Data.Sources.User
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			yield update_game_info();
-
 			if(installer == null) return;
-
 			var installers = new ArrayList<Runnable.Installer>();
 			installers.add(installer);
-
-			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode);
-
-			wnd.cancelled.connect(() => Idle.add(install.callback));
-
-			wnd.install.connect((installer, dl_only, tool) => {
-				installer.install.begin(this, dl_only, tool, (obj, res) => {
-					installer.install.end(res);
-					Idle.add(install.callback);
-				});
-			});
-
-			if(install_mode == Runnable.Installer.InstallMode.INTERACTIVE)
-			{
-				wnd.show_all();
-				wnd.present();
-			}
-
+			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;
 		}
 
@@ -196,7 +177,7 @@ namespace GameHub.Data.Sources.User
 			}
 		}
 
-		public class Installer: Runnable.Installer
+		public class Installer: Runnable.FileInstaller
 		{
 			private string game_name;
 			public override string name { owned get { return game_name; } }
@@ -206,7 +187,7 @@ namespace GameHub.Data.Sources.User
 				game_name = game.name;
 				id = "installer";
 				platform = installer.get_path().down().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
-				parts.add(new Runnable.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
+				file = installer;
 			}
 		}
 	}
