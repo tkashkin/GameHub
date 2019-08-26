@@ -387,35 +387,8 @@ namespace GameHub.Data.Sources.Humble
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			yield update_installers();
-
 			if(installers.size < 1) return;
-
-			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode);
-
-			wnd.cancelled.connect(() => Idle.add(install.callback));
-
-			wnd.install.connect((installer, dl_only, tool) => {
-				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
-				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
-
-				installer.install.begin(this, dl_only, tool, (obj, res) => {
-					installer.install.end(res);
-					update_status();
-					Idle.add(install.callback);
-				});
-			});
-
-			wnd.import.connect(() => {
-				import();
-				Idle.add(install.callback);
-			});
-
-			if(install_mode == Runnable.Installer.InstallMode.INTERACTIVE)
-			{
-				wnd.show_all();
-				wnd.present();
-			}
-
+			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;
 		}
 
@@ -436,13 +409,13 @@ namespace GameHub.Data.Sources.Humble
 			}
 		}
 
-		public class Installer: Runnable.Installer
+		public class Installer: Runnable.DownloadableInstaller
 		{
 			private File? installers_dir;
 
 			public string dl_name;
 			public string? dl_id;
-			public Runnable.Installer.Part part;
+			public Runnable.DownloadableInstaller.Part part;
 
 			public override string name { owned get { return dl_name; } }
 
@@ -482,7 +455,7 @@ namespace GameHub.Data.Sources.Humble
 					hash_type = ChecksumType.SHA256;
 				}
 
-				part = new Runnable.Installer.Part(id, url, full_size, remote, local, hash, hash_type);
+				part = new Runnable.DownloadableInstaller.Part(id, url, full_size, remote, local, hash, hash_type);
 				parts.add(part);
 			}
 

@@ -24,6 +24,7 @@ using GameHub.Utils;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
+using GameHub.Data.Sources.Itch;
 using GameHub.Data.Sources.User;
 
 namespace GameHub.Data.DB.Tables
@@ -279,9 +280,17 @@ namespace GameHub.Data.DB.Tables
 				{
 					g = new GOGGame.from_db((GOG) s, st);
 				}
+				else if(s is Trove)
+				{
+					g = new HumbleGame.from_db((Trove) s, st);
+				}
 				else if(s is Humble)
 				{
 					g = new HumbleGame.from_db((Humble) s, st);
+				}
+				else if(s is Itch)
+				{
+					g = new ItchGame.from_db((Itch) s, st);
 				}
 				else if(s is User)
 				{
@@ -356,9 +365,17 @@ namespace GameHub.Data.DB.Tables
 					{
 						g = new GOGGame.from_db((GOG) s, st);
 					}
+					else if(s is Trove)
+					{
+						g = new HumbleGame.from_db((Trove) s, st);
+					}
 					else if(s is Humble)
 					{
 						g = new HumbleGame.from_db((Humble) s, st);
+					}
+					else if(s is Itch)
+					{
+						g = new ItchGame.from_db((Itch) s, st);
 					}
 					else if(s is User)
 					{

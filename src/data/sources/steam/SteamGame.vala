@@ -62,8 +62,8 @@ namespace GameHub.Data.Sources.Steam
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			icon = Tables.Games.ICON.get(s);
 			image = Tables.Games.IMAGE.get(s);
-			info = Tables.Games.INFO.get(s);
-			info_detailed = Tables.Games.INFO_DETAILED.get(s);
+			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
+			executable_path = Tables.Games.EXECUTABLE.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
