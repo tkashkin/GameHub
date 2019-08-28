@@ -28,7 +28,7 @@ namespace GameHub.Data.Sources.Itch
 	 * with Content-Length headers, while butler daemon expects one message
 	 * per line, deliminated by LF
 	 */
-	public class ButlerClient : Object, ForwardsNotifications
+	public class ButlerClient : Object, ForwardsServerMessage
 	{
 		private SocketConnection socket_connection;
 		private int message_id = 0;
@@ -39,8 +39,8 @@ namespace GameHub.Data.Sources.Itch
 		{
 			this.socket_connection = socket_connection;
 			sender = new Sender(socket_connection.output_stream);
-			receiver = new Receiver(socket_connection.input_stream);
-			forward_notifications_from(receiver);
+			receiver = new Receiver(socket_connection.input_stream, sender);
+			forward_server_messages_from(receiver);
 		}
 
 		public async Json.Object? call(string method, Json.Node? params=null, out Json.Object? error = null)
@@ -83,18 +83,44 @@ namespace GameHub.Data.Sources.Itch
 					warning("[ButlerClient: req %d] Error while sending request: %s", message_id, e.message);
 				}
 			}
+
+			public void respond(int message_id, Json.Node? result=null)
+			{
+				var request = Parser.json(j => j
+					.set_member_name("jsonrpc").add_string_value("2.0")
+					.set_member_name("id").add_int_value(message_id)
+					.set_member_name("result").add_value(result ?? Parser.json())
+				);
+
+				try
+				{
+					var json = Json.to_string(request, false);
+					stream.put_string(json + "\n");
+
+					if(Application.log_verbose)
+					{
+						debug("[ButlerClient: srs %d] %s", message_id, json);
+					}
+				}
+				catch(Error e)
+				{
+					warning("[ButlerClient: srs %d] Error while responding to server request: %s", message_id, e.message);
+				}
+			}
 		}
 
-		private class Receiver : Object, ForwardsNotifications
+		private class Receiver : Object, ForwardsServerMessage
 		{
 			private DataInputStream stream;
+			private Sender sender;
 			private HashMap<int, Response?> responses;
 
-			public Receiver(InputStream input_stream)
+			public Receiver(InputStream input_stream, Sender sender)
 			{
 				stream = new DataInputStream(input_stream);
 				stream.set_newline_type(DataStreamNewlineType.LF);
 				responses = new HashMap<int, Response?>();
+				this.sender = sender;
 				Utils.thread("ItchButlerClientReceiver", () => {
 					handle_messages.begin();
 				}, false);
@@ -138,8 +164,10 @@ namespace GameHub.Data.Sources.Itch
 						else if(message_id != NO_ID)
 						{
 							// server request
+							server_call_received(method, params, (result) => {
+								sender.respond(message_id, result);
+							});
 							warning("[ButlerClient: srv %d] %s", message_id, json);
-							// TODO handle server call
 						}
 						else if(params != null && method != null)
 						{
@@ -220,14 +248,20 @@ namespace GameHub.Data.Sources.Itch
 		}
 	}
 
-	public interface ForwardsNotifications: Object
+	public interface ForwardsServerMessage: Object
 	{
 		public signal void notification_received(string method, Json.Object params);
 
-		public void forward_notifications_from(ForwardsNotifications source)
+		public delegate void ServerMessageResponder(Json.Node? result=null);
+		public signal void server_call_received(string method, Json.Object params, ServerMessageResponder respond);
+
+		public void forward_server_messages_from(ForwardsServerMessage source)
 		{
 			source.notification_received.connect((s, method, @params) =>
 				notification_received(method, params)
+			);
+			source.server_call_received.connect((s, method, @params, respond) =>
+				server_call_received(method, params, respond)
 			);
 		}
 	}
