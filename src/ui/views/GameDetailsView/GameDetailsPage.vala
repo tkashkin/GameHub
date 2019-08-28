@@ -275,18 +275,18 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			status.label = s.description;
 			download_progress.hide();
-			if(s.state == Game.State.DOWNLOADING && s.download != null)
+			if(s.state == Game.State.DOWNLOADING && s.download != null && s.download.status != null)
 			{
 				download = s.download;
 				var ds = download.status.state;
 
 				download_progress.show();
-				download_progress.fraction = s.download.status.progress;
+				download_progress.fraction = download.status.progress;
 
 				action_cancel.visible = true;
-				action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.QUEUED || ds == Downloader.DownloadState.PAUSED;
-				action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
-				action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
+				action_cancel.sensitive = ds == Downloader.Download.State.DOWNLOADING || ds == Downloader.Download.State.QUEUED || ds == Downloader.Download.State.PAUSED;
+				action_pause.visible = download is Downloader.PausableDownload && ds != Downloader.Download.State.PAUSED && ds != Downloader.Download.State.QUEUED;
+				action_resume.visible = download is Downloader.PausableDownload && ds == Downloader.Download.State.PAUSED && ds != Downloader.Download.State.QUEUED;
 			}
 			else
 			{

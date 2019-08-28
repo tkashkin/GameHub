@@ -43,7 +43,7 @@ namespace GameHub.Data.Sources.Itch
 			}
 
 			var connection = new ButlerConnection();
-			yield connection.connect(address, secret);
+			yield connection.init(address, secret);
 			return connection;
 		}
 
@@ -58,10 +58,9 @@ namespace GameHub.Data.Sources.Itch
 			var butler_path = butler_executable.get_path();
 			var db_path = FSUtils.expand(FSUtils.Paths.Itch.Home, FSUtils.Paths.Itch.Database);
 
-			string[] cmd = {
-				butler_path, "daemon", "--json", "--transport", "tcp", "--keep-alive",
-				"--dbpath", db_path
-			};
+			var pid = ((int) Posix.getpid()).to_string();
+
+			string[] cmd = { butler_path, "daemon", "--json", "--transport", "tcp", "--keep-alive", "--dbpath", db_path, "--destiny-pid", pid };
 			int stdout_fd;
 
 			try

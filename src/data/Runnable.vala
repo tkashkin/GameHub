@@ -580,7 +580,7 @@ namespace GameHub.Data
 					{
 						FSUtils.mkdir(part.local.get_parent().get_path());
 
-						var ds_id = Downloader.get_instance().download_started.connect(dl => {
+						var ds_id = Downloader.download_manager().file_download_started.connect(dl => {
 							if(dl.remote != part.remote) return;
 							if(game != null)
 							{
@@ -599,7 +599,7 @@ namespace GameHub.Data
 						}
 
 						var info = new Downloader.DownloadInfo(runnable.name, partDesc, game != null ? game.icon : null, null, null, game != null ? game.source.icon : null);
-						var file = yield Downloader.download(part.remote, part.local, info);
+						var file = yield Downloader.download_file(part.remote, part.local, info);
 						if(file != null && file.query_exists())
 						{
 							string? file_checksum = null;
@@ -643,7 +643,7 @@ namespace GameHub.Data
 								warning("Checksum mismatch in `%s`, skipping; expected: `%s`, actual: `%s`", file.get_basename(), part.checksum, file_checksum);
 							}
 						}
-						Downloader.get_instance().disconnect(ds_id);
+						Downloader.download_manager().disconnect(ds_id);
 
 						p++;
 					}

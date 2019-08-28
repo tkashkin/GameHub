@@ -22,11 +22,11 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Itch
 {
-	public class ButlerConnection : Object, ForwardsNotifications
+	public class ButlerConnection: Object, ForwardsNotifications
 	{
 		private ButlerClient client;
 
-		public async bool connect(string address, string secret)
+		public async bool init(string address, string secret)
 		{
 			try
 			{
@@ -89,9 +89,7 @@ namespace GameHub.Data.Sources.Itch
 						.end_object();
 				}
 			}));
-
 			var caves = new HashMap<int, ArrayList<string>>();
-
 			var installed = new ArrayList<Json.Node>();
 
 			var arr = result.has_member("items") ? result.get_array_member("items") : null;
@@ -123,22 +121,50 @@ namespace GameHub.Data.Sources.Itch
 			return caves;
 		}
 
-		public async void install(int game_id, string path, string install_id)
+		public async ArrayList<Json.Object>? get_game_uploads(int game_id)
 		{
-			var install_plan_result = yield client.call("Install.Plan", Parser.json(j => j
-				.set_member_name("gameId").add_int_value(game_id)
+			var result = yield client.call("Game.FindUploads", Parser.json(j => j
+				.set_member_name("game").begin_object()
+					.set_member_name("id").add_int_value(game_id)
+					.end_object()
 			));
-			var upload_id = install_plan_result
-				.get_object_member("info")
-				.get_object_member("upload")
-				.get_int_member("id");
+			var uploads = new ArrayList<Json.Object>();
+			var arr = result.has_member("uploads") ? result.get_array_member("uploads") : null;
+			if(arr != null)
+			{
+				arr.foreach_element((array, index, node) => {
+					uploads.add(node.get_object());
+				});
+			}
+			return uploads;
+		}
 
-			var add_location_result = yield client.call("Install.Locations.Add", Parser.json(j => j
-				.set_member_name("path").add_string_value(path)
-			));
-			var install_location_id = add_location_result
-				.get_object_member("installLocation")
-				.get_string_member("id");
+		public async void install(int game_id, int upload_id, string install_id)
+		{
+			var install_dir = FSUtils.mkdir(FSUtils.Paths.Itch.Games);
+			var install_dir_is_added = false;
+			string? install_location_id = null;
+
+			var install_locations_list = (yield client.call("Install.Locations.List")).get_array_member("installLocations");
+
+			foreach(var location_node in install_locations_list.get_elements())
+			{
+				var location_obj = location_node.get_object();
+				if(location_obj != null && location_obj.get_string_member("path") == install_dir.get_path())
+				{
+					install_dir_is_added = true;
+					install_location_id = location_obj.get_string_member("id");
+					break;
+				}
+			}
+
+			if(!install_dir_is_added)
+			{
+				var add_install_location_result = yield client.call("Install.Locations.Add", Parser.json(j => j
+					.set_member_name("path").add_string_value(install_dir.get_path())
+				));
+				install_location_id = add_install_location_result.get_object_member("installLocation").get_string_member("id");
+			}
 
 			var install_queue_result = yield client.call("Install.Queue", Parser.json(j => j
 				.set_member_name("game").begin_object()
@@ -150,9 +176,8 @@ namespace GameHub.Data.Sources.Itch
 				.set_member_name("installLocationId").add_string_value(install_location_id)
 				.set_member_name("queueDownload").add_boolean_value(true)
 			));
-			// install_id = install_queue_result.get_string_member("id");
-			var staging_folder = install_queue_result.get_string_member("stagingFolder");
 
+			var staging_folder = install_queue_result.get_string_member("stagingFolder");
 			yield client.call("Install.Perform", Parser.json(j => j
 				.set_member_name("id").add_string_value(install_id)
 				.set_member_name("stagingFolder").add_string_value(staging_folder)
@@ -174,8 +199,9 @@ namespace GameHub.Data.Sources.Itch
 			));
 		}
 
-		public async void run(string cave_id, string prereqs_dir)
+		public async void run(string cave_id)
 		{
+			var prereqs_dir = FSUtils.expand(FSUtils.Paths.Itch.Games, ".prereqs");
 			yield client.call("Launch", Parser.json(j => j
 				.set_member_name("caveId").add_string_value(cave_id)
 				.set_member_name("prereqsDir").add_string_value(prereqs_dir)

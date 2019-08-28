@@ -54,6 +54,8 @@ namespace GameHub.Data.Sources.Itch
 				platforms.add(Platform.MACOS);
 			}
 
+			description = json_obj.get_string_member("shortText");
+
 			info = Json.to_string(json_node, false);
 
 			update_status();
@@ -105,26 +107,21 @@ namespace GameHub.Data.Sources.Itch
 				}
 			}
 
+			var info_root = Parser.parse_json(info);
+			if(info_root != null && info_root.get_node_type() == Json.NodeType.OBJECT)
+			{
+				var info_root_obj = info_root.get_object();
+				if(info_root_obj.has_member("shortText"))
+				{
+					description = info_root_obj.get_string_member("shortText");
+				}
+			}
+
 			update_status();
 		}
 
 		public override async void update_game_info()
 		{
-			if(description == null || description.length == 0)
-			{
-				var root = Parser.parse_json(info);
-
-				if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
-				{
-					var root_obj = root.get_object();
-
-					if(root_obj.has_member("shortText"))
-					{
-						description = root_obj.get_string_member("shortText");
-					}
-				}
-			}
-
 			update_status();
 		}
 
@@ -151,31 +148,13 @@ namespace GameHub.Data.Sources.Itch
 			return null;
 		}
 
-		private Downloader.Download? _download;
-		public Downloader.Download? download
-		{
-			get { return _download; }
-			set {
-				if(_download != null)
-				{
-					_download.status_change.disconnect(update_status);
-				}
-				_download = value;
-				if(_download != null)
-				{
-					_download.status_change.connect(update_status);
-				}
-				update_status();
-			}
-		}
-
 		public override void update_status()
 		{
-			if(download != null)
-			{
-				status = new Game.Status(Game.State.DOWNLOADING, this, download);
-			}
-			else if(caves.size > 0)
+			if(status.state == Game.State.DOWNLOADING && status.download != null
+				&& status.download.status != null && status.download.status.state != Downloader.Download.State.CANCELLED
+				&& status.download.status.state != Downloader.Download.State.FINISHED) return;
+
+			if(caves.size > 0)
 			{
 				status = new Game.Status(Game.State.INSTALLED, this);
 			}
@@ -198,15 +177,43 @@ namespace GameHub.Data.Sources.Itch
 
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
-			/*
-			TODO: get list of installers and show InstallDialog
-			yield update_game_info();
-			if(installers == null || installers.size < 1) return;
+			var uploads = yield ((Itch) source).get_game_uploads(this);
+
+			if(uploads == null || uploads.size == 0)
+			{
+				is_installable = false;
+				return;
+			}
+
+			var installers = new ArrayList<Runnable.Installer>();
+
+			foreach(var upload in uploads)
+			{
+				var platforms = new ArrayList<Platform>();
+				var platforms_obj = upload.get_object_member("platforms");
+				if(platforms_obj.has_member("windows"))
+				{
+					platforms.add(Platform.WINDOWS);
+				}
+				if(platforms_obj.has_member("linux"))
+				{
+					platforms.add(Platform.LINUX);
+				}
+				if(platforms_obj.has_member("osx"))
+				{
+					platforms.add(Platform.MACOS);
+				}
+
+				if(platforms.size == 0) platforms.add(Platform.CURRENT);
+
+				foreach(var platform in platforms)
+				{
+					installers.add(new Installer(this, upload, platform));
+				}
+			}
+
 			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;
-			*/
-
-			yield ((Itch) source).install_game(this);
 		}
 
 		public override async void run()
@@ -238,74 +245,52 @@ namespace GameHub.Data.Sources.Itch
 
 		public override async void uninstall()
 		{
-			((Itch) source).uninstall_game(this);
+			((Itch) source).uninstall_game.begin(this);
 		}
 
-		/*
-		TODO: Implement ItchGame.Installer
 		public class Installer: Runnable.Installer
 		{
-			private ItchGame game;
+			public int int_id { get { return int.parse(id); } }
+
+			public ItchGame game;
 			private Json.Object json;
 
-			public override string name { owned get { return "<installer name>"; } }
+			public string? display_name;
+			public string? file_name;
 
-			public Installer(ItchGame game, Json.Object json)
+			private string _name;
+			public override string name { owned get { return _name; } }
+
+			public Installer(ItchGame game, Json.Object json, Platform platform)
 			{
 				this.game = game;
 				this.json = json;
 
-				id = json.get_string_member("id");
-				//platform = installer.get_path().down().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
+				id = json.get_int_member("id").to_string();
+				this.platform = platform;
+
+				file_name = json.has_member("filename") ? json.get_string_member("filename") : null;
+				display_name = json.has_member("displayName") ? json.get_string_member("displayName") : null;
+
+				if(file_name.length == 0) file_name = null;
+				if(display_name.length == 0) display_name = null;
+
+				_name = display_name ?? file_name ?? game.name;
+
+				var build_obj = json.has_member("build") ? json.get_object_member("build") : null;
+				if(build_obj != null)
+				{
+					version = build_obj.has_member("userVersion") ? build_obj.get_string_member("userVersion") : null;
+					_name += @" ($(version))";
+				}
+
+				full_size = json.get_int_member("size");
 			}
 
 			public override async void install(Runnable runnable, CompatTool? tool=null)
 			{
-
+				yield ((Itch) game.source).install_game(this);
 			}
-		}*/
-	}
-
-	public class ItchDownload : Downloader.Download
-	{
-		private ButlerConnection butler_connection;
-		private string install_id;
-		private double size;
-
-		public ItchDownload(ButlerConnection butler_connection, string install_id)
-		{
-			var dummy = File.new_for_path("/dev/null");
-			base(dummy, dummy, dummy);
-			this.install_id = install_id;
-			this.butler_connection = butler_connection;
-
-			butler_connection.notification_received.connect((s, method, @params) => {
-				if(method == "TaskStarted")
-				{
-					size = params.get_double_member("totalSize");
-					status = new Downloader.DownloadStatus(Downloader.DownloadState.STARTED);
-				}
-				else if(method == "Progress")
-				{
-					var progress = params.get_double_member("progress");
-					var speed = params.get_double_member("bps");
-
-					status = new Downloader.DownloadStatus(
-						Downloader.DownloadState.DOWNLOADING,
-						(int) (progress * size),
-						(int) size,
-						(int) speed);
-				}
-				else if(method == "TaskSucceeded")
-				{
-					status = new Downloader.DownloadStatus(Downloader.DownloadState.FINISHED);
-				}
-			});
-		}
-
-		public override void cancel()
-		{
-			butler_connection.cancel_install(install_id);
 		}
 	}
 }

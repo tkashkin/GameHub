@@ -211,14 +211,15 @@ namespace GameHub.Data.Sources.Itch
 			}
 		}
 
-		public async void install_game(ItchGame game)
+		public async ArrayList<Json.Object>? get_game_uploads(ItchGame game)
 		{
-			var connection = yield butler_daemon.create_connection();
-			var install_id = Uuid.string_random();
-			game.download = new ItchDownload(connection, install_id);
-			yield connection.install(game.int_id, make_game_dir(game), install_id);
-			game.download = null;
-			yield update_game_state(game);
+			return yield butler_connection.get_game_uploads(game.int_id);
+		}
+
+		public async void install_game(ItchGame.Installer installer)
+		{
+			yield ItchDownloader.get_instance().download(installer, butler_daemon);
+			yield update_game_state(installer.game);
 		}
 
 		public async void uninstall_game(ItchGame game)
@@ -234,14 +235,7 @@ namespace GameHub.Data.Sources.Itch
 
 		public async void run_game(ItchGame game)
 		{
-			yield butler_connection.run(game.get_cave(), make_game_dir(game));
-		}
-
-		private string make_game_dir(ItchGame game)
-		{
-			string install_dir = FSUtils.Paths.Collection.Itch.expand_game_dir(game.name);
-			FSUtils.mkdir(install_dir);
-			return install_dir;
+			yield butler_connection.run(game.get_cave());
 		}
 
 		private async void butler_connect()
