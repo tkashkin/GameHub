@@ -218,7 +218,18 @@ namespace GameHub.Data.Sources.Itch
 			game.download = new ItchDownload(connection, install_id);
 			yield connection.install(game.int_id, make_game_dir(game), install_id);
 			game.download = null;
-			game.update_caves(yield connection.get_caves(game.int_id));
+			yield update_game_state(game);
+		}
+
+		public async void uninstall_game(ItchGame game)
+		{
+			yield butler_connection.uninstall(game.get_cave());
+			yield update_game_state(game);
+		}
+
+		public async void update_game_state(ItchGame game)
+		{
+			game.update_caves(yield butler_connection.get_caves(game.int_id));
 		}
 
 		public async void run_game(ItchGame game)

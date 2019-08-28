@@ -238,6 +238,7 @@ namespace GameHub.Data.Sources.Itch
 
 		public override async void uninstall()
 		{
+			((Itch) source).uninstall_game(this);
 		}
 
 		/*

@@ -167,6 +167,13 @@ namespace GameHub.Data.Sources.Itch
 			return result.get_boolean_member("didCancel");
 		}
 
+		public async void uninstall(string cave_id)
+		{
+			yield client.call("Uninstall.Perform", Parser.json(j => j
+				.set_member_name("caveId").add_string_value(cave_id)
+			));
+		}
+
 		public async void run(string cave_id, string prereqs_dir)
 		{
 			yield client.call("Launch", Parser.json(j => j
