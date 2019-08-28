@@ -30,6 +30,7 @@ namespace GameHub.Data.Sources.Itch
 
 		public File? butler_executable = null;
 		private ButlerDaemon? butler_daemon = null;
+		private ButlerConnection? butler_connection = null;
 
 		public Itch()
 		{
@@ -110,7 +111,7 @@ namespace GameHub.Data.Sources.Itch
 
 			string? user_name;
 			int? user_id;
-			var success = yield butler_daemon.authenticate(api_key, out user_name, out user_id);
+			var success = yield butler_connection.authenticate(api_key, out user_name, out user_id);
 			this.user_name = user_name;
 			this.user_id = user_id;
 			return success;
@@ -176,10 +177,10 @@ namespace GameHub.Data.Sources.Itch
 
 		private async void load_games_from_butler(Utils.FutureResult2<Game, bool>? game_loaded=null)
 		{
-			ArrayList<Json.Node> owned_games = yield butler_daemon.get_owned_keys(user_id, true);
+			ArrayList<Json.Node> owned_games = yield butler_connection.get_owned_keys(user_id, true);
 			ArrayList<Json.Node> installed_games;
 
-			var caves = yield butler_daemon.get_caves(null, out installed_games);
+			var caves = yield butler_connection.get_caves(null, out installed_games);
 
 			ArrayList<Json.Node>[] game_arrays = { owned_games, installed_games };
 			foreach(var arr in game_arrays)
@@ -212,13 +213,17 @@ namespace GameHub.Data.Sources.Itch
 
 		public async void install_game(ItchGame game)
 		{
-			yield butler_daemon.install(game.int_id, make_game_dir(game));
-			game.update_caves(yield butler_daemon.get_caves(game.int_id));
+			var connection = yield butler_daemon.create_connection();
+			var install_id = Uuid.string_random();
+			game.download = new ItchDownload(connection, install_id);
+			yield connection.install(game.int_id, make_game_dir(game), install_id);
+			game.download = null;
+			game.update_caves(yield connection.get_caves(game.int_id));
 		}
 
 		public async void run_game(ItchGame game)
 		{
-			yield butler_daemon.run(game.get_cave(), make_game_dir(game));
+			yield butler_connection.run(game.get_cave(), make_game_dir(game));
 		}
 
 		private string make_game_dir(ItchGame game)
@@ -233,7 +238,7 @@ namespace GameHub.Data.Sources.Itch
 			if(butler_daemon == null && butler_executable != null || butler_executable.query_exists())
 			{
 				butler_daemon = new ButlerDaemon(butler_executable);
-				yield butler_daemon.connect();
+				butler_connection = yield butler_daemon.create_connection();
 			}
 		}
 	}
