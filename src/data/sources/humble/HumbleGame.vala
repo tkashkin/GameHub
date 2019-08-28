@@ -160,7 +160,7 @@ namespace GameHub.Data.Sources.Humble
 
 		public override void update_status()
 		{
-			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
+			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.Download.State.CANCELLED) return;
 
 			status = new Game.Status(executable != null && executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED, this);
 			if(status.state == Game.State.INSTALLED)

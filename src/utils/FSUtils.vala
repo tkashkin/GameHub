@@ -40,6 +40,7 @@ namespace GameHub.Utils
 				public string gog_games { get; set; }
 				public string humble_games { get; set; }
 				public string itch_home { get; set; }
+				public string itch_games { get; set; }
 
 				public Settings()
 				{
@@ -106,6 +107,7 @@ namespace GameHub.Utils
 			public class Itch
 			{
 				public static string Home { owned get { return FSUtils.Paths.Settings.instance.itch_home; } }
+				public static string Games { owned get { return FSUtils.Paths.Settings.instance.itch_games; } }
 
 				public const string Database = "db/butler.db";
 
@@ -263,40 +265,6 @@ namespace GameHub.Utils
 							if(_instance == null)
 							{
 								_instance = new Humble();
-							}
-							return _instance;
-						}
-					}
-				}
-
-				public class Itch: GameHub.Settings.SettingsSchema
-				{
-					public string game_dir { get; set; }
-
-					public static string expand_game_dir(string game, Platform? platform=null)
-					{
-						var g = game.replace(": ", " - ").replace(":", "");
-						var variables = new HashMap<string, string>();
-						variables.set("root", Collection.instance.root);
-						variables.set("game", g);
-						variables.set("platform_name", platform == null ? "." : platform.name());
-						variables.set("platform", platform == null ? "." : platform.id());
-						return FSUtils.expand(instance.game_dir, null, variables);
-					}
-
-					public Itch()
-					{
-						base(ProjectConfig.PROJECT_NAME + ".paths.collection.itch");
-					}
-
-					private static Itch? _instance;
-					public static unowned Itch instance
-					{
-						get
-						{
-							if(_instance == null)
-							{
-								_instance = new Itch();
 							}
 							return _instance;
 						}

@@ -196,7 +196,7 @@ namespace GameHub.Data.Sources.Itch
 				error = null;
 				while(!responses.has_key(message_id))
 				{
-					yield Utils.sleep_async(100);
+					yield Utils.sleep_async(50);
 				}
 				Response response;
 				responses.unset(message_id, out response);

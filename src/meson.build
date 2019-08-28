@@ -53,6 +53,7 @@ sources = [
 
 	'data/sources/itch/Itch.vala',
 	'data/sources/itch/ItchGame.vala',
+	'data/sources/itch/ItchDownloader.vala',
 	'data/sources/itch/ButlerDaemon.vala',
 	'data/sources/itch/ButlerConnection.vala',
 	'data/sources/itch/ButlerClient.vala',

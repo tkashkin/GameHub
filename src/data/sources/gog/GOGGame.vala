@@ -357,7 +357,7 @@ namespace GameHub.Data.Sources.GOG
 
 		public override void update_status()
 		{
-			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
+			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.Download.State.CANCELLED) return;
 
 			var state = Game.State.UNINSTALLED;
 
@@ -828,7 +828,7 @@ namespace GameHub.Data.Sources.GOG
 				FSUtils.mkdir(game.bonus_content_dir.get_path());
 
 				status = new BonusContent.Status(BonusContent.State.DOWNLOADING, null);
-				var ds_id = Downloader.get_instance().download_started.connect(dl => {
+				var ds_id = Downloader.download_manager().file_download_started.connect(dl => {
 					if(dl.remote != remote) return;
 					status = new BonusContent.Status(BonusContent.State.DOWNLOADING, dl);
 					dl.status_change.connect(s => {
@@ -840,11 +840,11 @@ namespace GameHub.Data.Sources.GOG
 
 				try
 				{
-					downloaded_file = yield Downloader.download(remote, local, dl_info, true, false);
+					downloaded_file = yield Downloader.download_file(remote, local, dl_info, true, false);
 				}
 				catch(Error e){}
 
-				Downloader.get_instance().disconnect(ds_id);
+				Downloader.download_manager().disconnect(ds_id);
 
 				save_filename();
 

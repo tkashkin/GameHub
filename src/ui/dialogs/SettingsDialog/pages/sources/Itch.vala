@@ -19,12 +19,14 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 
 using GameHub.Utils;
+using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
 	public class Itch: SettingsDialogPage
 	{
 		private Settings.Auth.Itch itch_auth;
+		private FileChooserEntry games_dir_chooser;
 
 		public Itch(SettingsDialog dlg)
 		{
@@ -41,8 +43,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		construct
 		{
 			var paths = FSUtils.Paths.Settings.instance;
-
 			itch_auth = Settings.Auth.Itch.instance;
+
+			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.itch_games, v => { paths.itch_games = v; request_restart(); update(); }).get_children().last().data as FileChooserEntry;
+
+			add_separator();
 
 			add_apikey_entry();
 			add_link(_("Generate key"), "https://itch.io/api-keys");
