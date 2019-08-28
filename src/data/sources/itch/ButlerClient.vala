@@ -28,7 +28,7 @@ namespace GameHub.Data.Sources.Itch
 	 * with Content-Length headers, while butler daemon expects one message
 	 * per line, deliminated by LF
 	 */
-	public class ButlerClient
+	public class ButlerClient : Object, ForwardsNotifications
 	{
 		private SocketConnection socket_connection;
 		private int message_id = 0;
@@ -40,6 +40,7 @@ namespace GameHub.Data.Sources.Itch
 			this.socket_connection = socket_connection;
 			sender = new Sender(socket_connection.output_stream);
 			receiver = new Receiver(socket_connection.input_stream);
+			forward_notifications_from(receiver);
 		}
 
 		public async Json.Object? call(string method, Json.Node? params=null, out Json.Object? error = null)
@@ -84,7 +85,7 @@ namespace GameHub.Data.Sources.Itch
 			}
 		}
 
-		private class Receiver
+		private class Receiver : Object, ForwardsNotifications
 		{
 			private DataInputStream stream;
 			private HashMap<int, Response?> responses;
@@ -143,6 +144,8 @@ namespace GameHub.Data.Sources.Itch
 						else if(params != null && method != null)
 						{
 							// notification
+							notification_received(method, params);
+
 							switch(method.down())
 							{
 								case "log":
@@ -214,6 +217,18 @@ namespace GameHub.Data.Sources.Itch
 				Json.Object content;
 				bool successful;
 			}
+		}
+	}
+
+	public interface ForwardsNotifications: Object
+	{
+		public signal void notification_received(string method, Json.Object params);
+
+		public void forward_notifications_from(ForwardsNotifications source)
+		{
+			source.notification_received.connect((s, method, @params) =>
+				notification_received(method, params)
+			);
 		}
 	}
 }

@@ -151,9 +151,31 @@ namespace GameHub.Data.Sources.Itch
 			return null;
 		}
 
+		private Downloader.Download? _download;
+		public Downloader.Download? download
+		{
+			get { return _download; }
+			set {
+				if(_download != null)
+				{
+					_download.status_change.disconnect(update_status);
+				}
+				_download = value;
+				if(_download != null)
+				{
+					_download.status_change.connect(update_status);
+				}
+				update_status();
+			}
+		}
+
 		public override void update_status()
 		{
-			if(caves.size > 0)
+			if(download != null)
+			{
+				status = new Game.Status(Game.State.DOWNLOADING, this, download);
+			}
+			else if(caves.size > 0)
 			{
 				status = new Game.Status(Game.State.INSTALLED, this);
 			}
@@ -241,5 +263,48 @@ namespace GameHub.Data.Sources.Itch
 
 			}
 		}*/
+	}
+
+	public class ItchDownload : Downloader.Download
+	{
+		private ButlerConnection butler_connection;
+		private string install_id;
+		private double size;
+
+		public ItchDownload(ButlerConnection butler_connection, string install_id)
+		{
+			var dummy = File.new_for_path("/dev/null");
+			base(dummy, dummy, dummy);
+			this.install_id = install_id;
+			this.butler_connection = butler_connection;
+
+			butler_connection.notification_received.connect((s, method, @params) => {
+				if(method == "TaskStarted")
+				{
+					size = params.get_double_member("totalSize");
+					status = new Downloader.DownloadStatus(Downloader.DownloadState.STARTED);
+				}
+				else if(method == "Progress")
+				{
+					var progress = params.get_double_member("progress");
+					var speed = params.get_double_member("bps");
+
+					status = new Downloader.DownloadStatus(
+						Downloader.DownloadState.DOWNLOADING,
+						(int) (progress * size),
+						(int) size,
+						(int) speed);
+				}
+				else if(method == "TaskSucceeded")
+				{
+					status = new Downloader.DownloadStatus(Downloader.DownloadState.FINISHED);
+				}
+			});
+		}
+
+		public override void cancel()
+		{
+			butler_connection.cancel_install(install_id);
+		}
 	}
 }
