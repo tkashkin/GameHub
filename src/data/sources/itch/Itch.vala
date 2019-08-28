@@ -235,7 +235,28 @@ namespace GameHub.Data.Sources.Itch
 
 		public async void run_game(ItchGame game)
 		{
-			yield butler_connection.run(game.get_cave());
+			var connection = yield butler_daemon.create_connection();
+			connection.server_call_received.connect((method, @params, respond) => {
+				string? pathUrl = null;
+				if(method == "ShellLaunch")
+				{
+					pathUrl = params.get_string_member("itemPath");
+				}
+				else if(method == "HTMLLaunch")
+				{
+					pathUrl = params.get_string_member("rootFolder") + "/" + params.get_string_member("indexPath");
+				}
+				else if(method == "URLLaunch")
+				{
+					pathUrl = params.get_string_member("url");
+				}
+				if(pathUrl != null)
+				{
+					run_async({"xdg-open", pathUrl});
+					respond();
+				}
+			});
+			yield connection.run(game.get_cave());
 		}
 
 		private async void butler_connect()

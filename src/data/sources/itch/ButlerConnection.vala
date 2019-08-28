@@ -22,7 +22,7 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Itch
 {
-	public class ButlerConnection: Object, ForwardsNotifications
+	public class ButlerConnection: Object, ForwardsServerMessage
 	{
 		private ButlerClient client;
 
@@ -31,7 +31,7 @@ namespace GameHub.Data.Sources.Itch
 			try
 			{
 				client = new ButlerClient(yield (new SocketClient().connect_to_host_async(address, 0, null)));
-				forward_notifications_from(client);
+				forward_server_messages_from(client);
 
 				var res = yield client.call("Meta.Authenticate", Parser.json(j => j.set_member_name("secret").add_string_value(secret)));
 				return res != null && res.has_member("ok") && res.get_boolean_member("ok");
