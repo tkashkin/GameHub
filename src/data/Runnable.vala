@@ -75,9 +75,25 @@ namespace GameHub.Data
 		public abstract async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE);
 		public abstract async void run();
 
+		public virtual bool can_be_launched(bool is_launch_attempt=false)
+		{
+			if(Runnable.IsLaunched || Sources.Steam.Steam.IsAnyAppRunning || is_running) return false;
+			if(is_launch_attempt)
+			{
+				lock(Runnable.LastLaunchAttempt)
+				{
+					var launch_attempt = Runnable.LastLaunchAttempt;
+					var now = get_real_time();
+					Runnable.LastLaunchAttempt = now;
+					if(now - launch_attempt < 1000000) return false;
+				}
+			}
+			return true;
+		}
+
 		public virtual async void run_with_compat(bool is_opened_from_menu=false)
 		{
-			if(!RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
+			if(can_be_launched(true))
 			{
 				var dlg = new UI.Dialogs.CompatRunDialog(this, is_opened_from_menu);
 				dlg.destroy.connect(() => {
@@ -317,6 +333,9 @@ namespace GameHub.Data
 			compat_tool_settings = Json.to_string(root_node, false);
 			save();
 		}
+
+		public static bool IsLaunched = false;
+		public static int64 LastLaunchAttempt = 0;
 
 		public abstract class Installer
 		{
@@ -845,6 +864,4 @@ namespace GameHub.Data
 			assert_not_reached();
 		}
 	}
-
-	public static bool RunnableIsLaunched = false;
 }

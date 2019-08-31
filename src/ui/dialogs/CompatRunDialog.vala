@@ -124,7 +124,7 @@ namespace GameHub.UI.Dialogs
 		{
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 
-			RunnableIsLaunched = game.is_running = true;
+			Runnable.IsLaunched = game.is_running = true;
 
 			if(game is Emulator)
 			{
@@ -133,7 +133,7 @@ namespace GameHub.UI.Dialogs
 				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, launch_in_game_dir, (obj, res) => {
 					compat_tool_picker.selected.run_emulator.end(res);
 					Timeout.add_seconds(1, () => {
-						RunnableIsLaunched = game.is_running = emulated_game.is_running = false;
+						Runnable.IsLaunched = game.is_running = emulated_game.is_running = false;
 						emulated_game.update_status();
 						return Source.REMOVE;
 					});
@@ -148,7 +148,7 @@ namespace GameHub.UI.Dialogs
 				compat_tool_picker.selected.run.begin(game, (obj, res) => {
 					compat_tool_picker.selected.run.end(res);
 					Timeout.add_seconds(1, () => {
-						RunnableIsLaunched = game.is_running = false;
+						Runnable.IsLaunched = game.is_running = false;
 						game.update_status();
 						return Source.REMOVE;
 					});
