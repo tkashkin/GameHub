@@ -28,7 +28,7 @@ namespace GameHub.Data.Sources.Itch
 	 * with Content-Length headers, while butler daemon expects one message
 	 * per line, deliminated by LF
 	 */
-	public class ButlerClient : Object, ForwardsServerMessage
+	public class ButlerClient: Object, ServerMessageListener, ServerMessageRelay
 	{
 		private SocketConnection socket_connection;
 		private int message_id = 0;
@@ -40,7 +40,7 @@ namespace GameHub.Data.Sources.Itch
 			this.socket_connection = socket_connection;
 			sender = new Sender(socket_connection.output_stream);
 			receiver = new Receiver(socket_connection.input_stream, sender);
-			forward_server_messages_from(receiver);
+			relay_messages(receiver);
 		}
 
 		public async Json.Object? call(string method, Json.Node? params=null, out Json.Object? error = null)
@@ -84,12 +84,12 @@ namespace GameHub.Data.Sources.Itch
 				}
 			}
 
-			public void respond(int message_id, Json.Node? result=null)
+			public void respond(int message_id, string? result_json=null)
 			{
 				var request = Parser.json(j => j
 					.set_member_name("jsonrpc").add_string_value("2.0")
 					.set_member_name("id").add_int_value(message_id)
-					.set_member_name("result").add_value(result ?? Parser.json())
+					.set_member_name("result").add_value(Parser.parse_json(result_json))
 				);
 
 				try
@@ -109,7 +109,7 @@ namespace GameHub.Data.Sources.Itch
 			}
 		}
 
-		private class Receiver : Object, ForwardsServerMessage
+		private class Receiver: Object, ServerMessageListener
 		{
 			private DataInputStream stream;
 			private Sender sender;
@@ -149,30 +149,28 @@ namespace GameHub.Data.Sources.Itch
 						if(error_info != null && message_id != NO_ID)
 						{
 							// failure response
-							responses.set(message_id, {error_info, false});
 							warning("[ButlerClient: err %d] %s", message_id, json);
+							responses.set(message_id, {error_info, false});
 						}
 						else if(result != null && message_id != NO_ID)
 						{
 							// success response
-							responses.set(message_id, {result, true});
 							if(Application.log_verbose)
 							{
 								debug("[ButlerClient: res %d] %s", message_id, json);
 							}
+							responses.set(message_id, {result, true});
 						}
 						else if(message_id != NO_ID)
 						{
 							// server request
-							server_call_received(method, params, (result) => {
-								sender.respond(message_id, result);
-							});
-							warning("[ButlerClient: srv %d] %s", message_id, json);
+							debug("[ButlerClient: srv %d] %s", message_id, json);
+							sender.respond(message_id, server_call(method, params));
 						}
 						else if(params != null && method != null)
 						{
 							// notification
-							notification_received(method, params);
+							notification(method, params);
 
 							switch(method.down())
 							{
@@ -248,21 +246,18 @@ namespace GameHub.Data.Sources.Itch
 		}
 	}
 
-	public interface ForwardsServerMessage: Object
+	public interface ServerMessageListener: Object
 	{
-		public signal void notification_received(string method, Json.Object params);
+		public signal void notification(string method, Json.Object? args);
+		public signal string? server_call(string method, Json.Object? args);
+	}
 
-		public delegate void ServerMessageResponder(Json.Node? result=null);
-		public signal void server_call_received(string method, Json.Object params, ServerMessageResponder respond);
-
-		public void forward_server_messages_from(ForwardsServerMessage source)
+	public interface ServerMessageRelay: ServerMessageListener
+	{
+		public void relay_messages(ServerMessageListener source)
 		{
-			source.notification_received.connect((s, method, @params) =>
-				notification_received(method, params)
-			);
-			source.server_call_received.connect((s, method, @params, respond) =>
-				server_call_received(method, params, respond)
-			);
+			source.notification.connect((method, args) => notification(method, args));
+			source.server_call.connect((method, args) => server_call(method, args));
 		}
 	}
 }

@@ -57,7 +57,7 @@ namespace GameHub.Utils
 		}
 		catch(Error e)
 		{
-			warning(e.message);
+			warning("[Utils.open_uri] Error while opening '%s': %s", uri, e.message);
 		}
 	}
 

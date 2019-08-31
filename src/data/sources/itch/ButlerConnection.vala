@@ -22,7 +22,7 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Itch
 {
-	public class ButlerConnection: Object, ForwardsServerMessage
+	public class ButlerConnection: Object, ServerMessageListener, ServerMessageRelay
 	{
 		private ButlerClient client;
 
@@ -31,7 +31,7 @@ namespace GameHub.Data.Sources.Itch
 			try
 			{
 				client = new ButlerClient(yield (new SocketClient().connect_to_host_async(address, 0, null)));
-				forward_server_messages_from(client);
+				relay_messages(client);
 
 				var res = yield client.call("Meta.Authenticate", Parser.json(j => j.set_member_name("secret").add_string_value(secret)));
 				return res != null && res.has_member("ok") && res.get_boolean_member("ok");
@@ -79,7 +79,7 @@ namespace GameHub.Data.Sources.Itch
 			return items;
 		}
 
-		public async HashMap<int, ArrayList<string>> get_caves(int? game_id=null, out ArrayList<Json.Node> installed_games=null)
+		public async HashMap<int, ArrayList<Cave>> get_caves(int? game_id=null, out ArrayList<Json.Node> installed_games=null)
 		{
 			var result = yield client.call("Fetch.Caves", Parser.json(j => {
 				if(game_id != null)
@@ -89,7 +89,7 @@ namespace GameHub.Data.Sources.Itch
 						.end_object();
 				}
 			}));
-			var caves = new HashMap<int, ArrayList<string>>();
+			var caves = new HashMap<int, ArrayList<Cave>>();
 			var installed = new ArrayList<Json.Node>();
 
 			var arr = result.has_member("items") ? result.get_array_member("items") : null;
@@ -101,24 +101,37 @@ namespace GameHub.Data.Sources.Itch
 					var game = cave.get_member("game");
 					var cave_game_id = (int) game.get_object().get_int_member("id");
 
+					var install_info = cave.has_member("installInfo") ? cave.get_object_member("installInfo") : null;
+					var install_dir = install_info != null && install_info.has_member("installFolder") ? install_info.get_string_member("installFolder") : null;
+
 					installed.add(game);
 
-					ArrayList<string> caves_for_game;
+					ArrayList<Cave> caves_for_game;
 					if(caves.has_key(cave_game_id))
 					{
 						caves_for_game = caves.get(cave_game_id);
 					}
 					else
 					{
-						caves_for_game = new ArrayList<string>();
+						caves_for_game = new ArrayList<Cave>();
 						caves.set(cave_game_id, caves_for_game);
 					}
-					caves_for_game.add(cave_id);
+					caves_for_game.add(new Cave(cave_id, install_dir));
 				});
 			}
 
 			installed_games = installed;
 			return caves;
+		}
+
+		public async Cave? get_cave(string cave_id)
+		{
+			var result = yield client.call("Fetch.Cave", Parser.json(j => j
+				.set_member_name("caveId").add_string_value(cave_id)
+			));
+			var install_info = Parser.json_nested_object(result, {"cave", "installInfo"});
+			var install_dir = install_info != null && install_info.has_member("installFolder") ? install_info.get_string_member("installFolder") : null;
+			return install_dir != null ? new Cave(cave_id, install_dir) : null;
 		}
 
 		public async ArrayList<Json.Object>? get_game_uploads(int game_id)
@@ -206,6 +219,17 @@ namespace GameHub.Data.Sources.Itch
 				.set_member_name("caveId").add_string_value(cave_id)
 				.set_member_name("prereqsDir").add_string_value(prereqs_dir)
 			));
+		}
+	}
+
+	public class Cave
+	{
+		public string id;
+		public string? install_dir;
+		public Cave(string id, string? install_dir)
+		{
+			this.id = id;
+			this.install_dir = install_dir;
 		}
 	}
 }
