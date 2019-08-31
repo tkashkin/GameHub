@@ -256,6 +256,7 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async void run()
 		{
+			if(!can_be_launched(true)) return;
 			last_launch = get_real_time() / 1000000;
 			save();
 			Utils.open_uri(@"steam://rungameid/$(id)");

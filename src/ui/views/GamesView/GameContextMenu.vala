@@ -44,14 +44,14 @@ namespace GameHub.UI.Views.GamesView
 				if(game.use_compat)
 				{
 					var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
-					run_with_compat.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
+					run_with_compat.sensitive = game.can_be_launched();
 					run_with_compat.activate.connect(() => game.run_with_compat.begin(true));
 					add(run_with_compat);
 				}
 				else
 				{
 					var run = new Gtk.MenuItem.with_label(_("Run"));
-					run.sensitive = !game.is_running && !RunnableIsLaunched && !GameHub.Data.Sources.Steam.Steam.IsAnyAppRunning;
+					run.sensitive = game.can_be_launched();
 					run.activate.connect(() => game.run.begin());
 					add(run);
 				}

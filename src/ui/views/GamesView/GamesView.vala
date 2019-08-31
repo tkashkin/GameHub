@@ -911,14 +911,14 @@ namespace GameHub.UI.Views.GamesView
 				var b = Gamepad.Buttons.get(btn);
 				b.emit_key_event(press);
 
-				if(GameHub.Application.log_verbose && !RunnableIsLaunched)
+				if(GameHub.Application.log_verbose && !Runnable.IsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
 				{
 					debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
 				}
 
 				ui_update_gamepad_mode();
 
-				if(controller_settings.focus_window && !press && b == Gamepad.BTN_GUIDE && !window.has_focus && !RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
+				if(controller_settings.focus_window && !press && b == Gamepad.BTN_GUIDE && !window.has_focus && !Runnable.IsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
 				{
 					window.get_window().focus(Gdk.CURRENT_TIME);
 				}
