@@ -207,7 +207,7 @@ namespace GameHub.Data.Sources.Itch
 
 			foreach(var g in _games)
 			{
-				((ItchGame) g).update_caves(caves);
+				yield update_game_state((ItchGame) g, caves);
 			}
 		}
 
@@ -224,39 +224,42 @@ namespace GameHub.Data.Sources.Itch
 
 		public async void uninstall_game(ItchGame game)
 		{
-			yield butler_connection.uninstall(game.get_cave());
+			yield butler_connection.uninstall(game.cave_id);
 			yield update_game_state(game);
 		}
 
-		public async void update_game_state(ItchGame game)
+		public async void update_game_state(ItchGame game, HashMap<int, ArrayList<Cave>>? caves_map=null)
 		{
-			game.update_caves(yield butler_connection.get_caves(game.int_id));
+			caves_map = caves_map ?? yield butler_connection.get_caves(game.int_id);
+			game.update_caves(caves_map);
 		}
 
 		public async void run_game(ItchGame game)
 		{
 			var connection = yield butler_daemon.create_connection();
-			connection.server_call_received.connect((method, @params, respond) => {
-				string? pathUrl = null;
-				if(method == "ShellLaunch")
+			connection.server_call.connect((method, args) => {
+				File? file = null;
+				switch(method)
 				{
-					pathUrl = params.get_string_member("itemPath");
+					case "ShellLaunch":
+						file = FSUtils.file(args.get_string_member("itemPath"));
+						break;
+
+					case "HTMLLaunch":
+						file = FSUtils.file(args.get_string_member("rootFolder"), args.get_string_member("indexPath"));
+						break;
+
+					case "URLLaunch":
+						file = File.new_for_uri(args.get_string_member("url"));
+						break;
 				}
-				else if(method == "HTMLLaunch")
+				if(file != null)
 				{
-					pathUrl = params.get_string_member("rootFolder") + "/" + params.get_string_member("indexPath");
+					Utils.open_uri(file.get_uri());
 				}
-				else if(method == "URLLaunch")
-				{
-					pathUrl = params.get_string_member("url");
-				}
-				if(pathUrl != null)
-				{
-					run_async({"xdg-open", pathUrl});
-					respond();
-				}
+				return null;
 			});
-			yield connection.run(game.get_cave());
+			yield connection.run(game.cave_id);
 		}
 
 		private async void butler_connect()

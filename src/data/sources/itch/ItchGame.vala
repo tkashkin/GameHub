@@ -36,6 +36,7 @@ namespace GameHub.Data.Sources.Itch
 			id = json_obj.get_int_member("id").to_string();
 			name = json_obj.get_string_member("title");
 			icon = json_obj.has_member("stillCoverUrl") ? json_obj.get_string_member("stillCoverUrl") : json_obj.get_string_member("coverUrl");
+			description = json_obj.get_string_member("shortText");
 			store_page = json_obj.get_string_member("url");
 
 			image = icon;
@@ -54,7 +55,6 @@ namespace GameHub.Data.Sources.Itch
 				platforms.add(Platform.MACOS);
 			}
 
-			description = json_obj.get_string_member("shortText");
 
 			info = Json.to_string(json_node, false);
 
@@ -111,10 +111,8 @@ namespace GameHub.Data.Sources.Itch
 			if(info_root != null && info_root.get_node_type() == Json.NodeType.OBJECT)
 			{
 				var info_root_obj = info_root.get_object();
-				if(info_root_obj.has_member("shortText"))
-				{
-					description = info_root_obj.get_string_member("shortText");
-				}
+				description = info_root_obj.get_string_member("shortText");
+				store_page = info_root_obj.get_string_member("url");
 			}
 
 			update_status();
@@ -125,8 +123,8 @@ namespace GameHub.Data.Sources.Itch
 			update_status();
 		}
 
-		private ArrayList<string> caves = new ArrayList<string>();
-		public void update_caves(HashMap<int, ArrayList<string>> caves_map)
+		private ArrayList<Cave> caves = new ArrayList<Cave>();
+		public void update_caves(HashMap<int, ArrayList<Cave>> caves_map)
 		{
 			if(caves_map.has_key(int_id))
 			{
@@ -136,16 +134,35 @@ namespace GameHub.Data.Sources.Itch
 			{
 				caves.clear();
 			}
+
+			var cave = this.cave;
+			if(cave != null)
+			{
+				install_dir = FSUtils.file(cave.install_dir);
+			}
+
 			update_status();
 		}
 
-		public string? get_cave()
+		public Cave? cave
 		{
-			if(caves.size > 0)
+			owned get
 			{
-				return caves.first();
+				if(caves.size > 0)
+				{
+					return caves.first();
+				}
+				return null;
 			}
-			return null;
+		}
+
+		public string? cave_id
+		{
+			get
+			{
+				var cave = this.cave;
+				return cave != null ? cave.id : null;
+			}
 		}
 
 		public override void update_status()

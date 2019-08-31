@@ -123,7 +123,7 @@ namespace GameHub.Data.Sources.Itch
 
 			status = new Status(Download.State.STARTING);
 
-			butler_connection.notification_received.connect((s, method, @params) => {
+			butler_connection.notification.connect((s, method, @params) => {
 				switch(method)
 				{
 					case "TaskStarted":
