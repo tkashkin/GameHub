@@ -168,14 +168,14 @@ namespace GameHub.Data
 
 		public override async void run()
 		{
-			if(!RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning && executable.query_exists())
+			if(can_be_launched(true) && executable.query_exists())
 			{
-				RunnableIsLaunched = is_running = true;
+				Runnable.IsLaunched = is_running = true;
 
 				yield Utils.run_thread(get_args(null, executable), executable.get_parent().get_path(), null, true);
 
 				Timeout.add_seconds(1, () => {
-					RunnableIsLaunched = is_running = false;
+					Runnable.IsLaunched = is_running = false;
 					return Source.REMOVE;
 				});
 			}
@@ -191,7 +191,7 @@ namespace GameHub.Data
 
 			if(executable.query_exists())
 			{
-				RunnableIsLaunched = is_running = true;
+				Runnable.IsLaunched = is_running = true;
 
 				if(game != null)
 				{
@@ -203,7 +203,7 @@ namespace GameHub.Data
 				yield Utils.run_thread(get_args(game, executable), dir.get_path(), null, true);
 
 				Timeout.add_seconds(1, () => {
-					RunnableIsLaunched = is_running = false;
+					Runnable.IsLaunched = is_running = false;
 					if(game != null)
 					{
 						game.is_running = false;
