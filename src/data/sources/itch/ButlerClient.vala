@@ -84,12 +84,12 @@ namespace GameHub.Data.Sources.Itch
 				}
 			}
 
-			public void respond(int message_id, string? result_json=null)
+			public void respond(int message_id, Json.Node? result=null)
 			{
 				var request = Parser.json(j => j
 					.set_member_name("jsonrpc").add_string_value("2.0")
 					.set_member_name("id").add_int_value(message_id)
-					.set_member_name("result").add_value(Parser.parse_json(result_json))
+					.set_member_name("result").add_value(result ?? Parser.json())
 				);
 
 				try
@@ -165,7 +165,7 @@ namespace GameHub.Data.Sources.Itch
 						{
 							// server request
 							debug("[ButlerClient: srv %d] %s", message_id, json);
-							sender.respond(message_id, server_call(method, params));
+							server_call(method, params, new ServerMessageResponder(result => sender.respond(message_id, result)));
 						}
 						else if(params != null && method != null)
 						{
@@ -246,10 +246,24 @@ namespace GameHub.Data.Sources.Itch
 		}
 	}
 
+	public class ServerMessageResponder
+	{
+		public delegate void Delegate(Json.Node? result=null);
+		private Delegate responder;
+		public ServerMessageResponder(owned Delegate responder)
+		{
+			this.responder = (owned) responder;
+		}
+		public void respond(Json.Node? result=null)
+		{
+			responder(result);
+		}
+	}
+
 	public interface ServerMessageListener: Object
 	{
 		public signal void notification(string method, Json.Object? args);
-		public signal string? server_call(string method, Json.Object? args);
+		public signal void server_call(string method, Json.Object? args, ServerMessageResponder responder);
 	}
 
 	public interface ServerMessageRelay: ServerMessageListener
@@ -257,7 +271,7 @@ namespace GameHub.Data.Sources.Itch
 		public void relay_messages(ServerMessageListener source)
 		{
 			source.notification.connect((method, args) => notification(method, args));
-			source.server_call.connect((method, args) => server_call(method, args));
+			source.server_call.connect((method, args, responder) => server_call(method, args, responder));
 		}
 	}
 }

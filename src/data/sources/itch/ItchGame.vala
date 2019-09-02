@@ -235,9 +235,9 @@ namespace GameHub.Data.Sources.Itch
 
 		public override async void run()
 		{
-			if(!RunnableIsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
+			if(can_be_launched(true))
 			{
-				RunnableIsLaunched = is_running = true;
+				Runnable.IsLaunched = is_running = true;
 				update_status();
 
 				last_launch = get_real_time() / 1000000;
@@ -249,7 +249,7 @@ namespace GameHub.Data.Sources.Itch
 				save();
 
 				Timeout.add_seconds(1, () => {
-					RunnableIsLaunched = is_running = false;
+					Runnable.IsLaunched = is_running = false;
 					update_status();
 					return Source.REMOVE;
 				});
