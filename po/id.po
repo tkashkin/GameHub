@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 11:08+0300\n"
+"POT-Creation-Date: 2019-09-02 22:06+0300\n"
 "PO-Revision-Date: 2018-11-24 17:10+0000\n"
 "Last-Translator: ditokp <ditokpl@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -126,74 +126,74 @@ msgstr "Properti permainan"
 msgid "Show logging options help"
 msgstr "Properti permainan"
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:147
 #, fuzzy
 msgid "Select executable"
 msgstr "Pilih permainan yang dapat dieksekusi"
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:389
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:389
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
 msgstr "Memilih"
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:163 src/ui/widgets/FileChooserEntry.vala:55
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:179 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
 msgstr "Batal"
 
-#: src/data/Runnable.vala:149 src/ui/widgets/FileChooserEntry.vala:49
+#: src/data/Runnable.vala:165 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
 msgstr "Pilih direktori"
 
-#: src/data/Runnable.vala:404
+#: src/data/Runnable.vala:423
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr "Bagian %1$u dari %2$u: %3$s"
 
-#: src/data/Runnable.vala:427 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, fuzzy, c-format
 msgid "%s: corrupted installer"
 msgstr "Tidak terpasang"
 
-#: src/data/Runnable.vala:428
+#: src/data/Runnable.vala:447
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr ""
 
-#: src/data/Runnable.vala:442 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:125
 #, fuzzy
 msgid "Show file"
 msgstr "Pilih berkas"
 
-#: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Hapus"
 
-#: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 #, fuzzy
 msgid "Backup"
 msgstr "Kembali"
 
-#: src/data/Runnable.vala:594
+#: src/data/Runnable.vala:613
 #, fuzzy, c-format
 msgid "%s: cannot detect main executable"
 msgstr "Pilih permainan yang dapat dieksekusi"
 
-#: src/data/Runnable.vala:595
+#: src/data/Runnable.vala:614
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
 
-#: src/data/Runnable.vala:831
+#: src/data/Runnable.vala:850
 #, fuzzy
 msgctxt "platform"
 msgid "Emulated"
