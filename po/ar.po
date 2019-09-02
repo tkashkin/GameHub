@@ -1,20 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
-# Jeff Huang <s8321414@gmail.com>, 2019.
+# Omar Aglan <omar.aglan91@yahoo.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 11:08+0300\n"
+"POT-Creation-Date: 2019-09-02 22:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: zh_Hant\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -110,71 +111,71 @@ msgstr ""
 msgid "Show logging options help"
 msgstr ""
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:147
 msgid "Select executable"
 msgstr ""
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:389
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:389
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
 msgstr ""
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:163 src/ui/widgets/FileChooserEntry.vala:55
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:179 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
 msgstr ""
 
-#: src/data/Runnable.vala:149 src/ui/widgets/FileChooserEntry.vala:49
+#: src/data/Runnable.vala:165 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
 msgstr ""
 
-#: src/data/Runnable.vala:404
+#: src/data/Runnable.vala:423
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr ""
 
-#: src/data/Runnable.vala:427 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr ""
 
-#: src/data/Runnable.vala:428
+#: src/data/Runnable.vala:447
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr ""
 
-#: src/data/Runnable.vala:442 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:125
 msgid "Show file"
 msgstr ""
 
-#: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr ""
 
-#: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
 msgstr ""
 
-#: src/data/Runnable.vala:594
+#: src/data/Runnable.vala:613
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr ""
 
-#: src/data/Runnable.vala:595
+#: src/data/Runnable.vala:614
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
 
-#: src/data/Runnable.vala:831
+#: src/data/Runnable.vala:850
 msgctxt "platform"
 msgid "Emulated"
 msgstr ""
@@ -849,6 +850,11 @@ msgstr ""
 msgid "%u core found"
 msgid_plural "%u cores found"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:168
@@ -860,6 +866,11 @@ msgstr ""
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
@@ -1271,6 +1282,11 @@ msgstr ""
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/views/GamesView/GamesView.vala:583
 msgid "No user-added games"
@@ -1411,30 +1427,55 @@ msgstr ""
 msgid "%d game selected"
 msgid_plural "%d games selected"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
 #, c-format
 msgid "%d game will be installed"
 msgid_plural "%d games will be installed"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:154
 #, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 #, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
 #, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
 msgid "Refresh"
@@ -1447,6 +1488,11 @@ msgid ""
 msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 msgid "Open store page"
@@ -1571,6 +1617,11 @@ msgstr ""
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
 msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:240
 msgctxt "igdb"
