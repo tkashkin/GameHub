@@ -237,7 +237,7 @@ namespace GameHub.Data.Sources.Itch
 		public async void run_game(ItchGame game)
 		{
 			var connection = yield butler_daemon.create_connection();
-			connection.server_call.connect((method, args) => {
+			connection.server_call.connect((method, args, responder) => {
 				File? file = null;
 				switch(method)
 				{
@@ -257,7 +257,7 @@ namespace GameHub.Data.Sources.Itch
 				{
 					Utils.open_uri(file.get_uri());
 				}
-				return null;
+				responder.respond();
 			});
 			yield connection.run(game.cave_id);
 		}
