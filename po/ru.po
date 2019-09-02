@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 11:08+0300\n"
+"POT-Creation-Date: 2019-09-02 22:06+0300\n"
 "PO-Revision-Date: 2019-01-14 12:25+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gamehub/"
@@ -116,65 +116,65 @@ msgstr "Параметры журналирования:"
 msgid "Show logging options help"
 msgstr "Показать справку о параметрах журналирования"
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:147
 msgid "Select executable"
 msgstr "Выберите исполняемый файл"
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:164 src/ui/views/GamesView/GamesView.vala:389
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:389
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
 msgstr "Выбрать"
 
-#: src/data/Runnable.vala:93 src/data/Runnable.vala:95
-#: src/data/Runnable.vala:163 src/ui/widgets/FileChooserEntry.vala:55
+#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:179 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/data/Runnable.vala:149 src/ui/widgets/FileChooserEntry.vala:49
+#: src/data/Runnable.vala:165 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
 msgstr "Выберите папку"
 
-#: src/data/Runnable.vala:404
+#: src/data/Runnable.vala:423
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr "Часть %1$u из %2$u: %3$s"
 
-#: src/data/Runnable.vala:427 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: повреждённый установщик"
 
-#: src/data/Runnable.vala:428
+#: src/data/Runnable.vala:447
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Несовпадение контрольной суммы в файле %s"
 
-#: src/data/Runnable.vala:442 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:125
 msgid "Show file"
 msgstr "Показать файл"
 
-#: src/data/Runnable.vala:443 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:131
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/data/Runnable.vala:444 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:127
 msgid "Backup"
 msgstr "Сохранить"
 
-#: src/data/Runnable.vala:594
+#: src/data/Runnable.vala:613
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: невозможно определить исполняемый файл игры"
 
-#: src/data/Runnable.vala:595
+#: src/data/Runnable.vala:614
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -182,7 +182,7 @@ msgstr ""
 "Исполняемый файл для этой игры невозможно определить автоматически.\n"
 "Укажите исполняемый файл в свойствах игры."
 
-#: src/data/Runnable.vala:831
+#: src/data/Runnable.vala:850
 msgctxt "platform"
 msgid "Emulated"
 msgstr "Эмулируемые"
