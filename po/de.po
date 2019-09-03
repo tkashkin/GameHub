@@ -6,13 +6,14 @@
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018, 2019.
 # Ettore Atalan <atalanttore@googlemail.com>, 2018.
 # CurlingTongs <o11577482@nwytg.net>, 2019.
+# Swann Martinet <swann.ranskassa@laposte.net>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-02 22:06+0300\n"
-"PO-Revision-Date: 2019-06-08 23:29+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2019-09-04 04:26+0000\n"
+"Last-Translator: Swann Martinet <swann.ranskassa@laposte.net>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7-dev\n"
+"X-Generator: Weblate 3.9-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -1034,7 +1035,7 @@ msgstr "Alle Ihre Spiele an einem Ort"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:92
 msgctxt "about_link"
 msgid "Website"
-msgstr "Webseite"
+msgstr "Website"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:96
 msgctxt "about_link"
