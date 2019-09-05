@@ -149,7 +149,7 @@ namespace GameHub.UI.Views
 
 						if(src.can_authenticate_automatically())
 						{
-							btn.description = _("Authenticating...");
+							btn.description = _("Authenticating…");
 							welcome.set_item_sensitivity(index, false);
 							yield src.authenticate();
 							is_updating = false;
