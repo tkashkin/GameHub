@@ -7,13 +7,14 @@
 # Ettore Atalan <atalanttore@googlemail.com>, 2018.
 # CurlingTongs <o11577482@nwytg.net>, 2019.
 # Swann Martinet <swann.ranskassa@laposte.net>, 2019.
+# tinect <s.koenig@tinect.de>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-02 22:06+0300\n"
-"PO-Revision-Date: 2019-09-04 04:26+0000\n"
-"Last-Translator: Swann Martinet <swann.ranskassa@laposte.net>\n"
+"PO-Revision-Date: 2019-09-18 18:27+0000\n"
+"Last-Translator: tinect <s.koenig@tinect.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -290,7 +291,7 @@ msgstr "Nach Spielzeit"
 #: src/data/adapters/GamesAdapter.vala:648
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr ""
+msgstr "Nicht gruppieren"
 
 #: src/data/adapters/GamesAdapter.vala:649
 msgctxt "group_mode"
