@@ -33,13 +33,15 @@ namespace GameHub.Data.DB.Tables
 
 		public static Table.Field GAME;
 		public static Table.Field DATA;
+		public static Table.Field INDEX;
 
 		public IGDBData()
 		{
 			instance = this;
 
-			GAME         = f(0);
-			DATA         = f(1);
+			GAME  = f(0);
+			DATA  = f(1);
+			INDEX = f(2);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -53,6 +55,10 @@ namespace GameHub.Data.DB.Tables
 							`game` string not null,
 							`data` string,
 						PRIMARY KEY(`game`))");
+						break;
+
+					case 8:
+						db.exec("ALTER TABLE `igdb_data` ADD `index` integer not null default 0");
 						break;
 				}
 			}

@@ -319,7 +319,7 @@ namespace GameHub.UI.Views.GamesView
 			icon.queue_draw();
 			if(game == null || game.icon == old_icon) return;
 			old_icon = game.icon;
-			icon.load(game.icon, "icon");
+			icon.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
 			no_icon_indicator.visible = game.icon == null || icon.source == null;
 		}
 	}

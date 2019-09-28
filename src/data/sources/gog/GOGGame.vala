@@ -110,6 +110,7 @@ namespace GameHub.Data.Sources.GOG
 			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
 			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
 			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
+			image_vertical = Tables.Games.IMAGE_VERTICAL.get(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");

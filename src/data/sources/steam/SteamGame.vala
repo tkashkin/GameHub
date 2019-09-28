@@ -42,9 +42,12 @@ namespace GameHub.Data.Sources.Steam
 
 			id = json_obj.get_int_member("appid").to_string();
 			name = json_obj.get_string_member("name");
+
 			var icon_hash = json_obj.get_string_member("img_icon_url");
+
 			icon = @"http://media.steampowered.com/steamcommunity/public/images/apps/$(id)/$(icon_hash).jpg";
 			image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
+			image_vertical = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/library_600x900_2x.jpg";
 
 			info = Json.to_string(json_node, false);
 
@@ -60,8 +63,6 @@ namespace GameHub.Data.Sources.Steam
 			name = Tables.Games.NAME.get(s);
 			info = Tables.Games.INFO.get(s);
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
-			icon = Tables.Games.ICON.get(s);
-			image = Tables.Games.IMAGE.get(s);
 			info = Tables.Games.INFO.get(s);
 			info_detailed = Tables.Games.INFO_DETAILED.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
@@ -70,6 +71,20 @@ namespace GameHub.Data.Sources.Steam
 			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
 			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
 			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
+
+			icon = Tables.Games.ICON.get(s);
+			image = Tables.Games.IMAGE.get(s);
+			image_vertical = Tables.Games.IMAGE_VERTICAL.get(s);
+
+			if(image == null || image == "")
+			{
+				image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
+			}
+
+			if(image_vertical == null || image_vertical == "")
+			{
+				image_vertical = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/library_600x900_2x.jpg";
+			}
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -110,11 +125,6 @@ namespace GameHub.Data.Sources.Steam
 			game_info_updating = true;
 
 			update_status();
-
-			if(image == null || image == "")
-			{
-				image = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/header.jpg";
-			}
 
 			if((info != null && info.length > 0))
 			{

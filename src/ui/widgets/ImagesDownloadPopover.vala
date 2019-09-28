@@ -174,7 +174,7 @@ namespace GameHub.UI.Widgets
 
 					foreach(var img in result.images)
 					{
-						var item = new ImageItem(img);
+						var item = new ImageItem(img, src, game);
 						flow.add(item);
 						if(img.url == game.image)
 						{
@@ -210,10 +210,12 @@ namespace GameHub.UI.Widgets
 		private class ImageItem: FlowBoxChild
 		{
 			public ImagesProvider.Image image { get; construct; }
+			public ImagesProvider provider { get; construct; }
+			public Game game { get; construct; }
 
-			public ImageItem(ImagesProvider.Image image)
+			public ImageItem(ImagesProvider.Image image, ImagesProvider provider, Game game)
 			{
-				Object(image: image);
+				Object(image: image, provider: provider, game: game);
 			}
 
 			construct
@@ -227,7 +229,7 @@ namespace GameHub.UI.Widgets
 				card.tooltip_markup = image.description;
 
 				var img = new AutoSizeImage();
-				img.load(image.url, "image");
+				img.load(image.url, null, @"games/$(game.source.id)/$(game.id)/images/providers/$(provider.id)/");
 
 				card.add(img);
 
