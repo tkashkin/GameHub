@@ -66,9 +66,9 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			var images_download_popover = new ImagesDownloadPopover(game, images_download_btn);
 
-			image_view.load(game.image, "image");
+			image_view.load(game.image, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
 			game.notify["image"].connect(() => {
-				image_view.load(game.image, "image");
+				image_view.load(game.image, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
 			});
 
 			Settings.UI.Appearance.instance.notify["grid-card-width"].connect(update_image_constraints);

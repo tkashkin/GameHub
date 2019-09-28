@@ -14,3 +14,5 @@ option('runtime', type: 'string', value: '')
 option('use_libunity', type: 'boolean', value: false)
 
 option('use_overlayfs', type: 'boolean', value: true)
+
+option('use_images_memcache', type: 'boolean', value: true)

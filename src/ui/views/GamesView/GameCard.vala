@@ -421,7 +421,7 @@ namespace GameHub.UI.Views.GamesView
 		private void image_handler()
 		{
 			Idle.add(() => {
-				image.load(game.image, "image");
+				image.load(game.image, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
 				no_image_indicator.opacity = game.image == null && !game.is_running ? 1 : 0;
 				return Source.REMOVE;
 			}, Priority.LOW);

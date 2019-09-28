@@ -173,17 +173,18 @@ namespace GameHub.Data.Providers.Images
 
 			public enum Style
 			{
-				ALTERNATE, BLURRED, MATERIAL, NO_LOGO;
+				ALTERNATE, BLURRED, MATERIAL, NO_LOGO, WHITE_LOGO;
 
 				public string name()
 				{
 					switch(this)
 					{
-						case Style.ALTERNATE: return C_("imagesource_steamgriddb_image_style", "Alternate");
-						case Style.BLURRED:   return C_("imagesource_steamgriddb_image_style", "Blurred");
+						case Style.ALTERNATE:  return C_("imagesource_steamgriddb_image_style", "Alternate");
+						case Style.BLURRED:    return C_("imagesource_steamgriddb_image_style", "Blurred");
 						// TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-						case Style.MATERIAL:  return C_("imagesource_steamgriddb_image_style", "Material");
-						case Style.NO_LOGO:   return C_("imagesource_steamgriddb_image_style", "No logo");
+						case Style.MATERIAL:   return C_("imagesource_steamgriddb_image_style", "Material");
+						case Style.NO_LOGO:    return C_("imagesource_steamgriddb_image_style", "No logo");
+						case Style.WHITE_LOGO: return C_("imagesource_steamgriddb_image_style", "White logo");
 					}
 					assert_not_reached();
 				}
@@ -192,10 +193,11 @@ namespace GameHub.Data.Providers.Images
 				{
 					switch(style)
 					{
-						case "alternate": return Style.ALTERNATE;
-						case "blurred":   return Style.BLURRED;
-						case "material":  return Style.MATERIAL;
-						case "no_logo":   return Style.NO_LOGO;
+						case "alternate":  return Style.ALTERNATE;
+						case "blurred":    return Style.BLURRED;
+						case "material":   return Style.MATERIAL;
+						case "no_logo":    return Style.NO_LOGO;
+						case "white_logo": return Style.WHITE_LOGO;
 					}
 					return null;
 				}

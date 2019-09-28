@@ -30,8 +30,9 @@ namespace GameHub.Data
 
 		public string description { get; protected set; }
 
-		public string icon { get; set; }
-		public string image { get; set; }
+		public string? icon { get; set; }
+		public string? image { get; set; }
+		public string? image_vertical { get; set; }
 
 		public string? info { get; protected set; }
 		public string? info_detailed { get; protected set; }
@@ -455,11 +456,13 @@ namespace GameHub.Data
 		{
 			public const string BASE = "base";
 
-			public Game   game    { get; construct; }
+			public Game game { get; construct; }
 
-			public string id      { get; construct; }
-			public string name    { get; construct; }
-			public bool   enabled { get; set; }
+			public string id { get; construct; }
+			public string name { get; construct; }
+			public bool enabled { get; set; }
+
+			public File? directory;
 
 			public bool removable
 			{
@@ -475,8 +478,6 @@ namespace GameHub.Data
 					return true;
 				}
 			}
-
-			public File?  directory;
 
 			public Overlay(Game game, string id=BASE, string? name=null, bool enabled=true)
 			{

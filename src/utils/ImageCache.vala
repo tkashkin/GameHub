@@ -23,8 +23,11 @@ namespace GameHub.Utils
 {
 	public class ImageCache
 	{
-		public static string DEFAULT_CACHED_FILE_PREFIX = "remote";
+		public static string DEFAULT_CACHED_FILE_PREFIX = "images/";
+
+		#if USE_IMAGES_MEMCACHE
 		private static HashMap<string, Pixbuf?> cache;
+		#endif
 
 		public static File? local_file(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)
 		{
@@ -33,7 +36,7 @@ namespace GameHub.Utils
 			var ext = parts.length > 1 ? parts[parts.length - 1] : null;
 			ext = ext != null && ext.length <= 6 ? "." + ext : null;
 			var hash = md5(url);
-			return FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");;
+			return FSUtils.file(FSUtils.Paths.Cache.Graphics, @"$(prefix)$(hash)$(ext)");;
 		}
 
 		public static async string? cache_image(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)
@@ -45,6 +48,10 @@ namespace GameHub.Utils
 			{
 				if(!cached.query_exists())
 				{
+					if(!cached.get_parent().query_exists())
+					{
+						cached.get_parent().make_directory_with_parents();
+					}
 					yield Downloader.download(remote, cached, null, false, false);
 				}
 				return cached.get_path();
@@ -64,13 +71,19 @@ namespace GameHub.Utils
 		{
 			if(url == null || url == "") return null;
 
+			#if USE_IMAGES_MEMCACHE
 			if(cache.has_key(url)) return cache.get(url);
+			#endif
 
 			var cached = yield cache_image(url, prefix);
 			try
 			{
 				var pixbuf = cached != null ? new Pixbuf.from_file(cached) : null;
+
+				#if USE_IMAGES_MEMCACHE
 				cache.set(url, pixbuf);
+				#endif
+
 				return pixbuf;
 			}
 			catch(Error e){}
@@ -80,7 +93,9 @@ namespace GameHub.Utils
 
 		public static void init()
 		{
+			#if USE_IMAGES_MEMCACHE
 			cache = new HashMap<string, Pixbuf?>();
+			#endif
 		}
 	}
 }

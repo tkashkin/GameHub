@@ -51,6 +51,7 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field LAST_LAUNCH;
 		public static Table.Field PLAYTIME_SOURCE;
 		public static Table.Field PLAYTIME_TRACKED;
+		public static Table.Field IMAGE_VERTICAL;
 
 		public Games()
 		{
@@ -75,6 +76,7 @@ namespace GameHub.Data.DB.Tables
 			LAST_LAUNCH          = f(14);
 			PLAYTIME_SOURCE      = f(15);
 			PLAYTIME_TRACKED     = f(16);
+			IMAGE_VERTICAL       = f(17);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -113,6 +115,10 @@ namespace GameHub.Data.DB.Tables
 						db.exec("ALTER TABLE `games` ADD `playtime_source` integer not null default 0");
 						db.exec("ALTER TABLE `games` ADD `playtime_tracked` integer not null default 0");
 						break;
+
+					case 8:
+						db.exec("ALTER TABLE `games` ADD `image_vertical` string");
+						break;
 				}
 			}
 		}
@@ -150,8 +156,9 @@ namespace GameHub.Data.DB.Tables
 					`arguments`,
 					`last_launch`,
 					`playtime_source`,
-					`playtime_tracked`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`playtime_tracked`,
+					`image_vertical`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -190,6 +197,7 @@ namespace GameHub.Data.DB.Tables
 			LAST_LAUNCH.bind_int64(s, game.last_launch);
 			PLAYTIME_SOURCE.bind_int64(s, game.playtime_source);
 			PLAYTIME_TRACKED.bind_int64(s, game.playtime_tracked);
+			IMAGE_VERTICAL.bind(s, game.image_vertical);
 
 			res = s.step();
 

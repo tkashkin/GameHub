@@ -27,6 +27,9 @@ namespace GameHub.UI.Widgets
 		private Pixbuf? src;
 		private Pixbuf? scaled;
 
+		private Pixbuf? src_vertical;
+		private Pixbuf? scaled_vertical;
+
 		private int cmin = 0;
 		private int cmax = 0;
 		private float ratio = 1;
@@ -34,6 +37,7 @@ namespace GameHub.UI.Widgets
 
 		public bool? scale = null;
 		private bool _scale = true;
+		private bool _scale_vertical = true;
 
 		public int corner_radius = 4;
 
@@ -50,6 +54,24 @@ namespace GameHub.UI.Widgets
 				if(src != null && src.width > 0 && src.height > 0)
 				{
 					_scale = scale ?? (src.width > cmin || src.height > cmin || src.width != src.height);
+				}
+				queue_draw();
+			}
+		}
+
+		public Pixbuf? source_vertical
+		{
+			get
+			{
+				return src_vertical;
+			}
+			set
+			{
+				src_vertical = value;
+				scaled_vertical = src_vertical;
+				if(src_vertical != null && src_vertical.width > 0 && src_vertical.height > 0)
+				{
+					_scale_vertical = scale ?? (src_vertical.width > cmin || src_vertical.height > cmin || src_vertical.width != src_vertical.height);
 				}
 				queue_draw();
 			}
@@ -73,16 +95,22 @@ namespace GameHub.UI.Widgets
 			}
 		}
 
-		public void load(string? url, string cache_prefix=ImageCache.DEFAULT_CACHED_FILE_PREFIX)
+		public void load(string? url, string? url_vertical, string cache_prefix=ImageCache.DEFAULT_CACHED_FILE_PREFIX)
 		{
-			if(url == null || url == "")
+			source = null;
+			source_vertical = null;
+			if(url != null || url != "")
 			{
-				source = null;
-				return;
+				ImageCache.load.begin(url, cache_prefix, (obj, res) => {
+					source = ImageCache.load.end(res);
+				});
 			}
-			ImageCache.load.begin(url, cache_prefix, (obj, res) => {
-				source = ImageCache.load.end(res);
-			});
+			if(url_vertical != null || url_vertical != "")
+			{
+				ImageCache.load.begin(url_vertical, cache_prefix, (obj, res) => {
+					source_vertical = ImageCache.load.end(res);
+				});
+			}
 		}
 
 		public override SizeRequestMode get_request_mode()
@@ -126,13 +154,24 @@ namespace GameHub.UI.Widgets
 			var width = get_allocated_width() * scale_factor;
 			var height = get_allocated_height() * scale_factor;
 
-			if(src != null && src.width > 0 && src.height > 0)
+			var img = src;
+			var scaled_img = scaled;
+			var _scale_img = _scale;
+
+			if(ratio > 1 && src_vertical != null)
 			{
-				if(_scale)
+				img = src_vertical;
+				scaled_img = scaled_vertical;
+				_scale_img = _scale_vertical;
+			}
+
+			if(img != null && img.width > 0 && img.height > 0)
+			{
+				if(_scale_img)
 				{
-					var ratio = float.min((float) width / src.width, (float) height / src.height);
-					var new_width = (int) (src.width * ratio);
-					var new_height = (int) (src.height * ratio);
+					var ratio = float.min((float) width / img.width, (float) height / img.height);
+					var new_width = (int) (img.width * ratio);
+					var new_height = (int) (img.height * ratio);
 
 					if(new_width < width)
 					{
@@ -146,9 +185,18 @@ namespace GameHub.UI.Widgets
 						new_height = height;
 					}
 
-					if(scaled.width != new_width || scaled.height != new_height)
+					if(scaled_img.width != new_width || scaled_img.height != new_height)
 					{
-						scaled = src.scale_simple(new_width, new_height, InterpType.BILINEAR);
+						scaled_img = img.scale_simple(new_width, new_height, InterpType.BILINEAR);
+
+						if(ratio > 1)
+						{
+							this.scaled_vertical = scaled_img;
+						}
+						else
+						{
+							this.scaled = scaled_img;
+						}
 					}
 				}
 

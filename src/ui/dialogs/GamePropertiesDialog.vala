@@ -131,8 +131,8 @@ namespace GameHub.UI.Dialogs
 
 			properties_box.add(icon_entry);
 
-			image_view.load(game.image, "image");
-			icon_view.load(game.icon, "icon");
+			image_view.load(game.image, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
+			icon_view.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
 
 			var space = new Box(Orientation.VERTICAL, 0);
 			space.vexpand = true;
@@ -269,7 +269,7 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				image_view.load(url, "image");
+				image_view.load(url, null, @"games/$(game.source.id)/$(game.id)/images/");
 			}
 		}
 
@@ -283,7 +283,7 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				icon_view.load(url, "icon");
+				icon_view.load(url, null, @"games/$(game.source.id)/$(game.id)/icons/");
 			}
 		}
 
