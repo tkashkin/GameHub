@@ -39,11 +39,13 @@ namespace GameHub.UI.Widgets
 
 		private bool images_load_started = false;
 
-		public ImagesDownloadPopover(Game game, MenuButton button)
+		public ImagesDownloadPopover(Game game, MenuButton button, int r_width=520, int r_height=400)
 		{
 			Object(game: game, relative_to: button);
 			button.popover = this;
 			position = PositionType.LEFT;
+
+			images_scroll.set_size_request(int.max(r_width, 520), int.max(r_height, 400));
 
 			button.clicked.connect(load_images);
 
@@ -73,7 +75,6 @@ namespace GameHub.UI.Widgets
 			no_images_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 
 			images_scroll = new ScrolledWindow(null, null);
-			images_scroll.set_size_request(520, 400);
 
 			images = new Box(Orientation.VERTICAL, 0);
 			images.margin = 4;
@@ -123,67 +124,81 @@ namespace GameHub.UI.Widgets
 			foreach(var src in ImageProviders)
 			{
 				if(!src.enabled) continue;
-				var result = yield src.images(game);
 
-				if(result != null && result.images != null && result.images.size > 0)
+				var results = yield src.images(game);
+				if(results == null || results.size < 1) continue;
+				foreach(var result in results)
 				{
-					if(images.get_children().length() > 0)
+					if(result != null && result.images != null && result.images.size > 0)
 					{
-						var separator = new Separator(Orientation.HORIZONTAL);
-						separator.margin = 4;
-						separator.margin_bottom = 0;
-						images.add(separator);
-					}
-
-					var header_hbox = new Box(Orientation.HORIZONTAL, 8);
-					header_hbox.margin_start = header_hbox.margin_end = 4;
-
-					var header = Styled.H4Label(src.name);
-					header.hexpand = true;
-
-					header_hbox.add(header);
-
-					if(result.url != null)
-					{
-						var link = new Button.from_icon_name("web-browser-symbolic");
-						link.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-						link.tooltip_text = result.url;
-						link.clicked.connect(() => {
-							Utils.open_uri(result.url);
-						});
-						header_hbox.add(link);
-					}
-
-					images.add(header_hbox);
-
-					var flow = new FlowBox();
-					flow.activate_on_single_click = true;
-					flow.homogeneous = true;
-					flow.min_children_per_line = 1;
-					flow.selection_mode = SelectionMode.SINGLE;
-
-					flow.child_activated.connect(item => {
-						game.image = ((ImageItem) item).image.url;
-						game.save();
-						#if GTK_3_22
-						popdown();
-						#else
-						hide();
-						#endif
-					});
-
-					foreach(var img in result.images)
-					{
-						var item = new ImageItem(img, src, game);
-						flow.add(item);
-						if(img.url == game.image)
+						if(images.get_children().length() > 0)
 						{
-							flow.select_child(item);
-							item.grab_focus();
+							var separator = new Separator(Orientation.HORIZONTAL);
+							separator.margin = 4;
+							separator.margin_bottom = 0;
+							images.add(separator);
 						}
-					}
 
-					images.add(flow);
+						var header_hbox = new Box(Orientation.HORIZONTAL, 8);
+						header_hbox.margin_start = header_hbox.margin_end = 4;
+
+						var header = Styled.H4Label(result.name);
+						header.hexpand = true;
+
+						header_hbox.add(header);
+
+						if(result.url != null)
+						{
+							var link = new Button.from_icon_name("web-browser-symbolic");
+							link.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+							link.tooltip_text = result.url;
+							link.clicked.connect(() => {
+								Utils.open_uri(result.url);
+							});
+							header_hbox.add(link);
+						}
+
+						images.add(header_hbox);
+
+						var flow = new FlowBox();
+						flow.activate_on_single_click = true;
+						flow.homogeneous = true;
+						flow.min_children_per_line = 1;
+						flow.selection_mode = SelectionMode.SINGLE;
+
+						flow.child_activated.connect(i => {
+							var item = (ImageItem) i;
+
+							if(item.size.width >= item.size.height)
+							{
+								game.image = item.image.url;
+							}
+							else
+							{
+								game.image_vertical = item.image.url;
+							}
+							game.save();
+
+							#if GTK_3_22
+							popdown();
+							#else
+							hide();
+							#endif
+						});
+
+						foreach(var img in result.images)
+						{
+							var item = new ImageItem(img, result.image_size, src, game);
+							flow.add(item);
+							if(img.url == game.image)
+							{
+								flow.select_child(item);
+								item.grab_focus();
+							}
+						}
+
+						images.add(flow);
+					}
 				}
 			}
 
@@ -210,12 +225,14 @@ namespace GameHub.UI.Widgets
 		private class ImageItem: FlowBoxChild
 		{
 			public ImagesProvider.Image image { get; construct; }
+			public ImagesProvider.ImageSize size { get; construct; }
+
 			public ImagesProvider provider { get; construct; }
 			public Game game { get; construct; }
 
-			public ImageItem(ImagesProvider.Image image, ImagesProvider provider, Game game)
+			public ImageItem(ImagesProvider.Image image, ImagesProvider.ImageSize size, ImagesProvider provider, Game game)
 			{
-				Object(image: image, provider: provider, game: game);
+				Object(image: image, size: size, provider: provider, game: game);
 			}
 
 			construct
@@ -235,11 +252,12 @@ namespace GameHub.UI.Widgets
 
 				child = card;
 
-				var w = Settings.UI.Appearance.instance.grid_card_width;
-				var h = Settings.UI.Appearance.instance.grid_card_height;
-				var ratio = (float) h / w;
-				var min = (int) (w / 2f);
-				var max = (int) (w - 1.5f);
+				var ratio = (float) size.height / size.width;
+
+				var w_1x = size.width > 500 ? size.width / 2 : size.width;
+
+				var min = int.max((int) (w_1x / 2f), 100);
+				var max = int.min(w_1x, 460);
 				img.set_constraint(min, max, ratio);
 
 				show_all();

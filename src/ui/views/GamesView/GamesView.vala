@@ -149,6 +149,9 @@ namespace GameHub.UI.Views.GamesView
 			games_grid_scrolled.hscrollbar_policy = PolicyType.NEVER;
 			games_grid_scrolled.add(games_grid);
 
+			games_grid_scrolled.vadjustment.value_changed.connect(update_games_grid_scroll);
+			games_grid_scrolled.size_allocate.connect(update_games_grid_scroll);
+
 			games_list_paned = new Paned(Orientation.HORIZONTAL);
 
 			games_list = new ListBox();
@@ -613,6 +616,8 @@ namespace GameHub.UI.Views.GamesView
 			saved_state.style = view.selected == 0 ? Settings.SavedState.GamesView.Style.GRID : Settings.SavedState.GamesView.Style.LIST;
 
 			Timeout.add(100, () => { select_first_visible_game(); return Source.REMOVE; });
+
+			update_games_grid_scroll();
 		}
 
 		private void show_games()
@@ -794,28 +799,78 @@ namespace GameHub.UI.Views.GamesView
 			var _games = games ?? DB.Tables.Games.get_all();
 			foreach(var game in _games)
 			{
-				if(game.image == null)
+				if(game.image == null || game.image_vertical == null)
 				{
-					yield download_image(game);
+					yield download_game_images(game);
 				}
 			}
 			update_status(null);
 		}
 
-		private async void download_image(Game game)
+		private async void download_game_images(Game game)
 		{
 			update_status(_("Downloading image: %s").printf(game.name));
+
+			string? image = game.image;
+			string? image_vertical = game.image_vertical;
+
+			if(image != null && image_vertical != null) return;
+
 			foreach(var src in Data.Providers.ImageProviders)
 			{
 				if(!src.enabled) continue;
-				var result = yield src.images(game);
-				if(result != null && result.images != null && result.images.size > 0)
+
+				var results = yield src.images(game);
+				if(results == null || results.size < 1) continue;
+				foreach(var result in results)
 				{
-					game.image = result.images.get(0).url;
-					game.save();
-					return;
+					if(result.images != null && result.images.size > 0)
+					{
+						if(image == null && result.image_size.width >= result.image_size.height)
+						{
+							image = result.images.get(0).url;
+						}
+						else if(image_vertical == null && result.image_size.width < result.image_size.height)
+						{
+							image_vertical = result.images.get(0).url;
+						}
+					}
+
+					if(image != null && image_vertical != null) break;
 				}
 			}
+
+			game.image = image;
+			game.image_vertical = image_vertical;
+			game.save();
+		}
+
+		private void update_games_grid_scroll()
+		{
+			var scroll = games_grid_scrolled.vadjustment.value;
+			var height = games_grid_scrolled.vadjustment.page_size;
+
+			var viewport_top = scroll;
+			var viewport_bottom = scroll + height;
+
+			games_grid.foreach(w => {
+				var card = (GameCard) w;
+
+				if(!card.visible) return;
+
+				Allocation alloc;
+				card.get_allocation(out alloc);
+
+				if(alloc.x < 0 || alloc.y < 0 || alloc.width < 1 || alloc.height < 1) return;
+
+				var card_top = alloc.y;
+				var card_bottom = alloc.y + alloc.height;
+
+				var is_before_viewport = card_bottom < viewport_top;
+				var is_after_viewport = card_top > viewport_bottom;
+
+				card.image_is_visible = !is_before_viewport && !is_after_viewport;
+			});
 		}
 
 		#if UNITY
