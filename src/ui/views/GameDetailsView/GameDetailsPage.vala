@@ -377,7 +377,7 @@ namespace GameHub.UI.Views.GameDetailsView
 				desc
 			};
 			GameDetailsBlock[] sidebar_blk = {
-				new Blocks.Artwork(game),
+				new Blocks.Artwork(game, details_view),
 				new Blocks.Playtime(game),
 				igdb,
 				new Blocks.SteamDetails(game),

@@ -36,8 +36,10 @@ namespace GameHub.UI.Dialogs
 
 		private Entry name_entry;
 		private AutoSizeImage image_view;
+		private AutoSizeImage image_vertical_view;
 		private AutoSizeImage icon_view;
 		private FileChooserEntry image_entry;
+		private FileChooserEntry image_vertical_entry;
 		private FileChooserEntry icon_entry;
 
 		private Box properties_box;
@@ -83,6 +85,8 @@ namespace GameHub.UI.Dialogs
 			images_header.xpad = 8;
 			properties_box.add(images_header);
 
+			var images_hbox = new Box(Orientation.HORIZONTAL, 0);
+
 			var images_card = Styled.Card("gamecard", "static");
 			images_card.margin = 4;
 
@@ -93,7 +97,7 @@ namespace GameHub.UI.Dialogs
 			icon_view.valign = Align.END;
 
 			image_view = new AutoSizeImage();
-			image_view.hexpand = false;
+			image_view.expand = false;
 
 			var actions = new Box(Orientation.VERTICAL, 0);
 			actions.get_style_context().add_class("actions");
@@ -105,6 +109,14 @@ namespace GameHub.UI.Dialogs
 			images_overlay.add_overlay(actions);
 			images_overlay.add_overlay(icon_view);
 
+			images_card.add(images_overlay);
+
+			var image_vertical_card = Styled.Card("gamecard", "static");
+			image_vertical_card.margin = 4;
+
+			image_vertical_view = new AutoSizeImage();
+			image_vertical_view.expand = false;
+
 			var images_download_btn = new MenuButton();
 			images_download_btn.get_style_context().add_class("images-download-button");
 			images_download_btn.margin = 8;
@@ -113,26 +125,39 @@ namespace GameHub.UI.Dialogs
 			images_download_btn.image = new Image.from_icon_name("folder-download-symbolic", IconSize.BUTTON);
 			images_download_btn.tooltip_text = _("Download images");
 
-			images_overlay.add_overlay(images_download_btn);
+			var actions_vertical = new Box(Orientation.VERTICAL, 0);
+			actions_vertical.get_style_context().add_class("actions");
+			actions_vertical.expand = true;
 
-			images_card.add(images_overlay);
-			properties_box.add(images_card);
+			var image_vertical_overlay = new Overlay();
+			image_vertical_overlay.add(image_vertical_view);
+			image_vertical_overlay.add_overlay(actions_vertical);
+			image_vertical_overlay.add_overlay(images_download_btn);
+
+			image_vertical_card.add(image_vertical_overlay);
+
+			images_hbox.add(images_card);
+			images_hbox.add(image_vertical_card);
+
+			properties_box.add(images_hbox);
 
 			image_entry = add_image_entry(_("Image URL"), "image-x-generic");
 			image_entry.hexpand = true;
 			image_entry.margin = 4;
 
+			image_vertical_entry = add_image_entry(_("Vertical image URL"), "image-x-generic");
+			image_vertical_entry.hexpand = true;
+			image_vertical_entry.margin_top = 0;
+
 			var images_download_popover = new ImagesDownloadPopover(game, images_download_btn);
 
 			properties_box.add(image_entry);
+			properties_box.add(image_vertical_entry);
 
 			icon_entry = add_image_entry(_("Icon URL"), "image-x-generic-symbolic");
 			icon_entry.margin_top = 0;
 
 			properties_box.add(icon_entry);
-
-			image_view.load(game.image, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
-			icon_view.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
 
 			var space = new Box(Orientation.VERTICAL, 0);
 			space.vexpand = true;
@@ -247,14 +272,17 @@ namespace GameHub.UI.Dialogs
 				image_entry.activate();
 				icon_entry.activate();
 				set_image_url(true);
+				set_image_vertical_url(true);
 				set_icon_url(true);
 				game.save();
 				destroy();
 			});
 
-			Settings.UI.Appearance.instance.notify["grid-card-width"].connect(update_image_constraints);
-			Settings.UI.Appearance.instance.notify["grid-card-height"].connect(update_image_constraints);
 			update_image_constraints();
+
+			game.notify["image"].connect(load_images);
+			game.notify["image-vertical"].connect(load_images);
+			load_images();
 
 			show_all();
 		}
@@ -273,6 +301,20 @@ namespace GameHub.UI.Dialogs
 			}
 		}
 
+		private void set_image_vertical_url(bool replace=false)
+		{
+			var url = image_vertical_entry.uri;
+			if(url == null || url.length == 0) url = game.image_vertical;
+			if(replace)
+			{
+				game.image_vertical = url;
+			}
+			else
+			{
+				image_vertical_view.load(null, url, @"games/$(game.source.id)/$(game.id)/images/");
+			}
+		}
+
 		private void set_icon_url(bool replace=false)
 		{
 			var url = icon_entry.uri;
@@ -287,14 +329,26 @@ namespace GameHub.UI.Dialogs
 			}
 		}
 
+		private void load_images()
+		{
+			image_entry.reset();
+			image_vertical_entry.reset();
+
+			image_view.load(game.image, null, @"games/$(game.source.id)/$(game.id)/images/");
+			image_vertical_view.load(null, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
+			icon_view.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
+		}
+
 		private void update_image_constraints()
 		{
-			var w = Settings.UI.Appearance.instance.grid_card_width;
-			var h = Settings.UI.Appearance.instance.grid_card_height;
+			set_image_constraints(image_view, 460, 215);
+			set_image_constraints(image_vertical_view, 143, 215);
+		}
+
+		private void set_image_constraints(AutoSizeImage iv, int w, int h)
+		{
 			var ratio = (float) h / w;
-			var min = (int) (w / 1.5f);
-			var max = (int) (w * 1.5f);
-			image_view.set_constraint(min, max, ratio);
+			iv.set_constraint(w, w * 2, ratio);
 		}
 
 		private FileChooserEntry add_image_entry(string text, string icon)
@@ -306,7 +360,7 @@ namespace GameHub.UI.Dialogs
 			filter.add_mime_type("image/*");
 			entry.chooser.set_filter(filter);
 
-			entry.uri_set.connect(() => { set_image_url(false); set_icon_url(false); });
+			entry.uri_set.connect(() => { set_image_url(false); set_image_vertical_url(false); set_icon_url(false); });
 
 			return entry;
 		}

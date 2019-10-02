@@ -25,13 +25,15 @@ namespace GameHub.Utils
 	{
 		public static string DEFAULT_CACHED_FILE_PREFIX = "images/";
 
+		private static ArrayList<string> failed_urls;
+
 		#if USE_IMAGES_MEMCACHE
 		private static HashMap<string, Pixbuf?> cache;
 		#endif
 
 		public static File? local_file(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)
 		{
-			if(url == null || url == "") return null;
+			if(url == null || url == "" || url in failed_urls) return null;
 			var parts = url.split("?")[0].split(".");
 			var ext = parts.length > 1 ? parts[parts.length - 1] : null;
 			ext = ext != null && ext.length <= 6 ? "." + ext : null;
@@ -41,7 +43,7 @@ namespace GameHub.Utils
 
 		public static async string? cache_image(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)
 		{
-			if(url == null || url == "") return null;
+			if(url == null || url == "" || url in failed_urls) return null;
 			var remote = File.new_for_uri(url);
 			var cached = local_file(url, prefix);
 			try
@@ -59,6 +61,7 @@ namespace GameHub.Utils
 			catch(IOError.EXISTS e){}
 			catch(Error e)
 			{
+				failed_urls.add(url);
 				if(GameHub.Application.log_verbose)
 				{
 					warning("[ImageCache] Error loading image '%s': %s", url, e.message);
@@ -69,7 +72,7 @@ namespace GameHub.Utils
 
 		public static async Pixbuf? load(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)
 		{
-			if(url == null || url == "") return null;
+			if(url == null || url == "" || url in failed_urls) return null;
 
 			#if USE_IMAGES_MEMCACHE
 			if(cache.has_key(url)) return cache.get(url);
@@ -93,6 +96,7 @@ namespace GameHub.Utils
 
 		public static void init()
 		{
+			failed_urls = new ArrayList<string>();
 			#if USE_IMAGES_MEMCACHE
 			cache = new HashMap<string, Pixbuf?>();
 			#endif

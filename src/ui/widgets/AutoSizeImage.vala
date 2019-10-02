@@ -97,8 +97,7 @@ namespace GameHub.UI.Widgets
 
 		public void load(string? url, string? url_vertical, string cache_prefix=ImageCache.DEFAULT_CACHED_FILE_PREFIX)
 		{
-			source = null;
-			source_vertical = null;
+			unload();
 			if(url != null || url != "")
 			{
 				ImageCache.load.begin(url, cache_prefix, (obj, res) => {
@@ -111,6 +110,12 @@ namespace GameHub.UI.Widgets
 					source_vertical = ImageCache.load.end(res);
 				});
 			}
+		}
+
+		public void unload()
+		{
+			source = null;
+			source_vertical = null;
 		}
 
 		public override SizeRequestMode get_request_mode()
