@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-08-28 18:24+0000\n"
+"PO-Revision-Date: 2019-10-04 11:56+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -528,7 +528,7 @@ msgstr "Ingen logo"
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr ""
+msgstr "Hvit logo"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
@@ -1105,7 +1105,7 @@ msgstr "Bildenettadresse"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Vertical image URL"
-msgstr ""
+msgstr "Nettadresse til loddrett bilde"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
