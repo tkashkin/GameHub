@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-08-22 15:24+0000\n"
+"PO-Revision-Date: 2019-10-04 11:56+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -528,7 +528,7 @@ msgstr "Zonder logo"
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr ""
+msgstr "Wit logo"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
@@ -1101,7 +1101,7 @@ msgstr "Afbeeldings-URL"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Vertical image URL"
-msgstr ""
+msgstr "URL van verticale afbeelding"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
@@ -1255,9 +1255,8 @@ msgid "Authentication required"
 msgstr "Authenticatie vereist"
 
 #: src/ui/views/WelcomeView.vala:152
-#, fuzzy
 msgid "Authenticating…"
-msgstr "Bezig met authenticeren..."
+msgstr "Bezig met authenticeren…"
 
 #: src/ui/views/WelcomeView.vala:163
 #, c-format
