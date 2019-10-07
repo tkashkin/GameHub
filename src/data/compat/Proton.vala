@@ -54,7 +54,8 @@ namespace GameHub.Data.Compat
 				new CompatTool.BoolOption("PROTON_FORCE_LARGE_ADDRESS_AWARE", _("Force LARGE_ADDRESS_AWARE flag"), false),
 				new CompatTool.BoolOption("PROTON_NO_D3D11", _("Disable DirectX 11 compatibility layer"), false),
 				new CompatTool.BoolOption("PROTON_USE_WINED3D11", _("Use WineD3D11 as DirectX 11 compatibility layer"), false),
-				new CompatTool.BoolOption("DXVK_HUD", _("Show DXVK info overlay"), true)
+				new CompatTool.BoolOption("DXVK_HUD", _("Show DXVK info overlay"), true),
+				new CompatTool.BoolOption("PROTON_USE_D9VK", _("Enable DirectX 9 compatibility layer"), false)
 			};
 
 			install_options = {
