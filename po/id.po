@@ -4,13 +4,14 @@
 # Automatically generated, 2018.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
 # ditokp <ditokpl@gmail.com>, 2018.
+# ekickx <mujahidmasadepan@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2018-11-24 17:10+0000\n"
-"Last-Translator: ditokp <ditokpl@gmail.com>\n"
+"PO-Revision-Date: 2019-10-10 22:04+0000\n"
+"Last-Translator: ekickx <mujahidmasadepan@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
 "translations/id/>\n"
 "Language: id\n"
@@ -18,17 +19,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.3-dev\n"
+"X-Generator: Weblate 3.9-dev\n"
 
 #: src/app.vala:89
-#, fuzzy
 msgid "Show help"
-msgstr "Pilih berkas"
+msgstr "Tampilkan bantuan"
 
 #: src/app.vala:90
-#, fuzzy
 msgid "Show application version and exit"
-msgstr "Paksakan mode pengguna yang ada"
+msgstr "Tampilkan versi aplikasi lalu keluar"
 
 #: src/app.vala:91
 msgid "Restart with GDB debugger attached"
@@ -44,12 +43,12 @@ msgstr ""
 
 #: src/app.vala:97
 msgid "Show main window"
-msgstr ""
+msgstr "Tampilkan jendela utama"
 
 #: src/app.vala:98
 #, fuzzy
 msgid "Show application settings dialog"
-msgstr "Paksakan mode pengguna yang ada"
+msgstr "Tampilkan dialog setelan aplikasi"
 
 #: src/app.vala:99
 #, fuzzy
@@ -61,9 +60,8 @@ msgid "Maximum number of background worker threads"
 msgstr ""
 
 #: src/app.vala:104
-#, fuzzy
 msgid "Run game"
-msgstr "Jalankan taskmgr"
+msgstr "Jalankan gim"
 
 #: src/app.vala:105
 #, fuzzy
@@ -71,9 +69,8 @@ msgid "Show compatibility options dialog"
 msgstr "Paksakan mode pengguna yang ada"
 
 #: src/app.vala:106
-#, fuzzy
 msgid "Open game details"
-msgstr "Properti permainan"
+msgstr "Buka rincian gim"
 
 #: src/app.vala:107
 #, fuzzy
@@ -91,9 +88,8 @@ msgid ""
 msgstr ""
 
 #: src/app.vala:113
-#, fuzzy
 msgid "Log download manager"
-msgstr "Mengunduh"
+msgstr "Log pengunduh"
 
 #: src/app.vala:114
 msgid "Log background workers start/stop"
