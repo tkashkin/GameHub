@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-10-12 08:52+0000\n"
+"PO-Revision-Date: 2019-10-13 16:52+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
@@ -664,9 +664,10 @@ msgid "Show status"
 msgstr "Afficher l'état"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
+#, fuzzy
 msgctxt "list_style"
 msgid "Dim"
-msgstr ""
+msgstr "Variable"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
 msgid "Grid options"
@@ -757,8 +758,9 @@ msgid "Enabled"
 msgstr "Activé"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
+#, fuzzy
 msgid "Focus GameHub window with Guide button"
-msgstr ""
+msgstr "Mettre la fenêtre de GameHub au premier plan avec le bouton Guide"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
@@ -766,7 +768,7 @@ msgstr "Contrôles du jeu"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
-msgstr ""
+msgstr "Déplacer le premier plan"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 msgid "Exit"
