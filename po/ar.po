@@ -2,32 +2,35 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Omar Aglan <omar.aglan91@yahoo.com>, 2019.
+# abidin toumi <abidin24@disroot.org>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-10-16 13:53+0000\n"
+"Last-Translator: abidin toumi <abidin24@disroot.org>\n"
+"Language-Team: Arabic <https://hosted.weblate.org/projects/gamehub/"
+"translations/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 3.9\n"
 
 #: src/app.vala:89
 msgid "Show help"
-msgstr ""
+msgstr "عرض التعليمات"
 
 #: src/app.vala:90
 msgid "Show application version and exit"
-msgstr ""
+msgstr "عرض اصدار التطبيق والخروج"
 
 #: src/app.vala:91
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "أعد التشغيل بإرفاق منقح GDB"
 
 #: src/app.vala:92
 msgid "Show full GDB backtrace"
@@ -39,35 +42,35 @@ msgstr ""
 
 #: src/app.vala:97
 msgid "Show main window"
-msgstr ""
+msgstr "عرض النافذة الرئيسية"
 
 #: src/app.vala:98
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "اعرض اعدادات التطبيق"
 
 #: src/app.vala:99
 msgid "Show about dialog"
-msgstr ""
+msgstr "أظهر نافذة حول"
 
 #: src/app.vala:100
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "العدد الاقصى للخيوط"
 
 #: src/app.vala:104
 msgid "Run game"
-msgstr ""
+msgstr "شغل اللعبة"
 
 #: src/app.vala:105
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "اعرض اعدادات التوافق"
 
 #: src/app.vala:106
 msgid "Open game details"
-msgstr ""
+msgstr "اعرض معلومات اللعبة"
 
 #: src/app.vala:107
 msgid "Open game properties"
-msgstr ""
+msgstr "افتح خصائص اللعبة"
 
 #: src/app.vala:111
 msgid "Enable debug logging"
@@ -77,7 +80,7 @@ msgstr ""
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
-msgstr ""
+msgstr "سجل عملية المصادقة والمعلومات الحساسة مثل رموز المصادقة"
 
 #: src/app.vala:113
 msgid "Log download manager"
@@ -89,7 +92,7 @@ msgstr ""
 
 #: src/app.vala:115
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "عطل فلترت رسائل السجل"
 
 #: src/app.vala:116
 msgid "Verbose logging"
@@ -97,42 +100,43 @@ msgstr ""
 
 #: src/app.vala:245
 msgid "Game Options:"
-msgstr ""
+msgstr "خيارات اللعبة:"
 
 #: src/app.vala:245
 msgid "Show game options help"
-msgstr ""
+msgstr "اعرض التعليمات لخيارت اللعبة"
 
 #: src/app.vala:253
 msgid "Logging Options:"
-msgstr ""
+msgstr "خيارات الولوج:"
 
 #: src/app.vala:253
 msgid "Show logging options help"
-msgstr ""
+msgstr "اعرض التعليمات لخيارات الولوج"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
-msgstr ""
+msgstr "حدد الملف التنفيذي"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:392
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "حدد"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/data/Runnable.vala:179 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
+#, fuzzy
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء"
 
 #: src/data/Runnable.vala:165 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr ""
+msgstr "إختر دليل"
 
 #: src/data/Runnable.vala:423
 #, c-format
@@ -142,7 +146,7 @@ msgstr ""
 #: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr ""
+msgstr "%s: مثبت تالف"
 
 #: src/data/Runnable.vala:447
 #, c-format
@@ -151,29 +155,31 @@ msgstr ""
 
 #: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
-msgstr ""
+msgstr "إعرض الملف"
 
 #: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
-msgstr ""
+msgstr "أزِل"
 
 #: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
-msgstr ""
+msgstr "نسخة إحتياطية"
 
 #: src/data/Runnable.vala:613
 #, c-format
 msgid "%s: cannot detect main executable"
-msgstr ""
+msgstr "%s: لا يمكن التعرف على الملف التنفيذي الرئيسي"
 
 #: src/data/Runnable.vala:614
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"لا يمكن التعرف على الملف التنفيذي للعبة.\n"
+"يرجى تعيينه في خصائص اللعبة."
 
 #: src/data/Runnable.vala:850
 msgctxt "platform"
@@ -188,111 +194,111 @@ msgstr ""
 #: src/data/Game.vala:550
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "مثبت"
 
 #: src/data/Game.vala:551
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "تثبيت"
 
 #: src/data/Game.vala:552
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr ""
+msgstr "التحقق من صحة المثبت"
 
 #: src/data/Game.vala:553
 msgctxt "status"
 msgid "Download started"
-msgstr ""
+msgstr "بدأ التحميل"
 
 #: src/data/Game.vala:555
 msgctxt "status"
 msgid "Not installed"
-msgstr ""
+msgstr "لم تثبت"
 
 #: src/data/Game.vala:565
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "تم التثيت"
 
 #: src/data/Game.vala:566
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "تثبيت"
 
 #: src/data/Game.vala:568
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "يحمل"
 
 #: src/data/Game.vala:570
 msgctxt "status_header"
 msgid "Not installed"
-msgstr ""
+msgstr "لم يثبت"
 
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr ""
+msgstr "%s ألعاب"
 
 #: src/data/adapters/GamesAdapter.vala:424
 msgctxt "status_header"
 msgid "Favorites"
-msgstr ""
+msgstr "المفضلة"
 
 #: src/data/adapters/GamesAdapter.vala:429
 #, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr ""
+msgstr "%s: مفضلة"
 
 #: src/data/adapters/GamesAdapter.vala:454
 msgid "Merging games"
-msgstr ""
+msgstr "دمج الالعاب"
 
 #: src/data/adapters/GamesAdapter.vala:467
 #, c-format
 msgid "Merging games from %s"
-msgstr ""
+msgstr "دمج الالعاب من %s"
 
 #: src/data/adapters/GamesAdapter.vala:514
 #, c-format
 msgid "Loading games from %s"
-msgstr ""
+msgstr "تحميل الألعاب من %s"
 
 #: src/data/adapters/GamesAdapter.vala:621
 msgctxt "sort_mode"
 msgid "By name"
-msgstr ""
+msgstr "بالإسم"
 
 #: src/data/adapters/GamesAdapter.vala:622
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr ""
+msgstr "بالأحدث تشغيلا"
 
 #: src/data/adapters/GamesAdapter.vala:623
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr ""
+msgstr "بمدة اللعب"
 
 #: src/data/adapters/GamesAdapter.vala:648
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr ""
+msgstr "لا تجمع"
 
 #: src/data/adapters/GamesAdapter.vala:649
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "بالحالة"
 
 #: src/data/adapters/GamesAdapter.vala:650
 msgctxt "group_mode"
 msgid "By source"
-msgstr ""
+msgstr "بالمصدر"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr ""
+msgstr "سيتم قراءة المعرف من Steam"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
@@ -303,45 +309,47 @@ msgstr ""
 #: src/data/sources/humble/HumbleGame.vala:333
 #, c-format
 msgid "%s: no available installers"
-msgstr ""
+msgstr "%s: المثبت غير متوفر"
 
 #: src/data/sources/humble/HumbleGame.vala:334
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
+"لم يتم الحصول على رابط التحميل.\n"
+"تأكد من أن اشتراكك الشهري في Humble مفعل."
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr ""
+msgstr "ألعاب المستخدم"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "المفضلة"
 
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
 msgid "Not installed"
-msgstr ""
+msgstr "لم تثبت"
 
 #: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
-msgstr ""
+msgstr "مثبت"
 
 #: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "مخفي"
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit script"
-msgstr ""
+msgstr "عدل البرنامج النصي"
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit custom script"
-msgstr ""
+msgstr "عدل برنامج نصي مخصص"
 
 #: src/data/compat/Innoextract.vala:55
 #, c-format
@@ -357,7 +365,7 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
-msgstr ""
+msgstr "شغل"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
@@ -374,7 +382,7 @@ msgstr ""
 
 #: src/data/compat/Proton.vala:53
 msgid "Disable esync"
-msgstr ""
+msgstr "عطل esync"
 
 #: src/data/compat/Proton.vala:54
 msgid "Force LARGE_ADDRESS_AWARE flag"
@@ -382,11 +390,11 @@ msgstr ""
 
 #: src/data/compat/Proton.vala:55
 msgid "Disable DirectX 11 compatibility layer"
-msgstr ""
+msgstr "عطل طبقة توافق  DirectX 11"
 
 #: src/data/compat/Proton.vala:56
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr ""
+msgstr "استخدم WineD3D11 كطبقة توافق DirectX 11"
 
 #: src/data/compat/Proton.vala:57
 msgid "Show DXVK info overlay"
@@ -394,7 +402,7 @@ msgstr ""
 
 #: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
 msgid "Silent installation"
-msgstr ""
+msgstr "تثبيت صامت"
 
 #: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
@@ -406,7 +414,7 @@ msgstr ""
 
 #: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
 msgid "No GUI"
-msgstr ""
+msgstr "بدون واجهة"
 
 #: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
@@ -414,7 +422,7 @@ msgstr ""
 
 #: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
-msgstr ""
+msgstr "شغل اعدادات wine"
 
 #: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
@@ -429,8 +437,9 @@ msgid "Wine prefix"
 msgstr ""
 
 #: src/data/compat/Wine.vala:55
+#, fuzzy
 msgid "Environment variables"
-msgstr ""
+msgstr "متغيرات البيئة"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
@@ -442,58 +451,59 @@ msgstr ""
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
-msgstr ""
+msgstr "محاكي مخصص"
 
 #: src/data/compat/CustomEmulator.vala:48
 msgid "Emulator"
-msgstr ""
+msgstr "محاكي"
 
 #: src/data/compat/CustomEmulator.vala:49
 msgid "Launch in game directory"
-msgstr ""
+msgstr "شغل في دليل اللعبة"
 
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
-msgstr ""
+msgstr "إفتراضي"
 
 #: src/data/providers/images/SteamGridDB.vala:158
 #: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
-msgstr ""
+msgstr "استعد مفتاح API الافتراضي"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
 msgid "API key"
-msgstr ""
+msgstr "مفتاح API"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Generate key"
-msgstr ""
+msgstr "توليد مفتاح"
 
 #: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "نمط"
 
 #: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "التقييم"
 
 #: src/data/providers/images/SteamGridDB.vala:213
+#, fuzzy
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "المالك"
 
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "بديل"
 
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
@@ -509,12 +519,12 @@ msgstr ""
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "بدون شعار"
 
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr ""
+msgstr "شعار أبيض"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
@@ -528,17 +538,17 @@ msgstr ""
 #: src/ui/views/GamesView/GamesView.vala:270
 #: src/ui/views/GamesView/GamesView.vala:652
 msgid "Settings"
-msgstr ""
+msgstr "إعدادات"
 
 #: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr ""
+msgstr "الموقع الرسمي"
 
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr ""
+msgstr "عند توفر وصف للعبة إعرضه"
 
 #: src/data/providers/data/IGDB.vala:476
 msgctxt "igdb_preferred_description"
@@ -548,7 +558,7 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr ""
+msgstr "من IGDB"
 
 #: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
@@ -557,7 +567,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
-msgstr ""
+msgstr "بعض الاعدادات تحتاج لإعادة التشغيل لتطبيقها"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:71
 msgid "Games directory contains space. It may cause problems for some games"
@@ -565,39 +575,39 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
-msgstr ""
+msgstr "الواجهة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
-msgstr ""
+msgstr "المظهر"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
-msgstr ""
+msgstr "إعدادات الواجهة العامة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgid "Dark theme"
-msgstr ""
+msgstr "السمة الليلية"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr ""
+msgstr "مبني على السمة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
-msgstr ""
+msgstr "رمزي"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
-msgstr ""
+msgstr "ملون"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "سمة الايقونات"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 msgid "Game card"
@@ -605,7 +615,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
 msgid "Show platform icons"
-msgstr ""
+msgstr "إعرض أيقونات المنصة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
@@ -619,70 +629,70 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 msgid "Games list: installed"
-msgstr ""
+msgstr "قائمة الألعاب: المثبتت"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:140
 msgid "Games list: not installed"
-msgstr ""
+msgstr "قائمة الألعاب: غير المثبتت"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:142
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:146
 msgctxt "list_style"
 msgid "Show icon"
-msgstr ""
+msgstr "إعرض الايقونة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:143
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:147
 msgctxt "list_style"
 msgid "Bold title"
-msgstr ""
+msgstr "عنوان عريض"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:144
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
 msgctxt "list_style"
 msgid "Show status"
-msgstr ""
+msgstr "عرض الحالة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
-msgstr ""
+msgstr "معتم"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
 msgid "Grid options"
-msgstr ""
+msgstr "خيارات التخطيط"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
 msgid "List options"
-msgstr ""
+msgstr "خيارات القائمة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
-msgstr ""
+msgstr "السلوك"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
 msgid "Behavior settings"
-msgstr ""
+msgstr "خيارات السلوك"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:42
 msgid "Run games with double click"
-msgstr ""
+msgstr "شغل الألعاب عند النقر المزدوج"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:46
 msgid "Merge games from different sources"
-msgstr ""
+msgstr "دمج الألعاب من مصادر مختلفة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:50
 msgid "Use imported tags"
-msgstr ""
+msgstr "استخدم الوسوم المستوردة"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:51
 msgid "General"
-msgstr ""
+msgstr "عام"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:52
 msgid "Collection"
-msgstr ""
+msgstr "التجميعة"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
 msgid "Empty"
@@ -691,18 +701,18 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
 msgid "Collection directory"
-msgstr ""
+msgstr "دليل المجموعة"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:70
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:87
 msgid "Game directory"
-msgstr ""
+msgstr "دليل اللعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Installers"
-msgstr ""
+msgstr "المثبتات"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:99
@@ -720,21 +730,21 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
-msgstr ""
+msgstr "اسم اللعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 #: src/ui/views/GamesView/FiltersPopover.vala:127
 msgid "Platform"
-msgstr ""
+msgstr "المنصة"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
 msgid "Controller"
-msgstr ""
+msgstr "يد التحكم"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
 msgid "Enabled"
-msgstr ""
+msgstr "مفعل"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
 msgid "Focus GameHub window with Guide button"
@@ -742,15 +752,15 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
-msgstr ""
+msgstr "أيدي التحكم"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
-msgstr ""
+msgstr "أنقل التحديد"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 msgid "Exit"
-msgstr ""
+msgstr "غادر"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:40
@@ -760,44 +770,44 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
 msgid "Disabled"
-msgstr ""
+msgstr "مٌعطل"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
-msgstr ""
+msgstr "مصادر اللعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Steam API keys have limited number of uses per day"
-msgstr ""
+msgstr "مرات استخدام مفتاح Steam API محدودة باليوم"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
 msgid "Installation directory"
-msgstr ""
+msgstr "دليل التثبيت"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
-msgstr ""
+msgstr "لم يثبت"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
 msgid "Not authenticated"
-msgstr ""
+msgstr "بدون توثيق"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr ""
+msgstr "موثق ک <b>%s</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
 msgid "Authenticated"
-msgstr ""
+msgstr "موثق"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
 #: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
@@ -805,30 +815,30 @@ msgstr ""
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
 msgid "Install"
-msgstr ""
+msgstr "ثبت"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:236
 msgid "Steam API key"
-msgstr ""
+msgstr "مفتاح Steam API"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
 msgid "Games directory"
-msgstr ""
+msgstr "دليل الالعاب"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:59
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:63
 msgid "Logout"
-msgstr ""
+msgstr "خروج"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:50
 msgid "Load games from Humble Trove"
-msgstr ""
+msgstr "حمل الالعاب من Humble Trove"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:45
 msgid "Emulators"
-msgstr ""
+msgstr "المحاكيات"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 msgid "Libretro core directory"
@@ -844,7 +854,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
-msgstr ""
+msgstr "تجاهل ملحق ملف اللعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
@@ -879,7 +889,7 @@ msgstr[5] ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
-msgstr ""
+msgstr "احفظ"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:250
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
@@ -891,21 +901,21 @@ msgstr ""
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
 msgid "Executable"
-msgstr ""
+msgstr "الملف التنفيذي"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
 #: src/ui/views/GamesView/AddGamePopover.vala:68
 #: src/ui/views/GamesView/AddGamePopover.vala:143
 msgid "Installer"
-msgstr ""
+msgstr "مثبت"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
 #: src/ui/dialogs/GamePropertiesDialog.vala:64
 #: src/ui/dialogs/GamePropertiesDialog.vala:69
 #: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
-msgstr ""
+msgstr "الاسم"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
 #: src/ui/dialogs/GamePropertiesDialog.vala:191
@@ -915,11 +925,11 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:276
 msgid "Variables"
-msgstr ""
+msgstr "المتغيرات"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:277
 msgid "Game executable"
-msgstr ""
+msgstr "الملف التنفيذي للعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
 msgid "Game arguments"
@@ -928,17 +938,18 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
+#, fuzzy
 msgid "Directory"
-msgstr ""
+msgstr "الدليل"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 msgid "Select emulator directory"
-msgstr ""
+msgstr "حدد دليل المحاكي"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
 #: src/ui/dialogs/GamePropertiesDialog.vala:209
 msgid "Force compatibility mode"
-msgstr ""
+msgstr "افرض وضع التوافق"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:307
 msgid "Game file patterns"
