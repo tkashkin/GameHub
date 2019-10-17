@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-10-16 13:53+0000\n"
+"PO-Revision-Date: 2019-10-18 07:53+0000\n"
 "Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gamehub/"
 "translations/ar/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 3.9\n"
+"X-Generator: Weblate 3.9.1-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -184,12 +184,12 @@ msgstr ""
 #: src/data/Runnable.vala:850
 msgctxt "platform"
 msgid "Emulated"
-msgstr ""
+msgstr "مُحاكى"
 
 #: src/data/Game.vala:547
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "يشتغل"
 
 #: src/data/Game.vala:550
 msgctxt "status"
@@ -305,6 +305,8 @@ msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
+"لم يُعثر على ملف اعدادات ستيم.\n"
+"سجل دخولك في عميل ستيم ثم عد الى GameHub"
 
 #: src/data/sources/humble/HumbleGame.vala:333
 #, c-format
@@ -406,7 +408,7 @@ msgstr "تثبيت صامت"
 
 #: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
-msgstr ""
+msgstr "تثبيت اكثر صمتاَ"
 
 #: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
@@ -430,7 +432,7 @@ msgstr ""
 
 #: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
-msgstr ""
+msgstr "شغل مدير المهام"
 
 #: src/data/compat/Wine.vala:53
 msgid "Wine prefix"
@@ -553,7 +555,7 @@ msgstr "عند توفر وصف للعبة إعرضه"
 #: src/data/providers/data/IGDB.vala:476
 msgctxt "igdb_preferred_description"
 msgid "of game"
-msgstr ""
+msgstr "للعبة"
 
 #: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
@@ -611,7 +613,7 @@ msgstr "سمة الايقونات"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 msgid "Game card"
-msgstr ""
+msgstr "بطاقة اللعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
 msgid "Show platform icons"
@@ -620,7 +622,7 @@ msgstr "إعرض أيقونات المنصة"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
 msgid "Card size"
-msgstr ""
+msgstr "حجم البطاقة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
 msgctxt "grid_size_preset"
@@ -726,7 +728,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
-msgstr ""
+msgstr "سياق المتغير: <b>$var</b> أو <b>${var}</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
@@ -874,7 +876,7 @@ msgstr[5] ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:168
 msgid "No custom emulators"
-msgstr ""
+msgstr "بدون محاكي مخصص"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:164
 #, c-format
@@ -957,11 +959,11 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:315
 msgid "Image"
-msgstr ""
+msgstr "صورة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:318
 msgid "Icon"
-msgstr ""
+msgstr "أيقونة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:325
 msgid ""
@@ -975,70 +977,70 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
-msgstr ""
+msgstr "البيانات"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:39
 msgid "Providers"
-msgstr ""
+msgstr "الناشر"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:40
 msgid "Third-party data providers"
-msgstr ""
+msgstr "ناشر بيانات الطرف الثالث"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
 msgid "Image providers"
-msgstr ""
+msgstr "موفر الصورة"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
 msgid "Metadata providers"
-msgstr ""
+msgstr "موفِر البيانات الوصفية"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
-msgstr ""
+msgstr "افتح الموقع"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:36
 msgid "About"
-msgstr ""
+msgstr "حول"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
 msgid "Copy application version and environment info"
-msgstr ""
+msgstr "انسخ اصدار التطبيق ومعلومات البيئة"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:78
 #: src/ui/views/WelcomeView.vala:57
 msgid "All your games in one place"
-msgstr ""
+msgstr "كل ألعابك في مكان واحد"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:92
 msgctxt "about_link"
 msgid "Website"
-msgstr ""
+msgstr "الموقع"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:96
 msgctxt "about_link"
 msgid "Source code on GitHub"
-msgstr ""
+msgstr "الكود المصدري على GitHub"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:103
 msgctxt "about_link"
 msgid "Report a problem"
-msgstr ""
+msgstr "أبلغ عن مشكلة"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:104
 msgctxt "about_link"
 msgid "Suggest translations"
-msgstr ""
+msgstr "اقترح ترجمة"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:110
 msgctxt "about_link"
 msgid "Issues"
-msgstr ""
+msgstr "علل"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:111
 msgctxt "about_link"
 msgid "Contributors"
-msgstr ""
+msgstr "المساهمون"
 
 #. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:114
@@ -1054,44 +1056,44 @@ msgstr ""
 #: src/ui/dialogs/InstallDialog.vala:112
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
-msgstr ""
+msgstr "استورد"
 
 #: src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 msgid "Download"
-msgstr ""
+msgstr "حمل"
 
 #: src/ui/dialogs/InstallDialog.vala:210
 msgid "Select installer"
-msgstr ""
+msgstr "اختر مثبت"
 
 #: src/ui/dialogs/InstallDialog.vala:219
 #, c-format
 msgid "Installer size: %s"
-msgstr ""
+msgstr "حجم التثبيت: %s"
 
 #: src/ui/dialogs/InstallDialog.vala:329
 msgid "Unknown"
-msgstr ""
+msgstr "مجهول"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:49
 #, c-format
 msgid "%s: Properties"
-msgstr ""
+msgstr "%s: خصائص"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:84
 msgid "Images"
-msgstr ""
+msgstr "صور"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:126
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
 #: src/ui/views/GameDetailsView/blocks/Artwork.vala:62
 msgid "Download images"
-msgstr ""
+msgstr "حمِل الصور"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:144
 msgid "Image URL"
-msgstr ""
+msgstr "رابط الصورة"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Vertical image URL"
@@ -1099,11 +1101,11 @@ msgstr ""
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
-msgstr ""
+msgstr "رابط الأيقونة"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:204
 msgid "Compatibility"
-msgstr ""
+msgstr "التوافق"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:226
 msgid "Launch from terminal"
@@ -1111,15 +1113,15 @@ msgstr ""
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:242
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "انسخ الى الحافظة"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:244
 msgid "Add to Steam"
-msgstr ""
+msgstr "أضف الى ستيم"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:245
 msgid "Add to the Steam library"
-msgstr ""
+msgstr "أضف الى مكتبة ستيم"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:53
 #, c-format
@@ -1152,7 +1154,7 @@ msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
-msgstr ""
+msgstr "أضف"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
 msgid "Enable overlays"
@@ -1177,7 +1179,7 @@ msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
-msgstr ""
+msgstr "افتح الدليل"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
 msgid "Remove overlay"
