@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-10-18 07:53+0000\n"
+"PO-Revision-Date: 2019-10-19 08:53+0000\n"
 "Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gamehub/"
 "translations/ar/>\n"
@@ -360,6 +360,8 @@ msgid ""
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
+"Innoextract <b>%1$s</b> غير مدعوم وقد لا يتمكن من استخراج اللعبة بشكل صحيح\n"
+"قم بتثبيت النسخة <b>%2$s</b> أو احدث"
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
@@ -428,7 +430,7 @@ msgstr "شغل اعدادات wine"
 
 #: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
-msgstr ""
+msgstr "شَغِّل winetricks"
 
 #: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
@@ -445,7 +447,7 @@ msgstr "متغيرات البيئة"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr ""
+msgstr "خيارات InnoSetup الافتراضية"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
