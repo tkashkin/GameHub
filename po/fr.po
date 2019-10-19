@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-10-13 16:52+0000\n"
+"PO-Revision-Date: 2019-10-20 10:53+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 3.9.1-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -760,7 +760,7 @@ msgstr "Activé"
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
 #, fuzzy
 msgid "Focus GameHub window with Guide button"
-msgstr "Mettre la fenêtre de GameHub au premier plan avec le bouton Guide"
+msgstr "Afficher la fenêtre de GameHub au premier plan avec le bouton Guide"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
