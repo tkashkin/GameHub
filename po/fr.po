@@ -5,13 +5,14 @@
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 # Swann Martinet <swann.ranskassa@laposte.net>, 2019.
 # Nathan <bonnemainsnathan@gmail.com>, 2019.
+# Éfrit <Efrit@posteo.net>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-10-20 10:53+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2019-10-22 22:53+0000\n"
+"Last-Translator: Éfrit <Efrit@posteo.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -320,7 +321,7 @@ msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
-"Impossible d'obtenir l'URL de téléchargement de Trove\n"
+"Impossible d’obtenir le lien de téléchargement de Trove.\n"
 "Veuillez vérifier que votre abonnement à Humble Monthly est actif."
 
 #: src/data/sources/user/User.vala:30
