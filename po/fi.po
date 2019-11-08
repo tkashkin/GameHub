@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-11-08 07:45+0000\n"
+"PO-Revision-Date: 2019-11-09 16:04+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
 "translations/fi/>\n"
@@ -84,7 +84,7 @@ msgstr ""
 
 #: src/app.vala:113
 msgid "Log download manager"
-msgstr "Lokien latausten hallinta"
+msgstr "Lokita latausten hallinta"
 
 #: src/app.vala:114
 msgid "Log background workers start/stop"
@@ -238,7 +238,7 @@ msgstr "Ei asennettu"
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr "%s peliä"
+msgstr "%s pelejä"
 
 #: src/data/adapters/GamesAdapter.vala:424
 msgctxt "status_header"
@@ -369,7 +369,7 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
-msgstr "Aja"
+msgstr "Käynnistä"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
@@ -422,7 +422,7 @@ msgstr "Ei GUI:ta"
 
 #: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
-msgstr "Avaa prefiksin hakemisto"
+msgstr "Avaa prefix hakemisto"
 
 #: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
@@ -614,7 +614,7 @@ msgstr "Värillinen"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr "Kuvake tyylinen"
+msgstr "Kuvakkeiden tyyli"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 msgid "Game card"
@@ -622,7 +622,7 @@ msgstr "Pelikortti tyylinen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
 msgid "Show platform icons"
-msgstr "Näytä alustojen kuvakkeet"
+msgstr "Näytä käyttöjärjestelmien kuvakkeet"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
@@ -652,7 +652,7 @@ msgstr "Näytä kuvakkeet"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:147
 msgctxt "list_style"
 msgid "Bold title"
-msgstr "Lihavoi otsikko"
+msgstr "Lihavoi pelin nimi"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:144
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
@@ -729,7 +729,7 @@ msgstr "DLC"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:132
 msgid "Bonus content"
-msgstr "Bonussisältö"
+msgstr "Bonus-sisältö"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
@@ -822,7 +822,7 @@ msgstr "Todennettu"
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
 msgid "Install"
-msgstr "Asentaa"
+msgstr "Asenna"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:236
 msgid "Steam API key"
@@ -857,11 +857,11 @@ msgstr "Libretro core info hakemisto"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
-msgstr "Sivuutettu libretro coreja"
+msgstr "Sivuuta libretro ytimiä"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
-msgstr "Ohitettu pelilaajennoksia"
+msgstr "Ohita pelilaajennokset"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
@@ -920,7 +920,7 @@ msgstr "Nimi"
 #: src/ui/dialogs/GamePropertiesDialog.vala:191
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
-msgstr "Argumentit"
+msgstr "Käynnistysasetukset"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:276
 msgid "Variables"
@@ -932,7 +932,7 @@ msgstr "Pelin suoritettava tiedosto"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
 msgid "Game arguments"
-msgstr "Peliargumentit"
+msgstr "Pelin käynnistys asetukset"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
@@ -970,10 +970,11 @@ msgid ""
 "<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
 "name (without extension)"
 msgstr ""
-"<b>findutils</b>-yhteensopivat globaalit kuviot\n"
+"<b>findutils</b>-yhteensopivat polut\n"
 "\n"
-"<b>•</b> Useita kuvioita voidaan erottaa <b>|</b>\n"
-"<b>•</b> Aloita kuvio näppäimellä<b>./</b>vastaamaan suhteellista polkua\n"
+"<b>•</b> Useita tiedostopäätteitä voidaan erottaa <b>|</b>-merkillä\n"
+"<b>•</b> Aloita tiedostopääte merkillä<b>./</b>vastaamaan suhteellista "
+"polkua\n"
 "<b>•</b> $<b>basename</b>muuttuja korvataan pelin suoritettavalla nimellä ("
 "ilman laajennusta)"
 
@@ -1427,7 +1428,7 @@ msgstr "Piilotettu"
 #: src/ui/views/GamesView/GameContextMenu.vala:133
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:236
 msgid "Open installation directory"
-msgstr "Avaa asennushakemisto"
+msgstr "Avaa asennus hakemisto"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
@@ -1437,12 +1438,12 @@ msgstr "Avaa asennusohjelmien kokoelmahakemisto"
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
 msgid "Open bonus collection directory"
-msgstr "Avaa bonuskeräyshakemisto"
+msgstr "Avaa bonus-sisällön kansio"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:239
 msgid "Open screenshots directory"
-msgstr "Avaa kuvakaappaushakemisto"
+msgstr "Avaa kuvakaappaus hakemisto"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:167
