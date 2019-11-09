@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-11-09 16:04+0000\n"
+"PO-Revision-Date: 2019-11-10 22:04+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
 "translations/fi/>\n"
@@ -238,7 +238,7 @@ msgstr "Ei asennettu"
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr "%s pelejä"
+msgstr "%s peliä"
 
 #: src/data/adapters/GamesAdapter.vala:424
 msgctxt "status_header"
@@ -708,7 +708,7 @@ msgstr "Tyhjä"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
 msgid "Collection directory"
-msgstr "Kokoelman hakemisto"
+msgstr "Peli kokoelman hakemisto"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:70
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
