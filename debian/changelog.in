@@ -1,3 +1,234 @@
+com.github.tkashkin.gamehub (0.14.2-51-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Merge pull request #312 from Lucki/patch-1 [6075c9f]
+  * Allow enabling d9vk [86b7d57]
+
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Fri, 15 Nov 2019 21:48:18 +0300
+
+com.github.tkashkin.gamehub (0.14.2-50-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Turkish) [006ff9f]
+
+ -- Oğuz Ersen <oguzersen@protonmail.com>  Wed, 13 Nov 2019 17:53:16 +0000
+
+com.github.tkashkin.gamehub (0.14.2-49-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Turkish) [4d0a243]
+
+ -- Oğuz Ersen <oguzersen@protonmail.com>  Mon, 11 Nov 2019 19:07:16 +0000
+
+com.github.tkashkin.gamehub (0.14.2-48-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Finnish) [4236830]
+  * Translated using Weblate (Finnish) [8ae0e75]
+  * Translated using Weblate (Catalan) [79c06dc]
+
+ -- Tuomas Lähteenmäki <lahtis@gmail.com>  Sat, 9 Nov 2019 21:43:37 +0000
+
+com.github.tkashkin.gamehub (0.14.2-46-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Catalan) [7427529]
+
+ -- Marc Riera <marc.riera.irigoyen@gmail.com>  Wed, 6 Nov 2019 23:28:04 +0000
+
+com.github.tkashkin.gamehub (0.14.2-45-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Finnish) [b20005b]
+
+ -- Tuomas Lähteenmäki <lahtis@gmail.com>  Thu, 7 Nov 2019 02:44:04 +0000
+
+com.github.tkashkin.gamehub (0.14.2-44-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Added translation using Weblate (Finnish) [51f4546]
+
+ -- Tuomas Lähteenmäki <lahtis@gmail.com>  Thu, 7 Nov 2019 02:43:02 +0000
+
+com.github.tkashkin.gamehub (0.14.2-43-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Added translation using Weblate (Catalan) [68f69e9]
+
+ -- Marc Riera <marc.riera.irigoyen@gmail.com>  Wed, 6 Nov 2019 19:18:42 +0000
+
+com.github.tkashkin.gamehub (0.14.2-42-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (French) [cf641ac]
+
+ -- Éfrit <Efrit@posteo.net>  Mon, 21 Oct 2019 22:23:29 +0000
+
+com.github.tkashkin.gamehub (0.14.2-41-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (French) [184c6e7]
+
+ -- Nathan <bonnemainsnathan@gmail.com>  Sat, 19 Oct 2019 10:30:13 +0000
+
+com.github.tkashkin.gamehub (0.14.2-40-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Arabic) [f3ea1ed]
+
+ -- abidin toumi <abidin24@disroot.org>  Fri, 18 Oct 2019 08:46:39 +0000
+
+com.github.tkashkin.gamehub (0.14.2-39-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Arabic) [e851f70]
+
+ -- abidin toumi <abidin24@disroot.org>  Thu, 17 Oct 2019 06:52:42 +0000
+
+com.github.tkashkin.gamehub (0.14.2-38-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Arabic) [79598e1]
+
+ -- abidin toumi <abidin24@disroot.org>  Mon, 14 Oct 2019 10:59:54 +0000
+
+com.github.tkashkin.gamehub (0.14.2-37-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (French) [2c90003]
+
+ -- Nathan <bonnemainsnathan@gmail.com>  Sat, 12 Oct 2019 16:37:46 +0000
+
+com.github.tkashkin.gamehub (0.14.2-36-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (French) [8f7f70c]
+
+ -- Nathan <bonnemainsnathan@gmail.com>  Fri, 11 Oct 2019 07:20:26 +0000
+
+com.github.tkashkin.gamehub (0.14.2-35-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Indonesian) [a3a2e89]
+
+ -- ekickx <mujahidmasadepan@gmail.com>  Wed, 9 Oct 2019 21:39:16 +0000
+
+com.github.tkashkin.gamehub (0.14.2-34-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [4693bf5]
+  * Translated using Weblate (Dutch) [6057099]
+
+ -- Allan Nordhøy <epost@anotheragency.no>  Thu, 3 Oct 2019 02:43:08 +0000
+
+com.github.tkashkin.gamehub (0.14.2-33-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Added translation using Weblate (Korean) [07f10c6]
+
+ -- ParkSeongSoo <syvf64@naver.com>  Thu, 3 Oct 2019 11:08:26 +0000
+
+com.github.tkashkin.gamehub (0.14.2-32-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Performance and memory usage improvements (#57) SteamGridDB image sizes support Added menu when IGDB returns multiple results [30b9b5e]
+  * Image cache changes Vertical game images support [a785155]
+  * Translated using Weblate (German) [833d510]
+
+ -- tkashkin <tkashkin@gmail.com>  Thu, 3 Oct 2019 00:54:29 +0300
+
+com.github.tkashkin.gamehub (0.14.2-29-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Portuguese (Portugal)) [2a7ac4c]
+
+ -- Manuela Silva <mmsrs@sky.com>  Fri, 6 Sep 2019 10:34:38 +0000
+
+com.github.tkashkin.gamehub (0.14.2-28-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Added translation using Weblate (Portuguese (Portugal)) [a5403de]
+  * [ci skip] Fix ellipsis in string (#301) [905f530]
+
+ -- Manuela Silva <mmsrs@sky.com>  Fri, 6 Sep 2019 10:34:09 +0000
+
+com.github.tkashkin.gamehub (0.14.2-27-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (French) [f02b1a6]
+  * Translated using Weblate (German) [a7d2474]
+  * [ci skip] Update translations [654105c]
+
+ -- Swann Martinet <swann.ranskassa@laposte.net>  Tue, 3 Sep 2019 03:37:33 +0000
+
+com.github.tkashkin.gamehub (0.14.2-25-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Added translation using Weblate (Arabic) [1a969ce]
+
+ -- Omar Aglan <omar.aglan91@yahoo.com>  Mon, 2 Sep 2019 01:18:30 +0000
+
+com.github.tkashkin.gamehub (0.14.2-23-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Prevent multiple game launches (#280, #281) [fcb80e5]
+
+ -- tkashkin <tkashkin@gmail.com>  Sat, 31 Aug 2019 20:20:47 +0300
+
+com.github.tkashkin.gamehub (0.14.2-21-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Norwegian Bokmål) [404b8bb]
+
+ -- Allan Nordhøy <epost@anotheragency.no>  Wed, 28 Aug 2019 16:50:24 +0000
+
+com.github.tkashkin.gamehub (0.14.2-19-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Dutch) [3821042]
+  * Translated using Weblate (Portuguese (Brazil)) [27c29ff]
+
+ -- Heimen Stoffels <vistausss@outlook.com>  Wed, 21 Aug 2019 14:39:18 +0000
+
+com.github.tkashkin.gamehub (0.14.2-18-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Games grid size customization [8a89a89]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 21 Aug 2019 11:08:38 +0300
+
+com.github.tkashkin.gamehub (0.14.2-17-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Steam-like game launch command overrides (#297) Improved GOG API error handling Small UI tweaks [075168a]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 21 Aug 2019 05:55:45 +0300
+
+com.github.tkashkin.gamehub (0.14.2-16-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Refresh GOG access token on error (#294) [dfab162]
+
+ -- tkashkin <tkashkin@gmail.com>  Tue, 13 Aug 2019 04:44:20 +0300
+
+com.github.tkashkin.gamehub (0.14.2-15-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Telugu) [8e019ba]
+
+ -- asher hrudai <asherhu@protonmail.com>  Sat, 10 Aug 2019 07:24:18 +0000
+
+com.github.tkashkin.gamehub (0.14.2-14-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Added translation using Weblate (Telugu) [5d97064]
+
+ -- asher hrudai <asherhu@protonmail.com>  Sat, 10 Aug 2019 07:21:39 +0000
+
+com.github.tkashkin.gamehub (0.14.2-13-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Added translation using Weblate (Hindi) [f804511]
+
+ -- asher hrudai <asherhu@protonmail.com>  Sat, 10 Aug 2019 07:18:28 +0000
+
+com.github.tkashkin.gamehub (0.14.2-12-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Fix `Game.get_file()` (#291) [eecf1db]
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 4 Aug 2019 13:53:49 +0300
+
+com.github.tkashkin.gamehub (0.14.2-11-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Persian) [9b67620]
+
+ -- Goudarz Jafari <goudarz.jafari@gmail.com>  Fri, 2 Aug 2019 19:39:28 +0000
+
+com.github.tkashkin.gamehub (0.14.2-10-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Fix overlays detection (#291) [6498058]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 2 Aug 2019 23:14:11 +0300
+
+com.github.tkashkin.gamehub (0.14.2-9-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Add type checks in `Proton.find_proton_versions` (#292, #101) [9b022f2]
+  * Translated using Weblate (Persian) [d1df472]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 2 Aug 2019 17:04:44 +0300
+
+com.github.tkashkin.gamehub (0.14.2-7-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Added translation using Weblate (Persian) [62adec9]
+  * [ci skip] Update `scripts/build.sh` [97b2775]
+
+ -- Goudarz Jafari <goudarz.jafari@gmail.com>  Fri, 2 Aug 2019 08:16:37 +0000
+
+com.github.tkashkin.gamehub (0.14.2-6-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Parse `appinfo.vdf` to find Proton versions (#292, #101) [788bb28]
+
+ -- tkashkin <tkashkin@gmail.com>  Wed, 31 Jul 2019 13:58:40 +0300
+
+com.github.tkashkin.gamehub (0.14.2-5-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Add `/opt/` and `/var/opt/` to FSOverlay allowed paths list (#290) Wait for overlays to mount before updating game status (#291) [f28cc89]
+  * [ci skip] Update mirrors [4bb1b7f]
+  * [ci skip] Update source code mirrors [a1fb490]
+
+ -- tkashkin <tkashkin@gmail.com>  Mon, 29 Jul 2019 19:58:36 +0300
+
+com.github.tkashkin.gamehub (0.14.2-4-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Merge branch 'dev' of https://hosted.weblate.org/git/gamehub/translations into dev [9548658]
+  * Translated using Weblate (Portuguese (Brazil)) [0ae8e38]
+  * Fix sort func in `GameTagsList` Improved portability: GameHub now can be built on Windows in MSYS2 environment (doesn't work yet) [acfec61]
+
+ -- tkashkin <tkashkin@gmail.com>  Sun, 28 Jul 2019 14:42:12 +0300
+
+com.github.tkashkin.gamehub (0.14.2-3-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Fix build with older `glib` and/or without `libmanette` [42aac9c]
+
+ -- tkashkin <tkashkin@gmail.com>  Fri, 26 Jul 2019 06:44:55 +0300
+
+com.github.tkashkin.gamehub (0.14.2-2-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * Translated using Weblate (Portuguese (Brazil)) [3eda1c3]
+
+ -- Wilker Santana da Silva <wilker@tutamail.com>  Mon, 22 Jul 2019 04:52:43 +0000
+
+com.github.tkashkin.gamehub (0.14.2-1-master~$VERSION_SUFFIX) $DISTRO; urgency=low
+  * [ci skip] Bump version [be55ac0]
+
+ -- tkashkin <tkashkin@gmail.com>  Sat, 13 Jul 2019 21:26:50 +0300
+
 com.github.tkashkin.gamehub (0.14.1-25-dev~$VERSION_SUFFIX) $DISTRO; urgency=low
   * Translated using Weblate (Norwegian Bokmål) [526c6f8]
   * Translated using Weblate (Dutch) [ad827dc]
