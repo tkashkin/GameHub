@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-11-10 22:04+0000\n"
+"PO-Revision-Date: 2019-11-17 07:04+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
 "translations/fi/>\n"
@@ -1317,7 +1317,7 @@ msgstr "Takaisin"
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u peli"
-msgstr[1] "%u pelejä"
+msgstr[1] "%u peliä"
 
 #: src/ui/views/GamesView/GamesView.vala:586
 msgid "No user-added games"
@@ -1330,7 +1330,7 @@ msgstr "Lisää joitain pelejä plus-painikkeella"
 #: src/ui/views/GamesView/GamesView.vala:591
 #, c-format
 msgid "No %s games"
-msgstr "Ei %s pelejä"
+msgstr "Ei %s peliä"
 
 #: src/ui/views/GamesView/GamesView.vala:592
 msgid "Get some Linux-compatible games"
@@ -1339,12 +1339,12 @@ msgstr "Hanki joitain Linux-yhteensopivia pelejä"
 #: src/ui/views/GamesView/GamesView.vala:602
 #, c-format
 msgid "No games matching “%s”"
-msgstr "Ei vastaavia pelejä “%s”"
+msgstr "Ei pelejä, jotka vastaavat“%s”"
 
 #: src/ui/views/GamesView/GamesView.vala:607
 #, c-format
 msgid "No %1$s games matching “%2$s”"
-msgstr "Ei %1$s pelejä, jotka vastaavat “%2$s”"
+msgstr "Ei %1$s peliä, jotka vastaavat “%2$s”"
 
 #: src/ui/views/GamesView/GamesView.vala:650
 msgid ""
