@@ -1749,21 +1749,20 @@ msgid "Custom"
 msgstr "Personalizzato"
 
 #~ msgid "Disable fullscreen"
-#~ msgstr "Désactiver le plein écran"
+#~ msgstr "Disattiva fullscreen"
 
 #~ msgid "Windowed"
-#~ msgstr "Fenêtré"
+#~ msgstr "In finestra"
 
 #~ msgid "Compact list"
-#~ msgstr "Liste compacte"
+#~ msgstr "Lista compatta"
 
 #~ msgid "Show non-native games"
-#~ msgstr "Afficher les jeux non natifs"
+#~ msgstr "Mostra giochi non nativi"
 
 #~ msgid "Use compatibility layers and consider Windows games compatible"
 #~ msgstr ""
-#~ "Utilisez les couches de compatibilité et considérez les jeux Windows "
-#~ "compatibles"
+#~ "Usa livello di compatibilità e considera i giochi Windows come compatibili "
 
 #~ msgid "Use symbolic icons instead of colored icons"
-#~ msgstr "Utilisez les icônes symboliques au lieu des icônes de couleur"
+#~ msgstr "Usa icone simboliche anzichè le colorate"
