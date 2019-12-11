@@ -25,12 +25,14 @@ namespace GameHub.Data.Providers
 	{
 		public override string icon { get { return "image-x-generic"; } }
 
-		public abstract async Result images(Game game);
+		public abstract async ArrayList<Result> images(Game game);
 
 		public class Result: Object
 		{
-			public ArrayList<Image>? images { get; set; default = null; }
+			public string?           name   { get; set; default = null; }
 			public string?           url    { get; set; default = null; }
+			public ArrayList<Image>? images { get; set; default = null; }
+			public ImageSize         image_size { get; set; default = ImageSize(460, 215); }
 		}
 
 		public class Image: Object
@@ -41,6 +43,18 @@ namespace GameHub.Data.Providers
 			public Image(string url, string? description=null)
 			{
 				Object(url: url, description: description);
+			}
+		}
+
+		public struct ImageSize
+		{
+			public int width;
+			public int height;
+
+			public ImageSize(int w, int h)
+			{
+				width = w;
+				height = h;
 			}
 		}
 	}

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-02 22:06+0300\n"
-"PO-Revision-Date: 2019-08-22 15:24+0000\n"
+"POT-Creation-Date: 2019-10-03 00:49+0300\n"
+"PO-Revision-Date: 2019-10-04 11:56+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -117,12 +117,12 @@ msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
 msgstr "Kies uitvoerbaar bestand"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:389
+#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:392
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -153,18 +153,18 @@ msgstr "%s: kapot installatiebestand"
 msgid "Checksum mismatch in %s"
 msgstr "Controlesom komt niet overeen voor %s"
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "Bestand tonen"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "Back-up"
 
@@ -187,52 +187,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Geëmuleerd"
 
-#: src/data/Game.vala:546
+#: src/data/Game.vala:547
 msgctxt "status"
 msgid "Running"
 msgstr "Actief"
 
-#: src/data/Game.vala:549
+#: src/data/Game.vala:550
 msgctxt "status"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:550
+#: src/data/Game.vala:551
 msgctxt "status"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:551
+#: src/data/Game.vala:552
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Bezig met verifiëren van integriteit"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:553
 msgctxt "status"
 msgid "Download started"
 msgstr "Downloaden gestart"
 
-#: src/data/Game.vala:554
+#: src/data/Game.vala:555
 msgctxt "status"
 msgid "Not installed"
 msgstr "Niet-geïnstalleerd"
 
-#: src/data/Game.vala:564
+#: src/data/Game.vala:565
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:565
+#: src/data/Game.vala:566
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:567
+#: src/data/Game.vala:568
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Bezig met downloaden"
 
-#: src/data/Game.vala:569
+#: src/data/Game.vala:570
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
@@ -309,12 +309,12 @@ msgstr ""
 "Steam-configuratiebestand niet aangetroffen.\n"
 "Log in op je account in de Steam-client en keer terug naar GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:332
+#: src/data/sources/humble/HumbleGame.vala:333
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: geen installatiebestanden beschikbaar"
 
-#: src/data/sources/humble/HumbleGame.vala:333
+#: src/data/sources/humble/HumbleGame.vala:334
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -367,7 +367,7 @@ msgstr ""
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
-#: src/ui/dialogs/CompatRunDialog.vala:101
+#: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
@@ -466,66 +466,71 @@ msgstr "Emulator"
 msgid "Launch in game directory"
 msgstr "Uitvoeren in spelmap"
 
-#: src/data/providers/images/SteamGridDB.vala:108
-#: src/data/providers/data/IGDB.vala:424
+#: src/data/providers/images/SteamGridDB.vala:151
+#: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
 msgstr "Standaard"
 
-#: src/data/providers/images/SteamGridDB.vala:115
-#: src/data/providers/data/IGDB.vala:431
+#: src/data/providers/images/SteamGridDB.vala:158
+#: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
 msgstr "Standaard API-sleutel herstellen"
 
-#: src/data/providers/images/SteamGridDB.vala:126
-#: src/data/providers/data/IGDB.vala:442
+#: src/data/providers/images/SteamGridDB.vala:169
+#: src/data/providers/data/IGDB.vala:449
 msgid "API key"
 msgstr "API-sleutel"
 
-#: src/data/providers/images/SteamGridDB.vala:134
-#: src/data/providers/data/IGDB.vala:450
+#: src/data/providers/images/SteamGridDB.vala:177
+#: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Generate key"
 msgstr "Sleutel genereren"
 
-#: src/data/providers/images/SteamGridDB.vala:165
+#: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
 msgstr "Stijl"
 
-#: src/data/providers/images/SteamGridDB.vala:166
+#: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
 msgstr "Score"
 
-#: src/data/providers/images/SteamGridDB.vala:170
+#: src/data/providers/images/SteamGridDB.vala:213
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
 msgstr "Maker"
 
-#: src/data/providers/images/SteamGridDB.vala:182
+#: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
 msgstr "Alternatief"
 
-#: src/data/providers/images/SteamGridDB.vala:183
+#: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
 msgstr "Vervaagd"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-#: src/data/providers/images/SteamGridDB.vala:185
+#: src/data/providers/images/SteamGridDB.vala:228
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
 msgstr "Material"
 
-#: src/data/providers/images/SteamGridDB.vala:186
+#: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
 msgstr "Zonder logo"
 
-#: src/data/providers/data/IGDB.vala:140
+#: src/data/providers/images/SteamGridDB.vala:230
+msgctxt "imagesource_steamgriddb_image_style"
+msgid "White logo"
+msgstr "Wit logo"
+
+#: src/data/providers/data/IGDB.vala:147
 msgid ""
 "Monthly IGDB request quota has been reached. Set your own API key to use "
 "IGDB data or disable IGDB."
@@ -533,35 +538,35 @@ msgstr ""
 "Het maandelijkse IGDB-verzoekquotum is overschreden. Stel je eigen API-"
 "sleutel in of schakel IGDB uit."
 
-#: src/data/providers/data/IGDB.vala:141
+#: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:267
-#: src/ui/views/GamesView/GamesView.vala:647
+#: src/ui/views/GamesView/GamesView.vala:270
+#: src/ui/views/GamesView/GamesView.vala:652
 msgid "Settings"
 msgstr "Instellingen"
 
-#: src/data/providers/data/IGDB.vala:349
+#: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
 msgstr "Officiële website"
 
-#: src/data/providers/data/IGDB.vala:462
+#: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
 msgstr "Spelomschrijving tonen (inden beschikbaar)"
 
-#: src/data/providers/data/IGDB.vala:469
+#: src/data/providers/data/IGDB.vala:476
 msgctxt "igdb_preferred_description"
 msgid "of game"
 msgstr "van spel"
 
-#: src/data/providers/data/IGDB.vala:470
+#: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
 msgstr "van IGDB"
 
-#: src/data/providers/data/IGDB.vala:471
+#: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
 msgid "both"
 msgstr "beide"
@@ -890,8 +895,8 @@ msgstr "Opslaan"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:312
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
-#: src/ui/dialogs/GamePropertiesDialog.vala:143
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:168
+#: src/ui/dialogs/GamePropertiesDialog.vala:172
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -906,14 +911,14 @@ msgid "Installer"
 msgstr "Installatiebestand"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
-#: src/ui/dialogs/GamePropertiesDialog.vala:62
-#: src/ui/dialogs/GamePropertiesDialog.vala:67
+#: src/ui/dialogs/GamePropertiesDialog.vala:64
+#: src/ui/dialogs/GamePropertiesDialog.vala:69
 #: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
 msgstr "Naam"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:166
+#: src/ui/dialogs/GamePropertiesDialog.vala:191
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Extra opties"
@@ -941,7 +946,7 @@ msgid "Select emulator directory"
 msgstr "Kies emulatormap"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:184
+#: src/ui/dialogs/GamePropertiesDialog.vala:209
 msgid "Force compatibility mode"
 msgstr "Comptabiliteitsmodus afdwingen"
 
@@ -1075,46 +1080,50 @@ msgstr "Grootte van installatiebestand: %s"
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:47
+#: src/ui/dialogs/GamePropertiesDialog.vala:49
 #, c-format
 msgid "%s: Properties"
 msgstr "%s: Eigenschappen"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:82
+#: src/ui/dialogs/GamePropertiesDialog.vala:84
 msgid "Images"
 msgstr "Afbeeldingen"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:114
+#: src/ui/dialogs/GamePropertiesDialog.vala:126
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
-#: src/ui/views/GameDetailsView/blocks/Artwork.vala:60
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:62
 msgid "Download images"
 msgstr "Afbeeldingen downloaden"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:121
+#: src/ui/dialogs/GamePropertiesDialog.vala:144
 msgid "Image URL"
 msgstr "Afbeeldings-URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:129
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
+msgid "Vertical image URL"
+msgstr "URL van verticale afbeelding"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
 msgstr "Pictogram-URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:179
+#: src/ui/dialogs/GamePropertiesDialog.vala:204
 msgid "Compatibility"
 msgstr "Comptabiliteit"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:201
+#: src/ui/dialogs/GamePropertiesDialog.vala:226
 msgid "Launch from terminal"
 msgstr "Opstarten in terminalvenster"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:217
+#: src/ui/dialogs/GamePropertiesDialog.vala:242
 msgid "Copy to clipboard"
 msgstr "Kopiëren naar klembord"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/dialogs/GamePropertiesDialog.vala:244
 msgid "Add to Steam"
 msgstr "Toevoegen aan Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:245
 msgid "Add to the Steam library"
 msgstr "Toevoegen aan de Steam-bibliotheek"
 
@@ -1246,8 +1255,8 @@ msgid "Authentication required"
 msgstr "Authenticatie vereist"
 
 #: src/ui/views/WelcomeView.vala:152
-msgid "Authenticating..."
-msgstr "Bezig met authenticeren..."
+msgid "Authenticating…"
+msgstr "Bezig met authenticeren…"
 
 #: src/ui/views/WelcomeView.vala:163
 #, c-format
@@ -1266,79 +1275,79 @@ msgstr "Geen spellen"
 msgid "Get some games or enable some game sources in settings"
 msgstr "Installeer spellen of schakel spelbronnen in via de instellingen"
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:190
 msgid "Grid view"
 msgstr "Rasterweergave"
 
-#: src/ui/views/GamesView/GamesView.vala:188
+#: src/ui/views/GamesView/GamesView.vala:191
 msgid "List view"
 msgstr "Lijstweergave"
 
-#: src/ui/views/GamesView/GamesView.vala:196
+#: src/ui/views/GamesView/GamesView.vala:199
 msgid "All games"
 msgstr "Alle spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:219
+#: src/ui/views/GamesView/GamesView.vala:222
 msgid "Downloads"
 msgstr "Downloads"
 
-#: src/ui/views/GamesView/GamesView.vala:245
+#: src/ui/views/GamesView/GamesView.vala:248
 msgid "Filters"
 msgstr "Filters"
 
-#: src/ui/views/GamesView/GamesView.vala:253
+#: src/ui/views/GamesView/GamesView.vala:256
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Spel toevoegen"
 
-#: src/ui/views/GamesView/GamesView.vala:260
+#: src/ui/views/GamesView/GamesView.vala:263
 msgid "Search"
 msgstr "Zoeken"
 
-#: src/ui/views/GamesView/GamesView.vala:387
+#: src/ui/views/GamesView/GamesView.vala:390
 msgid "Menu"
 msgstr "Menu"
 
-#: src/ui/views/GamesView/GamesView.vala:388
+#: src/ui/views/GamesView/GamesView.vala:391
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Terug"
 
-#: src/ui/views/GamesView/GamesView.vala:567
+#: src/ui/views/GamesView/GamesView.vala:570
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u spel"
 msgstr[1] "%u spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:583
+#: src/ui/views/GamesView/GamesView.vala:586
 msgid "No user-added games"
 msgstr "Geen door de gebruiker toegevoegde spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:584
+#: src/ui/views/GamesView/GamesView.vala:587
 msgid "Add some games using plus button"
 msgstr "Voeg spellen toe via de plus-knop"
 
-#: src/ui/views/GamesView/GamesView.vala:588
+#: src/ui/views/GamesView/GamesView.vala:591
 #, c-format
 msgid "No %s games"
 msgstr "Geen %s-spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:589
+#: src/ui/views/GamesView/GamesView.vala:592
 msgid "Get some Linux-compatible games"
 msgstr "Installeer met Linux compatibele spellen"
 
-#: src/ui/views/GamesView/GamesView.vala:599
+#: src/ui/views/GamesView/GamesView.vala:602
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Er zijn geen spellen die overeenkomen met \"%s\""
 
-#: src/ui/views/GamesView/GamesView.vala:604
+#: src/ui/views/GamesView/GamesView.vala:607
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Er zijn geen %1$s-spellen die overeenkomen met \"%2$s\""
 
-#: src/ui/views/GamesView/GamesView.vala:645
+#: src/ui/views/GamesView/GamesView.vala:650
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1346,15 +1355,15 @@ msgstr ""
 "Er zijn geen spellen geladen vanuit Steam. Maak je spellijst openbaar of "
 "voeg je eigen Steam API-sleutel toe via de instellingen."
 
-#: src/ui/views/GamesView/GamesView.vala:646
+#: src/ui/views/GamesView/GamesView.vala:651
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/ui/views/GamesView/GamesView.vala:793
+#: src/ui/views/GamesView/GamesView.vala:798
 msgid "Downloading images"
 msgstr "Bezig met downloaden van afbeeldingen"
 
-#: src/ui/views/GamesView/GamesView.vala:807
+#: src/ui/views/GamesView/GamesView.vala:812
 #, c-format
 msgid "Downloading image: %s"
 msgstr "Bezig met downloaden van afbeelding: %s"
@@ -1572,64 +1581,64 @@ msgstr "Genre"
 msgid "Genres"
 msgstr "Genres"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:68
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:109
 msgctxt "igdb"
 msgid "Popularity"
 msgstr "Populariteit"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:74
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:115
 msgctxt "igdb"
 msgid "Aggregated rating"
 msgstr "Algehele waardering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:75
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "IGDB user rating"
 msgstr "IGDB-gebruikerswaardering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:76
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:117
 msgctxt "igdb"
 msgid "Total rating"
 msgstr "Totale waardering"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:85
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
 msgid "Release date"
 msgstr "Verschijningsdatum"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:92
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:133
 msgctxt "igdb"
 msgid "Platforms"
 msgstr "Platformen"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:139
 msgctxt "igdb"
 msgid "Genres"
 msgstr "Genres"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:145
 msgctxt "igdb"
 msgid "Keywords"
 msgstr "Trefwoorden"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:111
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:152
 msgctxt "igdb"
 msgid "Links"
 msgstr "Links"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:158
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:208
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
 msgstr[0] "Op basis van <b>%d</b> waardering"
 msgstr[1] "Op basis van <b>%d</b> waarderingen"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:240
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:290
 msgctxt "igdb"
 msgid "Summary"
 msgstr "Samenvatting"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:251
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:301
 msgctxt "igdb"
 msgid "Storyline"
 msgstr "Verhaallijn"
@@ -1640,11 +1649,11 @@ msgstr "Verhaallijn"
 msgid "Select file"
 msgstr "Kies bestand"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid "No images"
 msgstr "Geen afbeeldingen"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
@@ -1652,7 +1661,7 @@ msgstr ""
 "Er zijn geen afbeeldingen gevonden bij dit spel\n"
 "Controleer de naam van het spel"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:93
+#: src/ui/widgets/ImagesDownloadPopover.vala:94
 msgid "Search images:"
 msgstr "Afbeeldingen zoeken:"
 

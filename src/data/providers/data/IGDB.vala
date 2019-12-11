@@ -21,7 +21,7 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Providers.Data
 {
-	public class IGDB: DataProvider
+	public class IGDB: DataProvider<ArrayList<Result>?>
 	{
 		private const string SCHEME        = "https://";
 		private const string DOMAIN        = "igdb.com";
@@ -49,7 +49,7 @@ namespace GameHub.Data.Providers.Data
 			request_quota_reached = false;
 		}
 
-		public override async DataProvider.Result? data(Game game)
+		public override async ArrayList<Result>? data(Game game)
 		{
 			var cached = DB.Tables.IGDBData.get(game);
 
@@ -89,7 +89,7 @@ namespace GameHub.Data.Providers.Data
 			return res;
 		}
 
-		private async DataProvider.Result? parse(Game game, string json, out bool error, out uint status, out string? err_msg)
+		private async ArrayList<Result>? parse(Game game, string json, out bool error, out uint status, out string? err_msg)
 		{
 			error = false;
 			status = 0;
@@ -100,15 +100,22 @@ namespace GameHub.Data.Providers.Data
 			var json_array = json_root.get_array();
 			if(json_array == null || json_array.get_length() < 1) return null;
 
-			var obj = json_array.get_object_element(0);
+			var results = new ArrayList<Result>();
 
-			if(is_error(obj, out status, out err_msg))
+			foreach(var node in json_array.get_elements())
 			{
-				error = true;
-				return null;
+				var obj = node.get_object();
+
+				if(is_error(obj, out status, out err_msg))
+				{
+					error = true;
+					return null;
+				}
+
+				results.add(new Result(obj));
 			}
 
-			return new Result(obj);
+			return results;
 		}
 
 		private bool is_error(Json.Object? obj, out uint status, out string? err_msg)
@@ -164,7 +171,7 @@ namespace GameHub.Data.Providers.Data
 			}
 		}
 
-		public class Result: DataProvider.Result
+		public class Result
 		{
 			public int?        id                      = null;
 			public string?     name                    = null;

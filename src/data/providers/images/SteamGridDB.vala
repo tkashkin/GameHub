@@ -27,6 +27,8 @@ namespace GameHub.Data.Providers.Images
 		private const string BASE_URL     = DOMAIN + "/api/v2";
 		private const string API_KEY_PAGE = DOMAIN + "/profile/preferences";
 
+		private ImagesProvider.ImageSize?[] SIZES = { null, ImageSize(460, 215), ImageSize(920, 430), ImageSize(600, 900), ImageSize(342, 482) };
+
 		public override string id   { get { return "steamgriddb"; } }
 		public override string name { get { return "SteamGridDB"; } }
 		public override string url  { get { return DOMAIN; } }
@@ -38,60 +40,101 @@ namespace GameHub.Data.Providers.Images
 			set { Settings.Providers.Images.SteamGridDB.instance.enabled = value; }
 		}
 
-		public override async ImagesProvider.Result images(Game game)
+		public override async ArrayList<ImagesProvider.Result> images(Game game)
 		{
-			var result = new ImagesProvider.Result();
+			var results = new ArrayList<ImagesProvider.Result>();
 
-			var endpoint = "/grids/steam/" + game.id;
-
+			ArrayList<SGDBGame>? games;
 			if(game is GameHub.Data.Sources.Steam.SteamGame)
 			{
-				var gid = yield game_id_by_steam_appid(game.id);
-				if(gid != null) result.url = DOMAIN + "/game/" + gid;
+				games = yield games_by_steam_appid(game.id);
 			}
 			else
 			{
-				var gid = yield game_id_by_name(game.name);
-				if(gid == null) return result;
-				endpoint = "/grids/game/" + gid;
-				result.url = DOMAIN + "/game/" + gid;
+				games = yield games_by_name(game.name);
 			}
 
-			var root = yield Parser.parse_remote_json_file_async(BASE_URL + endpoint, "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
-			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return result;
-			var obj = root.get_object();
-			var data = obj.has_member("data") ? obj.get_array_member("data") : null;
-			if(data == null || data.get_length() < 1) return result;
-
-			result.images = new ArrayList<Image>();
-			foreach(var img_node in data.get_elements())
+			if(games != null && games.size > 0)
 			{
-				var img = img_node != null && img_node.get_node_type() == Json.NodeType.OBJECT ? img_node.get_object() : null;
-				if(img == null || !img.has_member("url")) continue;
-				result.images.add(new Image(img));
+				foreach(var g in games)
+				{
+					foreach(var size in SIZES)
+					{
+						var result = new ImagesProvider.Result();
+						result.image_size = size ?? ImageSize(460, 215);
+						result.name = "%s: %s (%d × %d)".printf(name, g.name, result.image_size.width, result.image_size.height);
+						result.url = "%s/game/%s".printf(DOMAIN, g.id);
+
+						var dimensions = size != null ? "?dimensions=%dx%d".printf(size.width, size.height) : "";
+
+						var endpoint = "/grids/game/%s%s".printf(g.id, dimensions);
+						//if(game is GameHub.Data.Sources.Steam.SteamGame) endpoint = "/grids/steam/%s%s".printf(game.id, dimensions);
+
+						var root = yield Parser.parse_remote_json_file_async(BASE_URL + endpoint, "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
+						if(root == null || root.get_node_type() != Json.NodeType.OBJECT) continue;
+						var obj = root.get_object();
+						var data = obj.has_member("data") ? obj.get_array_member("data") : null;
+						if(data == null || data.get_length() < 1) continue;
+
+						result.images = new ArrayList<Image>();
+						foreach(var img_node in data.get_elements())
+						{
+							var img = img_node != null && img_node.get_node_type() == Json.NodeType.OBJECT ? img_node.get_object() : null;
+							if(img == null || !img.has_member("url")) continue;
+							result.images.add(new Image(img));
+						}
+
+						if(result.images.size > 0)
+						{
+							results.add(result);
+						}
+					}
+				}
 			}
 
-			return result;
+			return results;
 		}
 
-		private async string? game_id_by_name(string name)
+		private async ArrayList<SGDBGame>? games_by_name(string name)
 		{
 			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/search/autocomplete/" + Uri.escape_string(name), "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return null;
 			var obj = root.get_object();
 			var data = obj.has_member("data") ? obj.get_array_member("data") : null;
 			if(data == null || data.get_length() < 1) return null;
-			var item = data.get_object_element(0);
-			return item == null || !item.has_member("id") ? null : item.get_int_member("id").to_string();
+
+			var games = new ArrayList<SGDBGame>();
+			foreach(var item_node in data.get_elements())
+			{
+				var item = item_node != null && item_node.get_node_type() == Json.NodeType.OBJECT ? item_node.get_object() : null;
+				if(item == null || !item.has_member("id") || !item.has_member("name")) continue;
+				games.add(new SGDBGame(item));
+			}
+			return games;
 		}
 
-		private async string? game_id_by_steam_appid(string appid)
+		private async ArrayList<SGDBGame>? games_by_steam_appid(string appid)
 		{
 			var root = yield Parser.parse_remote_json_file_async(BASE_URL + "/games/steam/" + appid, "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
 			if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return null;
 			var obj = root.get_object();
 			var data = obj.has_member("data") ? obj.get_object_member("data") : null;
-			return data == null || !data.has_member("id") ? null : data.get_int_member("id").to_string();
+			if(data == null || !data.has_member("id") || !data.has_member("name")) return null;
+
+			var games = new ArrayList<SGDBGame>();
+			games.add(new SGDBGame(data));
+			return games;
+		}
+
+		private class SGDBGame
+		{
+			public string id;
+			public string name;
+			public SGDBGame(Json.Object game)
+			{
+				id = game.get_int_member("id").to_string();
+				name = game.get_string_member("name");
+			}
 		}
 
 		public override Gtk.Widget? settings_widget
@@ -173,17 +216,18 @@ namespace GameHub.Data.Providers.Images
 
 			public enum Style
 			{
-				ALTERNATE, BLURRED, MATERIAL, NO_LOGO;
+				ALTERNATE, BLURRED, MATERIAL, NO_LOGO, WHITE_LOGO;
 
 				public string name()
 				{
 					switch(this)
 					{
-						case Style.ALTERNATE: return C_("imagesource_steamgriddb_image_style", "Alternate");
-						case Style.BLURRED:   return C_("imagesource_steamgriddb_image_style", "Blurred");
+						case Style.ALTERNATE:  return C_("imagesource_steamgriddb_image_style", "Alternate");
+						case Style.BLURRED:    return C_("imagesource_steamgriddb_image_style", "Blurred");
 						// TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-						case Style.MATERIAL:  return C_("imagesource_steamgriddb_image_style", "Material");
-						case Style.NO_LOGO:   return C_("imagesource_steamgriddb_image_style", "No logo");
+						case Style.MATERIAL:   return C_("imagesource_steamgriddb_image_style", "Material");
+						case Style.NO_LOGO:    return C_("imagesource_steamgriddb_image_style", "No logo");
+						case Style.WHITE_LOGO: return C_("imagesource_steamgriddb_image_style", "White logo");
 					}
 					assert_not_reached();
 				}
@@ -192,10 +236,11 @@ namespace GameHub.Data.Providers.Images
 				{
 					switch(style)
 					{
-						case "alternate": return Style.ALTERNATE;
-						case "blurred":   return Style.BLURRED;
-						case "material":  return Style.MATERIAL;
-						case "no_logo":   return Style.NO_LOGO;
+						case "alternate":  return Style.ALTERNATE;
+						case "blurred":    return Style.BLURRED;
+						case "material":   return Style.MATERIAL;
+						case "no_logo":    return Style.NO_LOGO;
+						case "white_logo": return Style.WHITE_LOGO;
 					}
 					return null;
 				}

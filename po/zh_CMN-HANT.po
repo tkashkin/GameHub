@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-02 22:06+0300\n"
+"POT-Creation-Date: 2019-10-03 00:49+0300\n"
 "PO-Revision-Date: 2019-07-11 16:11+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -117,12 +117,12 @@ msgstr "显示日志选项帮助"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
 msgstr "选择可执行文件"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:389
+#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:392
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -153,18 +153,18 @@ msgstr "%s: 安装程序损坏"
 msgid "Checksum mismatch in %s"
 msgstr "校验和不匹配 %s"
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "显示文件"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "删除"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "备份"
 
@@ -186,52 +186,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "模拟器"
 
-#: src/data/Game.vala:546
+#: src/data/Game.vala:547
 msgctxt "status"
 msgid "Running"
 msgstr "正在运行"
 
-#: src/data/Game.vala:549
-msgctxt "status"
-msgid "Installed"
-msgstr "安装"
-
 #: src/data/Game.vala:550
 msgctxt "status"
-msgid "Installing"
+msgid "Installed"
 msgstr "安装"
 
 #: src/data/Game.vala:551
 msgctxt "status"
+msgid "Installing"
+msgstr "安装"
+
+#: src/data/Game.vala:552
+msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "验证安装程序完整性"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:553
 msgctxt "status"
 msgid "Download started"
 msgstr "下载已开始"
 
-#: src/data/Game.vala:554
+#: src/data/Game.vala:555
 msgctxt "status"
 msgid "Not installed"
 msgstr "未安装"
 
-#: src/data/Game.vala:564
+#: src/data/Game.vala:565
 msgctxt "status_header"
 msgid "Installed"
 msgstr "安装"
 
-#: src/data/Game.vala:565
+#: src/data/Game.vala:566
 msgctxt "status_header"
 msgid "Installing"
 msgstr "安装"
 
-#: src/data/Game.vala:567
+#: src/data/Game.vala:568
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "正在下载"
 
-#: src/data/Game.vala:569
+#: src/data/Game.vala:570
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "未安装"
@@ -308,12 +308,12 @@ msgstr ""
 "找不到Steam配置文件。\n"
 "在Steam客户端登录您的帐户并返回GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:332
+#: src/data/sources/humble/HumbleGame.vala:333
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: 没有可用的安装程序"
 
-#: src/data/sources/humble/HumbleGame.vala:333
+#: src/data/sources/humble/HumbleGame.vala:334
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -365,7 +365,7 @@ msgstr ""
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
-#: src/ui/dialogs/CompatRunDialog.vala:101
+#: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
@@ -468,101 +468,106 @@ msgstr ""
 msgid "Launch in game directory"
 msgstr "选择目录"
 
-#: src/data/providers/images/SteamGridDB.vala:108
-#: src/data/providers/data/IGDB.vala:424
+#: src/data/providers/images/SteamGridDB.vala:151
+#: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:115
-#: src/data/providers/data/IGDB.vala:431
+#: src/data/providers/images/SteamGridDB.vala:158
+#: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:126
-#: src/data/providers/data/IGDB.vala:442
+#: src/data/providers/images/SteamGridDB.vala:169
+#: src/data/providers/data/IGDB.vala:449
 msgid "API key"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:134
-#: src/data/providers/data/IGDB.vala:450
+#: src/data/providers/images/SteamGridDB.vala:177
+#: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Generate key"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:165
+#: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:166
+#: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:170
+#: src/data/providers/images/SteamGridDB.vala:213
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:182
+#: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:183
+#: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
 msgstr ""
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-#: src/data/providers/images/SteamGridDB.vala:185
+#: src/data/providers/images/SteamGridDB.vala:228
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
 msgstr ""
 
-#: src/data/providers/images/SteamGridDB.vala:186
+#: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
 msgstr ""
 
-#: src/data/providers/data/IGDB.vala:140
+#: src/data/providers/images/SteamGridDB.vala:230
+msgctxt "imagesource_steamgriddb_image_style"
+msgid "White logo"
+msgstr ""
+
+#: src/data/providers/data/IGDB.vala:147
 msgid ""
 "Monthly IGDB request quota has been reached. Set your own API key to use "
 "IGDB data or disable IGDB."
 msgstr ""
 
-#: src/data/providers/data/IGDB.vala:141
+#: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:267
-#: src/ui/views/GamesView/GamesView.vala:647
+#: src/ui/views/GamesView/GamesView.vala:270
+#: src/ui/views/GamesView/GamesView.vala:652
 msgid "Settings"
 msgstr "设置"
 
-#: src/data/providers/data/IGDB.vala:349
+#: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
 msgstr ""
 
-#: src/data/providers/data/IGDB.vala:462
+#: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
 msgstr ""
 
-#: src/data/providers/data/IGDB.vala:469
+#: src/data/providers/data/IGDB.vala:476
 #, fuzzy
 msgctxt "igdb_preferred_description"
 msgid "of game"
 msgstr "运行游戏"
 
-#: src/data/providers/data/IGDB.vala:470
+#: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
 msgstr "从IGDB"
 
-#: src/data/providers/data/IGDB.vala:471
+#: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
 msgid "both"
 msgstr "都"
@@ -911,8 +916,8 @@ msgstr "保存"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:312
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
-#: src/ui/dialogs/GamePropertiesDialog.vala:143
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:168
+#: src/ui/dialogs/GamePropertiesDialog.vala:172
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
@@ -929,14 +934,14 @@ msgid "Installer"
 msgstr "安装"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
-#: src/ui/dialogs/GamePropertiesDialog.vala:62
-#: src/ui/dialogs/GamePropertiesDialog.vala:67
+#: src/ui/dialogs/GamePropertiesDialog.vala:64
+#: src/ui/dialogs/GamePropertiesDialog.vala:69
 #: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
 msgstr "名字"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:166
+#: src/ui/dialogs/GamePropertiesDialog.vala:191
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 #, fuzzy
 msgid "Arguments"
@@ -969,7 +974,7 @@ msgid "Select emulator directory"
 msgstr "选择目录"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:184
+#: src/ui/dialogs/GamePropertiesDialog.vala:209
 #, fuzzy
 msgid "Force compatibility mode"
 msgstr "显示兼容性选项对话框"
@@ -1102,48 +1107,52 @@ msgstr "安装"
 msgid "Unknown"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:47
+#: src/ui/dialogs/GamePropertiesDialog.vala:49
 #, fuzzy, c-format
 msgid "%s: Properties"
 msgstr "收藏夹"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:82
+#: src/ui/dialogs/GamePropertiesDialog.vala:84
 msgid "Images"
 msgstr "图片"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:114
+#: src/ui/dialogs/GamePropertiesDialog.vala:126
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
-#: src/ui/views/GameDetailsView/blocks/Artwork.vala:60
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:62
 msgid "Download images"
 msgstr "下载图片"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:121
+#: src/ui/dialogs/GamePropertiesDialog.vala:144
 msgid "Image URL"
 msgstr "图片的URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:129
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
+msgid "Vertical image URL"
+msgstr ""
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:179
+#: src/ui/dialogs/GamePropertiesDialog.vala:204
 #, fuzzy
 msgid "Compatibility"
 msgstr "禁用DirectX 11兼容层"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:201
+#: src/ui/dialogs/GamePropertiesDialog.vala:226
 msgid "Launch from terminal"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:217
+#: src/ui/dialogs/GamePropertiesDialog.vala:242
 msgid "Copy to clipboard"
 msgstr ""
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
+#: src/ui/dialogs/GamePropertiesDialog.vala:244
 #, fuzzy
 msgid "Add to Steam"
 msgstr "加游戏"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:245
 #, fuzzy
 msgid "Add to the Steam library"
 msgstr "加游戏"
@@ -1278,7 +1287,7 @@ msgid "Authentication required"
 msgstr ""
 
 #: src/ui/views/WelcomeView.vala:152
-msgid "Authenticating..."
+msgid "Authenticating…"
 msgstr ""
 
 #: src/ui/views/WelcomeView.vala:163
@@ -1299,96 +1308,96 @@ msgstr "运行游戏"
 msgid "Get some games or enable some game sources in settings"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:190
 msgid "Grid view"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:188
+#: src/ui/views/GamesView/GamesView.vala:191
 msgid "List view"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:196
+#: src/ui/views/GamesView/GamesView.vala:199
 #, fuzzy
 msgid "All games"
 msgstr "%s 游戏"
 
-#: src/ui/views/GamesView/GamesView.vala:219
+#: src/ui/views/GamesView/GamesView.vala:222
 #, fuzzy
 msgid "Downloads"
 msgstr "下载"
 
-#: src/ui/views/GamesView/GamesView.vala:245
+#: src/ui/views/GamesView/GamesView.vala:248
 msgid "Filters"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:253
+#: src/ui/views/GamesView/GamesView.vala:256
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "加游戏"
 
-#: src/ui/views/GamesView/GamesView.vala:260
+#: src/ui/views/GamesView/GamesView.vala:263
 msgid "Search"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:387
+#: src/ui/views/GamesView/GamesView.vala:390
 msgid "Menu"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:388
+#: src/ui/views/GamesView/GamesView.vala:391
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 #, fuzzy
 msgid "Back"
 msgstr "备份"
 
-#: src/ui/views/GamesView/GamesView.vala:567
+#: src/ui/views/GamesView/GamesView.vala:570
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u个游戏"
 
-#: src/ui/views/GamesView/GamesView.vala:583
+#: src/ui/views/GamesView/GamesView.vala:586
 #, fuzzy
 msgid "No user-added games"
 msgstr "用户游戏"
 
-#: src/ui/views/GamesView/GamesView.vala:584
+#: src/ui/views/GamesView/GamesView.vala:587
 msgid "Add some games using plus button"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:588
+#: src/ui/views/GamesView/GamesView.vala:591
 #, fuzzy, c-format
 msgid "No %s games"
 msgstr "%s 游戏"
 
-#: src/ui/views/GamesView/GamesView.vala:589
+#: src/ui/views/GamesView/GamesView.vala:592
 msgid "Get some Linux-compatible games"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:599
+#: src/ui/views/GamesView/GamesView.vala:602
 #, c-format
 msgid "No games matching “%s”"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:604
+#: src/ui/views/GamesView/GamesView.vala:607
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:645
+#: src/ui/views/GamesView/GamesView.vala:650
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:646
+#: src/ui/views/GamesView/GamesView.vala:651
 msgid "Privacy"
 msgstr ""
 
-#: src/ui/views/GamesView/GamesView.vala:793
+#: src/ui/views/GamesView/GamesView.vala:798
 msgid "Downloading images"
 msgstr "还在下载图片"
 
-#: src/ui/views/GamesView/GamesView.vala:807
+#: src/ui/views/GamesView/GamesView.vala:812
 #, c-format
 msgid "Downloading image: %s"
 msgstr "还在下载图片：%s"
@@ -1611,63 +1620,64 @@ msgstr "类型"
 msgid "Genres"
 msgstr "类型"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:68
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:109
 msgctxt "igdb"
 msgid "Popularity"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:74
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:115
 msgctxt "igdb"
 msgid "Aggregated rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:75
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "IGDB user rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:76
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:117
 msgctxt "igdb"
 msgid "Total rating"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:85
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
 msgid "Release date"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:92
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:133
+#, fuzzy
 msgctxt "igdb"
 msgid "Platforms"
-msgstr ""
+msgstr "%s 游戏"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:139
 msgctxt "igdb"
 msgid "Genres"
 msgstr "类型"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:145
 msgctxt "igdb"
 msgid "Keywords"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:111
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:152
 msgctxt "igdb"
 msgid "Links"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:158
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:208
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
 msgstr[0] ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:240
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:290
 msgctxt "igdb"
 msgid "Summary"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:251
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:301
 msgctxt "igdb"
 msgid "Storyline"
 msgstr ""
@@ -1679,18 +1689,18 @@ msgstr ""
 msgid "Select file"
 msgstr "选择"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:74
 #, fuzzy
 msgid "No images"
 msgstr "下载图片"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:93
+#: src/ui/widgets/ImagesDownloadPopover.vala:94
 #, fuzzy
 msgid "Search images:"
 msgstr "下载图片"

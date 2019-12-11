@@ -83,13 +83,14 @@ namespace GameHub.UI.Dialogs
 			message_label.get_style_context().add_class("category-label");
 			content.add(message_label);
 
-			if(game is Game && (game as Game).icon != null)
+			if(game is Game && ((Game) game).icon != null)
 			{
+				var g = (Game) game;
 				var icon = new AutoSizeImage();
 				icon.valign = Align.START;
 				icon.set_constraint(48, 48, 1);
 				icon.set_size_request(48, 48);
-				icon.load((game as Game).icon, "icon");
+				icon.load(g.icon, null, @"$(g.source.id)/$(g.id)/icons/");
 				hbox.add(icon);
 			}
 

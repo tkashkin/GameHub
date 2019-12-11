@@ -74,15 +74,16 @@ namespace GameHub.UI.Dialogs
 
 			content.add(opts_list);
 
-			if(game is Game && (game as Game).icon != null)
+			if(game is Game && ((Game) game).icon != null)
 			{
+				var g = (Game) game;
 				var icon = new AutoSizeImage();
 				icon.valign = Align.START;
 				icon.set_constraint(48, 48, 1);
 				icon.set_size_request(48, 48);
 				title_label.margin_start = 8;
 				compat_tool_picker.margin_start = 4;
-				icon.load((game as Game).icon, "icon");
+				icon.load(g.icon, null, @"$(g.source.id)/$(g.id)/icons/");
 				hbox.add(icon);
 			}
 

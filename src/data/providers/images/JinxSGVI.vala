@@ -35,14 +35,18 @@ namespace GameHub.Data.Providers.Images
 			set { Settings.Providers.Images.JinxSGVI.instance.enabled = value; }
 		}
 
-		public override async ImagesProvider.Result images(Game game)
+		public override async ArrayList<ImagesProvider.Result> images(Game game)
 		{
 			var result = new ImagesProvider.Result();
-			result.images = new ArrayList<ImagesProvider.Image>();
+			result.name = "%s: %s".printf(name, game.name);
 			result.url = BASE_URL + "/?s=" + Uri.escape_string(game.name);
+			result.images = new ArrayList<ImagesProvider.Image>();
 
 			yield parse_page(result.url, result);
-			return result;
+
+			var results = new ArrayList<ImagesProvider.Result>();
+			results.add(result);
+			return results;
 		}
 
 		private async void parse_page(string url, ImagesProvider.Result result)
