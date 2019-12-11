@@ -70,6 +70,23 @@ namespace GameHub.UI.Views.GamesView
 		private Image no_image_indicator;
 		private Image running_indicator;
 
+		private bool _image_is_visible = false;
+		public bool image_is_visible
+		{
+			get
+			{
+				return _image_is_visible;
+			}
+			set
+			{
+				if(_image_is_visible != value)
+				{
+					_image_is_visible = value;
+					update_image();
+				}
+			}
+		}
+
 		public GameCard(Game? game=null, GamesAdapter? adapter=null)
 		{
 			Object(game: game, adapter: adapter);
@@ -220,6 +237,7 @@ namespace GameHub.UI.Views.GamesView
 
 		private ulong status_handler_id;
 		private ulong image_handler_id;
+		private ulong image_vertical_handler_id;
 		private ulong updates_handler_id;
 
 		private void update_game(Game? new_game)
@@ -230,6 +248,7 @@ namespace GameHub.UI.Views.GamesView
 			{
 				_game.disconnect(status_handler_id);
 				_game.disconnect(image_handler_id);
+				_game.disconnect(image_vertical_handler_id);
 				_game.disconnect(updates_handler_id);
 			}
 
@@ -349,8 +368,9 @@ namespace GameHub.UI.Views.GamesView
 			status_handler_id = game.status_change.connect(status_handler);
 			status_handler(game.status);
 
-			image_handler_id = game.notify["image"].connect(image_handler);
-			image_handler();
+			image_handler_id = game.notify["image"].connect(update_image);
+			image_vertical_handler_id = game.notify["image-vertical"].connect(update_image);
+			update_image();
 
 			updates_handler_id = game.notify["has-updates"].connect(updates_handler);
 			updates_handler();
@@ -412,19 +432,24 @@ namespace GameHub.UI.Views.GamesView
 				{
 					card.get_style_context().remove_class("running");
 					running_indicator.opacity = 0;
-					no_image_indicator.opacity = game.image == null ? 1 : 0;
+					no_image_indicator.opacity = game.image == null && game.image_vertical == null ? 1 : 0;
 				}
 				return Source.REMOVE;
 			}, Priority.LOW);
 		}
 
-		private void image_handler()
+		private void update_image()
 		{
-			Idle.add(() => {
-				image.load(game.image, "image");
-				no_image_indicator.opacity = game.image == null && !game.is_running ? 1 : 0;
-				return Source.REMOVE;
-			}, Priority.LOW);
+			if(image == null) return;
+			if(image_is_visible)
+			{
+				image.load(game.image, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
+				no_image_indicator.opacity = game.image == null && game.image_vertical == null && !game.is_running ? 1 : 0;
+			}
+			else
+			{
+				image.unload();
+			}
 		}
 
 		private void updates_handler()

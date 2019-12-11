@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Kemal Oktay Aktoğan <oktay454@disroot.org>, 2019.
 # Güner Acet <kurama632@gmail.com>, 2019.
+# Oğuz Ersen <oguzersen@protonmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-02 22:06+0300\n"
-"PO-Revision-Date: 2019-03-30 20:30+0000\n"
-"Last-Translator: Güner Acet <kurama632@gmail.com>\n"
+"POT-Creation-Date: 2019-10-03 00:49+0300\n"
+"PO-Revision-Date: 2019-11-15 18:04+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
 "translations/tr/>\n"
 "Language: tr\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 3.10-dev\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -37,7 +38,7 @@ msgstr "Tüm GDB geriye dönük izlemesini(olay yığını) göster"
 
 #: src/app.vala:93
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "Ölümcül hataları kritik olarak kabul et ve uygulamayı çöktür"
 
 #: src/app.vala:97
 msgid "Show main window"
@@ -48,9 +49,8 @@ msgid "Show application settings dialog"
 msgstr "Uygulama ayarları iletişim kutusunu göster"
 
 #: src/app.vala:99
-#, fuzzy
 msgid "Show about dialog"
-msgstr "Uyumluluk ayarları iletişim kutusunu göster"
+msgstr "Hakkında iletişim penceresini göster"
 
 #: src/app.vala:100
 msgid "Maximum number of background worker threads"
@@ -74,7 +74,7 @@ msgstr "Oyun özelliklerini aç"
 
 #: src/app.vala:111
 msgid "Enable debug logging"
-msgstr "Hata ayıklama günlüğünü etkinleştirin"
+msgstr "Hata ayıklama günlük kaydını etkinleştirin"
 
 #: src/app.vala:112
 msgid ""
@@ -85,15 +85,15 @@ msgstr ""
 
 #: src/app.vala:113
 msgid "Log download manager"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "Günlük kaydı indirme yöneticisi"
 
 #: src/app.vala:114
 msgid "Log background workers start/stop"
-msgstr "Arka plan çalışma öbeklerinin seyir kaydını başlat/durdur"
+msgstr "Arka plan çalışma öbeklerinin günlük kaydını başlat/durdur"
 
 #: src/app.vala:115
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Log mesajları filtresini devre dışı bırak"
 
 #: src/app.vala:116
 msgid "Verbose logging"
@@ -117,12 +117,12 @@ msgstr "Günlüğe kaydetme seçenekleri yardımını göster"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
 msgstr "Çalıştırma dosyasını seçiniz"
 
 #: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:389
+#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:392
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
@@ -136,12 +136,12 @@ msgstr "İptal"
 
 #: src/data/Runnable.vala:165 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr "Dizin seçin"
+msgstr "Dizin seç"
 
 #: src/data/Runnable.vala:423
-#, fuzzy, c-format
+#, c-format
 msgid "Part %1$u of %2$u: %3$s"
-msgstr "%u' nun %u Kısmı: "
+msgstr "Parça %1$u / %2$u: %3$s"
 
 #: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
@@ -153,18 +153,18 @@ msgstr "%s: bozuk yükleyici"
 msgid "Checksum mismatch in %s"
 msgstr "%s içinde sağlama uyuşmazlığı"
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:125
+#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "Dosyayı göster"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:131
+#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Kaldır"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:127
+#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "Yedekleme"
 
@@ -178,185 +178,180 @@ msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"Bu oyun için ana çalıştırılabilir dosya otomatik olarak algılanamıyor.\n"
+"Lütfen oyunun özelliklerinde çalıştırılabilir ana dosyayı ayarlayın."
 
 #: src/data/Runnable.vala:850
 msgctxt "platform"
 msgid "Emulated"
-msgstr ""
+msgstr "Emüle edilmiş"
 
-#: src/data/Game.vala:546
+#: src/data/Game.vala:547
 msgctxt "status"
 msgid "Running"
-msgstr ""
-
-#: src/data/Game.vala:549
-#, fuzzy
-msgctxt "status"
-msgid "Installed"
-msgstr "%s: bozuk yükleyici"
+msgstr "Çalışıyor"
 
 #: src/data/Game.vala:550
-#, fuzzy
 msgctxt "status"
-msgid "Installing"
-msgstr "%s: bozuk yükleyici"
+msgid "Installed"
+msgstr "Yüklendi"
 
 #: src/data/Game.vala:551
 msgctxt "status"
-msgid "Verifying installer integrity"
-msgstr ""
+msgid "Installing"
+msgstr "Yükleniyor"
 
 #: src/data/Game.vala:552
-#, fuzzy
+msgctxt "status"
+msgid "Verifying installer integrity"
+msgstr "Yükleyici bütünlüğü doğrulanıyor"
+
+#: src/data/Game.vala:553
 msgctxt "status"
 msgid "Download started"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirme başladı"
 
-#: src/data/Game.vala:554
-#, fuzzy
+#: src/data/Game.vala:555
 msgctxt "status"
 msgid "Not installed"
-msgstr "%s: bozuk yükleyici"
-
-#: src/data/Game.vala:564
-#, fuzzy
-msgctxt "status_header"
-msgid "Installed"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yüklenmedi"
 
 #: src/data/Game.vala:565
-#, fuzzy
+msgctxt "status_header"
+msgid "Installed"
+msgstr "Yüklendi"
+
+#: src/data/Game.vala:566
 msgctxt "status_header"
 msgid "Installing"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yükleniyor"
 
-#: src/data/Game.vala:567
-#, fuzzy
+#: src/data/Game.vala:568
 msgctxt "status_header"
 msgid "Downloading"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndiriliyor"
 
-#: src/data/Game.vala:569
-#, fuzzy
+#: src/data/Game.vala:570
 msgctxt "status_header"
 msgid "Not installed"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yüklenmedi"
 
 #: src/data/GameSource.vala:31
-#, fuzzy, c-format
+#, c-format
 msgid "%s games"
-msgstr "Oyunu çalıştır"
+msgstr "%s oyun"
 
 #: src/data/adapters/GamesAdapter.vala:424
 msgctxt "status_header"
 msgid "Favorites"
-msgstr ""
+msgstr "Sık kullanılanlar"
 
 #: src/data/adapters/GamesAdapter.vala:429
 #, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr ""
+msgstr "%s: Sık kullanılanlar"
 
 #: src/data/adapters/GamesAdapter.vala:454
 msgid "Merging games"
-msgstr ""
+msgstr "Oyunlar birleştiriliyor"
 
 #: src/data/adapters/GamesAdapter.vala:467
 #, c-format
 msgid "Merging games from %s"
-msgstr ""
+msgstr "%s'den oyunlar birleştiriliyor"
 
 #: src/data/adapters/GamesAdapter.vala:514
 #, c-format
 msgid "Loading games from %s"
-msgstr ""
+msgstr "%s'den oyunlar yükleniyor"
 
 #: src/data/adapters/GamesAdapter.vala:621
 msgctxt "sort_mode"
 msgid "By name"
-msgstr ""
+msgstr "İsme göre"
 
 #: src/data/adapters/GamesAdapter.vala:622
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr ""
+msgstr "Son başlatmaya göre"
 
 #: src/data/adapters/GamesAdapter.vala:623
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr ""
+msgstr "Oynama zamanına göre"
 
 #: src/data/adapters/GamesAdapter.vala:648
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr ""
+msgstr "Gruplandırma"
 
 #: src/data/adapters/GamesAdapter.vala:649
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "Duruma göre"
 
 #: src/data/adapters/GamesAdapter.vala:650
 msgctxt "group_mode"
 msgid "By source"
-msgstr ""
+msgstr "Kaynağa göre"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr ""
+msgstr "SteamID'niz Steam yapılandırma dosyasından okunacaktır"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
-
-#: src/data/sources/humble/HumbleGame.vala:332
-#, fuzzy, c-format
-msgid "%s: no available installers"
-msgstr "%s: bozuk yükleyici"
+"Steam yapılandırma dosyası bulunamadı.\n"
+"Steam istemcisinden hesabınıza giriş yapın ve GameHub'a geri dönün"
 
 #: src/data/sources/humble/HumbleGame.vala:333
+#, c-format
+msgid "%s: no available installers"
+msgstr "%s: kullanılabilir yükleyici yok"
+
+#: src/data/sources/humble/HumbleGame.vala:334
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
+"Trove indirme URL’si alınamıyor.\n"
+"Humble Monthly üyeliğinizin etkin olduğundan emin olun."
 
 #: src/data/sources/user/User.vala:30
-#, fuzzy
 msgid "User games"
-msgstr "Oyunu çalıştır"
+msgstr "Kullanıcı oyunları"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "Sık kullanılanlar"
 
 #: src/data/db/tables/Tags.vala:226
-#, fuzzy
 msgctxt "tag"
 msgid "Not installed"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yüklü değil"
 
 #: src/data/db/tables/Tags.vala:227
-#, fuzzy
 msgctxt "tag"
 msgid "Installed"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yüklü"
 
 #: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "Gizli"
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit script"
-msgstr ""
+msgstr "Komut dosyasını düzenle"
 
 #: src/data/compat/CustomScript.vala:59
 msgid "Edit custom script"
-msgstr ""
+msgstr "Özel komut dosyasını düzenle"
 
 #: src/data/compat/Innoextract.vala:55
 #, c-format
@@ -365,422 +360,414 @@ msgid ""
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
+"Innoextract <b>%1$s</b> desteklenmemektedir ve bazı oyunları doğru şekilde "
+"çıkaramayabilir.\n"
+"Innoextract <b>%2$s</b> veya daha yeni bir sürümünü yükleyin."
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
-#: src/ui/dialogs/CompatRunDialog.vala:101
+#: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
-msgstr ""
+msgstr "Çalıştır"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "WineWrap menüsünü göster"
 
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:131
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
-msgstr ""
+msgstr "Önekteki uygulamaları sonlandır"
 
 #: src/data/compat/Proton.vala:47
 msgid "Proton prefix"
-msgstr ""
+msgstr "Proton öneki"
 
 #: src/data/compat/Proton.vala:53
 msgid "Disable esync"
-msgstr ""
+msgstr "Esync'i devre dışı bırak"
 
 #: src/data/compat/Proton.vala:54
 msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr ""
+msgstr "LARGE_ADDRESS_AWARE bayrağını zorla"
 
 #: src/data/compat/Proton.vala:55
 msgid "Disable DirectX 11 compatibility layer"
-msgstr ""
+msgstr "DirectX 11 uyumluluk katmanını devre dışı bırak"
 
 #: src/data/compat/Proton.vala:56
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr ""
+msgstr "WineD3D11'i DirectX 11 uyumluluk katmanı olarak kullan"
 
 #: src/data/compat/Proton.vala:57
 msgid "Show DXVK info overlay"
-msgstr ""
+msgstr "DXVK bilgi paylaşımını göster"
 
 #: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
-#, fuzzy
 msgid "Silent installation"
-msgstr "Seç"
+msgstr "Sessiz kurulum"
 
 #: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
-#, fuzzy
 msgid "Very silent installation"
-msgstr "Seç"
+msgstr "Çok sessiz kurulum"
 
 #: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
-msgstr ""
+msgstr "Mesajları bastır"
 
 #: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
 msgid "No GUI"
-msgstr ""
+msgstr "GUI yok"
 
 #: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
-#, fuzzy
 msgid "Open prefix directory"
-msgstr "Dizin seçin"
+msgstr "Önek dizinini aç"
 
 #: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
-msgstr ""
+msgstr "winecfg'yi çalıştır"
 
 #: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
-msgstr ""
+msgstr "winetricks'i çalıştır"
 
 #: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
-#, fuzzy
 msgid "Run taskmgr"
-msgstr "Oyunu çalıştır"
+msgstr "Taskmgr'i çalıştır"
 
 #: src/data/compat/Wine.vala:53
 msgid "Wine prefix"
-msgstr ""
+msgstr "Wine öneki"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
-msgstr ""
+msgstr "Ortam değişkenleri"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr ""
+msgstr "InnoSetup varsayılan seçenekleri"
 
 #: src/data/compat/RetroArch.vala:53
-#, fuzzy
 msgid "Libretro core file"
-msgstr "Dizin seçin"
+msgstr "Libretro çekirdek dosyası"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
-msgstr ""
+msgstr "Özel emülatör"
 
 #: src/data/compat/CustomEmulator.vala:48
 msgid "Emulator"
-msgstr ""
+msgstr "Emülatör"
 
 #: src/data/compat/CustomEmulator.vala:49
-#, fuzzy
 msgid "Launch in game directory"
-msgstr "Dizin seçin"
+msgstr "Oyun dizininde başlat"
 
-#: src/data/providers/images/SteamGridDB.vala:108
-#: src/data/providers/data/IGDB.vala:424
+#: src/data/providers/images/SteamGridDB.vala:151
+#: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
-msgstr ""
+msgstr "Varsayılan"
 
-#: src/data/providers/images/SteamGridDB.vala:115
-#: src/data/providers/data/IGDB.vala:431
+#: src/data/providers/images/SteamGridDB.vala:158
+#: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
-msgstr ""
+msgstr "Varsayılan API anahtarını geri yükle"
 
-#: src/data/providers/images/SteamGridDB.vala:126
-#: src/data/providers/data/IGDB.vala:442
+#: src/data/providers/images/SteamGridDB.vala:169
+#: src/data/providers/data/IGDB.vala:449
 msgid "API key"
-msgstr ""
+msgstr "API anahtarı"
 
-#: src/data/providers/images/SteamGridDB.vala:134
-#: src/data/providers/data/IGDB.vala:450
+#: src/data/providers/images/SteamGridDB.vala:177
+#: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Generate key"
-msgstr ""
+msgstr "Anahtar oluştur"
 
-#: src/data/providers/images/SteamGridDB.vala:165
+#: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "Stil"
 
-#: src/data/providers/images/SteamGridDB.vala:166
+#: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "Puan"
 
-#: src/data/providers/images/SteamGridDB.vala:170
+#: src/data/providers/images/SteamGridDB.vala:213
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "Yazar"
 
-#: src/data/providers/images/SteamGridDB.vala:182
+#: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "Alternatif"
 
-#: src/data/providers/images/SteamGridDB.vala:183
+#: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "Bulanık"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
-#: src/data/providers/images/SteamGridDB.vala:185
+#: src/data/providers/images/SteamGridDB.vala:228
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
-#: src/data/providers/images/SteamGridDB.vala:186
+#: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "Logo yok"
 
-#: src/data/providers/data/IGDB.vala:140
+#: src/data/providers/images/SteamGridDB.vala:230
+msgctxt "imagesource_steamgriddb_image_style"
+msgid "White logo"
+msgstr "Beyaz logo"
+
+#: src/data/providers/data/IGDB.vala:147
 msgid ""
 "Monthly IGDB request quota has been reached. Set your own API key to use "
 "IGDB data or disable IGDB."
 msgstr ""
+"Aylık IGDB istek kotasına ulaşıldı. IGDB verilerini kullanmak için kendi API "
+"anahtarınızı ayarlayın veya IGDB'yi devre dışı bırakın."
 
-#: src/data/providers/data/IGDB.vala:141
+#: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:267
-#: src/ui/views/GamesView/GamesView.vala:647
+#: src/ui/views/GamesView/GamesView.vala:270
+#: src/ui/views/GamesView/GamesView.vala:652
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
-#: src/data/providers/data/IGDB.vala:349
+#: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr ""
-
-#: src/data/providers/data/IGDB.vala:462
-msgctxt "igdb_preferred_description"
-msgid "When game has description, show description"
-msgstr ""
+msgstr "Resmi web sitesi"
 
 #: src/data/providers/data/IGDB.vala:469
-#, fuzzy
+msgctxt "igdb_preferred_description"
+msgid "When game has description, show description"
+msgstr "Oyunun açıklaması olduğunda açıklamayı göster"
+
+#: src/data/providers/data/IGDB.vala:476
 msgctxt "igdb_preferred_description"
 msgid "of game"
-msgstr "Oyunu çalıştır"
+msgstr "oyunun"
 
-#: src/data/providers/data/IGDB.vala:470
+#: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr ""
+msgstr "IGDB'den"
 
-#: src/data/providers/data/IGDB.vala:471
+#: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "her ikisi de"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
-msgstr ""
+msgstr "Bazı ayarlar uygulama yeniden başlatıldıktan sonra uygulanacak"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:71
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
+"Oyunlar dizini boşluk içeriyor. Bu, bazı oyunlar için sorunlara neden "
+"olabilir"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
-msgstr ""
+msgstr "Arayüz"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
-msgstr ""
+msgstr "Görünüm"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
-msgstr ""
+msgstr "Genel arayüz ayarları"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgid "Dark theme"
-msgstr ""
+msgstr "Karanlık tema"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr ""
+msgstr "Tema tabanlı"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
-msgstr ""
+msgstr "Sembolik"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
-msgstr ""
+msgstr "Renkli"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "Simge stili"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
-#, fuzzy
 msgid "Game card"
-msgstr "Dizin seçin"
+msgstr "Oyun kartı"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
-#, fuzzy
 msgid "Show platform icons"
-msgstr "Dosyayı göster"
+msgstr "Platform simgelerini göster"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
 msgid "Card size"
-msgstr ""
+msgstr "Kart boyutu"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
 msgctxt "grid_size_preset"
 msgid "Presets"
-msgstr ""
+msgstr "Hazır ayarlar"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
-#, fuzzy
 msgid "Games list: installed"
-msgstr "%s: bozuk yükleyici"
+msgstr "Oyun listesi: yüklü"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:140
-#, fuzzy
 msgid "Games list: not installed"
-msgstr "%s: bozuk yükleyici"
+msgstr "Oyun listesi: yüklü değil"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:142
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:146
-#, fuzzy
 msgctxt "list_style"
 msgid "Show icon"
-msgstr "Dosyayı göster"
+msgstr "Simgeyi göster"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:143
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:147
 msgctxt "list_style"
 msgid "Bold title"
-msgstr ""
+msgstr "Kalın başlık"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:144
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
 msgctxt "list_style"
 msgid "Show status"
-msgstr ""
+msgstr "Durumu göster"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
-msgstr ""
+msgstr "Dim"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
-#, fuzzy
 msgid "Grid options"
-msgstr "Oyun seçenekleri:"
+msgstr "Örgü seçenekleri"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
-#, fuzzy
 msgid "List options"
-msgstr "Günlüğe Kaydetme Seçenekleri:"
+msgstr "Seçenekleri listele"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
-msgstr ""
+msgstr "Davranış"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
 msgid "Behavior settings"
-msgstr ""
+msgstr "Davranış ayarları"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:42
 msgid "Run games with double click"
-msgstr ""
+msgstr "Oyunları çift tıklayarak çalıştır"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:46
 msgid "Merge games from different sources"
-msgstr ""
+msgstr "Farklı kaynaklardan oyunları birleştir"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:50
 msgid "Use imported tags"
-msgstr ""
+msgstr "İçe aktarılmış etiketler kullan"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:51
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:52
-#, fuzzy
 msgid "Collection"
-msgstr "Dizin seçin"
+msgstr "Koleksiyon"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
 msgid "Empty"
-msgstr ""
+msgstr "Boş"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
-#, fuzzy
 msgid "Collection directory"
-msgstr "Dizin seçin"
+msgstr "Koleksiyon dizini"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:70
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:87
-#, fuzzy
 msgid "Game directory"
-msgstr "Dizin seçin"
+msgstr "Oyun dizini"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
-#, fuzzy
 msgid "Installers"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yükleyiciler"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:99
 msgid "DLC"
-msgstr ""
+msgstr "DLC"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:132
 msgid "Bonus content"
-msgstr ""
+msgstr "Bonus içerik"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
-msgstr ""
+msgstr "Değişken sözdizimi: <b>$var</b> veya <b>${var}</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
-msgstr ""
+msgstr "Oyun adı"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 #: src/ui/views/GamesView/FiltersPopover.vala:127
 msgid "Platform"
-msgstr ""
+msgstr "Platform"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
-#, fuzzy
 msgid "Controller"
-msgstr "%s: bozuk yükleyici"
+msgstr "Kontrolör"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
 msgid "Enabled"
-msgstr ""
+msgstr "Etkin"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
 msgid "Focus GameHub window with Guide button"
-msgstr ""
+msgstr "Rehber butonu ile GameHub penceresini odakla"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
-#, fuzzy
 msgid "Controllers"
-msgstr "%s: bozuk yükleyici"
+msgstr "Kontrolörler"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
-msgstr ""
+msgstr "Odağı taşı"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 msgid "Exit"
-msgstr ""
+msgstr "Çıkış"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:40
@@ -790,206 +777,189 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
 msgid "Disabled"
-msgstr ""
+msgstr "Devre dışı"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
-#, fuzzy
 msgid "Game sources"
-msgstr "Oyun özelliklerini aç"
+msgstr "Oyun kaynakları"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Steam API keys have limited number of uses per day"
-msgstr ""
+msgstr "Steam API anahtarlarının günlük kullanım sayısı sınırlıdır"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
-#, fuzzy
 msgid "Installation directory"
-msgstr "Dizin seçin"
+msgstr "Kurulum dizini"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
-#, fuzzy
 msgid "Not installed"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yüklü değil"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
-#, fuzzy
 msgid "Not authenticated"
-msgstr "%s: bozuk yükleyici"
+msgstr "Kimlik doğrulanmadı"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr ""
+msgstr "<b>%s</b> olarak kimlik doğrulandı"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
-#, fuzzy
 msgid "Authenticated"
-msgstr "%s: bozuk yükleyici"
+msgstr "Kimlik doğrulandı"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
 #: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
-#, fuzzy
 msgid "Install"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yükle"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:236
 msgid "Steam API key"
-msgstr ""
+msgstr "Steam API anahtarı"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
-#, fuzzy
 msgid "Games directory"
-msgstr "Dizin seçin"
+msgstr "Oyun dizini"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:59
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:63
 msgid "Logout"
-msgstr ""
+msgstr "Oturumu kapat"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:50
 msgid "Load games from Humble Trove"
-msgstr ""
+msgstr "Humble Trove oyunlarını yükle"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:45
 msgid "Emulators"
-msgstr ""
+msgstr "Emülatörler"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
-#, fuzzy
 msgid "Libretro core directory"
-msgstr "Dizin seçin"
+msgstr "Libretro çekirdek dizini"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
-#, fuzzy
 msgid "Libretro core info directory"
-msgstr "Dizin seçin"
+msgstr "Libretro çekirdek bilgi dizini"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
-msgstr ""
+msgstr "Göz ardı edilen libretro çekirdekleri"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
-msgstr ""
+msgstr "Göz ardı edilen oyun dosyası uzantıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
-msgstr ""
+msgstr "Çekirdek bulunamadı"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:70
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u çekirdek bulundu"
+msgstr[1] "%u çekirdek bulundu"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:168
 msgid "No custom emulators"
-msgstr ""
+msgstr "Özel emülatör yok"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:164
 #, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u özel emülatör"
+msgstr[1] "%u özel emülatör"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
-msgstr ""
+msgstr "Kaydet"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:250
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:312
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
-#: src/ui/dialogs/GamePropertiesDialog.vala:143
-#: src/ui/dialogs/GamePropertiesDialog.vala:147
+#: src/ui/dialogs/GamePropertiesDialog.vala:168
+#: src/ui/dialogs/GamePropertiesDialog.vala:172
 #: src/ui/views/GamesView/AddGamePopover.vala:67
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 #: src/ui/views/GamesView/AddGamePopover.vala:143
-#, fuzzy
 msgid "Executable"
-msgstr "Çalıştırma dosyasını seçiniz"
+msgstr "Çalıştırılabilir"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:251
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:404
 #: src/ui/views/GamesView/AddGamePopover.vala:68
 #: src/ui/views/GamesView/AddGamePopover.vala:143
-#, fuzzy
 msgid "Installer"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yükleyici"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
-#: src/ui/dialogs/GamePropertiesDialog.vala:62
-#: src/ui/dialogs/GamePropertiesDialog.vala:67
+#: src/ui/dialogs/GamePropertiesDialog.vala:64
+#: src/ui/dialogs/GamePropertiesDialog.vala:69
 #: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
-msgstr ""
+msgstr "İsim"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:166
+#: src/ui/dialogs/GamePropertiesDialog.vala:191
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
-msgstr ""
+msgstr "Argümanlar"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:276
 msgid "Variables"
-msgstr ""
+msgstr "Değişkenler"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:277
-#, fuzzy
 msgid "Game executable"
-msgstr "Çalıştırma dosyasını seçiniz"
+msgstr "Oyunun çalıştırılabilir dosyası"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
-#, fuzzy
 msgid "Game arguments"
-msgstr "Oyun özelliklerini aç"
+msgstr "Oyun argümanları"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
-#, fuzzy
 msgid "Directory"
-msgstr "Dizin seçin"
+msgstr "Dizin"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
-#, fuzzy
 msgid "Select emulator directory"
-msgstr "Dizin seçin"
+msgstr "Emülatör dizinini seçin"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:184
-#, fuzzy
+#: src/ui/dialogs/GamePropertiesDialog.vala:209
 msgid "Force compatibility mode"
-msgstr "Uyumluluk ayarları iletişim kutusunu göster"
+msgstr "Uyumluluk modunu zorla"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:307
-#, fuzzy
 msgid "Game file patterns"
-msgstr "Çalıştırma dosyasını seçiniz"
+msgstr "Oyun dosyası kalıpları"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:315
 msgid "Image"
-msgstr ""
+msgstr "Görüntü"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:318
 msgid "Icon"
-msgstr ""
+msgstr "Simge"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:325
 msgid ""
@@ -1000,167 +970,169 @@ msgid ""
 "<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
 "name (without extension)"
 msgstr ""
+"<b>findutils</b> ile uyumlu glob kalıpları\n"
+"\n"
+"<b>•</b> Birden fazla kalıp <b>|</b> ile ayrılabilir\n"
+"<b>•</b> Göreceli yolu eşleştirmek için kalıbı <b>./</b> ile başlatın\n"
+"<b>•</b> $<b>basename</b> değişkeni, oyunun yürütülebilir dosyasının adıyla ("
+"uzantı olmadan) değiştirilecektir"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
-msgstr ""
+msgstr "Veri"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:39
 msgid "Providers"
-msgstr ""
+msgstr "Sağlayıcılar"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:40
 msgid "Third-party data providers"
-msgstr ""
+msgstr "Üçüncü taraf veri sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:55
-#, fuzzy
 msgid "Image providers"
-msgstr "Oyun özelliklerini aç"
+msgstr "Görüntü sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
 msgid "Metadata providers"
-msgstr ""
+msgstr "Meta veri sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
-msgstr ""
+msgstr "Web sitesini aç"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:36
 msgid "About"
-msgstr ""
+msgstr "Hakkında"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
-#, fuzzy
 msgid "Copy application version and environment info"
-msgstr "Uygulama versiyonunu göster ve çık"
+msgstr "Uygulama sürümünü ve ortam bilgilerini kopyala"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:78
 #: src/ui/views/WelcomeView.vala:57
 msgid "All your games in one place"
-msgstr ""
+msgstr "Tüm oyunlarınızı tek bir yerde"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:92
 msgctxt "about_link"
 msgid "Website"
-msgstr ""
+msgstr "Web sitesi"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:96
 msgctxt "about_link"
 msgid "Source code on GitHub"
-msgstr ""
+msgstr "Kaynak kodu GitHub'da"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:103
 msgctxt "about_link"
 msgid "Report a problem"
-msgstr ""
+msgstr "Sorun bildir"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:104
 msgctxt "about_link"
 msgid "Suggest translations"
-msgstr ""
+msgstr "Çeviri öner"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:110
 msgctxt "about_link"
 msgid "Issues"
-msgstr ""
+msgstr "Sorunlar"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:111
 msgctxt "about_link"
 msgid "Contributors"
-msgstr ""
+msgstr "Katkıda bulunanlar"
 
 #. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:114
 msgctxt "about_link"
 msgid "Pulse"
-msgstr ""
+msgstr "Pulse"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:115
 msgctxt "about_link"
 msgid "Forks"
-msgstr ""
+msgstr "Forklar"
 
 #: src/ui/dialogs/InstallDialog.vala:112
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
-msgstr ""
+msgstr "İçe aktar"
 
 #: src/ui/dialogs/InstallDialog.vala:113
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
-#, fuzzy
 msgid "Download"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndir"
 
 #: src/ui/dialogs/InstallDialog.vala:210
-#, fuzzy
 msgid "Select installer"
-msgstr "Seç"
+msgstr "Yükleyiciyi seçin"
 
 #: src/ui/dialogs/InstallDialog.vala:219
-#, fuzzy, c-format
+#, c-format
 msgid "Installer size: %s"
-msgstr "%s: bozuk yükleyici"
+msgstr "Yükleyici boyutu: %s"
 
 #: src/ui/dialogs/InstallDialog.vala:329
 msgid "Unknown"
-msgstr ""
+msgstr "Bilinmeyen"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:47
-#, fuzzy, c-format
+#: src/ui/dialogs/GamePropertiesDialog.vala:49
+#, c-format
 msgid "%s: Properties"
-msgstr "Oyun özelliklerini aç"
+msgstr "%s: Özellikler"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:82
-#, fuzzy
+#: src/ui/dialogs/GamePropertiesDialog.vala:84
 msgid "Images"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "Görüntüler"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:114
+#: src/ui/dialogs/GamePropertiesDialog.vala:126
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
-#: src/ui/views/GameDetailsView/blocks/Artwork.vala:60
-#, fuzzy
+#: src/ui/views/GameDetailsView/blocks/Artwork.vala:62
 msgid "Download images"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "Görüntüleri indirin"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:121
+#: src/ui/dialogs/GamePropertiesDialog.vala:144
 msgid "Image URL"
-msgstr ""
+msgstr "Resim URL'si"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:129
+#: src/ui/dialogs/GamePropertiesDialog.vala:148
+msgid "Vertical image URL"
+msgstr "Dikey resim URL'si"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
-msgstr ""
+msgstr "Simge URL'si"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:179
-#, fuzzy
+#: src/ui/dialogs/GamePropertiesDialog.vala:204
 msgid "Compatibility"
-msgstr "Uyumluluk ayarları iletişim kutusunu göster"
+msgstr "Uyumluluk"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:201
+#: src/ui/dialogs/GamePropertiesDialog.vala:226
 msgid "Launch from terminal"
-msgstr ""
+msgstr "Terminalden başlat"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:217
+#: src/ui/dialogs/GamePropertiesDialog.vala:242
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Panoya kopyala"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:219
-#, fuzzy
+#: src/ui/dialogs/GamePropertiesDialog.vala:244
 msgid "Add to Steam"
-msgstr "Oyunu çalıştır"
+msgstr "Steam'e Ekle"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:220
+#: src/ui/dialogs/GamePropertiesDialog.vala:245
 msgid "Add to the Steam library"
-msgstr ""
+msgstr "Steam kütüphanesine ekle"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:53
 #, c-format
 msgid "%s: Overlays"
-msgstr ""
+msgstr "%s: Bindirmeler"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid "Overlays are disabled"
-msgstr ""
+msgstr "Bindirmeler devre dışı"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid ""
@@ -1168,29 +1140,30 @@ msgid ""
 "\n"
 "Enabling will move game to the “base“ overlay"
 msgstr ""
+"DLC'leri ve modları yönetmek için bindirmeleri etkinleştirin\n"
+"\n"
+"Etkinleştirme, oyunu “temel” bindirmeye taşıyacaktır"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:175
-#, fuzzy
 msgid "Overlays"
-msgstr "Kaldır"
+msgstr "Bindirmeler"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:105
 msgid "Overlay ID (directory name)"
-msgstr ""
+msgstr "Bindirme kimliği (dizin adı)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:110
 msgid "Overlay name (optional)"
-msgstr ""
+msgstr "Bindirme adı (isteğe bağlı)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
-msgstr ""
+msgstr "Ekle"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
-#, fuzzy
 msgid "Enable overlays"
-msgstr "Kaldır"
+msgstr "Bindirmeleri etkinleştir"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:182
 #, c-format
@@ -1200,6 +1173,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Bu yoldaki bindirme kullanımı güvenli olmayabilir\n"
+"Devam etmek kendi sorumluluğunuzdadır\n"
+"\n"
+"Yol: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1208,338 +1185,313 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Bu yoldaki bindirme kullanımı desteklenmemektedir\n"
+"\n"
+"Yol: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
-#, fuzzy
 msgid "Open directory"
-msgstr "Dizin seçin"
+msgstr "Dizini aç"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
-#, fuzzy
 msgid "Remove overlay"
-msgstr "Kaldır"
+msgstr "Bindirmeyi kaldır"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:235
-#, fuzzy
 msgid "Run with compatibility layer"
-msgstr "Uyumluluk ayarları iletişim kutusunu göster"
+msgstr "Uyumluluk katmanıyla çalıştır"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
-#, fuzzy
 msgid "Corrupted installer: checksum mismatch in"
-msgstr "%s içinde sağlama uyuşmazlığı"
+msgstr "Bozuk yükleyici: sağlama toplamı uyuşmazlığı"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
-#, fuzzy
 msgid "Import emulated games"
-msgstr "Dizin seçin"
+msgstr "Emüle edilmiş oyunları içe aktar"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
-#, fuzzy
 msgid "Select directory with emulated games"
-msgstr "Dizin seçin"
+msgstr "Emüle edilmiş oyunların olduğu dizini seç"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
-#, fuzzy
 msgid "Detected games"
-msgstr "Dizin seçin"
+msgstr "Algılanan oyunlar"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
-#, fuzzy
 msgid "Select all"
-msgstr "Seç"
+msgstr "Tümünü seç"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
-#, fuzzy
 msgid "Select directory to import"
-msgstr "Dizin seçin"
+msgstr "İçe aktaracak dizini seç"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
-msgstr ""
+msgstr "Etkinleştirilmiş oyun kaynağı yok"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "Enable some game sources in settings"
-msgstr ""
+msgstr "Ayarlarda birkaç oyun kaynağını etkinleştirin"
 
 #: src/ui/views/WelcomeView.vala:57
 msgid "Let's get started"
-msgstr ""
+msgstr "Başlayalım"
 
 #: src/ui/views/WelcomeView.vala:71
 msgid "Skip"
-msgstr ""
+msgstr "Atla"
 
 #: src/ui/views/WelcomeView.vala:141
 msgid "Ready"
-msgstr ""
+msgstr "Hazır"
 
 #: src/ui/views/WelcomeView.vala:147
-#, fuzzy
 msgid "Authentication required"
-msgstr "%s: bozuk yükleyici"
+msgstr "Kimlik doğrulama gerekli"
 
 #: src/ui/views/WelcomeView.vala:152
-msgid "Authenticating..."
-msgstr ""
+msgid "Authenticating…"
+msgstr "Kimlik doğrulanıyor…"
 
 #: src/ui/views/WelcomeView.vala:163
-#, fuzzy, c-format
+#, c-format
 msgid "Install %s"
-msgstr "%s: bozuk yükleyici"
+msgstr "%s yükle"
 
 #: src/ui/views/WelcomeView.vala:164
 msgid "Return to GameHub after installing"
-msgstr ""
+msgstr "Yüklemeden sonra GameHub'a dön"
 
 #: src/ui/views/GamesView/GamesView.vala:134
-#, fuzzy
 msgid "No games"
-msgstr "Oyunu çalıştır"
+msgstr "Oyun yok"
 
 #: src/ui/views/GamesView/GamesView.vala:134
 msgid "Get some games or enable some game sources in settings"
-msgstr ""
+msgstr "Birkaç oyun edinin veya ayarlarda birkaç oyun kaynağını etkinleştirin"
 
-#: src/ui/views/GamesView/GamesView.vala:187
+#: src/ui/views/GamesView/GamesView.vala:190
 msgid "Grid view"
-msgstr ""
+msgstr "Izgara görünümü"
 
-#: src/ui/views/GamesView/GamesView.vala:188
+#: src/ui/views/GamesView/GamesView.vala:191
 msgid "List view"
-msgstr ""
+msgstr "Liste görünümü"
 
-#: src/ui/views/GamesView/GamesView.vala:196
-#, fuzzy
+#: src/ui/views/GamesView/GamesView.vala:199
 msgid "All games"
-msgstr "Oyunu çalıştır"
+msgstr "Tüm oyunlar"
 
-#: src/ui/views/GamesView/GamesView.vala:219
-#, fuzzy
+#: src/ui/views/GamesView/GamesView.vala:222
 msgid "Downloads"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirilenler"
 
-#: src/ui/views/GamesView/GamesView.vala:245
+#: src/ui/views/GamesView/GamesView.vala:248
 msgid "Filters"
-msgstr ""
+msgstr "Filtreler"
 
-#: src/ui/views/GamesView/GamesView.vala:253
+#: src/ui/views/GamesView/GamesView.vala:256
 #: src/ui/views/GamesView/AddGamePopover.vala:84
-#, fuzzy
 msgid "Add game"
-msgstr "Oyunu çalıştır"
+msgstr "Oyun ekle"
 
-#: src/ui/views/GamesView/GamesView.vala:260
+#: src/ui/views/GamesView/GamesView.vala:263
 msgid "Search"
-msgstr ""
+msgstr "Arama"
 
-#: src/ui/views/GamesView/GamesView.vala:387
+#: src/ui/views/GamesView/GamesView.vala:390
 msgid "Menu"
-msgstr ""
+msgstr "Menü"
 
-#: src/ui/views/GamesView/GamesView.vala:388
+#: src/ui/views/GamesView/GamesView.vala:391
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
-#, fuzzy
 msgid "Back"
-msgstr "Yedekleme"
+msgstr "Geri"
 
-#: src/ui/views/GamesView/GamesView.vala:567
-#, fuzzy, c-format
+#: src/ui/views/GamesView/GamesView.vala:570
+#, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] "Oyunu çalıştır"
-msgstr[1] "Oyunu çalıştır"
+msgstr[0] "%u oyun"
+msgstr[1] "%u oyun"
 
-#: src/ui/views/GamesView/GamesView.vala:583
-#, fuzzy
+#: src/ui/views/GamesView/GamesView.vala:586
 msgid "No user-added games"
-msgstr "Oyunu çalıştır"
+msgstr "Kullanıcı tarafından eklenen oyun yok"
 
-#: src/ui/views/GamesView/GamesView.vala:584
+#: src/ui/views/GamesView/GamesView.vala:587
 msgid "Add some games using plus button"
-msgstr ""
+msgstr "Artı düğmesini kullanarak birkaç oyun ekleyin"
 
-#: src/ui/views/GamesView/GamesView.vala:588
-#, fuzzy, c-format
+#: src/ui/views/GamesView/GamesView.vala:591
+#, c-format
 msgid "No %s games"
-msgstr "Oyunu çalıştır"
+msgstr "%s oyunu yok"
 
-#: src/ui/views/GamesView/GamesView.vala:589
+#: src/ui/views/GamesView/GamesView.vala:592
 msgid "Get some Linux-compatible games"
-msgstr ""
+msgstr "Birkaç Linux uyumlu oyun edinin"
 
-#: src/ui/views/GamesView/GamesView.vala:599
+#: src/ui/views/GamesView/GamesView.vala:602
 #, c-format
 msgid "No games matching “%s”"
-msgstr ""
+msgstr "\"%s\" ile eşleşen oyun yok"
 
-#: src/ui/views/GamesView/GamesView.vala:604
+#: src/ui/views/GamesView/GamesView.vala:607
 #, c-format
 msgid "No %1$s games matching “%2$s”"
-msgstr ""
+msgstr "“%2$s” ile eşleşen %1$s oyun yok"
 
-#: src/ui/views/GamesView/GamesView.vala:645
+#: src/ui/views/GamesView/GamesView.vala:650
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
+"Steam'den oyun yüklenmedi. Oyun listesi gizliliğinizi herkese açık olarak "
+"ayarlayın veya ayarlarda kendi Steam API anahtarınızı kullanın."
 
-#: src/ui/views/GamesView/GamesView.vala:646
+#: src/ui/views/GamesView/GamesView.vala:651
 msgid "Privacy"
-msgstr ""
+msgstr "Gizlilik"
 
-#: src/ui/views/GamesView/GamesView.vala:793
-#, fuzzy
+#: src/ui/views/GamesView/GamesView.vala:798
 msgid "Downloading images"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "Görüntüler indiriliyor"
 
-#: src/ui/views/GamesView/GamesView.vala:807
-#, fuzzy, c-format
+#: src/ui/views/GamesView/GamesView.vala:812
+#, c-format
 msgid "Downloading image: %s"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "Görüntü indiriliyor: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:125
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
-#, fuzzy
 msgid "Pause download"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirmeyi duraklat"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:130
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
-#, fuzzy
 msgid "Resume download"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirmeye devam et"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:135
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
-#, fuzzy
 msgid "Cancel download"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirmeyi iptal et"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:77
 msgid "Group"
-msgstr ""
+msgstr "Grup"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:102
 msgid "Sort"
-msgstr ""
+msgstr "Sırala"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
 #: src/ui/widgets/GameTagsList.vala:59
 msgid "Tags"
-msgstr ""
+msgstr "Etiketler"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:353
-#, fuzzy
 msgid "All platforms"
-msgstr "Oyunu çalıştır"
+msgstr "Tüm platformlar"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
-#, fuzzy
 msgid "Select game executable"
-msgstr "Çalıştırma dosyasını seçiniz"
+msgstr "Oyunun çalıştırılabilir dosyasını seç"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:82
-#, fuzzy
 msgid "Select game directory"
-msgstr "Dizin seçin"
+msgstr "Oyun dizinini seç"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
-#, fuzzy
 msgid "Download game images"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "Oyun görüntüleri indir"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
-msgstr ""
+msgstr "Detaylar"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:117
 msgctxt "game_context_menu"
 msgid "Favorite"
-msgstr ""
+msgstr "Favori"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:121
 msgctxt "game_context_menu"
 msgid "Hidden"
-msgstr ""
+msgstr "Gizli"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:133
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:236
-#, fuzzy
 msgid "Open installation directory"
-msgstr "Dizin seçin"
+msgstr "Kurulum dizinini aç"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
-#, fuzzy
 msgid "Open installers collection directory"
-msgstr "Dizin seçin"
+msgstr "Yükleyici koleksiyon dizinini aç"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
-#, fuzzy
 msgid "Open bonus collection directory"
-msgstr "Dizin seçin"
+msgstr "Bonus koleksiyon dizinini aç"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:239
-#, fuzzy
 msgid "Open screenshots directory"
-msgstr "Dizin seçin"
+msgstr "Ekran görüntüleri dizinini aç"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
-#, fuzzy
 msgid "Uninstall"
-msgstr "%s: bozuk yükleyici"
+msgstr "Kaldır"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:184
-#, fuzzy
 msgid "Properties"
-msgstr "Oyun özelliklerini aç"
+msgstr "Özellikler"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:100
-#, fuzzy, c-format
+#, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] "%s: bozuk yükleyici"
-msgstr[1] "%s: bozuk yükleyici"
+msgstr[0] "%d oyun seçildi"
+msgstr[1] "%d oyun seçildi"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be installed"
 msgid_plural "%d games will be installed"
-msgstr[0] "%s: bozuk yükleyici"
-msgstr[1] "%s: bozuk yükleyici"
+msgstr[0] "%d oyun yüklenecek"
+msgstr[1] "%d oyun yüklenecek"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:154
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] "%s: bozuk yükleyici"
-msgstr[1] "%s: bozuk yükleyici"
+msgstr[0] "%d oyun indirilecek"
+msgstr[1] "%d oyun indirilecek"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
-#, fuzzy, c-format
+#, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] "%s: bozuk yükleyici"
-msgstr[1] "%s: bozuk yükleyici"
+msgstr[0] "%d oyun için görüntü aranacak"
+msgstr[1] "%d oyun için görüntü aranacak"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] "%s: bozuk yükleyici"
-msgstr[1] "%s: bozuk yükleyici"
+msgstr[0] "%d oyun kaldırılacak"
+msgstr[1] "%d oyun kaldırılacak"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
 msgid "Refresh"
-msgstr ""
+msgstr "Yenile"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:175
 #, c-format
@@ -1548,253 +1500,249 @@ msgid ""
 msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
 msgstr[0] ""
+"%d oyun veritabanından kaldırılacak. Yeni veriler almak için GameHub'ı "
+"yeniden başlatın"
 msgstr[1] ""
+"%d oyun veritabanından kaldırılacak. Yeni veriler almak için GameHub'ı "
+"yeniden başlatın"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 msgid "Open store page"
-msgstr ""
+msgstr "Mağaza sayfasını aç"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:242
-#, fuzzy
 msgid "Game properties"
-msgstr "Oyun özelliklerini aç"
+msgstr "Oyun özellikleri"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
-msgstr ""
+msgstr "Başarılar"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:85
 #, c-format
 msgid "Unlocked: %s"
-msgstr ""
+msgstr "Kilidi açıldı: %s"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:90
 #, c-format
 msgid "Global percentage: %g%%"
-msgstr ""
+msgstr "Global yüzde: %%%g"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
 msgid "Playtime"
-msgstr ""
+msgstr "Oynama zamanı"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
 msgid "Playtime (local)"
-msgstr ""
+msgstr "Oynama zamanı (yerel)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
 msgid "Last launch"
-msgstr ""
+msgstr "Son başlatma"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
 #, c-format
 msgctxt "time"
 msgid "%dh"
-msgstr ""
+msgstr "%dsaat"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr ""
+msgstr "%ddk"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
-msgstr ""
+msgstr "Dil"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:80
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
-msgstr ""
+msgstr "Diller"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:74
 msgid "Categories"
-msgstr ""
+msgstr "Kategoriler"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:90
 msgid "Genre"
-msgstr ""
+msgstr "Tür"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:93
 msgid "Genres"
-msgstr ""
+msgstr "Türler"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:68
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:109
 msgctxt "igdb"
 msgid "Popularity"
-msgstr ""
+msgstr "Popülerlik"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:74
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:115
 msgctxt "igdb"
 msgid "Aggregated rating"
-msgstr ""
+msgstr "Toplu derecelendirme"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:75
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr ""
+msgstr "IGDB kullanıcı derecelendirmesi"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:76
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:117
 msgctxt "igdb"
 msgid "Total rating"
-msgstr ""
+msgstr "Toplam derecelendirme"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:85
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
 msgid "Release date"
-msgstr ""
+msgstr "Yayın tarihi"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:92
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:133
 msgctxt "igdb"
 msgid "Platforms"
-msgstr ""
+msgstr "Platformlar"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:98
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:139
 msgctxt "igdb"
 msgid "Genres"
-msgstr ""
+msgstr "Türler"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:104
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:145
 msgctxt "igdb"
 msgid "Keywords"
-msgstr ""
+msgstr "Anahtar kelimeler"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:111
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:152
 msgctxt "igdb"
 msgid "Links"
-msgstr ""
+msgstr "Linkler"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:158
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:208
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>%d</b> derecelendirmeye göre"
+msgstr[1] "<b>%d</b> derecelendirmeye göre"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:240
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:290
 msgctxt "igdb"
 msgid "Summary"
-msgstr ""
+msgstr "Özet"
 
-#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:251
+#: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:301
 msgctxt "igdb"
 msgid "Storyline"
-msgstr ""
+msgstr "Hikayesi"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
-#, fuzzy
 msgid "Select file"
-msgstr "Seç"
+msgstr "Dosya seç"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
-#, fuzzy
+#: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid "No images"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "Görüntü yok"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:72
+#: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
+"Bu oyun için hiçbir resim bulunamadı\n"
+"Oyun adının doğru olduğundan emin olun"
 
-#: src/ui/widgets/ImagesDownloadPopover.vala:93
-#, fuzzy
+#: src/ui/widgets/ImagesDownloadPopover.vala:94
 msgid "Search images:"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "Gürüntü ara:"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
-#, fuzzy
 msgid "Compatibility layer:"
-msgstr "Uyumluluk ayarları iletişim kutusunu göster"
+msgstr "Uyumluluk katmanı:"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
-msgstr ""
+msgstr "Yapılandır"
 
 #: src/ui/widgets/GameTagsList.vala:110
-#, fuzzy
 msgid "Add tag"
-msgstr "Oyunu çalıştır"
+msgstr "Etiket ekle"
 
 #: src/utils/downloader/Downloader.vala:159
 msgctxt "dl_status"
 msgid "Queued"
-msgstr ""
+msgstr "Sıraya konuldu"
 
 #: src/utils/downloader/Downloader.vala:160
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr ""
+msgstr "İndirme başlatılıyor"
 
 #: src/utils/downloader/Downloader.vala:161
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download started"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirme başladı"
 
 #: src/utils/downloader/Downloader.vala:162
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download finished"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirme bitti"
 
 #: src/utils/downloader/Downloader.vala:163
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download failed"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirme başarısız oldu"
 
 #: src/utils/downloader/Downloader.vala:165
 #, c-format
 msgctxt "dl_status"
 msgid "Downloading: %d%% (%s / %s) [%s/s]"
-msgstr ""
+msgstr "İndiriliyor: %%%d (%s / %s) [%s/s]"
 
 #: src/utils/downloader/Downloader.vala:167
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %d%% (%s / %s)"
-msgstr ""
+msgstr "Duraklatıldı: %%%d (%s / %s)"
 
 #: src/utils/downloader/Downloader.vala:169
-#, fuzzy
 msgctxt "dl_status"
 msgid "Download cancelled"
-msgstr "Seyir kaydı indirme yöneticisi"
+msgstr "İndirme iptal edildi"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
 msgid "Steam"
-msgstr ""
+msgstr "Steam"
 
 #: src/settings/UI.vala:154
 msgctxt "grid_size_preset"
 msgid "Steam (vertical)"
-msgstr ""
+msgstr "Steam (dikey)"
 
 #: src/settings/UI.vala:155
 msgctxt "grid_size_preset"
 msgid "GOG"
-msgstr ""
+msgstr "GOG"
 
 #: src/settings/UI.vala:156
 msgctxt "grid_size_preset"
 msgid "GOG (vertical)"
-msgstr ""
+msgstr "GOG (dikey)"
 
 #: src/settings/UI.vala:157
 msgctxt "grid_size_preset"
 msgid "Square"
-msgstr ""
+msgstr "Kare"
 
 #: src/settings/UI.vala:158
 msgctxt "grid_size_preset"
 msgid "Custom"
-msgstr ""
+msgstr "Özel"

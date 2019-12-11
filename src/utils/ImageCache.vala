@@ -23,35 +23,45 @@ namespace GameHub.Utils
 {
 	public class ImageCache
 	{
-		public static string DEFAULT_CACHED_FILE_PREFIX = "remote";
+		public static string DEFAULT_CACHED_FILE_PREFIX = "images/";
+
+		private static ArrayList<string> failed_urls;
+
+		#if USE_IMAGES_MEMCACHE
 		private static HashMap<string, Pixbuf?> cache;
+		#endif
 
 		public static File? local_file(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)
 		{
-			if(url == null || url == "") return null;
+			if(url == null || url == "" || url in failed_urls) return null;
 			var parts = url.split("?")[0].split(".");
 			var ext = parts.length > 1 ? parts[parts.length - 1] : null;
 			ext = ext != null && ext.length <= 6 ? "." + ext : null;
 			var hash = md5(url);
-			return FSUtils.file(FSUtils.Paths.Cache.Images, @"$(prefix)_$(hash)$(ext)");;
+			return FSUtils.file(FSUtils.Paths.Cache.Graphics, @"$(prefix)$(hash)$(ext)");;
 		}
 
 		public static async string? cache_image(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)
 		{
-			if(url == null || url == "") return null;
+			if(url == null || url == "" || url in failed_urls) return null;
 			var remote = File.new_for_uri(url);
 			var cached = local_file(url, prefix);
 			try
 			{
 				if(!cached.query_exists())
 				{
-					yield Downloader.download_file(remote, cached, null, false, false);
+					if(!cached.get_parent().query_exists())
+					{
+						cached.get_parent().make_directory_with_parents();
+					}
+					yield Downloader.download(remote, cached, null, false, false);
 				}
 				return cached.get_path();
 			}
 			catch(IOError.EXISTS e){}
 			catch(Error e)
 			{
+				failed_urls.add(url);
 				if(GameHub.Application.log_verbose)
 				{
 					warning("[ImageCache] Error loading image '%s': %s", url, e.message);
@@ -62,15 +72,21 @@ namespace GameHub.Utils
 
 		public static async Pixbuf? load(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)
 		{
-			if(url == null || url == "") return null;
+			if(url == null || url == "" || url in failed_urls) return null;
 
+			#if USE_IMAGES_MEMCACHE
 			if(cache.has_key(url)) return cache.get(url);
+			#endif
 
 			var cached = yield cache_image(url, prefix);
 			try
 			{
 				var pixbuf = cached != null ? new Pixbuf.from_file(cached) : null;
+
+				#if USE_IMAGES_MEMCACHE
 				cache.set(url, pixbuf);
+				#endif
+
 				return pixbuf;
 			}
 			catch(Error e){}
@@ -80,7 +96,10 @@ namespace GameHub.Utils
 
 		public static void init()
 		{
+			failed_urls = new ArrayList<string>();
+			#if USE_IMAGES_MEMCACHE
 			cache = new HashMap<string, Pixbuf?>();
+			#endif
 		}
 	}
 }

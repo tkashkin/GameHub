@@ -466,7 +466,7 @@ namespace GameHub.Data.Sources.Steam
 
 			if(game.image != null)
 			{
-				var cached = ImageCache.local_file(game.image, "image");
+				var cached = ImageCache.local_file(game.image, @"games/$(game.source.id)/$(game.id)/images/");
 				game_node.add_node(new BinaryVDF.StringNode.node("icon", cached.get_path()));
 			}
 

@@ -1,3 +1,320 @@
+		<release type="development" version="0.14.2.51.dev" date="2019-11-15" timestamp="1573843698">
+			<description>
+				<ul>
+					<li>Merge pull request #312 from Lucki/patch-1 [6075c9f]</li>
+					<li>Allow enabling d9vk [86b7d57]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.50.dev" date="2019-11-15" timestamp="1573841080">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Turkish) [006ff9f]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.49.dev" date="2019-11-12" timestamp="1573589070">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Turkish) [4d0a243]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.48.dev" date="2019-11-10" timestamp="1573423456">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Finnish) [4236830]</li>
+					<li>Translated using Weblate (Finnish) [8ae0e75]</li>
+					<li>Translated using Weblate (Catalan) [79c06dc]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.46.dev" date="2019-11-08" timestamp="1573200276">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Catalan) [7427529]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.45.dev" date="2019-11-08" timestamp="1573199123">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Finnish) [b20005b]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.44.dev" date="2019-11-07" timestamp="1573094582">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Finnish) [51f4546]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.43.dev" date="2019-11-06" timestamp="1573067923">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Catalan) [68f69e9]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.42.dev" date="2019-10-23" timestamp="1571784787">
+			<description>
+				<ul>
+					<li>Translated using Weblate (French) [cf641ac]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.41.dev" date="2019-10-20" timestamp="1571568786">
+			<description>
+				<ul>
+					<li>Translated using Weblate (French) [184c6e7]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.40.dev" date="2019-10-19" timestamp="1571475180">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Arabic) [f3ea1ed]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.39.dev" date="2019-10-18" timestamp="1571385205">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Arabic) [e851f70]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.38.dev" date="2019-10-16" timestamp="1571233984">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Arabic) [79598e1]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.37.dev" date="2019-10-13" timestamp="1570985576">
+			<description>
+				<ul>
+					<li>Translated using Weblate (French) [2c90003]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.36.dev" date="2019-10-12" timestamp="1570870370">
+			<description>
+				<ul>
+					<li>Translated using Weblate (French) [8f7f70c]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.35.dev" date="2019-10-11" timestamp="1570745074">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Indonesian) [a3a2e89]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.34.dev" date="2019-10-04" timestamp="1570190178">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [4693bf5]</li>
+					<li>Translated using Weblate (Dutch) [6057099]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.33.dev" date="2019-10-03" timestamp="1570100906">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Korean) [07f10c6]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.32.dev" date="2019-10-03" timestamp="1570053269">
+			<description>
+				<ul>
+					<li>Performance and memory usage improvements (#57) SteamGridDB image sizes support Added menu when IGDB returns multiple results [30b9b5e]</li>
+					<li>Image cache changes Vertical game images support [a785155]</li>
+					<li>Translated using Weblate (German) [833d510]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.29.dev" date="2019-09-07" timestamp="1567859146">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Portuguese (Portugal)) [2a7ac4c]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.28.dev" date="2019-09-06" timestamp="1567766049">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Portuguese (Portugal)) [a5403de]</li>
+					<li>[ci skip] Fix ellipsis in string (#301) [905f530]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.27.dev" date="2019-09-04" timestamp="1567571169">
+			<description>
+				<ul>
+					<li>Translated using Weblate (French) [f02b1a6]</li>
+					<li>Translated using Weblate (German) [a7d2474]</li>
+					<li>[ci skip] Update translations [654105c]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.25.dev" date="2019-09-02" timestamp="1567387110">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Arabic) [1a969ce]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.23.dev" date="2019-08-31" timestamp="1567272047">
+			<description>
+				<ul>
+					<li>Prevent multiple game launches (#280, #281) [fcb80e5]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.21.dev" date="2019-08-28" timestamp="1567016652">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Norwegian Bokmål) [404b8bb]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.19.dev" date="2019-08-22" timestamp="1566487458">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Dutch) [3821042]</li>
+					<li>Translated using Weblate (Portuguese (Brazil)) [27c29ff]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.18.dev" date="2019-08-21" timestamp="1566374918">
+			<description>
+				<ul>
+					<li>Games grid size customization [8a89a89]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.17.dev" date="2019-08-21" timestamp="1566356145">
+			<description>
+				<ul>
+					<li>Steam-like game launch command overrides (#297) Improved GOG API error handling Small UI tweaks [075168a]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.16.dev" date="2019-08-13" timestamp="1565660660">
+			<description>
+				<ul>
+					<li>Refresh GOG access token on error (#294) [dfab162]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.15.dev" date="2019-08-11" timestamp="1565511838">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Telugu) [8e019ba]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.14.dev" date="2019-08-10" timestamp="1565421699">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Telugu) [5d97064]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.13.dev" date="2019-08-10" timestamp="1565421508">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Hindi) [f804511]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.12.dev" date="2019-08-04" timestamp="1564916029">
+			<description>
+				<ul>
+					<li>Fix `Game.get_file()` (#291) [eecf1db]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.11.dev" date="2019-08-03" timestamp="1564863830">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Persian) [9b67620]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.10.dev" date="2019-08-02" timestamp="1564776851">
+			<description>
+				<ul>
+					<li>Fix overlays detection (#291) [6498058]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.9.dev" date="2019-08-02" timestamp="1564754684">
+			<description>
+				<ul>
+					<li>Add type checks in `Proton.find_proton_versions` (#292, #101) [9b022f2]</li>
+					<li>Translated using Weblate (Persian) [d1df472]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.7.dev" date="2019-08-02" timestamp="1564733797">
+			<description>
+				<ul>
+					<li>Added translation using Weblate (Persian) [62adec9]</li>
+					<li>[ci skip] Update `scripts/build.sh` [97b2775]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.6.dev" date="2019-07-31" timestamp="1564570720">
+			<description>
+				<ul>
+					<li>Parse `appinfo.vdf` to find Proton versions (#292, #101) [788bb28]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.5.dev" date="2019-07-29" timestamp="1564419516">
+			<description>
+				<ul>
+					<li>Add `/opt/` and `/var/opt/` to FSOverlay allowed paths list (#290) Wait for overlays to mount before updating game status (#291) [f28cc89]</li>
+					<li>[ci skip] Update mirrors [4bb1b7f]</li>
+					<li>[ci skip] Update source code mirrors [a1fb490]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.4.dev" date="2019-07-28" timestamp="1564314132">
+			<description>
+				<ul>
+					<li>Merge branch 'dev' of https://hosted.weblate.org/git/gamehub/translations into dev [9548658]</li>
+					<li>Translated using Weblate (Portuguese (Brazil)) [0ae8e38]</li>
+					<li>Fix sort func in `GameTagsList` Improved portability: GameHub now can be built on Windows in MSYS2 environment (doesn't work yet) [acfec61]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.3.dev" date="2019-07-26" timestamp="1564112695">
+			<description>
+				<ul>
+					<li>Fix build with older `glib` and/or without `libmanette` [42aac9c]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="development" version="0.14.2.2.dev" date="2019-07-23" timestamp="1563894498">
+			<description>
+				<ul>
+					<li>Translated using Weblate (Portuguese (Brazil)) [3eda1c3]</li>
+				</ul>
+			</description>
+		</release>
+		<release type="stable" version="0.14.2.1.master" date="2019-07-13" timestamp="1563042410">
+			<description>
+				<ul>
+					<li>[ci skip] Bump version [be55ac0]</li>
+				</ul>
+			</description>
+		</release>
 		<release type="development" version="0.14.1.25.dev" date="2019-07-13" timestamp="1563008534">
 			<description>
 				<ul>

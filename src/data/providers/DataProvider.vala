@@ -21,13 +21,11 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Providers
 {
-	public abstract class DataProvider: Provider
+	public abstract class DataProvider<T>: Provider
 	{
 		public override string icon { get { return "text-x-generic-symbolic"; } }
 
-		public abstract async Result? data(Game game);
-
-		public abstract class Result: Object {}
+		public abstract async T data(Game game);
 	}
 
 	public static DataProvider[] DataProviders;

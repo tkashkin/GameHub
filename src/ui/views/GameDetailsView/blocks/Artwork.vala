@@ -30,9 +30,11 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 	{
 		private AutoSizeImage image_view;
 
-		public Artwork(Game game)
+		public GameDetailsView details_view { get; construct; }
+
+		public Artwork(Game game, GameDetailsView details_view)
 		{
-			Object(game: game, orientation: Orientation.VERTICAL, text_max_width: 48);
+			Object(game: game, orientation: Orientation.VERTICAL, text_max_width: 48, details_view: details_view);
 		}
 
 		construct
@@ -64,19 +66,26 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			card.add(image_overlay);
 			add(card);
 
-			var images_download_popover = new ImagesDownloadPopover(game, images_download_btn);
+			Allocation alloc;
+			details_view.get_allocation(out alloc);
 
-			image_view.load(game.image, "image");
-			game.notify["image"].connect(() => {
-				image_view.load(game.image, "image");
-			});
+			var images_download_popover = new ImagesDownloadPopover(game, images_download_btn, alloc.width - 200, alloc.height - 200);
 
 			Settings.UI.Appearance.instance.notify["grid-card-width"].connect(update_image_constraints);
 			Settings.UI.Appearance.instance.notify["grid-card-height"].connect(update_image_constraints);
 			update_image_constraints();
 
+			game.notify["image"].connect(load_image);
+			game.notify["image-vertical"].connect(load_image);
+			load_image();
+
 			show_all();
 			if(parent != null) parent.queue_draw();
+		}
+
+		private void load_image()
+		{
+			image_view.load(game.image, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
 		}
 
 		private void update_image_constraints()

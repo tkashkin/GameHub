@@ -66,7 +66,9 @@ namespace GameHub.Utils
 				public const string Home = "~/.cache/com.github.tkashkin.gamehub";
 
 				public const string Cookies = FSUtils.Paths.Cache.Home + "/cookies";
-				public const string Images = FSUtils.Paths.Cache.Home + "/images";
+
+				public const string OldImages = FSUtils.Paths.Cache.Home + "/images";
+				public const string Graphics = FSUtils.Paths.Cache.Home + "/graphics";
 
 				public const string Database = FSUtils.Paths.Cache.Home + "/gamehub.db";
 
@@ -420,8 +422,15 @@ namespace GameHub.Utils
 		public static void make_dirs()
 		{
 			mkdir(FSUtils.Paths.Cache.Home);
-			mkdir(FSUtils.Paths.Cache.Images);
+			mkdir(FSUtils.Paths.Cache.Graphics);
 			mkdir(FSUtils.Paths.Humble.Cache);
+
+			// remove old images cache
+			var old_images_cache = file(FSUtils.Paths.Cache.OldImages);
+			if(old_images_cache != null && old_images_cache.query_exists())
+			{
+				rm(old_images_cache.get_path(), null, "-rf");
+			}
 
 			#if FLATPAK
 			var paths = Paths.Settings.instance;

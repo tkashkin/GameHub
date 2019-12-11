@@ -644,7 +644,7 @@ namespace GameHub.Data
 										n.set_icon(new ThemedIcon("dialog-warning"));
 										if(game != null)
 										{
-											var icon = ImageCache.local_file(game.icon, "icon");
+											var icon = ImageCache.local_file(game.icon, @"games/$(game.source.id)/$(game.id)/icons/");
 											if(icon != null && icon.query_exists())
 											{
 												n.set_icon(new FileIcon(icon));
@@ -779,7 +779,7 @@ namespace GameHub.Data
 									n.set_icon(new ThemedIcon("dialog-warning"));
 									if(game != null)
 									{
-										var icon = ImageCache.local_file(game.icon, "icon");
+										var icon = ImageCache.local_file(game.icon, @"games/$(game.source.id)/$(game.id)/icons/");
 										if(icon != null && icon.query_exists())
 										{
 											n.set_icon(new FileIcon(icon));

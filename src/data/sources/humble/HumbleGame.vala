@@ -115,6 +115,7 @@ namespace GameHub.Data.Sources.Humble
 			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
 			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
 			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
+			image_vertical = Tables.Games.IMAGE_VERTICAL.get(s);
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -334,7 +335,7 @@ namespace GameHub.Data.Sources.Humble
 					NotificationPriority.HIGH,
 					n => {
 						n.set_icon(new ThemedIcon("dialog-warning"));
-						var cached_icon = ImageCache.local_file(icon, "icon");
+						var cached_icon = ImageCache.local_file(icon, @"$(source.id)/$(id)/icons/");
 						if(cached_icon != null && cached_icon.query_exists())
 						{
 							n.set_icon(new FileIcon(cached_icon));

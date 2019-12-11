@@ -5,7 +5,11 @@ import subprocess
 
 prefix = os.environ.get('MESON_INSTALL_PREFIX', '/usr/local')
 datadir = os.path.join(prefix, 'share')
+bindir = os.path.join(prefix, 'bin')
 schemadir = os.path.join(os.environ['MESON_INSTALL_PREFIX'], 'share', 'glib-2.0', 'schemas')
+
+if os.environ.get('MESON_INSTALL_DESTDIR_PREFIX'):
+    subprocess.call(['ln', '-s', 'com.github.tkashkin.gamehub', os.path.join(os.environ.get('MESON_INSTALL_DESTDIR_PREFIX'), 'bin', 'gamehub')])
 
 if not os.environ.get('DESTDIR'):
     print('Updating icon cache...')
