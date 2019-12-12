@@ -54,7 +54,7 @@ namespace GameHub.Utils
 					{
 						cached.get_parent().make_directory_with_parents();
 					}
-					yield Downloader.download(remote, cached, null, false, false);
+					yield Downloader.download_file(remote, cached, null, false, false);
 				}
 				return cached.get_path();
 			}
