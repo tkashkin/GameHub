@@ -87,10 +87,7 @@ namespace GameHub.Data.Sources.Itch
 
 			butler_executable = butler;
 
-			if(butler_executable != null && butler_executable.query_exists())
-			{
-				installed = true;
-			}
+			installed = butler_executable != null && butler_executable.query_exists();
 
 			return (!) installed;
 		}
