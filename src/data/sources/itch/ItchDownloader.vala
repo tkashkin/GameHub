@@ -96,7 +96,7 @@ namespace GameHub.Data.Sources.Itch
 
 			game.status = new Game.Status(Game.State.DOWNLOADING, game, download);
 
-			yield connection.install(game.int_id, installer.json, install_id, game.cave);
+			yield connection.install(game.int_id, installer.int_id, install_id);
 
 			lock(downloads) downloads.remove(game.full_id);
 			lock(dl_info) dl_info.remove(game.full_id);

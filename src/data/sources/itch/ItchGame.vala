@@ -195,17 +195,7 @@ namespace GameHub.Data.Sources.Itch
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			var uploads = yield ((Itch) source).get_game_uploads(this);
-			yield do_install(uploads, install_mode, install.callback);
-		}
 
-		public async void install_updates(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
-		{
-			var uploads = yield ((Itch) source).get_game_updates(this);
-			yield do_install(uploads, install_mode, install_updates.callback);
-		}
-
-		private async void do_install(ArrayList<Json.Object> uploads, Runnable.Installer.InstallMode install_mode, owned SourceFunc? callback)
-		{
 			if(uploads == null || uploads.size == 0)
 			{
 				is_installable = false;
@@ -239,14 +229,12 @@ namespace GameHub.Data.Sources.Itch
 				}
 			}
 
-			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, (owned)callback);
+			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;
 		}
 
 		public override async void run()
 		{
-			yield install_updates();
-
 			if(can_be_launched(true))
 			{
 				Runnable.IsLaunched = is_running = true;
@@ -282,7 +270,7 @@ namespace GameHub.Data.Sources.Itch
 			public int int_id { get { return int.parse(id); } }
 
 			public ItchGame game;
-			public Json.Object json;
+			private Json.Object json;
 
 			public string? display_name;
 			public string? file_name;

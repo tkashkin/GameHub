@@ -152,7 +152,7 @@ namespace GameHub.Data.Sources.Itch
 			return uploads;
 		}
 
-		public async void install(int game_id, Json.Object upload, string install_id, Cave? cave=null)
+		public async void install(int game_id, int upload_id, string install_id)
 		{
 			var install_dir = FSUtils.mkdir(FSUtils.Paths.Itch.Games);
 			var install_dir_is_added = false;
@@ -179,25 +179,16 @@ namespace GameHub.Data.Sources.Itch
 				install_location_id = add_install_location_result.get_object_member("installLocation").get_string_member("id");
 			}
 
-			var install_queue_result = yield client.call("Install.Queue", Parser.json(j => {
-				j.set_member_name("build").begin_object()
-					.set_member_name("id").add_int_value(upload.get_int_member("buildId"))
+			var install_queue_result = yield client.call("Install.Queue", Parser.json(j => j
+				.set_member_name("game").begin_object()
+					.set_member_name("id").add_int_value(game_id)
+					.end_object()
+				.set_member_name("upload").begin_object()
+					.set_member_name("id").add_int_value(upload_id)
 					.end_object()
 				.set_member_name("installLocationId").add_string_value(install_location_id)
 				.set_member_name("queueDownload").add_boolean_value(true)
-				.set_member_name("fastQueue").add_boolean_value(true);
-				if(cave == null)
-				{
-					j.set_member_name("game").begin_object()
-						.set_member_name("id").add_int_value(game_id)
-						.end_object();
-				}
-				else
-				{
-					j.set_member_name("caveId").add_string_value(cave.id);
-					j.set_member_name("reason").add_string_value("update");
-				}
-			}));
+			));
 
 			var staging_folder = install_queue_result.get_string_member("stagingFolder");
 			yield client.call("Install.Perform", Parser.json(j => j
@@ -212,32 +203,6 @@ namespace GameHub.Data.Sources.Itch
 				.set_member_name("id").add_string_value(id)
 			));
 			return result.get_boolean_member("didCancel");
-		}
-
-		public async ArrayList<Json.Object>? get_updates(Cave[] caves)
-		{
-			var result = yield client.call("CheckUpdate", Parser.json(j => {
-				j.set_member_name("caveIds").begin_array();
-				foreach(var cave in caves)
-				{
-					j.add_string_value(cave.id);
-				}
-				j.end_array();
-			}));
-			var uploads = new ArrayList<Json.Object>();
-			if(result.has_member("updates"))
-			{
-				result.get_array_member("updates").foreach_element((au, iu, update_node) => {
-					var update = update_node.get_object();
-					if(update.has_member("choices"))
-					{
-						update.get_array_member("choices").foreach_element((ac, ic, choice_node) => {
-							uploads.add(choice_node.get_object().get_object_member("upload"));
-						});
-					}
-				});
-			}
-			return uploads;
 		}
 
 		public async void uninstall(string cave_id)
