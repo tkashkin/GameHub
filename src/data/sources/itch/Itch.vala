@@ -213,11 +213,6 @@ namespace GameHub.Data.Sources.Itch
 			return yield butler_connection.get_game_uploads(game.int_id);
 		}
 
-		public async ArrayList<Json.Object>? get_game_updates(ItchGame game)
-		{
-			return yield butler_connection.get_updates({game.cave});
-		}
-
 		public async void install_game(ItchGame.Installer installer)
 		{
 			yield ItchDownloader.get_instance().download(installer, butler_daemon);
