@@ -153,7 +153,12 @@ namespace GameHub.Data.Sources.Itch
 
 		public override void cancel()
 		{
-			butler_connection.cancel_install.begin(id);
+			butler_connection.cancel_install.begin(id, (obj, result) => {
+				var cancelled = butler_connection.cancel_install.end(result);
+				if(cancelled) {
+					status = new Status(Download.State.CANCELLED);
+				}
+			});
 		}
 
 		public class Status: Download.Status
