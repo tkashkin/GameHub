@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-12-18 03:21+0000\n"
+"PO-Revision-Date: 2019-12-27 02:21+0000\n"
 "Last-Translator: wangling12 <hexinn12@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gamehub/translations/zh_Hans/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 3.10\n"
 
 #: src/app.vala:89
 msgid "Show help"
@@ -801,7 +801,7 @@ msgstr "未认证"
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr "认证为<b>%s </ b>"
+msgstr "认证为<b>%s </b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
@@ -864,7 +864,7 @@ msgstr "未找到内核"
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
-msgstr[0] "找到 %u 内核"
+msgstr[0] "找到 %u 个内核"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:168
@@ -875,7 +875,7 @@ msgstr "没有自定义模拟器"
 #, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
-msgstr[0] "%u自定义模拟器"
+msgstr[0] "%u个自定义模拟器"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
@@ -954,7 +954,6 @@ msgid "Icon"
 msgstr "图标"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:325
-#, fuzzy
 msgid ""
 "<b>findutils</b>-compatible glob patterns\n"
 "\n"
@@ -965,9 +964,9 @@ msgid ""
 msgstr ""
 "<b>findutils</b>兼容的全局模式\n"
 "\n"
-"<b>•</ b>可以用<b>|</b>分隔多个模式\n"
-"<b>•</ b>以<b> ./ </b>开头的模式以匹配相对路径\n"
-"<b>•</ b> $<b>basename</b>变量将替换为游戏的可执行文件名称（不带扩展名）"
+"<b>•</b>可以用<b>|</b>分隔多个模式\n"
+"<b>•</b>以<b> ./ </b>开头的模式以匹配相对路径\n"
+"<b>•</b> $<b>basename</b>变量将替换为游戏的可执行文件名称（不带扩展名）"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
@@ -1165,6 +1164,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"此路径的叠加用法可能不安全\n"
+"如果继续需要，自行承担风险\n"
+"\n"
+"路径：<b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1173,6 +1176,9 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"不支持此路径的叠加用法\n"
+"\n"
+"路径：<b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
@@ -1301,7 +1307,7 @@ msgstr "返回"
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] "%u 游戏"
+msgstr[0] "%u 个游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:586
 msgid "No user-added games"
@@ -1441,7 +1447,7 @@ msgstr "属性"
 #, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] "已选择 %d 游戏"
+msgstr[0] "已选择 %d 个游戏"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
 #, c-format
@@ -1477,7 +1483,7 @@ msgid ""
 "%d game will be removed from database. Restart GameHub to fetch new data"
 msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
-msgstr[0] "%d 游戏将从数据库中删除。重新启动 GameHub 以获取新数据"
+msgstr[0] "%d 个游戏将从数据库中删除。重新启动 GameHub 以获取新数据"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 msgid "Open store page"
