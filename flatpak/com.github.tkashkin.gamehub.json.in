@@ -1,9 +1,9 @@
 {
 	"app-id": "com.github.tkashkin.gamehub",
 	"base": "io.elementary.BaseApp",
-	"base-version": "juno",
+	"base-version": "juno-19.08",
 	"runtime": "org.gnome.Platform",
-	"runtime-version": "3.28",
+	"runtime-version": "3.34",
 	"sdk": "org.gnome.Sdk",
 	"command": "com.github.tkashkin.gamehub",
 	"separate-locales": false,
@@ -45,15 +45,45 @@
 		"--extension=org.freedesktop.Platform.GL32=enable-if=active-gl-driver",
 		"--filesystem=/sys/module/nvidia:ro",
 
-		"--talk-name=ca.desrt.dconf",
-		"--filesystem=xdg-run/dconf",
-		"--filesystem=~/.config/dconf:ro",
-		"--env=DCONF_USER_CONFIG_DIR=.config/dconf",
-
 		"--filesystem=host",
 		"--filesystem=home",
 		"--filesystem=~/.var/app/com.valvesoftware.Steam"
 	],
+add-extensions:
+  org.gnome.Platform.Compat.i386:
+    directory: lib/i386-linux-gnu
+    version: "3.34"
+
+  org.gnome.Platform.Compat.i386.Debug:
+    directory: lib/debug/lib/i386-linux-gnu
+    version: "3.34"
+    no-autodownload: true
+
+  org.freedesktop.Platform.GL32:
+    directory: lib/i386-linux-gnu/GL
+    version: "1.4"
+    versions: "19.08;1.4"
+    subdirectories: true
+    no-autodownload: true
+    autodelete: false
+    add-ld-path: lib
+    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d;OpenCL/vendors;lib/dri;lib/d3d;vulkan/explicit_layer.d
+    download-if: active-gl-driver
+    enable-if: active-gl-driver
+
+sdk-extensions:
+  - org.gnome.Sdk.Compat.i386
+  - org.freedesktop.Sdk.Extension.toolchain-i386
+
+x-compat-i386-opts: &compat_i386_opts
+  prepend-pkg-config-path: /app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig
+  ldflags: -L/app/lib32
+  append-path: /usr/lib/sdk/toolchain-i386/bin
+  env:
+    CC: i686-unknown-linux-gnu-gcc
+    CXX: i686-unknown-linux-gnu-g++
+  libdir: /app/lib32
+
 	"cleanup": [
 		"/include",
 		"/lib/pkgconfig",
