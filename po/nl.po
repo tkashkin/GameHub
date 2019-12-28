@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-28 07:48+0300\n"
-"PO-Revision-Date: 2019-10-04 11:56+0000\n"
+"PO-Revision-Date: 2019-12-29 02:33+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 3.10\n"
 
 #: src/app.vala:90
 msgid "Show help"
@@ -407,9 +407,8 @@ msgid "Show DXVK info overlay"
 msgstr "DXVK-informatieoverlay tonen"
 
 #: src/data/compat/Proton.vala:58
-#, fuzzy
 msgid "Enable DirectX 9 compatibility layer"
-msgstr "DirectX 11-comptabiliteit uitschakelen"
+msgstr "DirectX 9-comptabiliteit inschakelen"
 
 #: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
 msgid "Silent installation"
@@ -1683,10 +1682,10 @@ msgid "%dm"
 msgstr "%dm"
 
 #: src/utils/Utils.vala:350
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr "%du"
+msgstr "%ds"
 
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
@@ -1714,28 +1713,26 @@ msgid "Download failed"
 msgstr "Downloaden mislukt"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "Bezig met downloaden"
+msgstr "Bezig met downloaden: %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
 msgstr "Bezig met downloaden"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "Gepauzeerd: %d%% (%s/%s)"
+msgstr "Gepauzeerd: %s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "Downloaden pauzeren"
+msgstr "Gepauzeerd"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1744,10 +1741,10 @@ msgstr "Downloaden geannuleerd"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "Bezig met downloaden: %d%% (%s/%s) [%s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
