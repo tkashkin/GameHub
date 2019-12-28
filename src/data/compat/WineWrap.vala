@@ -98,7 +98,7 @@ namespace GameHub.Data.Compat
 
 			try
 			{
-				var wrapper = yield Downloader.download(wrapper_remote, wrapper_local);
+				var wrapper = yield Downloader.download_file(wrapper_remote, wrapper_local);
 
 				if(wrapper == null || !wrapper.query_exists()) return;
 

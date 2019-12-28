@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 00:49+0300\n"
+"POT-Creation-Date: 2019-12-28 07:48+0300\n"
 "PO-Revision-Date: 2019-08-22 15:24+0000\n"
 "Last-Translator: Wilker Santana da Silva <wilker@tutamail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -22,63 +22,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.9-dev\n"
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Show help"
 msgstr "Mostrar ajuda"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show application version and exit"
 msgstr "Mostrar versão do aplicativo e sair"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Restart with GDB debugger attached"
 msgstr "Reiniciar com o depurador do GDB vinculado"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Show full GDB backtrace"
 msgstr "Mostrar registro completo do GDB"
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Tratar erros fatais como críticos e fechar a aplicação"
 
-#: src/app.vala:97
+#: src/app.vala:98
 msgid "Show main window"
 msgstr "Mostrar janela principal"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show application settings dialog"
 msgstr "Mostrar diálogo de opções do aplicativo"
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Show about dialog"
 msgstr "Mostrar o dialogo de \"Sobre\""
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Maximum number of background worker threads"
 msgstr "Número máximo de threads em trabalho em segundo plano"
 
-#: src/app.vala:104
+#: src/app.vala:105
 msgid "Run game"
 msgstr "Executar o jogo"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Show compatibility options dialog"
 msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Open game details"
 msgstr "Abrir detalhes do jogo"
 
-#: src/app.vala:107
+#: src/app.vala:108
 msgid "Open game properties"
 msgstr "Abrir propriedades do jogo"
 
-#: src/app.vala:111
+#: src/app.vala:112
 msgid "Enable debug logging"
 msgstr "Ativar log de depuração"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -86,35 +86,35 @@ msgstr ""
 "Registrar processo de autenticação e informações sensíveis como tokens de "
 "autenticação"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid "Log download manager"
 msgstr "Log do gerenciador de download"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log background workers start/stop"
 msgstr "Registrar trabalhadores de fundo iniciar/parar"
 
-#: src/app.vala:115
+#: src/app.vala:116
 msgid "Disable log messages filtering"
 msgstr "Desativar filtro de registro de mensagens"
 
-#: src/app.vala:116
+#: src/app.vala:117
 msgid "Verbose logging"
 msgstr "Registro detalhado"
 
-#: src/app.vala:245
+#: src/app.vala:246
 msgid "Game Options:"
 msgstr "Opções do Jogo:"
 
-#: src/app.vala:245
+#: src/app.vala:246
 msgid "Show game options help"
 msgstr "Mostrar ajuda de opções de jogo"
 
-#: src/app.vala:253
+#: src/app.vala:254
 msgid "Logging Options:"
 msgstr "Opções de Logs:"
 
-#: src/app.vala:253
+#: src/app.vala:254
 msgid "Show logging options help"
 msgstr "Mostrar ajuda sobre logs"
 
@@ -141,42 +141,42 @@ msgstr "Cancelar"
 msgid "Select directory"
 msgstr "Selecione o diretório"
 
-#: src/data/Runnable.vala:423
+#: src/data/Runnable.vala:617
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr "Parte %1$u de %2$u: %3$s"
 
-#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:640 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: instalador corrompido"
 
-#: src/data/Runnable.vala:447
+#: src/data/Runnable.vala:641
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Incompatibilidade de soma de verificação em %s"
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
+#: src/data/Runnable.vala:655 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "Exibir arquivo"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
+#: src/data/Runnable.vala:656 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Remover"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
+#: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "Cópia de segurança"
 
-#: src/data/Runnable.vala:613
+#: src/data/Runnable.vala:775
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: não foi possível detectar o executável principal"
 
-#: src/data/Runnable.vala:614
+#: src/data/Runnable.vala:776
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -185,7 +185,7 @@ msgstr ""
 "automaticamente.\n"
 "Por favor, defina o executável principal nas propriedades do jogo."
 
-#: src/data/Runnable.vala:850
+#: src/data/Runnable.vala:905
 msgctxt "platform"
 msgid "Emulated"
 msgstr "Emulado"
@@ -380,7 +380,7 @@ msgstr "Jogar"
 msgid "Show WineWrap menu"
 msgstr "Mostrar menu do WineWrap"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:131
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:132
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "Mate aplicativos no prefixo"
@@ -409,35 +409,40 @@ msgstr "Use WineD3D11 como camada de compatibilidade DirectX 11"
 msgid "Show DXVK info overlay"
 msgstr "Mostrar sobreposição de informações do DXVK"
 
-#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
+#: src/data/compat/Proton.vala:58
+#, fuzzy
+msgid "Enable DirectX 9 compatibility layer"
+msgstr "Desativar camada de compatibilidade do DirectX 11"
+
+#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
 msgid "Silent installation"
 msgstr "Instalação silenciosa"
 
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
+#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
 msgstr "Instalação muito silenciosa"
 
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
 msgstr "Suprimir mensagens"
 
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
+#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:69
 msgid "No GUI"
 msgstr "Sem GUI"
 
-#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:120 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
 msgstr "Abrir diretório de prefixo"
 
-#: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:123 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
 msgstr "Executar winecfg"
 
-#: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:126 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
 msgstr "Executar winetricks"
 
-#: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:129 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
 msgstr "Executar taskmgr"
 
@@ -823,7 +828,7 @@ msgid "Authenticated"
 msgstr "Autenticado"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
-#: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
+#: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:111
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
@@ -1062,26 +1067,26 @@ msgctxt "about_link"
 msgid "Forks"
 msgstr "Garfos"
 
-#: src/ui/dialogs/InstallDialog.vala:112
+#: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr "Importar"
 
-#: src/ui/dialogs/InstallDialog.vala:113
+#: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 msgid "Download"
 msgstr "Transferências"
 
-#: src/ui/dialogs/InstallDialog.vala:210
+#: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
 msgstr "Selecione o instalador"
 
-#: src/ui/dialogs/InstallDialog.vala:219
+#: src/ui/dialogs/InstallDialog.vala:216
 #, c-format
 msgid "Installer size: %s"
 msgstr "Tamanho do instalador: %s"
 
-#: src/ui/dialogs/InstallDialog.vala:329
+#: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
 msgstr "Desconhecido"
 
@@ -1375,17 +1380,17 @@ msgstr "Baixando imagens"
 msgid "Downloading image: %s"
 msgstr "Baixando imagem: %s"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:125
+#: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Pausar download"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:130
+#: src/ui/views/GamesView/DownloadProgressView.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Retomar download"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:135
+#: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Cancelar o download"
@@ -1550,18 +1555,6 @@ msgstr "Tempo de reprodução (local)"
 msgid "Last launch"
 msgstr "Último lançamento"
 
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dh"
-msgstr "%dh"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dm"
-msgstr "%dm"
-
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
@@ -1684,47 +1677,84 @@ msgstr "Configurar"
 msgid "Add tag"
 msgstr "Adicionar etiqueta"
 
-#: src/utils/downloader/Downloader.vala:159
+#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#, c-format
+msgctxt "time"
+msgid "%dh"
+msgstr "%dh"
+
+#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#, c-format
+msgctxt "time"
+msgid "%dm"
+msgstr "%dm"
+
+#: src/utils/Utils.vala:350
+#, fuzzy, c-format
+msgctxt "time"
+msgid "%ds"
+msgstr "%dh"
+
+#: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
 msgstr "Na fila"
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Iniciando o download"
 
-#: src/utils/downloader/Downloader.vala:161
+#: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Download iniciado"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:203
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Download finalizado"
 
-#: src/utils/downloader/Downloader.vala:163
+#: src/utils/downloader/Downloader.vala:204
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Falha no download"
 
-#: src/utils/downloader/Downloader.vala:165
-#, c-format
+#: src/utils/downloader/Downloader.vala:208
+#, fuzzy, c-format
 msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s) [%s/s]"
-msgstr "Baixando: %d%% (%s / %s) [%s/s]"
+msgid "Downloading: %s"
+msgstr "Baixando"
 
-#: src/utils/downloader/Downloader.vala:167
-#, c-format
+#: src/utils/downloader/Downloader.vala:210
+#, fuzzy
 msgctxt "dl_status"
-msgid "Paused: %d%% (%s / %s)"
+msgid "Downloading"
+msgstr "Baixando"
+
+#: src/utils/downloader/Downloader.vala:214
+#, fuzzy, c-format
+msgctxt "dl_status"
+msgid "Paused: %s"
 msgstr "Pausado: %d%% (%s / %s)"
 
-#: src/utils/downloader/Downloader.vala:169
+#: src/utils/downloader/Downloader.vala:216
+#, fuzzy
+msgctxt "dl_status"
+msgid "Paused"
+msgstr "Pausar download"
+
+#: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Download cancelado"
+
+#. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
+#: src/utils/downloader/Downloader.vala:262
+#, fuzzy, c-format
+msgctxt "dl_status"
+msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
+msgstr "Baixando: %d%% (%s / %s) [%s/s]"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"

@@ -415,7 +415,7 @@ namespace GameHub.UI.Views.GamesView
 			add_game_button.opacity = 0;
 			add_game_button.sensitive = false;
 
-			Downloader.get_instance().dl_started.connect(dl => {
+			Downloader.download_manager().dl_started.connect(dl => {
 				Idle.add(() => {
 					downloads_list.add(new DownloadProgressView(dl));
 					downloads.sensitive = true;
@@ -432,7 +432,7 @@ namespace GameHub.UI.Views.GamesView
 					return Source.REMOVE;
 				}, Priority.LOW);
 			});
-			Downloader.get_instance().dl_ended.connect(dl => {
+			Downloader.download_manager().dl_ended.connect(dl => {
 				Idle.add(() => {
 					downloads_count--;
 					if(downloads_count < 0) downloads_count = 0;

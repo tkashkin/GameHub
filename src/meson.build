@@ -28,6 +28,7 @@ deps = [
 	dependency('gee-0.8'),
 	dependency('sqlite3'),
 	dependency('libxml-2.0'),
+	dependency('gio-unix-2.0'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
@@ -49,6 +50,13 @@ sources = [
 	'data/sources/humble/Humble.vala',
 	'data/sources/humble/HumbleGame.vala',
 	'data/sources/humble/Trove.vala',
+
+	'data/sources/itch/Itch.vala',
+	'data/sources/itch/ItchGame.vala',
+	'data/sources/itch/ItchDownloader.vala',
+	'data/sources/itch/ButlerDaemon.vala',
+	'data/sources/itch/ButlerConnection.vala',
+	'data/sources/itch/ButlerClient.vala',
 
 	'data/sources/user/User.vala',
 	'data/sources/user/UserGame.vala',
@@ -93,6 +101,7 @@ sources = [
 	'ui/dialogs/SettingsDialog/pages/sources/Steam.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/GOG.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Humble.vala',
+	'ui/dialogs/SettingsDialog/pages/sources/Itch.vala',
 	'ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala',
 	'ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala',
 	'ui/dialogs/SettingsDialog/pages/providers/Providers.vala',

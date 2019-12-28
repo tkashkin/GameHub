@@ -57,7 +57,7 @@ namespace GameHub.Utils
 		}
 		catch(Error e)
 		{
-			warning(e.message);
+			warning("[Utils.open_uri] Error while opening '%s': %s", uri, e.message);
 		}
 	}
 
@@ -333,6 +333,21 @@ namespace GameHub.Utils
 	public static string get_relative_datetime(GLib.DateTime date_time)
 	{
 		return date_time.format("%x %R");
+	}
+
+	private string minutes_to_string(int64 min)
+	{
+		int h = (int) min / 60;
+		int m = (int) min - (h * 60);
+		return (h > 0 ? C_("time", "%dh").printf(h) + " " : "") + C_("time", "%dm").printf(m);
+	}
+
+	private string seconds_to_string(int64 sec)
+	{
+		int h = (int) sec / 3600;
+		int m = (int) (sec - (h * 3600)) / 60;
+		int s = (int) sec - (h * 3600) - (m * 60);
+		return (h > 0 ? C_("time", "%dh").printf(h) + " " : "") + (m > 0 ? C_("time", "%dm").printf(m) + " " : "") + C_("time", "%ds").printf(s);
 	}
 
 	public static void notify(string title, string? body=null, NotificationPriority priority=NotificationPriority.NORMAL, NotificationConfigureDelegate? config=null)

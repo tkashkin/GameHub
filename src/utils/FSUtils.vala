@@ -39,6 +39,8 @@ namespace GameHub.Utils
 				public string steam_home { get; set; }
 				public string gog_games { get; set; }
 				public string humble_games { get; set; }
+				public string itch_home { get; set; }
+				public string itch_games { get; set; }
 
 				public Settings()
 				{
@@ -102,6 +104,20 @@ namespace GameHub.Utils
 
 				public const string Cache = FSUtils.Paths.Cache.Sources + "/humble";
 				public static string LoadedOrdersMD5 { owned get { return FSUtils.Paths.Humble.Cache + "/orders.md5"; } }
+			}
+
+			public class Itch
+			{
+				public static string Home { owned get { return FSUtils.Paths.Settings.instance.itch_home; } }
+				public static string Games { owned get { return FSUtils.Paths.Settings.instance.itch_games; } }
+
+				public const string Database = "db/butler.db";
+
+				public const string Repo = "broth";
+
+				public const string ButlerRoot = FSUtils.Paths.Itch.Repo + "/butler";
+				public const string ButlerCurrentVersion = FSUtils.Paths.Itch.ButlerRoot + "/.chosen-version";
+				public const string ButlerExecutable = FSUtils.Paths.Itch.ButlerRoot + "/versions/%s/butler";
 			}
 
 			public class Collection: GameHub.Settings.SettingsSchema

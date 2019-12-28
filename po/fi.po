@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 00:49+0300\n"
+"POT-Creation-Date: 2019-12-28 07:48+0300\n"
 "PO-Revision-Date: 2019-11-24 10:39+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
@@ -18,63 +18,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.10-dev\n"
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Show help"
 msgstr "Näytä ohje"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show application version and exit"
 msgstr "Näytä ohjelmiston versio ja sulje"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Restart with GDB debugger attached"
 msgstr "Käynnistä uudelleen kun GDB-virheenkorjain on liitetty"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Show full GDB backtrace"
 msgstr "Näytä GDB-jälkiseuranta kokonaan"
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Kohtele kohtalokkaita virheitä kriittisinä ja kaada sovellus"
 
-#: src/app.vala:97
+#: src/app.vala:98
 msgid "Show main window"
 msgstr "Näytä pääikkuna"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show application settings dialog"
 msgstr "Näytä sovellusasetukset-valintaikkuna"
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Show about dialog"
 msgstr "Näytä tietoja valintaikkuna"
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Maximum number of background worker threads"
 msgstr "Taustalla työskentelevien säikeiden enimmäismäärä"
 
-#: src/app.vala:104
+#: src/app.vala:105
 msgid "Run game"
 msgstr "Käynnistä peli"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Show compatibility options dialog"
 msgstr "Näytä yhteensopivuusasetukset-valintaikkuna"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Open game details"
 msgstr "Avaa pelin lisätiedot"
 
-#: src/app.vala:107
+#: src/app.vala:108
 msgid "Open game properties"
 msgstr "Avaa pelin ominaisuudet"
 
-#: src/app.vala:111
+#: src/app.vala:112
 msgid "Enable debug logging"
 msgstr "Ota virheenkorjaus käyttöön"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -82,35 +82,35 @@ msgstr ""
 "Kirjaa lokiin tunnistusprosessi ja arkaluontoiset tiedot, kuten "
 "todennuslomakkeet"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid "Log download manager"
 msgstr "Lokita latausten hallinta"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log background workers start/stop"
 msgstr "Lokita taustalla aloita/lopeta"
 
-#: src/app.vala:115
+#: src/app.vala:116
 msgid "Disable log messages filtering"
 msgstr "Poista loki sanomien suodatus käytöstä"
 
-#: src/app.vala:116
+#: src/app.vala:117
 msgid "Verbose logging"
 msgstr "Selväkielinen kirjaaminen lokiin"
 
-#: src/app.vala:245
+#: src/app.vala:246
 msgid "Game Options:"
 msgstr "Pelin asetukset:"
 
-#: src/app.vala:245
+#: src/app.vala:246
 msgid "Show game options help"
 msgstr "Näytä pelin asetuksien ohje"
 
-#: src/app.vala:253
+#: src/app.vala:254
 msgid "Logging Options:"
 msgstr "Lokituksen asetukset:"
 
-#: src/app.vala:253
+#: src/app.vala:254
 msgid "Show logging options help"
 msgstr "Näytä kirjaus asetuksien ohje"
 
@@ -137,42 +137,42 @@ msgstr "Peruuta"
 msgid "Select directory"
 msgstr "Valitse hakemisto"
 
-#: src/data/Runnable.vala:423
+#: src/data/Runnable.vala:617
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr "Osa %1$u / %2$u: %3$s"
 
-#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:640 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: viallinen asennusohjelma"
 
-#: src/data/Runnable.vala:447
+#: src/data/Runnable.vala:641
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Tarkistussumma on ristiriitainen %s"
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
+#: src/data/Runnable.vala:655 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "Näytä tiedosto"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
+#: src/data/Runnable.vala:656 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Poista"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
+#: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "Varmuuskopioi"
 
-#: src/data/Runnable.vala:613
+#: src/data/Runnable.vala:775
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: ei havaitse suoritettavaa tiedostoa"
 
-#: src/data/Runnable.vala:614
+#: src/data/Runnable.vala:776
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -180,7 +180,7 @@ msgstr ""
 "Tämän pelin suoritettavaa tiedostoa ei voida tunnistaa automaattisesti.\n"
 "Aseta suoritettava tiedosto pelin ominaisuuksista."
 
-#: src/data/Runnable.vala:850
+#: src/data/Runnable.vala:905
 msgctxt "platform"
 msgid "Emulated"
 msgstr "Emuloitu"
@@ -375,7 +375,7 @@ msgstr "Käynnistä"
 msgid "Show WineWrap menu"
 msgstr "Näytä WineWrap-valikko"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:131
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:132
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "Tapa sovellukset prefixistä"
@@ -404,35 +404,40 @@ msgstr "Käytä WineD3D11:sta DirectX 11 -yhteensopivuustason sijaan"
 msgid "Show DXVK info overlay"
 msgstr "Näytä DXVK infon yleiskerros"
 
-#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
+#: src/data/compat/Proton.vala:58
+#, fuzzy
+msgid "Enable DirectX 9 compatibility layer"
+msgstr "Poista DirectX 11 -yhteensopivuustaso käytöstä"
+
+#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
 msgid "Silent installation"
 msgstr "Hiljainen asennus"
 
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
+#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
 msgstr "Erittäin hiljainen asennus"
 
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
 msgstr "Tukahduta viestit"
 
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
+#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:69
 msgid "No GUI"
 msgstr "Ei GUI:ta"
 
-#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:120 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
 msgstr "Avaa prefix hakemisto"
 
-#: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:123 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
 msgstr "Käynnistä winecfg"
 
-#: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:126 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
 msgstr "Käynnistä winetricks"
 
-#: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:129 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
 msgstr "Käynnistä tehtävämanageri"
 
@@ -817,7 +822,7 @@ msgid "Authenticated"
 msgstr "Todennettu"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
-#: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
+#: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:111
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
@@ -975,8 +980,8 @@ msgstr ""
 "<b>•</b> Useita tiedostopäätteitä voidaan erottaa <b>|</b>-merkillä\n"
 "<b>•</b> Aloita tiedostopääte merkillä<b>./</b>vastaamaan suhteellista "
 "polkua\n"
-"<b>•</b> $<b>basename</b>muuttuja korvataan pelin suoritettavalla nimellä ("
-"ilman laajennusta)"
+"<b>•</b> $<b>basename</b>muuttuja korvataan pelin suoritettavalla nimellä "
+"(ilman laajennusta)"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
@@ -1056,26 +1061,26 @@ msgctxt "about_link"
 msgid "Forks"
 msgstr "Haaraumat"
 
-#: src/ui/dialogs/InstallDialog.vala:112
+#: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr "Tuo"
 
-#: src/ui/dialogs/InstallDialog.vala:113
+#: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 msgid "Download"
 msgstr "Lataa"
 
-#: src/ui/dialogs/InstallDialog.vala:210
+#: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
 msgstr "Valitse asentaja"
 
-#: src/ui/dialogs/InstallDialog.vala:219
+#: src/ui/dialogs/InstallDialog.vala:216
 #, c-format
 msgid "Installer size: %s"
 msgstr "Asentajan koko: %s"
 
-#: src/ui/dialogs/InstallDialog.vala:329
+#: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
 msgstr "Tuntematon"
 
@@ -1367,17 +1372,17 @@ msgstr "Kuvien lataaminen"
 msgid "Downloading image: %s"
 msgstr "Ladataan kuvaa: %s"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:125
+#: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Keskeytä lataus"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:130
+#: src/ui/views/GamesView/DownloadProgressView.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Jatka lataamista"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:135
+#: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Peruuta lataus"
@@ -1542,18 +1547,6 @@ msgstr "Peliaika (paikallinen)"
 msgid "Last launch"
 msgstr "Viimeisin käynnistys"
 
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dh"
-msgstr "%dt"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dm"
-msgstr "%dkk"
-
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
@@ -1676,47 +1669,84 @@ msgstr "Määritä"
 msgid "Add tag"
 msgstr "Lisää tagi"
 
-#: src/utils/downloader/Downloader.vala:159
+#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#, c-format
+msgctxt "time"
+msgid "%dh"
+msgstr "%dt"
+
+#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#, c-format
+msgctxt "time"
+msgid "%dm"
+msgstr "%dkk"
+
+#: src/utils/Utils.vala:350
+#, fuzzy, c-format
+msgctxt "time"
+msgid "%ds"
+msgstr "%dt"
+
+#: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
 msgstr "Jonossa"
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Aloitetaan lataamaan"
 
-#: src/utils/downloader/Downloader.vala:161
+#: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Lataus aloitettu"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:203
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Lataus valmistui"
 
-#: src/utils/downloader/Downloader.vala:163
+#: src/utils/downloader/Downloader.vala:204
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Lataus epäonnistui"
 
-#: src/utils/downloader/Downloader.vala:165
-#, c-format
+#: src/utils/downloader/Downloader.vala:208
+#, fuzzy, c-format
 msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s) [%s/s]"
-msgstr "Ladataan: %d%% (%s / %s) [%s/s]"
+msgid "Downloading: %s"
+msgstr "Lataa"
 
-#: src/utils/downloader/Downloader.vala:167
-#, c-format
+#: src/utils/downloader/Downloader.vala:210
+#, fuzzy
 msgctxt "dl_status"
-msgid "Paused: %d%% (%s / %s)"
+msgid "Downloading"
+msgstr "Lataa"
+
+#: src/utils/downloader/Downloader.vala:214
+#, fuzzy, c-format
+msgctxt "dl_status"
+msgid "Paused: %s"
 msgstr "Keskeytetty: %d%% (%s / %s)"
 
-#: src/utils/downloader/Downloader.vala:169
+#: src/utils/downloader/Downloader.vala:216
+#, fuzzy
+msgctxt "dl_status"
+msgid "Paused"
+msgstr "Keskeytä lataus"
+
+#: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Lataus peruutettu"
+
+#. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
+#: src/utils/downloader/Downloader.vala:262
+#, fuzzy, c-format
+msgctxt "dl_status"
+msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
+msgstr "Ladataan: %d%% (%s / %s) [%s/s]"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"

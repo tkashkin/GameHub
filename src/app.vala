@@ -25,6 +25,7 @@ using GameHub.Data.DB;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
+using GameHub.Data.Sources.Itch;
 using GameHub.Data.Sources.User;
 using GameHub.Utils;
 
@@ -139,7 +140,7 @@ namespace GameHub
 			ImageCache.init();
 			Database.create();
 
-			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new User() };
+			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new Itch(), new User() };
 
 			Providers.ImageProviders = { new Providers.Images.SteamGridDB(), new Providers.Images.JinxSGVI() };
 			Providers.DataProviders  = { new Providers.Data.IGDB() };

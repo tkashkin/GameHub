@@ -49,7 +49,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			if(game.playtime_tracked > 0)
 			{
-				add_info_label(_("Playtime (local)"), minutes_to_string(game.playtime_tracked), false, false);
+				add_info_label(_("Playtime (local)"), Utils.minutes_to_string(game.playtime_tracked), false, false);
 				add_separator = true;
 			}
 
@@ -57,7 +57,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			{
 				if(add_separator) add(new Separator(Orientation.HORIZONTAL));
 				add_separator = true;
-				add_info_label(_("Playtime"), minutes_to_string(game.playtime_source), false, false);
+				add_info_label(_("Playtime"), Utils.minutes_to_string(game.playtime_source), false, false);
 			}
 
 			if(game.last_launch > 0)
@@ -72,13 +72,6 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 			show_all();
 			if(parent != null) parent.queue_draw();
-		}
-
-		private string minutes_to_string(int64 min)
-		{
-			int h = (int) min / 60;
-			int m = (int) min - (h * 60);
-			return (h > 0 ? C_("time", "%dh").printf(h) + " " : "") + C_("time", "%dm").printf(m);
 		}
 
 		public override bool supports_game { get { return game.playtime_source > 0 || game.playtime_tracked > 0 || game.last_launch > 0; } }

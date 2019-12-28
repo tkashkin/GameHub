@@ -6,6 +6,7 @@
 		<file alias="scalable/actions/source-gog-symbolic.svg">symbolic/sources/gog.svg</file>
 		<file alias="scalable/actions/source-humble-symbolic.svg">symbolic/sources/humble.svg</file>
 		<file alias="scalable/actions/source-humble-trove-symbolic.svg">symbolic/sources/humble-trove.svg</file>
+		<file alias="scalable/actions/source-itch-symbolic.svg">symbolic/sources/itch.svg</file>
 
 		<file alias="scalable/actions/emu-retroarch-symbolic.svg">symbolic/emu/retroarch.svg</file>
 
