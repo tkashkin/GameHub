@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 00:49+0300\n"
+"POT-Creation-Date: 2019-12-28 07:48+0300\n"
 "PO-Revision-Date: 2019-07-11 16:11+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -21,97 +21,97 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.8-dev\n"
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Show help"
 msgstr "显示帮助"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show application version and exit"
 msgstr "显示版本并退出"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Restart with GDB debugger attached"
 msgstr "重新启动附加的GDB调试器"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Show full GDB backtrace"
 msgstr "显示完整的GDB回溯"
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "将致命错误视为关键和崩溃应用程序"
 
-#: src/app.vala:97
+#: src/app.vala:98
 msgid "Show main window"
 msgstr "显示主窗口"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show application settings dialog"
 msgstr "显示应用设置对话框"
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Show about dialog"
 msgstr "显示对话框"
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Maximum number of background worker threads"
 msgstr "最大后台工作线程数"
 
-#: src/app.vala:104
+#: src/app.vala:105
 msgid "Run game"
 msgstr "运行游戏"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Show compatibility options dialog"
 msgstr "显示兼容性选项对话框"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Open game details"
 msgstr "打开游戏细节"
 
-#: src/app.vala:107
+#: src/app.vala:108
 msgid "Open game properties"
 msgstr "打开游戏属性"
 
-#: src/app.vala:111
+#: src/app.vala:112
 msgid "Enable debug logging"
 msgstr "启用调试日志记录"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr "记录身份验证过程和敏感信息，如身份验证令牌"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid "Log download manager"
 msgstr "日志管理器"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log background workers start/stop"
 msgstr "日志后台工作开始/停止"
 
-#: src/app.vala:115
+#: src/app.vala:116
 msgid "Disable log messages filtering"
 msgstr "关闭日志信息过滤"
 
-#: src/app.vala:116
+#: src/app.vala:117
 msgid "Verbose logging"
 msgstr "详细记录"
 
-#: src/app.vala:245
+#: src/app.vala:246
 msgid "Game Options:"
 msgstr "游戏选项："
 
-#: src/app.vala:245
+#: src/app.vala:246
 msgid "Show game options help"
 msgstr "显示游戏选项帮助"
 
-#: src/app.vala:253
+#: src/app.vala:254
 msgid "Logging Options:"
 msgstr "记录选项："
 
-#: src/app.vala:253
+#: src/app.vala:254
 msgid "Show logging options help"
 msgstr "显示日志选项帮助"
 
@@ -138,42 +138,42 @@ msgstr "取消"
 msgid "Select directory"
 msgstr "选择目录"
 
-#: src/data/Runnable.vala:423
+#: src/data/Runnable.vala:617
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr ""
 
-#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:640 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: 安装程序损坏"
 
-#: src/data/Runnable.vala:447
+#: src/data/Runnable.vala:641
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "校验和不匹配 %s"
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
+#: src/data/Runnable.vala:655 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "显示文件"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
+#: src/data/Runnable.vala:656 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "删除"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
+#: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "备份"
 
-#: src/data/Runnable.vala:613
+#: src/data/Runnable.vala:775
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: 无法检测主可执行文件"
 
-#: src/data/Runnable.vala:614
+#: src/data/Runnable.vala:776
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -181,7 +181,7 @@ msgstr ""
 "无法自动检测此游戏的主要可执行文件。\n"
 "请在游戏属性中设置主要可执行文件。"
 
-#: src/data/Runnable.vala:850
+#: src/data/Runnable.vala:905
 msgctxt "platform"
 msgid "Emulated"
 msgstr "模拟器"
@@ -375,7 +375,7 @@ msgstr "运行"
 msgid "Show WineWrap menu"
 msgstr "显示WineWrap菜单"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:131
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:132
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr "终止前缀中的应用程序"
@@ -405,35 +405,40 @@ msgstr "使用wined3d11作为Directx11兼容层"
 msgid "Show DXVK info overlay"
 msgstr "显示dxvk信息覆盖"
 
-#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
+#: src/data/compat/Proton.vala:58
+#, fuzzy
+msgid "Enable DirectX 9 compatibility layer"
+msgstr "禁用DirectX 11兼容层"
+
+#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
 msgid "Silent installation"
 msgstr "静默安装"
 
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
+#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
 msgstr "非常安静的安装"
 
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
 msgstr "禁止显示消息"
 
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
+#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:69
 msgid "No GUI"
 msgstr "无图形用户界面"
 
-#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:120 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
 msgstr "打开前缀目录"
 
-#: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:123 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
 msgstr "运行winecfg"
 
-#: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:126 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
 msgstr "运行winetricks"
 
-#: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:129 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
 msgstr "运行任务管理器"
 
@@ -836,7 +841,7 @@ msgid "Authenticated"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
-#: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
+#: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:111
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
@@ -1083,27 +1088,27 @@ msgctxt "about_link"
 msgid "Forks"
 msgstr ""
 
-#: src/ui/dialogs/InstallDialog.vala:112
+#: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr ""
 
-#: src/ui/dialogs/InstallDialog.vala:113
+#: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 msgid "Download"
 msgstr "下载"
 
-#: src/ui/dialogs/InstallDialog.vala:210
+#: src/ui/dialogs/InstallDialog.vala:207
 #, fuzzy
 msgid "Select installer"
 msgstr "选择"
 
-#: src/ui/dialogs/InstallDialog.vala:219
+#: src/ui/dialogs/InstallDialog.vala:216
 #, fuzzy, c-format
 msgid "Installer size: %s"
 msgstr "安装"
 
-#: src/ui/dialogs/InstallDialog.vala:329
+#: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
 msgstr ""
 
@@ -1402,19 +1407,19 @@ msgstr "还在下载图片"
 msgid "Downloading image: %s"
 msgstr "还在下载图片：%s"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:125
+#: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 #, fuzzy
 msgid "Pause download"
 msgstr "开始下载"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:130
+#: src/ui/views/GamesView/DownloadProgressView.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 #, fuzzy
 msgid "Resume download"
 msgstr "下载"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:135
+#: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 #, fuzzy
 msgid "Cancel download"
@@ -1582,18 +1587,6 @@ msgstr ""
 msgid "Last launch"
 msgstr ""
 
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, fuzzy, c-format
-msgctxt "time"
-msgid "%dh"
-msgstr "%d分"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dm"
-msgstr "%d分"
-
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
@@ -1719,50 +1712,87 @@ msgstr ""
 msgid "Add tag"
 msgstr "加游戏"
 
-#: src/utils/downloader/Downloader.vala:159
+#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#, fuzzy, c-format
+msgctxt "time"
+msgid "%dh"
+msgstr "%d分"
+
+#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#, c-format
+msgctxt "time"
+msgid "%dm"
+msgstr "%d分"
+
+#: src/utils/Utils.vala:350
+#, fuzzy, c-format
+msgctxt "time"
+msgid "%ds"
+msgstr "%d分"
+
+#: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
 msgstr ""
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "开始下载"
 
-#: src/utils/downloader/Downloader.vala:161
+#: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "下载开始玩了"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:203
 #, fuzzy
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "下载开始玩了"
 
-#: src/utils/downloader/Downloader.vala:163
+#: src/utils/downloader/Downloader.vala:204
 #, fuzzy
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "下载开始玩了"
 
-#: src/utils/downloader/Downloader.vala:165
+#: src/utils/downloader/Downloader.vala:208
+#, fuzzy, c-format
+msgctxt "dl_status"
+msgid "Downloading: %s"
+msgstr "正在下载"
+
+#: src/utils/downloader/Downloader.vala:210
+#, fuzzy
+msgctxt "dl_status"
+msgid "Downloading"
+msgstr "正在下载"
+
+#: src/utils/downloader/Downloader.vala:214
 #, c-format
 msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s) [%s/s]"
+msgid "Paused: %s"
 msgstr ""
 
-#: src/utils/downloader/Downloader.vala:167
-#, c-format
+#: src/utils/downloader/Downloader.vala:216
+#, fuzzy
 msgctxt "dl_status"
-msgid "Paused: %d%% (%s / %s)"
-msgstr ""
+msgid "Paused"
+msgstr "开始下载"
 
-#: src/utils/downloader/Downloader.vala:169
+#: src/utils/downloader/Downloader.vala:218
 #, fuzzy
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "下载开始玩了"
+
+#. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
+#: src/utils/downloader/Downloader.vala:262
+#, c-format
+msgctxt "dl_status"
+msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
+msgstr ""
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"

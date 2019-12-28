@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 00:49+0300\n"
+"POT-Creation-Date: 2019-12-28 07:48+0300\n"
 "PO-Revision-Date: 2019-10-10 22:04+0000\n"
 "Last-Translator: ekickx <mujahidmasadepan@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
@@ -21,103 +21,103 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.9-dev\n"
 
-#: src/app.vala:89
+#: src/app.vala:90
 msgid "Show help"
 msgstr "Tampilkan bantuan"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show application version and exit"
 msgstr "Tampilkan versi aplikasi lalu keluar"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Restart with GDB debugger attached"
 msgstr ""
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Show full GDB backtrace"
 msgstr ""
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Treat fatal errors as criticals and crash application"
 msgstr ""
 
-#: src/app.vala:97
+#: src/app.vala:98
 msgid "Show main window"
 msgstr "Tampilkan jendela utama"
 
-#: src/app.vala:98
+#: src/app.vala:99
 #, fuzzy
 msgid "Show application settings dialog"
 msgstr "Tampilkan dialog setelan aplikasi"
 
-#: src/app.vala:99
+#: src/app.vala:100
 #, fuzzy
 msgid "Show about dialog"
 msgstr "Paksakan mode pengguna yang ada"
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Maximum number of background worker threads"
 msgstr ""
 
-#: src/app.vala:104
+#: src/app.vala:105
 msgid "Run game"
 msgstr "Jalankan gim"
 
-#: src/app.vala:105
+#: src/app.vala:106
 #, fuzzy
 msgid "Show compatibility options dialog"
 msgstr "Paksakan mode pengguna yang ada"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Open game details"
 msgstr "Buka rincian gim"
 
-#: src/app.vala:107
+#: src/app.vala:108
 #, fuzzy
 msgid "Open game properties"
 msgstr "Properti permainan"
 
-#: src/app.vala:111
+#: src/app.vala:112
 msgid "Enable debug logging"
 msgstr ""
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid "Log download manager"
 msgstr "Log pengunduh"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log background workers start/stop"
 msgstr ""
 
-#: src/app.vala:115
+#: src/app.vala:116
 msgid "Disable log messages filtering"
 msgstr ""
 
-#: src/app.vala:116
+#: src/app.vala:117
 msgid "Verbose logging"
 msgstr ""
 
-#: src/app.vala:245
+#: src/app.vala:246
 #, fuzzy
 msgid "Game Options:"
 msgstr "Properti permainan"
 
-#: src/app.vala:245
+#: src/app.vala:246
 msgid "Show game options help"
 msgstr ""
 
-#: src/app.vala:253
+#: src/app.vala:254
 #, fuzzy
 msgid "Logging Options:"
 msgstr "Properti permainan"
 
-#: src/app.vala:253
+#: src/app.vala:254
 #, fuzzy
 msgid "Show logging options help"
 msgstr "Properti permainan"
@@ -146,50 +146,50 @@ msgstr "Batal"
 msgid "Select directory"
 msgstr "Pilih direktori"
 
-#: src/data/Runnable.vala:423
+#: src/data/Runnable.vala:617
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr "Bagian %1$u dari %2$u: %3$s"
 
-#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:640 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, fuzzy, c-format
 msgid "%s: corrupted installer"
 msgstr "Tidak terpasang"
 
-#: src/data/Runnable.vala:447
+#: src/data/Runnable.vala:641
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr ""
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
+#: src/data/Runnable.vala:655 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 #, fuzzy
 msgid "Show file"
 msgstr "Pilih berkas"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
+#: src/data/Runnable.vala:656 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Hapus"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
+#: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 #, fuzzy
 msgid "Backup"
 msgstr "Kembali"
 
-#: src/data/Runnable.vala:613
+#: src/data/Runnable.vala:775
 #, fuzzy, c-format
 msgid "%s: cannot detect main executable"
 msgstr "Pilih permainan yang dapat dieksekusi"
 
-#: src/data/Runnable.vala:614
+#: src/data/Runnable.vala:776
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
 
-#: src/data/Runnable.vala:850
+#: src/data/Runnable.vala:905
 #, fuzzy
 msgctxt "platform"
 msgid "Emulated"
@@ -383,7 +383,7 @@ msgstr "Jalankan"
 msgid "Show WineWrap menu"
 msgstr ""
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:131
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:132
 #: src/data/compat/Wine.vala:87
 msgid "Kill apps in prefix"
 msgstr ""
@@ -412,35 +412,40 @@ msgstr "Gunakan WineD3D11 sebagai lapisan kompatibilitas DirectX 11"
 msgid "Show DXVK info overlay"
 msgstr "Tampilkan info overlay DXVK"
 
-#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
+#: src/data/compat/Proton.vala:58
+#, fuzzy
+msgid "Enable DirectX 9 compatibility layer"
+msgstr "Nonaktifkan lapisan kompatibilitas DirectX 11"
+
+#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
 msgid "Silent installation"
 msgstr "Pemasangan senyap"
 
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
+#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:67
 msgid "Very silent installation"
 msgstr "Pemasangan sangat senyap"
 
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
+#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:68
 msgid "Suppress messages"
 msgstr "Menekan pesan"
 
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
+#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:69
 msgid "No GUI"
 msgstr "Tidak ada GUI"
 
-#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:120 src/data/compat/Wine.vala:75
 msgid "Open prefix directory"
 msgstr "Buka direktori prefiks"
 
-#: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:123 src/data/compat/Wine.vala:78
 msgid "Run winecfg"
 msgstr "Jalankan winecfg"
 
-#: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:126 src/data/compat/Wine.vala:81
 msgid "Run winetricks"
 msgstr "Jalankan winetricks"
 
-#: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:129 src/data/compat/Wine.vala:84
 msgid "Run taskmgr"
 msgstr "Jalankan taskmgr"
 
@@ -839,7 +844,7 @@ msgid "Authenticated"
 msgstr "Mengautentikasi..."
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
-#: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
+#: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:111
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
@@ -1084,28 +1089,28 @@ msgctxt "about_link"
 msgid "Forks"
 msgstr ""
 
-#: src/ui/dialogs/InstallDialog.vala:112
+#: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr "Impor"
 
-#: src/ui/dialogs/InstallDialog.vala:113
+#: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 #, fuzzy
 msgid "Download"
 msgstr "Unduh"
 
-#: src/ui/dialogs/InstallDialog.vala:210
+#: src/ui/dialogs/InstallDialog.vala:207
 #, fuzzy
 msgid "Select installer"
 msgstr "Pilih berkas"
 
-#: src/ui/dialogs/InstallDialog.vala:219
+#: src/ui/dialogs/InstallDialog.vala:216
 #, c-format
 msgid "Installer size: %s"
 msgstr "Ukuran penginstal: %s"
 
-#: src/ui/dialogs/InstallDialog.vala:329
+#: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
 msgstr "Tak Diketahui"
 
@@ -1402,17 +1407,17 @@ msgstr "Mengunduh"
 msgid "Downloading image: %s"
 msgstr "Mengunduh"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:125
+#: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Jeda unduhan"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:130
+#: src/ui/views/GamesView/DownloadProgressView.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Lanjutkan unduhan"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:135
+#: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Batalkan unduhan"
@@ -1572,18 +1577,6 @@ msgstr "Waktu main (lokal)"
 msgid "Last launch"
 msgstr "Terakhir diluncurkan"
 
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dh"
-msgstr "%d j"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dm"
-msgstr "%d m"
-
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
@@ -1706,47 +1699,84 @@ msgstr ""
 msgid "Add tag"
 msgstr "Tambahkan tanda"
 
-#: src/utils/downloader/Downloader.vala:159
+#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#, c-format
+msgctxt "time"
+msgid "%dh"
+msgstr "%d j"
+
+#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#, c-format
+msgctxt "time"
+msgid "%dm"
+msgstr "%d m"
+
+#: src/utils/Utils.vala:350
+#, fuzzy, c-format
+msgctxt "time"
+msgid "%ds"
+msgstr "%d j"
+
+#: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
 msgstr ""
 
-#: src/utils/downloader/Downloader.vala:160
+#: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
 msgstr "Mulai mengunduh"
 
-#: src/utils/downloader/Downloader.vala:161
+#: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
 msgid "Download started"
 msgstr "Unduhan dimulai"
 
-#: src/utils/downloader/Downloader.vala:162
+#: src/utils/downloader/Downloader.vala:203
 msgctxt "dl_status"
 msgid "Download finished"
 msgstr "Unduhan selesai"
 
-#: src/utils/downloader/Downloader.vala:163
+#: src/utils/downloader/Downloader.vala:204
 msgctxt "dl_status"
 msgid "Download failed"
 msgstr "Unduhan gagal"
 
-#: src/utils/downloader/Downloader.vala:165
-#, c-format
+#: src/utils/downloader/Downloader.vala:208
+#, fuzzy, c-format
 msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s) [%s/s]"
-msgstr "Mengunduh: %d%% (%s / %s) [%s/s]"
+msgid "Downloading: %s"
+msgstr "Mengunduh"
 
-#: src/utils/downloader/Downloader.vala:167
-#, c-format
+#: src/utils/downloader/Downloader.vala:210
+#, fuzzy
 msgctxt "dl_status"
-msgid "Paused: %d%% (%s / %s)"
+msgid "Downloading"
+msgstr "Mengunduh"
+
+#: src/utils/downloader/Downloader.vala:214
+#, fuzzy, c-format
+msgctxt "dl_status"
+msgid "Paused: %s"
 msgstr "Dijeda: %d%% (%s / %s)"
 
-#: src/utils/downloader/Downloader.vala:169
+#: src/utils/downloader/Downloader.vala:216
+#, fuzzy
+msgctxt "dl_status"
+msgid "Paused"
+msgstr "Jeda unduhan"
+
+#: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
 msgid "Download cancelled"
 msgstr "Unduhan dibatalkan"
+
+#. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
+#: src/utils/downloader/Downloader.vala:262
+#, fuzzy, c-format
+msgctxt "dl_status"
+msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
+msgstr "Mengunduh: %d%% (%s / %s) [%s/s]"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
