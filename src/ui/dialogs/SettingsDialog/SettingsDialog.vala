@@ -90,6 +90,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			add_page("sources/steam", new Pages.Sources.Steam(this));
 			add_page("sources/gog", new Pages.Sources.GOG(this));
 			add_page("sources/humble", new Pages.Sources.Humble(this));
+			add_page("sources/itch", new Pages.Sources.Itch(this));
 
 			add_page("emulators/retroarch", new Pages.Emulators.RetroArch(this));
 			add_page("emulators/custom", new Pages.Emulators.Emulators(this));

@@ -247,13 +247,15 @@ namespace GameHub.UI.Widgets
 				action_area.remove.connect(set_action_area_visibility);
 
 				notify["icon-name"].connect(() => {
-					if(header_icon != null) {
+					if(header_icon != null)
+					{
 						header_icon.icon_name = icon_name;
 					}
 				});
 
 				notify["title"].connect(() => {
-					if(title_label != null) {
+					if(title_label != null)
+					{
 						title_label.label = title;
 					}
 				});

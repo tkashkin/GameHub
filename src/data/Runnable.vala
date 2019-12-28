@@ -339,15 +339,218 @@ namespace GameHub.Data
 
 		public abstract class Installer
 		{
-			private static string NSIS_INSTALLER_DESCRIPTION = "Nullsoft Installer";
+			public string   id         { get; protected set; }
+			public Platform platform   { get; protected set; default = Platform.CURRENT; }
+			public int64    full_size  { get; protected set; default = 0; }
+			public string?  version    { get; protected set; }
 
+			public virtual string name { owned get { return id; } }
+
+			public abstract async void install(Runnable runnable, CompatTool? tool=null);
+
+			public static async InstallerType guess_type(File file, bool is_part=false)
+			{
+				var type = InstallerType.UNKNOWN;
+				if(file == null) return type;
+
+				try
+				{
+					var finfo = yield file.query_info_async(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
+					var mime = finfo.get_content_type();
+					type = InstallerType.from_mime(mime);
+
+					if(type != InstallerType.UNKNOWN) return type;
+
+					var info = yield Utils.run_thread({"file", "-bi", file.get_path()});
+					if(info != null && info.length > 0)
+					{
+						mime = info.split(";")[0];
+						if(mime != null && mime.length > 0)
+						{
+							type = InstallerType.from_mime(mime);
+						}
+					}
+
+					if(type != InstallerType.UNKNOWN) return type;
+
+					string[] gog_part_ext = {"bin"};
+					string[] exe_ext = {"sh", "elf", "bin", "run"};
+					string[] win_exe_ext = {"exe", "msi"};
+					string[] arc_ext = {"zip", "tar", "cpio", "bz2", "gz", "lz", "lzma", "7z", "rar"};
+
+					if(is_part)
+					{
+						foreach(var ext in gog_part_ext)
+						{
+							if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.GOG_PART;
+						}
+					}
+
+					foreach(var ext in exe_ext)
+					{
+						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
+					}
+					foreach(var ext in win_exe_ext)
+					{
+						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.WINDOWS_EXECUTABLE;
+					}
+					foreach(var ext in arc_ext)
+					{
+						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.ARCHIVE;
+					}
+				}
+				catch(Error e){}
+
+				return type;
+			}
+
+			public enum InstallerType
+			{
+				UNKNOWN, EXECUTABLE, WINDOWS_EXECUTABLE, GOG_PART, ARCHIVE, WINDOWS_NSIS_INSTALLER;
+
+				public static InstallerType from_mime(string type)
+				{
+					switch(type.strip())
+					{
+						case "application/x-executable":
+						case "application/x-elf":
+						case "application/x-sh":
+						case "application/x-shellscript":
+							return InstallerType.EXECUTABLE;
+
+						case "application/x-dosexec":
+						case "application/x-ms-dos-executable":
+						case "application/dos-exe":
+						case "application/exe":
+						case "application/msdos-windows":
+						case "application/x-exe":
+						case "application/x-msdownload":
+						case "application/x-winexe":
+						case "application/x-msi":
+							return InstallerType.WINDOWS_EXECUTABLE;
+
+						case "application/octet-stream":
+							return InstallerType.GOG_PART;
+
+						case "application/zip":
+						case "application/x-tar":
+						case "application/x-gtar":
+						case "application/x-cpio":
+						case "application/x-bzip2":
+						case "application/gzip":
+						case "application/x-lzip":
+						case "application/x-lzma":
+						case "application/x-7z-compressed":
+						case "application/x-rar-compressed":
+						case "application/x-compressed-tar":
+							return InstallerType.ARCHIVE;
+					}
+					return InstallerType.UNKNOWN;
+				}
+			}
+
+			public enum InstallMode
+			{
+				INTERACTIVE, AUTOMATIC, AUTOMATIC_DOWNLOAD
+			}
+		}
+
+		public abstract class FileInstaller: Installer
+		{
+			private const string NSIS_INSTALLER_DESCRIPTION = "Nullsoft Installer";
+
+			public File? file { get; protected set; }
+			public int64 size { get; protected set; }
+
+			public override async void install(Runnable runnable, CompatTool? tool=null)
+			{
+				yield install_file(file, false, runnable, tool);
+			}
+
+			public static async void install_file(File? file, bool is_part, Runnable runnable, CompatTool? tool=null, out bool is_windows_installer=null, out bool is_nsis_installer=null)
+			{
+				is_windows_installer = false;
+				is_nsis_installer = false;
+
+				if(file == null || !file.query_exists()) return;
+
+				Game? game = null;
+				if(runnable is Game)
+				{
+					game = runnable as Game;
+				}
+
+				var path = file.get_path();
+				Utils.run({"chmod", "+x", path});
+
+				FSUtils.mkdir(runnable.install_dir.get_path());
+
+				var type = yield guess_type(file, is_part);
+
+				if(type == InstallerType.WINDOWS_EXECUTABLE && tool is Compat.Innoextract)
+				{
+					var desc = yield Utils.run_thread({"file", "-b", path});
+					if(desc != null && desc.length > 0 && NSIS_INSTALLER_DESCRIPTION in desc)
+					{
+						type = InstallerType.WINDOWS_NSIS_INSTALLER;
+					}
+				}
+
+				string[]? cmd = null;
+
+				switch(type)
+				{
+					case InstallerType.EXECUTABLE:
+						cmd = {path, "--", "--i-agree-to-all-licenses",
+								"--noreadme", "--nooptions", "--noprompt",
+								"--destination", runnable.install_dir.get_path().replace("'", "\\'")}; // probably mojosetup
+						break;
+
+					case InstallerType.ARCHIVE:
+					case InstallerType.WINDOWS_NSIS_INSTALLER:
+						cmd = {"file-roller", path, "-e", runnable.install_dir.get_path()}; // extract with file-roller
+						break;
+
+					case InstallerType.WINDOWS_EXECUTABLE:
+					case InstallerType.GOG_PART:
+						cmd = null; // use compattool later
+						break;
+
+					default:
+						cmd = {"xdg-open", path}; // unknown type, just open
+						break;
+				}
+
+				if(game != null) game.status = new Game.Status(Game.State.INSTALLING, game);
+
+				if(cmd != null)
+				{
+					yield Utils.run_async(cmd, null, null, false, true);
+				}
+				if(type == InstallerType.WINDOWS_EXECUTABLE)
+				{
+					is_windows_installer = true;
+					if(tool != null && tool.can_install(runnable))
+					{
+						yield tool.install(runnable, file);
+					}
+				}
+				else if(type == InstallerType.WINDOWS_NSIS_INSTALLER)
+				{
+					is_nsis_installer = true;
+				}
+			}
+		}
+
+		public abstract class DownloadableInstaller: Installer
+		{
 			public class Part: Object
 			{
 				public string       id            { get; construct set; }
 				public string       url           { get; construct set; }
 				public int64        size          { get; construct set; }
-				public File         remote        { get; construct set; }
-				public File         local         { get; construct set; }
+				public File?        remote        { get; construct set; }
+				public File?        local         { get; construct set; }
 				public string?      checksum      { get; construct set; }
 				public ChecksumType checksum_type { get; construct set; }
 				public Part(string id, string url, int64 size, File remote, File local, string? checksum=null, ChecksumType checksum_type=ChecksumType.MD5)
@@ -371,22 +574,15 @@ namespace GameHub.Data
 				}
 			}
 
-			public string   id           { get; protected set; }
-			public Platform platform     { get; protected set; default = Platform.CURRENT; }
 			public ArrayList<Part> parts { get; protected set; default = new ArrayList<Part>(); }
-			public int64    full_size    { get; protected set; default = 0; }
-			public string?  version      { get; protected set; }
-
-			public virtual string  name  { owned get { return id; } }
-
 			public virtual async void fetch_parts(){}
 
-			public async void install(Runnable runnable, bool dl_only, CompatTool? tool=null)
+			public async ArrayList<File> download(Runnable runnable)
 			{
+				var files = new ArrayList<File>();
 				try
 				{
 					Game? game = null;
-
 					if(runnable is Game)
 					{
 						game = runnable as Game;
@@ -395,17 +591,15 @@ namespace GameHub.Data
 					if(game != null) game.status = new Game.Status(Game.State.DOWNLOADING, game, null);
 
 					var runnable_install_dir = runnable.install_dir ?? runnable.default_install_dir;
-
-					if(runnable_install_dir == null) return;
-
+					if(runnable_install_dir == null) return files;
 					runnable.install_dir = runnable_install_dir;
-
-					var files = new ArrayList<File>();
 
 					uint p = 1;
 					foreach(var part in parts)
 					{
-						var ds_id = Downloader.get_instance().download_started.connect(dl => {
+						FSUtils.mkdir(part.local.get_parent().get_path());
+
+						var ds_id = Downloader.download_manager().file_download_started.connect(dl => {
 							if(dl.remote != part.remote) return;
 							if(game != null)
 							{
@@ -424,7 +618,7 @@ namespace GameHub.Data
 						}
 
 						var info = new Downloader.DownloadInfo(runnable.name, partDesc, game != null ? game.icon : null, null, null, game != null ? game.source.icon : null);
-						var file = yield Downloader.download(part.remote, part.local, info);
+						var file = yield Downloader.download_file(part.remote, part.local, info);
 						if(file != null && file.query_exists())
 						{
 							string? file_checksum = null;
@@ -468,81 +662,49 @@ namespace GameHub.Data
 								warning("Checksum mismatch in `%s`, skipping; expected: `%s`, actual: `%s`", file.get_basename(), part.checksum, file_checksum);
 							}
 						}
-						Downloader.get_instance().disconnect(ds_id);
+						Downloader.download_manager().disconnect(ds_id);
 
 						p++;
 					}
 
 					if(game != null) game.status = new Game.Status(Game.State.UNINSTALLED, game);
 					runnable.update_status();
+				}
+				catch(IOError.CANCELLED e){}
+				catch(Error e)
+				{
+					warning("[DownloadableInstaller.download] %s", e.message);
+				}
+				return files;
+			}
 
-					if(dl_only || files.size == 0) return;
+			public override async void install(Runnable runnable, CompatTool? tool=null)
+			{
+				try
+				{
+					var files = yield download(runnable);
+
+					Game? game = null;
+					if(runnable is Game)
+					{
+						game = runnable as Game;
+					}
+
+					if(game != null) game.status = new Game.Status(Game.State.UNINSTALLED, game);
+					runnable.update_status();
+
+					if(files.size == 0) return;
 
 					uint f = 0;
 					bool windows_installer = false;
 					bool nsis_installer = false;
 					foreach(var file in files)
 					{
-						var path = file.get_path();
-						Utils.run({"chmod", "+x", path});
-
-						FSUtils.mkdir(runnable.install_dir.get_path());
-
-						var type = yield guess_type(file, f > 0);
-
-						if(type == InstallerType.WINDOWS_EXECUTABLE && tool is Compat.Innoextract)
-						{
-							var desc = yield Utils.run_thread({"file", "-b", path});
-							if(desc != null && desc.length > 0 && NSIS_INSTALLER_DESCRIPTION in desc)
-							{
-								type = InstallerType.WINDOWS_NSIS_INSTALLER;
-							}
-						}
-
-						string[]? cmd = null;
-
-						switch(type)
-						{
-							case InstallerType.EXECUTABLE:
-								cmd = {path, "--", "--i-agree-to-all-licenses",
-										"--noreadme", "--nooptions", "--noprompt",
-										"--destination", runnable.install_dir.get_path().replace("'", "\\'")}; // probably mojosetup
-								break;
-
-							case InstallerType.ARCHIVE:
-							case InstallerType.WINDOWS_NSIS_INSTALLER:
-								cmd = {"file-roller", path, "-e", runnable.install_dir.get_path()}; // extract with file-roller
-								break;
-
-							case InstallerType.WINDOWS_EXECUTABLE:
-							case InstallerType.GOG_PART:
-								cmd = null; // use compattool later
-								break;
-
-							default:
-								cmd = {"xdg-open", path}; // unknown type, just open
-								break;
-						}
-
-						if(game != null) game.status = new Game.Status(Game.State.INSTALLING, game);
-
-						if(cmd != null)
-						{
-							yield Utils.run_async(cmd, null, null, false, true);
-						}
-						if(type == InstallerType.WINDOWS_EXECUTABLE)
-						{
-							windows_installer = true;
-							if(tool != null && tool.can_install(runnable))
-							{
-								yield tool.install(runnable, file);
-							}
-						}
-						else if(type == InstallerType.WINDOWS_NSIS_INSTALLER)
-						{
-							nsis_installer = true;
-						}
-						f++;
+						bool win;
+						bool nsis;
+						yield FileInstaller.install_file(file, f++ > 0, runnable, tool, out win, out nsis);
+						windows_installer = windows_installer || win;
+						nsis_installer = nsis_installer || nsis;
 					}
 
 					try
@@ -645,118 +807,11 @@ namespace GameHub.Data
 						FileUtils.set_contents(gh_marker.get_path(), "");
 					}
 				}
-				catch(IOError.CANCELLED e){}
 				catch(Error e)
 				{
-					warning(e.message);
+					warning("[DownloadableInstaller.install] %s", e.message);
 				}
 				runnable.update_status();
-			}
-
-			public static async InstallerType guess_type(File file, bool part=false)
-			{
-				var type = InstallerType.UNKNOWN;
-				if(file == null) return type;
-
-				try
-				{
-					var finfo = yield file.query_info_async(FileAttribute.STANDARD_CONTENT_TYPE, FileQueryInfoFlags.NONE);
-					var mime = finfo.get_content_type();
-					type = InstallerType.from_mime(mime);
-
-					if(type != InstallerType.UNKNOWN) return type;
-
-					var info = yield Utils.run_thread({"file", "-bi", file.get_path()});
-					if(info != null && info.length > 0)
-					{
-						mime = info.split(";")[0];
-						if(mime != null && mime.length > 0)
-						{
-							type = InstallerType.from_mime(mime);
-						}
-					}
-
-					if(type != InstallerType.UNKNOWN) return type;
-
-					string[] gog_part_ext = {"bin"};
-					string[] exe_ext = {"sh", "elf", "bin", "run"};
-					string[] win_exe_ext = {"exe", "msi"};
-					string[] arc_ext = {"zip", "tar", "cpio", "bz2", "gz", "lz", "lzma", "7z", "rar"};
-
-					if(part)
-					{
-						foreach(var ext in gog_part_ext)
-						{
-							if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.GOG_PART;
-						}
-					}
-
-					foreach(var ext in exe_ext)
-					{
-						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
-					}
-					foreach(var ext in win_exe_ext)
-					{
-						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.EXECUTABLE;
-					}
-					foreach(var ext in arc_ext)
-					{
-						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.ARCHIVE;
-					}
-				}
-				catch(Error e){}
-
-				return type;
-			}
-
-			public enum InstallerType
-			{
-				UNKNOWN, EXECUTABLE, WINDOWS_EXECUTABLE, GOG_PART, ARCHIVE, WINDOWS_NSIS_INSTALLER;
-
-				public static InstallerType from_mime(string type)
-				{
-					switch(type.strip())
-					{
-						case "application/x-executable":
-						case "application/x-elf":
-						case "application/x-sh":
-						case "application/x-shellscript":
-							return InstallerType.EXECUTABLE;
-
-						case "application/x-dosexec":
-						case "application/x-ms-dos-executable":
-						case "application/dos-exe":
-						case "application/exe":
-						case "application/msdos-windows":
-						case "application/x-exe":
-						case "application/x-msdownload":
-						case "application/x-winexe":
-						case "application/x-msi":
-							return InstallerType.WINDOWS_EXECUTABLE;
-
-						case "application/octet-stream":
-							return InstallerType.GOG_PART;
-
-						case "application/zip":
-						case "application/x-tar":
-						case "application/x-gtar":
-						case "application/x-cpio":
-						case "application/x-bzip2":
-						case "application/gzip":
-						case "application/x-lzip":
-						case "application/x-lzma":
-						case "application/x-7z-compressed":
-						case "application/x-rar-compressed":
-						case "application/x-compressed-tar":
-							return InstallerType.ARCHIVE;
-					}
-					return InstallerType.UNKNOWN;
-				}
-			}
-
-			public enum InstallMode
-			{
-				INTERACTIVE, AUTOMATIC, AUTOMATIC_DOWNLOAD
 			}
 		}
 
@@ -764,14 +819,14 @@ namespace GameHub.Data
 		{
 			public Runnable runnable     { get; protected set; }
 
-			public bool      is_primary   { get; protected set; default = false; }
-			public bool      is_hidden    { get; protected set; default = false; }
-			public string    name         { get; protected set; }
-			public File?     file         { get; protected set; }
-			public File?     workdir      { get; protected set; }
-			public string?   args         { get; protected set; }
-			public Type?[]   compat_tools { get; protected set; default = { null }; }
-			public string?   uri          { get; protected set; }
+			public bool     is_primary   { get; protected set; default = false; }
+			public bool     is_hidden    { get; protected set; default = false; }
+			public string   name         { get; protected set; }
+			public File?    file         { get; protected set; }
+			public File?    workdir      { get; protected set; }
+			public string?  args         { get; protected set; }
+			public Type?[]  compat_tools { get; protected set; default = { null }; }
+			public string?  uri          { get; protected set; }
 
 			public bool is_available(CompatTool? tool=null)
 			{

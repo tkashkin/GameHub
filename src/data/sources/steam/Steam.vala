@@ -259,10 +259,33 @@ namespace GameHub.Data.Sources.Steam
 				var response = Parser.json_object(root, {"response"});
 				var json_games = response != null && response.has_member("games") ? response.get_array_member("games") : null;
 
-				add_games.begin(json_games, game_loaded, (obj, res) => {
-					add_games.end(res);
-					Idle.add(load_games.callback);
-				});
+				if(json_games != null)
+				{
+					foreach(var g in json_games.get_elements())
+					{
+						var game = new SteamGame(this, g);
+						bool is_new_game = !_games.contains(game);
+						if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(game)))
+						{
+							_games.add(game);
+							if(game_loaded != null)
+							{
+								game_loaded(game, false);
+							}
+						}
+						if(is_new_game)
+						{
+							games_count++;
+							game.save();
+						}
+						else if(g != null && g.get_node_type() == Json.NodeType.OBJECT)
+						{
+							_games.get(_games.index_of(game)).playtime_source = g.get_object().get_int_member("playtime_forever");
+						}
+					}
+				}
+
+				Idle.add(load_games.callback);
 			});
 
 			yield;
@@ -270,35 +293,6 @@ namespace GameHub.Data.Sources.Steam
 			watch_client_registry();
 
 			return _games;
-		}
-
-		private async void add_games(Json.Array json_games, FutureResult2<Game, bool>? game_loaded = null)
-		{
-			if(json_games != null)
-			{
-				foreach(var g in json_games.get_elements())
-				{
-					var game = new SteamGame(this, g);
-					bool is_new_game = !_games.contains(game);
-					if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(game)))
-					{
-						_games.add(game);
-						if(game_loaded != null)
-						{
-							game_loaded(game, false);
-						}
-					}
-					if(is_new_game)
-					{
-						games_count++;
-						game.save();
-					}
-					else if(g != null && g.get_node_type() == Json.NodeType.OBJECT)
-					{
-						_games.get(_games.index_of(game)).playtime_source = g.get_object().get_int_member("playtime_forever");
-					}
-				}
-			}
 		}
 
 		public static BinaryVDF.ListNode? get_appinfo(string appid)

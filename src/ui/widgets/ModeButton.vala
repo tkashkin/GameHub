@@ -159,7 +159,8 @@ namespace GameHub.UI.Widgets
 			}
 		}
 
-		public void set_item_visible(int index, bool val) {
+		public void set_item_visible(int index, bool val)
+		{
 			return_if_fail(item_map.has_key(index));
 			var item = item_map[index] as Item;
 
