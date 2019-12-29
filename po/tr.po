@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-29 05:30+0300\n"
-"PO-Revision-Date: 2019-11-15 18:04+0000\n"
+"POT-Creation-Date: 2019-12-28 07:48+0300\n"
+"PO-Revision-Date: 2019-12-29 02:33+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
 "translations/tr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 3.10\n"
 
 #: src/app.vala:90
 msgid "Show help"
@@ -375,9 +375,8 @@ msgid "Show DXVK info overlay"
 msgstr "DXVK bilgi paylaşımını göster"
 
 #: src/data/compat/Proton.vala:58
-#, fuzzy
 msgid "Enable DirectX 9 compatibility layer"
-msgstr "DirectX 11 uyumluluk katmanını devre dışı bırak"
+msgstr "DirectX 9 uyumluluk katmanını etkinleştir"
 
 #: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
 msgid "Silent installation"
@@ -1715,10 +1714,10 @@ msgid "%dm"
 msgstr "%ddk"
 
 #: src/utils/Utils.vala:350
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr "%dsaat"
+msgstr "%ds"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1776,28 +1775,26 @@ msgid "Download failed"
 msgstr "İndirme başarısız oldu"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "İndiriliyor"
+msgstr "İndiriliyor: %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
 msgstr "İndiriliyor"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "Duraklatıldı: %%%d (%s / %s)"
+msgstr "Duraklatıldı: %s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "İndirmeyi duraklat"
+msgstr "Duraklatıldı"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1806,7 +1803,37 @@ msgstr "İndirme iptal edildi"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "İndiriliyor: %%%d (%s / %s) [%s/s]"
+msgstr "%%%1$d (%2$s / %3$s) [%4$s/s]"
+
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr "Steam"
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr "Steam (dikey)"
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr "GOG"
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr "GOG (dikey)"
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr "Kare"
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr "Özel"
