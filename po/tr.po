@@ -1807,33 +1807,3 @@ msgstr "İndirme iptal edildi"
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "%%%1$d (%2$s / %3$s) [%4$s/s]"
-
-#: src/settings/UI.vala:153
-msgctxt "grid_size_preset"
-msgid "Steam"
-msgstr "Steam"
-
-#: src/settings/UI.vala:154
-msgctxt "grid_size_preset"
-msgid "Steam (vertical)"
-msgstr "Steam (dikey)"
-
-#: src/settings/UI.vala:155
-msgctxt "grid_size_preset"
-msgid "GOG"
-msgstr "GOG"
-
-#: src/settings/UI.vala:156
-msgctxt "grid_size_preset"
-msgid "GOG (vertical)"
-msgstr "GOG (dikey)"
-
-#: src/settings/UI.vala:157
-msgctxt "grid_size_preset"
-msgid "Square"
-msgstr "Kare"
-
-#: src/settings/UI.vala:158
-msgctxt "grid_size_preset"
-msgid "Custom"
-msgstr "Özel"
