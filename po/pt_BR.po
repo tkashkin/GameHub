@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-28 07:48+0300\n"
+"POT-Creation-Date: 2019-12-29 05:30+0300\n"
 "PO-Revision-Date: 2019-08-22 15:24+0000\n"
 "Last-Translator: Wilker Santana da Silva <wilker@tutamail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -245,61 +245,6 @@ msgstr "Não instalado"
 msgid "%s games"
 msgstr "%s jogos"
 
-#: src/data/adapters/GamesAdapter.vala:424
-msgctxt "status_header"
-msgid "Favorites"
-msgstr "Favoritos"
-
-#: src/data/adapters/GamesAdapter.vala:429
-#, c-format
-msgctxt "status_header"
-msgid "%s: Favorites"
-msgstr "%s: Favoritos"
-
-#: src/data/adapters/GamesAdapter.vala:454
-msgid "Merging games"
-msgstr "Mesclando jogos"
-
-#: src/data/adapters/GamesAdapter.vala:467
-#, c-format
-msgid "Merging games from %s"
-msgstr "Mesclando jogos de %s"
-
-#: src/data/adapters/GamesAdapter.vala:514
-#, c-format
-msgid "Loading games from %s"
-msgstr "Carregando jogos de %s"
-
-#: src/data/adapters/GamesAdapter.vala:621
-msgctxt "sort_mode"
-msgid "By name"
-msgstr "Por nome"
-
-#: src/data/adapters/GamesAdapter.vala:622
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr "Pelo último lançamento"
-
-#: src/data/adapters/GamesAdapter.vala:623
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr "Por tempo jogado"
-
-#: src/data/adapters/GamesAdapter.vala:648
-msgctxt "group_mode"
-msgid "Do not group"
-msgstr "Não agrupar"
-
-#: src/data/adapters/GamesAdapter.vala:649
-msgctxt "group_mode"
-msgid "By status"
-msgstr "Por status"
-
-#: src/data/adapters/GamesAdapter.vala:650
-msgctxt "group_mode"
-msgid "By source"
-msgstr "Por fonte"
-
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr "Seu SteamID será lido a partir do arquivo de configuração do Steam"
@@ -324,6 +269,30 @@ msgid ""
 msgstr ""
 "Não é possível obter o URL de download do Trove.\n"
 "Certifique-se de que sua assinatura do Humble Monthly esteja ativa."
+
+#: src/data/sources/itch/ItchDownloader.vala:192
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%s left;"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:195
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%d%%"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:198
+#, c-format
+msgctxt "itch_dl_status"
+msgid "(%1$s / %2$s)"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:201
+#, c-format
+msgctxt "itch_dl_status"
+msgid "[%s/s]"
+msgstr ""
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -474,6 +443,61 @@ msgstr "Emulador"
 msgid "Launch in game directory"
 msgstr "Lançamento no diretório do jogo"
 
+#: src/data/adapters/GamesAdapter.vala:424
+msgctxt "status_header"
+msgid "Favorites"
+msgstr "Favoritos"
+
+#: src/data/adapters/GamesAdapter.vala:429
+#, c-format
+msgctxt "status_header"
+msgid "%s: Favorites"
+msgstr "%s: Favoritos"
+
+#: src/data/adapters/GamesAdapter.vala:454
+msgid "Merging games"
+msgstr "Mesclando jogos"
+
+#: src/data/adapters/GamesAdapter.vala:467
+#, c-format
+msgid "Merging games from %s"
+msgstr "Mesclando jogos de %s"
+
+#: src/data/adapters/GamesAdapter.vala:514
+#, c-format
+msgid "Loading games from %s"
+msgstr "Carregando jogos de %s"
+
+#: src/data/adapters/GamesAdapter.vala:621
+msgctxt "sort_mode"
+msgid "By name"
+msgstr "Por nome"
+
+#: src/data/adapters/GamesAdapter.vala:622
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr "Pelo último lançamento"
+
+#: src/data/adapters/GamesAdapter.vala:623
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "Por tempo jogado"
+
+#: src/data/adapters/GamesAdapter.vala:648
+msgctxt "group_mode"
+msgid "Do not group"
+msgstr "Não agrupar"
+
+#: src/data/adapters/GamesAdapter.vala:649
+msgctxt "group_mode"
+msgid "By status"
+msgstr "Por status"
+
+#: src/data/adapters/GamesAdapter.vala:650
+msgctxt "group_mode"
+msgid "By source"
+msgstr "Por fonte"
+
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
@@ -488,12 +512,14 @@ msgstr "Restaurar chave de API padrão"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:108
 msgid "API key"
 msgstr "Chave de API"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:53
 msgid "Generate key"
 msgstr "Gerar chave"
 
@@ -786,6 +812,8 @@ msgstr "Sair"
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:77
 msgid "Disabled"
 msgstr "Desativado"
 
@@ -799,11 +827,13 @@ msgstr ""
 "As chaves da API do Steam têm um número limitado de utilizações por dia"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:57
 msgid "Installation directory"
 msgstr "Diretório de instalação"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:81
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
@@ -812,11 +842,13 @@ msgstr "Não instalado"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:85
 msgid "Not authenticated"
 msgstr "Não autenticado"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 #, c-format
 msgid "Authenticated as <b>%s</b>"
 msgstr "Autenticado como <b>%s</b>"
@@ -824,6 +856,7 @@ msgstr "Autenticado como <b>%s</b>"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 msgid "Authenticated"
 msgstr "Autenticado"
 
@@ -841,6 +874,7 @@ msgstr "Chave da API do Steam"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:48
 msgid "Games directory"
 msgstr "Diretório de jogos"
 
@@ -1528,6 +1562,19 @@ msgstr "Abra a página da loja"
 msgid "Game properties"
 msgstr "Propriedades do jogo"
 
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
+msgid "Playtime"
+msgstr "Tempo de reprodução"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
+msgid "Playtime (local)"
+msgstr "Tempo de reprodução (local)"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
+msgid "Last launch"
+msgstr "Último lançamento"
+
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
 msgstr "Conquistas"
@@ -1541,19 +1588,6 @@ msgstr "Desbloqueado: %s"
 #, c-format
 msgid "Global percentage: %g%%"
 msgstr "Porcentagem global: %g%%"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
-msgid "Playtime"
-msgstr "Tempo de reprodução"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
-msgid "Playtime (local)"
-msgstr "Tempo de reprodução (local)"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
-msgid "Last launch"
-msgstr "Último lançamento"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
@@ -1695,6 +1729,36 @@ msgctxt "time"
 msgid "%ds"
 msgstr "%dh"
 
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr "Steam"
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr "Steam (vertical)"
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr "GOG"
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr "GOG (vertical)"
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr "Quadrado"
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr "Personalizado"
+
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
@@ -1755,36 +1819,6 @@ msgstr "Download cancelado"
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "Baixando: %d%% (%s / %s) [%s/s]"
-
-#: src/settings/UI.vala:153
-msgctxt "grid_size_preset"
-msgid "Steam"
-msgstr "Steam"
-
-#: src/settings/UI.vala:154
-msgctxt "grid_size_preset"
-msgid "Steam (vertical)"
-msgstr "Steam (vertical)"
-
-#: src/settings/UI.vala:155
-msgctxt "grid_size_preset"
-msgid "GOG"
-msgstr "GOG"
-
-#: src/settings/UI.vala:156
-msgctxt "grid_size_preset"
-msgid "GOG (vertical)"
-msgstr "GOG (vertical)"
-
-#: src/settings/UI.vala:157
-msgctxt "grid_size_preset"
-msgid "Square"
-msgstr "Quadrado"
-
-#: src/settings/UI.vala:158
-msgctxt "grid_size_preset"
-msgid "Custom"
-msgstr "Personalizado"
 
 #~ msgid "Description"
 #~ msgstr "Descrição"

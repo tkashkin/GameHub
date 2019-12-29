@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-28 07:48+0300\n"
+"POT-Creation-Date: 2019-12-29 05:30+0300\n"
 "PO-Revision-Date: 2019-10-04 11:56+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
@@ -242,61 +242,6 @@ msgstr "Ikke installert"
 msgid "%s games"
 msgstr "%s spill"
 
-#: src/data/adapters/GamesAdapter.vala:424
-msgctxt "status_header"
-msgid "Favorites"
-msgstr "Favoritter"
-
-#: src/data/adapters/GamesAdapter.vala:429
-#, c-format
-msgctxt "status_header"
-msgid "%s: Favorites"
-msgstr "%s: Favoritter"
-
-#: src/data/adapters/GamesAdapter.vala:454
-msgid "Merging games"
-msgstr "Fletter spill"
-
-#: src/data/adapters/GamesAdapter.vala:467
-#, c-format
-msgid "Merging games from %s"
-msgstr "Fletter spill fra %s"
-
-#: src/data/adapters/GamesAdapter.vala:514
-#, c-format
-msgid "Loading games from %s"
-msgstr "Laster spill fra %s"
-
-#: src/data/adapters/GamesAdapter.vala:621
-msgctxt "sort_mode"
-msgid "By name"
-msgstr "Etter navn"
-
-#: src/data/adapters/GamesAdapter.vala:622
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr "Etter siste kjøring"
-
-#: src/data/adapters/GamesAdapter.vala:623
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr "Etter spilltid"
-
-#: src/data/adapters/GamesAdapter.vala:648
-msgctxt "group_mode"
-msgid "Do not group"
-msgstr "Ikke grupper"
-
-#: src/data/adapters/GamesAdapter.vala:649
-msgctxt "group_mode"
-msgid "By status"
-msgstr "Etter status"
-
-#: src/data/adapters/GamesAdapter.vala:650
-msgctxt "group_mode"
-msgid "By source"
-msgstr "Etter kilde"
-
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr "Din SteamID vil bli lest fra Steam-oppsettsfilen"
@@ -321,6 +266,30 @@ msgid ""
 msgstr ""
 "Kan ikke hente nedlastingsnettadresse for Trove.\n"
 "Forsikre deg om at ditt månedlige Humble-abonnement er aktivt."
+
+#: src/data/sources/itch/ItchDownloader.vala:192
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%s left;"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:195
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%d%%"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:198
+#, c-format
+msgctxt "itch_dl_status"
+msgid "(%1$s / %2$s)"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:201
+#, c-format
+msgctxt "itch_dl_status"
+msgid "[%s/s]"
+msgstr ""
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -471,6 +440,61 @@ msgstr "Emulator"
 msgid "Launch in game directory"
 msgstr "Kjør i spillmappe"
 
+#: src/data/adapters/GamesAdapter.vala:424
+msgctxt "status_header"
+msgid "Favorites"
+msgstr "Favoritter"
+
+#: src/data/adapters/GamesAdapter.vala:429
+#, c-format
+msgctxt "status_header"
+msgid "%s: Favorites"
+msgstr "%s: Favoritter"
+
+#: src/data/adapters/GamesAdapter.vala:454
+msgid "Merging games"
+msgstr "Fletter spill"
+
+#: src/data/adapters/GamesAdapter.vala:467
+#, c-format
+msgid "Merging games from %s"
+msgstr "Fletter spill fra %s"
+
+#: src/data/adapters/GamesAdapter.vala:514
+#, c-format
+msgid "Loading games from %s"
+msgstr "Laster spill fra %s"
+
+#: src/data/adapters/GamesAdapter.vala:621
+msgctxt "sort_mode"
+msgid "By name"
+msgstr "Etter navn"
+
+#: src/data/adapters/GamesAdapter.vala:622
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr "Etter siste kjøring"
+
+#: src/data/adapters/GamesAdapter.vala:623
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "Etter spilltid"
+
+#: src/data/adapters/GamesAdapter.vala:648
+msgctxt "group_mode"
+msgid "Do not group"
+msgstr "Ikke grupper"
+
+#: src/data/adapters/GamesAdapter.vala:649
+msgctxt "group_mode"
+msgid "By status"
+msgstr "Etter status"
+
+#: src/data/adapters/GamesAdapter.vala:650
+msgctxt "group_mode"
+msgid "By source"
+msgstr "Etter kilde"
+
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
@@ -485,12 +509,14 @@ msgstr "Gjenopprett forvalgt API-nøkkel"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:108
 msgid "API key"
 msgstr "API-nøkkel"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:53
 msgid "Generate key"
 msgstr "Generer nøkkel"
 
@@ -787,6 +813,8 @@ msgstr "Avslutt"
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:77
 msgid "Disabled"
 msgstr "Avskrudd"
 
@@ -799,11 +827,13 @@ msgid "Steam API keys have limited number of uses per day"
 msgstr "API-nøkler fra Steam kan brukes kun et par ganger om dagen"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:57
 msgid "Installation directory"
 msgstr "Installasjonsmappe"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:81
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
@@ -812,11 +842,13 @@ msgstr "Ikke installert"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:85
 msgid "Not authenticated"
 msgstr "Identitetsbekreftelse kreves"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 #, c-format
 msgid "Authenticated as <b>%s</b>"
 msgstr "Identitetsbekreftet som <b>%s</b>"
@@ -824,6 +856,7 @@ msgstr "Identitetsbekreftet som <b>%s</b>"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 msgid "Authenticated"
 msgstr "Identitetsbekreftet"
 
@@ -841,6 +874,7 @@ msgstr "API-nøkkel fra Steam"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:48
 msgid "Games directory"
 msgstr "Spillmappe"
 
@@ -1526,6 +1560,19 @@ msgstr "Åpne butikkside"
 msgid "Game properties"
 msgstr "Spillegenskaper"
 
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
+msgid "Playtime"
+msgstr "Spilltid"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
+msgid "Playtime (local)"
+msgstr "Spilltid (lokal)"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
+msgid "Last launch"
+msgstr "Sist kjørt"
+
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
 msgstr "Prestasjoner"
@@ -1539,19 +1586,6 @@ msgstr "Opplåst: %s"
 #, c-format
 msgid "Global percentage: %g%%"
 msgstr "Global prosentsats: %g%%"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
-msgid "Playtime"
-msgstr "Spilltid"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
-msgid "Playtime (local)"
-msgstr "Spilltid (lokal)"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
-msgid "Last launch"
-msgstr "Sist kjørt"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
@@ -1693,6 +1727,36 @@ msgctxt "time"
 msgid "%ds"
 msgstr "%dt"
 
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr "Steam"
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr "Steam (vertikalt)"
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr "GOG"
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr "GOG (vertikalt)"
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr "Firkantig"
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr "Egendefinert"
+
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
@@ -1753,36 +1817,6 @@ msgstr "Nedlasting avbrutt"
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "Laster ned: %d%% (%s / %s) [%s/s]"
-
-#: src/settings/UI.vala:153
-msgctxt "grid_size_preset"
-msgid "Steam"
-msgstr "Steam"
-
-#: src/settings/UI.vala:154
-msgctxt "grid_size_preset"
-msgid "Steam (vertical)"
-msgstr "Steam (vertikalt)"
-
-#: src/settings/UI.vala:155
-msgctxt "grid_size_preset"
-msgid "GOG"
-msgstr "GOG"
-
-#: src/settings/UI.vala:156
-msgctxt "grid_size_preset"
-msgid "GOG (vertical)"
-msgstr "GOG (vertikalt)"
-
-#: src/settings/UI.vala:157
-msgctxt "grid_size_preset"
-msgid "Square"
-msgstr "Firkantig"
-
-#: src/settings/UI.vala:158
-msgctxt "grid_size_preset"
-msgid "Custom"
-msgstr "Egendefinert"
 
 #~ msgid "Description"
 #~ msgstr "Beskrivelse"

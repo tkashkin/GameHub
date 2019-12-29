@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-28 07:48+0300\n"
+"POT-Creation-Date: 2019-12-29 05:30+0300\n"
 "PO-Revision-Date: 2019-12-02 22:05+0000\n"
 "Last-Translator: Marc Riera <marcriera@softcatala.org>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/gamehub/"
@@ -241,61 +241,6 @@ msgstr "No instal·lat"
 msgid "%s games"
 msgstr "Jocs de %s"
 
-#: src/data/adapters/GamesAdapter.vala:424
-msgctxt "status_header"
-msgid "Favorites"
-msgstr "Preferits"
-
-#: src/data/adapters/GamesAdapter.vala:429
-#, c-format
-msgctxt "status_header"
-msgid "%s: Favorites"
-msgstr "%s: Preferits"
-
-#: src/data/adapters/GamesAdapter.vala:454
-msgid "Merging games"
-msgstr "S'estan fusionant els jocs"
-
-#: src/data/adapters/GamesAdapter.vala:467
-#, c-format
-msgid "Merging games from %s"
-msgstr "S'estan fusionant els jocs de %s"
-
-#: src/data/adapters/GamesAdapter.vala:514
-#, c-format
-msgid "Loading games from %s"
-msgstr "S'estan carregant els jocs de %s"
-
-#: src/data/adapters/GamesAdapter.vala:621
-msgctxt "sort_mode"
-msgid "By name"
-msgstr "Per nom"
-
-#: src/data/adapters/GamesAdapter.vala:622
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr "Per darrera execució"
-
-#: src/data/adapters/GamesAdapter.vala:623
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr "Per temps de joc"
-
-#: src/data/adapters/GamesAdapter.vala:648
-msgctxt "group_mode"
-msgid "Do not group"
-msgstr "No agrupis"
-
-#: src/data/adapters/GamesAdapter.vala:649
-msgctxt "group_mode"
-msgid "By status"
-msgstr "Per estat"
-
-#: src/data/adapters/GamesAdapter.vala:650
-msgctxt "group_mode"
-msgid "By source"
-msgstr "Per origen"
-
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr "Es llegirà el vostre SteamID del fitxer de configuració de Steam."
@@ -320,6 +265,30 @@ msgid ""
 msgstr ""
 "No es pot obtenir l'URL de baixada de Trove.\n"
 "Assegureu-vos que la vostra subscripció a Humble Monthly es troba activa."
+
+#: src/data/sources/itch/ItchDownloader.vala:192
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%s left;"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:195
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%d%%"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:198
+#, c-format
+msgctxt "itch_dl_status"
+msgid "(%1$s / %2$s)"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:201
+#, c-format
+msgctxt "itch_dl_status"
+msgid "[%s/s]"
+msgstr ""
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -470,6 +439,61 @@ msgstr "Emulador"
 msgid "Launch in game directory"
 msgstr "Executa al directori del joc"
 
+#: src/data/adapters/GamesAdapter.vala:424
+msgctxt "status_header"
+msgid "Favorites"
+msgstr "Preferits"
+
+#: src/data/adapters/GamesAdapter.vala:429
+#, c-format
+msgctxt "status_header"
+msgid "%s: Favorites"
+msgstr "%s: Preferits"
+
+#: src/data/adapters/GamesAdapter.vala:454
+msgid "Merging games"
+msgstr "S'estan fusionant els jocs"
+
+#: src/data/adapters/GamesAdapter.vala:467
+#, c-format
+msgid "Merging games from %s"
+msgstr "S'estan fusionant els jocs de %s"
+
+#: src/data/adapters/GamesAdapter.vala:514
+#, c-format
+msgid "Loading games from %s"
+msgstr "S'estan carregant els jocs de %s"
+
+#: src/data/adapters/GamesAdapter.vala:621
+msgctxt "sort_mode"
+msgid "By name"
+msgstr "Per nom"
+
+#: src/data/adapters/GamesAdapter.vala:622
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr "Per darrera execució"
+
+#: src/data/adapters/GamesAdapter.vala:623
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "Per temps de joc"
+
+#: src/data/adapters/GamesAdapter.vala:648
+msgctxt "group_mode"
+msgid "Do not group"
+msgstr "No agrupis"
+
+#: src/data/adapters/GamesAdapter.vala:649
+msgctxt "group_mode"
+msgid "By status"
+msgstr "Per estat"
+
+#: src/data/adapters/GamesAdapter.vala:650
+msgctxt "group_mode"
+msgid "By source"
+msgstr "Per origen"
+
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
@@ -484,12 +508,14 @@ msgstr "Restaura la clau API per defecte"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:108
 msgid "API key"
 msgstr "Clau API"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:53
 msgid "Generate key"
 msgstr "Genera una clau"
 
@@ -780,6 +806,8 @@ msgstr "Surt"
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:77
 msgid "Disabled"
 msgstr "Inhabilitat"
 
@@ -792,11 +820,13 @@ msgid "Steam API keys have limited number of uses per day"
 msgstr "Les claus API de Steam tenen un nombre limitat d'usos per dia"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:57
 msgid "Installation directory"
 msgstr "Directori d'instal·lació"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:81
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
@@ -805,11 +835,13 @@ msgstr "No instal·lat"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:85
 msgid "Not authenticated"
 msgstr "No autenticat"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 #, c-format
 msgid "Authenticated as <b>%s</b>"
 msgstr "Autenticat com a <b>%s</b>"
@@ -817,6 +849,7 @@ msgstr "Autenticat com a <b>%s</b>"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 msgid "Authenticated"
 msgstr "Autenticat"
 
@@ -834,6 +867,7 @@ msgstr "Clau API de Steam"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:48
 msgid "Games directory"
 msgstr "Directori dels jocs"
 
@@ -1520,6 +1554,19 @@ msgstr "Obre la pàgina de la botiga"
 msgid "Game properties"
 msgstr "Propietats del joc"
 
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
+msgid "Playtime"
+msgstr "Temps de joc"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
+msgid "Playtime (local)"
+msgstr "Temps de joc (local)"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
+msgid "Last launch"
+msgstr "Darrera execució"
+
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
 msgstr "Assoliments"
@@ -1533,19 +1580,6 @@ msgstr "Heu aconseguit: %s"
 #, c-format
 msgid "Global percentage: %g%%"
 msgstr "Percentatge global: %g%%"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
-msgid "Playtime"
-msgstr "Temps de joc"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
-msgid "Playtime (local)"
-msgstr "Temps de joc (local)"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
-msgid "Last launch"
-msgstr "Darrera execució"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
@@ -1687,6 +1721,36 @@ msgctxt "time"
 msgid "%ds"
 msgstr "%d h"
 
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr "Steam"
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr "Steam (vertical)"
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr "GOG"
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr "GOG (vertical)"
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr "Quadrada"
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr "Personalitzada"
+
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
@@ -1747,33 +1811,3 @@ msgstr "S'ha cancel·lat la baixada"
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "S'està baixant: %d%% (%s / %s) [%s/s]"
-
-#: src/settings/UI.vala:153
-msgctxt "grid_size_preset"
-msgid "Steam"
-msgstr "Steam"
-
-#: src/settings/UI.vala:154
-msgctxt "grid_size_preset"
-msgid "Steam (vertical)"
-msgstr "Steam (vertical)"
-
-#: src/settings/UI.vala:155
-msgctxt "grid_size_preset"
-msgid "GOG"
-msgstr "GOG"
-
-#: src/settings/UI.vala:156
-msgctxt "grid_size_preset"
-msgid "GOG (vertical)"
-msgstr "GOG (vertical)"
-
-#: src/settings/UI.vala:157
-msgctxt "grid_size_preset"
-msgid "Square"
-msgstr "Quadrada"
-
-#: src/settings/UI.vala:158
-msgctxt "grid_size_preset"
-msgid "Custom"
-msgstr "Personalitzada"

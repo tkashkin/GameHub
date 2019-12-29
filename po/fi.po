@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-28 07:48+0300\n"
+"POT-Creation-Date: 2019-12-29 05:30+0300\n"
 "PO-Revision-Date: 2019-11-24 10:39+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
@@ -240,61 +240,6 @@ msgstr "Ei asennettu"
 msgid "%s games"
 msgstr "%s peliä"
 
-#: src/data/adapters/GamesAdapter.vala:424
-msgctxt "status_header"
-msgid "Favorites"
-msgstr "Suosikit"
-
-#: src/data/adapters/GamesAdapter.vala:429
-#, c-format
-msgctxt "status_header"
-msgid "%s: Favorites"
-msgstr "%s: Suosikkeja"
-
-#: src/data/adapters/GamesAdapter.vala:454
-msgid "Merging games"
-msgstr "Pelien yhdistäminen"
-
-#: src/data/adapters/GamesAdapter.vala:467
-#, c-format
-msgid "Merging games from %s"
-msgstr "Pelien yhdistäminen %s"
-
-#: src/data/adapters/GamesAdapter.vala:514
-#, c-format
-msgid "Loading games from %s"
-msgstr "Ladataan pelejä %s"
-
-#: src/data/adapters/GamesAdapter.vala:621
-msgctxt "sort_mode"
-msgid "By name"
-msgstr "Nimeltä"
-
-#: src/data/adapters/GamesAdapter.vala:622
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr "Viimeisen käynnistyksen mukaan"
-
-#: src/data/adapters/GamesAdapter.vala:623
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr "Peliajan"
-
-#: src/data/adapters/GamesAdapter.vala:648
-msgctxt "group_mode"
-msgid "Do not group"
-msgstr "Älä ryhmitä"
-
-#: src/data/adapters/GamesAdapter.vala:649
-msgctxt "group_mode"
-msgid "By status"
-msgstr "Tila"
-
-#: src/data/adapters/GamesAdapter.vala:650
-msgctxt "group_mode"
-msgid "By source"
-msgstr "Lähteen"
-
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
 msgstr "SteamID-tunnuksesi luetaan Steam-määritystiedostosta"
@@ -319,6 +264,30 @@ msgid ""
 msgstr ""
 "Troven lataus URL-osoitetta ei saada.\n"
 "Varmista, että Humble Monthly -tilaus on aktiivinen."
+
+#: src/data/sources/itch/ItchDownloader.vala:192
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%s left;"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:195
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%d%%"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:198
+#, c-format
+msgctxt "itch_dl_status"
+msgid "(%1$s / %2$s)"
+msgstr ""
+
+#: src/data/sources/itch/ItchDownloader.vala:201
+#, c-format
+msgctxt "itch_dl_status"
+msgid "[%s/s]"
+msgstr ""
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -469,6 +438,61 @@ msgstr "Emulaattori"
 msgid "Launch in game directory"
 msgstr "Käynnistä pelihakemistossa"
 
+#: src/data/adapters/GamesAdapter.vala:424
+msgctxt "status_header"
+msgid "Favorites"
+msgstr "Suosikit"
+
+#: src/data/adapters/GamesAdapter.vala:429
+#, c-format
+msgctxt "status_header"
+msgid "%s: Favorites"
+msgstr "%s: Suosikkeja"
+
+#: src/data/adapters/GamesAdapter.vala:454
+msgid "Merging games"
+msgstr "Pelien yhdistäminen"
+
+#: src/data/adapters/GamesAdapter.vala:467
+#, c-format
+msgid "Merging games from %s"
+msgstr "Pelien yhdistäminen %s"
+
+#: src/data/adapters/GamesAdapter.vala:514
+#, c-format
+msgid "Loading games from %s"
+msgstr "Ladataan pelejä %s"
+
+#: src/data/adapters/GamesAdapter.vala:621
+msgctxt "sort_mode"
+msgid "By name"
+msgstr "Nimeltä"
+
+#: src/data/adapters/GamesAdapter.vala:622
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr "Viimeisen käynnistyksen mukaan"
+
+#: src/data/adapters/GamesAdapter.vala:623
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "Peliajan"
+
+#: src/data/adapters/GamesAdapter.vala:648
+msgctxt "group_mode"
+msgid "Do not group"
+msgstr "Älä ryhmitä"
+
+#: src/data/adapters/GamesAdapter.vala:649
+msgctxt "group_mode"
+msgid "By status"
+msgstr "Tila"
+
+#: src/data/adapters/GamesAdapter.vala:650
+msgctxt "group_mode"
+msgid "By source"
+msgstr "Lähteen"
+
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
@@ -483,12 +507,14 @@ msgstr "Palauta oletus API-avain"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:108
 msgid "API key"
 msgstr "API-avain"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:53
 msgid "Generate key"
 msgstr "Generoi avain"
 
@@ -781,6 +807,8 @@ msgstr "Poistu"
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:77
 msgid "Disabled"
 msgstr "Poistettu käytöstä"
 
@@ -793,11 +821,13 @@ msgid "Steam API keys have limited number of uses per day"
 msgstr "Steam API-avaimilla on rajoitettu määrä käyttöjä päivässä"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:57
 msgid "Installation directory"
 msgstr "Asennushakemisto"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:81
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
@@ -806,11 +836,13 @@ msgstr "Ei asennettu"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:85
 msgid "Not authenticated"
 msgstr "Ei todennettu"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 #, c-format
 msgid "Authenticated as <b>%s</b>"
 msgstr "Todennettu nimellä <b>%s</b>"
@@ -818,6 +850,7 @@ msgstr "Todennettu nimellä <b>%s</b>"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 msgid "Authenticated"
 msgstr "Todennettu"
 
@@ -835,6 +868,7 @@ msgstr "Steam API-avain"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:48
 msgid "Games directory"
 msgstr "Pelien hakemisto"
 
@@ -1520,6 +1554,19 @@ msgstr "Avaa kauppasivu"
 msgid "Game properties"
 msgstr "Pelin ominaisuudet"
 
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
+msgid "Playtime"
+msgstr "Peliaika"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
+msgid "Playtime (local)"
+msgstr "Peliaika (paikallinen)"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
+msgid "Last launch"
+msgstr "Viimeisin käynnistys"
+
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
 msgstr "Saavutukset"
@@ -1533,19 +1580,6 @@ msgstr "Avattu: %s"
 #, c-format
 msgid "Global percentage: %g%%"
 msgstr "Kokonaisprosentti: %g%%"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
-msgid "Playtime"
-msgstr "Peliaika"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
-msgid "Playtime (local)"
-msgstr "Peliaika (paikallinen)"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
-msgid "Last launch"
-msgstr "Viimeisin käynnistys"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
@@ -1687,6 +1721,36 @@ msgctxt "time"
 msgid "%ds"
 msgstr "%dt"
 
+#: src/settings/UI.vala:153
+msgctxt "grid_size_preset"
+msgid "Steam"
+msgstr "Steam"
+
+#: src/settings/UI.vala:154
+msgctxt "grid_size_preset"
+msgid "Steam (vertical)"
+msgstr "Steam (pystysuora)"
+
+#: src/settings/UI.vala:155
+msgctxt "grid_size_preset"
+msgid "GOG"
+msgstr "GOG"
+
+#: src/settings/UI.vala:156
+msgctxt "grid_size_preset"
+msgid "GOG (vertical)"
+msgstr "GOG (pystysuora)"
+
+#: src/settings/UI.vala:157
+msgctxt "grid_size_preset"
+msgid "Square"
+msgstr "Neliö"
+
+#: src/settings/UI.vala:158
+msgctxt "grid_size_preset"
+msgid "Custom"
+msgstr "Kustomi"
+
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
@@ -1747,33 +1811,3 @@ msgstr "Lataus peruutettu"
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "Ladataan: %d%% (%s / %s) [%s/s]"
-
-#: src/settings/UI.vala:153
-msgctxt "grid_size_preset"
-msgid "Steam"
-msgstr "Steam"
-
-#: src/settings/UI.vala:154
-msgctxt "grid_size_preset"
-msgid "Steam (vertical)"
-msgstr "Steam (pystysuora)"
-
-#: src/settings/UI.vala:155
-msgctxt "grid_size_preset"
-msgid "GOG"
-msgstr "GOG"
-
-#: src/settings/UI.vala:156
-msgctxt "grid_size_preset"
-msgid "GOG (vertical)"
-msgstr "GOG (pystysuora)"
-
-#: src/settings/UI.vala:157
-msgctxt "grid_size_preset"
-msgid "Square"
-msgstr "Neliö"
-
-#: src/settings/UI.vala:158
-msgctxt "grid_size_preset"
-msgid "Custom"
-msgstr "Kustomi"
