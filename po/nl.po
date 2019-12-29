@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-28 07:48+0300\n"
-"PO-Revision-Date: 2019-12-29 02:33+0000\n"
+"PO-Revision-Date: 2019-12-29 13:05+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
 "translations/nl/>\n"
@@ -271,25 +271,25 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s resterend;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "(%1$s / %2$s)"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
