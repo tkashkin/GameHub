@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-29 05:30+0300\n"
-"PO-Revision-Date: 2019-10-22 22:53+0000\n"
-"Last-Translator: Éfrit <Efrit@posteo.net>\n"
+"PO-Revision-Date: 2019-12-31 12:21+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1-dev\n"
+"X-Generator: Weblate 3.10\n"
 
 #: src/app.vala:90
 msgid "Show help"
@@ -266,32 +266,32 @@ msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
-"Impossible d’obtenir le lien de téléchargement de Trove.\n"
+"Impossible d’obtenir le lien de téléchargement pourTrove.\n"
 "Veuillez vérifier que votre abonnement à Humble Monthly est actif."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s restant ;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "(%1$s / %2$s)"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -367,20 +367,19 @@ msgstr "Forcer LARGE_ADDRESS_AWARE"
 
 #: src/data/compat/Proton.vala:55
 msgid "Disable DirectX 11 compatibility layer"
-msgstr "Désactiver le niveau de compatibilité DirectX 11"
+msgstr "Désactiver la couche de compatibilité pour DirectX 11"
 
 #: src/data/compat/Proton.vala:56
 msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr "Utiliser WineD3D11 comme niveau de compatibilité DirectX 11"
+msgstr "Utiliser WineD3D11 comme couche de compatibilité pour DirectX 11"
 
 #: src/data/compat/Proton.vala:57
 msgid "Show DXVK info overlay"
 msgstr "Afficher les infos DXVK en surimpression"
 
 #: src/data/compat/Proton.vala:58
-#, fuzzy
 msgid "Enable DirectX 9 compatibility layer"
-msgstr "Désactiver le niveau de compatibilité DirectX 11"
+msgstr "Activer la couche de compatibilité pour DirectX 9"
 
 #: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
 msgid "Silent installation"
@@ -1722,10 +1721,10 @@ msgid "%dm"
 msgstr "%dm"
 
 #: src/utils/Utils.vala:350
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr "%dh"
+msgstr "%ds"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1783,28 +1782,26 @@ msgid "Download failed"
 msgstr "Echec du téléchargement"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "En cours de téléchargement"
+msgstr "Téléchargement : %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
 msgstr "En cours de téléchargement"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "En pause: %d%% (%s / %s)"
+msgstr "En pause : %s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "Mettre le téléchargement en pause"
+msgstr "Mis en pause"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1813,10 +1810,10 @@ msgstr "Téléchargement annulé"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "Téléchargement:  %d%% (%s / %s) [%s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable fullscreen"
 #~ msgstr "Désactiver le plein écran"
