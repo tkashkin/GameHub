@@ -369,7 +369,7 @@ namespace GameHub.Data.Sources.Humble
 					var new_url = installer.update_url(this);
 					if(new_url != null)
 					{
-						var url_field = "\"web\": \"%s\"";
+						var url_field = "\"%s\"";
 						info = info.replace(url_field.printf(old_url), url_field.printf(new_url));
 					}
 					refresh = true;

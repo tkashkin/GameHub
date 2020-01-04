@@ -237,7 +237,7 @@ namespace GameHub.Data.Compat
 
 			if(!cmd.query_exists())
 			{
-				yield Utils.run_thread({ executable.get_path(), "run", cmd.get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
+				yield Utils.run_thread({ executable.get_path(), "run", cmd.get_path(), "/c", "exit" }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
 			}
 		}
 
