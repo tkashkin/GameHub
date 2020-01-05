@@ -63,10 +63,10 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			add(link);
 			add(new Separator(Orientation.HORIZONTAL));
 
-			var sys_langs = Intl.get_language_names();
-			var langs = root.get_object().get_object_member("languages");
+			var langs = Parser.json_object(root, {"languages"});
 			if(langs != null)
 			{
+				var sys_langs = Intl.get_language_names();
 				var langs_string = "";
 				foreach(var l in langs.get_members())
 				{
@@ -204,7 +204,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					{
 						Allocation alloc;
 						content.get_allocation(out alloc);
-						if(s.download != null)
+						if(s.download != null && s.download.status != null)
 						{
 							progress_bar.get_style_context().add_class("downloading");
 							progress_bar.set_size_request((int) (s.download.status.progress * alloc.width), alloc.height);
