@@ -53,6 +53,7 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field PLAYTIME_SOURCE;
 		public static Table.Field PLAYTIME_TRACKED;
 		public static Table.Field IMAGE_VERTICAL;
+		public static Table.Field TWEAKS;
 
 		public Games()
 		{
@@ -78,6 +79,7 @@ namespace GameHub.Data.DB.Tables
 			PLAYTIME_SOURCE      = f(15);
 			PLAYTIME_TRACKED     = f(16);
 			IMAGE_VERTICAL       = f(17);
+			TWEAKS               = f(18);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -120,6 +122,10 @@ namespace GameHub.Data.DB.Tables
 					case 8:
 						db.exec("ALTER TABLE `games` ADD `image_vertical` string");
 						break;
+
+					case 9:
+						db.exec("ALTER TABLE `games` ADD `tweaks` string");
+						break;
 				}
 			}
 		}
@@ -158,8 +164,9 @@ namespace GameHub.Data.DB.Tables
 					`last_launch`,
 					`playtime_source`,
 					`playtime_tracked`,
-					`image_vertical`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`image_vertical`,
+					`tweaks`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -181,6 +188,17 @@ namespace GameHub.Data.DB.Tables
 				tags += t.id;
 			}
 
+			string? tweaks = null;
+			if(game is TweakableGame && ((TweakableGame) game).tweaks != null)
+			{
+				tweaks = "";
+				foreach(var t in ((TweakableGame) game).tweaks)
+				{
+					if(tweaks.length > 0) tweaks += ",";
+					tweaks += t;
+				}
+			}
+
 			SOURCE.bind(s, game.source.id);
 			ID.bind(s, game.id);
 			NAME.bind(s, game.name);
@@ -199,6 +217,7 @@ namespace GameHub.Data.DB.Tables
 			PLAYTIME_SOURCE.bind_int64(s, game.playtime_source);
 			PLAYTIME_TRACKED.bind_int64(s, game.playtime_tracked);
 			IMAGE_VERTICAL.bind(s, game.image_vertical);
+			TWEAKS.bind(s, tweaks);
 
 			res = s.step();
 

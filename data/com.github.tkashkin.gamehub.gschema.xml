@@ -341,4 +341,12 @@
 				<summary>Preferred description source</summary>
 			</key>
 		</schema>
+
+	<!-- Tweaks -->
+		<schema path="/com/github/tkashkin/gamehub/tweaks/" id="com.github.tkashkin.gamehub.tweaks">
+			<key name="global" type="as">
+				<default>[]</default>
+				<summary>Global tweaks list</summary>
+			</key>
+		</schema>
 </schemalist>

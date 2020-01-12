@@ -50,47 +50,8 @@ namespace GameHub.Data.Compat
 			CompatTool.Option[] options = {};
 			additional_configs.clear();
 
-			var data_path = ProjectConfig.PROJECT_NAME + "/compat/dosbox";
-
-			string[] data_dirs = { FSUtils.file(ProjectConfig.DATADIR, data_path).get_path() };
-			var user_data_dir = Environment.get_user_data_dir();
-			var system_data_dirs = Environment.get_system_data_dirs();
-
-			if(GameHub.Application.log_verbose)
+			foreach(var data_dir in FSUtils.get_data_dirs("compat/dosbox"))
 			{
-				debug("[DOSBox.init] ProjectConfig.DATADIR: '%s'", ProjectConfig.DATADIR);
-				debug("[DOSBox.init] user_data_dir: '%s'", user_data_dir);
-			}
-
-			if(user_data_dir != null && user_data_dir.length > 0)
-			{
-				var dir = FSUtils.file(user_data_dir, data_path).get_path();
-				if(!(dir in data_dirs)) data_dirs += dir;
-			}
-
-			if(system_data_dirs != null && system_data_dirs.length > 0)
-			{
-				foreach(var system_data_dir in system_data_dirs)
-				{
-					if(GameHub.Application.log_verbose)
-					{
-						debug("[DOSBox.init] system_data_dir: '%s'", system_data_dir);
-					}
-					var dir = FSUtils.file(system_data_dir, data_path).get_path();
-					if(!(dir in data_dirs)) data_dirs += dir;
-				}
-			}
-
-			if(GameHub.Application.log_verbose)
-			{
-				debug("[DOSBox.init] data_dirs: {'%s'}", string.joinv("', '", data_dirs));
-			}
-
-			foreach(var dir in data_dirs)
-			{
-				var data_dir = FSUtils.file(dir);
-				if(data_dir == null || !data_dir.query_exists()) continue;
-
 				if(GameHub.Application.log_verbose)
 				{
 					debug("[DOSBox.init] Config directory: '%s'", data_dir.get_path());
@@ -179,7 +140,7 @@ namespace GameHub.Data.Compat
 		private static bool is_dos_executable(File? file)
 		{
 			if(file == null || !file.query_exists()) return false;
-			var type = Utils.run({"file", "-b", file.get_path()}, null, null, false, true, false);
+			var type = Utils.run({"file", "-b", file.get_path()}).log(false).run_sync(true).output;
 			if(type != null && type.length > 0)
 			{
 				return "DOS" in type;
@@ -254,7 +215,12 @@ namespace GameHub.Data.Compat
 				wdir = bundled_win_dosbox.get_parent();
 			}
 
-			yield Utils.run_thread(combine_cmd_with_args(cmd, runnable), wdir.get_path());
+			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(wdir.get_path());
+			if(runnable is TweakableGame)
+			{
+				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
+			}
+			yield task.run_sync_thread();
 		}
 	}
 }

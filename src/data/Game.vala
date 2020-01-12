@@ -21,6 +21,7 @@ using Gtk;
 
 using GameHub.Utils;
 using GameHub.Data.DB;
+using GameHub.Data.Tweaks;
 
 namespace GameHub.Data
 {
@@ -141,7 +142,14 @@ namespace GameHub.Data
 
 				last_launch = get_real_time() / 1000000;
 				save();
-				yield Utils.run_thread(cmd, executable.get_parent().get_path(), null, true);
+
+				var task = Utils.run(cmd).dir(executable.get_parent().get_path()).override_runtime(true);
+				if(this is TweakableGame)
+				{
+					task.tweaks(((TweakableGame) this).get_enabled_tweaks());
+				}
+				yield task.run_sync_thread();
+
 				playtime_tracked += ((get_real_time() / 1000000) - last_launch) / 60;
 				save();
 
@@ -589,6 +597,25 @@ namespace GameHub.Data
 			public string?   image_locked      { get; protected set; }
 			public string?   image_unlocked    { get; protected set; }
 			public string?   image             { get { return unlocked ? image_unlocked : image_locked; } }
+		}
+	}
+
+	public interface TweakableGame: Game
+	{
+		public abstract string[]? tweaks { get; set; default = null; }
+
+		public Tweak[] get_enabled_tweaks(CompatTool? tool=null)
+		{
+			Tweak[] enabled_tweaks = {};
+			var all_tweaks = Tweak.load_tweaks();
+			foreach(var tweak in all_tweaks.values)
+			{
+				if(tweak.is_enabled(this) && tweak.is_applicable_to(this, tool))
+				{
+					enabled_tweaks += tweak;
+				}
+			}
+			return enabled_tweaks;
 		}
 	}
 }

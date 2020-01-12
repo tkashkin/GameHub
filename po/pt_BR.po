@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-29 05:30+0300\n"
+"POT-Creation-Date: 2020-01-12 17:59+0300\n"
 "PO-Revision-Date: 2019-08-22 15:24+0000\n"
 "Last-Translator: Wilker Santana da Silva <wilker@tutamail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -22,63 +22,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.9-dev\n"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show help"
 msgstr "Mostrar ajuda"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Show application version and exit"
 msgstr "Mostrar versão do aplicativo e sair"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Restart with GDB debugger attached"
 msgstr "Reiniciar com o depurador do GDB vinculado"
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Show full GDB backtrace"
 msgstr "Mostrar registro completo do GDB"
 
-#: src/app.vala:94
+#: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Tratar erros fatais como críticos e fechar a aplicação"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show main window"
 msgstr "Mostrar janela principal"
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Show application settings dialog"
 msgstr "Mostrar diálogo de opções do aplicativo"
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Show about dialog"
 msgstr "Mostrar o dialogo de \"Sobre\""
 
-#: src/app.vala:101
+#: src/app.vala:102
 msgid "Maximum number of background worker threads"
 msgstr "Número máximo de threads em trabalho em segundo plano"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Run game"
 msgstr "Executar o jogo"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Show compatibility options dialog"
 msgstr "Mostrar caixa de diálogo de opções de compatibilidade"
 
-#: src/app.vala:107
+#: src/app.vala:108
 msgid "Open game details"
 msgstr "Abrir detalhes do jogo"
 
-#: src/app.vala:108
+#: src/app.vala:109
 msgid "Open game properties"
 msgstr "Abrir propriedades do jogo"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid "Enable debug logging"
 msgstr "Ativar log de depuração"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -86,35 +86,35 @@ msgstr ""
 "Registrar processo de autenticação e informações sensíveis como tokens de "
 "autenticação"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log download manager"
 msgstr "Log do gerenciador de download"
 
-#: src/app.vala:115
+#: src/app.vala:116
 msgid "Log background workers start/stop"
 msgstr "Registrar trabalhadores de fundo iniciar/parar"
 
-#: src/app.vala:116
+#: src/app.vala:117
 msgid "Disable log messages filtering"
 msgstr "Desativar filtro de registro de mensagens"
 
-#: src/app.vala:117
+#: src/app.vala:118
 msgid "Verbose logging"
 msgstr "Registro detalhado"
 
-#: src/app.vala:246
+#: src/app.vala:247
 msgid "Game Options:"
 msgstr "Opções do Jogo:"
 
-#: src/app.vala:246
+#: src/app.vala:247
 msgid "Show game options help"
 msgstr "Mostrar ajuda de opções de jogo"
 
-#: src/app.vala:254
+#: src/app.vala:255
 msgid "Logging Options:"
 msgstr "Opções de Logs:"
 
-#: src/app.vala:254
+#: src/app.vala:255
 msgid "Show logging options help"
 msgstr "Mostrar ajuda sobre logs"
 
@@ -190,52 +190,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Emulado"
 
-#: src/data/Game.vala:547
+#: src/data/Game.vala:555
 msgctxt "status"
 msgid "Running"
 msgstr "Correndo"
 
-#: src/data/Game.vala:550
+#: src/data/Game.vala:558
 msgctxt "status"
 msgid "Installed"
 msgstr "Instalado"
 
-#: src/data/Game.vala:551
+#: src/data/Game.vala:559
 msgctxt "status"
 msgid "Installing"
 msgstr "Instalando"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:560
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Verificando a integridade do instalador"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:561
 msgctxt "status"
 msgid "Download started"
 msgstr "Download iniciado"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:563
 msgctxt "status"
 msgid "Not installed"
 msgstr "Não instalado"
 
-#: src/data/Game.vala:565
+#: src/data/Game.vala:573
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Instalado"
 
-#: src/data/Game.vala:566
+#: src/data/Game.vala:574
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Instalando"
 
-#: src/data/Game.vala:568
+#: src/data/Game.vala:576
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Baixando"
 
-#: src/data/Game.vala:570
+#: src/data/Game.vala:578
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Não instalado"
@@ -257,12 +257,12 @@ msgstr ""
 "Arquivo de configuração do Steam não encontrado.\n"
 "Entre na sua conta no cliente Steam e retorne ao GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:333
+#: src/data/sources/humble/HumbleGame.vala:341
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: instaladores não disponíveis"
 
-#: src/data/sources/humble/HumbleGame.vala:334
+#: src/data/sources/humble/HumbleGame.vala:342
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -318,11 +318,11 @@ msgctxt "tag"
 msgid "Hidden"
 msgstr "Escondido"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
 msgstr "Editar script"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
 msgstr "Editar script personalizado"
 
@@ -349,8 +349,8 @@ msgstr "Jogar"
 msgid "Show WineWrap menu"
 msgstr "Mostrar menu do WineWrap"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:132
-#: src/data/compat/Wine.vala:87
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
+#: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
 msgstr "Mate aplicativos no prefixo"
 
@@ -358,60 +358,19 @@ msgstr "Mate aplicativos no prefixo"
 msgid "Proton prefix"
 msgstr "Prefixo do Proton"
 
-#: src/data/compat/Proton.vala:53
-msgid "Disable esync"
-msgstr "Desativar esync"
-
-#: src/data/compat/Proton.vala:54
-msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr "Forçar sinalizador LARGE_ADDRESS_AWARE"
-
-#: src/data/compat/Proton.vala:55
-msgid "Disable DirectX 11 compatibility layer"
-msgstr "Desativar camada de compatibilidade do DirectX 11"
-
-#: src/data/compat/Proton.vala:56
-msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr "Use WineD3D11 como camada de compatibilidade DirectX 11"
-
-#: src/data/compat/Proton.vala:57
-msgid "Show DXVK info overlay"
-msgstr "Mostrar sobreposição de informações do DXVK"
-
-#: src/data/compat/Proton.vala:58
-#, fuzzy
-msgid "Enable DirectX 9 compatibility layer"
-msgstr "Desativar camada de compatibilidade do DirectX 11"
-
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
-msgid "Silent installation"
-msgstr "Instalação silenciosa"
-
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:67
-msgid "Very silent installation"
-msgstr "Instalação muito silenciosa"
-
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:68
-msgid "Suppress messages"
-msgstr "Suprimir mensagens"
-
-#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:69
-msgid "No GUI"
-msgstr "Sem GUI"
-
-#: src/data/compat/Proton.vala:120 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
 msgstr "Abrir diretório de prefixo"
 
-#: src/data/compat/Proton.vala:123 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
 msgstr "Executar winecfg"
 
-#: src/data/compat/Proton.vala:126 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:116 src/data/compat/Wine.vala:77
 msgid "Run winetricks"
 msgstr "Executar winetricks"
 
-#: src/data/compat/Proton.vala:129 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:80
 msgid "Run taskmgr"
 msgstr "Executar taskmgr"
 
@@ -817,6 +776,32 @@ msgstr "Sair"
 msgid "Disabled"
 msgstr "Desativado"
 
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:47
+#: src/ui/dialogs/GameTweaksDialog.vala:53
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+msgid "Tweaks"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
+msgid "Tweak launch options and apply them to games automatically"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
+msgid ""
+"Tweaks are loaded from following directories in order\n"
+"Last tweak overrides previous tweaks with same identifiers"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
+msgid "Click to open"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
+#, c-format
+msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
+msgstr ""
+
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
 msgstr "Fontes de jogos"
@@ -865,6 +850,7 @@ msgstr "Autenticado"
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
+#: src/ui/widgets/TweaksList.vala:95
 msgid "Install"
 msgstr "Instalar"
 
@@ -1274,6 +1260,11 @@ msgstr "Selecionar tudo"
 msgid "Select directory to import"
 msgstr "Selecione o diretório para importar"
 
+#: src/ui/dialogs/GameTweaksDialog.vala:40
+#, fuzzy, c-format
+msgid "%s: Tweaks"
+msgstr "%s: Sobreposições"
+
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
 msgstr "Nenhuma fonte de jogo habilitada"
@@ -1438,7 +1429,7 @@ msgid "Sort"
 msgstr "Ordenar"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
-#: src/ui/widgets/GameTagsList.vala:59
+#: src/ui/widgets/GameTagsList.vala:58
 msgid "Tags"
 msgstr "Tags"
 
@@ -1498,7 +1489,7 @@ msgstr "Abrir diretório de capturas de tela"
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:184
+#: src/ui/views/GamesView/GameContextMenu.vala:192
 msgid "Properties"
 msgstr "Propriedades"
 
@@ -1707,23 +1698,33 @@ msgstr "Camada de compatibilidade:"
 msgid "Configure"
 msgstr "Configurar"
 
-#: src/ui/widgets/GameTagsList.vala:110
+#: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
 msgstr "Adicionar etiqueta"
 
-#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#: src/ui/widgets/TweaksList.vala:86
+#, fuzzy
+msgid "No description"
+msgstr "Descrição"
+
+#: src/ui/widgets/TweaksList.vala:124
+#, fuzzy
+msgid "Edit file"
+msgstr "Selecione o arquivo"
+
+#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%dh"
 msgstr "%dh"
 
-#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%dm"
 msgstr "%dm"
 
-#: src/utils/Utils.vala:350
+#: src/utils/Utils.vala:435
 #, fuzzy, c-format
 msgctxt "time"
 msgid "%ds"
@@ -1820,8 +1821,36 @@ msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "Baixando: %d%% (%s / %s) [%s/s]"
 
-#~ msgid "Description"
-#~ msgstr "Descrição"
+#~ msgid "Disable esync"
+#~ msgstr "Desativar esync"
+
+#~ msgid "Force LARGE_ADDRESS_AWARE flag"
+#~ msgstr "Forçar sinalizador LARGE_ADDRESS_AWARE"
+
+#~ msgid "Disable DirectX 11 compatibility layer"
+#~ msgstr "Desativar camada de compatibilidade do DirectX 11"
+
+#~ msgid "Use WineD3D11 as DirectX 11 compatibility layer"
+#~ msgstr "Use WineD3D11 como camada de compatibilidade DirectX 11"
+
+#~ msgid "Show DXVK info overlay"
+#~ msgstr "Mostrar sobreposição de informações do DXVK"
+
+#, fuzzy
+#~ msgid "Enable DirectX 9 compatibility layer"
+#~ msgstr "Desativar camada de compatibilidade do DirectX 11"
+
+#~ msgid "Silent installation"
+#~ msgstr "Instalação silenciosa"
+
+#~ msgid "Very silent installation"
+#~ msgstr "Instalação muito silenciosa"
+
+#~ msgid "Suppress messages"
+#~ msgstr "Suprimir mensagens"
+
+#~ msgid "No GUI"
+#~ msgstr "Sem GUI"
 
 #~ msgctxt "igdb"
 #~ msgid "<b>%s</b> on IGDB"

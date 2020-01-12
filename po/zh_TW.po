@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-29 05:30+0300\n"
+"POT-Creation-Date: 2020-01-12 17:59+0300\n"
 "PO-Revision-Date: 2019-07-11 16:11+0000\n"
 "Last-Translator: Anatoliy Kashkin <tkashkin@gmail.com>\n"
 "Language: zh_TW\n"
@@ -19,97 +19,97 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.8-dev\n"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show help"
 msgstr "显示帮助"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Show application version and exit"
 msgstr "显示版本并退出"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Restart with GDB debugger attached"
 msgstr "重新启动附加的GDB调试器"
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Show full GDB backtrace"
 msgstr "显示完整的GDB回溯"
 
-#: src/app.vala:94
+#: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "将致命错误视为关键和崩溃应用程序"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show main window"
 msgstr "显示主窗口"
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Show application settings dialog"
 msgstr "显示应用设置对话框"
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Show about dialog"
 msgstr "显示对话框"
 
-#: src/app.vala:101
+#: src/app.vala:102
 msgid "Maximum number of background worker threads"
 msgstr "最大后台工作线程数"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Run game"
 msgstr "运行游戏"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Show compatibility options dialog"
 msgstr "显示兼容性选项对话框"
 
-#: src/app.vala:107
+#: src/app.vala:108
 msgid "Open game details"
 msgstr "打开游戏细节"
 
-#: src/app.vala:108
+#: src/app.vala:109
 msgid "Open game properties"
 msgstr "打开游戏属性"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid "Enable debug logging"
 msgstr "启用调试日志记录"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr "记录身份验证过程和敏感信息，如身份验证令牌"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log download manager"
 msgstr "日志管理器"
 
-#: src/app.vala:115
+#: src/app.vala:116
 msgid "Log background workers start/stop"
 msgstr "日志后台工作开始/停止"
 
-#: src/app.vala:116
+#: src/app.vala:117
 msgid "Disable log messages filtering"
 msgstr "关闭日志信息过滤"
 
-#: src/app.vala:117
+#: src/app.vala:118
 msgid "Verbose logging"
 msgstr "详细记录"
 
-#: src/app.vala:246
+#: src/app.vala:247
 msgid "Game Options:"
 msgstr "游戏选项："
 
-#: src/app.vala:246
+#: src/app.vala:247
 msgid "Show game options help"
 msgstr "显示游戏选项帮助"
 
-#: src/app.vala:254
+#: src/app.vala:255
 msgid "Logging Options:"
 msgstr "记录选项："
 
-#: src/app.vala:254
+#: src/app.vala:255
 msgid "Show logging options help"
 msgstr "显示日志选项帮助"
 
@@ -184,52 +184,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "模拟器"
 
-#: src/data/Game.vala:547
+#: src/data/Game.vala:555
 msgctxt "status"
 msgid "Running"
 msgstr "正在运行"
 
-#: src/data/Game.vala:550
+#: src/data/Game.vala:558
 msgctxt "status"
 msgid "Installed"
 msgstr "安装"
 
-#: src/data/Game.vala:551
+#: src/data/Game.vala:559
 msgctxt "status"
 msgid "Installing"
 msgstr "安装"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:560
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "验证安装程序完整性"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:561
 msgctxt "status"
 msgid "Download started"
 msgstr "下载已开始"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:563
 msgctxt "status"
 msgid "Not installed"
 msgstr "未安装"
 
-#: src/data/Game.vala:565
+#: src/data/Game.vala:573
 msgctxt "status_header"
 msgid "Installed"
 msgstr "安装"
 
-#: src/data/Game.vala:566
+#: src/data/Game.vala:574
 msgctxt "status_header"
 msgid "Installing"
 msgstr "安装"
 
-#: src/data/Game.vala:568
+#: src/data/Game.vala:576
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "正在下载"
 
-#: src/data/Game.vala:570
+#: src/data/Game.vala:578
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "未安装"
@@ -251,12 +251,12 @@ msgstr ""
 "找不到Steam配置文件。\n"
 "在Steam客户端登录您的帐户并返回GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:333
+#: src/data/sources/humble/HumbleGame.vala:341
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: 没有可用的安装程序"
 
-#: src/data/sources/humble/HumbleGame.vala:334
+#: src/data/sources/humble/HumbleGame.vala:342
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -312,11 +312,11 @@ msgctxt "tag"
 msgid "Hidden"
 msgstr "隐藏的"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
 msgstr "编辑脚本"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
 msgstr "编辑自定义脚本"
 
@@ -342,8 +342,8 @@ msgstr "运行"
 msgid "Show WineWrap menu"
 msgstr "显示WineWrap菜单"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:132
-#: src/data/compat/Wine.vala:87
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
+#: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
 msgstr "终止前缀中的应用程序"
 
@@ -351,61 +351,19 @@ msgstr "终止前缀中的应用程序"
 msgid "Proton prefix"
 msgstr "Proton 前缀"
 
-#: src/data/compat/Proton.vala:53
-#, fuzzy
-msgid "Disable esync"
-msgstr "禁用esync"
-
-#: src/data/compat/Proton.vala:54
-msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr "强制使用 LARGE_ADDRESS_AWARE 标志"
-
-#: src/data/compat/Proton.vala:55
-msgid "Disable DirectX 11 compatibility layer"
-msgstr "禁用DirectX 11兼容层"
-
-#: src/data/compat/Proton.vala:56
-msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr "使用wined3d11作为Directx11兼容层"
-
-#: src/data/compat/Proton.vala:57
-msgid "Show DXVK info overlay"
-msgstr "显示dxvk信息覆盖"
-
-#: src/data/compat/Proton.vala:58
-#, fuzzy
-msgid "Enable DirectX 9 compatibility layer"
-msgstr "禁用DirectX 11兼容层"
-
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
-msgid "Silent installation"
-msgstr "静默安装"
-
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:67
-msgid "Very silent installation"
-msgstr "非常安静的安装"
-
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:68
-msgid "Suppress messages"
-msgstr "禁止显示消息"
-
-#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:69
-msgid "No GUI"
-msgstr "无图形用户界面"
-
-#: src/data/compat/Proton.vala:120 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
 msgstr "打开前缀目录"
 
-#: src/data/compat/Proton.vala:123 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
 msgstr "运行winecfg"
 
-#: src/data/compat/Proton.vala:126 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:116 src/data/compat/Wine.vala:77
 msgid "Run winetricks"
 msgstr "运行winetricks"
 
-#: src/data/compat/Proton.vala:129 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:80
 msgid "Run taskmgr"
 msgstr "运行任务管理器"
 
@@ -825,6 +783,32 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:47
+#: src/ui/dialogs/GameTweaksDialog.vala:53
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+msgid "Tweaks"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
+msgid "Tweak launch options and apply them to games automatically"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
+msgid ""
+"Tweaks are loaded from following directories in order\n"
+"Last tweak overrides previous tweaks with same identifiers"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
+msgid "Click to open"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
+#, c-format
+msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
+msgstr ""
+
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 #, fuzzy
 msgid "Game sources"
@@ -876,6 +860,7 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
+#: src/ui/widgets/TweaksList.vala:95
 #, fuzzy
 msgid "Install"
 msgstr "安装"
@@ -1298,6 +1283,11 @@ msgstr "选择"
 msgid "Select directory to import"
 msgstr "选择目录"
 
+#: src/ui/dialogs/GameTweaksDialog.vala:40
+#, c-format
+msgid "%s: Tweaks"
+msgstr ""
+
 #: src/ui/views/WelcomeView.vala:52
 #, fuzzy
 msgid "No enabled game sources"
@@ -1466,7 +1456,7 @@ msgid "Sort"
 msgstr ""
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
-#: src/ui/widgets/GameTagsList.vala:59
+#: src/ui/widgets/GameTagsList.vala:58
 msgid "Tags"
 msgstr ""
 
@@ -1536,7 +1526,7 @@ msgstr "打开前缀目录"
 msgid "Uninstall"
 msgstr "安装"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:184
+#: src/ui/views/GamesView/GameContextMenu.vala:192
 #, fuzzy
 msgid "Properties"
 msgstr "打开游戏属性"
@@ -1739,24 +1729,33 @@ msgstr "禁用DirectX 11兼容层"
 msgid "Configure"
 msgstr ""
 
-#: src/ui/widgets/GameTagsList.vala:110
+#: src/ui/widgets/GameTagsList.vala:109
 #, fuzzy
 msgid "Add tag"
 msgstr "加游戏"
 
-#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#: src/ui/widgets/TweaksList.vala:86
+msgid "No description"
+msgstr ""
+
+#: src/ui/widgets/TweaksList.vala:124
+#, fuzzy
+msgid "Edit file"
+msgstr "选择"
+
+#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, fuzzy, c-format
 msgctxt "time"
 msgid "%dh"
 msgstr "%d分"
 
-#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%dm"
 msgstr "%d分"
 
-#: src/utils/Utils.vala:350
+#: src/utils/Utils.vala:435
 #, fuzzy, c-format
 msgctxt "time"
 msgid "%ds"
@@ -1855,3 +1854,35 @@ msgstr "下载开始玩了"
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Disable esync"
+#~ msgstr "禁用esync"
+
+#~ msgid "Force LARGE_ADDRESS_AWARE flag"
+#~ msgstr "强制使用 LARGE_ADDRESS_AWARE 标志"
+
+#~ msgid "Disable DirectX 11 compatibility layer"
+#~ msgstr "禁用DirectX 11兼容层"
+
+#~ msgid "Use WineD3D11 as DirectX 11 compatibility layer"
+#~ msgstr "使用wined3d11作为Directx11兼容层"
+
+#~ msgid "Show DXVK info overlay"
+#~ msgstr "显示dxvk信息覆盖"
+
+#, fuzzy
+#~ msgid "Enable DirectX 9 compatibility layer"
+#~ msgstr "禁用DirectX 11兼容层"
+
+#~ msgid "Silent installation"
+#~ msgstr "静默安装"
+
+#~ msgid "Very silent installation"
+#~ msgstr "非常安静的安装"
+
+#~ msgid "Suppress messages"
+#~ msgstr "禁止显示消息"
+
+#~ msgid "No GUI"
+#~ msgstr "无图形用户界面"

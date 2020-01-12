@@ -22,8 +22,10 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.GOG
 {
-	public class GOGGame: Game
+	public class GOGGame: Game, TweakableGame
 	{
+		public string[]? tweaks { get; set; default = null; }
+
 		public ArrayList<Runnable.Installer>? installers { get; protected set; default = new ArrayList<Runnable.Installer>(); }
 		public ArrayList<BonusContent>? bonus_content { get; protected set; default = new ArrayList<BonusContent>(); }
 		public ArrayList<DLC>? dlc { get; protected set; default = new ArrayList<DLC>(); }
@@ -138,6 +140,12 @@ namespace GameHub.Data.Sources.GOG
 						break;
 					}
 				}
+			}
+
+			var tweaks_string = Tables.Games.TWEAKS.get(s);
+			if(tweaks_string != null)
+			{
+				tweaks = tweaks_string.split(",");
 			}
 
 			mount_overlays.begin();
@@ -339,7 +347,7 @@ namespace GameHub.Data.Sources.GOG
 				{
 					uninstaller = FSUtils.expand(install_dir.get_path(), uninstaller);
 					debug("[GOGGame] Running uninstaller '%s'...", uninstaller);
-					yield Utils.run_thread({uninstaller, "--noprompt", "--force"}, null, null, true);
+					yield Utils.run({uninstaller, "--noprompt", "--force"}).override_runtime(true).run_sync_thread();
 				}
 				else
 				{

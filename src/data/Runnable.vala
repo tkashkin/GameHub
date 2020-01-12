@@ -147,7 +147,7 @@ namespace GameHub.Data
 			executable = file;
 			if(executable != null && executable.query_exists())
 			{
-				Utils.run({"chmod", "+x", executable.get_path()});
+				Utils.run({"chmod", "+x", executable.get_path()}).run_sync();
 			}
 
 			if(update)
@@ -194,7 +194,7 @@ namespace GameHub.Data
 
 				if(executable.query_exists())
 				{
-					Utils.run({"chmod", "+x", executable.get_path()});
+					Utils.run({"chmod", "+x", executable.get_path()}).run_sync();
 				}
 
 				if(update)
@@ -219,7 +219,7 @@ namespace GameHub.Data
 		{
 			get
 			{
-				return (!is_supported(null, false) && is_supported(null, true)) || (executable != null && executable.get_basename().has_suffix(".exe"));
+				return (!is_supported(null, false) && is_supported(null, true)) || (executable != null && executable.get_basename().down().has_suffix(".exe"));
 			}
 		}
 
@@ -361,7 +361,7 @@ namespace GameHub.Data
 
 					if(type != InstallerType.UNKNOWN) return type;
 
-					var info = yield Utils.run_thread({"file", "-bi", file.get_path()});
+					var info = Utils.run({"file", "-bi", file.get_path()}).log(false).run_sync(true).output;
 					if(info != null && info.length > 0)
 					{
 						mime = info.split(";")[0];
@@ -481,7 +481,7 @@ namespace GameHub.Data
 				}
 
 				var path = file.get_path();
-				Utils.run({"chmod", "+x", path});
+				Utils.run({"chmod", "+x", path}).run_sync();
 
 				FSUtils.mkdir(runnable.install_dir.get_path());
 
@@ -489,7 +489,7 @@ namespace GameHub.Data
 
 				if(type == InstallerType.WINDOWS_EXECUTABLE && tool is Compat.Innoextract)
 				{
-					var desc = yield Utils.run_thread({"file", "-b", path});
+					var desc = Utils.run({"file", "-b", path}).log(false).run_sync(true).output;
 					if(desc != null && desc.length > 0 && NSIS_INSTALLER_DESCRIPTION in desc)
 					{
 						type = InstallerType.WINDOWS_NSIS_INSTALLER;
@@ -525,7 +525,7 @@ namespace GameHub.Data
 
 				if(cmd != null)
 				{
-					yield Utils.run_async(cmd, null, null, false, true);
+					yield Utils.run(cmd).run_async();
 				}
 				if(type == InstallerType.WINDOWS_EXECUTABLE)
 				{

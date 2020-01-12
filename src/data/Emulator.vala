@@ -172,7 +172,7 @@ namespace GameHub.Data
 			{
 				Runnable.IsLaunched = is_running = true;
 
-				yield Utils.run_thread(get_args(null, executable), executable.get_parent().get_path(), null, true);
+				yield Utils.run(get_args(null, executable)).dir(executable.get_parent().get_path()).override_runtime(true).run_sync_thread();
 
 				Timeout.add_seconds(1, () => {
 					Runnable.IsLaunched = is_running = false;
@@ -200,7 +200,13 @@ namespace GameHub.Data
 				}
 
 				var dir = game != null && launch_in_game_dir ? game.install_dir : install_dir;
-				yield Utils.run_thread(get_args(game, executable), dir.get_path(), null, true);
+
+				var task = Utils.run(get_args(game, executable)).dir(dir.get_path()).override_runtime(true);
+				if(game != null && game is TweakableGame)
+				{
+					task.tweaks(((TweakableGame) game).get_enabled_tweaks());
+				}
+				yield task.run_sync_thread();
 
 				Timeout.add_seconds(1, () => {
 					Runnable.IsLaunched = is_running = false;

@@ -27,6 +27,7 @@ using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
 using GameHub.Data.Sources.Itch;
 using GameHub.Data.Sources.User;
+using GameHub.Data.Tweaks;
 using GameHub.Utils;
 
 namespace GameHub
@@ -338,7 +339,7 @@ namespace GameHub
 				};
 
 				info("Restarting with GDB");
-				Utils.run(exec_cmd, Environment.get_current_dir());
+				Utils.run(exec_cmd).dir(Environment.get_current_dir()).run_sync();
 				exit_status = 0;
 				return true;
 			}

@@ -22,8 +22,10 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.User
 {
-	public class UserGame: Game
+	public class UserGame: Game, TweakableGame
 	{
+		public string[]? tweaks { get; set; default = null; }
+
 		private bool is_removed = false;
 		public signal void removed();
 
@@ -111,6 +113,12 @@ namespace GameHub.Data.Sources.User
 						break;
 					}
 				}
+			}
+
+			var tweaks_string = Tables.Games.TWEAKS.get(s);
+			if(tweaks_string != null)
+			{
+				tweaks = tweaks_string.split(",");
 			}
 
 			mount_overlays.begin();
