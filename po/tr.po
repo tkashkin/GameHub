@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Kemal Oktay Aktoğan <oktay454@disroot.org>, 2019.
 # Güner Acet <kurama632@gmail.com>, 2019.
-# Oğuz Ersen <oguzersen@protonmail.com>, 2019.
+# Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-12 17:59+0300\n"
-"PO-Revision-Date: 2019-12-29 13:05+0000\n"
+"PO-Revision-Date: 2020-01-14 18:21+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
 "translations/tr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -776,26 +776,28 @@ msgstr "Devre dışı"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "İnce ayarlar"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr ""
+msgstr "Başlatma seçeneklerini değiştirin ve oyunlara otomatik olarak uygulayın"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"İnce ayarlar, aşağıdaki dizinlerden sırayla yüklenir\n"
+"Son ayarlama, aynı tanımlayıcılara sahip önceki ayarlamaları geçersiz kılar"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "Açmak için tıklayın"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
-msgstr ""
+msgstr "İnce ayarlar <b>%1$s</b> ve %2$d dizinden daha yüklenir <b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -1254,9 +1256,9 @@ msgid "Select directory to import"
 msgstr "İçe aktaracak dizini seç"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s: Bindirmeler"
+msgstr "%s: İnce ayarlar"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1695,12 +1697,11 @@ msgstr "Etiket ekle"
 
 #: src/ui/widgets/TweaksList.vala:86
 msgid "No description"
-msgstr ""
+msgstr "Açıklama yok"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
-msgstr "Dosya seç"
+msgstr "Dosya düzenle"
 
 #: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
