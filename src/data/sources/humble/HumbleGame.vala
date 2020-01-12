@@ -22,8 +22,10 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Humble
 {
-	public class HumbleGame: Game
+	public class HumbleGame: Game, TweakableGame
 	{
+		public string[]? tweaks { get; set; default = null; }
+
 		public string order_id;
 
 		private bool game_info_updating = false;
@@ -153,6 +155,12 @@ namespace GameHub.Data.Sources.Humble
 				{
 					order_id = json.get_string_member("order");
 				}
+			}
+
+			var tweaks_string = Tables.Games.TWEAKS.get(s);
+			if(tweaks_string != null)
+			{
+				tweaks = tweaks_string.split(",");
 			}
 
 			mount_overlays.begin();

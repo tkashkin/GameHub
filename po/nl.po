@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-28 07:48+0300\n"
+"POT-Creation-Date: 2020-01-12 17:59+0300\n"
 "PO-Revision-Date: 2019-12-29 13:05+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gamehub/"
@@ -19,63 +19,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.10\n"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show help"
 msgstr "Hulp tonen"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Show application version and exit"
 msgstr "Applicatieversie tonen en afsluiten"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Restart with GDB debugger attached"
 msgstr "Herstarten met GDB-foutopsporing"
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Show full GDB backtrace"
 msgstr "Volledige GDB-backtrace tonen"
 
-#: src/app.vala:94
+#: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Fatale fouten opvatten als kritiek en app laten crashen"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show main window"
 msgstr "Hoofdvenster tonen"
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Show application settings dialog"
 msgstr "Applicatie-instellingen tonen"
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Show about dialog"
 msgstr "Over-venster tonen"
 
-#: src/app.vala:101
+#: src/app.vala:102
 msgid "Maximum number of background worker threads"
 msgstr "Maximum aantal achtergrondprocessen"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Run game"
 msgstr "Spel starten"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Show compatibility options dialog"
 msgstr "Comptabiliteitsmodus-opties tonen"
 
-#: src/app.vala:107
+#: src/app.vala:108
 msgid "Open game details"
 msgstr "Spelgegevens openen"
 
-#: src/app.vala:108
+#: src/app.vala:109
 msgid "Open game properties"
 msgstr "Speleigenschappen openen"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid "Enable debug logging"
 msgstr "Foutopsporingslogs inschakelen"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -83,35 +83,35 @@ msgstr ""
 "Authenticatieproces en gevoelige informatie, zoals authenticatiesleutels, "
 "vastleggen in logbestand"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log download manager"
 msgstr "Downloadbeheer vastleggen in logbestand"
 
-#: src/app.vala:115
+#: src/app.vala:116
 msgid "Log background workers start/stop"
 msgstr "Achtergronddiensten van loggen starten/stoppen"
 
-#: src/app.vala:116
+#: src/app.vala:117
 msgid "Disable log messages filtering"
 msgstr "Logberichtfiltering uitschakelen"
 
-#: src/app.vala:117
+#: src/app.vala:118
 msgid "Verbose logging"
 msgstr "Uitgebreid loggen"
 
-#: src/app.vala:246
+#: src/app.vala:247
 msgid "Game Options:"
 msgstr "Spelopties:"
 
-#: src/app.vala:246
+#: src/app.vala:247
 msgid "Show game options help"
 msgstr "Hulp bij opties van spel tonen"
 
-#: src/app.vala:254
+#: src/app.vala:255
 msgid "Logging Options:"
 msgstr "Opties voor loggen:"
 
-#: src/app.vala:254
+#: src/app.vala:255
 msgid "Show logging options help"
 msgstr "Hulp bij opties voor loggen tonen en afsluiten"
 
@@ -187,52 +187,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Geëmuleerd"
 
-#: src/data/Game.vala:547
+#: src/data/Game.vala:555
 msgctxt "status"
 msgid "Running"
 msgstr "Actief"
 
-#: src/data/Game.vala:550
+#: src/data/Game.vala:558
 msgctxt "status"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:551
+#: src/data/Game.vala:559
 msgctxt "status"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:560
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Bezig met verifiëren van integriteit"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:561
 msgctxt "status"
 msgid "Download started"
 msgstr "Downloaden gestart"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:563
 msgctxt "status"
 msgid "Not installed"
 msgstr "Niet-geïnstalleerd"
 
-#: src/data/Game.vala:565
+#: src/data/Game.vala:573
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
-#: src/data/Game.vala:566
+#: src/data/Game.vala:574
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Bezig met installeren"
 
-#: src/data/Game.vala:568
+#: src/data/Game.vala:576
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Bezig met downloaden"
 
-#: src/data/Game.vala:570
+#: src/data/Game.vala:578
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
@@ -254,12 +254,12 @@ msgstr ""
 "Steam-configuratiebestand niet aangetroffen.\n"
 "Log in op je account in de Steam-client en keer terug naar GameHub"
 
-#: src/data/sources/humble/HumbleGame.vala:333
+#: src/data/sources/humble/HumbleGame.vala:341
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: geen installatiebestanden beschikbaar"
 
-#: src/data/sources/humble/HumbleGame.vala:334
+#: src/data/sources/humble/HumbleGame.vala:342
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -315,11 +315,11 @@ msgctxt "tag"
 msgid "Hidden"
 msgstr "Verborgen"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
 msgstr "Script bewerken"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
 msgstr "Aangepast script bewerken"
 
@@ -346,8 +346,8 @@ msgstr "Uitvoeren"
 msgid "Show WineWrap menu"
 msgstr "WineWrap-menu tonen"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:132
-#: src/data/compat/Wine.vala:87
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
+#: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
 msgstr "Wine-apps beëindigen"
 
@@ -355,59 +355,19 @@ msgstr "Wine-apps beëindigen"
 msgid "Proton prefix"
 msgstr "Proton-voorvoegsel"
 
-#: src/data/compat/Proton.vala:53
-msgid "Disable esync"
-msgstr "esync uitschakelen"
-
-#: src/data/compat/Proton.vala:54
-msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr "LARE_ADDRESS_AWARE-functie afdwingen"
-
-#: src/data/compat/Proton.vala:55
-msgid "Disable DirectX 11 compatibility layer"
-msgstr "DirectX 11-comptabiliteit uitschakelen"
-
-#: src/data/compat/Proton.vala:56
-msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr "WineD3D11 gebruiken voor DirectX 11-comptabiliteit"
-
-#: src/data/compat/Proton.vala:57
-msgid "Show DXVK info overlay"
-msgstr "DXVK-informatieoverlay tonen"
-
-#: src/data/compat/Proton.vala:58
-msgid "Enable DirectX 9 compatibility layer"
-msgstr "DirectX 9-comptabiliteit inschakelen"
-
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
-msgid "Silent installation"
-msgstr "Stille installatie"
-
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:67
-msgid "Very silent installation"
-msgstr "Erg stille installatie"
-
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:68
-msgid "Suppress messages"
-msgstr "Berichten onderdrukken"
-
-#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:69
-msgid "No GUI"
-msgstr "Zonder grafisch venster"
-
-#: src/data/compat/Proton.vala:120 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
 msgstr "Wine-profielmap openen"
 
-#: src/data/compat/Proton.vala:123 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
 msgstr "winecfg uitvoeren"
 
-#: src/data/compat/Proton.vala:126 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:116 src/data/compat/Wine.vala:77
 msgid "Run winetricks"
 msgstr "winetricks uitvoeren"
 
-#: src/data/compat/Proton.vala:129 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:80
 msgid "Run taskmgr"
 msgstr "Taakbeheer uitvoeren"
 
@@ -812,6 +772,32 @@ msgstr "Afsluiten"
 msgid "Disabled"
 msgstr "Uitgeschakeld"
 
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:47
+#: src/ui/dialogs/GameTweaksDialog.vala:53
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+msgid "Tweaks"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
+msgid "Tweak launch options and apply them to games automatically"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
+msgid ""
+"Tweaks are loaded from following directories in order\n"
+"Last tweak overrides previous tweaks with same identifiers"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
+msgid "Click to open"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
+#, c-format
+msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
+msgstr ""
+
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
 msgstr "Spelbronnen"
@@ -859,6 +845,7 @@ msgstr "Geacthenticeerd"
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
+#: src/ui/widgets/TweaksList.vala:95
 msgid "Install"
 msgstr "Installeren"
 
@@ -1268,6 +1255,11 @@ msgstr "Alles selecteren"
 msgid "Select directory to import"
 msgstr "Kies de te importeren map"
 
+#: src/ui/dialogs/GameTweaksDialog.vala:40
+#, fuzzy, c-format
+msgid "%s: Tweaks"
+msgstr "%s: Overlays"
+
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
 msgstr "Geen spelbronnen ingeschakeld"
@@ -1430,7 +1422,7 @@ msgid "Sort"
 msgstr "Sorteren"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
-#: src/ui/widgets/GameTagsList.vala:59
+#: src/ui/widgets/GameTagsList.vala:58
 msgid "Tags"
 msgstr "Labels"
 
@@ -1490,7 +1482,7 @@ msgstr "Schermafdrukmap openen"
 msgid "Uninstall"
 msgstr "Deïnstalleren"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:184
+#: src/ui/views/GamesView/GameContextMenu.vala:192
 msgid "Properties"
 msgstr "Eigenschappen"
 
@@ -1699,23 +1691,33 @@ msgstr "Comptabiliteit:"
 msgid "Configure"
 msgstr "Instellen"
 
-#: src/ui/widgets/GameTagsList.vala:110
+#: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
 msgstr "Label toevoegen"
 
-#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#: src/ui/widgets/TweaksList.vala:86
+#, fuzzy
+msgid "No description"
+msgstr "Omschrijving"
+
+#: src/ui/widgets/TweaksList.vala:124
+#, fuzzy
+msgid "Edit file"
+msgstr "Kies bestand"
+
+#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%dh"
 msgstr "%du"
 
-#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%dm"
 msgstr "%dm"
 
-#: src/utils/Utils.vala:350
+#: src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%ds"
@@ -1810,8 +1812,35 @@ msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
-#~ msgid "Description"
-#~ msgstr "Omschrijving"
+#~ msgid "Disable esync"
+#~ msgstr "esync uitschakelen"
+
+#~ msgid "Force LARGE_ADDRESS_AWARE flag"
+#~ msgstr "LARE_ADDRESS_AWARE-functie afdwingen"
+
+#~ msgid "Disable DirectX 11 compatibility layer"
+#~ msgstr "DirectX 11-comptabiliteit uitschakelen"
+
+#~ msgid "Use WineD3D11 as DirectX 11 compatibility layer"
+#~ msgstr "WineD3D11 gebruiken voor DirectX 11-comptabiliteit"
+
+#~ msgid "Show DXVK info overlay"
+#~ msgstr "DXVK-informatieoverlay tonen"
+
+#~ msgid "Enable DirectX 9 compatibility layer"
+#~ msgstr "DirectX 9-comptabiliteit inschakelen"
+
+#~ msgid "Silent installation"
+#~ msgstr "Stille installatie"
+
+#~ msgid "Very silent installation"
+#~ msgstr "Erg stille installatie"
+
+#~ msgid "Suppress messages"
+#~ msgstr "Berichten onderdrukken"
+
+#~ msgid "No GUI"
+#~ msgstr "Zonder grafisch venster"
 
 #~ msgctxt "igdb"
 #~ msgid "<b>%s</b> on IGDB"

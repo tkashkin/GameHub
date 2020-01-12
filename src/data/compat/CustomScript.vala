@@ -17,6 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using GameHub.Utils;
+using GameHub.Data.Tweaks;
 
 using GameHub.Data.Sources.Steam;
 
@@ -72,7 +73,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
 			{
-				Utils.run({"chmod", "+x", script.get_path()});
+				Utils.run({"chmod", "+x", script.get_path()}).run_sync();
 				var executable_path = runnable.executable != null ? runnable.executable.get_path() : "null";
 				string[]? cmd = null;
 				if(runnable is Game)
@@ -84,7 +85,13 @@ GH_GAME_NAME_ESCAPED="${10}"
 				{
 					cmd = { script.get_path(), executable_path, runnable.id, runnable.name };
 				}
-				yield Utils.run_thread(cmd, runnable.install_dir.get_path());
+
+				var task = Utils.run(cmd).dir(runnable.install_dir.get_path());
+				if(runnable is TweakableGame)
+				{
+					task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
+				}
+				yield task.run_sync_thread();
 			}
 			else
 			{
@@ -99,12 +106,18 @@ GH_GAME_NAME_ESCAPED="${10}"
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
 			{
-				Utils.run({"chmod", "+x", script.get_path()});
+				Utils.run({"chmod", "+x", script.get_path()}).run_sync();
 				var executable_path = emu.executable != null ? emu.executable.get_path() : "null";
 				var game_executable_path = game != null && game.executable != null ? game.executable.get_path() : "null";
 				string[] cmd = { script.get_path(), executable_path, emu.id, emu.name, game_executable_path, game.id, game.full_id, game.name, game.escaped_name };
 				var dir = game != null && launch_in_game_dir ? game.install_dir : emu.install_dir;
-				yield Utils.run_thread(cmd, dir.get_path());
+
+				var task = Utils.run(cmd).dir(dir.get_path());
+				if(game is TweakableGame)
+				{
+					task.tweaks(((TweakableGame) game).get_enabled_tweaks(this));
+				}
+				yield task.run_sync_thread();
 			}
 			else
 			{
@@ -135,7 +148,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 					warning("[CustomScript.edit_script] %s", e.message);
 				}
 			}
-			Utils.run({"chmod", "+x", script.get_path()});
+			Utils.run({"chmod", "+x", script.get_path()}).run_sync();
 			Utils.open_uri(script.get_uri());
 		}
 	}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-28 07:48+0300\n"
+"POT-Creation-Date: 2020-01-12 17:59+0300\n"
 "PO-Revision-Date: 2019-12-29 13:05+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
@@ -20,98 +20,98 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.10\n"
 
-#: src/app.vala:90
+#: src/app.vala:91
 msgid "Show help"
 msgstr "Yardımı göster"
 
-#: src/app.vala:91
+#: src/app.vala:92
 msgid "Show application version and exit"
 msgstr "Uygulama versiyonunu göster ve çık"
 
-#: src/app.vala:92
+#: src/app.vala:93
 msgid "Restart with GDB debugger attached"
 msgstr "GDB hata ayıklayıcısı ile birlikte yeniden başlat"
 
-#: src/app.vala:93
+#: src/app.vala:94
 msgid "Show full GDB backtrace"
 msgstr "Tüm GDB geriye dönük izlemesini(olay yığını) göster"
 
-#: src/app.vala:94
+#: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Ölümcül hataları kritik olarak kabul et ve uygulamayı çöktür"
 
-#: src/app.vala:98
+#: src/app.vala:99
 msgid "Show main window"
 msgstr "Ana pencereyi göster"
 
-#: src/app.vala:99
+#: src/app.vala:100
 msgid "Show application settings dialog"
 msgstr "Uygulama ayarları iletişim kutusunu göster"
 
-#: src/app.vala:100
+#: src/app.vala:101
 msgid "Show about dialog"
 msgstr "Hakkında iletişim penceresini göster"
 
-#: src/app.vala:101
+#: src/app.vala:102
 msgid "Maximum number of background worker threads"
 msgstr "Arka planda çalışan iş parçacık sayısının üst limiti"
 
-#: src/app.vala:105
+#: src/app.vala:106
 msgid "Run game"
 msgstr "Oyunu çalıştır"
 
-#: src/app.vala:106
+#: src/app.vala:107
 msgid "Show compatibility options dialog"
 msgstr "Uyumluluk ayarları iletişim kutusunu göster"
 
-#: src/app.vala:107
+#: src/app.vala:108
 msgid "Open game details"
 msgstr "Oyun ayrıntılarını aç"
 
-#: src/app.vala:108
+#: src/app.vala:109
 msgid "Open game properties"
 msgstr "Oyun özelliklerini aç"
 
-#: src/app.vala:112
+#: src/app.vala:113
 msgid "Enable debug logging"
 msgstr "Hata ayıklama günlük kaydını etkinleştirin"
 
-#: src/app.vala:113
+#: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 "Kimlik doğrulama işlemi ve kimlik doğrulama belirteçleri gibi hassas bilgiler"
 
-#: src/app.vala:114
+#: src/app.vala:115
 msgid "Log download manager"
 msgstr "Günlük kaydı indirme yöneticisi"
 
-#: src/app.vala:115
+#: src/app.vala:116
 msgid "Log background workers start/stop"
 msgstr "Arka plan çalışma öbeklerinin günlük kaydını başlat/durdur"
 
-#: src/app.vala:116
+#: src/app.vala:117
 msgid "Disable log messages filtering"
 msgstr "Log mesajları filtresini devre dışı bırak"
 
-#: src/app.vala:117
+#: src/app.vala:118
 msgid "Verbose logging"
 msgstr "Ayrıntılı günlük kaydı"
 
-#: src/app.vala:246
+#: src/app.vala:247
 msgid "Game Options:"
 msgstr "Oyun seçenekleri:"
 
-#: src/app.vala:246
+#: src/app.vala:247
 msgid "Show game options help"
 msgstr "Oyun seçenekleri yardımını göster"
 
-#: src/app.vala:254
+#: src/app.vala:255
 msgid "Logging Options:"
 msgstr "Günlüğe Kaydetme Seçenekleri:"
 
-#: src/app.vala:254
+#: src/app.vala:255
 msgid "Show logging options help"
 msgstr "Günlüğe kaydetme seçenekleri yardımını göster"
 
@@ -186,52 +186,52 @@ msgctxt "platform"
 msgid "Emulated"
 msgstr "Emüle edilmiş"
 
-#: src/data/Game.vala:547
+#: src/data/Game.vala:555
 msgctxt "status"
 msgid "Running"
 msgstr "Çalışıyor"
 
-#: src/data/Game.vala:550
+#: src/data/Game.vala:558
 msgctxt "status"
 msgid "Installed"
 msgstr "Yüklendi"
 
-#: src/data/Game.vala:551
+#: src/data/Game.vala:559
 msgctxt "status"
 msgid "Installing"
 msgstr "Yükleniyor"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:560
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Yükleyici bütünlüğü doğrulanıyor"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:561
 msgctxt "status"
 msgid "Download started"
 msgstr "İndirme başladı"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:563
 msgctxt "status"
 msgid "Not installed"
 msgstr "Yüklenmedi"
 
-#: src/data/Game.vala:565
+#: src/data/Game.vala:573
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Yüklendi"
 
-#: src/data/Game.vala:566
+#: src/data/Game.vala:574
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Yükleniyor"
 
-#: src/data/Game.vala:568
+#: src/data/Game.vala:576
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "İndiriliyor"
 
-#: src/data/Game.vala:570
+#: src/data/Game.vala:578
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Yüklenmedi"
@@ -253,12 +253,12 @@ msgstr ""
 "Steam yapılandırma dosyası bulunamadı.\n"
 "Steam istemcisinden hesabınıza giriş yapın ve GameHub'a geri dönün"
 
-#: src/data/sources/humble/HumbleGame.vala:333
+#: src/data/sources/humble/HumbleGame.vala:341
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: kullanılabilir yükleyici yok"
 
-#: src/data/sources/humble/HumbleGame.vala:334
+#: src/data/sources/humble/HumbleGame.vala:342
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -314,11 +314,11 @@ msgctxt "tag"
 msgid "Hidden"
 msgstr "Gizli"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
 msgstr "Komut dosyasını düzenle"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
 msgstr "Özel komut dosyasını düzenle"
 
@@ -345,8 +345,8 @@ msgstr "Çalıştır"
 msgid "Show WineWrap menu"
 msgstr "WineWrap menüsünü göster"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:132
-#: src/data/compat/Wine.vala:87
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
+#: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
 msgstr "Önekteki uygulamaları sonlandır"
 
@@ -354,59 +354,19 @@ msgstr "Önekteki uygulamaları sonlandır"
 msgid "Proton prefix"
 msgstr "Proton öneki"
 
-#: src/data/compat/Proton.vala:53
-msgid "Disable esync"
-msgstr "Esync'i devre dışı bırak"
-
-#: src/data/compat/Proton.vala:54
-msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr "LARGE_ADDRESS_AWARE bayrağını zorla"
-
-#: src/data/compat/Proton.vala:55
-msgid "Disable DirectX 11 compatibility layer"
-msgstr "DirectX 11 uyumluluk katmanını devre dışı bırak"
-
-#: src/data/compat/Proton.vala:56
-msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr "WineD3D11'i DirectX 11 uyumluluk katmanı olarak kullan"
-
-#: src/data/compat/Proton.vala:57
-msgid "Show DXVK info overlay"
-msgstr "DXVK bilgi paylaşımını göster"
-
-#: src/data/compat/Proton.vala:58
-msgid "Enable DirectX 9 compatibility layer"
-msgstr "DirectX 9 uyumluluk katmanını etkinleştir"
-
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:66
-msgid "Silent installation"
-msgstr "Sessiz kurulum"
-
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:67
-msgid "Very silent installation"
-msgstr "Çok sessiz kurulum"
-
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:68
-msgid "Suppress messages"
-msgstr "Mesajları bastır"
-
-#: src/data/compat/Proton.vala:68 src/data/compat/Wine.vala:69
-msgid "No GUI"
-msgstr "GUI yok"
-
-#: src/data/compat/Proton.vala:120 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
 msgstr "Önek dizinini aç"
 
-#: src/data/compat/Proton.vala:123 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
 msgstr "winecfg'yi çalıştır"
 
-#: src/data/compat/Proton.vala:126 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:116 src/data/compat/Wine.vala:77
 msgid "Run winetricks"
 msgstr "winetricks'i çalıştır"
 
-#: src/data/compat/Proton.vala:129 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:80
 msgid "Run taskmgr"
 msgstr "Taskmgr'i çalıştır"
 
@@ -811,6 +771,32 @@ msgstr "Çıkış"
 msgid "Disabled"
 msgstr "Devre dışı"
 
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:47
+#: src/ui/dialogs/GameTweaksDialog.vala:53
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+msgid "Tweaks"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
+msgid "Tweak launch options and apply them to games automatically"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
+msgid ""
+"Tweaks are loaded from following directories in order\n"
+"Last tweak overrides previous tweaks with same identifiers"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
+msgid "Click to open"
+msgstr ""
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
+#, c-format
+msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
+msgstr ""
+
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
 msgstr "Oyun kaynakları"
@@ -858,6 +844,7 @@ msgstr "Kimlik doğrulandı"
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
+#: src/ui/widgets/TweaksList.vala:95
 msgid "Install"
 msgstr "Yükle"
 
@@ -1266,6 +1253,11 @@ msgstr "Tümünü seç"
 msgid "Select directory to import"
 msgstr "İçe aktaracak dizini seç"
 
+#: src/ui/dialogs/GameTweaksDialog.vala:40
+#, fuzzy, c-format
+msgid "%s: Tweaks"
+msgstr "%s: Bindirmeler"
+
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
 msgstr "Etkinleştirilmiş oyun kaynağı yok"
@@ -1428,7 +1420,7 @@ msgid "Sort"
 msgstr "Sırala"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
-#: src/ui/widgets/GameTagsList.vala:59
+#: src/ui/widgets/GameTagsList.vala:58
 msgid "Tags"
 msgstr "Etiketler"
 
@@ -1488,7 +1480,7 @@ msgstr "Ekran görüntüleri dizinini aç"
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:184
+#: src/ui/views/GamesView/GameContextMenu.vala:192
 msgid "Properties"
 msgstr "Özellikler"
 
@@ -1697,23 +1689,32 @@ msgstr "Uyumluluk katmanı:"
 msgid "Configure"
 msgstr "Yapılandır"
 
-#: src/ui/widgets/GameTagsList.vala:110
+#: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
 msgstr "Etiket ekle"
 
-#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#: src/ui/widgets/TweaksList.vala:86
+msgid "No description"
+msgstr ""
+
+#: src/ui/widgets/TweaksList.vala:124
+#, fuzzy
+msgid "Edit file"
+msgstr "Dosya seç"
+
+#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%dh"
 msgstr "%dsaat"
 
-#: src/utils/Utils.vala:342 src/utils/Utils.vala:350
+#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%dm"
 msgstr "%ddk"
 
-#: src/utils/Utils.vala:350
+#: src/utils/Utils.vala:435
 #, c-format
 msgctxt "time"
 msgid "%ds"
@@ -1807,3 +1808,33 @@ msgstr "İndirme iptal edildi"
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "%%%1$d (%2$s / %3$s) [%4$s/s]"
+
+#~ msgid "Disable esync"
+#~ msgstr "Esync'i devre dışı bırak"
+
+#~ msgid "Force LARGE_ADDRESS_AWARE flag"
+#~ msgstr "LARGE_ADDRESS_AWARE bayrağını zorla"
+
+#~ msgid "Disable DirectX 11 compatibility layer"
+#~ msgstr "DirectX 11 uyumluluk katmanını devre dışı bırak"
+
+#~ msgid "Use WineD3D11 as DirectX 11 compatibility layer"
+#~ msgstr "WineD3D11'i DirectX 11 uyumluluk katmanı olarak kullan"
+
+#~ msgid "Show DXVK info overlay"
+#~ msgstr "DXVK bilgi paylaşımını göster"
+
+#~ msgid "Enable DirectX 9 compatibility layer"
+#~ msgstr "DirectX 9 uyumluluk katmanını etkinleştir"
+
+#~ msgid "Silent installation"
+#~ msgstr "Sessiz kurulum"
+
+#~ msgid "Very silent installation"
+#~ msgstr "Çok sessiz kurulum"
+
+#~ msgid "Suppress messages"
+#~ msgstr "Mesajları bastır"
+
+#~ msgid "No GUI"
+#~ msgstr "GUI yok"

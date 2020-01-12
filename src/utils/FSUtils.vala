@@ -63,7 +63,7 @@ namespace GameHub.Utils
 
 			public class Cache
 			{
-				public const string Home = "~/.cache/com.github.tkashkin.gamehub";
+				public const string Home = "~/.cache/" + ProjectConfig.PROJECT_NAME;
 
 				public const string Cookies = FSUtils.Paths.Cache.Home + "/cookies";
 
@@ -76,6 +76,20 @@ namespace GameHub.Utils
 				public const string WineWrap = FSUtils.Paths.Cache.Compat + "/winewrap";
 
 				public const string Sources = FSUtils.Paths.Cache.Home + "/sources";
+			}
+
+			public class LocalData
+			{
+				public const string Home = "~/.local/share/" + ProjectConfig.PROJECT_NAME;
+				public const string Tweaks = FSUtils.Paths.LocalData.Home + "/tweaks";
+				public const string DOSBoxConfigs = FSUtils.Paths.LocalData.Home + "/compat/dosbox";
+			}
+
+			public class Config
+			{
+				public const string Home = "~/.config/" + ProjectConfig.PROJECT_NAME;
+				public const string Tweaks = FSUtils.Paths.Config.Home + "/tweaks";
+				public const string DOSBoxConfigs = FSUtils.Paths.Config.Home + "/compat/dosbox";
 			}
 
 			public class Steam
@@ -290,6 +304,8 @@ namespace GameHub.Utils
 				}
 			}
 			expanded_path = Utils.replace_prefix(expanded_path, "~/.cache", Environment.get_user_cache_dir());
+			expanded_path = Utils.replace_prefix(expanded_path, "~/.local/share", Environment.get_user_data_dir());
+			expanded_path = Utils.replace_prefix(expanded_path, "~/.config", Environment.get_user_config_dir());
 			expanded_path = Utils.replace_prefix(expanded_path, "~", Environment.get_home_dir());
 			expanded_path = expanded_path + (file != null && file != "" ? "/" + file : "");
 			#if OS_WINDOWS
@@ -351,6 +367,50 @@ namespace GameHub.Utils
 			return null;
 		}
 
+		public static ArrayList<File> get_data_dirs(string? subdir=null, bool with_nonexistent=false)
+		{
+			var data_path = ProjectConfig.PROJECT_NAME + (subdir != null ? @"/$(subdir)" : "");
+
+			string[] data_dirs = { FSUtils.file(ProjectConfig.DATADIR, data_path).get_path() };
+			var system_data_dirs = Environment.get_system_data_dirs();
+			var user_data_dir = Environment.get_user_data_dir();
+			var user_config_dir = Environment.get_user_config_dir();
+
+			if(system_data_dirs != null && system_data_dirs.length > 0)
+			{
+				foreach(var system_data_dir in system_data_dirs)
+				{
+					var dir = FSUtils.file(system_data_dir, data_path).get_path();
+					if(!(dir in data_dirs)) data_dirs += dir;
+				}
+			}
+
+			if(user_data_dir != null && user_data_dir.length > 0)
+			{
+				var dir = FSUtils.file(user_data_dir, data_path).get_path();
+				if(!(dir in data_dirs)) data_dirs += dir;
+			}
+
+			if(user_config_dir != null && user_config_dir.length > 0)
+			{
+				var dir = FSUtils.file(user_config_dir, data_path).get_path();
+				if(!(dir in data_dirs)) data_dirs += dir;
+			}
+
+			var dirs = new ArrayList<File>();
+
+			foreach(var d in data_dirs)
+			{
+				var dir = FSUtils.file(d);
+				if(dir != null && (with_nonexistent || dir.query_exists()))
+				{
+					dirs.add(dir);
+				}
+			}
+
+			return dirs;
+		}
+
 		public static File? mkdir(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
 			try
@@ -368,7 +428,7 @@ namespace GameHub.Utils
 
 		public static void rm(string path, string? file=null, string flags="-f", HashMap<string, string>? variables=null)
 		{
-			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") }, null, null, false, false, false);
+			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ")}).run_sync();
 		}
 
 		public static void mv_up(File? path, string dirname)
@@ -424,6 +484,14 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.Cache.Home);
 			mkdir(FSUtils.Paths.Cache.Graphics);
 			mkdir(FSUtils.Paths.Humble.Cache);
+
+			mkdir(FSUtils.Paths.LocalData.Home);
+			mkdir(FSUtils.Paths.LocalData.Tweaks);
+			mkdir(FSUtils.Paths.LocalData.DOSBoxConfigs);
+
+			mkdir(FSUtils.Paths.Config.Home);
+			mkdir(FSUtils.Paths.Config.Tweaks);
+			mkdir(FSUtils.Paths.Config.DOSBoxConfigs);
 
 			// remove old images cache
 			var old_images_cache = file(FSUtils.Paths.Cache.OldImages);

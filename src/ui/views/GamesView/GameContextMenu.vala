@@ -176,6 +176,14 @@ namespace GameHub.UI.Views.GamesView
 					fs_overlays.activate.connect(() => new Dialogs.GameFSOverlaysDialog(game).show_all());
 					add(fs_overlays);
 				}
+
+				if(game is TweakableGame)
+				{
+					add(new Gtk.SeparatorMenuItem());
+					var tweaks = new Gtk.MenuItem.with_label(_("Tweaks"));
+					tweaks.activate.connect(() => new Dialogs.GameTweaksDialog((TweakableGame) game).show_all());
+					add(tweaks);
+				}
 			}
 
 			if(!(game is Sources.GOG.GOGGame.DLC))

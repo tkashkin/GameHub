@@ -365,12 +365,9 @@ namespace GameHub.UI.Dialogs
 			return entry;
 		}
 
-		private Box add_switch(string text, bool enabled, owned SwitchAction action)
+		private Box add_row(string text, Widget widget)
 		{
-			var sw = new Switch();
-			sw.active = enabled;
-			sw.halign = Align.END;
-			sw.notify["active"].connect(() => { action(sw.active); });
+			widget.halign = Align.END;
 
 			var label = new Label(text);
 			label.halign = Align.START;
@@ -381,12 +378,20 @@ namespace GameHub.UI.Dialogs
 			hbox.margin_start = 8;
 
 			hbox.add(label);
-			hbox.add(sw);
+			hbox.add(widget);
 
 			hbox.show_all();
 
 			properties_box.add(hbox);
 			return hbox;
+		}
+
+		private Box add_switch(string text, bool enabled, owned SwitchAction action)
+		{
+			var sw = new Switch();
+			sw.active = enabled;
+			sw.notify["active"].connect(() => { action(sw.active); });
+			return add_row(text, sw);
 		}
 
 		protected delegate void SwitchAction(bool active);

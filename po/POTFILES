@@ -53,6 +53,8 @@ src/data/providers/images/SteamGridDB.vala
 src/data/providers/images/JinxSGVI.vala
 src/data/providers/data/IGDB.vala
 
+src/data/tweaks/Tweak.vala
+
 src/ui/windows/MainWindow.vala
 src/ui/windows/WebAuthWindow.vala
 
@@ -63,6 +65,7 @@ src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala
 src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala
 src/ui/dialogs/SettingsDialog/pages/general/Collection.vala
 src/ui/dialogs/SettingsDialog/pages/general/Controller.vala
+src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala
 src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala
 src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala
 src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala
@@ -79,6 +82,7 @@ src/ui/dialogs/GameFSOverlaysDialog.vala
 src/ui/dialogs/CompatRunDialog.vala
 src/ui/dialogs/CorruptedInstallerDialog.vala
 src/ui/dialogs/ImportEmulatedGamesDialog.vala
+src/ui/dialogs/GameTweaksDialog.vala
 
 src/ui/views/BaseView.vala
 src/ui/views/WelcomeView.vala
@@ -119,6 +123,7 @@ src/ui/widgets/ModeButton.vala
 src/ui/widgets/OverlayBar.vala
 src/ui/widgets/Welcome.vala
 src/ui/widgets/SettingsSidebar.vala
+src/ui/widgets/TweaksList.vala
 
 src/utils/Utils.vala
 src/utils/ImageCache.vala
@@ -134,6 +139,7 @@ src/settings/Auth.vala
 src/settings/Compat.vala
 src/settings/Providers.vala
 src/settings/Controller.vala
+src/settings/Tweaks.vala
 
 src/utils/downloader/Downloader.vala
 src/utils/downloader/SoupDownloader.vala

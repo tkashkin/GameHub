@@ -89,6 +89,8 @@ sources = [
 	'data/providers/images/JinxSGVI.vala',
 	'data/providers/data/IGDB.vala',
 
+	'data/tweaks/Tweak.vala',
+
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
 
@@ -98,6 +100,7 @@ sources = [
 	'ui/dialogs/SettingsDialog/pages/ui/Appearance.vala',
 	'ui/dialogs/SettingsDialog/pages/ui/Behavior.vala',
 	'ui/dialogs/SettingsDialog/pages/general/Collection.vala',
+	'ui/dialogs/SettingsDialog/pages/general/Tweaks.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Steam.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/GOG.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Humble.vala',
@@ -114,6 +117,7 @@ sources = [
 	'ui/dialogs/CompatRunDialog.vala',
 	'ui/dialogs/CorruptedInstallerDialog.vala',
 	'ui/dialogs/ImportEmulatedGamesDialog.vala',
+	'ui/dialogs/GameTweaksDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',
@@ -154,6 +158,7 @@ sources = [
 	'ui/widgets/OverlayBar.vala',
 	'ui/widgets/Welcome.vala',
 	'ui/widgets/SettingsSidebar.vala',
+	'ui/widgets/TweaksList.vala',
 
 	'utils/Utils.vala',
 	'utils/ImageCache.vala',
@@ -169,6 +174,7 @@ sources = [
 	'settings/Compat.vala',
 	'settings/Providers.vala',
 	'settings/Controller.vala',
+	'settings/Tweaks.vala',
 
 	'utils/downloader/Downloader.vala',
 	'utils/downloader/SoupDownloader.vala'
