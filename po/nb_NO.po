@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-12 17:59+0300\n"
-"PO-Revision-Date: 2020-01-04 12:21+0000\n"
+"PO-Revision-Date: 2020-01-14 18:21+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -782,26 +782,29 @@ msgstr "Avskrudd"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "Tilpasninger"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr ""
+msgstr "Tilpass oppstartsvalg og utfør dem for spill automatisk"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
+#, fuzzy
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"Tilpasninger lastes inn fra følgende mapper i rekkefølge\n"
+"Siste tilpasning overskriver forrige tilpasning med samme identifikatorer"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "Klikk for å åpne"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
-msgstr ""
+msgstr "Tilpasninger lastes inn fra <b>%1$s</b> og %2$d flere mapper <b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
