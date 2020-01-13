@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Marc Riera <marc.riera.irigoyen@gmail.com>, 2019.
-# Marc Riera <marcriera@softcatala.org>, 2019.
+# Marc Riera <marcriera@softcatala.org>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-12 17:59+0300\n"
-"PO-Revision-Date: 2019-12-31 12:21+0000\n"
+"PO-Revision-Date: 2020-01-14 18:21+0000\n"
 "Last-Translator: Marc Riera <marcriera@softcatala.org>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/gamehub/"
 "translations/ca/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -775,26 +775,32 @@ msgstr "Inhabilitat"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "Ajustaments"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
+#, fuzzy
 msgid "Tweak launch options and apply them to games automatically"
-msgstr ""
+msgstr "Ajusteu les opcions d'execució i apliqueu-les als jocs automàticament"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"Els ajustaments es carreguen dels directoris següents en ordre.\n"
+"L'últim ajustament anul·la els ajustaments anteriors amb els mateixos "
+"identificadors."
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "Feu clic per obrir"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
 msgstr ""
+"Els ajustaments es carreguen des de <b>%1$s</b> i %2$d directoris més "
+"<b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -1254,9 +1260,9 @@ msgid "Select directory to import"
 msgstr "Seleccioneu un directori per a importar-lo"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s: Capes"
+msgstr "%s: Ajustaments"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1701,7 +1707,7 @@ msgstr ""
 #: src/ui/widgets/TweaksList.vala:124
 #, fuzzy
 msgid "Edit file"
-msgstr "Seleccioneu un fitxer"
+msgstr "Edita el fitxer"
 
 #: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
