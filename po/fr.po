@@ -4,14 +4,14 @@
 # King Claudy <clocloranely@hotmail.fr>, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 # Swann Martinet <swann.ranskassa@laposte.net>, 2019.
-# Nathan <bonnemainsnathan@gmail.com>, 2019.
+# Nathan <bonnemainsnathan@gmail.com>, 2019, 2020.
 # Éfrit <Efrit@posteo.net>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-12 17:59+0300\n"
-"PO-Revision-Date: 2019-12-31 12:21+0000\n"
+"PO-Revision-Date: 2020-01-14 18:21+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -782,26 +782,31 @@ msgstr "Désactivé"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "Ajustements"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
 msgstr ""
+"Ajustez les options de démarrage et appliquez les automatiquement aux jeux"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"Les ajustements sont chargés depuis les dossiers suivants dans l'ordre\n"
+"Les derniers ajustements écrasent les précédents de même identifiants"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "Cliquez pour ouvrir"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
 msgstr ""
+"Les ajustements sont chargés depuis <b>%1$s</b> et %2$d dossiers "
+"supplémentaires <b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -1261,9 +1266,9 @@ msgid "Select directory to import"
 msgstr "Sélectionner le dossier à importer"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s : superpositions"
+msgstr "%s : Ajustements"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1702,12 +1707,11 @@ msgstr "Ajouter une étiquette"
 
 #: src/ui/widgets/TweaksList.vala:86
 msgid "No description"
-msgstr ""
+msgstr "Pas de description"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
-msgstr "Sélectionner le fichier"
+msgstr "Modifier le fichier"
 
 #: src/utils/Utils.vala:427 src/utils/Utils.vala:435
 #, c-format
