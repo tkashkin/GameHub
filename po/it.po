@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Mirko Brombin <send@mirko.pm>, 2019.
+# Francesco Bisignani <tassobaramba2@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-12 17:59+0300\n"
-"PO-Revision-Date: 2019-11-25 09:22+0000\n"
-"Last-Translator: Mirko Brombin <send@mirko.pm>\n"
+"PO-Revision-Date: 2020-01-14 18:21+0000\n"
+"Last-Translator: Francesco Bisignani <tassobaramba2@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gamehub/"
 "translations/it/>\n"
 "Language: it\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -270,13 +271,13 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s rimanenti;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
@@ -292,12 +293,12 @@ msgstr ""
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr "Giochi utente"
+msgstr "Giochi dell'utente"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr "Favoriti"
+msgstr "Preferiti"
 
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
