@@ -4,7 +4,7 @@
 	<vendor>Anatoliy Kashkin</vendor>
 	<vendor_url>https://tkashkin.tk/projects/gamehub</vendor_url>
 
-	<action id="com.github.tkashkin.gamehub.polkit.overlayfs-helper">
+	<action id="@PROJECT_NAME@.polkit.overlayfs-helper">
 		<description>Manage overlays</description>
 		<message>Authentication is required to manage overlays</message>
 		<icon_name>drive-removable-media</icon_name>
