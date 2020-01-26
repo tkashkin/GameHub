@@ -123,8 +123,13 @@ sources = [
 	'ui/views/WelcomeView.vala',
 
 	'ui/views/GamesView/GamesView.vala',
-	'ui/views/GamesView/GameCard.vala',
-	'ui/views/GamesView/GameListRow.vala',
+
+	'ui/views/GamesView/grid/GamesGrid.vala',
+	'ui/views/GamesView/grid/GameCard.vala',
+
+	'ui/views/GamesView/list/GamesList.vala',
+	'ui/views/GamesView/list/GameListRow.vala',
+
 	'ui/views/GamesView/DownloadProgressView.vala',
 	'ui/views/GamesView/FiltersPopover.vala',
 	'ui/views/GamesView/AddGamePopover.vala',

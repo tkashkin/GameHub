@@ -99,8 +99,16 @@ namespace GameHub.Utils
 		public RunTask log(bool log=true) { _log = log; return this; }
 		public RunTask tweaks(Tweak[]? tweaks=null) { _tweaks = tweaks; return this; }
 
+		private bool _expanded = false;
 		private void expand()
 		{
+			if(_expanded) return;
+			_expanded = true;
+
+			var cmd_expanded = false;
+
+			if(_log) debug("[RunTask] {'%s'}", string.joinv("' '", _cmd));
+
 			_dir = _dir ?? Environment.get_home_dir();
 			_env = _env ?? Environ.get();
 
@@ -152,6 +160,7 @@ namespace GameHub.Utils
 									tweaked_cmd += arg;
 								}
 							}
+							cmd_expanded = true;
 						}
 						_cmd = tweaked_cmd;
 					}
@@ -169,20 +178,38 @@ namespace GameHub.Utils
 				cmd += arg;
 			}
 			_cmd = cmd;
+			cmd_expanded = true;
 			#endif
+
+			if(_log && GameHub.Application.log_verbose)
+			{
+				if(cmd_expanded) debug("     cmd: {'%s'}", string.joinv("' '", _cmd));
+				debug("     dir: '%s'", _dir);
+
+				string[] env_diff = {};
+				string[] env_clean = Environ.get();
+				foreach(var env_var in _env)
+				{
+					if(!(env_var in env_clean))
+					{
+						env_diff += env_var;
+					}
+				}
+				if(env_diff.length > 0)
+				{
+					debug("     env: {\n                  '%s'\n              }", string.joinv("'\n                  '", env_diff));
+				}
+			}
+
 		}
 
 		public Result? run_sync(bool capture_output=false)
 		{
+			var is_called_from_thread = _expanded;
 			expand();
 			try
 			{
-				#if OS_WINDOWS
-				log = true;
-				#endif
-
-				if(_log) debug("[RunTask.run_sync] {'%s'}; dir: '%s'", string.joinv("' '", _cmd), _dir);
-
+				if(_log && !is_called_from_thread) debug("     .run_sync()");
 				int status;
 				if(capture_output)
 				{
@@ -213,8 +240,10 @@ namespace GameHub.Utils
 
 		public async Result? run_sync_thread(bool capture_output=false)
 		{
+			expand();
 			Result? result = null;
 			Utils.thread("RunTask.run_sync_thread", () => {
+				if(_log) debug("     .run_sync_thread()");
 				result = run_sync(capture_output);
 				Idle.add(run_sync_thread.callback);
 			}, _log);
@@ -228,7 +257,7 @@ namespace GameHub.Utils
 			Result? result = null;
 			try
 			{
-				if(_log) debug("[RunTask.run_async] Running {'%s'} in '%s'", string.joinv("' '", _cmd), _dir);
+				if(_log) debug("     .run_async()");
 				Pid pid;
 				Process.spawn_async(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
 				ChildWatch.add(pid, (pid, status) => {

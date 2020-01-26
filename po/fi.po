@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 17:59+0300\n"
+"POT-Creation-Date: 2020-01-26 06:40+0300\n"
 "PO-Revision-Date: 2019-11-24 10:39+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
@@ -114,65 +114,65 @@ msgstr "Lokituksen asetukset:"
 msgid "Show logging options help"
 msgstr "Näytä kirjaus asetuksien ohje"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
 msgstr "Valitse suoritettava tiedosto"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:392
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
+#: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
 msgstr "Valitse"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:179 src/ui/widgets/FileChooserEntry.vala:55
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
+#: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: src/data/Runnable.vala:165 src/ui/widgets/FileChooserEntry.vala:49
+#: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
 msgstr "Valitse hakemisto"
 
-#: src/data/Runnable.vala:617
+#: src/data/Runnable.vala:619
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr "Osa %1$u / %2$u: %3$s"
 
-#: src/data/Runnable.vala:640 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: viallinen asennusohjelma"
 
-#: src/data/Runnable.vala:641
+#: src/data/Runnable.vala:643
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "Tarkistussumma on ristiriitainen %s"
 
-#: src/data/Runnable.vala:655 src/ui/dialogs/CorruptedInstallerDialog.vala:126
+#: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "Näytä tiedosto"
 
-#: src/data/Runnable.vala:656 src/ui/dialogs/CorruptedInstallerDialog.vala:132
+#: src/data/Runnable.vala:658 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Poista"
 
-#: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:128
+#: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "Varmuuskopioi"
 
-#: src/data/Runnable.vala:775
+#: src/data/Runnable.vala:778
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: ei havaitse suoritettavaa tiedostoa"
 
-#: src/data/Runnable.vala:776
+#: src/data/Runnable.vala:779
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -180,57 +180,57 @@ msgstr ""
 "Tämän pelin suoritettavaa tiedostoa ei voida tunnistaa automaattisesti.\n"
 "Aseta suoritettava tiedosto pelin ominaisuuksista."
 
-#: src/data/Runnable.vala:905
+#: src/data/Runnable.vala:908
 msgctxt "platform"
 msgid "Emulated"
 msgstr "Emuloitu"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
 msgstr "Käynnissä"
 
-#: src/data/Game.vala:558
+#: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
 msgstr "Asennettu"
 
-#: src/data/Game.vala:559
+#: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
 msgstr "Asentaa"
 
-#: src/data/Game.vala:560
+#: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "Tarkistaa asennuksen eheyttä"
 
-#: src/data/Game.vala:561
+#: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
 msgstr "Lataus aloitettu"
 
-#: src/data/Game.vala:563
+#: src/data/Game.vala:633
 msgctxt "status"
 msgid "Not installed"
 msgstr "Ei asennettu"
 
-#: src/data/Game.vala:573
+#: src/data/Game.vala:643
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Asennettu"
 
-#: src/data/Game.vala:574
+#: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Asentaa"
 
-#: src/data/Game.vala:576
+#: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "Lataa"
 
-#: src/data/Game.vala:578
+#: src/data/Game.vala:648
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Ei asennettu"
@@ -252,12 +252,17 @@ msgstr ""
 "Steamin konfiguraatiotiedostoa ei löydy.\n"
 "Kirjaudu tiliisi Steam-asiakasohjelmassa ja palaa GameHub ohjelmaan"
 
-#: src/data/sources/humble/HumbleGame.vala:341
+#: src/data/sources/gog/GOGGame.vala:983
+#, c-format
+msgid "DLC: %s"
+msgstr ""
+
+#: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: ei käytettävissä olevaa asennusohjelmaa"
 
-#: src/data/sources/humble/HumbleGame.vala:342
+#: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
@@ -397,57 +402,57 @@ msgstr "Emulaattori"
 msgid "Launch in game directory"
 msgstr "Käynnistä pelihakemistossa"
 
-#: src/data/adapters/GamesAdapter.vala:424
+#: src/data/adapters/GamesAdapter.vala:440
 msgctxt "status_header"
 msgid "Favorites"
 msgstr "Suosikit"
 
-#: src/data/adapters/GamesAdapter.vala:429
+#: src/data/adapters/GamesAdapter.vala:445
 #, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
 msgstr "%s: Suosikkeja"
 
-#: src/data/adapters/GamesAdapter.vala:454
+#: src/data/adapters/GamesAdapter.vala:491
 msgid "Merging games"
 msgstr "Pelien yhdistäminen"
 
-#: src/data/adapters/GamesAdapter.vala:467
+#: src/data/adapters/GamesAdapter.vala:504
 #, c-format
 msgid "Merging games from %s"
 msgstr "Pelien yhdistäminen %s"
 
-#: src/data/adapters/GamesAdapter.vala:514
+#: src/data/adapters/GamesAdapter.vala:551
 #, c-format
 msgid "Loading games from %s"
 msgstr "Ladataan pelejä %s"
 
-#: src/data/adapters/GamesAdapter.vala:621
+#: src/data/adapters/GamesAdapter.vala:678
 msgctxt "sort_mode"
 msgid "By name"
 msgstr "Nimeltä"
 
-#: src/data/adapters/GamesAdapter.vala:622
+#: src/data/adapters/GamesAdapter.vala:679
 msgctxt "sort_mode"
 msgid "By last launch"
 msgstr "Viimeisen käynnistyksen mukaan"
 
-#: src/data/adapters/GamesAdapter.vala:623
+#: src/data/adapters/GamesAdapter.vala:680
 msgctxt "sort_mode"
 msgid "By playtime"
 msgstr "Peliajan"
 
-#: src/data/adapters/GamesAdapter.vala:648
+#: src/data/adapters/GamesAdapter.vala:705
 msgctxt "group_mode"
 msgid "Do not group"
 msgstr "Älä ryhmitä"
 
-#: src/data/adapters/GamesAdapter.vala:649
+#: src/data/adapters/GamesAdapter.vala:706
 msgctxt "group_mode"
 msgid "By status"
 msgstr "Tila"
 
-#: src/data/adapters/GamesAdapter.vala:650
+#: src/data/adapters/GamesAdapter.vala:707
 msgctxt "group_mode"
 msgid "By source"
 msgstr "Lähteen"
@@ -529,8 +534,8 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:270
-#: src/ui/views/GamesView/GamesView.vala:652
+#: src/ui/views/GamesView/GamesView.vala:230
+#: src/ui/views/GamesView/GamesView.vala:629
 msgid "Settings"
 msgstr "Asetukset"
 
@@ -712,12 +717,12 @@ msgid "Installers"
 msgstr "Asentajat"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:99
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:98
 msgid "DLC"
 msgstr "DLC"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:132
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:197
 msgid "Bonus content"
 msgstr "Bonus-sisältö"
 
@@ -942,7 +947,7 @@ msgid "Name"
 msgstr "Nimi"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:191
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Käynnistysasetukset"
@@ -970,7 +975,7 @@ msgid "Select emulator directory"
 msgstr "Valitse emulaattorin hakemisto"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:209
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Force compatibility mode"
 msgstr "Pakota yhteensopivuustila"
 
@@ -1131,23 +1136,33 @@ msgstr "Pystykuvan URL"
 msgid "Icon URL"
 msgstr "Kuvakkeen URL"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:204
+#: src/ui/dialogs/GamePropertiesDialog.vala:173
+#, fuzzy
+msgid "Select working directory"
+msgstr "Valitse hakemisto"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:173
+#, fuzzy
+msgid "Working directory"
+msgstr "Avaa hakemisto"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
 msgstr "Yhteensopivuus"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:226
+#: src/ui/dialogs/GamePropertiesDialog.vala:236
 msgid "Launch from terminal"
 msgstr "Käynnistä terminaalista"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:242
+#: src/ui/dialogs/GamePropertiesDialog.vala:252
 msgid "Copy to clipboard"
 msgstr "Kopioi leikepöydälle"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:244
+#: src/ui/dialogs/GamePropertiesDialog.vala:254
 msgid "Add to Steam"
 msgstr "Lisää Steamiin"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:245
+#: src/ui/dialogs/GamePropertiesDialog.vala:255
 msgid "Add to the Steam library"
 msgstr "Lisää Steamin kirjastoon"
 
@@ -1296,87 +1311,99 @@ msgstr "Asentaa %s"
 msgid "Return to GameHub after installing"
 msgstr "Palaa GameHubiin asennuksen jälkeen"
 
-#: src/ui/views/GamesView/GamesView.vala:134
+#: src/ui/views/GamesView/GamesView.vala:136
 msgid "No games"
 msgstr "Ei pelejä"
 
-#: src/ui/views/GamesView/GamesView.vala:134
+#: src/ui/views/GamesView/GamesView.vala:136
 msgid "Get some games or enable some game sources in settings"
 msgstr "Hanki joitain pelejä tai ota käyttöön pelilähteet asetuksissa"
 
-#: src/ui/views/GamesView/GamesView.vala:190
+#: src/ui/views/GamesView/GamesView.vala:150
 msgid "Grid view"
 msgstr "Ruudukkonäkymä"
 
-#: src/ui/views/GamesView/GamesView.vala:191
+#: src/ui/views/GamesView/GamesView.vala:151
 msgid "List view"
 msgstr "Listanäkymä"
 
-#: src/ui/views/GamesView/GamesView.vala:199
+#: src/ui/views/GamesView/GamesView.vala:159
 msgid "All games"
 msgstr "Kaikki pelit"
 
-#: src/ui/views/GamesView/GamesView.vala:222
+#: src/ui/views/GamesView/GamesView.vala:182
 msgid "Downloads"
 msgstr "Lataukset"
 
-#: src/ui/views/GamesView/GamesView.vala:248
+#: src/ui/views/GamesView/GamesView.vala:208
 msgid "Filters"
 msgstr "Filtterit"
 
-#: src/ui/views/GamesView/GamesView.vala:256
+#: src/ui/views/GamesView/GamesView.vala:216
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Lisää peli"
 
-#: src/ui/views/GamesView/GamesView.vala:263
+#: src/ui/views/GamesView/GamesView.vala:223
 msgid "Search"
 msgstr "Etsi"
 
-#: src/ui/views/GamesView/GamesView.vala:390
+#: src/ui/views/GamesView/GamesView.vala:328
 msgid "Menu"
 msgstr "Valikko"
 
-#: src/ui/views/GamesView/GamesView.vala:391
+#: src/ui/views/GamesView/GamesView.vala:329
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Takaisin"
 
-#: src/ui/views/GamesView/GamesView.vala:570
+#: src/ui/views/GamesView/GamesView.vala:550
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u peli"
 msgstr[1] "%u peliä"
 
-#: src/ui/views/GamesView/GamesView.vala:586
+#: src/ui/views/GamesView/GamesView.vala:553
+#, c-format
+msgctxt "games_view_subtitle_filtered_games"
+msgid "%1$u / %2$s"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:557
+#, c-format
+msgctxt "games_view_subtitle"
+msgid "%1$s: %2$s"
+msgstr ""
+
+#: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
 msgstr "Ei käyttäjän lisäämiä pelejä"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:569
 msgid "Add some games using plus button"
 msgstr "Lisää joitain pelejä plus-painikkeella"
 
-#: src/ui/views/GamesView/GamesView.vala:591
+#: src/ui/views/GamesView/GamesView.vala:573
 #, c-format
 msgid "No %s games"
 msgstr "Ei %s peliä"
 
-#: src/ui/views/GamesView/GamesView.vala:592
+#: src/ui/views/GamesView/GamesView.vala:574
 msgid "Get some Linux-compatible games"
 msgstr "Hanki joitain Linux-yhteensopivia pelejä"
 
-#: src/ui/views/GamesView/GamesView.vala:602
+#: src/ui/views/GamesView/GamesView.vala:584
 #, c-format
 msgid "No games matching “%s”"
 msgstr "Ei pelejä, jotka vastaavat“%s”"
 
-#: src/ui/views/GamesView/GamesView.vala:607
+#: src/ui/views/GamesView/GamesView.vala:589
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "Ei %1$s peliä, jotka vastaavat “%2$s”"
 
-#: src/ui/views/GamesView/GamesView.vala:650
+#: src/ui/views/GamesView/GamesView.vala:627
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1384,15 +1411,15 @@ msgstr ""
 "Steamistä ei ladattu mitään pelejä. Aseta peliluettelosi yksityisyys "
 "julkiseksi tai käytä omaa Steam API -avainta asetuksissa."
 
-#: src/ui/views/GamesView/GamesView.vala:651
+#: src/ui/views/GamesView/GamesView.vala:628
 msgid "Privacy"
 msgstr "Yksityisyys"
 
-#: src/ui/views/GamesView/GamesView.vala:798
+#: src/ui/views/GamesView/GamesView.vala:739
 msgid "Downloading images"
 msgstr "Kuvien lataaminen"
 
-#: src/ui/views/GamesView/GamesView.vala:812
+#: src/ui/views/GamesView/GamesView.vala:753
 #, c-format
 msgid "Downloading image: %s"
 msgstr "Ladataan kuvaa: %s"
@@ -1582,6 +1609,11 @@ msgstr "Kieli"
 msgid "Languages"
 msgstr "Kielet"
 
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
+#, fuzzy, c-format
+msgid "%u DLCs cannot be installed"
+msgstr "%s: viallinen asennusohjelma"
+
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
 msgstr "Luokka"
@@ -1703,19 +1735,19 @@ msgstr ""
 msgid "Edit file"
 msgstr "Valitse tiedosto"
 
-#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
+#: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
 msgctxt "time"
 msgid "%dh"
 msgstr "%dt"
 
-#: src/utils/Utils.vala:427 src/utils/Utils.vala:435
+#: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
 msgctxt "time"
 msgid "%dm"
 msgstr "%dkk"
 
-#: src/utils/Utils.vala:435
+#: src/utils/Utils.vala:464
 #, fuzzy, c-format
 msgctxt "time"
 msgid "%ds"

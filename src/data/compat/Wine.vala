@@ -143,7 +143,7 @@ namespace GameHub.Data.Compat
 		{
 			if(!can_run(runnable)) return;
 			yield wineboot(runnable);
-			yield exec(runnable, runnable.executable, runnable.install_dir, Utils.parse_args(runnable.arguments));
+			yield exec(runnable, runnable.executable, runnable.work_dir, Utils.parse_args(runnable.arguments));
 		}
 
 		public override async void run_action(Runnable runnable, Runnable.RunnableAction action)
@@ -156,7 +156,7 @@ namespace GameHub.Data.Compat
 		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
 		{
 			if(!can_run(emu)) return;
-			var dir = game != null && launch_in_game_dir ? game.install_dir : emu.install_dir;
+			var dir = game != null && launch_in_game_dir ? game.work_dir : emu.work_dir;
 			yield exec(emu, emu.executable, dir, emu.get_args(game));
 		}
 

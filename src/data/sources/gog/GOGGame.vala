@@ -90,6 +90,7 @@ namespace GameHub.Data.Sources.GOG
 
 			install_dir = null;
 			executable_path = "$game_dir/start.sh";
+			work_dir_path = "$game_dir";
 
 			mount_overlays.begin();
 			update_status();
@@ -106,6 +107,7 @@ namespace GameHub.Data.Sources.GOG
 			image = Tables.Games.IMAGE.get(s);
 			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
 			executable_path = Tables.Games.EXECUTABLE.get(s);
+			work_dir_path = Tables.Games.WORK_DIR.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
@@ -202,12 +204,6 @@ namespace GameHub.Data.Sources.GOG
 				else icon = image;
 			}
 
-			if(game_info_updated)
-			{
-				game_info_updating = false;
-				return;
-			}
-
 			is_installable = root != null && root.get_node_type() == Json.NodeType.OBJECT
 				&& root.get_object().has_member("is_installable") && root.get_object().get_boolean_member("is_installable");
 
@@ -281,7 +277,7 @@ namespace GameHub.Data.Sources.GOG
 				{
 					var d = new GOGGame.DLC(this, dlc_json);
 					dlc.add(d);
-					yield d.update_game_info();
+					yield d.update_downloads_info();
 				}
 			}
 
@@ -722,11 +718,8 @@ namespace GameHub.Data.Sources.GOG
 					? runnable.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged")
 					: runnable.install_dir;
 				if(dir == null || !dir.query_exists()) return null;
-				var p = path.replace("\\", "/").strip();
-				if(p.length == 0)
-				{
-					return dir;
-				}
+				var p = path.replace("//", "/").replace("\\", "/").strip();
+				if(p.length == 0) return dir;
 				return FSUtils.find_case_insensitive(dir, p);
 			}
 		}
@@ -953,13 +946,25 @@ namespace GameHub.Data.Sources.GOG
 			{
 				base(game.source as GOG, json_node);
 
+				icon = game.icon;
 				image = game.image;
 
 				install_dir = game.install_dir;
+				work_dir = game.work_dir;
 				executable = game.executable;
+
+				platforms = game.platforms;
 
 				this.game = game;
 				update_status();
+			}
+
+			// hack to parse installers/downloads fast, but allow next updates to fetch less important data
+			public async void update_downloads_info()
+			{
+				info_detailed = info;
+				yield update_game_info();
+				info_detailed = null;
 			}
 
 			public override void update_status()
@@ -975,17 +980,17 @@ namespace GameHub.Data.Sources.GOG
 
 				yield game.umount_overlays();
 				game.enable_overlays();
-				var dlc_overlay = new Game.Overlay(game, "dlc_" + id, "DLC: " + name, true);
+				var overlay = new Game.Overlay(game, "dlc_" + id, _("DLC: %s").printf(name), true);
 
-				yield game.mount_overlays(dlc_overlay.directory);
+				yield game.mount_overlays(overlay.directory);
 
 				install_dir = game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
 
-				yield base.install();
+				yield base.install(install_mode);
 
 				yield game.umount_overlays();
 
-				game.overlays.add(dlc_overlay);
+				game.overlays.add(overlay);
 				game.save_overlays();
 				yield game.mount_overlays();
 			}

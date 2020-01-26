@@ -139,7 +139,7 @@ namespace GameHub.Data.Compat
 
 			string[] cmd = { runnable.install_dir.get_child("start.sh").get_path(), action };
 
-			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(runnable.install_dir.get_path());
+			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(runnable.work_dir.get_path());
 			if(runnable is TweakableGame)
 			{
 				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));

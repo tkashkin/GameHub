@@ -86,21 +86,86 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			{
 				add(new Separator(Orientation.HORIZONTAL));
 
-				var dlcbox = new Box(Orientation.VERTICAL, 0);
-				var dlclist = new ListBox();
-				dlclist.selection_mode = SelectionMode.NONE;
-				dlclist.get_style_context().add_class("gameinfo-content-list");
+				var installable = new ArrayList<GOGGame.DLC>();
+				var not_installable = new ArrayList<GOGGame.DLC>();
 
 				foreach(var dlc in gog_game.dlc)
 				{
-					dlclist.add(new DLCRow(dlc, details_page));
+					(dlc.is_installable ? installable : not_installable).add(dlc);
 				}
 
+				var dlcbox = new Box(Orientation.VERTICAL, 0);
 				var header = Styled.H4Label(_("DLC"));
 				header.margin_start = header.margin_end = 8;
-
 				dlcbox.add(header);
-				dlcbox.add(dlclist);
+
+				if(installable.size > 0 || not_installable.size <= 3)
+				{
+					var dlclist = new ListBox();
+					dlclist.selection_mode = SelectionMode.NONE;
+					dlclist.get_style_context().add_class("gameinfo-content-list");
+
+					foreach(var dlc in installable)
+					{
+						dlclist.add(new DLCRow(dlc, details_page));
+					}
+
+					if(not_installable.size <= 3)
+					{
+						foreach(var dlc in not_installable)
+						{
+							dlclist.add(new DLCRow(dlc, details_page));
+						}
+					}
+
+					dlcbox.add(dlclist);
+				}
+
+				if(not_installable.size > 3)
+				{
+					var dlclist_scrolled = new ScrolledWindow(null, null);
+					dlclist_scrolled.hscrollbar_policy = PolicyType.NEVER;
+					dlclist_scrolled.set_size_request(420, 64);
+
+					#if GTK_3_22
+					dlclist_scrolled.propagate_natural_width = true;
+					dlclist_scrolled.propagate_natural_height = true;
+					dlclist_scrolled.max_content_height = 720;
+					#endif
+
+					var dlclist = new ListBox();
+					dlclist.selection_mode = SelectionMode.NONE;
+					dlclist.get_style_context().add_class("gameinfo-content-list");
+
+					foreach(var dlc in not_installable)
+					{
+						dlclist.add(new DLCRow(dlc, details_page, false));
+					}
+
+					dlclist_scrolled.add(dlclist);
+
+					var dlc_popover_button = new Button.with_label(_("%u DLCs cannot be installed").printf(not_installable.size));
+					dlc_popover_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+					dlc_popover_button.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+
+					var dlc_popover = new Popover(dlc_popover_button);
+					dlc_popover.position = PositionType.LEFT;
+
+					dlc_popover.add(dlclist_scrolled);
+					dlclist_scrolled.show_all();
+
+					dlc_popover_button.clicked.connect(() => {
+						#if GTK_3_22
+						dlc_popover.popup();
+						#else
+						dlc_popover.show();
+						#endif
+					});
+
+					dlcbox.add(new Separator(Orientation.HORIZONTAL));
+					dlcbox.add(dlc_popover_button);
+				}
+
 				add(dlcbox);
 			}
 
@@ -265,7 +330,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			public GOGGame.DLC dlc;
 
-			public DLCRow(GOGGame.DLC dlc, GameDetailsPage details_page)
+			public DLCRow(GOGGame.DLC dlc, GameDetailsPage details_page, bool limit_name_width=true)
 			{
 				this.dlc = dlc;
 
@@ -280,6 +345,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				name.hexpand = true;
 				name.halign = Align.START;
 				name.xalign = 0;
+
+				if(limit_name_width)
+				{
+					name.max_width_chars = 42;
+					name.tooltip_text = dlc.name;
+				}
 
 				var status_icon = new Image.from_icon_name(dlc.status.state == Game.State.INSTALLED ? "process-completed-symbolic" : "folder-download-symbolic", IconSize.BUTTON);
 				status_icon.opacity = dlc.is_installable ? 1 : 0.6;

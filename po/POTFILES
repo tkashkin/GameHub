@@ -88,8 +88,13 @@ src/ui/views/BaseView.vala
 src/ui/views/WelcomeView.vala
 
 src/ui/views/GamesView/GamesView.vala
-src/ui/views/GamesView/GameCard.vala
-src/ui/views/GamesView/GameListRow.vala
+
+src/ui/views/GamesView/grid/GamesGrid.vala
+src/ui/views/GamesView/grid/GameCard.vala
+
+src/ui/views/GamesView/list/GamesList.vala
+src/ui/views/GamesView/list/GameListRow.vala
+
 src/ui/views/GamesView/DownloadProgressView.vala
 src/ui/views/GamesView/FiltersPopover.vala
 src/ui/views/GamesView/AddGamePopover.vala

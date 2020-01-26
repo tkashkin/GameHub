@@ -26,7 +26,7 @@ using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Views.GamesView
+namespace GameHub.UI.Views.GamesView.Grid
 {
 	public class GameCard: FlowBoxChild
 	{

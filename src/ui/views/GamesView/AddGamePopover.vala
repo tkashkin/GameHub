@@ -34,7 +34,7 @@ namespace GameHub.UI.Views.GamesView
 		public signal void game_added(UserGame game);
 		public signal void download_images();
 
-		private Grid grid;
+		private Gtk.Grid grid;
 		private int rows = 0;
 
 		private bool suppress_updates = false;
@@ -56,7 +56,7 @@ namespace GameHub.UI.Views.GamesView
 
 		construct
 		{
-			grid = new Grid();
+			grid = new Gtk.Grid();
 			grid.row_spacing = 4;
 			grid.column_spacing = 4;
 			grid.set_size_request(270, -1);
