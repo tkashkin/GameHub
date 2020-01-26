@@ -68,6 +68,7 @@ namespace GameHub.Data
 
 		public abstract File? executable { owned get; set; }
 		public File? install_dir { get; set; }
+		public abstract File? work_dir { owned get; set; }
 		public virtual File? default_install_dir { owned get { return null; } }
 
 		public ArrayList<RunnableAction> actions { get; protected set; default = new ArrayList<RunnableAction>(); }
@@ -185,6 +186,7 @@ namespace GameHub.Data
 			if(chooser.run() == ResponseType.ACCEPT)
 			{
 				install_dir = chooser.get_file();
+				work_dir = install_dir;
 				executable = FSUtils.file(install_dir.get_path(), "start.sh");
 
 				if(!executable.query_exists())
@@ -757,6 +759,7 @@ namespace GameHub.Data
 									if(action.file != null && action.file.query_exists())
 									{
 										runnable.executable = action.file;
+										runnable.work_dir = action.workdir;
 										runnable.arguments = action.args;
 										break;
 									}

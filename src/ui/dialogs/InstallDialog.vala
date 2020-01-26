@@ -247,7 +247,7 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				compat_tool_revealer.reveal_child = !runnable.is_supported(null, false) && runnable.is_supported(null, true);
+				compat_tool_revealer.reveal_child = installers[0].platform == Platform.WINDOWS;
 				dl_btn.sensitive = installers[0] is Runnable.DownloadableInstaller;
 			}
 

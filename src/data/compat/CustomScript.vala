@@ -86,7 +86,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 					cmd = { script.get_path(), executable_path, runnable.id, runnable.name };
 				}
 
-				var task = Utils.run(cmd).dir(runnable.install_dir.get_path());
+				var task = Utils.run(cmd).dir(runnable.work_dir.get_path());
 				if(runnable is TweakableGame)
 				{
 					task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
@@ -110,7 +110,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 				var executable_path = emu.executable != null ? emu.executable.get_path() : "null";
 				var game_executable_path = game != null && game.executable != null ? game.executable.get_path() : "null";
 				string[] cmd = { script.get_path(), executable_path, emu.id, emu.name, game_executable_path, game.id, game.full_id, game.name, game.escaped_name };
-				var dir = game != null && launch_in_game_dir ? game.install_dir : emu.install_dir;
+				var dir = game != null && launch_in_game_dir ? game.work_dir : emu.work_dir;
 
 				var task = Utils.run(cmd).dir(dir.get_path());
 				if(game is TweakableGame)

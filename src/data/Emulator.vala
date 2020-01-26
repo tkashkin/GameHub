@@ -28,6 +28,7 @@ namespace GameHub.Data
 		public signal void removed();
 
 		public override File? executable { owned get; set; }
+		public override File? work_dir { owned get; set; }
 		public Installer? installer;
 
 		public string? game_executable_pattern { get; set; }
@@ -41,6 +42,7 @@ namespace GameHub.Data
 			this.name = name;
 
 			install_dir = dir;
+			work_dir = dir;
 
 			executable = exec;
 			arguments = args;
@@ -56,6 +58,7 @@ namespace GameHub.Data
 			id = Tables.Emulators.ID.get(s);
 			name = Tables.Emulators.NAME.get(s);
 			install_dir = FSUtils.file(Tables.Emulators.INSTALL_PATH.get(s));
+			work_dir = FSUtils.file(Tables.Emulators.WORK_DIR.get(s));
 			executable = FSUtils.file(Tables.Emulators.EXECUTABLE.get(s));
 			compat_tool = Tables.Emulators.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Emulators.COMPAT_TOOL_SETTINGS.get(s);
@@ -172,7 +175,7 @@ namespace GameHub.Data
 			{
 				Runnable.IsLaunched = is_running = true;
 
-				yield Utils.run(get_args(null, executable)).dir(executable.get_parent().get_path()).override_runtime(true).run_sync_thread();
+				yield Utils.run(get_args(null, executable)).dir(work_dir.get_path()).override_runtime(true).run_sync_thread();
 
 				Timeout.add_seconds(1, () => {
 					Runnable.IsLaunched = is_running = false;
@@ -199,7 +202,7 @@ namespace GameHub.Data
 					game.update_status();
 				}
 
-				var dir = game != null && launch_in_game_dir ? game.install_dir : install_dir;
+				var dir = game != null && launch_in_game_dir ? game.work_dir : work_dir;
 
 				var task = Utils.run(get_args(game, executable)).dir(dir.get_path()).override_runtime(true);
 				if(game != null && game is TweakableGame)

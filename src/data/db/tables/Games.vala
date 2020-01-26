@@ -54,6 +54,7 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field PLAYTIME_TRACKED;
 		public static Table.Field IMAGE_VERTICAL;
 		public static Table.Field TWEAKS;
+		public static Table.Field WORK_DIR;
 
 		public Games()
 		{
@@ -80,6 +81,7 @@ namespace GameHub.Data.DB.Tables
 			PLAYTIME_TRACKED     = f(16);
 			IMAGE_VERTICAL       = f(17);
 			TWEAKS               = f(18);
+			WORK_DIR             = f(19);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -126,6 +128,10 @@ namespace GameHub.Data.DB.Tables
 					case 9:
 						db.exec("ALTER TABLE `games` ADD `tweaks` string");
 						break;
+
+					case 10:
+						db.exec("ALTER TABLE `games` ADD `work_dir` string");
+						break;
 				}
 			}
 		}
@@ -165,8 +171,9 @@ namespace GameHub.Data.DB.Tables
 					`playtime_source`,
 					`playtime_tracked`,
 					`image_vertical`,
-					`tweaks`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`tweaks`,
+					`work_dir`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -218,6 +225,7 @@ namespace GameHub.Data.DB.Tables
 			PLAYTIME_TRACKED.bind_int64(s, game.playtime_tracked);
 			IMAGE_VERTICAL.bind(s, game.image_vertical);
 			TWEAKS.bind(s, tweaks);
+			WORK_DIR.bind(s, game.work_dir == null ? null : game.work_dir_path);
 
 			res = s.step();
 

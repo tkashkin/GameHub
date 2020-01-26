@@ -29,6 +29,9 @@ using GameHub.UI.Widgets;
 using GameHub.UI.Windows;
 using GameHub.Settings;
 
+using GameHub.UI.Views.GamesView.List;
+using GameHub.UI.Views.GamesView.Grid;
+
 namespace GameHub.UI.Views.GamesView
 {
 	public class GamesView: BaseView
@@ -45,11 +48,10 @@ namespace GameHub.UI.Views.GamesView
 
 		private AlertView empty_alert;
 
-		private ScrolledWindow games_grid_scrolled;
-		private FlowBox games_grid;
+		private GamesGrid games_grid;
 
 		private Paned games_list_paned;
-		private ListBox games_list;
+		private GamesList games_list;
 		private GameDetailsView.GameDetailsView games_list_details;
 
 		private ModeButton view;
@@ -132,49 +134,7 @@ namespace GameHub.UI.Views.GamesView
 			stack.transition_type = StackTransitionType.CROSSFADE;
 
 			empty_alert = new AlertView(_("No games"), _("Get some games or enable some game sources in settings"), "dialog-warning");
-
-			games_grid = new FlowBox();
-			games_grid.get_style_context().add_class("games-grid");
-			games_grid.margin = 4;
-
-			games_grid.activate_on_single_click = false;
-			games_grid.homogeneous = true;
-			games_grid.min_children_per_line = 2;
-			games_grid.max_children_per_line = 32;
-			games_grid.selection_mode = SelectionMode.BROWSE;
-			games_grid.valign = Align.START;
-
-			games_grid_scrolled = new ScrolledWindow(null, null);
-			games_grid_scrolled.expand = true;
-			games_grid_scrolled.hscrollbar_policy = PolicyType.NEVER;
-			games_grid_scrolled.add(games_grid);
-
-			games_grid_scrolled.vadjustment.value_changed.connect(update_games_grid_scroll);
-			games_grid_scrolled.size_allocate.connect(update_games_grid_scroll);
-
-			games_list_paned = new Paned(Orientation.HORIZONTAL);
-
-			games_list = new ListBox();
-			games_list.selection_mode = SelectionMode.MULTIPLE;
-
-			games_list_details = new GameDetailsView.GameDetailsView(null);
-			games_list_details.content_margin = 16;
-
-			games_list_details.selected_games_view.download_images.connect(games => {
-				download_images_async.begin(games);
-			});
-
-			var games_list_scrolled = new ScrolledWindow(null, null);
-			games_list_scrolled.hscrollbar_policy = PolicyType.NEVER;
-			games_list_scrolled.add(games_list);
-			games_list_scrolled.set_size_request(220, -1);
-
-			games_list_paned.pack1(games_list_scrolled, false, false);
-			games_list_paned.pack2(games_list_details, true, true);
-
 			stack.add(empty_alert);
-			stack.add(games_grid_scrolled);
-			stack.add(games_list_paned);
 
 			overlay.add(stack);
 
@@ -271,29 +231,7 @@ namespace GameHub.UI.Views.GamesView
 			settings.image = new Image.from_icon_name("open-menu" + Settings.UI.Appearance.symbolic_icon_suffix, Settings.UI.Appearance.headerbar_icon_size);
 			settings.action_name = Application.ACTION_PREFIX + Application.ACTION_SETTINGS;
 
-			games_list.selected_rows_changed.connect(() => {
-				var rows = games_list.get_selected_rows();
-
-				if(rows.length() == 1)
-				{
-					games_list_details.game = ((GameListRow) rows.data).game;
-				}
-				else if(rows.length() > 1)
-				{
-					var selected = new ArrayList<Game>();
-					foreach(var row in rows)
-					{
-						var game = ((GameListRow) row).game;
-						if(game != null)
-						{
-							selected.add(game);
-						}
-					}
-					games_list_details.selected_games = selected;
-				}
-			});
-
-			games_adapter = new GamesAdapter(games_grid, games_list);
+			games_adapter = new GamesAdapter();
 			games_adapter.cache_loaded.connect(update_view);
 
 			filter.mode_changed.connect(update_view);
@@ -398,8 +336,6 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			show_all();
-			games_grid_scrolled.show_all();
-			games_grid.show_all();
 
 			stack.set_visible_child(empty_alert);
 
@@ -525,25 +461,8 @@ namespace GameHub.UI.Views.GamesView
 
 				case ACTION_SELECT_RANDOM_GAME:
 					int index = Random.int_range(0, (int32) games_grid.get_children().length());
-					var card = games_grid.get_child_at_index(index);
-					if(card != null)
-					{
-						games_grid.select_child(card);
-						if(view.selected == 0)
-						{
-							card.grab_focus();
-						}
-					}
-					games_list.unselect_all();
-					var row = games_list.get_row_at_index(index);
-					if(row != null)
-					{
-						games_list.select_row(row);
-						if(view.selected == 1)
-						{
-							row.grab_focus();
-						}
-					}
+					games_grid.select(index, view.selected == 0);
+					games_list.select(index, view.selected == 1);
 					break;
 
 				case ACTION_ADD_GAME:
@@ -559,6 +478,54 @@ namespace GameHub.UI.Views.GamesView
 			}
 		}
 
+		private void init_grid()
+		{
+			if(games_grid != null) return;
+
+			games_grid = new GamesGrid();
+			stack.add(games_grid.wrapped());
+			games_grid.attach(games_adapter);
+		}
+
+		private void init_list()
+		{
+			if(games_list != null) return;
+
+			games_list_paned = new Paned(Orientation.HORIZONTAL);
+			games_list = new GamesList();
+			games_list_details = new GameDetailsView.GameDetailsView(null);
+			games_list_details.content_margin = 16;
+			games_list_paned.pack1(games_list.wrapped(), false, false);
+			games_list_paned.pack2(games_list_details, true, true);
+			stack.add(games_list_paned);
+			games_list_paned.show_all();
+
+			games_list.game_selected.connect(game => { games_list_details.game = game; });
+			games_list.multiple_games_selected.connect(games => { games_list_details.selected_games = games; });
+			games_list_details.selected_games_view.download_images.connect(games => {
+				download_images_async.begin(games);
+			});
+			games_list.attach(games_adapter);
+		}
+
+		private void init_and_show_view(Settings.SavedState.GamesView.Style view)
+		{
+			switch(view)
+			{
+				case Settings.SavedState.GamesView.Style.GRID:
+					init_grid();
+					if(games_grid != null && games_grid.scrolled != null)
+						stack.set_visible_child(games_grid.scrolled);
+					break;
+
+				case Settings.SavedState.GamesView.Style.LIST:
+					init_list();
+					if(games_list != null && games_list_paned != null)
+						stack.set_visible_child(games_list_paned);
+					break;
+			}
+		}
+
 		private void update_view()
 		{
 			show_games();
@@ -566,8 +533,6 @@ namespace GameHub.UI.Views.GamesView
 			var f = filter.selected;
 			GameSource? src = null;
 			if(f > 0) src = sources[f - 1];
-			var games = src == null ? games_grid.get_children().length() : src.games_count;
-			titlebar.subtitle = (src == null ? "" : src.name + ": ") + ngettext("%u game", "%u games", games).printf(games);
 
 			if(games_adapter.filter_source != src)
 			{
@@ -575,9 +540,26 @@ namespace GameHub.UI.Views.GamesView
 				games_adapter.invalidate(true, false, true);
 			}
 
-			games_list_details.preferred_source = src;
+			if(games_list_details != null) games_list_details.preferred_source = src;
 
 			saved_state.filter_source = src == null ? "" : src.id;
+
+			var games = src == null ? games_adapter.games_count : src.games_count;
+			var filtered_games = games_adapter.filtered_games_count;
+
+			var games_count = ngettext("%u game", "%u games", games).printf(games);
+			if(filtered_games != games)
+			{
+				games_count = C_("games_view_subtitle_filtered_games", "%1$u / %2$s").printf(filtered_games, games_count);
+			}
+			if(src != null)
+			{
+				titlebar.subtitle = C_("games_view_subtitle", "%1$s: %2$s").printf(src.name, games_count);
+			}
+			else
+			{
+				titlebar.subtitle = games_count;
+			}
 
 			if(src != null && src.games_count == 0)
 			{
@@ -597,7 +579,7 @@ namespace GameHub.UI.Views.GamesView
 			}
 			else if(search.text.strip().length > 0)
 			{
-				if(!games_adapter.has_filtered_views())
+				if(!games_adapter.has_filtered_games)
 				{
 					empty_alert.title = _("No games matching “%s”").printf(search.text.strip());
 					empty_alert.description = null;
@@ -611,21 +593,16 @@ namespace GameHub.UI.Views.GamesView
 				}
 			}
 
-			var tab = view.selected == 0 ? (Widget) games_grid_scrolled : (Widget) games_list_paned;
-			stack.set_visible_child(tab);
-			saved_state.style = view.selected == 0 ? Settings.SavedState.GamesView.Style.GRID : Settings.SavedState.GamesView.Style.LIST;
-
-			Timeout.add(100, () => { select_first_visible_game(); return Source.REMOVE; });
-
-			update_games_grid_scroll();
+			saved_state.style = (Settings.SavedState.GamesView.Style) view.selected;
+			init_and_show_view(saved_state.style);
 		}
 
 		private void show_games()
 		{
 			if(view.opacity != 0 || stack.visible_child != empty_alert) return;
 
-			view.set_active(saved_state.style == Settings.SavedState.GamesView.Style.LIST ? 1 : 0);
-			stack.set_visible_child(saved_state.style == Settings.SavedState.GamesView.Style.LIST ? (Widget) games_list_paned : (Widget) games_grid_scrolled);
+			view.set_active((int) saved_state.style);
+			init_and_show_view(saved_state.style);
 
 			view.opacity = 1;
 			view.sensitive = true;
@@ -690,42 +667,6 @@ namespace GameHub.UI.Views.GamesView
 			var image = new Image.from_icon_name(icon, IconSize.MENU);
 			image.tooltip_text = tooltip;
 			filter.append(image);
-		}
-
-		private void select_first_visible_game()
-		{
-			GameListRow? row = null;
-
-			var rows = games_list.get_selected_rows();
-			if(rows != null && rows.length() > 0)
-			{
-				row = (GameListRow?) rows.data;
-				if(row != null && games_adapter.filter(row.game)) return;
-			}
-			games_list.unselect_all();
-
-			row = games_list.get_row_at_y(32) as GameListRow?;
-			if(row != null)
-			{
-				games_list.select_row(row);
-			}
-
-			var cards = games_grid.get_selected_children();
-			var card = cards != null && cards.length() > 0 ? cards.first().data as GameCard? : null;
-			if(card != null && games_adapter.filter(card.game)) return;
-			#if GTK_3_22
-			card = games_grid.get_child_at_pos(0, 0) as GameCard?;
-			#else
-			card = null;
-			#endif
-			if(card != null)
-			{
-				games_grid.select_child(card);
-				if(!search.has_focus)
-				{
-					card.grab_focus();
-				}
-			}
 		}
 
 		private void search_run_first_matching_game()
@@ -843,34 +784,6 @@ namespace GameHub.UI.Views.GamesView
 			game.image = image;
 			game.image_vertical = image_vertical;
 			game.save();
-		}
-
-		private void update_games_grid_scroll()
-		{
-			var scroll = games_grid_scrolled.vadjustment.value;
-			var height = games_grid_scrolled.vadjustment.page_size;
-
-			var viewport_top = scroll;
-			var viewport_bottom = scroll + height;
-
-			games_grid.foreach(w => {
-				var card = (GameCard) w;
-
-				if(!card.visible) return;
-
-				Allocation alloc;
-				card.get_allocation(out alloc);
-
-				if(alloc.x < 0 || alloc.y < 0 || alloc.width < 1 || alloc.height < 1) return;
-
-				var card_top = alloc.y;
-				var card_bottom = alloc.y + alloc.height;
-
-				var is_before_viewport = card_bottom < viewport_top;
-				var is_after_viewport = card_top > viewport_bottom;
-
-				card.image_is_visible = !is_before_viewport && !is_after_viewport;
-			});
 		}
 
 		#if UNITY

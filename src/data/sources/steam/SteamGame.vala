@@ -143,6 +143,7 @@ namespace GameHub.Data.Sources.Steam
 			File? dir;
 			Steam.find_app_install_dir(id, out dir);
 			install_dir = dir;
+			work_dir = dir;
 
 			var appinfo = Steam.get_appinfo(id);
 			if(appinfo != null)

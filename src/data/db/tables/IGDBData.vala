@@ -64,10 +64,10 @@ namespace GameHub.Data.DB.Tables
 			}
 		}
 
-		public static bool add(Game game, string data)
+		public static bool add(Game game, string? data)
 		{
 			unowned Sqlite.Database? db = Database.instance.db;
-			if(db == null) return false;
+			if(db == null || data == null) return false;
 
 			Statement s;
 			int res = db.prepare_v2("INSERT OR REPLACE INTO `igdb_data`(

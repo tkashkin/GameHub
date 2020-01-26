@@ -94,6 +94,7 @@ namespace GameHub.Data.Sources.Humble
 
 			install_dir = null;
 			executable_path = "$game_dir/start.sh";
+			work_dir_path = "$game_dir";
 			info_detailed = @"{\"order\":\"$(order_id)\"}";
 
 			mount_overlays.begin();
@@ -111,6 +112,7 @@ namespace GameHub.Data.Sources.Humble
 			image = Tables.Games.IMAGE.get(s);
 			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
 			executable_path = Tables.Games.EXECUTABLE.get(s);
+			work_dir_path = Tables.Games.WORK_DIR.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);

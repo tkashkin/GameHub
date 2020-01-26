@@ -44,6 +44,7 @@ namespace GameHub.Data.Sources.User
 			platforms.add(path.has_suffix(".exe") || path.has_suffix(".bat") || path.has_suffix(".com") ? Platform.WINDOWS : Platform.LINUX);
 
 			install_dir = dir;
+			work_dir = dir;
 
 			arguments = args;
 
@@ -79,6 +80,7 @@ namespace GameHub.Data.Sources.User
 			image = Tables.Games.IMAGE.get(s);
 			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
 			executable_path = Tables.Games.EXECUTABLE.get(s);
+			work_dir_path = Tables.Games.WORK_DIR.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);

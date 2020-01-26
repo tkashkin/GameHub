@@ -27,7 +27,7 @@ using GameHub.UI.Views.GamesView;
 
 namespace GameHub.UI.Views.GameDetailsView
 {
-	public class GameDetailsPage: Grid
+	public class GameDetailsPage: Gtk.Grid
 	{
 		public Game game { get; construct; }
 

@@ -143,7 +143,7 @@ namespace GameHub.Data
 				last_launch = get_real_time() / 1000000;
 				save();
 
-				var task = Utils.run(cmd).dir(executable.get_parent().get_path()).override_runtime(true);
+				var task = Utils.run(cmd).dir(work_dir.get_path()).override_runtime(true);
 				if(this is TweakableGame)
 				{
 					task.tweaks(((TweakableGame) this).get_enabled_tweaks());
@@ -316,10 +316,50 @@ namespace GameHub.Data
 			}
 		}
 
+		public string? work_dir_path;
+		public override File? work_dir
+		{
+			owned get
+			{
+				if(install_dir == null) return null;
+				if(work_dir_path == null || work_dir_path.length == 0) return install_dir;
+				return get_file(work_dir_path);
+			}
+			set
+			{
+				if(value != null && value.query_exists() && install_dir != null && install_dir.query_exists())
+				{
+					File[] dirs = { install_dir };
+					if(overlays_enabled)
+					{
+						dirs = {
+							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged"),
+							install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(Overlay.BASE),
+							install_dir
+						};
+					}
+					foreach(var dir in dirs)
+					{
+						if(value.get_path().has_prefix(dir.get_path()))
+						{
+							work_dir_path = value.get_path().replace(dir.get_path(), "$game_dir");
+							break;
+						}
+					}
+				}
+				else
+				{
+					work_dir_path = null;
+				}
+				save();
+			}
+		}
+
 		public bool overlays_enabled
 		{
 			get
 			{
+				if(this is Sources.GOG.GOGGame.DLC && ((Sources.GOG.GOGGame.DLC) this).game != null) return ((Sources.GOG.GOGGame.DLC) this).game.overlays_enabled;
 				if(this is Sources.Steam.SteamGame) return false;
 				if(FSOverlay.RootPathSafety.for(install_dir) == FSOverlay.RootPathSafety.RESTRICTED) return false;
 				return install_dir != null && install_dir.query_exists()
@@ -329,6 +369,12 @@ namespace GameHub.Data
 
 		public void enable_overlays()
 		{
+			if(this is Sources.GOG.GOGGame.DLC)
+			{
+				if(((Sources.GOG.GOGGame.DLC) this).game != null) ((Sources.GOG.GOGGame.DLC) this).game.enable_overlays();
+				return;
+			}
+
 			if(this is Sources.Steam.SteamGame || install_dir == null || !install_dir.query_exists() || overlays_enabled) return;
 			if(FSOverlay.RootPathSafety.for(install_dir) == FSOverlay.RootPathSafety.RESTRICTED) return;
 
@@ -357,6 +403,12 @@ namespace GameHub.Data
 
 		public void save_overlays()
 		{
+			if(this is Sources.GOG.GOGGame.DLC)
+			{
+				if(((Sources.GOG.GOGGame.DLC) this).game != null) ((Sources.GOG.GOGGame.DLC) this).game.save_overlays();
+				return;
+			}
+
 			if(install_dir == null || !install_dir.query_exists() || overlays == null) return;
 			if(FSOverlay.RootPathSafety.for(install_dir) == FSOverlay.RootPathSafety.RESTRICTED) return;
 
@@ -397,6 +449,12 @@ namespace GameHub.Data
 
 		public void load_overlays()
 		{
+			if(this is Sources.GOG.GOGGame.DLC)
+			{
+				if(((Sources.GOG.GOGGame.DLC) this).game != null) ((Sources.GOG.GOGGame.DLC) this).game.load_overlays();
+				return;
+			}
+
 			if(!overlays_enabled) return;
 			overlays.clear();
 			overlays.add(new Overlay(this));
@@ -415,6 +473,12 @@ namespace GameHub.Data
 
 		public async void mount_overlays(File? persist=null)
 		{
+			if(this is Sources.GOG.GOGGame.DLC)
+			{
+				if(((Sources.GOG.GOGGame.DLC) this).game != null) yield ((Sources.GOG.GOGGame.DLC) this).game.mount_overlays(persist);
+				return;
+			}
+
 			if(!overlays_enabled) return;
 			load_overlays();
 
@@ -443,6 +507,12 @@ namespace GameHub.Data
 
 		public async void umount_overlays()
 		{
+			if(this is Sources.GOG.GOGGame.DLC)
+			{
+				if(((Sources.GOG.GOGGame.DLC) this).game != null) yield ((Sources.GOG.GOGGame.DLC) this).game.umount_overlays();
+				return;
+			}
+
 			if(!overlays_enabled || fs_overlay == null) return;
 			yield fs_overlay.umount();
 		}

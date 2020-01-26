@@ -170,20 +170,30 @@ namespace GameHub.UI.Dialogs
 				properties_box.add(executable_header);
 
 				var executable_picker = new FileChooserEntry(_("Select executable"), FileChooserAction.OPEN, "application-x-executable", _("Executable"), false, true);
+				var work_dir_picker = new FileChooserEntry(_("Select working directory"), FileChooserAction.SELECT_FOLDER, "folder", _("Working directory"));
 				try
 				{
 					executable_picker.set_default_directory(game.install_dir);
 					executable_picker.select_file(game.executable);
+					work_dir_picker.set_default_directory(game.install_dir);
+					work_dir_picker.select_file(game.work_dir);
 				}
 				catch(Error e)
 				{
 					warning(e.message);
 				}
 				executable_picker.margin_start = executable_picker.margin_end = 4;
+				work_dir_picker.margin_start = work_dir_picker.margin_end = work_dir_picker.margin_top = 4;
 				properties_box.add(executable_picker);
+				properties_box.add(work_dir_picker);
 
 				executable_picker.file_set.connect(() => {
 					game.set_chosen_executable(executable_picker.file);
+				});
+
+				work_dir_picker.file_set.connect(() => {
+					game.work_dir = work_dir_picker.file;
+					game.save();
 				});
 
 				var args_entry = new Entry();
