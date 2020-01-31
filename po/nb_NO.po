@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-01-14 18:21+0000\n"
+"PO-Revision-Date: 2020-02-01 07:50+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -255,9 +255,9 @@ msgstr ""
 "Logg inn på din konto i Steamklienten og kom tilbake til GameHub"
 
 #: src/data/sources/gog/GOGGame.vala:983
-#, c-format
+#, c-format, fuzzy
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
