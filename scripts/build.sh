@@ -98,6 +98,7 @@ deps()
 	set +e
 	echo "[scripts/build.sh] Installing dependencies"
 	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:vala-team/next -y
+	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:savoury1/build-tools -y
 	sudo DEBIAN_FRONTEND="noninteractive" apt update -qq
 	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
 	#sudo apt full-upgrade -y
