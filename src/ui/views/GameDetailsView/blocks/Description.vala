@@ -39,7 +39,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 		private const string CSS          = "body{overflow: hidden; font-size: 0.8em; margin: 7px; line-height: 1.4; %s} h1,h2,h3{line-height: 1.2;} ul{padding: 4px 0 4px 16px;} img{max-width: 100%; display: block;}";
 		private const string CSS_COLORS   = "background: %s; color: %s;";
-		private const string WRAPPER_HTML = "<html><body><div id=\"description\">%s</div><script>setInterval(function(){document.title = -1; document.title = document.getElementById('description').offsetHeight;},250);</script></body></html>";
+		private const string WRAPPER_HTML = "<html><body><div id=\"description\">%s</div><script>var desc = document.getElementById('description'); var observer = function(){ document.title = desc.offsetHeight; }; observer(); window.addEventListener('resize', observer);</script></body></html>";
 		private string? current_colors;
 
 		public Description(Game game, bool is_dialog)
@@ -56,7 +56,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			#if WEBKIT2GTK
 			description = new WebView();
 			description.hexpand = true;
-			description.vexpand = false;
+			description.vexpand = true;
 			description.sensitive = false;
 			description.get_settings().hardware_acceleration_policy = HardwareAccelerationPolicy.NEVER;
 
