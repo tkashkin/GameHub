@@ -4,13 +4,14 @@
 # AngryPenguinPL <angrypenguinpoland@gmail.com>, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 # Antek Karaś <antos.karas@gmail.com>, 2019.
+# Garreciq <adamzygiel@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2019-06-07 16:03+0000\n"
-"Last-Translator: Antek Karaś <antos.karas@gmail.com>\n"
+"PO-Revision-Date: 2020-02-04 23:50+0000\n"
+"Last-Translator: Garreciq <adamzygiel@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
 "translations/pl/>\n"
 "Language: pl\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.7-dev\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -1669,7 +1670,7 @@ msgstr "Gatunki"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:109
 msgctxt "igdb"
 msgid "Popularity"
-msgstr ""
+msgstr "Popularność"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:115
 msgctxt "igdb"
@@ -1689,7 +1690,7 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
 msgid "Release date"
-msgstr ""
+msgstr "Data wydania"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:133
 #, fuzzy
@@ -1711,7 +1712,7 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:152
 msgctxt "igdb"
 msgid "Links"
-msgstr ""
+msgstr "Linki"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:208
 #, c-format
@@ -1747,6 +1748,8 @@ msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
+"Nie znaleziono obrazów dla tej gry\n"
+"Upewnij się, że nazwa gry jest poprawna"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:94
 msgid "Search images:"
@@ -1758,7 +1761,7 @@ msgstr "Warstwa kompatybilności:"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
-msgstr ""
+msgstr "Konfiguruj"
 
 #: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
@@ -1825,7 +1828,7 @@ msgstr ""
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
-msgstr ""
+msgstr "W kolejce"
 
 #: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
