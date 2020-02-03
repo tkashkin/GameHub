@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
-# wangling12 <hexinn12@gmail.com>, 2019.
+# wangling12 <hexinn12@gmail.com>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2019-12-29 13:05+0000\n"
+"PO-Revision-Date: 2020-02-04 23:50+0000\n"
 "Last-Translator: wangling12 <hexinn12@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gamehub/translations/zh_Hans/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -253,7 +253,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -773,26 +773,28 @@ msgstr "禁用"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "调整"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr ""
+msgstr "调整启动选项并将其自动应用于游戏"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"从以下目录按顺序加载调整项\n"
+"相同条目的后续调整会覆盖之前的"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "点击打开"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
-msgstr ""
+msgstr "从<b>%1$s</b>和另外%2$d个目录<b>(?)</b>加载调整"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -970,7 +972,6 @@ msgid "Force compatibility mode"
 msgstr "强制兼容模式"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:307
-#, fuzzy
 msgid "Game file patterns"
 msgstr "游戏文件格式"
 
@@ -1066,13 +1067,11 @@ msgstr "贡献者"
 
 #. TRANSLATORS: Likely it should not be translated. GitHub Pulse is a page that shows recent repository activity: https://github.com/tkashkin/GameHub/pulse
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:114
-#, fuzzy
 msgctxt "about_link"
 msgid "Pulse"
 msgstr "Pulse"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:115
-#, fuzzy
 msgctxt "about_link"
 msgid "Forks"
 msgstr "Forks"
@@ -1116,7 +1115,6 @@ msgid "Download images"
 msgstr "下载图片"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:144
-#, fuzzy
 msgid "Image URL"
 msgstr "图片网址"
 
@@ -1129,14 +1127,12 @@ msgid "Icon URL"
 msgstr "图标网址"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Select working directory"
-msgstr "选择文件夹"
+msgstr "选择工作目录"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Working directory"
-msgstr "打开目录"
+msgstr "工作目录"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
@@ -1164,8 +1160,9 @@ msgid "%s: Overlays"
 msgstr "%s:覆盖"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
+#, fuzzy
 msgid "Overlays are disabled"
-msgstr ""
+msgstr "叠加层已禁用"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid ""
