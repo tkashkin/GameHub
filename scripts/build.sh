@@ -215,7 +215,7 @@ build()
 	echo "[scripts/build.sh] Building"
 	cd "$_ROOT"
 	mkdir -p "$BUILDROOT"
-	meson "$BUILDDIR" --prefix=/usr --buildtype=debug -Ddistro=generic -Dappimage=true -Dgit_branch=$_GH_BRANCH -Dgit_commit=$_GH_COMMIT -Dgit_commit_short=$_GH_COMMIT_SHORT
+	meson "$BUILDDIR" --prefix=/usr --buildtype=debug -Dpackage=appimage -Dgit_branch=$_GH_BRANCH -Dgit_commit=$_GH_COMMIT -Dgit_commit_short=$_GH_COMMIT_SHORT
 	cd "$BUILDDIR"
 	ninja
 	DESTDIR="$APPDIR" ninja install

@@ -5,18 +5,24 @@ gnome = import('gnome')
 
 add_global_arguments('-O0', '-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()), language: 'c')
 
-if get_option('appimage')
-	add_global_arguments('-D', 'APPIMAGE', language: 'vala')
-elif get_option('flatpak')
-	add_global_arguments('-D', 'FLATPAK', language: 'vala')
-elif get_option('snap')
-	add_global_arguments('-D', 'SNAP', language: 'vala')
+if get_option('package') == 'appimage'
+	add_global_arguments('-D', 'PKG_APPIMAGE', language: 'vala')
+elif get_option('package') == 'flatpak'
+	add_global_arguments('-D', 'PKG_FLATPAK', language: 'vala')
 endif
 
 if get_option('distro') == 'debian'
 	add_global_arguments('-D', 'DISTRO_DEBIAN', '-D', 'PM_APT', language: 'vala')
 elif get_option('distro') == 'arch'
 	add_global_arguments('-D', 'DISTRO_ARCH', '-D', 'PM_PACMAN', language: 'vala')
+endif
+
+if get_option('perf_images_memcache')
+	add_global_arguments('-D', 'PERF_IMAGES_MEMCACHE', language: 'vala')
+endif
+
+if get_option('perf_gamecard_unload_images')
+	add_global_arguments('-D', 'PERF_GAMECARD_UNLOAD_IMAGES', language: 'vala')
 endif
 
 conf_data = configuration_data()

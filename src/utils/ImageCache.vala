@@ -27,7 +27,7 @@ namespace GameHub.Utils
 
 		private static ArrayList<string> failed_urls;
 
-		#if USE_IMAGES_MEMCACHE
+		#if PERF_IMAGES_MEMCACHE
 		private static HashMap<string, Pixbuf?> cache;
 		#endif
 
@@ -74,7 +74,7 @@ namespace GameHub.Utils
 		{
 			if(url == null || url == "" || url in failed_urls) return null;
 
-			#if USE_IMAGES_MEMCACHE
+			#if PERF_IMAGES_MEMCACHE
 			if(cache.has_key(url)) return cache.get(url);
 			#endif
 
@@ -83,7 +83,7 @@ namespace GameHub.Utils
 			{
 				var pixbuf = cached != null ? new Pixbuf.from_file(cached) : null;
 
-				#if USE_IMAGES_MEMCACHE
+				#if PERF_IMAGES_MEMCACHE
 				cache.set(url, pixbuf);
 				#endif
 
@@ -97,7 +97,7 @@ namespace GameHub.Utils
 		public static void init()
 		{
 			failed_urls = new ArrayList<string>();
-			#if USE_IMAGES_MEMCACHE
+			#if PERF_IMAGES_MEMCACHE
 			cache = new HashMap<string, Pixbuf?>();
 			#endif
 		}

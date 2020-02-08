@@ -37,14 +37,13 @@ namespace GameHub.UI.Views.GamesView.Grid
 
 		public GamesGrid()
 		{
-			Object(selection_mode: SelectionMode.MULTIPLE);
+			Object(selection_mode: SelectionMode.SINGLE);
 		}
 
 		construct
 		{
 			get_style_context().add_class("games-grid");
 			margin = 4;
-
 			activate_on_single_click = false;
 			homogeneous = true;
 			min_children_per_line = 2;
@@ -103,11 +102,18 @@ namespace GameHub.UI.Views.GamesView.Grid
 			scrolled.expand = true;
 			scrolled.hscrollbar_policy = PolicyType.NEVER;
 			scrolled.add(this);
-			scrolled.vadjustment.value_changed.connect(update_scroll);
-			scrolled.size_allocate.connect(update_scroll);
+			setup_scroll_events();
 			scrolled.show_all();
 			show_all();
 			return scrolled;
+		}
+
+		private void setup_scroll_events()
+		{
+			var limiter = new SignalRateLimiter(100);
+			scrolled.vadjustment.value_changed.connect(() => limiter.update());
+			scrolled.size_allocate.connect(() => limiter.update());
+			limiter.signaled.connect(update_scroll);
 		}
 	}
 }

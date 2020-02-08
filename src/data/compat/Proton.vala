@@ -193,7 +193,7 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEPREFIX", compatdata.get_child("pfx").get_path());
 			}
 
-			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.Paths.Steam.Home);
+			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.expand(FSUtils.Paths.Steam.Home));
 			env = Environ.set_variable(env, "PROTON_LOG", "1");
 
 			if(parse_opts)

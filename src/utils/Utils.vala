@@ -112,7 +112,7 @@ namespace GameHub.Utils
 			_dir = _dir ?? Environment.get_home_dir();
 			_env = _env ?? Environ.get();
 
-			#if APPIMAGE
+			#if PKG_APPIMAGE
 			_env = Environ.unset_variable(_env, "LD_LIBRARY_PATH");
 			_env = Environ.unset_variable(_env, "LD_PRELOAD");
 			#endif
@@ -167,7 +167,7 @@ namespace GameHub.Utils
 				}
 			}
 
-			#if FLATPAK
+			#if PKG_FLATPAK
 			if(_override_runtime && ProjectConfig.RUNTIME.length > 0)
 			{
 				_env = Environ.set_variable(_env, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
@@ -341,12 +341,10 @@ namespace GameHub.Utils
 
 		#if OS_LINUX
 			distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}).log(false).run_sync(true).output.replace("\"", "");
-			#if APPIMAGE
+			#if PKG_APPIMAGE
 				distro = "[AppImage] " + distro;
-			#elif FLATPAK
+			#elif PKG_FLATPAK
 				distro = "[Flatpak] " + distro;
-			#elif SNAP
-				distro = "[Snap] " + distro;
 			#endif
 		#elif OS_WINDOWS
 			distro = "Windows " + win32_get_os_version();
@@ -401,7 +399,7 @@ namespace GameHub.Utils
 
 	public static bool is_package_installed(string package)
 	{
-		#if APPIMAGE || FLATPAK || SNAP
+		#if PKG_APPIMAGE || PKG_FLATPAK
 		return false;
 		#elif PM_APT
 		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package}).log(false).run_sync(true).output;
