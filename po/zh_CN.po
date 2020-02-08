@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # wangling12 <hexinn12@gmail.com>, 2019, 2020.
+# Benjamin Zhao <benjaminzhao11@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-02-04 23:50+0000\n"
-"Last-Translator: wangling12 <hexinn12@gmail.com>\n"
+"PO-Revision-Date: 2020-02-09 07:50+0000\n"
+"Last-Translator: Benjamin Zhao <benjaminzhao11@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gamehub/translations/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -591,7 +592,7 @@ msgstr "基于主题"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
-msgstr ""
+msgstr "使其具有象征"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
@@ -716,7 +717,7 @@ msgstr "DLC"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:197
 msgid "Bonus content"
-msgstr ""
+msgstr "奖励内容"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
@@ -750,7 +751,7 @@ msgstr "控制器"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
-msgstr ""
+msgstr "移动焦点"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 msgid "Exit"
@@ -1120,7 +1121,7 @@ msgstr "图片网址"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Vertical image URL"
-msgstr ""
+msgstr "垂直图片的网址"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
@@ -1155,12 +1156,11 @@ msgid "Add to the Steam library"
 msgstr "添加到Steam库"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:53
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Overlays"
 msgstr "%s:覆盖"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
-#, fuzzy
 msgid "Overlays are disabled"
 msgstr "叠加层已禁用"
 
@@ -1170,19 +1170,22 @@ msgid ""
 "\n"
 "Enabling will move game to the “base“ overlay"
 msgstr ""
+"启用叠加层以管理DLC和Mod\n"
+"\n"
+"启用该设置会将游戏移至“基本”叠加层"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:175
 msgid "Overlays"
-msgstr ""
+msgstr "叠加层"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:105
 msgid "Overlay ID (directory name)"
-msgstr ""
+msgstr "叠加ID（目录名称）"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:110
 msgid "Overlay name (optional)"
-msgstr ""
+msgstr "叠加名称（可选）"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
@@ -1190,7 +1193,7 @@ msgstr "添加"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
 msgid "Enable overlays"
-msgstr ""
+msgstr "启用叠加层"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:182
 #, c-format
@@ -1222,7 +1225,7 @@ msgstr "打开目录"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
 msgid "Remove overlay"
-msgstr ""
+msgstr "移除叠加层"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
@@ -1256,7 +1259,7 @@ msgid "Select directory to import"
 msgstr "选择要导入的目录"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
 msgstr "%s:覆盖"
 
@@ -1277,7 +1280,6 @@ msgid "Skip"
 msgstr "跳过"
 
 #: src/ui/views/WelcomeView.vala:141
-#, fuzzy
 msgid "Ready"
 msgstr "准备就绪"
 
@@ -1481,7 +1483,7 @@ msgstr "打开安装程序集合目录"
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
 msgid "Open bonus collection directory"
-msgstr ""
+msgstr "打开奖励收集目录"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:239
@@ -1586,9 +1588,9 @@ msgid "Languages"
 msgstr "语言"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
-#, fuzzy, c-format
+#, c-format
 msgid "%u DLCs cannot be installed"
-msgstr "%s：安装程序损坏"
+msgstr "%u 安装程序已损坏，无法安装"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1703,10 +1705,9 @@ msgstr "添加标记"
 
 #: src/ui/widgets/TweaksList.vala:86
 msgid "No description"
-msgstr ""
+msgstr "没有说明"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
 msgstr "选择文件"
 
@@ -1723,13 +1724,12 @@ msgid "%dm"
 msgstr "%d分钟"
 
 #: src/utils/Utils.vala:464
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr "%d小时"
+msgstr "%d秒"
 
 #: src/settings/UI.vala:153
-#, fuzzy
 msgctxt "grid_size_preset"
 msgid "Steam"
 msgstr "Steam"
@@ -1752,12 +1752,12 @@ msgstr "GOG (垂直)"
 #: src/settings/UI.vala:157
 msgctxt "grid_size_preset"
 msgid "Square"
-msgstr "Square"
+msgstr "队列"
 
 #: src/settings/UI.vala:158
 msgctxt "grid_size_preset"
 msgid "Custom"
-msgstr "自 定义"
+msgstr "自定义"
 
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
@@ -1767,7 +1767,7 @@ msgstr "在队列中"
 #: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr "开始下载"
+msgstr "正在开始下载"
 
 #: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
@@ -1785,25 +1785,23 @@ msgid "Download failed"
 msgstr "下载失败"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "正在下载"
+msgstr "正在下载: %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
 msgstr "正在下载"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "已暂停： %d%%（%s / %s）"
+msgstr "已暂停： %s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
 msgstr "暂停下载"
@@ -1818,7 +1816,7 @@ msgstr "下载已取消"
 #, fuzzy, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "正在下载： %d%%（%s / %s） [%s/s]"
+msgstr "正在下载： %1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "禁止esync"
