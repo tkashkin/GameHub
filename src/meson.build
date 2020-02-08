@@ -111,6 +111,7 @@ sources = [
 	'ui/dialogs/SettingsDialog/pages/About.vala',
 
 	'ui/dialogs/InstallDialog.vala',
+
 	'ui/dialogs/GameDetailsDialog.vala',
 	'ui/dialogs/GamePropertiesDialog.vala',
 	'ui/dialogs/GameFSOverlaysDialog.vala',
@@ -171,6 +172,7 @@ sources = [
 	'utils/FSOverlay.vala',
 	'utils/Parser.vala',
 	'utils/BinaryVDF.vala',
+	'utils/SignalRateLimiter.vala',
 
 	'settings/Settings.vala',
 	'settings/UI.vala',
@@ -225,7 +227,7 @@ if webkit2gtk.found()
 	deps += webkit2gtk
 endif
 
-if get_option('os') == 'linux' and get_option('use_overlayfs')
+if get_option('os') == 'linux' and get_option('feature_overlayfs')
 	add_global_arguments('-D', 'OVERLAYFS', language: 'vala')
 	polkit = dependency('polkit-gobject-1', required: false)
 	if polkit.found()

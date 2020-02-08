@@ -448,7 +448,9 @@ namespace GameHub.UI.Views.GamesView.Grid
 			}
 			else
 			{
+				#if PERF_GAMECARD_UNLOAD_IMAGES
 				image.unload();
+				#endif
 			}
 		}
 

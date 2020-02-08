@@ -462,16 +462,23 @@ namespace GameHub.Utils
 			}
 			catch(IOError.WOULD_MERGE e)
 			{
-				FileInfo? finfo = null;
-				var enumerator = source.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
-				while((finfo = enumerator.next_file()) != null)
+				try
 				{
-					var src = source.get_child(finfo.get_name());
-					var dest = destination.get_child(finfo.get_name());
-					debug("[FSUtils.mv_merge] '%s' -> '%s'", src.get_path(), dest.get_path());
-					FSUtils.mv_merge(src, dest);
+					FileInfo? finfo = null;
+					var enumerator = source.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+					while((finfo = enumerator.next_file()) != null)
+					{
+						var src = source.get_child(finfo.get_name());
+						var dest = destination.get_child(finfo.get_name());
+						debug("[FSUtils.mv_merge] '%s' -> '%s'", src.get_path(), dest.get_path());
+						FSUtils.mv_merge(src, dest);
+					}
+					source.delete();
 				}
-				source.delete();
+				catch(Error e)
+				{
+					warning("[FSUtils.mv_merge] %s", e.message);
+				}
 			}
 			catch(Error e)
 			{
@@ -500,7 +507,7 @@ namespace GameHub.Utils
 				rm(old_images_cache.get_path(), null, "-rf");
 			}
 
-			#if FLATPAK
+			#if PKG_FLATPAK
 			var paths = Paths.Settings.instance;
 			if(paths.steam_home == paths.schema.get_default_value("steam-home").get_string())
 			{

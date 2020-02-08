@@ -173,7 +173,7 @@ namespace GameHub.Utils.Downloader.SoupDownloader
 				throw new IOError.CANCELLED("Download cancelled by user");
 			}
 
-			#if !FLATPAK
+			#if !PKG_FLATPAK
 			var address = msg.get_address();
 			var connectable = new NetworkAddress(address.name, (uint16) address.port);
 			var network_monitor = NetworkMonitor.get_default();
