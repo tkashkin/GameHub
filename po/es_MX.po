@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # juliomorales98 <juliocesar.mr@protonmail.com>, 2019.
+# Anderson Guzman Abreu <chicobello1111@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2019-11-19 07:04+0000\n"
-"Last-Translator: juliomorales98 <juliocesar.mr@protonmail.com>\n"
+"PO-Revision-Date: 2020-02-24 05:27+0000\n"
+"Last-Translator: Anderson Guzman Abreu <chicobello1111@gmail.com>\n"
 "Language-Team: Spanish (Mexico) <https://hosted.weblate.org/projects/gamehub/"
 "translations/es_MX/>\n"
 "Language: es_MX\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -72,7 +73,7 @@ msgstr "Abrir propiedades del juego"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Habilitar el registro de depuración"
 
 #: src/app.vala:114
 msgid ""
@@ -90,7 +91,7 @@ msgstr ""
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Deshabilita el filtro de los mensajes del registro"
 
 #: src/app.vala:118
 msgid "Verbose logging"
@@ -106,11 +107,11 @@ msgstr "Mostrar ayuda de las opciones del juego"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr ""
+msgstr "Opciones del registro:"
 
 #: src/app.vala:255
 msgid "Show logging options help"
-msgstr ""
+msgstr "Muestra la ayuda de las opciones del registro"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
@@ -240,9 +241,8 @@ msgid "%s games"
 msgstr "%s juegos"
 
 #: src/data/sources/steam/Steam.vala:43
-#, fuzzy
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr "Tu SteamID será leído desde el archivo de configuración de Steam"
+msgstr "Tu ID de Steam será leído desde el archivo de configuración de Steam"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
@@ -255,7 +255,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -272,13 +272,13 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s restante;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d %%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
@@ -294,7 +294,7 @@ msgstr ""
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr ""
+msgstr "Juegos del usuario"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
@@ -325,15 +325,15 @@ msgid "Edit custom script"
 msgstr "Editar script personalizado"
 
 #: src/data/compat/Innoextract.vala:55
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Innoextract <b>%1$s</b> is not supported and may not be able to extract some "
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
-"Innoextract <b>%1$s</b> no está soportado y no será posible extraer algunos "
-"juegos correctamente.\n"
-"Instala innoextract <b>%2$s</b>  o más reciente."
+"Innoextract <b>%1$s</b> no está soportado y puede ser que no extraiga "
+"algunos juegos correctamente.\n"
+"Instala Innoextract <b>%2$s</b> o más reciente."
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
@@ -350,8 +350,9 @@ msgstr "Mostrar menú WineWrap"
 
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
 #: src/data/compat/Wine.vala:83
+#, fuzzy
 msgid "Kill apps in prefix"
-msgstr ""
+msgstr "Mata a todas las apps en el prefijo"
 
 #: src/data/compat/Proton.vala:47
 msgid "Proton prefix"
