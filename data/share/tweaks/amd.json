@@ -1,0 +1,7 @@
+{
+	"id": "amd_radeon_aco_vulkan",
+	"name": "AMD: Radeon ACO Vulkan Compiler",
+	"description": "Enable ACO based Vulkan shader compiler for RADV instead of LLVM",
+	"url": "https://github.com/mesa3d/mesa",
+	"command": "RADV_PERFTEST=aco ${command}"
+}
