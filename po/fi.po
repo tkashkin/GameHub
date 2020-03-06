@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
-# Tuomas Lähteenmäki <lahtis@gmail.com>, 2019.
+# Tuomas Lähteenmäki <lahtis@gmail.com>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2019-11-24 10:39+0000\n"
+"PO-Revision-Date: 2020-03-07 04:33+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
 "translations/fi/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -255,7 +255,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -274,25 +274,25 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s jäljellä;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "(%1$s / %2$s)"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -781,26 +781,30 @@ msgstr "Poistettu käytöstä"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "Hienosäädöt"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
 msgstr ""
+"Hienosäädä käynnistysvaihtoehtoja ja käytä niitä peleihin automaattisesti"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"Hienosäädöt ladataan seuraavista hakemistoista järjestyksessä\n"
+"Viimeinen säätö ohittaa aiemmat tarkistukset samoilla tunnisteilla"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "Avaa napsauttamalla"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
 msgstr ""
+"Hienosäädöt on ladattu <b>%1$s</b> ja %2$d ja muista hakemistoista <b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -1137,14 +1141,12 @@ msgid "Icon URL"
 msgstr "Kuvakkeen URL"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Select working directory"
-msgstr "Valitse hakemisto"
+msgstr "Valitse työhakemisto"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Working directory"
-msgstr "Avaa hakemisto"
+msgstr "Työhakemisto"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
@@ -1270,9 +1272,9 @@ msgid "Select directory to import"
 msgstr "Valitse tuotava hakemisto"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s: Päällekkäiskuvat"
+msgstr "%s: Hienosäädöt"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1368,13 +1370,13 @@ msgstr[1] "%u peliä"
 #, c-format
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
-msgstr ""
+msgstr "%1$u / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
 #, c-format
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
-msgstr ""
+msgstr "%1$s: %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
@@ -1610,9 +1612,9 @@ msgid "Languages"
 msgstr "Kielet"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
-#, fuzzy, c-format
+#, c-format
 msgid "%u DLCs cannot be installed"
-msgstr "%s: viallinen asennusohjelma"
+msgstr "%u DLC:tä ei voi asentaa"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1728,12 +1730,11 @@ msgstr "Lisää tagi"
 
 #: src/ui/widgets/TweaksList.vala:86
 msgid "No description"
-msgstr ""
+msgstr "Ei kuvausta"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
-msgstr "Valitse tiedosto"
+msgstr "Muokkaa tiedostoa"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
@@ -1748,10 +1749,10 @@ msgid "%dm"
 msgstr "%dkk"
 
 #: src/utils/Utils.vala:464
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr "%dt"
+msgstr "%ds"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1809,28 +1810,26 @@ msgid "Download failed"
 msgstr "Lataus epäonnistui"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "Lataa"
+msgstr "Ladataan: %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
 msgstr "Lataa"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "Keskeytetty: %d%% (%s / %s)"
+msgstr "Keskeytetty: %s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "Keskeytä lataus"
+msgstr "Keskeytetty"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1839,10 +1838,10 @@ msgstr "Lataus peruutettu"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "Ladataan: %d%% (%s / %s) [%s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "Poista esync käytöstä"
