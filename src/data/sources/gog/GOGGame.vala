@@ -641,7 +641,7 @@ namespace GameHub.Data.Sources.GOG
 									var checksum_url = root.get_string_member("checksum");
 									var remote = File.new_for_uri(url);
 
-									var local = installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
+									string? local_filename = null;
 
 									string? hash = null;
 									var hash_type = ChecksumType.MD5;
@@ -653,10 +653,20 @@ namespace GameHub.Data.Sources.GOG
 										if(checksum_file_node != null)
 										{
 											hash = checksum_file_node->get_prop("md5");
+											local_filename = checksum_file_node->get_prop("name");
 										}
 
 										delete checksum_root;
 									}
+
+									if(local_filename == null && "/namespaces/website/download?path=" in url)
+									{
+										var remote_path_encoded = url.split("/namespaces/website/download?path=")[1].split("&")[0];
+										var remote_path = Uri.unescape_string(remote_path_encoded);
+										local_filename = File.new_for_path(remote_path).get_basename();
+									}
+
+									var local = installers_dir.get_child(local_filename ?? "gog_" + game.id + "_" + this.id + "_" + id);
 
 									parts.add(new Runnable.DownloadableInstaller.Part(id, url, size, remote, local, hash, hash_type));
 								}
@@ -789,7 +799,7 @@ namespace GameHub.Data.Sources.GOG
 				size = json.get_int_member("total_size");
 				dl_info = new Downloader.DownloadInfo(text, game.name, game.icon, null, null, icon);
 
-				filename = "gog_" + game.id + "_bonus_" + id;
+				filename = @"gog_$(game.id)_bonus_$(id)";
 				if(bonus_map != null && bonus_map.has_member(id))
 				{
 					filename = bonus_map.get_string_member(id);
@@ -800,6 +810,8 @@ namespace GameHub.Data.Sources.GOG
 
 			public async File? download()
 			{
+				if(game.bonus_content_dir == null) return null;
+
 				Json.Node? root_node = null;
 
 				while(true)
@@ -819,15 +831,23 @@ namespace GameHub.Data.Sources.GOG
 				var root = root_node.get_object();
 				if(root == null || !root.has_member("downlink")) return null;
 
-				var link = root.get_string_member("downlink");
-				var remote = File.new_for_uri(link);
+				var url = root.get_string_member("downlink");
+				var checksum_url = root.get_string_member("checksum");
+				var remote = File.new_for_uri(url);
 
-				if(game.bonus_content_dir == null) return null;
+				if(filename == @"gog_$(game.id)_bonus_$(id)" && "/namespaces/website/download?path=" in url)
+				{
+					var remote_path_encoded = url.split("/namespaces/website/download?path=")[1].split("&")[0];
+					var remote_path = Uri.unescape_string(remote_path_encoded);
+					filename = File.new_for_path(remote_path).get_basename();
+				}
 
-				var local = game.bonus_content_dir.get_child(filename);
+				warning("[filename] %s", filename);
 
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(game.bonus_content_dir.get_path());
+
+				var local = game.bonus_content_dir.get_child(filename);
 
 				status = new BonusContent.Status(BonusContent.State.DOWNLOADING, null);
 				var ds_id = Downloader.download_manager().file_download_started.connect(dl => {
