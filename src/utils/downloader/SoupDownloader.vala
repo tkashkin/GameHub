@@ -32,7 +32,8 @@ namespace GameHub.Utils.Downloader.SoupDownloader
 		private HashTable<string, DownloadInfo> dl_info;
 		private ArrayQueue<string> dl_queue;
 
-		private static string[] supported_schemes = { "http", "https" };
+		private static string[] URL_SCHEMES = { "http", "https" };
+		private static string[] FILENAME_BLACKLIST = { "download" };
 
 		public SoupDownloader()
 		{
@@ -112,7 +113,7 @@ namespace GameHub.Utils.Downloader.SoupDownloader
 
 			try
 			{
-				if(remote.get_uri_scheme() in supported_schemes)
+				if(remote.get_uri_scheme() in URL_SCHEMES)
 					yield download_from_http(download, preserve_filename, queue);
 				else
 					yield download_from_filesystem(download);
@@ -239,27 +240,28 @@ namespace GameHub.Utils.Downloader.SoupDownloader
 							filename = download.remote.get_basename();
 						}
 
-						if(filename != null)
+						if(filename != null && !(filename in FILENAME_BLACKLIST))
 						{
 							download.local = download.local.get_parent().get_child(filename);
-							if(download.local.query_exists())
-							{
-								if(GameHub.Application.log_downloader)
-								{
-									debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
-								}
-								var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
-								if(info.get_size() == dl_bytes_total)
-								{
-									session.cancel_message(msg, Status.OK);
-									return;
-								}
-							}
-							if(GameHub.Application.log_downloader)
-							{
-								debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
-							}
 						}
+					}
+
+					if(download.local.query_exists())
+					{
+						if(GameHub.Application.log_downloader)
+						{
+							debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
+						}
+						var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
+						if(info.get_size() == dl_bytes_total)
+						{
+							session.cancel_message(msg, Status.OK);
+							return;
+						}
+					}
+					if(GameHub.Application.log_downloader)
+					{
+						debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
 					}
 
 					#if SOUP_2_60
