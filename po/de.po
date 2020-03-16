@@ -8,13 +8,14 @@
 # CurlingTongs <o11577482@nwytg.net>, 2019.
 # Swann Martinet <swann.ranskassa@laposte.net>, 2019.
 # tinect <s.koenig@tinect.de>, 2019.
+# anonymous <noreply@weblate.org>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2019-09-18 18:27+0000\n"
-"Last-Translator: tinect <s.koenig@tinect.de>\n"
+"PO-Revision-Date: 2020-03-18 01:36+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -98,7 +99,7 @@ msgstr "Start/Stopp von Hintergrund-Workern protokollieren"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Deaktiviere Log-Nachrichten Filterung"
 
 #: src/app.vala:118
 msgid "Verbose logging"
