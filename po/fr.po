@@ -5,14 +5,14 @@
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 # Swann Martinet <swann.ranskassa@laposte.net>, 2019.
 # Nathan <bonnemainsnathan@gmail.com>, 2019, 2020.
-# Éfrit <Efrit@posteo.net>, 2019.
+# Éfrit <Efrit@posteo.net>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-01-27 13:21+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2020-03-18 01:36+0000\n"
+"Last-Translator: Éfrit <Efrit@posteo.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -20,15 +20,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr "Afficher l'aide"
+msgstr "Afficher l’aide"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr "Afficher la version de l'application et quitter"
+msgstr "Afficher la version de l’application et quitter"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
@@ -36,11 +36,11 @@ msgstr "Redémarrer avec le débogueur GDB attaché"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr "Afficher l'intégralité de la trace d'appels de GDB"
+msgstr "Afficher l’intégralité de la trace d’appels de GDB"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
-msgstr "Traiter les erreurs fatales comme critiques et fermer l’application"
+msgstr "Traiter les erreurs fatales comme cruciales et planter l’application"
 
 #: src/app.vala:99
 msgid "Show main window"
@@ -48,15 +48,15 @@ msgstr "Afficher la fenêtre principale"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr "Afficher les paramètres de l'application"
+msgstr "Afficher les paramètres de l’application"
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr "À propos de Gamehub"
+msgstr "À propos de GameHub"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
-msgstr "Nombre maximal de tâches d’arrière-plan"
+msgstr "Nombre maximal d’unités de traitement en arrière-plan"
 
 #: src/app.vala:106
 msgid "Run game"
@@ -64,15 +64,15 @@ msgstr "Lancer le jeu"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr "Ouvrir les options de compatibilité"
+msgstr "Afficher les options de compatibilité"
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr "Ouvrir les détails du jeu"
+msgstr "Afficher les détails du jeu"
 
 #: src/app.vala:109
 msgid "Open game properties"
-msgstr "Ouvrir les propriétés du jeu"
+msgstr "Afficher les propriétés du jeu"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
@@ -83,8 +83,8 @@ msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
-"Journaliser le processus d'authentification et des informations sensibles "
-"comme les clés d'authentification"
+"Journaliser le processus d’authentification et les informations sensibles "
+"comme les jetons d’authentification"
 
 #: src/app.vala:115
 msgid "Log download manager"
@@ -92,7 +92,8 @@ msgstr "Journaliser le gestionnaire de téléchargement"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
-msgstr "Journaliser les démarrages et arrêts des tâches d'arrière-plan"
+msgstr ""
+"Journaliser les démarrages et arrêts des unités de traitement en arrière-plan"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
@@ -104,11 +105,11 @@ msgstr "Journalisation détaillée"
 
 #: src/app.vala:247
 msgid "Game Options:"
-msgstr "Options de jeu :"
+msgstr "Options du jeu :"
 
 #: src/app.vala:247
 msgid "Show game options help"
-msgstr "Afficher l’aide pour les options de jeu"
+msgstr "Afficher l’aide pour les options du jeu"
 
 #: src/app.vala:255
 msgid "Logging Options:"
@@ -122,7 +123,7 @@ msgstr "Afficher l’aide pour les options de journalisation"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
-msgstr "Choisir l'exécutable"
+msgstr "Choisir l’exécutable"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
@@ -139,22 +140,22 @@ msgstr "Annuler"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr "Choisir le dossier"
+msgstr "Choisir le répertoire"
 
 #: src/data/Runnable.vala:619
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
-msgstr "Partie %1$u sur %2$u : %3$s"
+msgstr "Partie %1$u sur %2$u : %3$s"
 
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr "%s : Installeur corrompu"
+msgstr "%s : installateur corrompu"
 
 #: src/data/Runnable.vala:643
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr "Différence dans la somme de contrôle dans %s"
+msgstr "Différence de somme de contrôle dans %s"
 
 #: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
@@ -174,15 +175,15 @@ msgstr "Sauvegarder"
 #: src/data/Runnable.vala:778
 #, c-format
 msgid "%s: cannot detect main executable"
-msgstr "%s: n'a pas pu détecter l'executable"
+msgstr "%s : impossible de détecter l’exécutable principal"
 
 #: src/data/Runnable.vala:779
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
-"L’exécutable pour ce jeu ne peut être détecté automatiquement.\n"
-"Veuillez le choisir dans les propriétés du jeu."
+"L’exécutable principal pour ce jeu ne peut être détecté automatiquement.\n"
+"Veuillez le paramétrer dans les propriétés du jeu."
 
 #: src/data/Runnable.vala:908
 msgctxt "platform"
@@ -202,12 +203,12 @@ msgstr "Installé"
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr "En cours d'installation"
+msgstr "En cours d’installation"
 
 #: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr "Vérification de l'intégrité de l'installateur"
+msgstr "Vérification de l’intégrité de l’installateur"
 
 #: src/data/Game.vala:631
 msgctxt "status"
@@ -227,7 +228,7 @@ msgstr "Installé"
 #: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
-msgstr "En cours d'installation"
+msgstr "En cours d’installation"
 
 #: src/data/Game.vala:646
 msgctxt "status_header"
@@ -246,7 +247,8 @@ msgstr "%s jeux"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr "Votre SteamID sera lu à partir de votre fichier de configuration Steam"
+msgstr ""
+"Votre identifiant Steam sera lu à partir du fichier de configuration Steam"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
@@ -254,31 +256,31 @@ msgid ""
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
 "Fichier de configuration Steam introuvable.\n"
-"Connectez-vous sur votre compte dans le client Steam et revenez dans GameHub"
+"Connectez-vous à votre compte dans le client Steam puis revenez dans GameHub"
 
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr "DLC : %s"
+msgstr "Contenu téléchargeable : %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr "%s : aucun installateur disponible"
+msgstr "%s : aucun installateur disponible"
 
 #: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
-"Impossible d’obtenir le lien de téléchargement pourTrove.\n"
+"Impossible d’obtenir le lien de téléchargement pour Trove.\n"
 "Veuillez vérifier que votre abonnement à Humble Monthly est actif."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr "%s restant ;"
+msgstr "%s restant ;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
@@ -300,7 +302,7 @@ msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr "Jeux de l'utilisateur"
+msgstr "Jeux de l’utilisateur"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
@@ -356,7 +358,7 @@ msgstr "Afficher le menu WineWrap"
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
 #: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
-msgstr "Arrêter les applications dans prefix"
+msgstr "Tuer les applications dans prefix"
 
 #: src/data/compat/Proton.vala:47
 msgid "Proton prefix"
@@ -364,7 +366,7 @@ msgstr "Préfixe de Proton"
 
 #: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
-msgstr "Ouvrir le dossier prefix"
+msgstr "Ouvrir le répertoire prefix"
 
 #: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
@@ -384,11 +386,11 @@ msgstr "Préfixe Wine"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
-msgstr "Variables d'environnement"
+msgstr "Variables d’environnement"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr "Options par défaut d'InnoSetup"
+msgstr "Options par défaut d’InnoSetup"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
@@ -415,7 +417,7 @@ msgstr "Favoris"
 #, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr "%s : favoris"
+msgstr "%s : favoris"
 
 #: src/data/adapters/GamesAdapter.vala:491
 msgid "Merging games"
@@ -439,7 +441,7 @@ msgstr "Par nom"
 #: src/data/adapters/GamesAdapter.vala:679
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr "Par dernier démarrage"
+msgstr "Par dernier lancement"
 
 #: src/data/adapters/GamesAdapter.vala:680
 msgctxt "sort_mode"
@@ -449,12 +451,12 @@ msgstr "Par temps de jeu"
 #: src/data/adapters/GamesAdapter.vala:705
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr "Ne pas regrouper"
+msgstr "Ne pas grouper"
 
 #: src/data/adapters/GamesAdapter.vala:706
 msgctxt "group_mode"
 msgid "By status"
-msgstr "Par statuts"
+msgstr "Par statut"
 
 #: src/data/adapters/GamesAdapter.vala:707
 msgctxt "group_mode"
@@ -471,7 +473,7 @@ msgstr "Par défaut"
 #: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
-msgstr "Restaurer la clé par défaut de l'API"
+msgstr "Restaurer la clé par défaut de l’API"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
@@ -499,12 +501,12 @@ msgstr "Score"
 #: src/data/providers/images/SteamGridDB.vala:213
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr "Auteur·e"
+msgstr "Auteur"
 
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr "Alterner"
+msgstr "Alterné"
 
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
@@ -533,7 +535,7 @@ msgid ""
 "IGDB data or disable IGDB."
 msgstr ""
 "Le quota mensuel de requêtes vers IGBD a été atteint. Définissez votre "
-"propre clé d'API pour utiliser les données de IGDB ou désactivez IGDB."
+"propre clé d’API pour utiliser les données de IGDB ou désactivez IGDB."
 
 #: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
@@ -546,7 +548,7 @@ msgstr "Paramètres"
 #: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr "Site officiel"
+msgstr "Site Web officiel"
 
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
@@ -571,7 +573,7 @@ msgstr "les deux"
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
 msgstr ""
-"Certains paramètres seront appliqués après le redémarrage de l'application"
+"Certains paramètres seront appliqués après le redémarrage de l’application"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:71
 msgid "Games directory contains space. It may cause problems for some games"
