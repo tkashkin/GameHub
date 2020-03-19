@@ -9,13 +9,14 @@
 # Swann Martinet <swann.ranskassa@laposte.net>, 2019.
 # tinect <s.koenig@tinect.de>, 2019.
 # anonymous <noreply@weblate.org>, 2020.
+# Sascha Bohrmann <weblate@saschabohrmann.de>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
 "PO-Revision-Date: 2020-03-19 08:47+0000\n"
-"Last-Translator: anonymous <noreply@weblate.org>\n"
+"Last-Translator: Sascha Bohrmann <weblate@saschabohrmann.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -532,7 +533,7 @@ msgstr "Kein Logo"
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr ""
+msgstr "Weißes Logo"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
