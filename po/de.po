@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-03-18 01:36+0000\n"
+"PO-Revision-Date: 2020-03-19 08:47+0000\n"
 "Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -459,7 +459,7 @@ msgstr "Nicht gruppieren"
 #: src/data/adapters/GamesAdapter.vala:706
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "nach Status"
 
 #: src/data/adapters/GamesAdapter.vala:707
 #, fuzzy
@@ -496,17 +496,17 @@ msgstr "Schlüssel generieren"
 #: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "Design"
 
 #: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "Bewertung"
 
 #: src/data/providers/images/SteamGridDB.vala:213
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
@@ -527,7 +527,7 @@ msgstr ""
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "Kein Logo"
 
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
@@ -539,6 +539,8 @@ msgid ""
 "Monthly IGDB request quota has been reached. Set your own API key to use "
 "IGDB data or disable IGDB."
 msgstr ""
+"Monatliche IGDB Anfragen-Quote erreicht. Nutze deinen eigenen API-Schlüssel "
+"um die IGDB-Daten weiter zu nutzen oder deaktiviere IGDB."
 
 #: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
@@ -557,7 +559,7 @@ msgstr "Webseite"
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr ""
+msgstr "Zeige die Beschreibung, sollte das Spiel eine besitzen."
 
 #: src/data/providers/data/IGDB.vala:476
 #, fuzzy
