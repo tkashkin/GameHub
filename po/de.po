@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
 "PO-Revision-Date: 2020-03-20 10:36+0000\n"
-"Last-Translator: Sascha Bohrmann <github@dakunier.de>\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -191,10 +191,9 @@ msgstr ""
 "Bitte stelle die Hauptausführungsdatei in den Spieleigenschaften ein."
 
 #: src/data/Runnable.vala:908
-#, fuzzy
 msgctxt "platform"
 msgid "Emulated"
-msgstr "Emulator"
+msgstr "Emuliert"
 
 #: src/data/Game.vala:625
 msgctxt "status"
@@ -419,10 +418,10 @@ msgid "Favorites"
 msgstr "Favoriten"
 
 #: src/data/adapters/GamesAdapter.vala:445
-#, fuzzy, c-format
+#, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr "Favoriten"
+msgstr "%s: Favoriten"
 
 #: src/data/adapters/GamesAdapter.vala:491
 msgid "Merging games"
@@ -464,10 +463,9 @@ msgid "By status"
 msgstr "nach Status"
 
 #: src/data/adapters/GamesAdapter.vala:707
-#, fuzzy
 msgctxt "group_mode"
 msgid "By source"
-msgstr "Spielquellen"
+msgstr "nach Spielquellen"
 
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
@@ -484,9 +482,8 @@ msgstr "Standard-API-Schlüssel wiederherstellen"
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
 #: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:108
-#, fuzzy
 msgid "API key"
-msgstr "Steam-API-Schlüssel"
+msgstr "API-Schlüssel"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
@@ -518,7 +515,7 @@ msgstr ""
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "Verwischt"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:228
@@ -553,10 +550,9 @@ msgid "Settings"
 msgstr "Einstellungen"
 
 #: src/data/providers/data/IGDB.vala:356
-#, fuzzy
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr "Webseite"
+msgstr "Offizielle Webseite"
 
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
@@ -564,20 +560,19 @@ msgid "When game has description, show description"
 msgstr "Zeige die Beschreibung, sollte das Spiel eine besitzen"
 
 #: src/data/providers/data/IGDB.vala:476
-#, fuzzy
 msgctxt "igdb_preferred_description"
 msgid "of game"
-msgstr "Keine Spiele"
+msgstr "vom Spiel"
 
 #: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr ""
+msgstr "von IGDB"
 
 #: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "beide"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
