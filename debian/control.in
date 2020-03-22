@@ -14,12 +14,13 @@ Build-Depends: meson (>= 0.40),
                libsqlite3-dev,
                libxml2-dev,
                libpolkit-gobject-1-dev,
-               libx11-dev, libmanette-0.2-dev, libxtst-dev
+               libx11-dev, libmanette-0.2-dev, libxtst-dev,
+               innoextract
 Standards-Version: 4.1.4
 
 Package: com.github.tkashkin.gamehub
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Recommends: file-roller, innoextract, wine, dosbox
+Recommends: file-roller, wine, dosbox
 Suggests: steam
 Description: All your games in one place
