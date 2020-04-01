@@ -79,7 +79,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 				if(runnable is Game)
 				{
 					var game = runnable as Game;
-					cmd = { script.get_path(), executable_path, game.id, game.full_id, game.name, game.escaped_name };
+					cmd = { script.get_path(), executable_path, game.work_dir.get_path(), game.id, game.full_id, game.name, game.escaped_name };
 				}
 				else if(runnable is Emulator)
 				{
