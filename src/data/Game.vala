@@ -342,7 +342,7 @@ namespace GameHub.Data
 					{
 						if(value.get_path().has_prefix(dir.get_path()))
 						{
-							work_dir_path = value.get_path().replace(dir.get_path(), "$game_dir");
+							work_dir_path = value.get_path().replace(dir.get_path(), "$game_dir/");
 							break;
 						}
 					}
