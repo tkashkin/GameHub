@@ -6,13 +6,14 @@
 # Kassin Dornelles <kassin.dornelles@gmail.com>, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 # Wilker Santana da Silva <wilker@tutamail.com>, 2019.
+# Wellington Terumi Uemura <wellingtonuemura@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2019-08-22 15:24+0000\n"
-"Last-Translator: Wilker Santana da Silva <wilker@tutamail.com>\n"
+"PO-Revision-Date: 2020-04-03 12:21+0000\n"
+"Last-Translator: Wellington Terumi Uemura <wellingtonuemura@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -260,7 +261,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -279,25 +280,25 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s esquerda;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "(%1$s / %2$s)"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -526,7 +527,7 @@ msgstr "Sem logotipo"
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr ""
+msgstr "Logomarca branca"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
@@ -786,26 +787,30 @@ msgstr "Desativado"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "Ajustes"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr ""
+msgstr "Ajuste as opções de lançamento e aplique-as aos jogos automaticamente"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"Os ajustes são carregados a partir dos seguintes diretórios em ordem\n"
+"O último ajuste substitui os ajustes anteriores com os mesmos identificadores"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "Clique para abrir"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
 msgstr ""
+"Os ajustes são carregados a partir de <b>%1$s</b> e %2$d em conjunto com os "
+"diretórios <b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -1085,7 +1090,7 @@ msgstr "Contribuidores"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:114
 msgctxt "about_link"
 msgid "Pulse"
-msgstr "Pulse"
+msgstr "Pulso"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:115
 msgctxt "about_link"
@@ -1136,21 +1141,19 @@ msgstr "URL da imagem"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Vertical image URL"
-msgstr ""
+msgstr "URL vertical da imagem"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
 msgstr "URL do ícone"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Select working directory"
-msgstr "Selecione o diretório"
+msgstr "Selecione o diretório de trabalho"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Working directory"
-msgstr "Diretório aberto"
+msgstr "Diretório de trabalho"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
@@ -1276,9 +1279,9 @@ msgid "Select directory to import"
 msgstr "Selecione o diretório para importar"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s: Sobreposições"
+msgstr "%s: Ajustes"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1305,9 +1308,8 @@ msgid "Authentication required"
 msgstr "Autentificação requerida"
 
 #: src/ui/views/WelcomeView.vala:152
-#, fuzzy
 msgid "Authenticating…"
-msgstr "Autenticando..."
+msgstr "Autenticando…"
 
 #: src/ui/views/WelcomeView.vala:163
 #, c-format
@@ -1376,13 +1378,13 @@ msgstr[1] "%u jogos"
 #, c-format
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
-msgstr ""
+msgstr "%1$u / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
 #, c-format
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
-msgstr ""
+msgstr "%1$s: %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
@@ -1618,9 +1620,9 @@ msgid "Languages"
 msgstr "Línguas"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
-#, fuzzy, c-format
+#, c-format
 msgid "%u DLCs cannot be installed"
-msgstr "%s: instalador corrompido"
+msgstr "%u Os DLCs não podem ser instalados"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1735,14 +1737,12 @@ msgid "Add tag"
 msgstr "Adicionar etiqueta"
 
 #: src/ui/widgets/TweaksList.vala:86
-#, fuzzy
 msgid "No description"
-msgstr "Descrição"
+msgstr "Sem descrição"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
-msgstr "Selecione o arquivo"
+msgstr "Editar o arquivo"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
@@ -1757,10 +1757,10 @@ msgid "%dm"
 msgstr "%dm"
 
 #: src/utils/Utils.vala:464
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr "%dh"
+msgstr "%ds"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1818,28 +1818,26 @@ msgid "Download failed"
 msgstr "Falha no download"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "Baixando"
+msgstr "Baixando: %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
 msgstr "Baixando"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "Pausado: %d%% (%s / %s)"
+msgstr "Pausado: %s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "Pausar download"
+msgstr "Pausado"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1848,10 +1846,10 @@ msgstr "Download cancelado"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "Baixando: %d%% (%s / %s) [%s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "Desativar esync"
