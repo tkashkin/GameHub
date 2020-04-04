@@ -81,6 +81,43 @@ namespace GameHub.Settings.Providers
 				}
 			}
 		}
+
+		public class Steam: SettingsSchema
+		{
+			public bool enabled { get; set; }
+			public string api_key { get; set; }
+
+			public Steam()
+			{
+				base(ProjectConfig.PROJECT_NAME + ".providers.images.steam");
+			}
+
+			protected override void verify(string key)
+			{
+				switch(key)
+				{
+					case "api-key":
+						if(api_key.length != 32)
+						{
+							schema.reset("api-key");
+						}
+						break;
+				}
+			}
+
+			private static Steam? _instance;
+			public static unowned Steam instance
+			{
+				get
+				{
+					if(_instance == null)
+					{
+						_instance = new Steam();
+					}
+					return _instance;
+				}
+			}
+		}
 	}
 
 	namespace Data
