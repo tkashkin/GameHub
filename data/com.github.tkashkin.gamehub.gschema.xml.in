@@ -325,10 +325,6 @@
 				<default>true</default>
 				<summary>Is Steam image search enabled</summary>
 			</key>
-			<key name="api-key" type="s">
-				<default>'@PREF_API_KEY_STEAM@'</default>
-				<summary>Steam API key</summary>
-			</key>
 		</schema>
 
 	<!-- Providers / Data / IGDB -->
