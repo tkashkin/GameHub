@@ -25,7 +25,10 @@ namespace GameHub.Data.Providers.Images
 	{
 		private const string DOMAIN       = "https://store.steampowered.com/";
 		private const string CDN_BASE_URL = "http://cdn.akamai.steamstatic.com/steam/apps/";
+		private const string API_KEY_PAGE = "https://steamcommunity.com/dev/apikey";
+		private const string API_BASE_URL = "https://api.steampowered.com/";
 
+		private const string APPLIST_CACHE_FILE = "applist.json";
 		private ImagesProvider.ImageSize?[] SIZES = { ImageSize(460, 215), ImageSize(600, 900) };
 
 		public override string id   { get { return "steam"; } }
@@ -51,6 +54,9 @@ namespace GameHub.Data.Providers.Images
 			else
 			{
 				appid = yield GameHub.Data.Sources.Steam.Steam.get_appid_from_name(game.name);
+
+				// also contains unowned games:
+				if(appid == null) appid = yield get_appid_from_name(game.name);
 			}
 
 			if(appid != null)
@@ -116,6 +122,75 @@ namespace GameHub.Data.Providers.Images
 				return true;
 			}
 			return false;
+		}
+
+		private async string? get_appid_from_name(string game_name)
+		{
+			var applist_cache_path = @"$(FSUtils.Paths.Cache.Providers)/steam/";
+			var cache_file = FSUtils.file(applist_cache_path, APPLIST_CACHE_FILE);
+			DateTime? modification_date = null;
+
+			if(cache_file.query_exists())
+			{
+				try
+				{
+					// Get modification time so we refresh only once a day
+					modification_date = cache_file.query_info("*", NONE).get_modification_date_time();
+				}
+				catch(Error e)
+				{
+					debug("[Provider.Images.Steam] %s", e.message);
+					return null;
+				}
+			}
+
+			if(!cache_file.query_exists() || modification_date == null || modification_date.compare(new DateTime.now_utc().add_days(-1)) < 0)
+			{
+				var url = @"$(API_BASE_URL)ISteamApps/GetAppList/v0002/";
+
+				FSUtils.mkdir(applist_cache_path);
+				cache_file = FSUtils.file(applist_cache_path, APPLIST_CACHE_FILE);
+
+				try
+				{
+					var json_string = yield Parser.load_remote_file_async(url);
+					var tmp = Parser.parse_json(json_string);
+					if(tmp != null && tmp.get_node_type() == Json.NodeType.OBJECT && tmp.get_object().get_object_member("applist").get_array_member("apps").get_length() > 0)
+					{
+						var dos = new DataOutputStream(cache_file.replace(null, false, FileCreateFlags.NONE));
+						dos.put_string(json_string);
+						debug("[Provider.Images.Steam] Refreshed steam applist");
+					}
+					else
+					{
+						debug("[Provider.Images.Steam] Downloaded applist is empty");
+					}
+				}
+				catch(Error e)
+				{
+					warning("[Provider.Images.Steam] %s", e.message);
+					return null;
+				}
+			}
+
+			var json = Parser.parse_json_file(applist_cache_path, APPLIST_CACHE_FILE);
+			if(json == null || json.get_node_type() != Json.NodeType.OBJECT)
+			{
+				debug("[Provider.Images.Steam] Error reading steam applist");
+				return null;
+			}
+
+			var apps = json.get_object().get_object_member("applist").get_array_member("apps").get_elements();
+			foreach(var app in apps)
+			{
+				if(app.get_object().get_string_member("name").down() == game_name.down())
+				{
+					var appid = app.get_object().get_int_member("appid").to_string();
+					return appid;
+				}
+			}
+
+			return null;
 		}
 	}
 }
