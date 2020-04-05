@@ -76,8 +76,6 @@ namespace GameHub.Utils
 				public const string WineWrap = FSUtils.Paths.Cache.Compat + "/winewrap";
 
 				public const string Sources = FSUtils.Paths.Cache.Home + "/sources";
-
-				public const string Providers = FSUtils.Paths.Cache.Home + "/providers";
 			}
 
 			public class LocalData
