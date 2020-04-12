@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-01-27 13:21+0000\n"
+"PO-Revision-Date: 2020-04-14 09:11+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
 "translations/tr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -26,7 +26,7 @@ msgstr "Yardımı göster"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr "Uygulama versiyonunu göster ve çık"
+msgstr "Uygulama sürümünü göster ve çık"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
@@ -385,7 +385,7 @@ msgstr "Ortam değişkenleri"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr "InnoSetup varsayılan seçenekleri"
+msgstr "InnoSetup öntanımlı seçenekleri"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
@@ -462,13 +462,13 @@ msgstr "Kaynağa göre"
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
-msgstr "Varsayılan"
+msgstr "Öntanımlı"
 
 #: src/data/providers/images/SteamGridDB.vala:158
 #: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
-msgstr "Varsayılan API anahtarını geri yükle"
+msgstr "Öntanımlı API anahtarını geri yükle"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
@@ -741,7 +741,7 @@ msgstr "Platform"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
 msgid "Controller"
-msgstr "Kontrolör"
+msgstr "Denetleyici"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
@@ -750,11 +750,11 @@ msgstr "Etkin"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
 msgid "Focus GameHub window with Guide button"
-msgstr "Rehber butonu ile GameHub penceresini odakla"
+msgstr "Rehber düğmesi ile GameHub penceresini odakla"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
-msgstr "Kontrolörler"
+msgstr "Denetleyiciler"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
@@ -1028,7 +1028,7 @@ msgstr "Görüntü sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
 msgid "Metadata providers"
-msgstr "Meta veri sağlayıcıları"
+msgstr "Üst veri sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
