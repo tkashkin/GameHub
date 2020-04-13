@@ -148,7 +148,7 @@ namespace GameHub.Data.Compat
 			var prefix = FSUtils.mkdir(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)/pfx");
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
+			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(id)").query_exists())
 			{
 				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}).dir(install_dir.get_path()).run_sync();
 				FSUtils.rm(dosdevices.get_child("d:").get_path());
@@ -168,7 +168,7 @@ namespace GameHub.Data.Compat
 
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists())
+			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists() && !dosdevices.get_child("d::").query_exists())
 			{
 				if(dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
 				{

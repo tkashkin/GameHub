@@ -202,7 +202,7 @@ namespace GameHub.Data.Compat
 
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists())
+			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists() && !dosdevices.get_child("d::").query_exists())
 			{
 				if(dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
 				{
