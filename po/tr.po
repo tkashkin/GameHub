@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-04-14 09:11+0000\n"
+"PO-Revision-Date: 2020-04-15 12:11+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
 "translations/tr/>\n"
@@ -146,7 +146,7 @@ msgstr "Parça %1$u / %2$u: %3$s"
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr "%s: bozuk yükleyici"
+msgstr "%s: bozuk kurucu"
 
 #: src/data/Runnable.vala:643
 #, c-format
@@ -204,7 +204,7 @@ msgstr "Yükleniyor"
 #: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr "Yükleyici bütünlüğü doğrulanıyor"
+msgstr "Kurucu bütünlüğü doğrulanıyor"
 
 #: src/data/Game.vala:631
 msgctxt "status"
@@ -261,7 +261,7 @@ msgstr "DLC: %s"
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr "%s: kullanılabilir yükleyici yok"
+msgstr "%s: kullanılabilir kurucu yok"
 
 #: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
@@ -714,7 +714,7 @@ msgstr "Oyun dizini"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Installers"
-msgstr "Yükleyiciler"
+msgstr "Kurucular"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:98
@@ -940,7 +940,7 @@ msgstr "Çalıştırılabilir"
 #: src/ui/views/GamesView/AddGamePopover.vala:68
 #: src/ui/views/GamesView/AddGamePopover.vala:143
 msgid "Installer"
-msgstr "Yükleyici"
+msgstr "Kurucu"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
 #: src/ui/dialogs/GamePropertiesDialog.vala:64
@@ -1100,12 +1100,12 @@ msgstr "İndir"
 
 #: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
-msgstr "Yükleyiciyi seçin"
+msgstr "Kurucuyu seçin"
 
 #: src/ui/dialogs/InstallDialog.vala:216
 #, c-format
 msgid "Installer size: %s"
-msgstr "Yükleyici boyutu: %s"
+msgstr "Kurucu boyutu: %s"
 
 #: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
@@ -1246,7 +1246,7 @@ msgstr "Uyumluluk katmanıyla çalıştır"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
-msgstr "Bozuk yükleyici: sağlama toplamı uyuşmazlığı"
+msgstr "Bozuk kurucu: sağlama toplamı uyuşmazlığı"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
@@ -1490,7 +1490,7 @@ msgstr "Kurulum dizinini aç"
 #: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
 msgid "Open installers collection directory"
-msgstr "Yükleyici koleksiyon dizinini aç"
+msgstr "Kurucu koleksiyon dizinini aç"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
