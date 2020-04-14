@@ -64,43 +64,38 @@ namespace GameHub.Data.Providers.Images
 				debug("[Provider.Images.Steam] Found appid %s for game %s", appid, game.name);
 				foreach(var size in SIZES)
 				{
-					var needs_check = false;
-					var exists = false;
 					var result = new ImagesProvider.Result();
+					result.images = new ArrayList<ImagesProvider.Image>();
 					result.image_size = size ?? ImageSize(460, 215);
 					result.name = "%s: %s (%d × %d)".printf(name, game.name, result.image_size.width, result.image_size.height);
 					result.url = "%sapp/%s".printf(DOMAIN, appid);
 
-					var format = "header.jpg";
+					string? remote_result = null;
+					string? local_result = null;
 					switch (size.width) {
 					case 460:
 						// Always enforced by steam, exists for everything
-						format = "header.jpg";
-						exists = true;
+						local_result = yield search_local(appid);
+						remote_result = yield search_remote(appid, "header.jpg", false);
 						break;
 					//  case 920:
 						// Higher resolution of the one above at the same location
-						//  format = "header.jpg";
 						//  break;
 					case 600:
 						// Enforced since 2019, possibly not available
-						format = "library_600x900_2x.jpg";
-						needs_check = true;
+						local_result = yield search_local(appid, "p");
+						remote_result = yield search_remote(appid, "library_600x900_2x.jpg");
 						break;
 					}
 
-					var endpoint = "%s/%s".printf(appid, format);
-
-					result.images = new ArrayList<ImagesProvider.Image>();
-
-					if(needs_check)
+					if(local_result != null)
 					{
-						exists = yield image_exists("%s%s".printf(CDN_BASE_URL, endpoint));
+						result.images.add(new Image(local_result, "Local custom steam grid image"));
 					}
 
-					if(exists)
+					if(remote_result != null)
 					{
-						result.images.add(new Image("%s%s".printf(CDN_BASE_URL, endpoint)));
+						result.images.add(new Image(remote_result, "Remote download"));
 					}
 
 					if(result.images.size > 0)
@@ -111,6 +106,40 @@ namespace GameHub.Data.Providers.Images
 			}
 
 			return results;
+		}
+
+		private async string? search_local(string appid, string format="")
+		{
+			string[] extensions = { ".png", ".jpg" };
+			File? griddir = Sources.Steam.Steam.get_userdata_dir().get_child("config").get_child("grid");
+
+			foreach(var extension in extensions)
+			{
+				if(griddir.get_child(appid + format + extension).query_exists())
+				{
+					return "file://" + griddir.get_child(appid + format + extension).get_path();
+				}
+			}
+
+			return null;
+		}
+
+		private async string? search_remote(string appid, string format, bool needs_check=true)
+		{
+			var exists = !needs_check;
+			var endpoint = "%s/%s".printf(appid, format);
+
+			if(needs_check)
+			{
+				exists = yield image_exists("%s%s".printf(CDN_BASE_URL, endpoint));
+			}
+
+			if(exists)
+			{
+				return "%s%s".printf(CDN_BASE_URL, endpoint);
+			}
+
+			return null;
 		}
 
 		private async bool image_exists(string url)
