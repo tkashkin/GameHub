@@ -29,6 +29,7 @@ deps = [
 	dependency('sqlite3'),
 	dependency('libxml-2.0'),
 	dependency('gio-unix-2.0'),
+	dependency('zlib'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
