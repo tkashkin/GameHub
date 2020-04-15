@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 using GameHub.Data.DB;
 using GameHub.Utils;
+using ZLib.Utility;
 
 namespace GameHub.Data.Sources.Steam
 {
@@ -446,9 +447,13 @@ namespace GameHub.Data.Sources.Steam
 
 			var root_node = vdf.read() as BinaryVDF.ListNode;
 
-			if(root_node == null)
+			if(root_node.get("shortcuts") == null)
 			{
 				root_node = new BinaryVDF.ListNode.node("shortcuts");
+			}
+			else
+			{
+				root_node = root_node.get("shortcuts") as BinaryVDF.ListNode;
 			}
 
 			var game_node = new BinaryVDF.ListNode.node(root_node.nodes.size.to_string());
@@ -470,8 +475,30 @@ namespace GameHub.Data.Sources.Steam
 				game_node.add_node(new BinaryVDF.StringNode.node("icon", cached.get_path()));
 			}
 
+			if(game.image_vertical != null)
+			{
+				try
+				{
+					var cached = ImageCache.local_file(game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
+					// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
+					uint64 id = crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000;
+					var dest = FSUtils.file(get_userdata_dir().get_child("config").get_child("grid").get_path(), id.to_string() + "p.png");
+					cached.copy(dest, NONE);
+				}
+				catch (Error e) {}
+			}
+
 			var tags_node = new BinaryVDF.ListNode.node("tags");
 			tags_node.add_node(new BinaryVDF.StringNode.node("0", "GameHub"));
+
+			foreach(var tag in game.tags)
+			{
+				if(tag.removable)
+				{
+					tags_node.add_node(new BinaryVDF.StringNode.node((game.tags.index_of(tag) + 1).to_string(), tag.name));
+				}
+			}
+
 			game_node.add_node(tags_node);
 
 			root_node.add_node(game_node);
