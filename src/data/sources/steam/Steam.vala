@@ -446,9 +446,13 @@ namespace GameHub.Data.Sources.Steam
 
 			var root_node = vdf.read() as BinaryVDF.ListNode;
 
-			if(root_node == null)
+			if(root_node.get("shortcuts") == null)
 			{
 				root_node = new BinaryVDF.ListNode.node("shortcuts");
+			}
+			else
+			{
+				root_node = root_node.get("shortcuts") as BinaryVDF.ListNode;
 			}
 
 			var game_node = new BinaryVDF.ListNode.node(root_node.nodes.size.to_string());
