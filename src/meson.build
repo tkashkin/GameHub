@@ -198,12 +198,18 @@ elif get_option('os') == 'macos'
 	add_global_arguments('-D', 'OS_MACOS', language: 'vala')
 endif
 
-glib256 = dependency('glib-2.0', version: '>=2.56', required: false)
-if glib256.found()
-	add_global_arguments('-D', 'GLIB_2_56', language: 'vala')
-	deps += glib256
+glib262 = dependency('glib-2.0', version: '>=2.62', required: false)
+if glib262.found()
+	add_global_arguments('-D', 'GLIB_2_62', '-D', 'GLIB_2_56', language: 'vala')
+	deps += glib262
 else
-	deps += dependency('glib-2.0')
+	glib256 = dependency('glib-2.0', version: '>=2.56', required: false)
+	if glib256.found()
+		add_global_arguments('-D', 'GLIB_2_56', language: 'vala')
+		deps += glib256
+	else
+		deps += dependency('glib-2.0')
+	endif
 endif
 
 gtk322 = dependency('gtk+-3.0', version: '>=3.22', required: false)
