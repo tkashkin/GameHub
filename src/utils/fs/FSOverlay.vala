@@ -16,10 +16,9 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using GLib;
 using Gee;
 
-namespace GameHub.Utils
+namespace GameHub.Utils.FS
 {
 	public class FSOverlay: Object
 	{
@@ -45,7 +44,7 @@ namespace GameHub.Utils
 		{
 			if(persist != null && workdir == null)
 			{
-				workdir = FSUtils.file(persist.get_parent().get_path(), ".gh." + persist.get_basename() + ".overlay_workdir");
+				workdir = FS.file(persist.get_parent().get_path(), ".gh." + persist.get_basename() + ".overlay_workdir");
 			}
 		}
 
@@ -117,7 +116,7 @@ namespace GameHub.Utils
 
 			if(workdir != null && !workdir.query_exists())
 			{
-				FSUtils.rm(workdir.get_path(), null, "-rf");
+				FS.rm(workdir.get_path(), null, "-rf");
 			}
 		}
 
@@ -178,10 +177,20 @@ namespace GameHub.Utils
 
 				string[] safe_paths = {};
 
-				if(Data.Sources.GOG.GOG.instance.enabled)
-					safe_paths += FSUtils.Paths.GOG.Games.down();
-				if(Data.Sources.Humble.Humble.instance.enabled)
-					safe_paths += FSUtils.Paths.Humble.Games.down();
+				foreach(var src in GameHub.Data.GameSources)
+				{
+					var src_dirs = src.game_dirs;
+					if(src_dirs != null)
+					{
+						foreach(var dir in src_dirs)
+						{
+							if(dir != null && dir.query_exists())
+							{
+								safe_paths += dir.get_path().down();
+							}
+						}
+					}
+				}
 
 				foreach(var safe_path in safe_paths)
 				{

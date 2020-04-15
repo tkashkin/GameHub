@@ -21,6 +21,7 @@ using Gdk;
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 

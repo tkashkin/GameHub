@@ -16,8 +16,6 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
-
 namespace GameHub.Settings
 {
 	public class Controller: SettingsSchema

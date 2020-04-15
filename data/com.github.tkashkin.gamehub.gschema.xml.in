@@ -199,27 +199,51 @@
 			</key>
 		</schema>
 
-	<!-- Paths -->
-		<schema path="@SCHEMA_PATH@/paths/" id="@SCHEMA_ID@.paths">
-			<key name="steam-home" type="s">
+	<!-- Paths / Steam -->
+		<schema path="@SCHEMA_PATH@/paths/steam/" id="@SCHEMA_ID@.paths.steam">
+			<key name="home" type="s">
 				<default>'~/.steam'</default>
 				<summary>Steam installation directory</summary>
 			</key>
-			<key name="gog-games" type="s">
+		</schema>
+
+	<!-- Paths / GOG -->
+		<schema path="@SCHEMA_PATH@/paths/gog/" id="@SCHEMA_ID@.paths.gog">
+			<key name="game-directories" type="as">
+				<default>['~/Games/GOG', '~/GOG Games']</default>
+				<summary>GOG game directories</summary>
+			</key>
+			<key name="default-game-directory" type="s">
 				<default>'~/Games/GOG'</default>
-				<summary>GOG games directory</summary>
+				<summary>Default GOG games directory</summary>
 			</key>
-			<key name="humble-games" type="s">
+		</schema>
+
+	<!-- Paths / Humble -->
+		<schema path="@SCHEMA_PATH@/paths/humble/" id="@SCHEMA_ID@.paths.humble">
+			<key name="game-directories" type="as">
+				<default>['~/Games/HumbleBundle']</default>
+				<summary>Humble game directories</summary>
+			</key>
+			<key name="default-game-directory" type="s">
 				<default>'~/Games/HumbleBundle'</default>
-				<summary>Humble games directory</summary>
+				<summary>Default Humble games directory</summary>
 			</key>
-			<key name="itch-home" type="s">
+		</schema>
+
+	<!-- Paths / itch.io -->
+		<schema path="@SCHEMA_PATH@/paths/itch/" id="@SCHEMA_ID@.paths.itch">
+			<key name="home" type="s">
 				<default>'~/.config/itch'</default>
 				<summary>itch.io config/installation directory</summary>
 			</key>
-			<key name="itch-games" type="s">
+			<key name="game-directories" type="as">
+				<default>['~/Games/itch']</default>
+				<summary>itch.io game directories</summary>
+			</key>
+			<key name="default-game-directory" type="s">
 				<default>'~/Games/itch'</default>
-				<summary>itch.io games directory</summary>
+				<summary>Default itch.io games directory</summary>
 			</key>
 		</schema>
 
@@ -242,7 +266,7 @@
 			</key>
 			<key name="dlc" type="s">
 				<default>'$game_dir/dlc'</default>
-				<summary>GOG collection: dlc directory</summary>
+				<summary>GOG collection: DLC directory</summary>
 			</key>
 			<key name="bonus" type="s">
 				<default>'$game_dir/bonus'</default>

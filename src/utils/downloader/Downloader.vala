@@ -19,6 +19,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using GLib;
 using Gee;
 
+using GameHub.Data.Runnables;
+
 namespace GameHub.Utils.Downloader
 {
 	public abstract class Downloader: Object
@@ -285,6 +287,17 @@ namespace GameHub.Utils.Downloader
 		public DownloadInfo(string name, string? description, string? icon=null, string? icon_name=null, string? type_icon=null, string? type_icon_name=null)
 		{
 			Object(name: name, description: description, icon: icon, icon_name: icon_name, type_icon: type_icon, type_icon_name: type_icon_name);
+		}
+
+		public DownloadInfo.for_runnable(Runnable runnable, string? description=null)
+		{
+			string? game_icon = null;
+			string? source_icon = null;
+			runnable.cast<Game>(game => {
+				game_icon = game.icon;
+				source_icon = game.source.icon;
+			});
+			Object(name: runnable.name, description: description, icon: game_icon, icon_name: null, type_icon: null, type_icon_name: source_icon);
 		}
 	}
 }

@@ -137,7 +137,7 @@ namespace GameHub
 		{
 			if(GameSources != null && CompatTools != null) return;
 
-			FSUtils.make_dirs();
+			FS.make_dirs();
 			ImageCache.init();
 			Database.create();
 
@@ -166,7 +166,7 @@ namespace GameHub
 				}
 			}
 
-			tools += new Compat.CustomEmulator();
+			//tools += new Compat.CustomEmulator();
 			tools += new Compat.RetroArch();
 			tools += new Compat.CustomScript();
 
@@ -476,7 +476,7 @@ namespace GameHub
 
 			if(game_id == null || path == null) return;
 
-			var file = FSUtils.file(path);
+			var file = FS.file(path);
 			if(file == null || !file.query_exists()) return;
 			try
 			{
@@ -505,7 +505,7 @@ namespace GameHub
 						break;
 
 					case ACTION_CORRUPTED_INSTALLER_BACKUP:
-						file.move(FSUtils.file(path + ".backup"), FileCopyFlags.BACKUP);
+						file.move(FS.file(path + ".backup"), FileCopyFlags.BACKUP);
 						break;
 
 					case ACTION_CORRUPTED_INSTALLER_REMOVE:
@@ -554,7 +554,7 @@ namespace GameHub
 								break;
 
 							case ACTION_GAME_PROPERTIES:
-								var dlg = new UI.Dialogs.GamePropertiesDialog(game);
+								var dlg = new UI.Dialogs.GamePropertiesDialog.GamePropertiesDialog(game);
 								dlg.destroy.connect(() => {
 									loop.quit();
 								});

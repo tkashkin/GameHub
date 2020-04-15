@@ -57,9 +57,9 @@ namespace GameHub.Data
 		{
 			id = Tables.Emulators.ID.get(s);
 			name = Tables.Emulators.NAME.get(s);
-			install_dir = FSUtils.file(Tables.Emulators.INSTALL_PATH.get(s));
-			work_dir = FSUtils.file(Tables.Emulators.WORK_DIR.get(s));
-			executable = FSUtils.file(Tables.Emulators.EXECUTABLE.get(s));
+			install_dir = FS.file(Tables.Emulators.INSTALL_PATH.get(s));
+			work_dir = FS.file(Tables.Emulators.WORK_DIR.get(s));
+			executable = FS.file(Tables.Emulators.EXECUTABLE.get(s));
 			compat_tool = Tables.Emulators.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Emulators.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Emulators.ARGUMENTS.get(s);
@@ -159,7 +159,7 @@ namespace GameHub.Data
 						}
 						if("$" in arg)
 						{
-							arg = FSUtils.expand(arg, null, variables);
+							arg = FS.expand(arg, null, variables);
 						}
 						result_args += arg;
 					}

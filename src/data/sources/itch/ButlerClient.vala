@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Itch

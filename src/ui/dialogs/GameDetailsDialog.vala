@@ -20,6 +20,7 @@ using Gtk;
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.UI.Dialogs

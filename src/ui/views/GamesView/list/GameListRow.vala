@@ -23,6 +23,7 @@ using Gee;
 using GameHub.Data;
 using GameHub.Data.Adapters;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -261,19 +262,19 @@ namespace GameHub.UI.Views.GamesView.List
 		{
 			_visible_game = vg;
 
-			status_handler_id = game.status_change.connect(status_handler);
-			status_handler(game.status);
+			status_handler_id = game.notify["status"].connect(status_handler);
+			status_handler();
 
 			updates_handler_id = game.notify["has-updates"].connect(updates_handler);
 			updates_handler();
 		}
 
-		private void status_handler(Game.Status s)
+		private void status_handler()
 		{
 			Idle.add(() => {
 				label.label = game.name;
-				status_label.label = s.description;
-				tooltip_markup = """<span weight="600">%s</span>""".printf(game.name.replace("&amp;", "&").replace("&", "&amp;")) + "\n" + """<span size="smaller">%s</span>""".printf(s.description.replace("&amp;", "&").replace("&", "&amp;"));
+				status_label.label = game.status.description;
+				tooltip_markup = """<span weight="600">%s</span>""".printf(game.name.replace("&amp;", "&").replace("&", "&amp;")) + "\n" + """<span size="smaller">%s</span>""".printf(game.status.description.replace("&amp;", "&").replace("&", "&amp;"));
 				update_style(ui_settings.list_style_cache);
 				favorite_icon.visible = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
 				update_icon();

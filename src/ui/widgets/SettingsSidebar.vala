@@ -234,7 +234,9 @@ namespace GameHub.UI.Widgets
 				var grid = new Grid();
 				grid.margin = 12;
 				grid.orientation = Orientation.VERTICAL;
-				grid.row_spacing = 24;
+				grid.row_spacing = 12;
+				header_area.margin_bottom = 12;
+				action_area.margin_top = 12;
 				grid.add(header_area);
 				grid.add(content_area);
 				grid.add(action_area);

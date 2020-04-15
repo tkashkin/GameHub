@@ -96,6 +96,10 @@ namespace GameHub.UI.Widgets
 			label.xalign = 0;
 			return label;
 		}
+		public Label BoldLabel(string? text, ...)
+		{
+			return label(text, "bold", va_list());
+		}
 		public Label DimLabel(string? text, ...)
 		{
 			return label(text, Gtk.STYLE_CLASS_DIM_LABEL, va_list());

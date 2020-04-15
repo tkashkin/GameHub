@@ -25,6 +25,7 @@ using GameHub.Utils;
 using GameHub.UI.Widgets;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Steam;
 
 namespace GameHub.UI.Dialogs
@@ -35,7 +36,7 @@ namespace GameHub.UI.Dialogs
 		private const int RESPONSE_BACKUP = 11;
 		private const int RESPONSE_REMOVE = 12;
 
-		public Runnable game { get; construct; }
+		public Runnable runnable { get; construct; }
 		public File installer { get; construct; }
 
 		private Box content;
@@ -43,9 +44,9 @@ namespace GameHub.UI.Dialogs
 		private Label subtitle_label;
 		private Label message_label;
 
-		public CorruptedInstallerDialog(Runnable game, File installer)
+		public CorruptedInstallerDialog(Runnable runnable, File installer)
 		{
-			Object(game: game, installer: installer, transient_for: Windows.MainWindow.instance, resizable: false, title: _("%s: corrupted installer").printf(game.name));
+			Object(runnable: runnable, installer: installer, transient_for: Windows.MainWindow.instance, resizable: false, title: _("%s: corrupted installer").printf(runnable.name));
 		}
 
 		construct
@@ -61,7 +62,7 @@ namespace GameHub.UI.Dialogs
 			content = new Box(Orientation.VERTICAL, 0);
 			content.margin_bottom = 8;
 
-			title_label = Styled.H2Label(game.name);
+			title_label = Styled.H2Label(runnable.name);
 			title_label.margin_start = 8;
 			title_label.halign = Align.START;
 			title_label.valign = Align.START;
@@ -83,16 +84,14 @@ namespace GameHub.UI.Dialogs
 			message_label.get_style_context().add_class("category-label");
 			content.add(message_label);
 
-			if(game is Game && ((Game) game).icon != null)
-			{
-				var g = (Game) game;
+			runnable.cast<Game>(game => {
 				var icon = new AutoSizeImage();
 				icon.valign = Align.START;
 				icon.set_constraint(48, 48, 1);
 				icon.set_size_request(48, 48);
-				icon.load(g.icon, null, @"$(g.source.id)/$(g.id)/icons/");
+				icon.load(game.icon, null, @"$(game.source.id)/$(game.id)/icons/");
 				hbox.add(icon);
-			}
+			});
 
 			hbox.add(content);
 
@@ -115,8 +114,7 @@ namespace GameHub.UI.Dialogs
 					default:
 						return;
 				}
-				string id = (game is Game) ? (game as Game).full_id : game.id;
-				Application.instance.activate_action(action, new Variant("(ss)", id, installer.get_path()));
+				Application.instance.activate_action(action, new Variant("(ss)", runnable.full_id, installer.get_path()));
 				if(action != Application.ACTION_CORRUPTED_INSTALLER_SHOW)
 				{
 					destroy();

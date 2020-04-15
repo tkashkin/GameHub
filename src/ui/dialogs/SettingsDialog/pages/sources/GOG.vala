@@ -25,9 +25,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
 	public class GOG: SettingsDialogPage
 	{
-		private Settings.Auth.GOG gog_auth;
+		private Settings.Auth.GOG gog_auth = Settings.Auth.GOG.instance;
+		private Settings.Paths.GOG gog_paths = Settings.Paths.GOG.instance;
+
 		private Button logout_btn;
-		private FileChooserEntry games_dir_chooser;
+		private DirectoriesList game_dirs_list;
 
 		public GOG(SettingsDialog dlg)
 		{
@@ -43,11 +45,31 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = FSUtils.Paths.Settings.instance;
+			root_grid.margin = 0;
+			header_grid.margin = 12;
+			content_area.margin = 0;
 
-			gog_auth = Settings.Auth.GOG.instance;
+			action_area.margin = 12;
+			action_area.margin_top = 0;
 
-			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.gog_games, v => { paths.gog_games = v; request_restart(); update(); }).get_children().last().data as FileChooserEntry;
+			var game_dirs_header = add_header(_("Game directories"));
+			game_dirs_header.margin_start = game_dirs_header.margin_end = 12;
+
+			var game_dirs_list = add_widget(new DirectoriesList.with_array(gog_paths.game_directories, gog_paths.default_game_directory, null, false));
+
+			game_dirs_list.margin_start = 7;
+			game_dirs_list.margin_end = 3;
+			game_dirs_list.margin_top = 0;
+			game_dirs_list.margin_bottom = 0;
+
+			game_dirs_list.notify["directories"].connect(() => {
+				warning("[dirs] '%s'", string.joinv("', '", game_dirs_list.directories_array));
+				gog_paths.game_directories = game_dirs_list.directories_array;
+			});
+
+			game_dirs_list.directory_selected.connect(dir => {
+				gog_paths.default_game_directory = dir;
+			});
 
 			status_switch.active = gog_auth.enabled;
 			status_switch.notify["active"].connect(() => {
@@ -75,7 +97,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			content_area.sensitive = gog_auth.enabled;
 			logout_btn.sensitive = gog_auth.authenticated && gog_auth.access_token.length > 0;
 
-			if(" " in FSUtils.Paths.Settings.instance.gog_games)
+			/*if(" " in FS.Paths.Settings.instance.gog_games)
 			{
 				games_dir_chooser.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
 				status_type = StatusType.ERROR;
@@ -85,7 +107,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				games_dir_chooser.get_style_context().remove_class(Gtk.STYLE_CLASS_ERROR);
 				status_type = restart_requested ? StatusType.WARNING : StatusType.NONE;
 			}
-			dialog.update_games_dir_space_message();
+			dialog.update_games_dir_space_message();*/
 
 			if(!gog_auth.enabled)
 			{
@@ -101,6 +123,5 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				status = description = user_name != null ? _("Authenticated as <b>%s</b>").printf(user_name) : _("Authenticated");
 			}
 		}
-
 	}
 }

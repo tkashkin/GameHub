@@ -66,7 +66,7 @@ namespace GameHub.UI.Windows
 			#if WEBKIT2GTK
 			webview = new WebView();
 
-			var cookies_file = FSUtils.expand(FSUtils.Paths.Cache.Cookies);
+			var cookies_file = FS.expand(FS.Paths.Cache.Cookies);
 			webview.web_context.get_cookie_manager().set_persistent_storage(cookies_file, CookiePersistentStorage.TEXT);
 
 			webview.get_settings().enable_mediasource = true;

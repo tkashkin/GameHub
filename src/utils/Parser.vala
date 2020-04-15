@@ -28,7 +28,7 @@ namespace GameHub.Utils
 
 		public static string load_file(string path, string file="")
 		{
-			var f = FSUtils.file(path, file);
+			var f = FS.file(path, file);
 			if(!f.query_exists()) return "";
 			string data;
 			try

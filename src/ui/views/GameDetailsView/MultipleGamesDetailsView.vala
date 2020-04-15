@@ -22,6 +22,7 @@ using Gee;
 
 using GameHub.Data;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -180,7 +181,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void install_games()
 		{
-			if(installable == null || installable.size == 0) return;
+			/*if(installable == null || installable.size == 0) return;
 
 			if(Sources.Steam.Steam.instance.enabled)
 			{
@@ -205,12 +206,12 @@ namespace GameHub.UI.Views.GameDetailsView
 					game.install.begin(Runnable.Installer.InstallMode.AUTOMATIC);
 				}
 			}
-			update();
+			update();*/
 		}
 
 		private void download_games()
 		{
-			if(downloadable == null || downloadable.size == 0) return;
+			/*if(downloadable == null || downloadable.size == 0) return;
 			foreach(var game in downloadable)
 			{
 				if(!(game is Sources.Steam.SteamGame))
@@ -218,30 +219,30 @@ namespace GameHub.UI.Views.GameDetailsView
 					game.install.begin(Runnable.Installer.InstallMode.AUTOMATIC_DOWNLOAD);
 				}
 			}
-			update();
+			update();*/
 		}
 
 		private void download_game_images()
 		{
-			if(no_images == null || no_images.size == 0) return;
+			/*if(no_images == null || no_images.size == 0) return;
 			download_images(no_images);
-			update();
+			update();*/
 		}
 
 		private void uninstall_games()
 		{
-			if(uninstallable == null || uninstallable.size == 0) return;
-			uninstall_games_async.begin(uninstallable);
+			/*if(uninstallable == null || uninstallable.size == 0) return;
+			uninstall_games_async.begin(uninstallable);*/
 		}
 
 		private void refresh_games()
 		{
-			if(refreshable == null || refreshable.size == 0) return;
+			/*if(refreshable == null || refreshable.size == 0) return;
 			foreach(var game in refreshable)
 			{
 				Tables.Games.remove(game);
 			}
-			update();
+			update();*/
 		}
 
 		private async void uninstall_games_async(ArrayList<Game> games)

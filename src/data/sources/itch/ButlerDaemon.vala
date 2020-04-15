@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Itch
@@ -56,7 +57,7 @@ namespace GameHub.Data.Sources.Itch
 			}
 
 			var butler_path = butler_executable.get_path();
-			var db_path = FSUtils.expand(FSUtils.Paths.Itch.Home, FSUtils.Paths.Itch.Database);
+			var db_path = FS.expand(GameHub.Settings.Paths.Itch.instance.home, FS.Paths.Itch.Database);
 
 			var pid = ((int) Posix.getpid()).to_string();
 

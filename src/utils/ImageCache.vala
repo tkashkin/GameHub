@@ -38,7 +38,7 @@ namespace GameHub.Utils
 			var ext = parts.length > 1 ? parts[parts.length - 1] : null;
 			ext = ext != null && ext.length <= 6 ? "." + ext : null;
 			var hash = md5(url);
-			return FSUtils.file(FSUtils.Paths.Cache.Graphics, @"$(prefix)$(hash)$(ext)");;
+			return FS.file(FS.Paths.Cache.Graphics, @"$(prefix)$(hash)$(ext)");;
 		}
 
 		public static async string? cache_image(string? url, string prefix=DEFAULT_CACHED_FILE_PREFIX)

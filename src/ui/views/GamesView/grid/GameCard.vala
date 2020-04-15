@@ -23,6 +23,7 @@ using Gee;
 using GameHub.Data;
 using GameHub.Data.Adapters;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -365,8 +366,8 @@ namespace GameHub.UI.Views.GamesView.Grid
 				return Source.REMOVE;
 			});
 
-			status_handler_id = game.status_change.connect(status_handler);
-			status_handler(game.status);
+			status_handler_id = game.notify["status"].connect(status_handler);
+			status_handler();
 
 			image_handler_id = game.notify["image"].connect(update_image);
 			image_vertical_handler_id = game.notify["image-vertical"].connect(update_image);
@@ -384,13 +385,13 @@ namespace GameHub.UI.Views.GamesView.Grid
 			src_icons.add(icon);
 		}
 
-		private void status_handler(Game.Status s)
+		private void status_handler()
 		{
 			Idle.add(() => {
 				label.label = game.name;
-				status_label.label = s.description;
+				status_label.label = game.status.description;
 				favorite_icon.visible = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
-				switch(s.state)
+				switch(game.status.state)
 				{
 					case Game.State.UNINSTALLED:
 						card.get_style_context().remove_class("installed");
@@ -410,9 +411,9 @@ namespace GameHub.UI.Views.GamesView.Grid
 						card.get_style_context().remove_class("installing");
 						Allocation alloc;
 						card.get_allocation(out alloc);
-						if(s.download != null && s.download.status != null && s.download.status.progress >= 0)
+						if(game.status.download != null && game.status.download.status != null && game.status.download.status.progress >= 0)
 						{
-							progress_bar.set_size_request((int) (s.download.status.progress * alloc.width), 8);
+							progress_bar.set_size_request((int) (game.status.download.status.progress * alloc.width), 8);
 						}
 						break;
 

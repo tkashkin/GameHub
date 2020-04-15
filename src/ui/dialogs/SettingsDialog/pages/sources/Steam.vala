@@ -48,10 +48,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		{
 			root_grid.margin = 0;
 			header_grid.margin = 12;
-			header_grid.margin_bottom = 0;
 			content_area.margin = 0;
 
-			var paths = FSUtils.Paths.Settings.instance;
+			var paths = Settings.Paths.Steam.instance;
 
 			steam_auth = Settings.Auth.Steam.instance;
 
@@ -60,7 +59,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			adjust_margins(add_separator());
 
-			adjust_margins(add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.steam_home, v => { paths.steam_home = v; request_restart(); }, false));
+			adjust_margins(add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.home, v => { paths.home = v; request_restart(); }, false));
 
 			var proton_header = add_header("Proton");
 			proton_header.margin_start = proton_header.margin_end = 12;

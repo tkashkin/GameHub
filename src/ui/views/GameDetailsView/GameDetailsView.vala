@@ -22,6 +22,7 @@ using Gee;
 
 using GameHub.Data;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -232,7 +233,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(merged)
 			{
-				foreach(var m in merges)
+				/*foreach(var m in merges)
 				{
 					if(Game.is_equal(g, m)
 						|| !m.is_supported(null)
@@ -242,7 +243,7 @@ namespace GameHub.UI.Views.GameDetailsView
 					}
 
 					add_page(m);
-				}
+				}*/
 			}
 
 			stack_tabs.visible = stack.get_children().length() > 1;

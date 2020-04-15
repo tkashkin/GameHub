@@ -21,6 +21,7 @@ using Gdk;
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 
@@ -42,6 +43,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		construct
 		{
 			if(!supports_game) return;
+			var game = game.cast<Traits.Game.HasAchievements>();
+			if(game == null) return;
 
 			var header = Styled.H4Label(_("Achievements"), "description-header");
 			header.margin_start = header.margin_end = 7;
@@ -105,6 +108,6 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			});
 		}
 
-		public override bool supports_game { get { return game is SteamGame || game is GOGGame; } }
+		public override bool supports_game { get { return game is Traits.Game.HasAchievements; } }
 	}
 }

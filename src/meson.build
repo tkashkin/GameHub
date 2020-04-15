@@ -36,10 +36,29 @@ deps = [
 sources = [
 	'app.vala',
 
-	'data/Runnable.vala',
-	'data/Game.vala',
+	#'data/Runnable.vala',
+	#'data/Game.vala',
 	'data/GameSource.vala',
-	'data/Emulator.vala',
+	#'data/Emulator.vala',
+
+	'data/Platform.vala',
+
+	'data/runnables/Runnable.vala',
+	'data/runnables/Game.vala',
+
+	'data/runnables/tasks/install/Installer.vala',
+	'data/runnables/tasks/install/InstallerType.vala',
+	'data/runnables/tasks/install/InstallTask.vala',
+
+	'data/runnables/tasks/run/RunTask.vala',
+
+	'data/runnables/traits/HasExecutableFile.vala',
+	'data/runnables/traits/SupportsCompatTools.vala',
+	'data/runnables/traits/HasActions.vala',
+
+	'data/runnables/traits/game/HasAchievements.vala',
+	'data/runnables/traits/game/SupportsOverlays.vala',
+	'data/runnables/traits/game/SupportsTweaks.vala',
 
 	'data/sources/steam/Steam.vala',
 	'data/sources/steam/SteamGame.vala',
@@ -66,7 +85,7 @@ sources = [
 	'data/db/tables/Games.vala',
 	'data/db/tables/Tags.vala',
 	'data/db/tables/Merges.vala',
-	'data/db/tables/Emulators.vala',
+	#'data/db/tables/Emulators.vala',
 	'data/db/tables/IGDBData.vala',
 
 	'data/CompatTool.vala',
@@ -78,7 +97,7 @@ sources = [
 	'data/compat/DOSBox.vala',
 	'data/compat/ScummVM.vala',
 	'data/compat/RetroArch.vala',
-	'data/compat/CustomEmulator.vala',
+	#'data/compat/CustomEmulator.vala',
 
 	'data/adapters/GamesAdapter.vala',
 
@@ -105,19 +124,23 @@ sources = [
 	'ui/dialogs/SettingsDialog/pages/sources/GOG.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Humble.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Itch.vala',
-	'ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala',
-	'ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala',
+	#'ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala',
+	#'ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala',
 	'ui/dialogs/SettingsDialog/pages/providers/Providers.vala',
 	'ui/dialogs/SettingsDialog/pages/About.vala',
 
-	'ui/dialogs/InstallDialog.vala',
+	'ui/dialogs/InstallDialog/InstallDialog.vala',
+	'ui/dialogs/InstallDialog/steps/InstallerStep.vala',
+	'ui/dialogs/InstallDialog/steps/InstallDirStep.vala',
+	'ui/dialogs/InstallDialog/steps/CompatToolStep.vala',
+
+	'ui/dialogs/GamePropertiesDialog/GamePropertiesDialog.vala',
 
 	'ui/dialogs/GameDetailsDialog.vala',
-	'ui/dialogs/GamePropertiesDialog.vala',
 	'ui/dialogs/GameFSOverlaysDialog.vala',
 	'ui/dialogs/CompatRunDialog.vala',
 	'ui/dialogs/CorruptedInstallerDialog.vala',
-	'ui/dialogs/ImportEmulatedGamesDialog.vala',
+	#'ui/dialogs/ImportEmulatedGamesDialog.vala',
 	'ui/dialogs/GameTweaksDialog.vala',
 
 	'ui/views/BaseView.vala',
@@ -165,11 +188,14 @@ sources = [
 	'ui/widgets/Welcome.vala',
 	'ui/widgets/SettingsSidebar.vala',
 	'ui/widgets/TweaksList.vala',
+	'ui/widgets/DirectoriesList.vala',
 
 	'utils/Utils.vala',
+
+	'utils/fs/FS.vala',
+	'utils/fs/FSOverlay.vala',
+
 	'utils/ImageCache.vala',
-	'utils/FSUtils.vala',
-	'utils/FSOverlay.vala',
 	'utils/Parser.vala',
 	'utils/BinaryVDF.vala',
 	'utils/SignalRateLimiter.vala',
@@ -179,6 +205,7 @@ sources = [
 	'settings/SavedState.vala',
 	'settings/Auth.vala',
 	'settings/Compat.vala',
+	'settings/Paths.vala',
 	'settings/Providers.vala',
 	'settings/Controller.vala',
 	'settings/Tweaks.vala',

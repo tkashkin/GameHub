@@ -24,6 +24,7 @@ using Gee;
 using GameHub.Data;
 using GameHub.Data.Adapters;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 using GameHub.UI.Windows;
@@ -879,14 +880,14 @@ namespace GameHub.UI.Views.GamesView
 				var b = Gamepad.Buttons.get(btn);
 				b.emit_key_event(press);
 
-				if(GameHub.Application.log_verbose && !Runnable.IsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
+				if(GameHub.Application.log_verbose && !Runnable.IsAnyRunnableRunning && !Sources.Steam.Steam.IsAnyAppRunning)
 				{
 					debug("[Gamepad] Button %s: %s (%s) [%d]", (press ? "pressed" : "released"), b.name, b.long_name, btn);
 				}
 
 				ui_update_gamepad_mode();
 
-				if(controller_settings.focus_window && !press && b == Gamepad.BTN_GUIDE && !window.has_focus && !Runnable.IsLaunched && !Sources.Steam.Steam.IsAnyAppRunning)
+				if(controller_settings.focus_window && !press && b == Gamepad.BTN_GUIDE && !window.has_focus && !Runnable.IsAnyRunnableRunning && !Sources.Steam.Steam.IsAnyAppRunning)
 				{
 					window.get_window().focus(Gdk.CURRENT_TIME);
 				}

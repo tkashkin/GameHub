@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gee;
 using GameHub.Utils;
+using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 
@@ -45,6 +46,15 @@ namespace GameHub.Data
 		public abstract bool can_authenticate_automatically();
 
 		public abstract ArrayList<Game> games { get; }
+
+		public virtual ArrayList<File>? game_dirs
+		{
+			owned get { return null; }
+		}
+		public virtual File? default_game_dir
+		{
+			owned get { return null; }
+		}
 
 		public abstract async ArrayList<Game> load_games(Utils.FutureResult2<Game, bool>? game_loaded=null, Utils.Future? cache_loaded=null);
 

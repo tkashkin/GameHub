@@ -18,6 +18,10 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using GameHub.Utils;
 
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
+using GameHub.Data.Runnables.Tasks.Run;
+
 using GameHub.Data.Sources.Steam;
 
 namespace GameHub.Data.Compat
@@ -87,26 +91,26 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		public override bool can_install(Runnable runnable)
+		public override bool can_install(Traits.SupportsCompatTools runnable, InstallTask task)
 		{
 			return can_run(runnable);
 		}
 
-		public override bool can_run(Runnable runnable)
+		public override bool can_run(Traits.SupportsCompatTools runnable)
 		{
-			return installed && runnable != null && ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms)) || runnable is Emulator);
+			return installed && runnable != null && ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms))/* || runnable is Emulator*/);
 		}
 
-		public override bool can_run_action(Runnable runnable, Runnable.RunnableAction action)
+		public override bool can_run_action(Traits.SupportsCompatTools runnable, Traits.HasActions.Action action)
 		{
 			return installed && runnable != null && action != null;
 		}
 
-		protected virtual async string[] prepare_installer_args(Runnable runnable)
+		protected virtual async string[] prepare_installer_args(Traits.SupportsCompatTools runnable, InstallTask task)
 		{
 			var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
-			var win_path = yield convert_path(runnable, runnable.install_dir.get_child(tmp_root));
-			var log_win_path = yield convert_path(runnable, runnable.install_dir.get_child("install.log"));
+			var win_path = yield convert_path(runnable, task.install_dir.get_child(tmp_root));
+			var log_win_path = yield convert_path(runnable, task.install_dir.get_child("install.log"));
 
 			string[] opts = {};
 
@@ -126,41 +130,41 @@ namespace GameHub.Data.Compat
 			return opts;
 		}
 
-		public override async void install(Runnable runnable, File installer)
+		public override async void install(Traits.SupportsCompatTools runnable, InstallTask task, File installer)
 		{
-			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
+			if(!can_install(runnable, task) || (yield InstallerType.guess(installer)) != InstallerType.WINDOWS_EXECUTABLE) return;
 			yield wineboot(runnable);
-			yield exec(runnable, installer, installer.get_parent(), yield prepare_installer_args(runnable));
+			yield exec(runnable, installer, installer.get_parent(), yield prepare_installer_args(runnable, task));
 
 			var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
-			if(runnable.install_dir != null && runnable.install_dir.get_child(tmp_root).query_exists())
+			if(task.install_dir != null && task.install_dir.get_child(tmp_root).query_exists())
 			{
-				FSUtils.mv_up(runnable.install_dir, tmp_root);
+				FS.mv_up(task.install_dir, tmp_root);
 			}
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Traits.SupportsCompatTools runnable)
 		{
 			if(!can_run(runnable)) return;
 			yield wineboot(runnable);
 			yield exec(runnable, runnable.executable, runnable.work_dir, Utils.parse_args(runnable.arguments));
 		}
 
-		public override async void run_action(Runnable runnable, Runnable.RunnableAction action)
+		public override async void run_action(Traits.SupportsCompatTools runnable, Traits.HasActions.Action action)
 		{
 			if(!can_run_action(runnable, action)) return;
 			yield wineboot(runnable);
 			yield exec(runnable, action.file, action.workdir, Utils.parse_args(action.args));
 		}
 
-		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
+		/*public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
 		{
 			if(!can_run(emu)) return;
 			var dir = game != null && launch_in_game_dir ? game.work_dir : emu.work_dir;
 			yield exec(emu, emu.executable, dir, emu.get_args(game));
-		}
+		}*/
 
-		protected virtual async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected virtual async void exec(Traits.SupportsCompatTools runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), file.get_path() };
 			if(file.get_path().down().has_suffix(".msi"))
@@ -168,30 +172,29 @@ namespace GameHub.Data.Compat
 				cmd = { executable.get_path(), "msiexec", "/i", file.get_path() };
 			}
 			var task = Utils.run(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
-			if(runnable is TweakableGame)
-			{
-				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
-			}
+			runnable.cast<Traits.Game.SupportsTweaks>(game => {
+				task.tweaks(game.get_enabled_tweaks(this));
+			});
 			yield task.run_sync_thread();
 		}
 
-		public virtual File get_default_wineprefix(Runnable runnable)
+		public virtual File get_default_wineprefix(Traits.SupportsCompatTools runnable)
 		{
-			var install_dir = runnable.install_dir ?? runnable.default_install_dir;
+			var install_dir = runnable.install_dir /*?? runnable.default_install_dir*/;
 
-			var prefix = FSUtils.mkdir(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(binary)_$(arch)");
+			var prefix = FS.mkdir(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(binary)_$(arch)");
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
+			if(FS.file(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(binary)_$(arch)"}).dir(install_dir.get_path()).run_sync();
-				FSUtils.rm(dosdevices.get_child("d:").get_path());
+				Utils.run({"bash", "-c", @"mv -f $(FS.GAMEHUB_DIR)/$(binary)_$(arch) $(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(binary)_$(arch)"}).dir(install_dir.get_path()).run_sync();
+				FS.rm(dosdevices.get_child("d:").get_path());
 			}
 
 			return prefix;
 		}
 
-		public virtual File get_wineprefix(Runnable runnable)
+		public virtual File get_wineprefix(Traits.SupportsCompatTools runnable)
 		{
 			var prefix = get_default_wineprefix(runnable);
 
@@ -213,12 +216,7 @@ namespace GameHub.Data.Compat
 			return prefix;
 		}
 
-		public override File get_install_root(Runnable runnable)
-		{
-			return get_wineprefix(runnable).get_child("drive_c");
-		}
-
-		protected virtual string[] prepare_env(Runnable runnable, bool parse_opts=true)
+		protected virtual string[] prepare_env(Traits.SupportsCompatTools runnable, bool parse_opts=true)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d;winemenubuilder.exe=d");
@@ -264,12 +262,12 @@ namespace GameHub.Data.Compat
 			return env;
 		}
 
-		protected virtual async void wineboot(Runnable runnable, string[]? args=null)
+		protected virtual async void wineboot(Traits.SupportsCompatTools runnable, string[]? args=null)
 		{
 			yield wineutil(runnable, "wineboot", args);
 		}
 
-		protected async void wineutil(Runnable runnable, string util="winecfg", string[]? args=null)
+		protected async void wineutil(Traits.SupportsCompatTools runnable, string util="winecfg", string[]? args=null)
 		{
 			string[] cmd = { wine_binary.get_path(), util };
 
@@ -284,14 +282,14 @@ namespace GameHub.Data.Compat
 			yield Utils.run(cmd).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
 		}
 
-		protected async void winetricks(Runnable runnable)
+		protected async void winetricks(Traits.SupportsCompatTools runnable)
 		{
 			yield Utils.run({"winetricks"}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
 		}
 
-		public async string convert_path(Runnable runnable, File path)
+		public async string convert_path(Traits.SupportsCompatTools runnable, File path)
 		{
-			var win_path = (yield Utils.run({wine_binary.get_path(), "winepath", "-w", path.get_path()}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).log(false).run_sync_thread(true)).output.strip();
+			var win_path = (yield Utils.run({wine_binary.get_path(), "winepath", "-w", path.get_path()}).env(prepare_env(runnable)).log(false).run_sync_thread(true)).output.strip();
 			debug("[Wine.convert_path] '%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
 		}

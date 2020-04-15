@@ -18,7 +18,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gee;
+
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.Settings;
 
@@ -381,7 +383,7 @@ namespace GameHub.Data.Adapters
 						break;
 				}
 
-				return game1.normalized_name.collate(game2.normalized_name);
+				return game1.name_normalized.collate(game2.name_normalized);
 			}
 			return 0;
 		}
@@ -526,10 +528,10 @@ namespace GameHub.Data.Adapters
 
 			if(Tables.Merges.is_game_merged(game) || Tables.Merges.is_game_merged(game2) || Tables.Merges.is_game_merged_as_primary(game2)) return;
 
-			bool name_match_exact = game.normalized_name.casefold() == game2.normalized_name.casefold();
+			bool name_match_exact = game.name_normalized.casefold() == game2.name_normalized.casefold();
 			bool name_match_fuzzy_prefix = game.source != src
-			                  && (Utils.strip_name(game.name, ":", true).casefold().has_prefix(game2.normalized_name.casefold() + ":")
-			                  || Utils.strip_name(game2.name, ":", true).casefold().has_prefix(game.normalized_name.casefold() + ":"));
+			                  && (Utils.strip_name(game.name, ":", true).casefold().has_prefix(game2.name_normalized.casefold() + ":")
+			                  || Utils.strip_name(game2.name, ":", true).casefold().has_prefix(game.name_normalized.casefold() + ":"));
 			if(name_match_exact || name_match_fuzzy_prefix)
 			{
 				debug("[Merge] Merging '%s' (%s) with '%s' (%s)", game.name, game.full_id, game2.name, game2.full_id);
@@ -619,7 +621,7 @@ namespace GameHub.Data.Adapters
 				this.adapter = adapter;
 				this.game = game;
 
-				this.game.tags_update.connect(() => {
+				this.game.notify["tags"].connect(() => {
 					Idle.add(() => {
 						if(grid_card != null) grid_card.changed();
 						if(list_row != null) list_row.changed();

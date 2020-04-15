@@ -188,7 +188,7 @@
 {
 	font-size: 11pt;
 }
-.h4, .category-label
+.h4, .category-label, .bold
 {
 	font-weight: bold;
 }
@@ -642,7 +642,8 @@ dialog .sidebar list
 	border-bottom: 1px shade(@theme_bg_color, 0.7) solid;
 }
 
-.separated-list .list-row:not(:last-child), .separated-list row:not(:last-child)
+.separated-list .list-row:not(:last-child), .separated-list row:not(:last-child),
+.separated-list-all .list-row, .separated-list-all row
 {
 	border-bottom: 1px shade(@theme_bg_color, 0.9) solid;
 }

@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gee;
 
+using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Steam;
 using GameHub.Utils;
 
@@ -126,7 +127,7 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		protected override async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected override async void exec(Traits.SupportsCompatTools runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), "run", file.get_path() };
 			if(file.get_path().down().has_suffix(".msi"))
@@ -134,30 +135,29 @@ namespace GameHub.Data.Compat
 				cmd = { executable.get_path(), "run", "msiexec", "/i", file.get_path() };
 			}
 			var task = Utils.run(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
-			if(runnable is TweakableGame)
-			{
-				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
-			}
+			runnable.cast<Traits.Game.SupportsTweaks>(game => {
+				task.tweaks(game.get_enabled_tweaks(this));
+			});
 			yield task.run_sync_thread();
 		}
 
-		public override File get_default_wineprefix(Runnable runnable)
+		public override File get_default_wineprefix(Traits.SupportsCompatTools runnable)
 		{
-			var install_dir = runnable.install_dir ?? runnable.default_install_dir;
+			var install_dir = runnable.install_dir /*?? runnable.default_install_dir*/;
 
-			var prefix = FSUtils.mkdir(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)/pfx");
+			var prefix = FS.mkdir(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(id)/pfx");
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
+			if(FS.file(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}).dir(install_dir.get_path()).run_sync();
-				FSUtils.rm(dosdevices.get_child("d:").get_path());
+				Utils.run({"bash", "-c", @"mv -f $(FS.GAMEHUB_DIR)/$(id) $(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(id)"}).dir(install_dir.get_path()).run_sync();
+				FS.rm(dosdevices.get_child("d:").get_path());
 			}
 
 			return prefix;
 		}
 
-		public override File get_wineprefix(Runnable runnable)
+		public override File get_wineprefix(Traits.SupportsCompatTools runnable)
 		{
 			var prefix = get_default_wineprefix(runnable);
 
@@ -179,7 +179,7 @@ namespace GameHub.Data.Compat
 			return prefix;
 		}
 
-		protected override string[] prepare_env(Runnable runnable, bool parse_opts=true)
+		protected override string[] prepare_env(Traits.SupportsCompatTools runnable, bool parse_opts=true)
 		{
 			var env = base.prepare_env(runnable, parse_opts);
 
@@ -193,7 +193,7 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEPREFIX", compatdata.get_child("pfx").get_path());
 			}
 
-			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.expand(FSUtils.Paths.Steam.Home));
+			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FS.expand(GameHub.Settings.Paths.Steam.instance.home));
 			env = Environ.set_variable(env, "PROTON_LOG", "1");
 
 			if(parse_opts)
@@ -210,7 +210,7 @@ namespace GameHub.Data.Compat
 			return env;
 		}
 
-		protected override async void wineboot(Runnable runnable, string[]? args=null)
+		protected override async void wineboot(Traits.SupportsCompatTools runnable, string[]? args=null)
 		{
 			if(args == null)
 			{
@@ -220,7 +220,7 @@ namespace GameHub.Data.Compat
 			yield wineutil(runnable, "wineboot", args);
 		}
 
-		protected async void proton_init_prefix(Runnable runnable)
+		protected async void proton_init_prefix(Traits.SupportsCompatTools runnable)
 		{
 			var prefix = get_wineprefix(runnable);
 			if(opt_prefix.file != null && opt_prefix.file.query_exists())

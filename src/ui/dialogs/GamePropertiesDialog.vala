@@ -20,9 +20,9 @@ using Gtk;
 using Gdk;
 using Gee;
 
-
 using GameHub.Data;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -51,7 +51,7 @@ namespace GameHub.UI.Dialogs
 
 		construct
 		{
-			get_style_context().add_class("rounded");
+			/*get_style_context().add_class("rounded");
 			get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 			gravity = Gdk.Gravity.NORTH;
@@ -292,7 +292,7 @@ namespace GameHub.UI.Dialogs
 
 			game.notify["image"].connect(load_images);
 			game.notify["image-vertical"].connect(load_images);
-			load_images();
+			load_images();*/
 
 			show_all();
 		}

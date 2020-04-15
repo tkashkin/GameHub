@@ -22,14 +22,15 @@ using Gee;
 
 using GameHub.Data;
 using GameHub.Data.Tweaks;
+using GameHub.Data.Runnables;
 
 namespace GameHub.UI.Widgets
 {
 	public class TweaksList: ListBox
 	{
-		public TweakableGame? game { get; construct; default = null; }
+		public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
 
-		public TweaksList(TweakableGame? game=null)
+		public TweaksList(Traits.Game.SupportsTweaks? game=null)
 		{
 			Object(game: game, selection_mode: SelectionMode.NONE);
 		}
@@ -57,9 +58,9 @@ namespace GameHub.UI.Widgets
 		private class TweakRow: ListBoxRow
 		{
 			public Tweak tweak { get; construct; }
-			public TweakableGame? game { get; construct; default = null; }
+			public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
 
-			public TweakRow(Tweak tweak, TweakableGame? game=null)
+			public TweakRow(Tweak tweak, Traits.Game.SupportsTweaks? game=null)
 			{
 				Object(tweak: tweak, game: game);
 			}

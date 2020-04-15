@@ -18,18 +18,18 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 
-
 using GameHub.Data;
 using GameHub.Utils;
+using GameHub.Settings;
 using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 {
 	public class Collection: SettingsDialogPage
 	{
-		private FSUtils.Paths.Collection collection;
-		private FSUtils.Paths.Collection.GOG gog;
-		private FSUtils.Paths.Collection.Humble humble;
+		private Paths.Collection collection;
+		private Paths.Collection.GOG gog;
+		private Paths.Collection.Humble humble;
 
 		private FileChooserEntry collection_root;
 
@@ -58,9 +58,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 		construct
 		{
-			collection = FSUtils.Paths.Collection.instance;
-			gog = FSUtils.Paths.Collection.GOG.instance;
-			humble = FSUtils.Paths.Collection.Humble.instance;
+			collection = Paths.Collection.instance;
+			gog = Paths.Collection.GOG.instance;
+			humble = Paths.Collection.Humble.instance;
 
 			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update(); }).get_children().last().data as FileChooserEntry;
 
@@ -103,13 +103,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 		{
 			var game = "Game";
 
-			gog_game_dir.tooltip_text = FSUtils.Paths.Collection.GOG.expand_game_dir(game);
-			gog_installers.tooltip_text = FSUtils.Paths.Collection.GOG.expand_installers(game, null, Platform.CURRENT);
-			gog_dlc.tooltip_text = FSUtils.Paths.Collection.GOG.expand_dlc(game);
-			gog_bonus.tooltip_text = FSUtils.Paths.Collection.GOG.expand_bonus(game);
+			/*gog_game_dir.tooltip_text = FS.Paths.Collection.GOG.expand_game_dir(game);
+			gog_installers.tooltip_text = FS.Paths.Collection.GOG.expand_installers(game, null, Platform.CURRENT);
+			gog_dlc.tooltip_text = FS.Paths.Collection.GOG.expand_dlc(game);
+			gog_bonus.tooltip_text = FS.Paths.Collection.GOG.expand_bonus(game);
 
-			humble_game_dir.tooltip_text = FSUtils.Paths.Collection.Humble.expand_game_dir(game);
-			humble_installers.tooltip_text = FSUtils.Paths.Collection.Humble.expand_installers(game);
+			humble_game_dir.tooltip_text = FS.Paths.Collection.Humble.expand_game_dir(game);
+			humble_installers.tooltip_text = FS.Paths.Collection.Humble.expand_installers(game);*/
 
 			Utils.thread("CollectionDiskUsage", () => {
 				try
@@ -121,7 +121,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 						});
 					};
 					uint64 size, dirs, files;
-					FSUtils.file(collection.root).measure_disk_usage(FileMeasureFlags.NONE, null, callback, out size, out dirs, out files);
+					FS.file(collection.root).measure_disk_usage(FileMeasureFlags.NONE, null, callback, out size, out dirs, out files);
 					callback(true, size, dirs, files);
 				}
 				catch(Error e){}

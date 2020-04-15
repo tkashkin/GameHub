@@ -23,6 +23,7 @@ using Gdk;
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 
 namespace GameHub.UI.Views.GameDetailsView
 {

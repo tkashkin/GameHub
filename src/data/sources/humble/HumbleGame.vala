@@ -17,30 +17,41 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
 using GameHub.Utils;
+using GameHub.Utils.FS;
 
 namespace GameHub.Data.Sources.Humble
 {
-	public class HumbleGame: Game, TweakableGame
+	public class HumbleGame: Game,
+		Traits.HasExecutableFile, Traits.SupportsCompatTools,
+		Traits.Game.SupportsOverlays, Traits.Game.SupportsTweaks
 	{
-		public string[]? tweaks { get; set; default = null; }
+		// Traits.HasExecutableFile
+		public override string? executable_path { owned get; set; }
+		public override string? work_dir_path { owned get; set; }
+		public override string? arguments { owned get; set; }
+
+		// Traits.SupportsCompatTools
+		public override string? compat_tool { get; set; }
+		public override string? compat_tool_settings { get; set; }
+
+		// Traits.Game.SupportsOverlays
+		public override ArrayList<Traits.Game.SupportsOverlays.Overlay> overlays { get; set; default = new ArrayList<Traits.Game.SupportsOverlays.Overlay>(); }
+		protected override FSOverlay? fs_overlay { get; set; }
+		protected override string? fs_overlay_last_options { get; set; }
+
+		// Traits.Game.SupportsTweaks
+		public override string[]? tweaks { get; set; default = null; }
 
 		public string order_id;
 
 		private bool game_info_updating = false;
 		private bool game_info_updated = false;
 		private bool game_info_refreshed = false;
-
-		public ArrayList<Runnable.Installer>? installers { get; protected set; default = new ArrayList<Runnable.Installer>(); }
-
-		public override File? default_install_dir
-		{
-			owned get
-			{
-				return FSUtils.file(FSUtils.Paths.Humble.Games, escaped_name);
-			}
-		}
 
 		public HumbleGame(Humble src, string order, Json.Node json_node)
 		{
@@ -104,50 +115,11 @@ namespace GameHub.Data.Sources.Humble
 		public HumbleGame.from_db(Humble src, Sqlite.Statement s)
 		{
 			source = src;
-			id = Tables.Games.ID.get(s);
-			name = Tables.Games.NAME.get(s);
-			info = Tables.Games.INFO.get(s);
-			info_detailed = Tables.Games.INFO_DETAILED.get(s);
-			icon = Tables.Games.ICON.get(s);
-			image = Tables.Games.IMAGE.get(s);
-			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
-			executable_path = Tables.Games.EXECUTABLE.get(s);
-			work_dir_path = Tables.Games.WORK_DIR.get(s);
-			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
-			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
-			arguments = Tables.Games.ARGUMENTS.get(s);
-			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
-			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
-			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
-			image_vertical = Tables.Games.IMAGE_VERTICAL.get(s);
 
-			platforms.clear();
-			var pls = Tables.Games.PLATFORMS.get(s).split(",");
-			foreach(var pl in pls)
-			{
-				foreach(var p in Platform.PLATFORMS)
-				{
-					if(pl == p.id())
-					{
-						platforms.add(p);
-						break;
-					}
-				}
-			}
-
-			tags.clear();
-			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
-			foreach(var tid in tag_ids)
-			{
-				foreach(var t in Tables.Tags.TAGS)
-				{
-					if(tid == t.id)
-					{
-						if(!tags.contains(t)) tags.add(t);
-						break;
-					}
-				}
-			}
+			dbinit(s);
+			dbinit_executable(s);
+			dbinit_compat(s);
+			dbinit_tweaks(s);
 
 			var json_node = Parser.parse_json(info_detailed);
 			if(json_node != null && json_node.get_node_type() == Json.NodeType.OBJECT)
@@ -157,12 +129,6 @@ namespace GameHub.Data.Sources.Humble
 				{
 					order_id = json.get_string_member("order");
 				}
-			}
-
-			var tweaks_string = Tables.Games.TWEAKS.get(s);
-			if(tweaks_string != null)
-			{
-				tweaks = tweaks_string.split(",");
 			}
 
 			mount_overlays.begin();
@@ -185,9 +151,9 @@ namespace GameHub.Data.Sources.Humble
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
 
-			installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(name));
+			//installers_dir = FS.file(FS.Paths.Collection.Humble.expand_installers(name));
 
-			update_version();
+			load_version();
 		}
 
 		public override async void update_game_info()
@@ -281,7 +247,9 @@ namespace GameHub.Data.Sources.Humble
 
 		private async void update_installers()
 		{
-			if(installers.size > 0) return;
+			if(installers != null && installers.size > 0) return;
+
+			installers = new ArrayList<Runnables.Tasks.Install.Installer>();
 
 			var product_node = Parser.parse_json(info);
 			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return;
@@ -395,20 +363,12 @@ namespace GameHub.Data.Sources.Humble
 			return refresh;
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
-		{
-			yield update_installers();
-			if(installers.size < 1) return;
-			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
-			yield;
-		}
-
 		public override async void uninstall()
 		{
 			if(install_dir != null && install_dir.query_exists())
 			{
 				yield umount_overlays();
-				FSUtils.rm(install_dir.get_path(), "", "-rf");
+				FS.rm(install_dir.get_path(), "", "-rf");
 				update_status();
 				if((install_dir == null || !install_dir.query_exists()) && (executable == null || !executable.query_exists()))
 				{
@@ -420,27 +380,24 @@ namespace GameHub.Data.Sources.Humble
 			}
 		}
 
-		public class Installer: Runnable.DownloadableInstaller
+		public class Installer: DownloadableInstaller
 		{
 			private File? installers_dir;
 
-			public string dl_name;
 			public string? dl_id;
-			public Runnable.DownloadableInstaller.Part part;
-
-			public override string name { owned get { return dl_name; } }
+			public DownloadableInstaller.Part part;
 
 			public Installer(HumbleGame game, string machine_name, string? download_identifier, Platform platform, Json.Object download)
 			{
 				id = machine_name;
 				this.platform = platform;
 				dl_id = download_identifier;
-				dl_name = download.has_member("name") ? download.get_string_member("name") : "";
+				name = download.has_member("name") ? download.get_string_member("name") : game.name;
 				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
 				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
 
-				installers_dir = FSUtils.file(FSUtils.Paths.Collection.Humble.expand_installers(game.name, platform)) ?? game.installers_dir;
+				//installers_dir = FS.file(FS.Paths.Collection.Humble.expand_installers(game.name, platform)) ?? game.installers_dir;
 
 				if(installers_dir == null) return;
 
@@ -466,7 +423,7 @@ namespace GameHub.Data.Sources.Humble
 					hash_type = ChecksumType.SHA256;
 				}
 
-				part = new Runnable.DownloadableInstaller.Part(id, url, full_size, remote, local, hash, hash_type);
+				part = new DownloadableInstaller.Part(id, url, full_size, remote, local, hash, hash_type);
 				parts.add(part);
 			}
 

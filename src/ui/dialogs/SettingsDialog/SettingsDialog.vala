@@ -37,7 +37,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		public SettingsDialog(string page="ui/appearance")
 		{
-			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Settings"));
+			Object(transient_for: Windows.MainWindow.instance, resizable: false, use_header_bar: 1, title: _("Settings"));
 			default_page = page;
 		}
 
@@ -93,8 +93,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			add_page("sources/humble", new Pages.Sources.Humble(this));
 			add_page("sources/itch", new Pages.Sources.Itch(this));
 
-			add_page("emulators/retroarch", new Pages.Emulators.RetroArch(this));
-			add_page("emulators/custom", new Pages.Emulators.Emulators(this));
+			/*add_page("emulators/retroarch", new Pages.Emulators.RetroArch(this));
+			add_page("emulators/custom", new Pages.Emulators.Emulators(this));*/
 
 			add_page("providers/providers", new Pages.Providers.Providers(this));
 
@@ -148,8 +148,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		public void update_games_dir_space_message()
 		{
-			var paths = FSUtils.Paths.Settings.instance;
-			games_dir_space_msg_shown = " " in paths.gog_games || " " in paths.humble_games;
+			/*var paths = FS.Paths.Settings.instance;
+			games_dir_space_msg_shown = " " in paths.gog_games || " " in paths.humble_games;*/
 			update_messages();
 		}
 
