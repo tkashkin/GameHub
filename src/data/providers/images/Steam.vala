@@ -164,7 +164,11 @@ namespace GameHub.Data.Providers.Images
 				try
 				{
 					// Get modification time so we refresh only once a day
-					modification_date = cache_file.query_info("*", NONE).get_modification_date_time();
+					#if GLIB_2_62
+					modification_date = cache_file.query_info("*", FileQueryInfoFlags.NONE).get_modification_date_time();
+					#else
+					modification_date = new DateTime.from_timeval_utc(cache_file.query_info("*", FileQueryInfoFlags.NONE).get_modification_time());
+					#endif
 				}
 				catch(Error e)
 				{
