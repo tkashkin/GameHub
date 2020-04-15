@@ -86,6 +86,7 @@ sources = [
 	'data/providers/Provider.vala',
 	'data/providers/ImagesProvider.vala',
 	'data/providers/DataProvider.vala',
+	'data/providers/images/Steam.vala',
 	'data/providers/images/SteamGridDB.vala',
 	'data/providers/images/JinxSGVI.vala',
 	'data/providers/data/IGDB.vala',

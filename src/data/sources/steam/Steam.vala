@@ -319,6 +319,45 @@ namespace GameHub.Data.Sources.Steam
 			return pkgs;
 		}
 
+		public static async string? get_appid_from_name(string game_name)
+		{
+			if(instance == null) return null;
+
+			instance.load_appinfo();
+
+			if(instance.appinfo == null) return null;
+
+			foreach(var app_node in instance.appinfo.nodes.values)
+			{
+				if(app_node != null && app_node is BinaryVDF.ListNode)
+				{
+					var app = (BinaryVDF.ListNode) app_node;
+					var common_node = app.get_nested({"appinfo", "common"});
+
+					if(common_node != null && common_node is BinaryVDF.ListNode)
+					{
+						var common = (BinaryVDF.ListNode) common_node;
+
+						var name_node = common.get("name");
+						var type_node = common.get("type");
+
+						if(name_node != null && name_node is BinaryVDF.StringNode && type_node != null && type_node is BinaryVDF.StringNode)
+						{
+							var name = ((BinaryVDF.StringNode) name_node).value;
+							var type = ((BinaryVDF.StringNode) type_node).value;
+
+							if(type != null && type.down() == "game" && name != null && name.down() == game_name.down())
+							{
+								return app.key;
+							}
+						}
+					}
+				}
+			}
+
+			return null;
+		}
+
 		public static void install_app(string appid)
 		{
 			Utils.open_uri(@"steam://install/$(appid)");

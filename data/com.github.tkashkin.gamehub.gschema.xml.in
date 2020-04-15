@@ -320,6 +320,13 @@
 			</key>
 		</schema>
 
+		<schema path="@SCHEMA_PATH@/providers/images/steam/" id="@SCHEMA_ID@.providers.images.steam">
+			<key name="enabled" type="b">
+				<default>true</default>
+				<summary>Is Steam image search enabled</summary>
+			</key>
+		</schema>
+
 	<!-- Providers / Data / IGDB -->
 		<enum id="@SCHEMA_ID@.providers.data.igdb.preferred-description">
 			<value nick="Game" value="0" />
