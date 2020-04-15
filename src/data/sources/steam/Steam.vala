@@ -476,6 +476,15 @@ namespace GameHub.Data.Sources.Steam
 
 			var tags_node = new BinaryVDF.ListNode.node("tags");
 			tags_node.add_node(new BinaryVDF.StringNode.node("0", "GameHub"));
+
+			foreach(var tag in game.tags)
+			{
+				if(tag.removable)
+				{
+					tags_node.add_node(new BinaryVDF.StringNode.node((game.tags.index_of(tag) + 1).to_string(), tag.name));
+				}
+			}
+
 			game_node.add_node(tags_node);
 
 			root_node.add_node(game_node);
