@@ -39,6 +39,7 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field GAME_EXECUTABLE_PATTERN;
 		public static Table.Field GAME_IMAGE_PATTERN;
 		public static Table.Field GAME_ICON_PATTERN;
+		public static Table.Field WORK_DIR;
 
 		public Emulators()
 		{
@@ -54,6 +55,7 @@ namespace GameHub.Data.DB.Tables
 			GAME_EXECUTABLE_PATTERN  = f(7);
 			GAME_IMAGE_PATTERN       = f(8);
 			GAME_ICON_PATTERN        = f(9);
+			WORK_DIR                 = f(10);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -82,6 +84,10 @@ namespace GameHub.Data.DB.Tables
 						db.exec("ALTER TABLE `emulators` ADD `game_image_pattern` string");
 						db.exec("ALTER TABLE `emulators` ADD `game_icon_pattern` string");
 						break;
+
+					case 10:
+						db.exec("ALTER TABLE `emulators` ADD `work_dir` string");
+						break;
 				}
 			}
 		}
@@ -102,8 +108,9 @@ namespace GameHub.Data.DB.Tables
 					`arguments`,
 					`game_executable_pattern`,
 					`game_image_pattern`,
-					`game_icon_pattern`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`game_icon_pattern`,
+					`work_dir`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -121,6 +128,7 @@ namespace GameHub.Data.DB.Tables
 			GAME_EXECUTABLE_PATTERN.bind(s, emu.game_executable_pattern);
 			GAME_IMAGE_PATTERN.bind(s, emu.game_image_pattern);
 			GAME_ICON_PATTERN.bind(s, emu.game_icon_pattern);
+			WORK_DIR.bind(s, emu.work_dir == null || !emu.work_dir.query_exists() ? null : emu.work_dir.get_path());
 
 			res = s.step();
 

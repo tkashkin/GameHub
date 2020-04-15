@@ -13,12 +13,26 @@ foreach i : icon_sizes
 	)
 endforeach
 
-install_data(
-	meson.project_name() + '.gschema.xml',
+gschema_conf = configuration_data()
+gschema_conf.set('SCHEMA_ID', meson.project_name())
+gschema_conf.set('SCHEMA_PATH', '/' + ('/'.join(meson.project_name().split('.')))) # meson.project_name().replace('.', '/')
+gschema_conf.set('PREF_API_KEY_STEAM', get_option('api_key_steam'))
+gschema_conf.set('PREF_API_KEY_ITCH', get_option('api_key_itch'))
+gschema_conf.set('PREF_API_KEY_IGDB', get_option('api_key_igdb'))
+gschema_conf.set('PREF_API_KEY_STEAMGRIDDB', get_option('api_key_steamgriddb'))
+gschema_conf.set('PREF_LIBRETRO_CORE_DIR', get_option('libretro_core_dir'))
+gschema_conf.set('PREF_LIBRETRO_CORE_INFO_DIR', get_option('libretro_core_info_dir'))
+
+configure_file(
+	input: meson.project_name() + '.gschema.xml.in',
+	output: meson.project_name() + '.gschema.xml',
+	configuration: gschema_conf,
+	install: true,
 	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'glib-2.0', 'schemas')
 )
 
 install_subdir('share/compat', install_dir: join_paths(get_option('prefix'), get_option('datadir'), meson.project_name()))
+install_subdir('share/tweaks', install_dir: join_paths(get_option('prefix'), get_option('datadir'), meson.project_name()))
 
 i18n.merge_file(
 	input: meson.project_name() + '.desktop.in',

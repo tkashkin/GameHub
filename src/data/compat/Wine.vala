@@ -62,11 +62,7 @@ namespace GameHub.Data.Compat
 			install_options = {
 				opt_prefix,
 				opt_env,
-				install_opt_innosetup_args,
-				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
-				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), false),
-				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), false),
-				new CompatTool.BoolOption("/NOGUI", _("No GUI"), false)
+				install_opt_innosetup_args
 			};
 
 			if(installed)
@@ -147,7 +143,7 @@ namespace GameHub.Data.Compat
 		{
 			if(!can_run(runnable)) return;
 			yield wineboot(runnable);
-			yield exec(runnable, runnable.executable, runnable.install_dir, Utils.parse_args(runnable.arguments));
+			yield exec(runnable, runnable.executable, runnable.work_dir, Utils.parse_args(runnable.arguments));
 		}
 
 		public override async void run_action(Runnable runnable, Runnable.RunnableAction action)
@@ -160,7 +156,7 @@ namespace GameHub.Data.Compat
 		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
 		{
 			if(!can_run(emu)) return;
-			var dir = game != null && launch_in_game_dir ? game.install_dir : emu.install_dir;
+			var dir = game != null && launch_in_game_dir ? game.work_dir : emu.work_dir;
 			yield exec(emu, emu.executable, dir, emu.get_args(game));
 		}
 
@@ -171,7 +167,12 @@ namespace GameHub.Data.Compat
 			{
 				cmd = { executable.get_path(), "msiexec", "/i", file.get_path() };
 			}
-			yield Utils.run_thread(combine_cmd_with_args(cmd, runnable, args), dir.get_path(), prepare_env(runnable));
+			var task = Utils.run(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
+			if(runnable is TweakableGame)
+			{
+				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
+			}
+			yield task.run_sync_thread();
 		}
 
 		public virtual File get_default_wineprefix(Runnable runnable)
@@ -183,7 +184,7 @@ namespace GameHub.Data.Compat
 
 			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(binary)_$(arch)"}, install_dir.get_path());
+				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(binary)_$(arch)"}).dir(install_dir.get_path()).run_sync();
 				FSUtils.rm(dosdevices.get_child("d:").get_path());
 			}
 
@@ -201,15 +202,52 @@ namespace GameHub.Data.Compat
 
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists())
+			if(dosdevices.get_child("c:").query_exists() && dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
 			{
-				if(dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
+				var has_symlink = false;
+				for(var letter = 'd'; letter <= 'y'; letter++)
 				{
-					Utils.run({"ln", "-nsf", "../../../../", "d:"}, dosdevices.get_path());
+					if(is_symlink_and_correct(dosdevices.get_child(@"$(letter):")))
+					{
+						has_symlink = true;
+						break;
+					}
+				}
+
+				for(var letter = 'd'; has_symlink == false && letter <= 'y'; letter++)
+				{
+					if(!dosdevices.get_child(@"$(letter):").query_exists() && !dosdevices.get_child(@"$(letter)::").query_exists())
+					{
+						Utils.run({"ln", "-nsf", "../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync();
+						break;
+					}
 				}
 			}
 
 			return prefix;
+		}
+
+		private bool is_symlink_and_correct(File symlink)
+		{
+			if(!symlink.query_exists())
+			{
+				return false;
+			}
+
+			try
+			{
+				var symlink_info = symlink.query_info("*", NONE);
+				if(symlink_info == null || !symlink_info.get_is_symlink() || symlink_info.get_symlink_target() != "../../../../")
+				{
+					return false;
+				}
+			}
+			catch (Error e)
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		public override File get_install_root(Runnable runnable)
@@ -280,17 +318,17 @@ namespace GameHub.Data.Compat
 				}
 			}
 
-			yield Utils.run_thread(cmd, runnable.install_dir.get_path(), prepare_env(runnable));
+			yield Utils.run(cmd).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
 		}
 
 		protected async void winetricks(Runnable runnable)
 		{
-			yield Utils.run_thread({ "winetricks" }, runnable.install_dir.get_path(), prepare_env(runnable));
+			yield Utils.run({"winetricks"}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
 		}
 
 		public async string convert_path(Runnable runnable, File path)
 		{
-			var win_path = (yield Utils.run_thread({ wine_binary.get_path(), "winepath", "-w", path.get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true)).strip();
+			var win_path = (yield Utils.run({wine_binary.get_path(), "winepath", "-w", path.get_path()}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).log(false).run_sync_thread(true)).output.strip();
 			debug("[Wine.convert_path] '%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
 		}

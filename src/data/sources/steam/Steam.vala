@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 using GameHub.Data.DB;
 using GameHub.Utils;
+using ZLib.Utility;
 
 namespace GameHub.Data.Sources.Steam
 {
@@ -259,10 +260,33 @@ namespace GameHub.Data.Sources.Steam
 				var response = Parser.json_object(root, {"response"});
 				var json_games = response != null && response.has_member("games") ? response.get_array_member("games") : null;
 
-				add_games.begin(json_games, game_loaded, (obj, res) => {
-					add_games.end(res);
-					Idle.add(load_games.callback);
-				});
+				if(json_games != null)
+				{
+					foreach(var g in json_games.get_elements())
+					{
+						var game = new SteamGame(this, g);
+						bool is_new_game = !_games.contains(game);
+						if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(game)))
+						{
+							_games.add(game);
+							if(game_loaded != null)
+							{
+								game_loaded(game, false);
+							}
+						}
+						if(is_new_game)
+						{
+							games_count++;
+							game.save();
+						}
+						else if(g != null && g.get_node_type() == Json.NodeType.OBJECT)
+						{
+							_games.get(_games.index_of(game)).playtime_source = g.get_object().get_int_member("playtime_forever");
+						}
+					}
+				}
+
+				Idle.add(load_games.callback);
 			});
 
 			yield;
@@ -270,35 +294,6 @@ namespace GameHub.Data.Sources.Steam
 			watch_client_registry();
 
 			return _games;
-		}
-
-		private async void add_games(Json.Array json_games, FutureResult2<Game, bool>? game_loaded = null)
-		{
-			if(json_games != null)
-			{
-				foreach(var g in json_games.get_elements())
-				{
-					var game = new SteamGame(this, g);
-					bool is_new_game = !_games.contains(game);
-					if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(game)))
-					{
-						_games.add(game);
-						if(game_loaded != null)
-						{
-							game_loaded(game, false);
-						}
-					}
-					if(is_new_game)
-					{
-						games_count++;
-						game.save();
-					}
-					else if(g != null && g.get_node_type() == Json.NodeType.OBJECT)
-					{
-						_games.get(_games.index_of(game)).playtime_source = g.get_object().get_int_member("playtime_forever");
-					}
-				}
-			}
 		}
 
 		public static BinaryVDF.ListNode? get_appinfo(string appid)
@@ -322,6 +317,45 @@ namespace GameHub.Data.Sources.Steam
 				}
 			}
 			return pkgs;
+		}
+
+		public static async string? get_appid_from_name(string game_name)
+		{
+			if(instance == null) return null;
+
+			instance.load_appinfo();
+
+			if(instance.appinfo == null) return null;
+
+			foreach(var app_node in instance.appinfo.nodes.values)
+			{
+				if(app_node != null && app_node is BinaryVDF.ListNode)
+				{
+					var app = (BinaryVDF.ListNode) app_node;
+					var common_node = app.get_nested({"appinfo", "common"});
+
+					if(common_node != null && common_node is BinaryVDF.ListNode)
+					{
+						var common = (BinaryVDF.ListNode) common_node;
+
+						var name_node = common.get("name");
+						var type_node = common.get("type");
+
+						if(name_node != null && name_node is BinaryVDF.StringNode && type_node != null && type_node is BinaryVDF.StringNode)
+						{
+							var name = ((BinaryVDF.StringNode) name_node).value;
+							var type = ((BinaryVDF.StringNode) type_node).value;
+
+							if(type != null && type.down() == "game" && name != null && name.down() == game_name.down())
+							{
+								return app.key;
+							}
+						}
+					}
+				}
+			}
+
+			return null;
 		}
 
 		public static void install_app(string appid)
@@ -452,9 +486,13 @@ namespace GameHub.Data.Sources.Steam
 
 			var root_node = vdf.read() as BinaryVDF.ListNode;
 
-			if(root_node == null)
+			if(root_node.get("shortcuts") == null)
 			{
 				root_node = new BinaryVDF.ListNode.node("shortcuts");
+			}
+			else
+			{
+				root_node = root_node.get("shortcuts") as BinaryVDF.ListNode;
 			}
 
 			var game_node = new BinaryVDF.ListNode.node(root_node.nodes.size.to_string());
@@ -476,8 +514,30 @@ namespace GameHub.Data.Sources.Steam
 				game_node.add_node(new BinaryVDF.StringNode.node("icon", cached.get_path()));
 			}
 
+			if(game.image_vertical != null)
+			{
+				try
+				{
+					var cached = ImageCache.local_file(game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
+					// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
+					uint64 id = crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000;
+					var dest = FSUtils.file(get_userdata_dir().get_child("config").get_child("grid").get_path(), id.to_string() + "p.png");
+					cached.copy(dest, NONE);
+				}
+				catch (Error e) {}
+			}
+
 			var tags_node = new BinaryVDF.ListNode.node("tags");
 			tags_node.add_node(new BinaryVDF.StringNode.node("0", "GameHub"));
+
+			foreach(var tag in game.tags)
+			{
+				if(tag.removable)
+				{
+					tags_node.add_node(new BinaryVDF.StringNode.node((game.tags.index_of(tag) + 1).to_string(), tag.name));
+				}
+			}
+
 			game_node.add_node(tags_node);
 
 			root_node.add_node(game_node);

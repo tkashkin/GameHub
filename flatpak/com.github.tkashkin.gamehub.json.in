@@ -72,7 +72,7 @@
 			"buildsystem": "meson",
 			"config-opts": [
 				"--buildtype=debug",
-				"-Dflatpak=true",
+				"-Dpackage=flatpak",
 				"-Dgit_branch=$BRANCH",
 				"-Dgit_commit=$COMMIT",
 				"-Dgit_commit_short=$COMMIT_SHORT"

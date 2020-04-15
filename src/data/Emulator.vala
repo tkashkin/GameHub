@@ -28,6 +28,7 @@ namespace GameHub.Data
 		public signal void removed();
 
 		public override File? executable { owned get; set; }
+		public override File? work_dir { owned get; set; }
 		public Installer? installer;
 
 		public string? game_executable_pattern { get; set; }
@@ -41,6 +42,7 @@ namespace GameHub.Data
 			this.name = name;
 
 			install_dir = dir;
+			work_dir = dir;
 
 			executable = exec;
 			arguments = args;
@@ -56,6 +58,7 @@ namespace GameHub.Data
 			id = Tables.Emulators.ID.get(s);
 			name = Tables.Emulators.NAME.get(s);
 			install_dir = FSUtils.file(Tables.Emulators.INSTALL_PATH.get(s));
+			work_dir = FSUtils.file(Tables.Emulators.WORK_DIR.get(s));
 			executable = FSUtils.file(Tables.Emulators.EXECUTABLE.get(s));
 			compat_tool = Tables.Emulators.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Emulators.COMPAT_TOOL_SETTINGS.get(s);
@@ -96,26 +99,10 @@ namespace GameHub.Data
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			update_status();
-
 			if(installer == null || install_dir == null) return;
-
 			var installers = new ArrayList<Runnable.Installer>();
 			installers.add(installer);
-
-			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode);
-
-			wnd.cancelled.connect(() => Idle.add(install.callback));
-
-			wnd.install.connect((installer, dl_only, tool) => {
-				installer.install.begin(this, dl_only, tool, (obj, res) => {
-					installer.install.end(res);
-					Idle.add(install.callback);
-				});
-			});
-
-			wnd.show_all();
-			wnd.present();
-
+			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;
 		}
 
@@ -188,7 +175,7 @@ namespace GameHub.Data
 			{
 				Runnable.IsLaunched = is_running = true;
 
-				yield Utils.run_thread(get_args(null, executable), executable.get_parent().get_path(), null, true);
+				yield Utils.run(get_args(null, executable)).dir(work_dir.get_path()).override_runtime(true).run_sync_thread();
 
 				Timeout.add_seconds(1, () => {
 					Runnable.IsLaunched = is_running = false;
@@ -215,8 +202,14 @@ namespace GameHub.Data
 					game.update_status();
 				}
 
-				var dir = game != null && launch_in_game_dir ? game.install_dir : install_dir;
-				yield Utils.run_thread(get_args(game, executable), dir.get_path(), null, true);
+				var dir = game != null && launch_in_game_dir ? game.work_dir : work_dir;
+
+				var task = Utils.run(get_args(game, executable)).dir(dir.get_path()).override_runtime(true);
+				if(game != null && game is TweakableGame)
+				{
+					task.tweaks(((TweakableGame) game).get_enabled_tweaks());
+				}
+				yield task.run_sync_thread();
 
 				Timeout.add_seconds(1, () => {
 					Runnable.IsLaunched = is_running = false;
@@ -245,7 +238,7 @@ namespace GameHub.Data
 			return str_hash(emu.id);
 		}
 
-		public class Installer: Runnable.Installer
+		public class Installer: Runnable.FileInstaller
 		{
 			private string emu_name;
 			public override string name { owned get { return emu_name; } }
@@ -255,7 +248,7 @@ namespace GameHub.Data
 				emu_name = emu.name;
 				id = "installer";
 				platform = installer.get_path().down().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
-				parts.add(new Runnable.Installer.Part("installer", installer.get_uri(), full_size, installer, installer));
+				file = installer;
 			}
 		}
 	}

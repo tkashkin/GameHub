@@ -22,8 +22,10 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.GOG
 {
-	public class GOGGame: Game
+	public class GOGGame: Game, TweakableGame
 	{
+		public string[]? tweaks { get; set; default = null; }
+
 		public ArrayList<Runnable.Installer>? installers { get; protected set; default = new ArrayList<Runnable.Installer>(); }
 		public ArrayList<BonusContent>? bonus_content { get; protected set; default = new ArrayList<BonusContent>(); }
 		public ArrayList<DLC>? dlc { get; protected set; default = new ArrayList<DLC>(); }
@@ -88,6 +90,7 @@ namespace GameHub.Data.Sources.GOG
 
 			install_dir = null;
 			executable_path = "$game_dir/start.sh";
+			work_dir_path = "$game_dir";
 
 			mount_overlays.begin();
 			update_status();
@@ -104,6 +107,7 @@ namespace GameHub.Data.Sources.GOG
 			image = Tables.Games.IMAGE.get(s);
 			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
 			executable_path = Tables.Games.EXECUTABLE.get(s);
+			work_dir_path = Tables.Games.WORK_DIR.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
@@ -138,6 +142,12 @@ namespace GameHub.Data.Sources.GOG
 						break;
 					}
 				}
+			}
+
+			var tweaks_string = Tables.Games.TWEAKS.get(s);
+			if(tweaks_string != null)
+			{
+				tweaks = tweaks_string.split(",");
 			}
 
 			mount_overlays.begin();
@@ -192,12 +202,6 @@ namespace GameHub.Data.Sources.GOG
 				icon = images.get_string_member("icon");
 				if(icon != null) icon = "https:" + icon;
 				else icon = image;
-			}
-
-			if(game_info_updated)
-			{
-				game_info_updating = false;
-				return;
 			}
 
 			is_installable = root != null && root.get_node_type() == Json.NodeType.OBJECT
@@ -273,7 +277,7 @@ namespace GameHub.Data.Sources.GOG
 				{
 					var d = new GOGGame.DLC(this, dlc_json);
 					dlc.add(d);
-					yield d.update_game_info();
+					yield d.update_downloads_info();
 				}
 			}
 
@@ -308,38 +312,8 @@ namespace GameHub.Data.Sources.GOG
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			yield update_game_info();
-
 			if(installers == null || installers.size < 1) return;
-
-			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode);
-
-			wnd.cancelled.connect(() => Idle.add(install.callback));
-
-			wnd.install.connect((installer, dl_only, tool) => {
-				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-
-				if(installer.parts.size > 0)
-				{
-					FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
-				}
-
-				installer.install.begin(this, dl_only, tool, (obj, res) => {
-					installer.install.end(res);
-					Idle.add(install.callback);
-				});
-			});
-
-			wnd.import.connect(() => {
-				import();
-				Idle.add(install.callback);
-			});
-
-			if(install_mode == Runnable.Installer.InstallMode.INTERACTIVE)
-			{
-				wnd.show_all();
-				wnd.present();
-			}
-
+			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;
 		}
 
@@ -369,7 +343,7 @@ namespace GameHub.Data.Sources.GOG
 				{
 					uninstaller = FSUtils.expand(install_dir.get_path(), uninstaller);
 					debug("[GOGGame] Running uninstaller '%s'...", uninstaller);
-					yield Utils.run_thread({uninstaller, "--noprompt", "--force"}, null, null, true);
+					yield Utils.run({uninstaller, "--noprompt", "--force"}).override_runtime(true).run_sync_thread();
 				}
 				else
 				{
@@ -388,7 +362,7 @@ namespace GameHub.Data.Sources.GOG
 
 		public override void update_status()
 		{
-			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
+			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.Download.State.CANCELLED) return;
 
 			var state = Game.State.UNINSTALLED;
 
@@ -594,7 +568,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 		}
 
-		public class Installer: Runnable.Installer
+		public class Installer: Runnable.DownloadableInstaller
 		{
 			private GOGGame game;
 			private Json.Object json;
@@ -667,7 +641,7 @@ namespace GameHub.Data.Sources.GOG
 									var checksum_url = root.get_string_member("checksum");
 									var remote = File.new_for_uri(url);
 
-									var local = installers_dir.get_child("gog_" + game.id + "_" + this.id + "_" + id);
+									string? local_filename = null;
 
 									string? hash = null;
 									var hash_type = ChecksumType.MD5;
@@ -679,12 +653,22 @@ namespace GameHub.Data.Sources.GOG
 										if(checksum_file_node != null)
 										{
 											hash = checksum_file_node->get_prop("md5");
+											local_filename = checksum_file_node->get_prop("name");
 										}
 
 										delete checksum_root;
 									}
 
-									parts.add(new Runnable.Installer.Part(id, url, size, remote, local, hash, hash_type));
+									if(local_filename == null && "/namespaces/website/download?path=" in url)
+									{
+										var remote_path_encoded = url.split("/namespaces/website/download?path=")[1].split("&")[0];
+										var remote_path = Uri.unescape_string(remote_path_encoded);
+										local_filename = File.new_for_path(remote_path).get_basename();
+									}
+
+									var local = installers_dir.get_child(local_filename ?? "gog_" + game.id + "_" + this.id + "_" + id);
+
+									parts.add(new Runnable.DownloadableInstaller.Part(id, url, size, remote, local, hash, hash_type));
 								}
 							}
 
@@ -744,11 +728,8 @@ namespace GameHub.Data.Sources.GOG
 					? runnable.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged")
 					: runnable.install_dir;
 				if(dir == null || !dir.query_exists()) return null;
-				var p = path.replace("\\", "/").strip();
-				if(p.length == 0)
-				{
-					return dir;
-				}
+				var p = path.replace("//", "/").replace("\\", "/").strip();
+				if(p.length == 0) return dir;
 				return FSUtils.find_case_insensitive(dir, p);
 			}
 		}
@@ -818,7 +799,7 @@ namespace GameHub.Data.Sources.GOG
 				size = json.get_int_member("total_size");
 				dl_info = new Downloader.DownloadInfo(text, game.name, game.icon, null, null, icon);
 
-				filename = "gog_" + game.id + "_bonus_" + id;
+				filename = @"gog_$(game.id)_bonus_$(id)";
 				if(bonus_map != null && bonus_map.has_member(id))
 				{
 					filename = bonus_map.get_string_member(id);
@@ -829,6 +810,8 @@ namespace GameHub.Data.Sources.GOG
 
 			public async File? download()
 			{
+				if(game.bonus_content_dir == null) return null;
+
 				Json.Node? root_node = null;
 
 				while(true)
@@ -848,18 +831,26 @@ namespace GameHub.Data.Sources.GOG
 				var root = root_node.get_object();
 				if(root == null || !root.has_member("downlink")) return null;
 
-				var link = root.get_string_member("downlink");
-				var remote = File.new_for_uri(link);
+				var url = root.get_string_member("downlink");
+				var checksum_url = root.get_string_member("checksum");
+				var remote = File.new_for_uri(url);
 
-				if(game.bonus_content_dir == null) return null;
+				if(filename == @"gog_$(game.id)_bonus_$(id)" && "/namespaces/website/download?path=" in url)
+				{
+					var remote_path_encoded = url.split("/namespaces/website/download?path=")[1].split("&")[0];
+					var remote_path = Uri.unescape_string(remote_path_encoded);
+					filename = File.new_for_path(remote_path).get_basename();
+				}
 
-				var local = game.bonus_content_dir.get_child(filename);
+				warning("[filename] %s", filename);
 
 				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
 				FSUtils.mkdir(game.bonus_content_dir.get_path());
 
+				var local = game.bonus_content_dir.get_child(filename);
+
 				status = new BonusContent.Status(BonusContent.State.DOWNLOADING, null);
-				var ds_id = Downloader.get_instance().download_started.connect(dl => {
+				var ds_id = Downloader.download_manager().file_download_started.connect(dl => {
 					if(dl.remote != remote) return;
 					status = new BonusContent.Status(BonusContent.State.DOWNLOADING, dl);
 					dl.status_change.connect(s => {
@@ -871,11 +862,11 @@ namespace GameHub.Data.Sources.GOG
 
 				try
 				{
-					downloaded_file = yield Downloader.download(remote, local, dl_info, true, false);
+					downloaded_file = yield Downloader.download_file(remote, local, dl_info, true, false);
 				}
 				catch(Error e){}
 
-				Downloader.get_instance().disconnect(ds_id);
+				Downloader.download_manager().disconnect(ds_id);
 
 				save_filename();
 
@@ -975,13 +966,25 @@ namespace GameHub.Data.Sources.GOG
 			{
 				base(game.source as GOG, json_node);
 
+				icon = game.icon;
 				image = game.image;
 
 				install_dir = game.install_dir;
+				work_dir = game.work_dir;
 				executable = game.executable;
+
+				platforms = game.platforms;
 
 				this.game = game;
 				update_status();
+			}
+
+			// hack to parse installers/downloads fast, but allow next updates to fetch less important data
+			public async void update_downloads_info()
+			{
+				info_detailed = info;
+				yield update_game_info();
+				info_detailed = null;
 			}
 
 			public override void update_status()
@@ -997,17 +1000,17 @@ namespace GameHub.Data.Sources.GOG
 
 				yield game.umount_overlays();
 				game.enable_overlays();
-				var dlc_overlay = new Game.Overlay(game, "dlc_" + id, "DLC: " + name, true);
+				var overlay = new Game.Overlay(game, "dlc_" + id, _("DLC: %s").printf(name), true);
 
-				yield game.mount_overlays(dlc_overlay.directory);
+				yield game.mount_overlays(overlay.directory);
 
 				install_dir = game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
 
-				yield base.install();
+				yield base.install(install_mode);
 
 				yield game.umount_overlays();
 
-				game.overlays.add(dlc_overlay);
+				game.overlays.add(overlay);
 				game.save_overlays();
 				yield game.mount_overlays();
 			}

@@ -18,6 +18,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 
+using GameHub.Data;
+using GameHub.Data.Tweaks;
 
 namespace GameHub.Utils
 {
@@ -57,7 +59,7 @@ namespace GameHub.Utils
 		}
 		catch(Error e)
 		{
-			warning(e.message);
+			warning("[Utils.open_uri] Error while opening '%s': %s", uri, e.message);
 		}
 	}
 
@@ -79,125 +81,237 @@ namespace GameHub.Utils
 		return null;
 	}
 
-	public static string run(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool capture_output=false, bool log=true)
+	public class RunTask
 	{
-		string sout = "";
-		string serr = "";
+		private string[] _cmd;
+		private string? _dir = null;
+		private string[]? _env = null;
+		private bool _override_runtime = false;
+		private bool _log = true;
+		private Tweak[]? _tweaks = null;
 
-		var cdir = dir ?? Environment.get_home_dir();
-		var cenv = env ?? Environ.get();
+		public RunTask(string[] cmd) { _cmd = cmd; }
 
-		#if FLATPAK
-		if(override_runtime && ProjectConfig.RUNTIME.length > 0)
+		public RunTask cmd(string[] cmd) { _cmd = cmd; return this; }
+		public RunTask dir(string? dir=null) { _dir = dir; return this; }
+		public RunTask env(string[]? env=null) { _env = env; return this; }
+		public RunTask override_runtime(bool override_runtime=false) { _override_runtime = override_runtime; return this; }
+		public RunTask log(bool log=true) { _log = log; return this; }
+		public RunTask tweaks(Tweak[]? tweaks=null) { _tweaks = tweaks; return this; }
+
+		private bool _expanded = false;
+		private void expand()
 		{
-			cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
-		}
-		string[] ccmd = { "flatpak-spawn", "--host" };
-		foreach(var arg in cmd)
-		{
-			ccmd += arg;
-		}
-		#else
-		string[] ccmd = cmd;
-		#endif
+			if(_expanded) return;
+			_expanded = true;
 
-		#if APPIMAGE
-		cenv = Environ.unset_variable(cenv, "LD_LIBRARY_PATH");
-		cenv = Environ.unset_variable(cenv, "LD_PRELOAD");
-		#endif
+			var cmd_expanded = false;
 
-		try
-		{
-			#if OS_WINDOWS
-			log = true;
+			if(_log) debug("[RunTask] {'%s'}", string.joinv("' '", _cmd));
+
+			_dir = _dir ?? Environment.get_home_dir();
+			_env = _env ?? Environ.get();
+
+			#if PKG_APPIMAGE
+			_env = Environ.unset_variable(_env, "LD_LIBRARY_PATH");
+			_env = Environ.unset_variable(_env, "LD_PRELOAD");
 			#endif
 
-			if(log) debug("[Utils.run] {'%s'}; dir: '%s'", string.joinv("' '", cmd), cdir);
-
-			if(capture_output)
+			if(_tweaks != null)
 			{
-				Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH, null, out sout, out serr);
-				sout = sout.strip();
-				serr = serr.strip();
-				if(log)
+				foreach(var tweak in _tweaks)
 				{
-					if(sout.length > 0) print(sout + "\n");
-					if(serr.length > 0) warning(serr);
+					if(tweak.env != null)
+					{
+						foreach(var env_var in tweak.env.entries)
+						{
+							if(env_var.value != null)
+							{
+								_env = Environ.set_variable(_env, env_var.key, env_var.value);
+							}
+							else
+							{
+								_env = Environ.unset_variable(_env, env_var.key);
+							}
+						}
+					}
+
+					if(tweak.command != null && tweak.command.length > 0)
+					{
+						string[] tweaked_cmd = _cmd;
+						var tweak_cmd = Utils.parse_args(tweak.command);
+						if(tweak_cmd != null)
+						{
+							if("$command" in tweak_cmd || "${command}" in tweak_cmd)
+							{
+								tweaked_cmd = {};
+							}
+							foreach(var arg in tweak_cmd)
+							{
+								if(arg == "$command" || arg == "${command}")
+								{
+									foreach(var a in _cmd)
+									{
+										tweaked_cmd += a;
+									}
+								}
+								else
+								{
+									tweaked_cmd += arg;
+								}
+							}
+							cmd_expanded = true;
+						}
+						_cmd = tweaked_cmd;
+					}
 				}
 			}
-			else
+
+			#if PKG_FLATPAK
+			if(_override_runtime && ProjectConfig.RUNTIME.length > 0)
 			{
-				Process.spawn_sync(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.CHILD_INHERITS_STDIN, null);
+				_env = Environ.set_variable(_env, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
+			}
+			string[] cmd = { "flatpak-spawn", "--host" };
+			foreach(var arg in _cmd)
+			{
+				cmd += arg;
+			}
+			_cmd = cmd;
+			cmd_expanded = true;
+			#endif
+
+			if(_log && GameHub.Application.log_verbose)
+			{
+				if(cmd_expanded) debug("     cmd: {'%s'}", string.joinv("' '", _cmd));
+				debug("     dir: '%s'", _dir);
+
+				string[] env_diff = {};
+				string[] env_clean = Environ.get();
+				foreach(var env_var in _env)
+				{
+					if(!(env_var in env_clean))
+					{
+						env_diff += env_var;
+					}
+				}
+				if(env_diff.length > 0)
+				{
+					debug("     env: {\n                  '%s'\n              }", string.joinv("'\n                  '", env_diff));
+				}
+			}
+
+		}
+
+		public Result? run_sync(bool capture_output=false)
+		{
+			var is_called_from_thread = _expanded;
+			expand();
+			try
+			{
+				if(_log && !is_called_from_thread) debug("     .run_sync()");
+				int status;
+				if(capture_output)
+				{
+					string sout;
+					string serr;
+					Process.spawn_sync(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH, null, out sout, out serr, out status);
+					sout = sout.strip();
+					serr = serr.strip();
+					if(_log)
+					{
+						if(sout.length > 0) print(sout + "\n");
+						if(serr.length > 0) warning(serr);
+					}
+					return new Result(status, sout, serr);
+				}
+				else
+				{
+					Process.spawn_sync(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH | SpawnFlags.CHILD_INHERITS_STDIN | SpawnFlags.STDERR_TO_DEV_NULL, null, null, null, out status);
+					return new Result(status);
+				}
+			}
+			catch (Error e)
+			{
+				warning("[RunTask.run_sync] %s", e.message);
+			}
+			return null;
+		}
+
+		public async Result? run_sync_thread(bool capture_output=false)
+		{
+			expand();
+			Result? result = null;
+			Utils.thread("RunTask.run_sync_thread", () => {
+				if(_log) debug("     .run_sync_thread()");
+				result = run_sync(capture_output);
+				Idle.add(run_sync_thread.callback);
+			}, _log);
+			yield;
+			return result;
+		}
+
+		public async Result? run_async(bool wait=true)
+		{
+			expand();
+			Result? result = null;
+			try
+			{
+				if(_log) debug("     .run_async()");
+				Pid pid;
+				Process.spawn_async(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
+				ChildWatch.add(pid, (pid, status) => {
+					Process.close_pid(pid);
+					result = new Result(status);
+					Idle.add(run_async.callback);
+				});
+			}
+			catch (Error e)
+			{
+				warning("[RunTask.run_async] %s", e.message);
+			}
+			if(wait) yield;
+			return result;
+		}
+
+		public class Result
+		{
+			public int? status;
+			public int? exit_code;
+			public string? output;
+			public string? errors;
+
+			public Result(int? status, string? output=null, string? errors=null)
+			{
+				this.status = status;
+				this.output = output;
+				this.errors = errors;
+				if(this.status != null)
+				{
+					this.exit_code = Process.exit_status(this.status);
+				}
+			}
+
+			public bool check_status() throws Error
+			{
+				if(this.status != null)
+				{
+					return Process.check_exit_status(this.status);
+				}
+				return true;
 			}
 		}
-		catch (Error e)
-		{
-			warning("[Utils.run] %s", e.message);
-		}
-		return sout;
 	}
 
-	public static async void run_async(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool wait=true, bool log=true)
+	public static RunTask run(string[] cmd)
 	{
-		Pid pid;
-
-		var cdir = dir ?? Environment.get_home_dir();
-		var cenv = env ?? Environ.get();
-
-		#if FLATPAK
-		if(override_runtime && ProjectConfig.RUNTIME.length > 0)
-		{
-			cenv = Environ.set_variable(cenv, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
-		}
-		string[] ccmd = { "flatpak-spawn", "--host" };
-		foreach(var arg in cmd)
-		{
-			ccmd += arg;
-		}
-		#else
-		string[] ccmd = cmd;
-		#endif
-
-		#if APPIMAGE
-		cenv = Environ.unset_variable(cenv, "LD_LIBRARY_PATH");
-		cenv = Environ.unset_variable(cenv, "LD_PRELOAD");
-		#endif
-
-		try
-		{
-			if(log) debug("[Utils.run_async] Running {'%s'} in '%s'", string.joinv("' '", cmd), cdir);
-			Process.spawn_async(cdir, ccmd, cenv, SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
-
-			ChildWatch.add(pid, (pid, status) => {
-				Process.close_pid(pid);
-				Idle.add(run_async.callback);
-			});
-		}
-		catch (Error e)
-		{
-			warning("[Utils.run_async] %s", e.message);
-		}
-
-		if(wait) yield;
-	}
-
-	public static async string run_thread(string[] cmd, string? dir=null, string[]? env=null, bool override_runtime=false, bool capture_output=false, bool log=true)
-	{
-		string sout = "";
-
-		Utils.thread("Utils.run_thread", () => {
-			sout = Utils.run(cmd, dir, env, override_runtime, capture_output, log);
-			Idle.add(run_thread.callback);
-		}, log);
-
-		yield;
-		return sout;
+		return new RunTask(cmd);
 	}
 
 	public static File? find_executable(string? name)
 	{
 		if(name == null || name.length == 0) return null;
-		var which = Environment.find_program_in_path(name) ?? run({ "which", name }, null, null, false, true, false);
+		var which = Environment.find_program_in_path(name) ?? run({"which", name}).log(false).run_sync(true).output;
 		if(which == null || which.length == 0 || !which.has_prefix("/"))
 		{
 			return null;
@@ -226,13 +340,11 @@ namespace GameHub.Utils
 		if(distro != null) return distro;
 
 		#if OS_LINUX
-			distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}, null, null, false, true, false).replace("\"", "");
-			#if APPIMAGE
+			distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}).log(false).run_sync(true).output.replace("\"", "");
+			#if PKG_APPIMAGE
 				distro = "[AppImage] " + distro;
-			#elif FLATPAK
+			#elif PKG_FLATPAK
 				distro = "[Flatpak] " + distro;
-			#elif SNAP
-				distro = "[Snap] " + distro;
 			#endif
 		#elif OS_WINDOWS
 			distro = "Windows " + win32_get_os_version();
@@ -287,10 +399,10 @@ namespace GameHub.Utils
 
 	public static bool is_package_installed(string package)
 	{
-		#if APPIMAGE || FLATPAK || SNAP
+		#if PKG_APPIMAGE || PKG_FLATPAK
 		return false;
 		#elif PM_APT
-		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package}, null, null, false, true, false);
+		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package}).log(false).run_sync(true).output;
 		return "install ok installed" in output;
 		#else
 		return false;
@@ -333,6 +445,21 @@ namespace GameHub.Utils
 	public static string get_relative_datetime(GLib.DateTime date_time)
 	{
 		return date_time.format("%x %R");
+	}
+
+	private string minutes_to_string(int64 min)
+	{
+		int h = (int) min / 60;
+		int m = (int) min - (h * 60);
+		return (h > 0 ? C_("time", "%dh").printf(h) + " " : "") + C_("time", "%dm").printf(m);
+	}
+
+	private string seconds_to_string(int64 sec)
+	{
+		int h = (int) sec / 3600;
+		int m = (int) (sec - (h * 3600)) / 60;
+		int s = (int) sec - (h * 3600) - (m * 60);
+		return (h > 0 ? C_("time", "%dh").printf(h) + " " : "") + (m > 0 ? C_("time", "%dm").printf(m) + " " : "") + C_("time", "%ds").printf(s);
 	}
 
 	public static void notify(string title, string? body=null, NotificationPriority priority=NotificationPriority.NORMAL, NotificationConfigureDelegate? config=null)

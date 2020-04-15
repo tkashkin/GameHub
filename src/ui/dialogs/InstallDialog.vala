@@ -34,10 +34,6 @@ namespace GameHub.UI.Dialogs
 		private const int RESPONSE_IMPORT = 10;
 		private const int RESPONSE_DOWNLOAD = 11;
 
-		public signal void import();
-		public signal void install(Runnable.Installer installer, bool dl_only, CompatTool? tool);
-		public signal void cancelled();
-
 		private Box content;
 		private Label title_label;
 		private Label subtitle_label;
@@ -45,16 +41,17 @@ namespace GameHub.UI.Dialogs
 		private ModeButton platforms_list;
 		private ListBox installers_list;
 
-		private bool is_finished = false;
-
 		private CompatToolPicker compat_tool_picker;
 		private CompatToolOptions opts_list;
 
+		public Runnable runnable { get; construct; }
 		public Runnable.Installer.InstallMode install_mode { get; construct; }
+		private SourceFunc? callback = null;
 
-		public InstallDialog(Runnable runnable, ArrayList<Runnable.Installer> installers, Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public InstallDialog(Runnable runnable, ArrayList<Runnable.Installer> installers, Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE, owned SourceFunc? callback=null)
 		{
-			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Install"), install_mode: install_mode);
+			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("Install"), runnable: runnable, install_mode: install_mode);
+			this.callback = (owned) callback;
 
 			Game? game = null;
 
@@ -242,13 +239,16 @@ namespace GameHub.UI.Dialogs
 					}
 					else
 					{
-						compat_tool_revealer.reveal_child = row.installer.platform == Platform.WINDOWS;
+						var installer = row.installer;
+						compat_tool_revealer.reveal_child = installer.platform == Platform.WINDOWS;
+						dl_btn.sensitive = installer is Runnable.DownloadableInstaller;
 					}
 				});
 			}
 			else
 			{
-				compat_tool_revealer.reveal_child = !runnable.is_supported(null, false) && runnable.is_supported(null, true);
+				compat_tool_revealer.reveal_child = installers[0].platform == Platform.WINDOWS;
+				dl_btn.sensitive = installers[0] is Runnable.DownloadableInstaller;
 			}
 
 			content.add(compat_tool_revealer);
@@ -272,12 +272,13 @@ namespace GameHub.UI.Dialogs
 				{
 					case ResponseType.CLOSE:
 						destroy();
+						if(callback != null) callback();
 						break;
 
 					case InstallDialog.RESPONSE_IMPORT:
-						is_finished = true;
-						import();
+						runnable.import();
 						destroy();
+						if(callback != null) callback();
 						break;
 
 					case ResponseType.ACCEPT:
@@ -288,21 +289,15 @@ namespace GameHub.UI.Dialogs
 							var row = installers_list.get_selected_row() as InstallerRow;
 							if(row != null) installer = row.installer;
 						}
-						is_finished = true;
 						if(opts_list != null)
 						{
 							opts_list.save_options();
 						}
-						installer.fetch_parts.begin((obj, res) => {
-							installer.fetch_parts.end(res);
-							install(installer, response_id == InstallDialog.RESPONSE_DOWNLOAD, compat_tool_picker != null ? compat_tool_picker.selected : null);
-							destroy();
-						});
+						install_or_download.begin(response_id, installer, compat_tool_picker != null ? compat_tool_picker.selected : null);
+						destroy();
 						break;
 				}
 			});
-
-			destroy.connect(() => { if(!is_finished) cancelled(); });
 
 			get_content_area().add(hbox);
 			get_content_area().set_size_request(380, 96);
@@ -317,7 +312,31 @@ namespace GameHub.UI.Dialogs
 				return;
 			}
 
-			show_all();
+			if(install_mode == Runnable.Installer.InstallMode.INTERACTIVE)
+			{
+				show_all();
+				present();
+			}
+		}
+
+		private async void install_or_download(int response_id, Runnable.Installer installer, CompatTool? tool=null)
+		{
+			if(installer is Runnable.DownloadableInstaller)
+			{
+				var dl_installer = (Runnable.DownloadableInstaller) installer;
+
+				yield dl_installer.fetch_parts();
+
+				if(response_id == InstallDialog.RESPONSE_DOWNLOAD)
+				{
+					yield dl_installer.download(runnable);
+				}
+			}
+			if(response_id == ResponseType.ACCEPT)
+			{
+				yield installer.install(runnable, tool);
+			}
+			if(callback != null) callback();
 		}
 
 		public static string fsize(int64 size)

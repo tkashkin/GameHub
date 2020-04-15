@@ -49,23 +49,13 @@ namespace GameHub.Data.Compat
 
 			options = {
 				opt_prefix,
-				opt_env,
-				new CompatTool.BoolOption("PROTON_NO_ESYNC", _("Disable esync"), false),
-				new CompatTool.BoolOption("PROTON_FORCE_LARGE_ADDRESS_AWARE", _("Force LARGE_ADDRESS_AWARE flag"), false),
-				new CompatTool.BoolOption("PROTON_NO_D3D11", _("Disable DirectX 11 compatibility layer"), false),
-				new CompatTool.BoolOption("PROTON_USE_WINED3D11", _("Use WineD3D11 as DirectX 11 compatibility layer"), false),
-				new CompatTool.BoolOption("DXVK_HUD", _("Show DXVK info overlay"), true),
-				new CompatTool.BoolOption("PROTON_USE_D9VK", _("Enable DirectX 9 compatibility layer"), false)
+				opt_env
 			};
 
 			install_options = {
 				opt_prefix,
 				opt_env,
-				install_opt_innosetup_args,
-				new CompatTool.BoolOption("/SILENT", _("Silent installation"), false),
-				new CompatTool.BoolOption("/VERYSILENT", _("Very silent installation"), false),
-				new CompatTool.BoolOption("/SUPPRESSMSGBOXES", _("Suppress messages"), false),
-				new CompatTool.BoolOption("/NOGUI", _("No GUI"), false)
+				install_opt_innosetup_args
 			};
 
 			if(!is_latest)
@@ -143,7 +133,12 @@ namespace GameHub.Data.Compat
 			{
 				cmd = { executable.get_path(), "run", "msiexec", "/i", file.get_path() };
 			}
-			yield Utils.run_thread(combine_cmd_with_args(cmd, runnable, args), dir.get_path(), prepare_env(runnable, parse_opts));
+			var task = Utils.run(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
+			if(runnable is TweakableGame)
+			{
+				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
+			}
+			yield task.run_sync_thread();
 		}
 
 		public override File get_default_wineprefix(Runnable runnable)
@@ -153,9 +148,9 @@ namespace GameHub.Data.Compat
 			var prefix = FSUtils.mkdir(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)/pfx");
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
+			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(id)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}, install_dir.get_path());
+				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}).dir(install_dir.get_path()).run_sync();
 				FSUtils.rm(dosdevices.get_child("d:").get_path());
 			}
 
@@ -173,15 +168,52 @@ namespace GameHub.Data.Compat
 
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists())
+			if(dosdevices.get_child("c:").query_exists() && dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
 			{
-				if(dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
+				var has_symlink = false;
+				for(var letter = 'd'; letter <= 'y'; letter++)
 				{
-					Utils.run({"ln", "-nsf", "../../../../../", "d:"}, dosdevices.get_path());
+					if(is_symlink_and_correct(dosdevices.get_child(@"$(letter):")))
+					{
+						has_symlink = true;
+						break;
+					}
+				}
+
+				for(var letter = 'd'; has_symlink == false && letter <= 'y'; letter++)
+				{
+					if(!dosdevices.get_child(@"$(letter):").query_exists() && !dosdevices.get_child(@"$(letter)::").query_exists())
+					{
+						Utils.run({"ln", "-nsf", "../../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync();
+						break;
+					}
 				}
 			}
 
 			return prefix;
+		}
+
+		private bool is_symlink_and_correct(File symlink)
+		{
+			if(!symlink.query_exists())
+			{
+				return false;
+			}
+
+			try
+			{
+				var symlink_info = symlink.query_info("*", NONE);
+				if(symlink_info == null || !symlink_info.get_is_symlink() || symlink_info.get_symlink_target() != "../../../../../")
+				{
+					return false;
+				}
+			}
+			catch (Error e)
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		protected override string[] prepare_env(Runnable runnable, bool parse_opts=true)
@@ -198,7 +230,7 @@ namespace GameHub.Data.Compat
 				env = Environ.set_variable(env, "WINEPREFIX", compatdata.get_child("pfx").get_path());
 			}
 
-			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.Paths.Steam.Home);
+			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.expand(FSUtils.Paths.Steam.Home));
 			env = Environ.set_variable(env, "PROTON_LOG", "1");
 
 			if(parse_opts)
@@ -237,7 +269,10 @@ namespace GameHub.Data.Compat
 
 			if(!cmd.query_exists())
 			{
-				yield Utils.run_thread({ executable.get_path(), "run", cmd.get_path() }, runnable.install_dir.get_path(), prepare_env(runnable), false, true);
+				yield Utils.run({executable.get_path(), "run", cmd.get_path(), "/c", "exit"})
+					.dir(runnable.install_dir.get_path())
+					.env(prepare_env(runnable))
+					.run_sync_thread(true);
 			}
 		}
 

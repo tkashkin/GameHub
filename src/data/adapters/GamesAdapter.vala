@@ -24,6 +24,8 @@ using GameHub.Settings;
 
 using GameHub.UI.Widgets;
 using GameHub.UI.Views.GamesView;
+using GameHub.UI.Views.GamesView.List;
+using GameHub.UI.Views.GamesView.Grid;
 
 namespace GameHub.Data.Adapters
 {
@@ -48,8 +50,8 @@ namespace GameHub.Data.Adapters
 
 		private bool new_games_added = false;
 
-		public FlowBox grid;
-		public ListBox list;
+		public weak GamesGrid? grid;
+		public weak GamesList? list;
 
 		private HashMap<Game, ViewHolder> view_cache = new HashMap<Game, ViewHolder>();
 
@@ -60,7 +62,7 @@ namespace GameHub.Data.Adapters
 		public Dbusmenu.Menuitem launcher_menu;
 		#endif
 
-		public GamesAdapter(FlowBox grid, ListBox list)
+		public GamesAdapter()
 		{
 			foreach(var src in GameSources)
 			{
@@ -70,28 +72,10 @@ namespace GameHub.Data.Adapters
 				}
 			}
 
-			this.grid = grid;
-			this.list = list;
-
 			settings = Settings.UI.Behavior.instance;
 			filter_settings_merge = settings.merge_games;
 
 			settings.notify["merge-games"].connect(() => invalidate());
-
-			this.grid.set_filter_func(c => {
-				return filter((c as GameCard).game);
-			});
-			this.grid.set_sort_func((c, c2) => {
-				return sort((c as GameCard).game, (c2 as GameCard).game);
-			});
-
-			this.list.set_filter_func(r => {
-				return filter((r as GameListRow).game);
-			});
-			this.list.set_sort_func((r, r2) => {
-				return sort((r as GameListRow).game, (r2 as GameListRow).game);
-			});
-			this.list.set_header_func(list_header);
 
 			#if UNITY
 			launcher_entry = Unity.LauncherEntry.get_for_desktop_id(ProjectConfig.PROJECT_NAME + ".desktop");
@@ -99,22 +83,53 @@ namespace GameHub.Data.Adapters
 			#endif
 		}
 
+		public void attach_grid(GamesGrid? grid)
+		{
+			this.grid = grid;
+			if(this.grid != null)
+			{
+				this.grid.set_filter_func(c => {
+					return filter((c as GameCard).game);
+				});
+				this.grid.set_sort_func((c, c2) => {
+					return sort((c as GameCard).game, (c2 as GameCard).game);
+				});
+				add_cached_views(false);
+			}
+		}
+
+		public void attach_list(GamesList? list)
+		{
+			this.list = list;
+			if(this.list != null)
+			{
+				this.list.set_filter_func(r => {
+					return filter((r as GameListRow).game);
+				});
+				this.list.set_sort_func((r, r2) => {
+					return sort((r as GameListRow).game, (r2 as GameListRow).game);
+				});
+				this.list.set_header_func(list_header);
+				add_cached_views(false);
+			}
+		}
+
 		public void invalidate(bool filter=true, bool sort=true, bool headers=true)
 		{
 			filter_settings_merge = settings.merge_games;
 			if(filter)
 			{
-				grid.invalidate_filter();
-				list.invalidate_filter();
+				if(grid != null) grid.invalidate_filter();
+				if(list != null) list.invalidate_filter();
 			}
 			if(sort)
 			{
-				grid.invalidate_sort();
-				list.invalidate_sort();
+				if(grid != null) grid.invalidate_sort();
+				if(list != null) list.invalidate_sort();
 			}
 			if(headers)
 			{
-				list.invalidate_headers();
+				if(list != null) list.invalidate_headers();
 			}
 		}
 
@@ -125,7 +140,7 @@ namespace GameHub.Data.Adapters
 				{
 					loading_sources.add(src);
 					update_loading_status();
-					src.load_games.begin(add, () => add_cached_views(), (obj, res) => {
+					src.load_games.begin(add, () => { add_cached_views(); }, (obj, res) => {
 						src.load_games.end(res);
 						loading_sources.remove(src);
 						update_loading_status();
@@ -177,46 +192,47 @@ namespace GameHub.Data.Adapters
 		private void add_views(Game game, ViewHolder? holder=null)
 		{
 			holder = holder ?? view_cache.get(game);
-			if(holder != null && !holder.is_added)
+			if(holder != null)
 			{
-				holder.init_views();
-				grid.add(holder.grid_card);
-				list.add(holder.list_row);
-				holder.is_added = true;
+				holder.add_views(grid, list);
 
-				if(grid.get_children().length() == 0)
+				if(grid != null && holder.grid_card != null)
 				{
-					holder.grid_card.grab_focus();
-				}
-				if(list.get_selected_row() == null)
-				{
-					list.select_row(holder.list_row);
+					holder.grid_card.show_all();
+					if(grid.get_children().length() == 0)
+					{
+						holder.grid_card.grab_focus();
+					}
 				}
 
-				holder.grid_card.show_all();
-				holder.list_row.show_all();
+				if(list != null && holder.list_row != null)
+				{
+					holder.list_row.show_all();
+					if(list.get_selected_row() == null)
+					{
+						list.select_row(holder.list_row);
+					}
+				}
+
 				if(!filter(game))
 				{
-					holder.grid_card.changed();
-					holder.list_row.changed();
+					if(holder.grid_card != null) holder.grid_card.changed();
+					if(holder.list_row != null) holder.list_row.changed();
 				}
 			}
 		}
 
-		private void add_cached_views()
+		private void add_cached_views(bool invoke_cache_loaded_signal=true)
 		{
 			Idle.add(() => {
 				lock(view_cache)
 				{
 					foreach(var holder in view_cache.values)
 					{
-						if(!holder.is_added)
-						{
-							add_views(holder.game, holder);
-						}
+						add_views(holder.game, holder);
 					}
 				}
-				cache_loaded();
+				if(invoke_cache_loaded_signal) cache_loaded();
 				return Source.REMOVE;
 			}, Priority.LOW);
 		}
@@ -231,7 +247,7 @@ namespace GameHub.Data.Adapters
 				view_cache.unset(game, out holder);
 			}
 
-			if(holder != null && holder.is_added)
+			if(holder != null)
 			{
 				holder.destroy();
 			}
@@ -435,16 +451,37 @@ namespace GameHub.Data.Adapters
 			row.set_header(header);
 		}
 
-		public bool has_filtered_views()
+		public int games_count
 		{
-			foreach(var card in grid.get_children())
+			get
 			{
-				if(filter(((GameCard) card).game))
-				{
-					return true;
-				}
+				return games.size;
 			}
-			return false;
+		}
+
+		public int filtered_games_count
+		{
+			get
+			{
+				var count = 0;
+				foreach(var game in games)
+				{
+					if(filter(game)) count++;
+				}
+				return count;
+			}
+		}
+
+		public bool has_filtered_games
+		{
+			get
+			{
+				foreach(var game in games)
+				{
+					if(filter(game)) return true;
+				}
+				return false;
+			}
 		}
 
 		private void merge_games()
@@ -574,29 +611,50 @@ namespace GameHub.Data.Adapters
 		{
 			public GamesAdapter adapter;
 			public Game game;
-			public GameCard grid_card;
-			public GameListRow list_row;
-			public bool is_added;
+			public GameCard? grid_card = null;
+			public GameListRow? list_row = null;
 
 			public ViewHolder(Game game, GamesAdapter adapter)
 			{
 				this.adapter = adapter;
 				this.game = game;
-				is_added = false;
 
 				this.game.tags_update.connect(() => {
 					Idle.add(() => {
-						grid_card.changed();
-						list_row.changed();
+						if(grid_card != null) grid_card.changed();
+						if(list_row != null) list_row.changed();
 						return Source.REMOVE;
 					}, Priority.LOW);
 				});
 			}
 
-			public void init_views()
+			public void init_views(bool init_card=true, bool init_row=true)
 			{
-				grid_card = new GameCard(game, adapter);
-				list_row = new GameListRow(game, adapter);
+				if(grid_card == null && init_card) grid_card = new GameCard(game, adapter);
+				if(list_row == null && init_row) list_row = new GameListRow(game, adapter);
+			}
+
+			public void add_views(GamesGrid? grid, GamesList? list)
+			{
+				init_views(grid != null, list != null);
+				if(grid != null)
+				{
+					var old_parent = grid_card.parent;
+					if(old_parent != grid)
+					{
+						if(old_parent != null) old_parent.remove(grid_card);
+						grid.add(grid_card);
+					}
+				}
+				if(list != null)
+				{
+					var old_parent = list_row.parent;
+					if(old_parent != list)
+					{
+						if(old_parent != null) old_parent.remove(list_row);
+						list.add(list_row);
+					}
+				}
 			}
 
 			public void destroy()
@@ -604,7 +662,6 @@ namespace GameHub.Data.Adapters
 				Idle.add(() => {
 					if(grid_card != null) grid_card.destroy();
 					if(list_row != null) list_row.destroy();
-					is_added = false;
 					return Source.REMOVE;
 				}, Priority.LOW);
 			}

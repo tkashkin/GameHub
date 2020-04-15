@@ -22,8 +22,10 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Humble
 {
-	public class HumbleGame: Game
+	public class HumbleGame: Game, TweakableGame
 	{
+		public string[]? tweaks { get; set; default = null; }
+
 		public string order_id;
 
 		private bool game_info_updating = false;
@@ -92,6 +94,7 @@ namespace GameHub.Data.Sources.Humble
 
 			install_dir = null;
 			executable_path = "$game_dir/start.sh";
+			work_dir_path = "$game_dir";
 			info_detailed = @"{\"order\":\"$(order_id)\"}";
 
 			mount_overlays.begin();
@@ -109,6 +112,7 @@ namespace GameHub.Data.Sources.Humble
 			image = Tables.Games.IMAGE.get(s);
 			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
 			executable_path = Tables.Games.EXECUTABLE.get(s);
+			work_dir_path = Tables.Games.WORK_DIR.get(s);
 			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
 			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
@@ -155,13 +159,19 @@ namespace GameHub.Data.Sources.Humble
 				}
 			}
 
+			var tweaks_string = Tables.Games.TWEAKS.get(s);
+			if(tweaks_string != null)
+			{
+				tweaks = tweaks_string.split(",");
+			}
+
 			mount_overlays.begin();
 			update_status();
 		}
 
 		public override void update_status()
 		{
-			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.DownloadState.CANCELLED) return;
+			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.Download.State.CANCELLED) return;
 
 			status = new Game.Status(executable != null && executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED, this);
 			if(status.state == Game.State.INSTALLED)
@@ -369,7 +379,7 @@ namespace GameHub.Data.Sources.Humble
 					var new_url = installer.update_url(this);
 					if(new_url != null)
 					{
-						var url_field = "\"web\": \"%s\"";
+						var url_field = "\"%s\"";
 						info = info.replace(url_field.printf(old_url), url_field.printf(new_url));
 					}
 					refresh = true;
@@ -388,35 +398,8 @@ namespace GameHub.Data.Sources.Humble
 		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
 		{
 			yield update_installers();
-
 			if(installers.size < 1) return;
-
-			var wnd = new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode);
-
-			wnd.cancelled.connect(() => Idle.add(install.callback));
-
-			wnd.install.connect((installer, dl_only, tool) => {
-				FSUtils.mkdir(FSUtils.Paths.Humble.Games);
-				FSUtils.mkdir(installer.parts.get(0).local.get_parent().get_path());
-
-				installer.install.begin(this, dl_only, tool, (obj, res) => {
-					installer.install.end(res);
-					update_status();
-					Idle.add(install.callback);
-				});
-			});
-
-			wnd.import.connect(() => {
-				import();
-				Idle.add(install.callback);
-			});
-
-			if(install_mode == Runnable.Installer.InstallMode.INTERACTIVE)
-			{
-				wnd.show_all();
-				wnd.present();
-			}
-
+			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;
 		}
 
@@ -437,13 +420,13 @@ namespace GameHub.Data.Sources.Humble
 			}
 		}
 
-		public class Installer: Runnable.Installer
+		public class Installer: Runnable.DownloadableInstaller
 		{
 			private File? installers_dir;
 
 			public string dl_name;
 			public string? dl_id;
-			public Runnable.Installer.Part part;
+			public Runnable.DownloadableInstaller.Part part;
 
 			public override string name { owned get { return dl_name; } }
 
@@ -483,7 +466,7 @@ namespace GameHub.Data.Sources.Humble
 					hash_type = ChecksumType.SHA256;
 				}
 
-				part = new Runnable.Installer.Part(id, url, full_size, remote, local, hash, hash_type);
+				part = new Runnable.DownloadableInstaller.Part(id, url, full_size, remote, local, hash, hash_type);
 				parts.add(part);
 			}
 

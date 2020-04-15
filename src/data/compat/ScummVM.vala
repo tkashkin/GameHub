@@ -47,7 +47,7 @@ namespace GameHub.Data.Compat
 		{
 			if(dir != null && dir.query_exists())
 			{
-				var output = Utils.run({ executable.get_path(), "--detect" }, dir.get_path(), null, false, true, false);
+				var output = Utils.run({executable.get_path(), "--detect"}).dir(dir.get_path()).log(false).run_sync(true).output;
 				return !(SCUMMVM_NO_GAMES_WARNING in output);
 			}
 			return false;
@@ -73,7 +73,12 @@ namespace GameHub.Data.Compat
 
 			string[] cmd = { executable.get_path(), "--auto-detect" };
 
-			yield Utils.run_thread(combine_cmd_with_args(cmd, runnable), dir.get_path());
+			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(dir.get_path());
+			if(runnable is TweakableGame)
+			{
+				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
+			}
+			yield task.run_sync_thread();
 		}
 	}
 }

@@ -24,6 +24,7 @@ using GameHub.Utils;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
+using GameHub.Data.Sources.Itch;
 using GameHub.Data.Sources.User;
 
 namespace GameHub.Data.DB.Tables
@@ -52,6 +53,8 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field PLAYTIME_SOURCE;
 		public static Table.Field PLAYTIME_TRACKED;
 		public static Table.Field IMAGE_VERTICAL;
+		public static Table.Field TWEAKS;
+		public static Table.Field WORK_DIR;
 
 		public Games()
 		{
@@ -77,6 +80,8 @@ namespace GameHub.Data.DB.Tables
 			PLAYTIME_SOURCE      = f(15);
 			PLAYTIME_TRACKED     = f(16);
 			IMAGE_VERTICAL       = f(17);
+			TWEAKS               = f(18);
+			WORK_DIR             = f(19);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -119,6 +124,14 @@ namespace GameHub.Data.DB.Tables
 					case 8:
 						db.exec("ALTER TABLE `games` ADD `image_vertical` string");
 						break;
+
+					case 9:
+						db.exec("ALTER TABLE `games` ADD `tweaks` string");
+						break;
+
+					case 10:
+						db.exec("ALTER TABLE `games` ADD `work_dir` string");
+						break;
 				}
 			}
 		}
@@ -157,8 +170,10 @@ namespace GameHub.Data.DB.Tables
 					`last_launch`,
 					`playtime_source`,
 					`playtime_tracked`,
-					`image_vertical`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`image_vertical`,
+					`tweaks`,
+					`work_dir`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -180,6 +195,17 @@ namespace GameHub.Data.DB.Tables
 				tags += t.id;
 			}
 
+			string? tweaks = null;
+			if(game is TweakableGame && ((TweakableGame) game).tweaks != null)
+			{
+				tweaks = "";
+				foreach(var t in ((TweakableGame) game).tweaks)
+				{
+					if(tweaks.length > 0) tweaks += ",";
+					tweaks += t;
+				}
+			}
+
 			SOURCE.bind(s, game.source.id);
 			ID.bind(s, game.id);
 			NAME.bind(s, game.name);
@@ -198,6 +224,8 @@ namespace GameHub.Data.DB.Tables
 			PLAYTIME_SOURCE.bind_int64(s, game.playtime_source);
 			PLAYTIME_TRACKED.bind_int64(s, game.playtime_tracked);
 			IMAGE_VERTICAL.bind(s, game.image_vertical);
+			TWEAKS.bind(s, tweaks);
+			WORK_DIR.bind(s, game.work_dir == null ? null : game.work_dir_path);
 
 			res = s.step();
 
@@ -287,9 +315,17 @@ namespace GameHub.Data.DB.Tables
 				{
 					g = new GOGGame.from_db((GOG) s, st);
 				}
+				else if(s is Trove)
+				{
+					g = new HumbleGame.from_db((Trove) s, st);
+				}
 				else if(s is Humble)
 				{
 					g = new HumbleGame.from_db((Humble) s, st);
+				}
+				else if(s is Itch)
+				{
+					g = new ItchGame.from_db((Itch) s, st);
 				}
 				else if(s is User)
 				{
@@ -364,9 +400,17 @@ namespace GameHub.Data.DB.Tables
 					{
 						g = new GOGGame.from_db((GOG) s, st);
 					}
+					else if(s is Trove)
+					{
+						g = new HumbleGame.from_db((Trove) s, st);
+					}
 					else if(s is Humble)
 					{
 						g = new HumbleGame.from_db((Humble) s, st);
+					}
+					else if(s is Itch)
+					{
+						g = new ItchGame.from_db((Itch) s, st);
 					}
 					else if(s is User)
 					{

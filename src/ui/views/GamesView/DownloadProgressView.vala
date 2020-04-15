@@ -108,14 +108,20 @@ namespace GameHub.UI.Views.GamesView
 			label.halign = Align.START;
 			label.get_style_context().add_class("category-label");
 			label.ypad = 2;
+			vbox_labels.add(label);
 
-			var desc_label = new Label(dl_info.description);
-			desc_label.halign = Align.START;
-			desc_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-			desc_label.ypad = 2;
+			if(dl_info.description != null)
+			{
+				var desc_label = new Label(dl_info.description);
+				desc_label.halign = Align.START;
+				desc_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+				desc_label.ypad = 2;
+				vbox_labels.add(desc_label);
+			}
 
 			var state_label = new Label(null);
 			state_label.halign = Align.START;
+			vbox_labels.add(state_label);
 
 			progress_bar = new ProgressBar();
 			progress_bar.hexpand = true;
@@ -124,21 +130,20 @@ namespace GameHub.UI.Views.GamesView
 			action_pause = new Button.from_icon_name("media-playback-pause-symbolic");
 			action_pause.tooltip_text = _("Pause download");
 			action_pause.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			action_pause.no_show_all = true;
 			action_pause.visible = false;
 
 			action_resume = new Button.from_icon_name("media-playback-start-symbolic");
 			action_resume.tooltip_text = _("Resume download");
 			action_resume.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			action_resume.no_show_all = true;
 			action_resume.visible = false;
 
 			action_cancel = new Button.from_icon_name("process-stop-symbolic");
 			action_cancel.tooltip_text = _("Cancel download");
 			action_cancel.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			action_cancel.no_show_all = true;
 			action_cancel.visible = false;
-
-			vbox_labels.add(label);
-			vbox_labels.add(desc_label);
-			vbox_labels.add(state_label);
 
 			hbox_inner.add(vbox_labels);
 			hbox_inner.add(hbox_actions);
@@ -162,9 +167,9 @@ namespace GameHub.UI.Views.GamesView
 					progress_bar.fraction = s.progress;
 
 					action_cancel.visible = true;
-					action_cancel.sensitive = ds == Downloader.DownloadState.DOWNLOADING || ds == Downloader.DownloadState.QUEUED || ds == Downloader.DownloadState.PAUSED;
-					action_pause.visible = dl_info.download is Downloader.PausableDownload && ds != Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
-					action_resume.visible = dl_info.download is Downloader.PausableDownload && ds == Downloader.DownloadState.PAUSED && ds != Downloader.DownloadState.QUEUED;
+					action_cancel.sensitive = ds == Downloader.Download.State.DOWNLOADING || ds == Downloader.Download.State.QUEUED || ds == Downloader.Download.State.PAUSED;
+					action_pause.visible = dl_info.download is Downloader.PausableDownload && ds != Downloader.Download.State.PAUSED && ds != Downloader.Download.State.QUEUED;
+					action_resume.visible = dl_info.download is Downloader.PausableDownload && ds == Downloader.Download.State.PAUSED && ds != Downloader.Download.State.QUEUED;
 
 					return Source.REMOVE;
 				});
@@ -188,7 +193,7 @@ namespace GameHub.UI.Views.GamesView
 				}
 			});
 
-			Downloader.get_instance().dl_ended.connect(dl => {
+			Downloader.download_manager().dl_ended.connect(dl => {
 				Idle.add(() => {
 					if(dl == dl_info) destroy();
 					return Source.REMOVE;

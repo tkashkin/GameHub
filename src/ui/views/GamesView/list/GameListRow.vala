@@ -26,7 +26,7 @@ using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Views.GamesView
+namespace GameHub.UI.Views.GamesView.List
 {
 	public class GameListRow: ListBoxRow
 	{
@@ -58,7 +58,22 @@ namespace GameHub.UI.Views.GamesView
 		private Image favorite_icon;
 		private Image updated_icon;
 
-		private string old_icon;
+		private bool _icon_is_visible = false;
+		public bool icon_is_visible
+		{
+			get
+			{
+				return _icon_is_visible;
+			}
+			set
+			{
+				if(_icon_is_visible != value)
+				{
+					_icon_is_visible = value;
+					update_icon();
+				}
+			}
+		}
 
 		private GameHub.Settings.UI.Appearance ui_settings;
 
@@ -316,11 +331,14 @@ namespace GameHub.UI.Views.GamesView
 
 		private void update_icon()
 		{
-			icon.queue_draw();
-			if(game == null || game.icon == old_icon) return;
-			old_icon = game.icon;
-			icon.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
-			no_icon_indicator.visible = game.icon == null || icon.source == null;
+			if(icon_is_visible)
+			{
+				icon.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
+			}
+			else
+			{
+				icon.unload();
+			}
 		}
 	}
 }
