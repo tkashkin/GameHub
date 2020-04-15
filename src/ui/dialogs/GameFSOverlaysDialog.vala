@@ -20,10 +20,11 @@ using Gtk;
 using Gdk;
 using Gee;
 
-
 using GameHub.Data;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
+using GameHub.Utils.FS;
 using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs
@@ -32,7 +33,7 @@ namespace GameHub.UI.Dialogs
 	{
 		private const int RESPONSE_ENABLE_OVERLAYS = 1;
 
-		public Game? game { get; construct; }
+		public Traits.Game.SupportsOverlays? game { get; construct; }
 
 		private Stack stack;
 
@@ -48,7 +49,7 @@ namespace GameHub.UI.Dialogs
 		private Entry name_entry;
 		private Button add_btn;
 
-		public GameFSOverlaysDialog(Game? game)
+		public GameFSOverlaysDialog(Traits.Game.SupportsOverlays? game)
 		{
 			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("%s: Overlays").printf(game.name), game: game);
 		}
@@ -231,7 +232,7 @@ namespace GameHub.UI.Dialogs
 			var name = name_entry.text.strip();
 			if(name.length == 0) name = id;
 			if(id.length == 0) return;
-			game.overlays.add(new Game.Overlay(game, id, name, true));
+			game.overlays.add(new Traits.Game.SupportsOverlays.Overlay(game, id, name, true));
 			game.save_overlays();
 			id_entry.text = name_entry.text = "";
 			id_entry.grab_focus();
@@ -239,9 +240,9 @@ namespace GameHub.UI.Dialogs
 
 		private class OverlayRow: ListBoxRow
 		{
-			public Game.Overlay overlay { get; construct; }
+			public Traits.Game.SupportsOverlays.Overlay overlay { get; construct; }
 
-			public OverlayRow(Game.Overlay overlay)
+			public OverlayRow(Traits.Game.SupportsOverlays.Overlay overlay)
 			{
 				Object(overlay: overlay);
 			}
@@ -275,7 +276,7 @@ namespace GameHub.UI.Dialogs
 
 				var enabled = new Switch();
 				enabled.active = overlay.enabled;
-				enabled.sensitive = overlay.id != Game.Overlay.BASE;
+				enabled.sensitive = overlay.id != Traits.Game.SupportsOverlays.Overlay.BASE;
 				enabled.valign = Align.CENTER;
 
 				grid.attach(name, 0, 0);

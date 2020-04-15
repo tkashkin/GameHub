@@ -19,6 +19,10 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Utils;
+
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
+
 using GameHub.Data.Sources.GOG;
 
 namespace GameHub.Data.Compat
@@ -80,21 +84,21 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		public override bool can_install(Runnable runnable)
+		public override bool can_install(Traits.SupportsCompatTools runnable, InstallTask task)
 		{
 			return installed && runnable != null && runnable is GOGGame && wrappers.has_key(runnable.id);
 		}
 
-		public override async void install(Runnable runnable, File installer)
+		public override async void install(Traits.SupportsCompatTools runnable, InstallTask task, File installer)
 		{
-			if(!can_install(runnable)) return;
+			if(!can_install(runnable, task)) return;
 
-			var wrapper_dir = FSUtils.mkdir(FSUtils.Paths.Cache.WineWrap, runnable.id);
+			var wrapper_dir = FS.mkdir(FS.Paths.Cache.WineWrap, runnable.id);
 
-			FSUtils.rm(wrapper_dir.get_path(), "*", "-rf");
+			FS.rm(wrapper_dir.get_path(), "*", "-rf");
 
 			var wrapper_remote = File.new_for_uri(wrappers.get(runnable.id));
-			var wrapper_local = FSUtils.file(wrapper_dir.get_path(), @"/winewrap_$(runnable.id).tar.xz");
+			var wrapper_local = FS.file(wrapper_dir.get_path(), @"/winewrap_$(runnable.id).tar.xz");
 
 			try
 			{
@@ -110,9 +114,9 @@ namespace GameHub.Data.Compat
 				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_BUILDPATH", runnable.install_dir.get_parent().get_path());
 				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_SKIP_CHECKSUMS", "1");
 
-				FSUtils.rm(runnable.install_dir.get_path(), null, "-rf");
+				FS.rm(runnable.install_dir.get_path(), null, "-rf");
 
-				cmd = { "bash", "-c", "./*_wine.sh -dirname=" + (runnable as GOGGame).escaped_name };
+				cmd = { "bash", "-c", "./*_wine.sh -dirname=" + (runnable as GOGGame).name_escaped };
 				yield Utils.run(cmd).dir(wrapper_dir.get_path()).env(winewrap_env).run_sync_thread();
 
 				runnable.executable = runnable.install_dir.get_child("start.sh");
@@ -123,27 +127,26 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		public override bool can_run(Runnable runnable)
+		public override bool can_run(Traits.SupportsCompatTools runnable)
 		{
-			return can_install(runnable) || runnable.compat_tool == id;
+			return can_install(runnable, null) || runnable.compat_tool == id;
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Traits.SupportsCompatTools runnable)
 		{
 			yield action(runnable, "play");
 		}
 
-		private async void action(Runnable runnable, string action)
+		private async void action(Traits.SupportsCompatTools runnable, string action)
 		{
 			if(!can_run(runnable)) return;
 
 			string[] cmd = { runnable.install_dir.get_child("start.sh").get_path(), action };
 
 			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(runnable.work_dir.get_path());
-			if(runnable is TweakableGame)
-			{
-				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
-			}
+			runnable.cast<Traits.Game.SupportsTweaks>(game => {
+				task.tweaks(game.get_enabled_tweaks(this));
+			});
 			yield task.run_sync_thread();
 		}
 	}

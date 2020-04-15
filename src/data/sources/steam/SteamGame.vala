@@ -19,11 +19,14 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Steam
 {
-	public class SteamGame: Game
+	public class SteamGame: Game,
+		Traits.Game.HasAchievements
 	{
 		private int metadata_tries = 0;
 
@@ -59,22 +62,8 @@ namespace GameHub.Data.Sources.Steam
 		public SteamGame.from_db(Steam src, Sqlite.Statement s)
 		{
 			source = src;
-			id = Tables.Games.ID.get(s);
-			name = Tables.Games.NAME.get(s);
-			info = Tables.Games.INFO.get(s);
-			info_detailed = Tables.Games.INFO_DETAILED.get(s);
-			info = Tables.Games.INFO.get(s);
-			info_detailed = Tables.Games.INFO_DETAILED.get(s);
-			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
-			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
-			arguments = Tables.Games.ARGUMENTS.get(s);
-			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
-			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
-			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
 
-			icon = Tables.Games.ICON.get(s);
-			image = Tables.Games.IMAGE.get(s);
-			image_vertical = Tables.Games.IMAGE_VERTICAL.get(s);
+			dbinit(s);
 
 			if(image == null || image == "")
 			{
@@ -84,34 +73,6 @@ namespace GameHub.Data.Sources.Steam
 			if(image_vertical == null || image_vertical == "")
 			{
 				image_vertical = @"http://cdn.akamai.steamstatic.com/steam/apps/$(id)/library_600x900_2x.jpg";
-			}
-
-			platforms.clear();
-			var pls = Tables.Games.PLATFORMS.get(s).split(",");
-			foreach(var pl in pls)
-			{
-				foreach(var p in Platform.PLATFORMS)
-				{
-					if(pl == p.id())
-					{
-						platforms.add(p);
-						break;
-					}
-				}
-			}
-
-			tags.clear();
-			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
-			foreach(var tid in tag_ids)
-			{
-				foreach(var t in Tables.Tags.TAGS)
-				{
-					if(tid == t.id)
-					{
-						if(!tags.contains(t)) tags.add(t);
-						break;
-					}
-				}
 			}
 
 			store_page = @"steam://store/$(id)";
@@ -143,15 +104,14 @@ namespace GameHub.Data.Sources.Steam
 			File? dir;
 			Steam.find_app_install_dir(id, out dir);
 			install_dir = dir;
-			work_dir = dir;
 
-			var appinfo = Steam.get_appinfo(id);
+			/*var appinfo = Steam.get_appinfo(id);
 			if(appinfo != null)
 			{
-				//appinfo.show();
-			}
+				appinfo.show();
+			}*/
 
-			screenshots_dir = FSUtils.find_case_insensitive(Steam.get_userdata_dir(), @"760/remote/$(id)/screenshots");
+			screenshots_dir = FS.find_case_insensitive(Steam.get_userdata_dir(), @"760/remote/$(id)/screenshots");
 
 			if(game_info_updated)
 			{
@@ -259,9 +219,15 @@ namespace GameHub.Data.Sources.Steam
 			status = new Game.Status(state, this);
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public override async void install(InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE)
 		{
 			Steam.install_app(id);
+			update_status();
+		}
+
+		public override async void uninstall()
+		{
+			Utils.open_uri(@"steam://uninstall/$(id)");
 			update_status();
 		}
 
@@ -274,19 +240,11 @@ namespace GameHub.Data.Sources.Steam
 			update_status();
 		}
 
-		public override async void run_with_compat(bool is_opened_from_menu=false)
-		{
-			yield run();
-		}
-
-		public override async void uninstall()
-		{
-			Utils.open_uri(@"steam://uninstall/$(id)");
-			update_status();
-		}
+		// Achievements
 
 		private bool loading_achievements = false;
-		public override async ArrayList<Game.Achievement>? load_achievements()
+		public ArrayList<Traits.Game.HasAchievements.Achievement>? achievements { get; protected set; default = null; }
+		public override async ArrayList<Traits.Game.HasAchievements.Achievement>? load_achievements()
 		{
 			if(achievements != null || loading_achievements)
 			{
@@ -330,7 +288,7 @@ namespace GameHub.Data.Sources.Steam
 			}
 			var global_percentages = global_percentages_obj.get_array_member("achievements");
 
-			var _achievements = new ArrayList<Game.Achievement>();
+			var _achievements = new ArrayList<Traits.Game.HasAchievements.Achievement>();
 
 			foreach(var s_achievement_node in schema_achievements.get_elements())
 			{
@@ -394,10 +352,7 @@ namespace GameHub.Data.Sources.Steam
 			return achievements;
 		}
 
-		public override void import(bool update=true){}
-		public override void choose_executable(bool update=true){}
-
-		public class Achievement: Game.Achievement
+		public class Achievement: Traits.Game.HasAchievements.Achievement
 		{
 			public int64 unlock_timestamp;
 

@@ -17,7 +17,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.GOG
@@ -57,6 +59,7 @@ namespace GameHub.Data.Sources.GOG
 			instance = this;
 
 			settings = Settings.Auth.GOG.instance;
+
 			var access_token = settings.access_token;
 			var refresh_token = settings.refresh_token;
 			if(access_token.length > 0 && refresh_token.length > 0)
@@ -382,6 +385,55 @@ namespace GameHub.Data.Sources.GOG
 			yield;
 
 			return _games;
+		}
+
+		public override ArrayList<File>? game_dirs
+		{
+			owned get
+			{
+				ArrayList<File>? dirs = null;
+
+				var paths = GameHub.Settings.Paths.GOG.instance.game_directories;
+				if(paths != null && paths.length > 0)
+				{
+					foreach(var path in paths)
+					{
+						if(path != null && path.length > 0)
+						{
+							var dir = FS.file(path);
+							if(dir != null)
+							{
+								if(dirs == null) dirs = new ArrayList<File>();
+								dirs.add(dir);
+							}
+						}
+					}
+				}
+
+				return dirs;
+			}
+		}
+
+		public override File? default_game_dir
+		{
+			owned get
+			{
+				var path = GameHub.Settings.Paths.GOG.instance.default_game_directory;
+				if(path != null && path.length > 0)
+				{
+					var dir = FS.file(path);
+					if(dir != null && dir.query_exists())
+					{
+						return dir;
+					}
+				}
+				var dirs = game_dirs;
+				if(dirs != null && dirs.size > 0)
+				{
+					return dirs.first();
+				}
+				return null;
+			}
 		}
 
 		private class PlayerStatItem

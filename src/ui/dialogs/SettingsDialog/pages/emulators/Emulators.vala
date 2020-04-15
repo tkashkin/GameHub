@@ -50,7 +50,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 		construct
 		{
-			var paths = FSUtils.Paths.Settings.instance;
+			var paths = FS.Paths.Settings.instance;
 
 			var content_hbox = new Box(Orientation.HORIZONTAL, 0);
 

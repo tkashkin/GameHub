@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gee;
 
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.Data.Compat
@@ -50,7 +51,7 @@ namespace GameHub.Data.Compat
 			CompatTool.Option[] options = {};
 			additional_configs.clear();
 
-			foreach(var data_dir in FSUtils.get_data_dirs("compat/dosbox"))
+			foreach(var data_dir in FS.get_data_dirs("compat/dosbox"))
 			{
 				if(GameHub.Application.log_verbose)
 				{
@@ -148,13 +149,13 @@ namespace GameHub.Data.Compat
 			return false;
 		}
 
-		public override bool can_run(Runnable runnable)
+		public override bool can_run(Traits.SupportsCompatTools runnable)
 		{
 			return installed && runnable is Game && runnable.install_dir != null && runnable.install_dir.query_exists()
 				&& (is_dos_executable(runnable.executable) || find_configs(runnable.install_dir).size > 0);
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Traits.SupportsCompatTools runnable)
 		{
 			if(!can_run(runnable)) return;
 
@@ -209,17 +210,16 @@ namespace GameHub.Data.Compat
 				}
 			}
 
-			var bundled_win_dosbox = FSUtils.find_case_insensitive(runnable.install_dir, "dosbox/dosbox.exe");
+			var bundled_win_dosbox = FS.find_case_insensitive(runnable.install_dir, "dosbox/dosbox.exe");
 			if(bundled_win_dosbox != null && bundled_win_dosbox.query_exists())
 			{
 				wdir = bundled_win_dosbox.get_parent();
 			}
 
 			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(wdir.get_path());
-			if(runnable is TweakableGame)
-			{
-				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
-			}
+			runnable.cast<Traits.Game.SupportsTweaks>(game => {
+				task.tweaks(game.get_enabled_tweaks(this));
+			});
 			yield task.run_sync_thread();
 		}
 	}

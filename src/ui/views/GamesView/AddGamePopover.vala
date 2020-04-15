@@ -174,8 +174,8 @@ namespace GameHub.UI.Views.GamesView
 			#else
 			hide();
 			#endif
-			var dlg = new UI.Dialogs.ImportEmulatedGamesDialog();
-			dlg.game_added.connect(g => game_added(g));
+			/*var dlg = new UI.Dialogs.ImportEmulatedGamesDialog();
+			dlg.game_added.connect(g => game_added(g));*/
 		}
 
 		private void start_images_download()

@@ -40,7 +40,7 @@ namespace GameHub.Data.DB
 		{
 			instance = this;
 
-			var path = FSUtils.expand(FSUtils.Paths.Cache.Database);
+			var path = FS.expand(FS.Paths.Cache.Database);
 
 			var db_file = File.new_for_path(path);
 			var db_backup = db_file.get_parent().get_child(db_file.get_basename() + ".old");
@@ -67,7 +67,7 @@ namespace GameHub.Data.DB
 				}
 			}
 
-			TABLES = { new Tables.Games(), new Tables.Tags(), new Tables.Merges(), new Tables.Emulators(), new Tables.IGDBData() };
+			TABLES = { new Tables.Games(), new Tables.Tags(), new Tables.Merges(), /*new Tables.Emulators(),*/ new Tables.IGDBData() };
 
 			migrate();
 			init();

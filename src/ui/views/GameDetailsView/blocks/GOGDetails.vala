@@ -21,6 +21,7 @@ using Gdk;
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Data.Sources.GOG;
 
 using GameHub.UI.Widgets;
@@ -42,11 +43,8 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		construct
 		{
 			if(!supports_game) return;
-
-			var gog_game = game as GOGGame;
-
+			var gog_game = game.cast<GOGGame>();
 			var root = Parser.parse_json(game.info_detailed);
-
 			if(root == null || gog_game == null) return;
 
 			get_style_context().add_class("gameinfo-sidebar-block");
@@ -371,7 +369,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					return true;
 				});
 
-				dlc.status_change.connect(() => {
+				dlc.notify["status"].connect(() => {
 					Idle.add(() => {
 						status_icon.icon_name = dlc.status.state == Game.State.INSTALLED ? "process-completed-symbolic" : "folder-download-symbolic";
 						status_icon.opacity = dlc.is_installable ? 1 : 0.6;

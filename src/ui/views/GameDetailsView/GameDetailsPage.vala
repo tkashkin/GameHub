@@ -21,6 +21,7 @@ using Gdk;
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 using GameHub.UI.Views.GamesView;
@@ -273,7 +274,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void set_visible_widgets(Game.Status s)
 		{
-			status.label = s.description;
+			/*status.label = s.description;
 			download_progress.hide();
 			if(s.state == Game.State.DOWNLOADING && s.download != null && s.download.status != null)
 			{
@@ -318,7 +319,7 @@ namespace GameHub.UI.Views.GameDetailsView
 						break;
 					}
 				}
-			}
+			}*/
 		}
 
 		public void update()
@@ -399,9 +400,9 @@ namespace GameHub.UI.Views.GameDetailsView
 				}
 			}
 
-			game.status_change.connect(s => {
+			game.notify["status"].connect(() => {
 				Idle.add(() => {
-					set_visible_widgets(s);
+					set_visible_widgets(game.status);
 					return Source.REMOVE;
 				});
 			});
@@ -418,98 +419,98 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void install_game()
 		{
-			if(_game != null && game.status.state == Game.State.UNINSTALLED)
+			/*if(_game != null && game.status.state == Game.State.UNINSTALLED)
 			{
 				game.install.begin();
-			}
+			}*/
 		}
 
 		private void game_properties()
 		{
-			if(_game != null)
+			/*if(_game != null)
 			{
 				new Dialogs.GamePropertiesDialog(game).show_all();
-			}
+			}*/
 		}
 
 		private void open_game_directory()
 		{
-			if(_game != null && game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
+			/*if(_game != null && game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
 			{
 				Utils.open_uri(game.install_dir.get_uri());
-			}
+			}*/
 		}
 
 		private void open_installer_collection_directory()
 		{
-			if(_game != null && game.installers_dir != null && game.installers_dir.query_exists())
+			/*if(_game != null && game.installers_dir != null && game.installers_dir.query_exists())
 			{
 				Utils.open_uri(game.installers_dir.get_uri());
-			}
+			}*/
 		}
 
 		private void open_bonus_collection_directory()
 		{
-			if(_game != null && game is GameHub.Data.Sources.GOG.GOGGame)
+			/*if(_game != null && game is GameHub.Data.Sources.GOG.GOGGame)
 			{
 				var gog_game = game as GameHub.Data.Sources.GOG.GOGGame;
 				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
 				{
 					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
 				}
-			}
+			}*/
 		}
 
 		private void open_screenshots_directory()
 		{
-			if(_game != null && game is GameHub.Data.Sources.Steam.SteamGame)
+			/*if(_game != null && game is GameHub.Data.Sources.Steam.SteamGame)
 			{
 				var steam_game = game as GameHub.Data.Sources.Steam.SteamGame;
 				if(steam_game != null && steam_game.screenshots_dir != null && steam_game.screenshots_dir.query_exists())
 				{
 					Utils.open_uri(steam_game.screenshots_dir.get_uri());
 				}
-			}
+			}*/
 		}
 
 		private void open_game_store_page()
 		{
-			if(_game != null && game.store_page != null)
+			/*if(_game != null && game.store_page != null)
 			{
 				Utils.open_uri(game.store_page);
-			}
+			}*/
 		}
 
 		private void run_game()
 		{
-			if(_game != null && game.status.state == Game.State.INSTALLED)
+			/*if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
 				game.run.begin();
-			}
+			}*/
 		}
 
 		private void run_game_with_compat()
 		{
-			if(_game != null && game.status.state == Game.State.INSTALLED)
+			/*if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
 				game.run_with_compat.begin(false);
-			}
+			}*/
 		}
 
 		private void uninstall_game()
 		{
-			if(_game != null && game.status.state == Game.State.INSTALLED)
+			/*if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
 				game.uninstall.begin();
-			}
+			}*/
 		}
 
 		private void open_context_menu(Event e, bool at_pointer=true)
 		{
-			if(_game != null)
+			/*if(_game != null)
 			{
 				new GameContextMenu(game, this).open(e, at_pointer);
-			}
+			}*/
 		}
 
 		private delegate void Action();

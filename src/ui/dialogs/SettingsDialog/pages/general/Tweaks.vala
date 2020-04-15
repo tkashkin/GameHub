@@ -41,7 +41,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 		{
 			root_grid.margin = 0;
 			header_grid.margin = 12;
-			header_grid.margin_bottom = 0;
 			content_area.margin = 0;
 
 			var header = add_header(_("Tweaks"));
@@ -73,7 +72,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 		private void add_dirs_info()
 		{
-			var dirs = FSUtils.get_data_dirs("tweaks", true);
+			var dirs = FS.get_data_dirs("tweaks", true);
 			var last_dir = dirs.last();
 
 			var dirs_tooltip = """<span size="smaller" weight="600">%s</span>""".printf(_("Tweaks are loaded from following directories in order\nLast tweak overrides previous tweaks with same identifiers")) + "\n";

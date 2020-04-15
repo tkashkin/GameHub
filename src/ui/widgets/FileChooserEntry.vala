@@ -101,7 +101,7 @@ namespace GameHub.UI.Widgets
 			}
 			else if(path.has_prefix("/") || path.has_prefix("~"))
 			{
-				file = FSUtils.file(path);
+				file = FS.file(path);
 				uri = file.get_uri();
 			}
 			else if(allow_executable && path.length > 0)
@@ -113,7 +113,7 @@ namespace GameHub.UI.Widgets
 				}
 				else
 				{
-					file = FSUtils.file("/usr/bin", text);
+					file = FS.file("/usr/bin", text);
 				}
 				uri = file.get_uri();
 			}

@@ -17,14 +17,35 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
 using GameHub.Utils;
+using GameHub.Utils.FS;
 
 namespace GameHub.Data.Sources.User
 {
-	public class UserGame: Game, TweakableGame
+	public class UserGame: Game,
+		Traits.HasExecutableFile, Traits.SupportsCompatTools,
+		Traits.Game.SupportsOverlays, Traits.Game.SupportsTweaks
 	{
-		public string[]? tweaks { get; set; default = null; }
+		// Traits.HasExecutableFile
+		public override string? executable_path { owned get; set; }
+		public override string? work_dir_path { owned get; set; }
+		public override string? arguments { owned get; set; }
+
+		// Traits.SupportsCompatTools
+		public override string? compat_tool { get; set; }
+		public override string? compat_tool_settings { get; set; }
+
+		// Traits.Game.SupportsOverlays
+		public override ArrayList<Traits.Game.SupportsOverlays.Overlay> overlays { get; set; default = new ArrayList<Traits.Game.SupportsOverlays.Overlay>(); }
+		protected override FSOverlay? fs_overlay { get; set; }
+		protected override string? fs_overlay_last_options { get; set; }
+
+		// Traits.Game.SupportsTweaks
+		public override string[]? tweaks { get; set; default = null; }
 
 		private bool is_removed = false;
 		public signal void removed();
@@ -72,56 +93,11 @@ namespace GameHub.Data.Sources.User
 		public UserGame.from_db(User src, Sqlite.Statement s)
 		{
 			source = src;
-			id = Tables.Games.ID.get(s);
-			name = Tables.Games.NAME.get(s);
-			info = Tables.Games.INFO.get(s);
-			info_detailed = Tables.Games.INFO_DETAILED.get(s);
-			icon = Tables.Games.ICON.get(s);
-			image = Tables.Games.IMAGE.get(s);
-			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
-			executable_path = Tables.Games.EXECUTABLE.get(s);
-			work_dir_path = Tables.Games.WORK_DIR.get(s);
-			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
-			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
-			arguments = Tables.Games.ARGUMENTS.get(s);
-			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
-			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
-			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
-			image_vertical = Tables.Games.IMAGE_VERTICAL.get(s);
 
-			platforms.clear();
-			var pls = Tables.Games.PLATFORMS.get(s).split(",");
-			foreach(var pl in pls)
-			{
-				foreach(var p in Platform.PLATFORMS)
-				{
-					if(pl == p.id())
-					{
-						platforms.add(p);
-						break;
-					}
-				}
-			}
-
-			tags.clear();
-			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
-			foreach(var tid in tag_ids)
-			{
-				foreach(var t in Tables.Tags.TAGS)
-				{
-					if(tid == t.id)
-					{
-						if(!tags.contains(t)) tags.add(t);
-						break;
-					}
-				}
-			}
-
-			var tweaks_string = Tables.Games.TWEAKS.get(s);
-			if(tweaks_string != null)
-			{
-				tweaks = tweaks_string.split(",");
-			}
+			dbinit(s);
+			dbinit_executable(s);
+			dbinit_compat(s);
+			dbinit_tweaks(s);
 
 			mount_overlays.begin();
 			update_status();
@@ -141,14 +117,14 @@ namespace GameHub.Data.Sources.User
 			save();
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public override async void install(InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE)
 		{
-			yield update_game_info();
+			/*yield update_game_info();
 			if(installer == null) return;
 			var installers = new ArrayList<Runnable.Installer>();
 			installers.add(installer);
 			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
-			yield;
+			yield;*/
 		}
 
 		public override async void uninstall()
@@ -188,15 +164,12 @@ namespace GameHub.Data.Sources.User
 			}
 		}
 
-		public class Installer: Runnable.FileInstaller
+		public class Installer: FileInstaller
 		{
-			private string game_name;
-			public override string name { owned get { return game_name; } }
-
 			public Installer(UserGame game, File installer)
 			{
-				game_name = game.name;
 				id = "installer";
+				name = game.name;
 				platform = installer.get_path().down().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
 				file = installer;
 			}

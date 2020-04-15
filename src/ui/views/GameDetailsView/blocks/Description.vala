@@ -27,6 +27,7 @@ using WebKit;
 #endif
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Humble;
 
 namespace GameHub.UI.Views.GameDetailsView.Blocks

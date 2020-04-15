@@ -18,9 +18,11 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Utils;
 using GameHub.Data;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 
 namespace GameHub.Data.Sources.Itch
 {
@@ -69,14 +71,14 @@ namespace GameHub.Data.Sources.Itch
 
 			if(butler == null || !butler.query_exists())
 			{
-				var version_file = FSUtils.file(FSUtils.Paths.Itch.Home, FSUtils.Paths.Itch.ButlerCurrentVersion);
+				var version_file = FS.file(GameHub.Settings.Paths.Itch.instance.home, FS.Paths.Itch.ButlerCurrentVersion);
 				if(version_file != null && version_file.query_exists())
 				{
 					try
 					{
 						string version;
 						FileUtils.get_contents(version_file.get_path(), out version);
-						butler = FSUtils.file(FSUtils.Paths.Itch.Home, FSUtils.Paths.Itch.ButlerExecutable.printf(version));
+						butler = FS.file(GameHub.Settings.Paths.Itch.instance.home, FS.Paths.Itch.ButlerExecutable.printf(version));
 					}
 					catch(Error e)
 					{
@@ -239,11 +241,11 @@ namespace GameHub.Data.Sources.Itch
 				switch(method)
 				{
 					case "ShellLaunch":
-						file = FSUtils.file(args.get_string_member("itemPath"));
+						file = FS.file(args.get_string_member("itemPath"));
 						break;
 
 					case "HTMLLaunch":
-						file = FSUtils.file(args.get_string_member("rootFolder"), args.get_string_member("indexPath"));
+						file = FS.file(args.get_string_member("rootFolder"), args.get_string_member("indexPath"));
 						break;
 
 					case "URLLaunch":

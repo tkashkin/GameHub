@@ -19,21 +19,20 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 
-using GLib;
 using Gee;
-using GameHub.Utils;
-using GameHub.UI.Widgets;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Steam;
+
+using GameHub.Utils;
+using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs
 {
 	public class CompatRunDialog: Dialog
 	{
-		public bool is_opened_from_menu { get; construct; default = false; }
-
-		public Runnable game { get; construct; }
+		public Traits.SupportsCompatTools runnable { get; construct; }
 		public Game? emulated_game { get; construct; }
 		public bool launch_in_game_dir { get; construct; }
 
@@ -43,9 +42,9 @@ namespace GameHub.UI.Dialogs
 
 		private CompatToolPicker compat_tool_picker;
 
-		public CompatRunDialog(Runnable game, bool is_opened_from_menu=false, Game? emulated_game=null, bool launch_in_game_dir=false)
+		public CompatRunDialog(Traits.SupportsCompatTools runnable, bool is_opened_from_menu=false, Game? emulated_game=null, bool launch_in_game_dir=false)
 		{
-			Object(game: game, emulated_game: emulated_game, launch_in_game_dir: launch_in_game_dir, transient_for: Windows.MainWindow.instance, resizable: false, title: _("Run with compatibility layer"), is_opened_from_menu: is_opened_from_menu);
+			Object(transient_for: Windows.MainWindow.instance, resizable: false, use_header_bar: 1, title: _("Run with compatibility layer"));
 		}
 
 		construct
@@ -58,7 +57,7 @@ namespace GameHub.UI.Dialogs
 			var hbox = new Box(Orientation.HORIZONTAL, 8);
 			hbox.margin_start = hbox.margin_end = 5;
 
-			content = new Box(Orientation.VERTICAL, 0);
+			/*content = new Box(Orientation.VERTICAL, 0);
 
 			title_label = Styled.H2Label(game.name);
 			title_label.margin_start = 4;
@@ -116,7 +115,7 @@ namespace GameHub.UI.Dialogs
 					return Source.REMOVE;
 				});
 				return;
-			}
+			}*/
 
 			show_all();
 		}
@@ -125,9 +124,9 @@ namespace GameHub.UI.Dialogs
 		{
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 
-			Runnable.IsLaunched = game.is_running = true;
+			//Runnable.IsLaunched = game.is_running = true;
 
-			if(game is Emulator)
+			/*if(game is Emulator)
 			{
 				emulated_game.is_running = true;
 				emulated_game.update_status();
@@ -141,8 +140,8 @@ namespace GameHub.UI.Dialogs
 					destroy();
 				});
 			}
-			else
-			{
+			else*/
+			/*{
 				game.update_status();
 				(game as Game).last_launch = get_real_time() / 1000000;
 				game.save();
@@ -157,7 +156,7 @@ namespace GameHub.UI.Dialogs
 					game.save();
 					destroy();
 				});
-			}
+			}*/
 
 			opts_list.save_options();
 		}

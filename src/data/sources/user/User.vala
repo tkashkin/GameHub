@@ -17,7 +17,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.User

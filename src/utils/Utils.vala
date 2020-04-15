@@ -17,6 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using Gee;
 
 using GameHub.Data;
 using GameHub.Data.Tweaks;
@@ -86,6 +87,7 @@ namespace GameHub.Utils
 		private string[] _cmd;
 		private string? _dir = null;
 		private string[]? _env = null;
+		private HashMap<string, string>? _env_vars = null;
 		private bool _override_runtime = false;
 		private bool _log = true;
 		private Tweak[]? _tweaks = null;
@@ -95,6 +97,7 @@ namespace GameHub.Utils
 		public RunTask cmd(string[] cmd) { _cmd = cmd; return this; }
 		public RunTask dir(string? dir=null) { _dir = dir; return this; }
 		public RunTask env(string[]? env=null) { _env = env; return this; }
+		public RunTask env_var(string name, string? value=null) { if(_env_vars == null) _env_vars = new HashMap<string, string>(); _env_vars.set(name, value); return this; }
 		public RunTask override_runtime(bool override_runtime=false) { _override_runtime = override_runtime; return this; }
 		public RunTask log(bool log=true) { _log = log; return this; }
 		public RunTask tweaks(Tweak[]? tweaks=null) { _tweaks = tweaks; return this; }
@@ -116,6 +119,21 @@ namespace GameHub.Utils
 			_env = Environ.unset_variable(_env, "LD_LIBRARY_PATH");
 			_env = Environ.unset_variable(_env, "LD_PRELOAD");
 			#endif
+
+			if(_env_vars != null)
+			{
+				foreach(var env_var in _env_vars.entries)
+				{
+					if(env_var.value != null)
+					{
+						_env = Environ.set_variable(_env, env_var.key, env_var.value);
+					}
+					else
+					{
+						_env = Environ.unset_variable(_env, env_var.key);
+					}
+				}
+			}
 
 			if(_tweaks != null)
 			{

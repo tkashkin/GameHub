@@ -19,8 +19,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 
-
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.UI.Widgets
@@ -28,11 +28,11 @@ namespace GameHub.UI.Widgets
 	public class CompatToolOptions: ListBox
 	{
 		private CompatToolPicker compat_tool_picker;
-		private Runnable runnable;
+		private Traits.SupportsCompatTools runnable;
 		private bool install;
 		private string settings_key;
 
-		public CompatToolOptions(Runnable runnable, CompatToolPicker picker, bool install = false)
+		public CompatToolOptions(Traits.SupportsCompatTools runnable, CompatToolPicker picker, bool install = false)
 		{
 			this.runnable = runnable;
 			this.compat_tool_picker = picker;
@@ -67,7 +67,7 @@ namespace GameHub.UI.Widgets
 					}
 					else if(opt is CompatTool.FileOption)
 					{
-						((CompatTool.FileOption) opt).file = FSUtils.file(ts_options.get_string_member(opt.name));
+						((CompatTool.FileOption) opt).file = FS.file(ts_options.get_string_member(opt.name));
 					}
 					else if(opt is CompatTool.ComboOption)
 					{

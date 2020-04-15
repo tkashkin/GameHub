@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Itch
@@ -154,7 +155,7 @@ namespace GameHub.Data.Sources.Itch
 
 		public async void install(int game_id, int upload_id, string install_id)
 		{
-			var install_dir = FSUtils.mkdir(FSUtils.Paths.Itch.Games);
+			/*var install_dir = FS.mkdir(FS.Paths.Itch.Games);
 			var install_dir_is_added = false;
 			string? install_location_id = null;
 
@@ -194,7 +195,7 @@ namespace GameHub.Data.Sources.Itch
 			yield client.call("Install.Perform", Parser.json(j => j
 				.set_member_name("id").add_string_value(install_id)
 				.set_member_name("stagingFolder").add_string_value(staging_folder)
-			));
+			));*/
 		}
 
 		public async bool cancel_install(string id)
@@ -214,11 +215,11 @@ namespace GameHub.Data.Sources.Itch
 
 		public async void run(string cave_id)
 		{
-			var prereqs_dir = FSUtils.expand(FSUtils.Paths.Itch.Games, ".prereqs");
+			/*var prereqs_dir = FS.expand(FS.Paths.Itch.Games, ".prereqs");
 			yield client.call("Launch", Parser.json(j => j
 				.set_member_name("caveId").add_string_value(cave_id)
 				.set_member_name("prereqsDir").add_string_value(prereqs_dir)
-			));
+			));*/
 		}
 	}
 

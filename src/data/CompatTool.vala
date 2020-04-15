@@ -18,6 +18,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gee;
 
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
+
 using GameHub.Utils;
 
 namespace GameHub.Data
@@ -36,18 +39,16 @@ namespace GameHub.Data
 
 		public string[]? warnings = null;
 
-		public virtual bool can_install(Runnable runnable) { return false; }
-		public virtual bool can_run(Runnable runnable) { return false; }
-		public virtual bool can_run_action(Runnable runnable, Runnable.RunnableAction action) { return false; }
+		public virtual bool can_install(Traits.SupportsCompatTools runnable, InstallTask task) { return false; }
+		public virtual bool can_run(Traits.SupportsCompatTools runnable) { return false; }
+		public virtual bool can_run_action(Traits.SupportsCompatTools runnable, Traits.HasActions.Action action) { return false; }
 
-		public virtual File get_install_root(Runnable runnable) { return runnable.install_dir; }
+		public virtual async void install(Traits.SupportsCompatTools runnable, InstallTask task, File installer){}
+		public virtual async void run(Traits.SupportsCompatTools game){}
+		public virtual async void run_action(Traits.SupportsCompatTools runnable, Traits.HasActions.Action action){}
+		//public virtual async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false){}
 
-		public virtual async void install(Runnable runnable, File installer){}
-		public virtual async void run(Runnable game){}
-		public virtual async void run_action(Runnable runnable, Runnable.RunnableAction action){}
-		public virtual async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false){}
-
-		protected string[] combine_cmd_with_args(string[] cmd, Runnable runnable, string[]? args_override=null)
+		protected string[] combine_cmd_with_args(string[] cmd, Traits.SupportsCompatTools runnable, string[]? args_override=null)
 		{
 			string[] full_cmd = cmd;
 
@@ -76,7 +77,7 @@ namespace GameHub.Data
 					{
 						if("$" in arg)
 						{
-							arg = FSUtils.expand(arg, null, variables);
+							arg = FS.expand(arg, null, variables);
 						}
 						full_cmd += arg;
 					}
@@ -146,7 +147,7 @@ namespace GameHub.Data
 
 		public class Action: Object
 		{
-			public delegate void Delegate(Runnable runnable);
+			public delegate void Delegate(Traits.SupportsCompatTools runnable);
 			public string name { get; construct; }
 			public string description { get; construct; }
 			private Delegate action;
@@ -155,7 +156,7 @@ namespace GameHub.Data
 				Object(name: name, description: description);
 				this.action = (owned) action;
 			}
-			public void invoke(Runnable runnable)
+			public void invoke(Traits.SupportsCompatTools runnable)
 			{
 				action(runnable);
 			}

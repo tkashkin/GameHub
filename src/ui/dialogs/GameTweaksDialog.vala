@@ -22,6 +22,7 @@ using Gee;
 
 using GameHub.Data;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -29,13 +30,13 @@ namespace GameHub.UI.Dialogs
 {
 	public class GameTweaksDialog: Dialog
 	{
-		public TweakableGame? game { get; construct; }
+		public Traits.Game.SupportsTweaks? game { get; construct; }
 
 		private Box content;
 		private TweaksList tweaks_list;
 		private ScrolledWindow tweaks_list_scroll;
 
-		public GameTweaksDialog(TweakableGame? game)
+		public GameTweaksDialog(Traits.Game.SupportsTweaks? game)
 		{
 			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("%s: Tweaks").printf(game.name), game: game);
 		}

@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gee;
 
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.Data.Compat
@@ -53,13 +54,13 @@ namespace GameHub.Data.Compat
 			return false;
 		}
 
-		public override bool can_run(Runnable runnable)
+		public override bool can_run(Traits.SupportsCompatTools runnable)
 		{
 			return installed && runnable is Game
 				&& (scummvm_detect(runnable.install_dir) || scummvm_detect(runnable.install_dir.get_child("data")));
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Traits.SupportsCompatTools runnable)
 		{
 			if(!can_run(runnable)) return;
 
@@ -74,10 +75,9 @@ namespace GameHub.Data.Compat
 			string[] cmd = { executable.get_path(), "--auto-detect" };
 
 			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(dir.get_path());
-			if(runnable is TweakableGame)
-			{
-				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
-			}
+			runnable.cast<Traits.Game.SupportsTweaks>(game => {
+				task.tweaks(game.get_enabled_tweaks(this));
+			});
 			yield task.run_sync_thread();
 		}
 	}

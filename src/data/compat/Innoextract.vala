@@ -18,6 +18,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using GameHub.Utils;
 
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
+
 using GameHub.Data.Sources.Steam;
 
 namespace GameHub.Data.Compat
@@ -59,14 +62,14 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		public override bool can_install(Runnable runnable)
+		public override bool can_install(Traits.SupportsCompatTools runnable, InstallTask task)
 		{
 			return installed && runnable != null && Platform.WINDOWS in runnable.platforms;
 		}
 
-		public override async void install(Runnable runnable, File installer)
+		public override async void install(Traits.SupportsCompatTools runnable, InstallTask task, File installer)
 		{
-			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
+			/*if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
 
 			runnable.install_dir = runnable.install_dir ?? runnable.default_install_dir;
 
@@ -77,10 +80,10 @@ namespace GameHub.Data.Compat
 
 			do
 			{
-				FSUtils.mv_up(runnable.install_dir, "__support");
-				FSUtils.mv_up(runnable.install_dir, "app");
+				FS.mv_up(runnable.install_dir, "__support");
+				FS.mv_up(runnable.install_dir, "app");
 			}
-			while(runnable.install_dir.get_child("__support").query_exists());
+			while(runnable.install_dir.get_child("__support").query_exists());*/
 		}
 	}
 }

@@ -43,7 +43,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = FSUtils.Paths.Settings.instance;
+			var paths = Settings.Paths.Humble.instance;
 
 			humble_auth = Settings.Auth.Humble.instance;
 
@@ -51,7 +51,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			add_separator();
 
-			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; update(); request_restart(); }).get_children().last().data as FileChooserEntry;
+			//games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; update(); request_restart(); }).get_children().last().data as FileChooserEntry;
 
 			status_switch.active = humble_auth.enabled;
 			status_switch.notify["active"].connect(() => {
@@ -75,10 +75,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private void update()
 		{
-			content_area.sensitive = humble_auth.enabled;
+			/*content_area.sensitive = humble_auth.enabled;
 			logout_btn.sensitive = humble_auth.authenticated && humble_auth.access_token.length > 0;
 
-			if(" " in FSUtils.Paths.Settings.instance.humble_games)
+			if(" " in FS.Paths.Settings.instance.humble_games)
 			{
 				games_dir_chooser.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
 				status_type = StatusType.ERROR;
@@ -101,7 +101,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			else
 			{
 				status = description = _("Authenticated");
-			}
+			}*/
 		}
 
 	}

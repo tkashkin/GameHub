@@ -47,7 +47,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 		{
 			root_grid.margin = 0;
 			header_grid.margin = 12;
-			header_grid.margin_bottom = 0;
 			content_area.margin = 0;
 
 			igdb = Settings.Providers.Data.IGDB.instance;

@@ -21,6 +21,7 @@ using Sqlite;
 
 using GameHub.Utils;
 
+using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
@@ -195,16 +196,33 @@ namespace GameHub.Data.DB.Tables
 				tags += t.id;
 			}
 
+			string? install_dir = game.install_dir == null ? null : game.install_dir.get_path();
+			string? work_dir = null;
+			string? executable_path = null;
+			string? arguments = null;
+
+			game.cast<Traits.HasExecutableFile>(game => {
+				work_dir = game.work_dir_path;
+				executable_path = game.executable_path;
+				arguments = game.arguments;
+			});
+
+			string? compat_tool = null;
+			string? compat_tool_settings = null;
+
+			game.cast<Traits.SupportsCompatTools>(game => {
+				compat_tool = game.compat_tool;
+				compat_tool_settings = game.compat_tool_settings;
+			});
+
 			string? tweaks = null;
-			if(game is TweakableGame && ((TweakableGame) game).tweaks != null)
-			{
-				tweaks = "";
-				foreach(var t in ((TweakableGame) game).tweaks)
+
+			game.cast<Traits.Game.SupportsTweaks>(game => {
+				if(game.tweaks != null)
 				{
-					if(tweaks.length > 0) tweaks += ",";
-					tweaks += t;
+					tweaks = string.joinv(",", game.tweaks);
 				}
-			}
+			});
 
 			SOURCE.bind(s, game.source.id);
 			ID.bind(s, game.id);
@@ -214,18 +232,18 @@ namespace GameHub.Data.DB.Tables
 			ICON.bind(s, game.icon);
 			IMAGE.bind(s, game.image);
 			TAGS.bind(s, tags);
-			EXECUTABLE.bind(s, game.executable_path == null ? null : game.executable_path);
-			INSTALL_PATH.bind(s, game.install_dir == null ? null : game.install_dir.get_path());
+			EXECUTABLE.bind(s, executable_path);
+			INSTALL_PATH.bind(s, install_dir);
 			PLATFORMS.bind(s, platforms);
-			COMPAT_TOOL.bind(s, game.compat_tool);
-			COMPAT_TOOL_SETTINGS.bind(s, game.compat_tool_settings);
-			ARGUMENTS.bind(s, game.arguments);
+			COMPAT_TOOL.bind(s, compat_tool);
+			COMPAT_TOOL_SETTINGS.bind(s, compat_tool_settings);
+			ARGUMENTS.bind(s, arguments);
 			LAST_LAUNCH.bind_int64(s, game.last_launch);
 			PLAYTIME_SOURCE.bind_int64(s, game.playtime_source);
 			PLAYTIME_TRACKED.bind_int64(s, game.playtime_tracked);
 			IMAGE_VERTICAL.bind(s, game.image_vertical);
 			TWEAKS.bind(s, tweaks);
-			WORK_DIR.bind(s, game.work_dir == null ? null : game.work_dir_path);
+			WORK_DIR.bind(s, work_dir);
 
 			res = s.step();
 

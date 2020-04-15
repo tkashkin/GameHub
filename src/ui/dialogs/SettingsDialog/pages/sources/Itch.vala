@@ -42,10 +42,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = FSUtils.Paths.Settings.instance;
+			var paths = Settings.Paths.Itch.instance;
 			itch_auth = Settings.Auth.Itch.instance;
 
-			games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.itch_games, v => { paths.itch_games = v; request_restart(); update(); }).get_children().last().data as FileChooserEntry;
+			//games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.itch_games, v => { paths.itch_games = v; request_restart(); update(); }).get_children().last().data as FileChooserEntry;
 
 			add_separator();
 
@@ -54,7 +54,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			add_separator();
 
-			add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.itch_home, v => { paths.itch_home = v; request_restart(); }, false);
+			//add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.itch_home, v => { paths.itch_home = v; request_restart(); }, false);
 
 			status_switch.active = itch_auth.enabled;
 			status_switch.notify["active"].connect(() => {
@@ -68,7 +68,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private void update()
 		{
-			var itch = GameHub.Data.Sources.Itch.Itch.instance;
+			/*var itch = GameHub.Data.Sources.Itch.Itch.instance;
 
 			content_area.sensitive = itch.enabled;
 
@@ -87,7 +87,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			else
 			{
 				status = description = itch.user_name != null ? _("Authenticated as <b>%s</b>").printf(itch.user_name) : _("Authenticated");
-			}
+			}*/
 		}
 
 		protected void add_apikey_entry()

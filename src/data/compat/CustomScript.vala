@@ -17,6 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using GameHub.Utils;
+using GameHub.Data.Runnables;
 using GameHub.Data.Tweaks;
 
 using GameHub.Data.Sources.Steam;
@@ -27,25 +28,32 @@ namespace GameHub.Data.Compat
 	{
 		public const string SCRIPT = "customscript.sh";
 		private const string SCRIPT_TEMPLATE = """#!/bin/bash
-GH_EXECUTABLE="$1"
-GH_INSTALL_DIR="$2"
-GH_GAME_ID="$3"
-GH_GAME_ID_FULL="$4"
-GH_GAME_NAME="$5"
-GH_GAME_NAME_ESCAPED="$6"
+
+# Environment variables passed by GameHub:
+# ${GH_EXECUTABLE}        - path to game executable file
+# ${GH_INSTALL_DIR}       - path to game installation directory
+# ${GH_WORK_DIR}          - path to game working directory
+# ${GH_GAME_ID}           - game id
+# ${GH_GAME_ID_FULL}      - full game id (with source)
+# ${GH_GAME_NAME}         - game name
+# ${GH_GAME_NAME_ESCAPED} - escaped game name
 
 """;
 		private const string EMU_SCRIPT_TEMPLATE = """#!/bin/bash
-GH_EXECUTABLE="$1"
-GH_INSTALL_DIR="$2"
-GH_EMU_ID="$3"
-GH_EMU_NAME="$4"
-GH_GAME_EXECUTABLE="$5"
-GH_GAME_INSTALL_DIR="$6"
-GH_GAME_ID="$7"
-GH_GAME_ID_FULL="$8"
-GH_GAME_NAME="$9"
-GH_GAME_NAME_ESCAPED="${10}"
+
+# Environment variables passed by GameHub:
+# ${GH_EMU_EXECUTABLE}    - path to emulator executable file
+# ${GH_EMU_INSTALL_DIR}   - path to emulator installation directory
+# ${GH_EMU_WORK_DIR}      - path to emulator working directory
+# ${GH_EMU_ID}            - emulator id
+# ${GH_EMU_NAME}          - emulator name
+# ${GH_GAME_EXECUTABLE}   - path to game executable file
+# ${GH_GAME_INSTALL_DIR}  - path to game installation directory
+# ${GH_GAME_WORK_DIR}     - path to game working directory
+# ${GH_GAME_ID}           - game id
+# ${GH_GAME_ID_FULL}      - full game id (with source)
+# ${GH_GAME_NAME}         - game name
+# ${GH_GAME_NAME_ESCAPED} - escaped game name
 
 """;
 
@@ -61,36 +69,44 @@ GH_GAME_NAME_ESCAPED="${10}"
 			};
 		}
 
-		public override bool can_run(Runnable runnable)
+		public override bool can_run(Traits.SupportsCompatTools runnable)
 		{
 			return true;
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Traits.SupportsCompatTools runnable)
 		{
 			if(runnable.install_dir == null || !runnable.install_dir.query_exists()) return;
-			var gh_dir = FSUtils.mkdir(runnable.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
+			var gh_dir = FS.mkdir(runnable.install_dir.get_path(), FS.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
 			{
-				Utils.run({"chmod", "+x", script.get_path()}).run_sync();
-				var executable_path = runnable.executable != null ? runnable.executable.get_path() : "null";
-				string[]? cmd = null;
-				if(runnable is Game)
-				{
-					var game = runnable as Game;
-					cmd = { script.get_path(), executable_path, game.id, game.full_id, game.name, game.escaped_name };
-				}
-				else if(runnable is Emulator)
-				{
-					cmd = { script.get_path(), executable_path, runnable.id, runnable.name };
-				}
+				var task = Utils.run({ script.get_path() }).dir(runnable.install_dir.get_path());
 
-				var task = Utils.run(cmd).dir(runnable.work_dir.get_path());
-				if(runnable is TweakableGame)
-				{
-					task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
-				}
+				runnable.cast<Game>(game => {
+					task.env_var("GH_INSTALL_DIR", game.install_dir.get_path())
+						.env_var("GH_GAME_ID", game.id)
+						.env_var("GH_GAME_ID_FULL", game.full_id)
+						.env_var("GH_GAME_NAME", game.name)
+						.env_var("GH_GAME_NAME_ESCAPED", game.name_escaped);
+
+					game.cast<Traits.HasExecutableFile>(game => {
+						task.env_var("GH_EXECUTABLE", game.executable.get_path())
+							.env_var("GH_WORK_DIR", game.work_dir.get_path());
+					});
+				});
+
+				/*runnable.cast<Emulator>(emu => {
+					task.env_var("GH_EMU_EXECUTABLE", emu.executable.get_path())
+						.env_var("GH_EMU_INSTALL_DIR", emu.install_dir.get_path())
+						.env_var("GH_EMU_WORK_DIR", emu.work_dir.get_path())
+						.env_var("GH_EMU_ID", emu.id)
+						.env_var("GH_EMU_NAME", emu.name);
+				});*/
+
+				runnable.cast<Traits.Game.SupportsTweaks>(game => {
+					task.tweaks(game.get_enabled_tweaks(this));
+				});
 				yield task.run_sync_thread();
 			}
 			else
@@ -99,10 +115,10 @@ GH_GAME_NAME_ESCAPED="${10}"
 			}
 		}
 
-		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
+		/*public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
 		{
 			if(emu.install_dir == null || !emu.install_dir.query_exists()) return;
-			var gh_dir = FSUtils.mkdir(emu.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
+			var gh_dir = FS.mkdir(emu.install_dir.get_path(), FS.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
 			{
@@ -113,35 +129,28 @@ GH_GAME_NAME_ESCAPED="${10}"
 				var dir = game != null && launch_in_game_dir ? game.work_dir : emu.work_dir;
 
 				var task = Utils.run(cmd).dir(dir.get_path());
-				if(game is TweakableGame)
-				{
-					task.tweaks(((TweakableGame) game).get_enabled_tweaks(this));
-				}
+				runnable.cast<Traits.Game.SupportsTweaks>(game => {
+					task.tweaks(game.get_enabled_tweaks(this));
+				});
 				yield task.run_sync_thread();
 			}
 			else
 			{
 				edit_script(emu);
 			}
-		}
+		}*/
 
-		public void edit_script(Runnable runnable)
+		public void edit_script(Traits.SupportsCompatTools runnable)
 		{
 			if(runnable.install_dir == null || !runnable.install_dir.query_exists()) return;
-			var gh_dir = FSUtils.mkdir(runnable.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
+			var gh_dir = FS.mkdir(runnable.install_dir.get_path(), FS.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(!script.query_exists())
 			{
 				try
 				{
-					if(runnable is Game)
-					{
-						FileUtils.set_contents(script.get_path(), SCRIPT_TEMPLATE, SCRIPT_TEMPLATE.length);
-					}
-					else if(runnable is Emulator)
-					{
-						FileUtils.set_contents(script.get_path(), EMU_SCRIPT_TEMPLATE, EMU_SCRIPT_TEMPLATE.length);
-					}
+					var template = /*runnable is Emulator ? EMU_SCRIPT_TEMPLATE :*/ SCRIPT_TEMPLATE;
+					FileUtils.set_contents(script.get_path(), template, template.length);
 				}
 				catch(Error e)
 				{

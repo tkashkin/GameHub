@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 using GameHub.Utils.Downloader;
@@ -81,7 +82,7 @@ namespace GameHub.Data.Sources.Itch
 			lock(downloads) downloads.set(game.full_id, download);
 			download_started(download);
 
-			download.status_change.connect(s => game.status_change(game.status));
+			//download.status_change.connect(s => game.status_change(game.status));
 
 			var info = new DownloadInfo(game.name, null, game.icon, null, null, game.source.icon);
 			info.download = download;

@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gee;
 
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.Data.Compat
@@ -63,7 +64,7 @@ namespace GameHub.Data.Compat
 			has_cores = false;
 			core_option.options = cores;
 
-			var dir = FSUtils.file(Settings.Compat.RetroArch.instance.core_dir);
+			var dir = FS.file(Settings.Compat.RetroArch.instance.core_dir);
 
 			if(dir == null || !dir.query_exists())
 			{
@@ -94,12 +95,12 @@ namespace GameHub.Data.Compat
 			return has_cores;
 		}
 
-		public override bool can_run(Runnable runnable)
+		public override bool can_run(Traits.SupportsCompatTools runnable)
 		{
 			return installed && runnable is Game && has_cores;
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Traits.SupportsCompatTools runnable)
 		{
 			if(!can_run(runnable)) return;
 			var core = core_option.value;
@@ -107,7 +108,7 @@ namespace GameHub.Data.Compat
 
 			if(!core.has_prefix("/"))
 			{
-				core = FSUtils.expand(Settings.Compat.RetroArch.instance.core_dir, core);
+				core = FS.expand(Settings.Compat.RetroArch.instance.core_dir, core);
 			}
 			if(!core.has_suffix(LIBRETRO_CORE_SUFFIX))
 			{

@@ -105,7 +105,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var chooser = new FileChooserEntry(text, mode, icon, null, allow_url, allow_executable);
 			chooser.chooser.create_folders = create;
 			chooser.chooser.show_hidden = true;
-			chooser.select_file(FSUtils.file(val));
+			chooser.select_file(FS.file(val));
 			chooser.tooltip_text = chooser.file.get_path();
 			chooser.file_set.connect(() => { chooser.tooltip_text = chooser.file != null ? chooser.file.get_path() : null; action(chooser.tooltip_text); });
 			chooser.set_size_request(280, -1);

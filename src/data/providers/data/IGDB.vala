@@ -17,6 +17,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.Data.Providers.Data
@@ -312,7 +314,7 @@ namespace GameHub.Data.Providers.Data
 				{
 					UNKNOWN = 0, OFFICIAL = 1, WIKIA = 2, WIKIPEDIA = 3, FACEBOOK = 4, TWITTER = 5, TWITCH = 6,
 					INSTAGRAM = 8, YOUTUBE = 9, IPHONE = 10, IPAD = 11, ANDROID = 12, STEAM = 13, REDDIT = 14,
-					DISCORD = 15, GOOGLE_PLUS = 16, TUMBLR = 17, LINKEDIN = 18, PINTEREST = 19, SOUNDCLOUD = 20;
+					ITCH = 15, EGS = 16, GOG = 17;
 
 					public static Category from_id(int id)
 					{
@@ -334,17 +336,13 @@ namespace GameHub.Data.Providers.Data
 							case TWITCH:      return "related-link-twitch-symbolic";
 							case INSTAGRAM:   return "related-link-instagram-symbolic";
 							case YOUTUBE:     return "related-link-youtube-symbolic";
+							case REDDIT:      return "related-link-reddit-symbolic";
 							case IPHONE:      return "related-link-app-iphone-symbolic";
 							case IPAD:        return "related-link-app-ipad-symbolic";
 							case ANDROID:     return "related-link-app-android-symbolic";
 							case STEAM:       return "source-steam-symbolic";
-							case REDDIT:      return "related-link-reddit-symbolic";
-							case DISCORD:     return "related-link-discord-symbolic";
-							case GOOGLE_PLUS: return "related-link-google-plus-symbolic";
-							case TUMBLR:      return "related-link-tumblr-symbolic";
-							case LINKEDIN:    return "related-link-linkedin-symbolic";
-							case PINTEREST:   return "related-link-pinterest-symbolic";
-							case SOUNDCLOUD:  return "related-link-soundcloud-symbolic";
+							case GOG:         return "source-gog-symbolic";
+							case ITCH:        return "source-itch-symbolic";
 						}
 						return "web-browser-symbolic";
 					}
@@ -364,14 +362,10 @@ namespace GameHub.Data.Providers.Data
 							case IPHONE:      return "iPhone";
 							case IPAD:        return "iPad";
 							case ANDROID:     return "Android";
-							case STEAM:       return "Steam";
 							case REDDIT:      return "Reddit";
-							case DISCORD:     return "Discord";
-							case GOOGLE_PLUS: return "Google+";
-							case TUMBLR:      return "Tumblr";
-							case LINKEDIN:    return "LinkedIn";
-							case PINTEREST:   return "Pinterest";
-							case SOUNDCLOUD:  return "SoundCloud";
+							case STEAM:       return "Steam";
+							case GOG:         return "GOG";
+							case ITCH:        return "itch.io";
 						}
 						return null;
 					}

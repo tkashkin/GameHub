@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Utils;
+using GameHub.Data.Runnables;
 
 namespace GameHub.Data.Tweaks
 {
@@ -108,13 +109,13 @@ namespace GameHub.Data.Tweaks
 			return loaded_tweaks;
 		}
 
-		public bool is_applicable_to(TweakableGame game, CompatTool? compat_tool=null)
+		public bool is_applicable_to(Traits.Game.SupportsTweaks game, CompatTool? compat_tool=null)
 		{
 			if(applicability_options == null) return true;
 			return applicability_options.is_applicable_to(game, compat_tool);
 		}
 
-		public bool is_enabled(TweakableGame? game=null)
+		public bool is_enabled(Traits.Game.SupportsTweaks? game=null)
 		{
 			if(game == null || game.tweaks == null)
 			{
@@ -126,7 +127,7 @@ namespace GameHub.Data.Tweaks
 			}
 		}
 
-		public void set_enabled(bool enabled, TweakableGame? game=null)
+		public void set_enabled(bool enabled, Traits.Game.SupportsTweaks? game=null)
 		{
 			if(game == null)
 			{
@@ -207,7 +208,7 @@ namespace GameHub.Data.Tweaks
 
 			tweaks = new HashMap<string, Tweak>();
 
-			foreach(var data_dir in FSUtils.get_data_dirs("tweaks"))
+			foreach(var data_dir in FS.get_data_dirs("tweaks"))
 			{
 				if(GameHub.Application.log_verbose)
 				{
@@ -359,7 +360,7 @@ namespace GameHub.Data.Tweaks
 				Object(platforms: platforms, compat_tool_ids: compat_tool_ids);
 			}
 
-			public bool is_applicable_to(TweakableGame game, CompatTool? compat_tool=null)
+			public bool is_applicable_to(Traits.Game.SupportsTweaks game, CompatTool? compat_tool=null)
 			{
 				if(platforms != null)
 				{
@@ -382,10 +383,12 @@ namespace GameHub.Data.Tweaks
 				}
 				else
 				{
-					if(game.use_compat)
-					{
-						compat_tool_id = game.compat_tool;
-					}
+					game.cast<Traits.SupportsCompatTools>(game => {
+						if(game.use_compat)
+						{
+							compat_tool_id = game.compat_tool;
+						}
+					});
 				}
 
 				if(compat_tool_ids != null)

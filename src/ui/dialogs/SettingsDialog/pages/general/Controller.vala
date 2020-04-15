@@ -45,7 +45,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 		{
 			root_grid.margin = 0;
 			header_grid.margin = 12;
-			header_grid.margin_bottom = 0;
 			content_area.margin = 0;
 
 			settings = Settings.Controller.instance;

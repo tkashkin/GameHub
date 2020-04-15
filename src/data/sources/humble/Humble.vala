@@ -17,7 +17,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Humble
@@ -175,7 +177,7 @@ namespace GameHub.Data.Sources.Humble
 				try
 				{
 					string? cached_orders_md5 = null;
-					FileUtils.get_contents(FSUtils.expand(FSUtils.Paths.Humble.LoadedOrdersMD5), out cached_orders_md5);
+					FileUtils.get_contents(FS.expand(FS.Paths.Humble.LoadedOrdersMD5), out cached_orders_md5);
 					if(orders_md5 == cached_orders_md5)
 					{
 						Idle.add(load_games.callback);
@@ -186,7 +188,7 @@ namespace GameHub.Data.Sources.Humble
 
 				try
 				{
-					FileUtils.set_contents(FSUtils.expand(FSUtils.Paths.Humble.LoadedOrdersMD5), orders_md5);
+					FileUtils.set_contents(FS.expand(FS.Paths.Humble.LoadedOrdersMD5), orders_md5);
 				}
 				catch(Error e){}
 

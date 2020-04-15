@@ -22,6 +22,7 @@ using Gdk;
 
 using GameHub.Data;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 
 namespace GameHub.UI.Widgets
 {
@@ -29,7 +30,7 @@ namespace GameHub.UI.Widgets
 	{
 		public CompatTool? selected { get; private set; default = null; }
 
-		public Runnable runnable { get; construct; }
+		public Traits.SupportsCompatTools runnable { get; construct; }
 		public bool install_mode { get; construct; }
 		public bool show_compat_config { get; construct; }
 
@@ -41,7 +42,7 @@ namespace GameHub.UI.Widgets
 		private Box actions;
 		private Box warnings;
 
-		public CompatToolPicker(Runnable runnable, bool install_mode, bool show_compat_config=false)
+		public CompatToolPicker(Traits.SupportsCompatTools runnable, bool install_mode, bool show_compat_config=false)
 		{
 			Object(orientation: Orientation.VERTICAL, spacing: 4, runnable: runnable, install_mode: install_mode, show_compat_config: show_compat_config);
 		}
@@ -57,7 +58,7 @@ namespace GameHub.UI.Widgets
 
 			model = new Gtk.ListStore(3, typeof(string), typeof(string), typeof(CompatTool));
 
-			foreach(var tool in CompatTools)
+			/*foreach(var tool in CompatTools)
 			{
 				if(tool.installed && ((install_mode && tool.can_install(runnable)) || (!install_mode && tool.can_run(runnable))))
 				{
@@ -67,7 +68,7 @@ namespace GameHub.UI.Widgets
 					model.set(iter, 2, tool);
 					model_size++;
 				}
-			}
+			}*/
 
 			combo = new ComboBox.with_model(model);
 			combo.halign = Align.END;

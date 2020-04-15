@@ -17,35 +17,51 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
 using GameHub.Utils;
+using GameHub.Utils.FS;
 
 namespace GameHub.Data.Sources.GOG
 {
-	public class GOGGame: Game, TweakableGame
+	public class GOGGame: Game,
+		Traits.HasActions, Traits.HasExecutableFile, Traits.SupportsCompatTools,
+		Traits.Game.HasAchievements, Traits.Game.SupportsOverlays, Traits.Game.SupportsTweaks
 	{
-		public string[]? tweaks { get; set; default = null; }
+		// Traits.HasActions
+		public override ArrayList<Traits.HasActions.Action>? actions { get; protected set; default = new ArrayList<Traits.HasActions.Action>(); }
 
-		public ArrayList<Runnable.Installer>? installers { get; protected set; default = new ArrayList<Runnable.Installer>(); }
-		public ArrayList<BonusContent>? bonus_content { get; protected set; default = new ArrayList<BonusContent>(); }
-		public ArrayList<DLC>? dlc { get; protected set; default = new ArrayList<DLC>(); }
+		// Traits.HasExecutableFile
+		public override string? executable_path { owned get; set; }
+		public override string? work_dir_path { owned get; set; }
+		public override string? arguments { owned get; set; }
+
+		// Traits.SupportsCompatTools
+		public override string? compat_tool { get; set; }
+		public override string? compat_tool_settings { get; set; }
+
+		// Traits.Game.HasAchievements
+		public override ArrayList<Traits.Game.HasAchievements.Achievement>? achievements { get; protected set; default = new ArrayList<Traits.Game.HasAchievements.Achievement>(); }
+
+		// Traits.Game.SupportsOverlays
+		public override ArrayList<Traits.Game.SupportsOverlays.Overlay> overlays { get; set; default = new ArrayList<Traits.Game.SupportsOverlays.Overlay>(); }
+		protected override FSOverlay? fs_overlay { get; set; }
+		protected override string? fs_overlay_last_options { get; set; }
+
+		// Traits.Game.SupportsTweaks
+		public override string[]? tweaks { get; set; default = null; }
+
+		public ArrayList<BonusContent>? bonus_content { get; protected set; default = null; }
+		public ArrayList<DLC>? dlc { get; protected set; default = null; }
 
 		public File? bonus_content_dir { get; protected set; default = null; }
 
 		public bool has_updates { get; set; default = false; }
 
-		public override File? default_install_dir
-		{
-			owned get
-			{
-				return FSUtils.file(FSUtils.Paths.GOG.Games, escaped_name);
-			}
-		}
-
 		private bool game_info_updating = false;
 		private bool game_info_updated = false;
-
-		public GOGGame.default(){}
 
 		public GOGGame(GOG src, Json.Node json_node)
 		{
@@ -99,56 +115,11 @@ namespace GameHub.Data.Sources.GOG
 		public GOGGame.from_db(GOG src, Sqlite.Statement s)
 		{
 			source = src;
-			id = Tables.Games.ID.get(s);
-			name = Tables.Games.NAME.get(s);
-			info = Tables.Games.INFO.get(s);
-			info_detailed = Tables.Games.INFO_DETAILED.get(s);
-			icon = Tables.Games.ICON.get(s);
-			image = Tables.Games.IMAGE.get(s);
-			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
-			executable_path = Tables.Games.EXECUTABLE.get(s);
-			work_dir_path = Tables.Games.WORK_DIR.get(s);
-			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
-			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
-			arguments = Tables.Games.ARGUMENTS.get(s);
-			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
-			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
-			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
-			image_vertical = Tables.Games.IMAGE_VERTICAL.get(s);
 
-			platforms.clear();
-			var pls = Tables.Games.PLATFORMS.get(s).split(",");
-			foreach(var pl in pls)
-			{
-				foreach(var p in Platform.PLATFORMS)
-				{
-					if(pl == p.id())
-					{
-						platforms.add(p);
-						break;
-					}
-				}
-			}
-
-			tags.clear();
-			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
-			foreach(var tid in tag_ids)
-			{
-				foreach(var t in Tables.Tags.TAGS)
-				{
-					if(tid == t.id)
-					{
-						if(!tags.contains(t)) tags.add(t);
-						break;
-					}
-				}
-			}
-
-			var tweaks_string = Tables.Games.TWEAKS.get(s);
-			if(tweaks_string != null)
-			{
-				tweaks = tweaks_string.split(",");
-			}
+			dbinit(s);
+			dbinit_executable(s);
+			dbinit_compat(s);
+			dbinit_tweaks(s);
 
 			mount_overlays.begin();
 			update_status();
@@ -235,8 +206,9 @@ namespace GameHub.Data.Sources.GOG
 			var downloads = Parser.json_object(root, {"downloads"});
 
 			var installers_json = downloads == null || !downloads.has_member("installers") ? null : downloads.get_array_member("installers");
-			if(installers_json != null && installers.size == 0)
+			if(installers_json != null && (installers == null || installers.size == 0))
 			{
+				installers = new ArrayList<Runnables.Tasks.Install.Installer>();
 				foreach(var installer_json in installers_json.get_elements())
 				{
 					var installer = new Installer(this, installer_json.get_object());
@@ -250,8 +222,9 @@ namespace GameHub.Data.Sources.GOG
 			}
 
 			var bonuses_json = downloads == null || !downloads.has_member("bonus_content") ? null : downloads.get_array_member("bonus_content");
-			if(bonuses_json != null && bonus_content.size == 0)
+			if(bonuses_json != null && (bonus_content == null || bonus_content.size == 0))
 			{
+				bonus_content = new ArrayList<BonusContent>();
 				Json.Object? bonus_map = null;
 
 				if(bonus_content_dir != null && bonus_content_dir.query_exists())
@@ -271,11 +244,12 @@ namespace GameHub.Data.Sources.GOG
 			}
 
 			var dlcs_json = root == null || root.get_node_type() != Json.NodeType.OBJECT || !root.get_object().has_member("expanded_dlcs") ? null : root.get_object().get_array_member("expanded_dlcs");
-			if(dlcs_json != null && dlc.size == 0)
+			if(dlcs_json != null && (dlc == null || dlc.size == 0))
 			{
+				dlc = new ArrayList<DLC>();
 				foreach(var dlc_json in dlcs_json.get_elements())
 				{
-					var d = new GOGGame.DLC(this, dlc_json);
+					var d = new DLC(this, dlc_json);
 					dlc.add(d);
 					yield d.update_downloads_info();
 				}
@@ -309,12 +283,11 @@ namespace GameHub.Data.Sources.GOG
 			game_info_updating = false;
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public override async ArrayList<Tasks.Install.Installer>? load_installers()
 		{
+			if(installers != null && installers.size > 0) return installers;
 			yield update_game_info();
-			if(installers == null || installers.size < 1) return;
-			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
-			yield;
+			return installers;
 		}
 
 		public override async void uninstall()
@@ -341,13 +314,13 @@ namespace GameHub.Data.Sources.GOG
 
 				if(uninstaller != null)
 				{
-					uninstaller = FSUtils.expand(install_dir.get_path(), uninstaller);
+					uninstaller = FS.expand(install_dir.get_path(), uninstaller);
 					debug("[GOGGame] Running uninstaller '%s'...", uninstaller);
 					yield Utils.run({uninstaller, "--noprompt", "--force"}).override_runtime(true).run_sync_thread();
 				}
 				else
 				{
-					FSUtils.rm(install_dir.get_path(), "", "-rf");
+					FS.rm(install_dir.get_path(), "", "-rf");
 				}
 				update_status();
 			}
@@ -421,7 +394,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 			else
 			{
-				update_version();
+				load_version();
 			}
 
 			actions.clear();
@@ -454,12 +427,12 @@ namespace GameHub.Data.Sources.GOG
 				g = (this as DLC).game.name;
 				d = name;
 			}
-			installers_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_installers(g, d));
-			bonus_content_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_bonus(g, d));
+			/*installers_dir = FS.file(FS.Paths.Collection.GOG.expand_installers(g, d));
+			bonus_content_dir = FS.file(FS.Paths.Collection.GOG.expand_bonus(g, d));*/
 		}
 
 		private bool loading_achievements = false;
-		public override async ArrayList<Game.Achievement>? load_achievements()
+		public override async ArrayList<Traits.Game.HasAchievements.Achievement>? load_achievements()
 		{
 			if(achievements != null || loading_achievements || source == null || ((GOG) source).user_id == null)
 			{
@@ -494,7 +467,7 @@ namespace GameHub.Data.Sources.GOG
 
 			var achievements_array = root_obj.get_array_member("items");
 
-			var _achievements = new ArrayList<Game.Achievement>();
+			var _achievements = new ArrayList<Traits.Game.HasAchievements.Achievement>();
 
 			foreach(var a_node in achievements_array.get_elements())
 			{
@@ -545,7 +518,7 @@ namespace GameHub.Data.Sources.GOG
 			return achievements;
 		}
 
-		public class Achievement: Game.Achievement
+		public class Achievement: Traits.Game.HasAchievements.Achievement
 		{
 			public Achievement(string id, string name, string desc, string? image_locked, string? image_unlocked,
 			                   bool unlocked, string? unlock_date, float global_percentage)
@@ -568,17 +541,12 @@ namespace GameHub.Data.Sources.GOG
 			}
 		}
 
-		public class Installer: Runnable.DownloadableInstaller
+		public class Installer: Runnables.Tasks.Install.DownloadableInstaller
 		{
 			private GOGGame game;
 			private Json.Object json;
 			private bool fetched = false;
 			private File? installers_dir;
-
-			public string lang;
-			public string lang_full;
-
-			public override string name { owned get { return lang_full + (version != null ? ": " + version : ""); } }
 
 			public Installer(GOGGame game, Json.Object json)
 			{
@@ -586,8 +554,9 @@ namespace GameHub.Data.Sources.GOG
 				this.json = json;
 
 				id = json.get_string_member("id");
-				lang = json.get_string_member("language");
-				lang_full = json.get_string_member("language_full");
+				name = json.get_string_member("name");
+				language = json.get_string_member("language");
+				language_name = json.get_string_member("language_full");
 
 				var os = json.get_string_member("os");
 				platform = Platform.CURRENT;
@@ -607,7 +576,7 @@ namespace GameHub.Data.Sources.GOG
 					g = (game as DLC).game.name;
 					d = game.name;
 				}
-				installers_dir = FSUtils.file(FSUtils.Paths.Collection.GOG.expand_installers(g, d, platform)) ?? game.installers_dir;
+				//installers_dir = FS.file(FS.Paths.Collection.GOG.expand_installers(g, d, platform)) ?? game.installers_dir;
 
 				full_size = json.get_int_member("total_size");
 				version = json.get_string_member("version");
@@ -668,7 +637,7 @@ namespace GameHub.Data.Sources.GOG
 
 									var local = installers_dir.get_child(local_filename ?? "gog_" + game.id + "_" + this.id + "_" + id);
 
-									parts.add(new Runnable.DownloadableInstaller.Part(id, url, size, remote, local, hash, hash_type));
+									//parts.add(new Runnable.DownloadableInstaller.Part(id, url, size, remote, local, hash, hash_type));
 								}
 							}
 
@@ -686,7 +655,7 @@ namespace GameHub.Data.Sources.GOG
 			}
 		}
 
-		public class RunnableAction: Runnable.RunnableAction
+		public class RunnableAction: Traits.HasActions.Action
 		{
 			public RunnableAction(GOGGame game, Json.Object json)
 			{
@@ -723,14 +692,15 @@ namespace GameHub.Data.Sources.GOG
 
 			private File? find_file(string path)
 			{
-				if(runnable.install_dir == null || !runnable.install_dir.query_exists()) return null;
-				var dir = (runnable is Game && ((Game) runnable).overlays_enabled)
-					? runnable.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged")
-					: runnable.install_dir;
+				var game = runnable.cast<GOGGame>();
+				if(game == null || game.install_dir == null || !game.install_dir.query_exists()) return null;
+				var dir = game.overlays_enabled
+					? game.install_dir.get_child(FS.GAMEHUB_DIR).get_child("_overlay").get_child("merged")
+					: game.install_dir;
 				if(dir == null || !dir.query_exists()) return null;
 				var p = path.replace("//", "/").replace("\\", "/").strip();
 				if(p.length == 0) return dir;
-				return FSUtils.find_case_insensitive(dir, p);
+				return FS.find_case_insensitive(dir, p);
 			}
 		}
 
@@ -844,8 +814,8 @@ namespace GameHub.Data.Sources.GOG
 
 				warning("[filename] %s", filename);
 
-				FSUtils.mkdir(FSUtils.Paths.GOG.Games);
-				FSUtils.mkdir(game.bonus_content_dir.get_path());
+				//FS.mkdir(FS.Paths.GOG.Games);
+				FS.mkdir(game.bonus_content_dir.get_path());
 
 				var local = game.bonus_content_dir.get_child(filename);
 
@@ -954,14 +924,6 @@ namespace GameHub.Data.Sources.GOG
 		{
 			public GOGGame game;
 
-			public override File? default_install_dir
-			{
-				owned get
-				{
-					return game.default_install_dir;
-				}
-			}
-
 			public DLC(GOGGame game, Json.Node json_node)
 			{
 				base(game.source as GOG, json_node);
@@ -994,9 +956,9 @@ namespace GameHub.Data.Sources.GOG
 				base.update_status();
 			}
 
-			public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+			public override async void install(InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE)
 			{
-				if(game.install_dir == null || !game.install_dir.query_exists()) return;
+				/*if(game.install_dir == null || !game.install_dir.query_exists()) return;
 
 				yield game.umount_overlays();
 				game.enable_overlays();
@@ -1004,7 +966,7 @@ namespace GameHub.Data.Sources.GOG
 
 				yield game.mount_overlays(overlay.directory);
 
-				install_dir = game.install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
+				install_dir = game.install_dir.get_child(FS.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
 
 				yield base.install(install_mode);
 
@@ -1012,7 +974,7 @@ namespace GameHub.Data.Sources.GOG
 
 				game.overlays.add(overlay);
 				game.save_overlays();
-				yield game.mount_overlays();
+				yield game.mount_overlays();*/
 			}
 		}
 	}

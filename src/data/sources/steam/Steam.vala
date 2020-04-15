@@ -17,7 +17,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gee;
+
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Steam
@@ -67,7 +69,7 @@ namespace GameHub.Data.Sources.Steam
 		{
 			get
 			{
-				var loginusers = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.LoginUsersVDF);
+				var loginusers = FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.LoginUsersVDF);
 				return loginusers != null && loginusers.query_exists();
 			}
 		}
@@ -86,11 +88,11 @@ namespace GameHub.Data.Sources.Steam
 				         || Utils.is_package_installed("steam64")
 				         || Utils.is_package_installed("steam-launcher")
 				         || Utils.is_package_installed("steam-installer")
-				         || FSUtils.file(FSUtils.Paths.Steam.Home).query_exists();
+				         || FS.file(GameHub.Settings.Paths.Steam.instance.home).query_exists();
 			}
 			else
 			{
-				installed = FSUtils.file(FSUtils.Paths.Steam.Home).query_exists();
+				installed = FS.file(GameHub.Settings.Paths.Steam.instance.home).query_exists();
 			}
 
 			return (!) installed;
@@ -101,11 +103,11 @@ namespace GameHub.Data.Sources.Steam
 			install_dir = null;
 			foreach(var dir in Steam.LibraryFolders)
 			{
-				var acf = FSUtils.find_case_insensitive(FSUtils.file(dir), @"appmanifest_$(app).acf");
+				var acf = FS.find_case_insensitive(FS.file(dir), @"appmanifest_$(app).acf");
 				if(acf != null && acf.query_exists())
 				{
 					var root = Parser.parse_vdf_file(acf.get_path()).get_object();
-					var d = FSUtils.find_case_insensitive(FSUtils.file(dir), "common/" + root.get_object_member("AppState").get_string_member("installdir"));
+					var d = FS.find_case_insensitive(FS.file(dir), "common/" + root.get_object_member("AppState").get_string_member("installdir"));
 					install_dir = d;
 					return d != null && d.query_exists();
 				}
@@ -143,7 +145,7 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			Utils.thread("Steam-loginusers", () => {
-				var loginusers = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.LoginUsersVDF);
+				var loginusers = FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.LoginUsersVDF);
 
 				if(loginusers == null || !loginusers.query_exists())
 				{
@@ -204,11 +206,11 @@ namespace GameHub.Data.Sources.Steam
 		{
 			if(appinfo == null)
 			{
-				appinfo = new AppInfoVDF(FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.AppInfoVDF)).read();
+				appinfo = new AppInfoVDF(FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.AppInfoVDF)).read();
 			}
 			if(packageinfo == null)
 			{
-				packageinfo = new PackageInfoVDF(FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.PackageInfoVDF)).read();
+				packageinfo = new PackageInfoVDF(FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.PackageInfoVDF)).read();
 			}
 		}
 
@@ -343,7 +345,7 @@ namespace GameHub.Data.Sources.Steam
 
 		private void watch_client_registry()
 		{
-			var regfile = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.RegistryVDF);
+			var regfile = FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.RegistryVDF);
 			if(regfile == null || !regfile.query_exists()) return;
 
 			Timeout.add_seconds(5, () => {
@@ -393,13 +395,13 @@ namespace GameHub.Data.Sources.Steam
 				if(folders != null) return folders;
 				folders = new ArrayList<string>();
 
-				var steamapps = FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), FSUtils.Paths.Steam.SteamApps);
+				var steamapps = FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.SteamApps);
 
 				if(steamapps == null || !steamapps.query_exists()) return folders;
 
 				folders.add(steamapps.get_path());
 
-				var libraryfolders = FSUtils.find_case_insensitive(steamapps, FSUtils.Paths.Steam.LibraryFoldersVDF);
+				var libraryfolders = FS.find_case_insensitive(steamapps, FS.Paths.Steam.LibraryFoldersVDF);
 
 				if(libraryfolders == null || !libraryfolders.query_exists()) return folders;
 
@@ -410,10 +412,10 @@ namespace GameHub.Data.Sources.Steam
 				{
 					foreach(var key in lf.get_members())
 					{
-						var libdir = FSUtils.file(lf.get_string_member(key));
+						var libdir = FS.file(lf.get_string_member(key));
 						if(libdir != null && libdir.query_exists())
 						{
-							var dir = FSUtils.find_case_insensitive(libdir, "steamapps");
+							var dir = FS.find_case_insensitive(libdir, "steamapps");
 							if(dir != null && dir.query_exists()) folders.add(dir.get_path());
 						}
 					}
@@ -432,15 +434,15 @@ namespace GameHub.Data.Sources.Steam
 		{
 			uint64 communityid = uint64.parse(instance.user_id);
 			uint64 steamid3 = communityid_to_steamid3(communityid);
-			return FSUtils.find_case_insensitive(FSUtils.file(FSUtils.Paths.Steam.Home), @"steam/userdata/$(steamid3)");
+			return FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), @"steam/userdata/$(steamid3)");
 		}
 
 		public static void add_game_shortcut(Game game)
 		{
-			var config_dir = FSUtils.find_case_insensitive(get_userdata_dir(), "config");
+			var config_dir = FS.find_case_insensitive(get_userdata_dir(), "config");
 			if(config_dir == null || !config_dir.query_exists()) return;
 
-			var shortcuts = FSUtils.find_case_insensitive(config_dir, "shortcuts.vdf") ?? FSUtils.file(config_dir.get_path(), "shortcuts.vdf");
+			var shortcuts = FS.find_case_insensitive(config_dir, "shortcuts.vdf") ?? FS.file(config_dir.get_path(), "shortcuts.vdf");
 
 			var vdf = new BinaryVDF(shortcuts);
 

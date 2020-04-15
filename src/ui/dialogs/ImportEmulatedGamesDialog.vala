@@ -271,7 +271,7 @@ namespace GameHub.UI.Dialogs
 
 						foreach(var file_path in files)
 						{
-							var file = FSUtils.file(file_path);
+							var file = FS.file(file_path);
 
 							var dir = file.get_parent();
 							var name = file.get_basename();
@@ -325,7 +325,7 @@ namespace GameHub.UI.Dialogs
 				return;
 			}
 
-			var core_info_dir = FSUtils.file(Settings.Compat.RetroArch.instance.core_info_dir);
+			var core_info_dir = FS.file(Settings.Compat.RetroArch.instance.core_info_dir);
 
 			if(core_info_dir == null || !core_info_dir.query_exists())
 			{
@@ -388,7 +388,7 @@ namespace GameHub.UI.Dialogs
 
 							foreach(var file_path in files)
 							{
-								var file = FSUtils.file(file_path);
+								var file = FS.file(file_path);
 
 								var dir = file.get_parent();
 								var name = file.get_basename();
@@ -634,7 +634,7 @@ namespace GameHub.UI.Dialogs
 
 						foreach(var file_path in files)
 						{
-							var file = FSUtils.file(file_path);
+							var file = FS.file(file_path);
 							if(file != null && file.query_exists())
 							{
 								return file;

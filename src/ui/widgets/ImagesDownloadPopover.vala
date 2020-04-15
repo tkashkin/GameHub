@@ -21,6 +21,7 @@ using Gtk;
 
 using GameHub.Data;
 using GameHub.Data.Providers;
+using GameHub.Data.Runnables;
 
 namespace GameHub.UI.Widgets
 {

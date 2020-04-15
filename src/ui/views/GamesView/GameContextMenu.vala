@@ -21,6 +21,7 @@ using Gdk;
 
 using GameHub.Data;
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
@@ -39,7 +40,7 @@ namespace GameHub.UI.Views.GamesView
 
 		construct
 		{
-			if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
+			/*if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
 			{
 				if(game.use_compat)
 				{
@@ -76,13 +77,13 @@ namespace GameHub.UI.Views.GamesView
 				}
 			}
 			else if(game.status.state == Game.State.UNINSTALLED)
-			{
+			{*/
 				var install = new Gtk.MenuItem.with_label(_("Install"));
 				install.sensitive = game.is_installable;
 				install.activate.connect(() => game.install.begin());
 				add(install);
 				add(new Gtk.SeparatorMenuItem());
-			}
+			/*}
 
 			var details = new Gtk.MenuItem.with_label(_("Details"));
 			details.activate.connect(() => new Dialogs.GameDetailsDialog(game).show_all());
@@ -124,7 +125,7 @@ namespace GameHub.UI.Views.GamesView
 				add(hidden);
 			}
 
-			bool add_dirs_separator = true;
+			/*bool add_dirs_separator = true;
 
 			if(game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
 			{
@@ -160,7 +161,7 @@ namespace GameHub.UI.Views.GamesView
 				var open_screenshots_dir = new Gtk.MenuItem.with_label(_("Open screenshots directory"));
 				open_screenshots_dir.activate.connect(open_screenshots_directory);
 				add(open_screenshots_dir);
-			}
+			}*/
 
 			if((game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame) && !(game is Sources.GOG.GOGGame.DLC))
 			{
@@ -169,28 +170,26 @@ namespace GameHub.UI.Views.GamesView
 				add(new Gtk.SeparatorMenuItem());
 				add(uninstall);
 
-				if(!(game is Sources.Steam.SteamGame))
-				{
+				game.cast<Traits.Game.SupportsOverlays>(game => {
 					add(new Gtk.SeparatorMenuItem());
 					var fs_overlays = new Gtk.MenuItem.with_label(_("Overlays"));
 					fs_overlays.activate.connect(() => new Dialogs.GameFSOverlaysDialog(game).show_all());
 					add(fs_overlays);
-				}
+				});
 
-				if(game is TweakableGame)
-				{
+				game.cast<Traits.Game.SupportsTweaks>(game => {
 					add(new Gtk.SeparatorMenuItem());
 					var tweaks = new Gtk.MenuItem.with_label(_("Tweaks"));
-					tweaks.activate.connect(() => new Dialogs.GameTweaksDialog((TweakableGame) game).show_all());
+					tweaks.activate.connect(() => new Dialogs.GameTweaksDialog(game).show_all());
 					add(tweaks);
-				}
+				});
 			}
 
 			if(!(game is Sources.GOG.GOGGame.DLC))
 			{
 				add(new Gtk.SeparatorMenuItem());
 				var properties = new Gtk.MenuItem.with_label(_("Properties"));
-				properties.activate.connect(() => new Dialogs.GamePropertiesDialog(game).show_all());
+				properties.activate.connect(() => new Dialogs.GamePropertiesDialog.GamePropertiesDialog(game).show_all());
 				add(properties);
 			}
 
@@ -211,46 +210,6 @@ namespace GameHub.UI.Views.GamesView
 			#else
 			popup(null, null, null, 0, ((EventButton) e).time);
 			#endif
-		}
-
-		private void open_game_directory()
-		{
-			if(game != null && game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
-			{
-				Utils.open_uri(game.install_dir.get_uri());
-			}
-		}
-
-		private void open_installer_collection_directory()
-		{
-			if(game != null && game.installers_dir != null && game.installers_dir.query_exists())
-			{
-				Utils.open_uri(game.installers_dir.get_uri());
-			}
-		}
-
-		private void open_bonus_collection_directory()
-		{
-			if(game != null && game is GameHub.Data.Sources.GOG.GOGGame)
-			{
-				var gog_game = game as GameHub.Data.Sources.GOG.GOGGame;
-				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
-				{
-					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
-				}
-			}
-		}
-
-		private void open_screenshots_directory()
-		{
-			if(game != null && game is GameHub.Data.Sources.Steam.SteamGame)
-			{
-				var steam_game = game as GameHub.Data.Sources.Steam.SteamGame;
-				if(steam_game != null && steam_game.screenshots_dir != null && steam_game.screenshots_dir.query_exists())
-				{
-					Utils.open_uri(steam_game.screenshots_dir.get_uri());
-				}
-			}
 		}
 
 		private void add_merged_game_submenu(Game g)

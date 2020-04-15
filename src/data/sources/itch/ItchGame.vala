@@ -19,6 +19,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Data.DB;
+using GameHub.Data.Runnables;
+using GameHub.Data.Runnables.Tasks.Install;
 using GameHub.Utils;
 
 namespace GameHub.Data.Sources.Itch
@@ -64,49 +66,8 @@ namespace GameHub.Data.Sources.Itch
 		public ItchGame.from_db(Itch src, Sqlite.Statement s)
 		{
 			source = src;
-			id = Tables.Games.ID.get(s);
-			name = Tables.Games.NAME.get(s);
-			info = Tables.Games.INFO.get(s);
-			info_detailed = Tables.Games.INFO_DETAILED.get(s);
-			icon = Tables.Games.ICON.get(s);
-			image = Tables.Games.IMAGE.get(s);
-			install_dir = Tables.Games.INSTALL_PATH.get(s) != null ? FSUtils.file(Tables.Games.INSTALL_PATH.get(s)) : null;
-			executable_path = Tables.Games.EXECUTABLE.get(s);
-			work_dir_path = Tables.Games.WORK_DIR.get(s);
-			compat_tool = Tables.Games.COMPAT_TOOL.get(s);
-			compat_tool_settings = Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
-			arguments = Tables.Games.ARGUMENTS.get(s);
-			last_launch = Tables.Games.LAST_LAUNCH.get_int64(s);
-			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
-			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
 
-			platforms.clear();
-			var pls = Tables.Games.PLATFORMS.get(s).split(",");
-			foreach(var pl in pls)
-			{
-				foreach(var p in Platform.PLATFORMS)
-				{
-					if(pl == p.id())
-					{
-						platforms.add(p);
-						break;
-					}
-				}
-			}
-
-			tags.clear();
-			var tag_ids = (Tables.Games.TAGS.get(s) ?? "").split(",");
-			foreach(var tid in tag_ids)
-			{
-				foreach(var t in Tables.Tags.TAGS)
-				{
-					if(tid == t.id)
-					{
-						if(!tags.contains(t)) tags.add(t);
-						break;
-					}
-				}
-			}
+			dbinit(s);
 
 			var info_root = Parser.parse_json(info);
 			if(info_root != null && info_root.get_node_type() == Json.NodeType.OBJECT)
@@ -139,7 +100,7 @@ namespace GameHub.Data.Sources.Itch
 			var cave = this.cave;
 			if(cave != null)
 			{
-				install_dir = FSUtils.file(cave.install_dir);
+				install_dir = FS.file(cave.install_dir);
 			}
 
 			update_status();
@@ -193,9 +154,9 @@ namespace GameHub.Data.Sources.Itch
 			}
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public override async void install(InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE)
 		{
-			var uploads = yield ((Itch) source).get_game_uploads(this);
+			/*var uploads = yield ((Itch) source).get_game_uploads(this);
 
 			if(uploads == null || uploads.size == 0)
 			{
@@ -231,12 +192,12 @@ namespace GameHub.Data.Sources.Itch
 			}
 
 			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
-			yield;
+			yield;*/
 		}
 
 		public override async void run()
 		{
-			if(can_be_launched(true))
+			/*if(can_be_launched(true))
 			{
 				Runnable.IsLaunched = is_running = true;
 				update_status();
@@ -254,19 +215,19 @@ namespace GameHub.Data.Sources.Itch
 					update_status();
 					return Source.REMOVE;
 				});
-			}
+			}*/
 		}
 
-		public override async void run_with_compat(bool is_opened_from_menu=false)
+		/*public override async void run_with_compat(bool is_opened_from_menu=false)
 		{
-		}
+		}*/
 
 		public override async void uninstall()
 		{
 			((Itch) source).uninstall_game.begin(this);
 		}
 
-		public class Installer: Runnable.Installer
+		public class Installer: Runnables.Tasks.Install.Installer
 		{
 			public int int_id { get { return int.parse(id); } }
 
@@ -275,9 +236,6 @@ namespace GameHub.Data.Sources.Itch
 
 			public string? display_name;
 			public string? file_name;
-
-			private string _name;
-			public override string name { owned get { return _name; } }
 
 			public Installer(ItchGame game, Json.Object json, Platform platform)
 			{
@@ -293,21 +251,21 @@ namespace GameHub.Data.Sources.Itch
 				if(file_name.length == 0) file_name = null;
 				if(display_name.length == 0) display_name = null;
 
-				_name = display_name ?? file_name ?? game.name;
+				name = display_name ?? file_name ?? game.name;
 
 				var build_obj = json.has_member("build") ? json.get_object_member("build") : null;
 				if(build_obj != null)
 				{
 					version = build_obj.has_member("userVersion") ? build_obj.get_string_member("userVersion") : null;
-					_name += @" ($(version))";
 				}
 
 				full_size = json.get_int_member("size");
 			}
 
-			public override async void install(Runnable runnable, CompatTool? tool=null)
+			public override async bool install(InstallTask task)
 			{
 				yield ((Itch) game.source).install_game(this);
+				return true;
 			}
 		}
 	}
