@@ -46,7 +46,7 @@ namespace GameHub.Data.Compat
 
 			if(installed)
 			{
-				version = Utils.run({ executable.get_path(), "-v", "-q", "-c", "0" }, null, null, false, true, false).replace(id, "").strip();
+				version = Utils.run({executable.get_path(), "-v", "-q", "-c", "0"}).log(false).run_sync(true).output.replace(id, "").strip();
 				name = name + " (" + version + ")";
 
 				if(Utils.compare_versions(Utils.parse_version(version), Innoextract.MIN_SUPPORTED_VERSION) < 0)
@@ -73,7 +73,7 @@ namespace GameHub.Data.Compat
 			string[] cmd = { executable.get_path(), "-e", "-m", "-d", runnable.install_dir.get_path() };
 			if(runnable is Sources.GOG.GOGGame) cmd += "--gog";
 			cmd += installer.get_path();
-			yield Utils.run_thread(cmd, installer.get_parent().get_path());
+			yield Utils.run(cmd).dir(installer.get_parent().get_path()).run_sync_thread();
 
 			do
 			{

@@ -108,4 +108,29 @@ namespace GameHub.Settings.Auth
 			}
 		}
 	}
+
+	public class Itch: SettingsSchema
+	{
+		public bool enabled { get; set; }
+		public bool authenticated { get; set; }
+		public string api_key { get; set; }
+
+		public Itch()
+		{
+			base(ProjectConfig.PROJECT_NAME + ".auth.itch");
+		}
+
+		private static Itch? _instance;
+		public static unowned Itch instance
+		{
+			get
+			{
+				if(_instance == null)
+				{
+					_instance = new Itch();
+				}
+				return _instance;
+			}
+		}
+	}
 }

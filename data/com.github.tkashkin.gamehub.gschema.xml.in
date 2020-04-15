@@ -2,14 +2,14 @@
 <schemalist>
 
 	<!-- Saved state / Window -->
-		<enum id="com.github.tkashkin.gamehub.saved-state.window.states">
+		<enum id="@SCHEMA_ID@.saved-state.window.states">
 			<value nick="Normal" value="0" />
 			<value nick="Maximized" value="1" />
 			<value nick="Fullscreen" value="2" />
 		</enum>
 
-		<schema path="/com/github/tkashkin/gamehub/saved-state/window/" id="com.github.tkashkin.gamehub.saved-state.window">
-			<key name="state" enum="com.github.tkashkin.gamehub.saved-state.window.states">
+		<schema path="@SCHEMA_PATH@/saved-state/window/" id="@SCHEMA_ID@.saved-state.window">
+			<key name="state" enum="@SCHEMA_ID@.saved-state.window.states">
 				<default>"Normal"</default>
 				<summary>Saved window state</summary>
 			</key>
@@ -32,24 +32,24 @@
 		</schema>
 
 	<!-- Saved state / Games view -->
-		<enum id="com.github.tkashkin.gamehub.saved-state.games-view.styles">
+		<enum id="@SCHEMA_ID@.saved-state.games-view.styles">
 			<value nick="Grid" value="0" />
 			<value nick="List" value="1" />
 		</enum>
 
-		<enum id="com.github.tkashkin.gamehub.saved-state.games-view.sort-modes">
+		<enum id="@SCHEMA_ID@.saved-state.games-view.sort-modes">
 			<value nick="Name" value="0" />
 			<value nick="Last launch" value="1" />
 			<value nick="Playtime" value="2" />
 		</enum>
 
-		<enum id="com.github.tkashkin.gamehub.saved-state.games-view.group-modes">
+		<enum id="@SCHEMA_ID@.saved-state.games-view.group-modes">
 			<value nick="None" value="0" />
 			<value nick="Status" value="1" />
 			<value nick="Source" value="2" />
 		</enum>
 
-		<enum id="com.github.tkashkin.gamehub.saved-state.games-view.filter-platforms">
+		<enum id="@SCHEMA_ID@.saved-state.games-view.filter-platforms">
 			<value nick="All" value="0" />
 			<value nick="Linux" value="1" />
 			<value nick="Windows" value="2" />
@@ -57,16 +57,16 @@
 			<value nick="Emulated" value="4" />
 		</enum>
 
-		<schema path="/com/github/tkashkin/gamehub/saved-state/games-view/" id="com.github.tkashkin.gamehub.saved-state.games-view">
-			<key name="style" enum="com.github.tkashkin.gamehub.saved-state.games-view.styles">
+		<schema path="@SCHEMA_PATH@/saved-state/games-view/" id="@SCHEMA_ID@.saved-state.games-view">
+			<key name="style" enum="@SCHEMA_ID@.saved-state.games-view.styles">
 				<default>"Grid"</default>
 				<summary>Selected view style</summary>
 			</key>
-			<key name="sort-mode" enum="com.github.tkashkin.gamehub.saved-state.games-view.sort-modes">
+			<key name="sort-mode" enum="@SCHEMA_ID@.saved-state.games-view.sort-modes">
 				<default>"Name"</default>
 				<summary>Selected sort mode</summary>
 			</key>
-			<key name="group-mode" enum="com.github.tkashkin.gamehub.saved-state.games-view.group-modes">
+			<key name="group-mode" enum="@SCHEMA_ID@.saved-state.games-view.group-modes">
 				<default>"Status"</default>
 				<summary>Selected group mode</summary>
 			</key>
@@ -74,25 +74,25 @@
 				<default>''</default>
 				<summary>Selected game source filter</summary>
 			</key>
-			<key name="filter-platform" enum="com.github.tkashkin.gamehub.saved-state.games-view.filter-platforms">
+			<key name="filter-platform" enum="@SCHEMA_ID@.saved-state.games-view.filter-platforms">
 				<default>"All"</default>
 				<summary>Selected platform filter</summary>
 			</key>
 		</schema>
 
 	<!-- UI / Appearance -->
-		<enum id="com.github.tkashkin.gamehub.ui.appearance.icon-styles">
+		<enum id="@SCHEMA_ID@.ui.appearance.icon-styles">
 			<value nick="Theme-based" value="0" />
 			<value nick="Symbolic" value="1" />
 			<value nick="Colored" value="2" />
 		</enum>
 
-		<schema path="/com/github/tkashkin/gamehub/ui/appearance/" id="com.github.tkashkin.gamehub.ui.appearance">
+		<schema path="@SCHEMA_PATH@/ui/appearance/" id="@SCHEMA_ID@.ui.appearance">
 			<key name="dark-theme" type="b">
 				<default>false</default>
 				<summary>Dark theme</summary>
 			</key>
-			<key name="icon-style" enum="com.github.tkashkin.gamehub.ui.appearance.icon-styles">
+			<key name="icon-style" enum="@SCHEMA_ID@.ui.appearance.icon-styles">
 				<default>"Theme-based"</default>
 				<summary>Icon style</summary>
 			</key>
@@ -115,7 +115,7 @@
 		</schema>
 
 	<!-- UI / Behavior -->
-		<schema path="/com/github/tkashkin/gamehub/ui/behavior/" id="com.github.tkashkin.gamehub.ui.behavior">
+		<schema path="@SCHEMA_PATH@/ui/behavior/" id="@SCHEMA_ID@.ui.behavior">
 			<key name="grid-doubleclick" type="b">
 				<default>false</default>
 				<summary>Run games with doubleclick</summary>
@@ -131,7 +131,7 @@
 		</schema>
 
 	<!-- Auth -->
-		<schema path="/com/github/tkashkin/gamehub/auth/steam/" id="com.github.tkashkin.gamehub.auth.steam">
+		<schema path="@SCHEMA_PATH@/auth/steam/" id="@SCHEMA_ID@.auth.steam">
 			<key name="enabled" type="b">
 				<default>true</default>
 				<summary>Is Steam enabled</summary>
@@ -141,12 +141,12 @@
 				<summary>Did user agree to read Steam configs</summary>
 			</key>
 			<key name="api-key" type="s">
-				<default>'8B10B604CAC6AC90F57AACE025DD904C'</default>
+				<default>'@PREF_API_KEY_STEAM@'</default>
 				<summary>Steam API key</summary>
 			</key>
 		</schema>
 
-		<schema path="/com/github/tkashkin/gamehub/auth/gog/" id="com.github.tkashkin.gamehub.auth.gog">
+		<schema path="@SCHEMA_PATH@/auth/gog/" id="@SCHEMA_ID@.auth.gog">
 			<key name="enabled" type="b">
 				<default>true</default>
 				<summary>Is GOG enabled</summary>
@@ -165,7 +165,7 @@
 			</key>
 		</schema>
 
-		<schema path="/com/github/tkashkin/gamehub/auth/humble/" id="com.github.tkashkin.gamehub.auth.humble">
+		<schema path="@SCHEMA_PATH@/auth/humble/" id="@SCHEMA_ID@.auth.humble">
 			<key name="enabled" type="b">
 				<default>true</default>
 				<summary>Is Humble enabled</summary>
@@ -184,8 +184,23 @@
 			</key>
 		</schema>
 
+		<schema path="@SCHEMA_PATH@/auth/itch/" id="@SCHEMA_ID@.auth.itch">
+			<key name="enabled" type="b">
+				<default>true</default>
+				<summary>Is itch.io enabled</summary>
+			</key>
+			<key name="authenticated" type="b">
+				<default>false</default>
+				<summary>Did user agree to read itch.io configs</summary>
+			</key>
+			<key name="api-key" type="s">
+				<default>'@PREF_API_KEY_ITCH@'</default>
+				<summary>itch.io API key</summary>
+			</key>
+		</schema>
+
 	<!-- Paths -->
-		<schema path="/com/github/tkashkin/gamehub/paths/" id="com.github.tkashkin.gamehub.paths">
+		<schema path="@SCHEMA_PATH@/paths/" id="@SCHEMA_ID@.paths">
 			<key name="steam-home" type="s">
 				<default>'~/.steam'</default>
 				<summary>Steam installation directory</summary>
@@ -198,17 +213,25 @@
 				<default>'~/Games/HumbleBundle'</default>
 				<summary>Humble games directory</summary>
 			</key>
+			<key name="itch-home" type="s">
+				<default>'~/.config/itch'</default>
+				<summary>itch.io config/installation directory</summary>
+			</key>
+			<key name="itch-games" type="s">
+				<default>'~/Games/itch'</default>
+				<summary>itch.io games directory</summary>
+			</key>
 		</schema>
 
 	<!-- Paths / Collection -->
-		<schema path="/com/github/tkashkin/gamehub/paths/collection/" id="com.github.tkashkin.gamehub.paths.collection">
+		<schema path="@SCHEMA_PATH@/paths/collection/" id="@SCHEMA_ID@.paths.collection">
 			<key name="root" type="s">
 				<default>'~/Games/_Collection'</default>
 				<summary>Collection root directory</summary>
 			</key>
 		</schema>
 
-		<schema path="/com/github/tkashkin/gamehub/paths/collection/gog/" id="com.github.tkashkin.gamehub.paths.collection.gog">
+		<schema path="@SCHEMA_PATH@/paths/collection/gog/" id="@SCHEMA_ID@.paths.collection.gog">
 			<key name="game-dir" type="s">
 				<default>'$root/GOG/$game'</default>
 				<summary>GOG collection: game directory</summary>
@@ -227,7 +250,7 @@
 			</key>
 		</schema>
 
-		<schema path="/com/github/tkashkin/gamehub/paths/collection/humble/" id="com.github.tkashkin.gamehub.paths.collection.humble">
+		<schema path="@SCHEMA_PATH@/paths/collection/humble/" id="@SCHEMA_ID@.paths.collection.humble">
 			<key name="game-dir" type="s">
 				<default>'$root/Humble Bundle/$game'</default>
 				<summary>Humble collection: game directory</summary>
@@ -239,7 +262,7 @@
 		</schema>
 
 	<!-- Controller -->
-		<schema path="/com/github/tkashkin/gamehub/controller/" id="com.github.tkashkin.gamehub.controller">
+		<schema path="@SCHEMA_PATH@/controller/" id="@SCHEMA_ID@.controller">
 			<key name="enabled" type="b">
 				<default>true</default>
 				<summary>Is controller support enabled</summary>
@@ -259,13 +282,13 @@
 		</schema>
 
 	<!-- Compat / RetroArch -->
-		<schema path="/com/github/tkashkin/gamehub/compat/retroarch/" id="com.github.tkashkin.gamehub.compat.retroarch">
+		<schema path="@SCHEMA_PATH@/compat/retroarch/" id="@SCHEMA_ID@.compat.retroarch">
 			<key name="core-dir" type="s">
-				<default>'/usr/lib/libretro'</default>
+				<default>'@PREF_LIBRETRO_CORE_DIR@'</default>
 				<summary>libretro cores directory</summary>
 			</key>
 			<key name="core-info-dir" type="s">
-				<default>'/usr/share/libretro/info'</default>
+				<default>'@PREF_LIBRETRO_CORE_INFO_DIR@'</default>
 				<summary>libretro core info directory</summary>
 			</key>
 			<key name="cores-blacklist" type="s">
@@ -279,43 +302,58 @@
 		</schema>
 
 	<!-- Providers / Images -->
-		<schema path="/com/github/tkashkin/gamehub/providers/images/steamgriddb/" id="com.github.tkashkin.gamehub.providers.images.steamgriddb">
+		<schema path="@SCHEMA_PATH@/providers/images/steamgriddb/" id="@SCHEMA_ID@.providers.images.steamgriddb">
 			<key name="enabled" type="b">
 				<default>true</default>
 				<summary>Is SteamGridDB enabled</summary>
 			</key>
 			<key name="api-key" type="s">
-				<default>'711485c5b6c9b8ca87f6052f6dda04e8'</default>
+				<default>'@PREF_API_KEY_STEAMGRIDDB@'</default>
 				<summary>SteamGridDB API key</summary>
 			</key>
 		</schema>
 
-		<schema path="/com/github/tkashkin/gamehub/providers/images/jinx-sgvi/" id="com.github.tkashkin.gamehub.providers.images.jinx-sgvi">
+		<schema path="@SCHEMA_PATH@/providers/images/jinx-sgvi/" id="@SCHEMA_ID@.providers.images.jinx-sgvi">
 			<key name="enabled" type="b">
 				<default>true</default>
 				<summary>Is Jinx's Steam Grid View Images enabled</summary>
 			</key>
 		</schema>
 
+		<schema path="@SCHEMA_PATH@/providers/images/steam/" id="@SCHEMA_ID@.providers.images.steam">
+			<key name="enabled" type="b">
+				<default>true</default>
+				<summary>Is Steam image search enabled</summary>
+			</key>
+		</schema>
+
 	<!-- Providers / Data / IGDB -->
-		<enum id="com.github.tkashkin.gamehub.providers.data.igdb.preferred-description">
+		<enum id="@SCHEMA_ID@.providers.data.igdb.preferred-description">
 			<value nick="Game" value="0" />
 			<value nick="IGDB" value="1" />
 			<value nick="Both" value="2" />
 		</enum>
 
-		<schema path="/com/github/tkashkin/gamehub/providers/data/igdb/" id="com.github.tkashkin.gamehub.providers.data.igdb">
+		<schema path="@SCHEMA_PATH@/providers/data/igdb/" id="@SCHEMA_ID@.providers.data.igdb">
 			<key name="enabled" type="b">
 				<default>true</default>
 				<summary>Is IGDB enabled</summary>
 			</key>
 			<key name="api-key" type="s">
-				<default>'e0a54818580e4085b596c5aa613b1c53'</default>
+				<default>'@PREF_API_KEY_IGDB@'</default>
 				<summary>IGDB API key</summary>
 			</key>
-			<key name="preferred-description" enum="com.github.tkashkin.gamehub.providers.data.igdb.preferred-description">
+			<key name="preferred-description" enum="@SCHEMA_ID@.providers.data.igdb.preferred-description">
 				<default>"Game"</default>
 				<summary>Preferred description source</summary>
+			</key>
+		</schema>
+
+	<!-- Tweaks -->
+		<schema path="@SCHEMA_PATH@/tweaks/" id="@SCHEMA_ID@.tweaks">
+			<key name="global" type="as">
+				<default>[]</default>
+				<summary>Global tweaks list</summary>
 			</key>
 		</schema>
 </schemalist>

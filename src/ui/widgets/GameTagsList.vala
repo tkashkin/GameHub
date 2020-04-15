@@ -20,7 +20,6 @@ using Gtk;
 using Gdk;
 using Gee;
 
-
 using GameHub.Data;
 using GameHub.Data.DB;
 

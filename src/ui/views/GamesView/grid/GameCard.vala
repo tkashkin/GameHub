@@ -26,7 +26,7 @@ using GameHub.Data.DB;
 using GameHub.Utils;
 using GameHub.UI.Widgets;
 
-namespace GameHub.UI.Views.GamesView
+namespace GameHub.UI.Views.GamesView.Grid
 {
 	public class GameCard: FlowBoxChild
 	{
@@ -410,7 +410,7 @@ namespace GameHub.UI.Views.GamesView
 						card.get_style_context().remove_class("installing");
 						Allocation alloc;
 						card.get_allocation(out alloc);
-						if(s.download != null)
+						if(s.download != null && s.download.status != null && s.download.status.progress >= 0)
 						{
 							progress_bar.set_size_request((int) (s.download.status.progress * alloc.width), 8);
 						}
@@ -448,7 +448,9 @@ namespace GameHub.UI.Views.GamesView
 			}
 			else
 			{
+				#if PERF_GAMECARD_UNLOAD_IMAGES
 				image.unload();
+				#endif
 			}
 		}
 

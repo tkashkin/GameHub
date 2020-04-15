@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Kemal Oktay Aktoğan <oktay454@disroot.org>, 2019.
 # Güner Acet <kurama632@gmail.com>, 2019.
-# Oğuz Ersen <oguzersen@protonmail.com>, 2019.
+# Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-11-15 18:04+0000\n"
+"POT-Creation-Date: 2020-01-26 06:40+0300\n"
+"PO-Revision-Date: 2020-04-15 12:11+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
 "translations/tr/>\n"
@@ -18,162 +18,162 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
-#: src/app.vala:89
+#: src/app.vala:91
 msgid "Show help"
 msgstr "Yardımı göster"
 
-#: src/app.vala:90
+#: src/app.vala:92
 msgid "Show application version and exit"
-msgstr "Uygulama versiyonunu göster ve çık"
+msgstr "Uygulama sürümünü göster ve çık"
 
-#: src/app.vala:91
+#: src/app.vala:93
 msgid "Restart with GDB debugger attached"
 msgstr "GDB hata ayıklayıcısı ile birlikte yeniden başlat"
 
-#: src/app.vala:92
+#: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr "Tüm GDB geriye dönük izlemesini(olay yığını) göster"
+msgstr "Tam GDB yığın geri izlemesini göster"
 
-#: src/app.vala:93
+#: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Ölümcül hataları kritik olarak kabul et ve uygulamayı çöktür"
 
-#: src/app.vala:97
+#: src/app.vala:99
 msgid "Show main window"
 msgstr "Ana pencereyi göster"
 
-#: src/app.vala:98
+#: src/app.vala:100
 msgid "Show application settings dialog"
 msgstr "Uygulama ayarları iletişim kutusunu göster"
 
-#: src/app.vala:99
+#: src/app.vala:101
 msgid "Show about dialog"
 msgstr "Hakkında iletişim penceresini göster"
 
-#: src/app.vala:100
+#: src/app.vala:102
 msgid "Maximum number of background worker threads"
 msgstr "Arka planda çalışan iş parçacık sayısının üst limiti"
 
-#: src/app.vala:104
+#: src/app.vala:106
 msgid "Run game"
 msgstr "Oyunu çalıştır"
 
-#: src/app.vala:105
+#: src/app.vala:107
 msgid "Show compatibility options dialog"
 msgstr "Uyumluluk ayarları iletişim kutusunu göster"
 
-#: src/app.vala:106
+#: src/app.vala:108
 msgid "Open game details"
 msgstr "Oyun ayrıntılarını aç"
 
-#: src/app.vala:107
+#: src/app.vala:109
 msgid "Open game properties"
 msgstr "Oyun özelliklerini aç"
 
-#: src/app.vala:111
+#: src/app.vala:113
 msgid "Enable debug logging"
 msgstr "Hata ayıklama günlük kaydını etkinleştirin"
 
-#: src/app.vala:112
+#: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
 "Kimlik doğrulama işlemi ve kimlik doğrulama belirteçleri gibi hassas bilgiler"
 
-#: src/app.vala:113
+#: src/app.vala:115
 msgid "Log download manager"
 msgstr "Günlük kaydı indirme yöneticisi"
 
-#: src/app.vala:114
+#: src/app.vala:116
 msgid "Log background workers start/stop"
 msgstr "Arka plan çalışma öbeklerinin günlük kaydını başlat/durdur"
 
-#: src/app.vala:115
+#: src/app.vala:117
 msgid "Disable log messages filtering"
 msgstr "Log mesajları filtresini devre dışı bırak"
 
-#: src/app.vala:116
+#: src/app.vala:118
 msgid "Verbose logging"
 msgstr "Ayrıntılı günlük kaydı"
 
-#: src/app.vala:245
+#: src/app.vala:247
 msgid "Game Options:"
 msgstr "Oyun seçenekleri:"
 
-#: src/app.vala:245
+#: src/app.vala:247
 msgid "Show game options help"
 msgstr "Oyun seçenekleri yardımını göster"
 
-#: src/app.vala:253
+#: src/app.vala:255
 msgid "Logging Options:"
 msgstr "Günlüğe Kaydetme Seçenekleri:"
 
-#: src/app.vala:253
+#: src/app.vala:255
 msgid "Show logging options help"
 msgstr "Günlüğe kaydetme seçenekleri yardımını göster"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
 msgstr "Çalıştırma dosyasını seçiniz"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:392
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
+#: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
 msgstr "Seç"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:179 src/ui/widgets/FileChooserEntry.vala:55
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
+#: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
 msgstr "İptal"
 
-#: src/data/Runnable.vala:165 src/ui/widgets/FileChooserEntry.vala:49
+#: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
 msgstr "Dizin seç"
 
-#: src/data/Runnable.vala:423
+#: src/data/Runnable.vala:619
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr "Parça %1$u / %2$u: %3$s"
 
-#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr "%s: bozuk yükleyici"
+msgstr "%s: bozuk kurucu"
 
-#: src/data/Runnable.vala:447
+#: src/data/Runnable.vala:643
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "%s içinde sağlama uyuşmazlığı"
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
+#: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "Dosyayı göster"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
+#: src/data/Runnable.vala:658 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Kaldır"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
+#: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "Yedekleme"
 
-#: src/data/Runnable.vala:613
+#: src/data/Runnable.vala:778
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: ana çalıştırılabilir dosya algılanamıyor"
 
-#: src/data/Runnable.vala:614
+#: src/data/Runnable.vala:779
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -181,57 +181,57 @@ msgstr ""
 "Bu oyun için ana çalıştırılabilir dosya otomatik olarak algılanamıyor.\n"
 "Lütfen oyunun özelliklerinde çalıştırılabilir ana dosyayı ayarlayın."
 
-#: src/data/Runnable.vala:850
+#: src/data/Runnable.vala:908
 msgctxt "platform"
 msgid "Emulated"
 msgstr "Emüle edilmiş"
 
-#: src/data/Game.vala:547
+#: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
 msgstr "Çalışıyor"
 
-#: src/data/Game.vala:550
+#: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
 msgstr "Yüklendi"
 
-#: src/data/Game.vala:551
+#: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
 msgstr "Yükleniyor"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr "Yükleyici bütünlüğü doğrulanıyor"
+msgstr "Kurucu bütünlüğü doğrulanıyor"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
 msgstr "İndirme başladı"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:633
 msgctxt "status"
 msgid "Not installed"
 msgstr "Yüklenmedi"
 
-#: src/data/Game.vala:565
+#: src/data/Game.vala:643
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Yüklendi"
 
-#: src/data/Game.vala:566
+#: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
 msgstr "Yükleniyor"
 
-#: src/data/Game.vala:568
+#: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "İndiriliyor"
 
-#: src/data/Game.vala:570
+#: src/data/Game.vala:648
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "Yüklenmedi"
@@ -240,61 +240,6 @@ msgstr "Yüklenmedi"
 #, c-format
 msgid "%s games"
 msgstr "%s oyun"
-
-#: src/data/adapters/GamesAdapter.vala:424
-msgctxt "status_header"
-msgid "Favorites"
-msgstr "Sık kullanılanlar"
-
-#: src/data/adapters/GamesAdapter.vala:429
-#, c-format
-msgctxt "status_header"
-msgid "%s: Favorites"
-msgstr "%s: Sık kullanılanlar"
-
-#: src/data/adapters/GamesAdapter.vala:454
-msgid "Merging games"
-msgstr "Oyunlar birleştiriliyor"
-
-#: src/data/adapters/GamesAdapter.vala:467
-#, c-format
-msgid "Merging games from %s"
-msgstr "%s'den oyunlar birleştiriliyor"
-
-#: src/data/adapters/GamesAdapter.vala:514
-#, c-format
-msgid "Loading games from %s"
-msgstr "%s'den oyunlar yükleniyor"
-
-#: src/data/adapters/GamesAdapter.vala:621
-msgctxt "sort_mode"
-msgid "By name"
-msgstr "İsme göre"
-
-#: src/data/adapters/GamesAdapter.vala:622
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr "Son başlatmaya göre"
-
-#: src/data/adapters/GamesAdapter.vala:623
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr "Oynama zamanına göre"
-
-#: src/data/adapters/GamesAdapter.vala:648
-msgctxt "group_mode"
-msgid "Do not group"
-msgstr "Gruplandırma"
-
-#: src/data/adapters/GamesAdapter.vala:649
-msgctxt "group_mode"
-msgid "By status"
-msgstr "Duruma göre"
-
-#: src/data/adapters/GamesAdapter.vala:650
-msgctxt "group_mode"
-msgid "By source"
-msgstr "Kaynağa göre"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
@@ -308,18 +253,47 @@ msgstr ""
 "Steam yapılandırma dosyası bulunamadı.\n"
 "Steam istemcisinden hesabınıza giriş yapın ve GameHub'a geri dönün"
 
-#: src/data/sources/humble/HumbleGame.vala:333
+#: src/data/sources/gog/GOGGame.vala:983
+#, c-format
+msgid "DLC: %s"
+msgstr "DLC: %s"
+
+#: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr "%s: kullanılabilir yükleyici yok"
+msgstr "%s: kullanılabilir kurucu yok"
 
-#: src/data/sources/humble/HumbleGame.vala:334
+#: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
 "Trove indirme URL’si alınamıyor.\n"
 "Humble Monthly üyeliğinizin etkin olduğundan emin olun."
+
+#: src/data/sources/itch/ItchDownloader.vala:192
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%s left;"
+msgstr "%s kaldı;"
+
+#: src/data/sources/itch/ItchDownloader.vala:195
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%d%%"
+msgstr "%%%d"
+
+#: src/data/sources/itch/ItchDownloader.vala:198
+#, c-format
+msgctxt "itch_dl_status"
+msgid "(%1$s / %2$s)"
+msgstr "(%1$s / %2$s)"
+
+#: src/data/sources/itch/ItchDownloader.vala:201
+#, c-format
+msgctxt "itch_dl_status"
+msgid "[%s/s]"
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -345,11 +319,11 @@ msgctxt "tag"
 msgid "Hidden"
 msgstr "Gizli"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
 msgstr "Komut dosyasını düzenle"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
 msgstr "Özel komut dosyasını düzenle"
 
@@ -376,8 +350,8 @@ msgstr "Çalıştır"
 msgid "Show WineWrap menu"
 msgstr "WineWrap menüsünü göster"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:131
-#: src/data/compat/Wine.vala:87
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
+#: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
 msgstr "Önekteki uygulamaları sonlandır"
 
@@ -385,55 +359,19 @@ msgstr "Önekteki uygulamaları sonlandır"
 msgid "Proton prefix"
 msgstr "Proton öneki"
 
-#: src/data/compat/Proton.vala:53
-msgid "Disable esync"
-msgstr "Esync'i devre dışı bırak"
-
-#: src/data/compat/Proton.vala:54
-msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr "LARGE_ADDRESS_AWARE bayrağını zorla"
-
-#: src/data/compat/Proton.vala:55
-msgid "Disable DirectX 11 compatibility layer"
-msgstr "DirectX 11 uyumluluk katmanını devre dışı bırak"
-
-#: src/data/compat/Proton.vala:56
-msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr "WineD3D11'i DirectX 11 uyumluluk katmanı olarak kullan"
-
-#: src/data/compat/Proton.vala:57
-msgid "Show DXVK info overlay"
-msgstr "DXVK bilgi paylaşımını göster"
-
-#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
-msgid "Silent installation"
-msgstr "Sessiz kurulum"
-
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
-msgid "Very silent installation"
-msgstr "Çok sessiz kurulum"
-
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
-msgid "Suppress messages"
-msgstr "Mesajları bastır"
-
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
-msgid "No GUI"
-msgstr "GUI yok"
-
-#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
 msgstr "Önek dizinini aç"
 
-#: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
 msgstr "winecfg'yi çalıştır"
 
-#: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:116 src/data/compat/Wine.vala:77
 msgid "Run winetricks"
 msgstr "winetricks'i çalıştır"
 
-#: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:80
 msgid "Run taskmgr"
 msgstr "Taskmgr'i çalıştır"
 
@@ -447,7 +385,7 @@ msgstr "Ortam değişkenleri"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr "InnoSetup varsayılan seçenekleri"
+msgstr "InnoSetup öntanımlı seçenekleri"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
@@ -465,26 +403,83 @@ msgstr "Emülatör"
 msgid "Launch in game directory"
 msgstr "Oyun dizininde başlat"
 
+#: src/data/adapters/GamesAdapter.vala:440
+msgctxt "status_header"
+msgid "Favorites"
+msgstr "Sık kullanılanlar"
+
+#: src/data/adapters/GamesAdapter.vala:445
+#, c-format
+msgctxt "status_header"
+msgid "%s: Favorites"
+msgstr "%s: Sık kullanılanlar"
+
+#: src/data/adapters/GamesAdapter.vala:491
+msgid "Merging games"
+msgstr "Oyunlar birleştiriliyor"
+
+#: src/data/adapters/GamesAdapter.vala:504
+#, c-format
+msgid "Merging games from %s"
+msgstr "%s'den oyunlar birleştiriliyor"
+
+#: src/data/adapters/GamesAdapter.vala:551
+#, c-format
+msgid "Loading games from %s"
+msgstr "%s'den oyunlar yükleniyor"
+
+#: src/data/adapters/GamesAdapter.vala:678
+msgctxt "sort_mode"
+msgid "By name"
+msgstr "İsme göre"
+
+#: src/data/adapters/GamesAdapter.vala:679
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr "Son başlatmaya göre"
+
+#: src/data/adapters/GamesAdapter.vala:680
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "Oynama zamanına göre"
+
+#: src/data/adapters/GamesAdapter.vala:705
+msgctxt "group_mode"
+msgid "Do not group"
+msgstr "Gruplandırma"
+
+#: src/data/adapters/GamesAdapter.vala:706
+msgctxt "group_mode"
+msgid "By status"
+msgstr "Duruma göre"
+
+#: src/data/adapters/GamesAdapter.vala:707
+msgctxt "group_mode"
+msgid "By source"
+msgstr "Kaynağa göre"
+
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
-msgstr "Varsayılan"
+msgstr "Öntanımlı"
 
 #: src/data/providers/images/SteamGridDB.vala:158
 #: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
-msgstr "Varsayılan API anahtarını geri yükle"
+msgstr "Öntanımlı API anahtarını geri yükle"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:108
 msgid "API key"
 msgstr "API anahtarı"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:53
 msgid "Generate key"
 msgstr "Anahtar oluştur"
 
@@ -540,8 +535,8 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:270
-#: src/ui/views/GamesView/GamesView.vala:652
+#: src/ui/views/GamesView/GamesView.vala:230
+#: src/ui/views/GamesView/GamesView.vala:629
 msgid "Settings"
 msgstr "Ayarlar"
 
@@ -719,15 +714,15 @@ msgstr "Oyun dizini"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Installers"
-msgstr "Yükleyiciler"
+msgstr "Kurucular"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:99
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:98
 msgid "DLC"
 msgstr "DLC"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:132
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:197
 msgid "Bonus content"
 msgstr "Bonus içerik"
 
@@ -746,7 +741,7 @@ msgstr "Platform"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
 msgid "Controller"
-msgstr "Kontrolör"
+msgstr "Denetleyici"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
@@ -755,11 +750,11 @@ msgstr "Etkin"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
 msgid "Focus GameHub window with Guide button"
-msgstr "Rehber butonu ile GameHub penceresini odakla"
+msgstr "Rehber düğmesi ile GameHub penceresini odakla"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
-msgstr "Kontrolörler"
+msgstr "Denetleyiciler"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
@@ -776,8 +771,39 @@ msgstr "Çıkış"
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:77
 msgid "Disabled"
 msgstr "Devre dışı"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:47
+#: src/ui/dialogs/GameTweaksDialog.vala:53
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+msgid "Tweaks"
+msgstr "İnce ayarlar"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
+msgid "Tweak launch options and apply them to games automatically"
+msgstr ""
+"Başlatma seçeneklerini değiştirin ve oyunlara otomatik olarak uygulayın"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
+msgid ""
+"Tweaks are loaded from following directories in order\n"
+"Last tweak overrides previous tweaks with same identifiers"
+msgstr ""
+"İnce ayarlar, aşağıdaki dizinlerden sırayla yüklenir\n"
+"Son ayarlama, aynı tanımlayıcılara sahip önceki ayarlamaları geçersiz kılar"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
+msgid "Click to open"
+msgstr "Açmak için tıklayın"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
+#, c-format
+msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
+msgstr "İnce ayarlar <b>%1$s</b> ve %2$d dizinden daha yüklenir <b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -788,11 +814,13 @@ msgid "Steam API keys have limited number of uses per day"
 msgstr "Steam API anahtarlarının günlük kullanım sayısı sınırlıdır"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:57
 msgid "Installation directory"
 msgstr "Kurulum dizini"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:81
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
@@ -801,11 +829,13 @@ msgstr "Yüklü değil"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:85
 msgid "Not authenticated"
 msgstr "Kimlik doğrulanmadı"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 #, c-format
 msgid "Authenticated as <b>%s</b>"
 msgstr "<b>%s</b> olarak kimlik doğrulandı"
@@ -813,14 +843,16 @@ msgstr "<b>%s</b> olarak kimlik doğrulandı"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 msgid "Authenticated"
 msgstr "Kimlik doğrulandı"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
-#: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
+#: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:111
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
+#: src/ui/widgets/TweaksList.vala:95
 msgid "Install"
 msgstr "Yükle"
 
@@ -830,6 +862,7 @@ msgstr "Steam API anahtarı"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:48
 msgid "Games directory"
 msgstr "Oyun dizini"
 
@@ -907,7 +940,7 @@ msgstr "Çalıştırılabilir"
 #: src/ui/views/GamesView/AddGamePopover.vala:68
 #: src/ui/views/GamesView/AddGamePopover.vala:143
 msgid "Installer"
-msgstr "Yükleyici"
+msgstr "Kurucu"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
 #: src/ui/dialogs/GamePropertiesDialog.vala:64
@@ -917,7 +950,7 @@ msgid "Name"
 msgstr "İsim"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:191
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Argümanlar"
@@ -945,7 +978,7 @@ msgid "Select emulator directory"
 msgstr "Emülatör dizinini seçin"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:209
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Force compatibility mode"
 msgstr "Uyumluluk modunu zorla"
 
@@ -974,8 +1007,8 @@ msgstr ""
 "\n"
 "<b>•</b> Birden fazla kalıp <b>|</b> ile ayrılabilir\n"
 "<b>•</b> Göreceli yolu eşleştirmek için kalıbı <b>./</b> ile başlatın\n"
-"<b>•</b> $<b>basename</b> değişkeni, oyunun yürütülebilir dosyasının adıyla ("
-"uzantı olmadan) değiştirilecektir"
+"<b>•</b> $<b>basename</b> değişkeni, oyunun yürütülebilir dosyasının adıyla "
+"(uzantı olmadan) değiştirilecektir"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
@@ -995,7 +1028,7 @@ msgstr "Görüntü sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
 msgid "Metadata providers"
-msgstr "Meta veri sağlayıcıları"
+msgstr "Üst veri sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
@@ -1055,26 +1088,26 @@ msgctxt "about_link"
 msgid "Forks"
 msgstr "Forklar"
 
-#: src/ui/dialogs/InstallDialog.vala:112
+#: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr "İçe aktar"
 
-#: src/ui/dialogs/InstallDialog.vala:113
+#: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 msgid "Download"
 msgstr "İndir"
 
-#: src/ui/dialogs/InstallDialog.vala:210
+#: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
-msgstr "Yükleyiciyi seçin"
+msgstr "Kurucuyu seçin"
 
-#: src/ui/dialogs/InstallDialog.vala:219
+#: src/ui/dialogs/InstallDialog.vala:216
 #, c-format
 msgid "Installer size: %s"
-msgstr "Yükleyici boyutu: %s"
+msgstr "Kurucu boyutu: %s"
 
-#: src/ui/dialogs/InstallDialog.vala:329
+#: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
@@ -1105,23 +1138,31 @@ msgstr "Dikey resim URL'si"
 msgid "Icon URL"
 msgstr "Simge URL'si"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:204
+#: src/ui/dialogs/GamePropertiesDialog.vala:173
+msgid "Select working directory"
+msgstr "Çalışma dizinini seç"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:173
+msgid "Working directory"
+msgstr "Çalışma dizini"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
 msgstr "Uyumluluk"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:226
+#: src/ui/dialogs/GamePropertiesDialog.vala:236
 msgid "Launch from terminal"
 msgstr "Terminalden başlat"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:242
+#: src/ui/dialogs/GamePropertiesDialog.vala:252
 msgid "Copy to clipboard"
 msgstr "Panoya kopyala"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:244
+#: src/ui/dialogs/GamePropertiesDialog.vala:254
 msgid "Add to Steam"
 msgstr "Steam'e Ekle"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:245
+#: src/ui/dialogs/GamePropertiesDialog.vala:255
 msgid "Add to the Steam library"
 msgstr "Steam kütüphanesine ekle"
 
@@ -1205,7 +1246,7 @@ msgstr "Uyumluluk katmanıyla çalıştır"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
-msgstr "Bozuk yükleyici: sağlama toplamı uyuşmazlığı"
+msgstr "Bozuk kurucu: sağlama toplamı uyuşmazlığı"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
@@ -1227,6 +1268,11 @@ msgstr "Tümünü seç"
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
 msgid "Select directory to import"
 msgstr "İçe aktaracak dizini seç"
+
+#: src/ui/dialogs/GameTweaksDialog.vala:40
+#, c-format
+msgid "%s: Tweaks"
+msgstr "%s: İnce ayarlar"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1265,87 +1311,99 @@ msgstr "%s yükle"
 msgid "Return to GameHub after installing"
 msgstr "Yüklemeden sonra GameHub'a dön"
 
-#: src/ui/views/GamesView/GamesView.vala:134
+#: src/ui/views/GamesView/GamesView.vala:136
 msgid "No games"
 msgstr "Oyun yok"
 
-#: src/ui/views/GamesView/GamesView.vala:134
+#: src/ui/views/GamesView/GamesView.vala:136
 msgid "Get some games or enable some game sources in settings"
 msgstr "Birkaç oyun edinin veya ayarlarda birkaç oyun kaynağını etkinleştirin"
 
-#: src/ui/views/GamesView/GamesView.vala:190
+#: src/ui/views/GamesView/GamesView.vala:150
 msgid "Grid view"
 msgstr "Izgara görünümü"
 
-#: src/ui/views/GamesView/GamesView.vala:191
+#: src/ui/views/GamesView/GamesView.vala:151
 msgid "List view"
 msgstr "Liste görünümü"
 
-#: src/ui/views/GamesView/GamesView.vala:199
+#: src/ui/views/GamesView/GamesView.vala:159
 msgid "All games"
 msgstr "Tüm oyunlar"
 
-#: src/ui/views/GamesView/GamesView.vala:222
+#: src/ui/views/GamesView/GamesView.vala:182
 msgid "Downloads"
 msgstr "İndirilenler"
 
-#: src/ui/views/GamesView/GamesView.vala:248
+#: src/ui/views/GamesView/GamesView.vala:208
 msgid "Filters"
 msgstr "Filtreler"
 
-#: src/ui/views/GamesView/GamesView.vala:256
+#: src/ui/views/GamesView/GamesView.vala:216
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Oyun ekle"
 
-#: src/ui/views/GamesView/GamesView.vala:263
+#: src/ui/views/GamesView/GamesView.vala:223
 msgid "Search"
 msgstr "Arama"
 
-#: src/ui/views/GamesView/GamesView.vala:390
+#: src/ui/views/GamesView/GamesView.vala:328
 msgid "Menu"
 msgstr "Menü"
 
-#: src/ui/views/GamesView/GamesView.vala:391
+#: src/ui/views/GamesView/GamesView.vala:329
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Geri"
 
-#: src/ui/views/GamesView/GamesView.vala:570
+#: src/ui/views/GamesView/GamesView.vala:550
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u oyun"
 msgstr[1] "%u oyun"
 
-#: src/ui/views/GamesView/GamesView.vala:586
+#: src/ui/views/GamesView/GamesView.vala:553
+#, c-format
+msgctxt "games_view_subtitle_filtered_games"
+msgid "%1$u / %2$s"
+msgstr "%1$u / %2$s"
+
+#: src/ui/views/GamesView/GamesView.vala:557
+#, c-format
+msgctxt "games_view_subtitle"
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
 msgstr "Kullanıcı tarafından eklenen oyun yok"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:569
 msgid "Add some games using plus button"
 msgstr "Artı düğmesini kullanarak birkaç oyun ekleyin"
 
-#: src/ui/views/GamesView/GamesView.vala:591
+#: src/ui/views/GamesView/GamesView.vala:573
 #, c-format
 msgid "No %s games"
 msgstr "%s oyunu yok"
 
-#: src/ui/views/GamesView/GamesView.vala:592
+#: src/ui/views/GamesView/GamesView.vala:574
 msgid "Get some Linux-compatible games"
 msgstr "Birkaç Linux uyumlu oyun edinin"
 
-#: src/ui/views/GamesView/GamesView.vala:602
+#: src/ui/views/GamesView/GamesView.vala:584
 #, c-format
 msgid "No games matching “%s”"
 msgstr "\"%s\" ile eşleşen oyun yok"
 
-#: src/ui/views/GamesView/GamesView.vala:607
+#: src/ui/views/GamesView/GamesView.vala:589
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "“%2$s” ile eşleşen %1$s oyun yok"
 
-#: src/ui/views/GamesView/GamesView.vala:650
+#: src/ui/views/GamesView/GamesView.vala:627
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1353,30 +1411,30 @@ msgstr ""
 "Steam'den oyun yüklenmedi. Oyun listesi gizliliğinizi herkese açık olarak "
 "ayarlayın veya ayarlarda kendi Steam API anahtarınızı kullanın."
 
-#: src/ui/views/GamesView/GamesView.vala:651
+#: src/ui/views/GamesView/GamesView.vala:628
 msgid "Privacy"
 msgstr "Gizlilik"
 
-#: src/ui/views/GamesView/GamesView.vala:798
+#: src/ui/views/GamesView/GamesView.vala:739
 msgid "Downloading images"
 msgstr "Görüntüler indiriliyor"
 
-#: src/ui/views/GamesView/GamesView.vala:812
+#: src/ui/views/GamesView/GamesView.vala:753
 #, c-format
 msgid "Downloading image: %s"
 msgstr "Görüntü indiriliyor: %s"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:125
+#: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "İndirmeyi duraklat"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:130
+#: src/ui/views/GamesView/DownloadProgressView.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "İndirmeye devam et"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:135
+#: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "İndirmeyi iptal et"
@@ -1390,7 +1448,7 @@ msgid "Sort"
 msgstr "Sırala"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
-#: src/ui/widgets/GameTagsList.vala:59
+#: src/ui/widgets/GameTagsList.vala:58
 msgid "Tags"
 msgstr "Etiketler"
 
@@ -1432,7 +1490,7 @@ msgstr "Kurulum dizinini aç"
 #: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
 msgid "Open installers collection directory"
-msgstr "Yükleyici koleksiyon dizinini aç"
+msgstr "Kurucu koleksiyon dizinini aç"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
@@ -1450,7 +1508,7 @@ msgstr "Ekran görüntüleri dizinini aç"
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:184
+#: src/ui/views/GamesView/GameContextMenu.vala:192
 msgid "Properties"
 msgstr "Özellikler"
 
@@ -1514,6 +1572,19 @@ msgstr "Mağaza sayfasını aç"
 msgid "Game properties"
 msgstr "Oyun özellikleri"
 
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
+msgid "Playtime"
+msgstr "Oynama zamanı"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
+msgid "Playtime (local)"
+msgstr "Oynama zamanı (yerel)"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
+msgid "Last launch"
+msgstr "Son başlatma"
+
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
 msgstr "Başarılar"
@@ -1528,31 +1599,6 @@ msgstr "Kilidi açıldı: %s"
 msgid "Global percentage: %g%%"
 msgstr "Global yüzde: %%%g"
 
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
-msgid "Playtime"
-msgstr "Oynama zamanı"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
-msgid "Playtime (local)"
-msgstr "Oynama zamanı (yerel)"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
-msgid "Last launch"
-msgstr "Son başlatma"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dh"
-msgstr "%dsaat"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dm"
-msgstr "%ddk"
-
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
@@ -1562,6 +1608,11 @@ msgstr "Dil"
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
 msgstr "Diller"
+
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
+#, c-format
+msgid "%u DLCs cannot be installed"
+msgstr "%u DLC yüklenemiyor"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1671,51 +1722,35 @@ msgstr "Uyumluluk katmanı:"
 msgid "Configure"
 msgstr "Yapılandır"
 
-#: src/ui/widgets/GameTagsList.vala:110
+#: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
 msgstr "Etiket ekle"
 
-#: src/utils/downloader/Downloader.vala:159
-msgctxt "dl_status"
-msgid "Queued"
-msgstr "Sıraya konuldu"
+#: src/ui/widgets/TweaksList.vala:86
+msgid "No description"
+msgstr "Açıklama yok"
 
-#: src/utils/downloader/Downloader.vala:160
-msgctxt "dl_status"
-msgid "Starting download"
-msgstr "İndirme başlatılıyor"
+#: src/ui/widgets/TweaksList.vala:124
+msgid "Edit file"
+msgstr "Dosya düzenle"
 
-#: src/utils/downloader/Downloader.vala:161
-msgctxt "dl_status"
-msgid "Download started"
-msgstr "İndirme başladı"
-
-#: src/utils/downloader/Downloader.vala:162
-msgctxt "dl_status"
-msgid "Download finished"
-msgstr "İndirme bitti"
-
-#: src/utils/downloader/Downloader.vala:163
-msgctxt "dl_status"
-msgid "Download failed"
-msgstr "İndirme başarısız oldu"
-
-#: src/utils/downloader/Downloader.vala:165
+#: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
-msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s) [%s/s]"
-msgstr "İndiriliyor: %%%d (%s / %s) [%s/s]"
+msgctxt "time"
+msgid "%dh"
+msgstr "%dsaat"
 
-#: src/utils/downloader/Downloader.vala:167
+#: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
-msgctxt "dl_status"
-msgid "Paused: %d%% (%s / %s)"
-msgstr "Duraklatıldı: %%%d (%s / %s)"
+msgctxt "time"
+msgid "%dm"
+msgstr "%ddk"
 
-#: src/utils/downloader/Downloader.vala:169
-msgctxt "dl_status"
-msgid "Download cancelled"
-msgstr "İndirme iptal edildi"
+#: src/utils/Utils.vala:464
+#, c-format
+msgctxt "time"
+msgid "%ds"
+msgstr "%ds"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1746,3 +1781,92 @@ msgstr "Kare"
 msgctxt "grid_size_preset"
 msgid "Custom"
 msgstr "Özel"
+
+#: src/utils/downloader/Downloader.vala:200
+msgctxt "dl_status"
+msgid "Queued"
+msgstr "Sıraya konuldu"
+
+#: src/utils/downloader/Downloader.vala:201
+msgctxt "dl_status"
+msgid "Starting download"
+msgstr "İndirme başlatılıyor"
+
+#: src/utils/downloader/Downloader.vala:202
+msgctxt "dl_status"
+msgid "Download started"
+msgstr "İndirme başladı"
+
+#: src/utils/downloader/Downloader.vala:203
+msgctxt "dl_status"
+msgid "Download finished"
+msgstr "İndirme bitti"
+
+#: src/utils/downloader/Downloader.vala:204
+msgctxt "dl_status"
+msgid "Download failed"
+msgstr "İndirme başarısız oldu"
+
+#: src/utils/downloader/Downloader.vala:208
+#, c-format
+msgctxt "dl_status"
+msgid "Downloading: %s"
+msgstr "İndiriliyor: %s"
+
+#: src/utils/downloader/Downloader.vala:210
+msgctxt "dl_status"
+msgid "Downloading"
+msgstr "İndiriliyor"
+
+#: src/utils/downloader/Downloader.vala:214
+#, c-format
+msgctxt "dl_status"
+msgid "Paused: %s"
+msgstr "Duraklatıldı: %s"
+
+#: src/utils/downloader/Downloader.vala:216
+msgctxt "dl_status"
+msgid "Paused"
+msgstr "Duraklatıldı"
+
+#: src/utils/downloader/Downloader.vala:218
+msgctxt "dl_status"
+msgid "Download cancelled"
+msgstr "İndirme iptal edildi"
+
+#. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
+#: src/utils/downloader/Downloader.vala:262
+#, c-format
+msgctxt "dl_status"
+msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
+msgstr "%%%1$d (%2$s / %3$s) [%4$s/s]"
+
+#~ msgid "Disable esync"
+#~ msgstr "Esync'i devre dışı bırak"
+
+#~ msgid "Force LARGE_ADDRESS_AWARE flag"
+#~ msgstr "LARGE_ADDRESS_AWARE bayrağını zorla"
+
+#~ msgid "Disable DirectX 11 compatibility layer"
+#~ msgstr "DirectX 11 uyumluluk katmanını devre dışı bırak"
+
+#~ msgid "Use WineD3D11 as DirectX 11 compatibility layer"
+#~ msgstr "WineD3D11'i DirectX 11 uyumluluk katmanı olarak kullan"
+
+#~ msgid "Show DXVK info overlay"
+#~ msgstr "DXVK bilgi paylaşımını göster"
+
+#~ msgid "Enable DirectX 9 compatibility layer"
+#~ msgstr "DirectX 9 uyumluluk katmanını etkinleştir"
+
+#~ msgid "Silent installation"
+#~ msgstr "Sessiz kurulum"
+
+#~ msgid "Very silent installation"
+#~ msgstr "Çok sessiz kurulum"
+
+#~ msgid "Suppress messages"
+#~ msgstr "Mesajları bastır"
+
+#~ msgid "No GUI"
+#~ msgstr "GUI yok"

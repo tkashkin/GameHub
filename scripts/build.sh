@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _GH_RDNN="com.github.tkashkin.gamehub"
-_GH_VERSION="0.15.0"
+_GH_VERSION="0.16.0"
 
 _GH_BRANCH="${APPVEYOR_REPO_BRANCH:-$(git symbolic-ref --short -q HEAD)}"
 _GH_COMMIT="$(git rev-parse HEAD)"
@@ -31,8 +31,8 @@ if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 	_GPG_BINARY="gpg"
 	_GPG_PACKAGE="gnupg"
 elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
-	_DEB_TARGET_DISTRO_NAMES=("bionic" "disco" "eoan")
-	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "19.04" "19.10")
+	_DEB_TARGET_DISTRO_NAMES=("bionic" "disco" "eoan" "focal")
+	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "19.04" "19.10" "20.04")
 	_BUILD_IMAGE="bionic"
 else
 	source "/etc/os-release"
@@ -97,12 +97,10 @@ deps()
 {
 	set +e
 	echo "[scripts/build.sh] Installing dependencies"
-	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:elementary-os/stable -y
-	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:elementary-os/os-patches -y
-	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:elementary-os/daily -y
 	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:vala-team/next -y
+	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:savoury1/build-tools -y
 	sudo DEBIAN_FRONTEND="noninteractive" apt update -qq
-	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage elementary-sdk libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
+	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
 	#sudo apt full-upgrade -y
 	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
 		sudo DEBIAN_FRONTEND="noninteractive" dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
@@ -217,7 +215,7 @@ build()
 	echo "[scripts/build.sh] Building"
 	cd "$_ROOT"
 	mkdir -p "$BUILDROOT"
-	meson "$BUILDDIR" --prefix=/usr --buildtype=debug -Ddistro=generic -Dappimage=true -Dgit_branch=$_GH_BRANCH -Dgit_commit=$_GH_COMMIT -Dgit_commit_short=$_GH_COMMIT_SHORT
+	meson "$BUILDDIR" --prefix=/usr --buildtype=debug -Dpackage=appimage -Dgit_branch=$_GH_BRANCH -Dgit_commit=$_GH_COMMIT -Dgit_commit_short=$_GH_COMMIT_SHORT
 	cd "$BUILDDIR"
 	ninja
 	DESTDIR="$APPDIR" ninja install

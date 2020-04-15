@@ -24,11 +24,13 @@ namespace GameHub.UI.Widgets
 {
 	public class AutoSizeImage: DrawingArea
 	{
+		private string? url;
+		private string? url_vertical;
 		private Pixbuf? src;
-		private Pixbuf? scaled;
-
 		private Pixbuf? src_vertical;
+		private Pixbuf? scaled;
 		private Pixbuf? scaled_vertical;
+		private string cache_prefix = ImageCache.DEFAULT_CACHED_FILE_PREFIX;
 
 		private int cmin = 0;
 		private int cmax = 0;
@@ -93,27 +95,55 @@ namespace GameHub.UI.Widgets
 					set_size_request((int) (cmin / ratio), cmin);
 					break;
 			}
+			load_image(is_vertical);
+		}
+
+		private bool is_vertical
+		{
+			get { return ratio > 1; }
 		}
 
 		public void load(string? url, string? url_vertical, string cache_prefix=ImageCache.DEFAULT_CACHED_FILE_PREFIX)
 		{
+			if(url == this.url && url_vertical == this.url_vertical) return;
 			unload();
-			if(url != null || url != "")
+			this.url = url;
+			this.url_vertical = url_vertical;
+			this.cache_prefix = cache_prefix;
+			load_image(is_vertical);
+		}
+
+		private void load_image(bool vertical=false)
+		{
+			if(vertical && url_vertical != null && url_vertical != "")
 			{
-				ImageCache.load.begin(url, cache_prefix, (obj, res) => {
-					source = ImageCache.load.end(res);
-				});
+				if(src_vertical == null)
+				{
+					ImageCache.load.begin(url_vertical, cache_prefix, (obj, res) => {
+						source_vertical = ImageCache.load.end(res);
+						if(src_vertical == null)
+						{
+							load_image(false);
+						}
+					});
+				}
 			}
-			if(url_vertical != null || url_vertical != "")
+			else if(url != null && url != "")
 			{
-				ImageCache.load.begin(url_vertical, cache_prefix, (obj, res) => {
-					source_vertical = ImageCache.load.end(res);
-				});
+				if(src == null)
+				{
+					ImageCache.load.begin(url, cache_prefix, (obj, res) => {
+						source = ImageCache.load.end(res);
+					});
+				}
 			}
 		}
 
 		public void unload()
 		{
+			url = null;
+			url_vertical = null;
+			cache_prefix = ImageCache.DEFAULT_CACHED_FILE_PREFIX;
 			source = null;
 			source_vertical = null;
 		}
@@ -163,7 +193,7 @@ namespace GameHub.UI.Widgets
 			var scaled_img = scaled;
 			var _scale_img = _scale;
 
-			if(ratio > 1 && src_vertical != null)
+			if(is_vertical && src_vertical != null)
 			{
 				img = src_vertical;
 				scaled_img = scaled_vertical;
@@ -192,9 +222,9 @@ namespace GameHub.UI.Widgets
 
 					if(scaled_img.width != new_width || scaled_img.height != new_height)
 					{
-						scaled_img = img.scale_simple(new_width, new_height, InterpType.BILINEAR);
+						scaled_img = img.scale_simple(new_width, new_height, InterpType.HYPER);
 
-						if(ratio > 1)
+						if(is_vertical && src_vertical != null)
 						{
 							this.scaled_vertical = scaled_img;
 						}
@@ -205,11 +235,11 @@ namespace GameHub.UI.Widgets
 					}
 				}
 
-				var x = (width - scaled.width) / 2;
-				var y = (height - scaled.height) / 2;
+				var x = (width - scaled_img.width) / 2;
+				var y = (height - scaled_img.height) / 2;
 
-				cairo_rounded_rectangle(ctx, int.max(x, 0), int.max(y, 0), int.min(scaled.width, width), int.min(scaled.height, height), corner_radius * scale_factor);
-				cairo_set_source_pixbuf(ctx, scaled, x, y);
+				cairo_rounded_rectangle(ctx, int.max(x, 0), int.max(y, 0), int.min(scaled_img.width, width), int.min(scaled_img.height, height), corner_radius * scale_factor);
+				cairo_set_source_pixbuf(ctx, scaled_img, x, y);
 
 				ctx.clip();
 				ctx.paint();

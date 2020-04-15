@@ -39,6 +39,8 @@ namespace GameHub.Utils
 				public string steam_home { get; set; }
 				public string gog_games { get; set; }
 				public string humble_games { get; set; }
+				public string itch_home { get; set; }
+				public string itch_games { get; set; }
 
 				public Settings()
 				{
@@ -61,7 +63,7 @@ namespace GameHub.Utils
 
 			public class Cache
 			{
-				public const string Home = "~/.cache/com.github.tkashkin.gamehub";
+				public const string Home = "~/.cache/" + ProjectConfig.PROJECT_NAME;
 
 				public const string Cookies = FSUtils.Paths.Cache.Home + "/cookies";
 
@@ -74,6 +76,22 @@ namespace GameHub.Utils
 				public const string WineWrap = FSUtils.Paths.Cache.Compat + "/winewrap";
 
 				public const string Sources = FSUtils.Paths.Cache.Home + "/sources";
+
+				public const string Providers = FSUtils.Paths.Cache.Home + "/providers";
+			}
+
+			public class LocalData
+			{
+				public const string Home = "~/.local/share/" + ProjectConfig.PROJECT_NAME;
+				public const string Tweaks = FSUtils.Paths.LocalData.Home + "/tweaks";
+				public const string DOSBoxConfigs = FSUtils.Paths.LocalData.Home + "/compat/dosbox";
+			}
+
+			public class Config
+			{
+				public const string Home = "~/.config/" + ProjectConfig.PROJECT_NAME;
+				public const string Tweaks = FSUtils.Paths.Config.Home + "/tweaks";
+				public const string DOSBoxConfigs = FSUtils.Paths.Config.Home + "/compat/dosbox";
 			}
 
 			public class Steam
@@ -102,6 +120,20 @@ namespace GameHub.Utils
 
 				public const string Cache = FSUtils.Paths.Cache.Sources + "/humble";
 				public static string LoadedOrdersMD5 { owned get { return FSUtils.Paths.Humble.Cache + "/orders.md5"; } }
+			}
+
+			public class Itch
+			{
+				public static string Home { owned get { return FSUtils.Paths.Settings.instance.itch_home; } }
+				public static string Games { owned get { return FSUtils.Paths.Settings.instance.itch_games; } }
+
+				public const string Database = "db/butler.db";
+
+				public const string Repo = "broth";
+
+				public const string ButlerRoot = FSUtils.Paths.Itch.Repo + "/butler";
+				public const string ButlerCurrentVersion = FSUtils.Paths.Itch.ButlerRoot + "/.chosen-version";
+				public const string ButlerExecutable = FSUtils.Paths.Itch.ButlerRoot + "/versions/%s/butler";
 			}
 
 			public class Collection: GameHub.Settings.SettingsSchema
@@ -274,6 +306,8 @@ namespace GameHub.Utils
 				}
 			}
 			expanded_path = Utils.replace_prefix(expanded_path, "~/.cache", Environment.get_user_cache_dir());
+			expanded_path = Utils.replace_prefix(expanded_path, "~/.local/share", Environment.get_user_data_dir());
+			expanded_path = Utils.replace_prefix(expanded_path, "~/.config", Environment.get_user_config_dir());
 			expanded_path = Utils.replace_prefix(expanded_path, "~", Environment.get_home_dir());
 			expanded_path = expanded_path + (file != null && file != "" ? "/" + file : "");
 			#if OS_WINDOWS
@@ -335,6 +369,50 @@ namespace GameHub.Utils
 			return null;
 		}
 
+		public static ArrayList<File> get_data_dirs(string? subdir=null, bool with_nonexistent=false)
+		{
+			var data_path = ProjectConfig.PROJECT_NAME + (subdir != null ? @"/$(subdir)" : "");
+
+			string[] data_dirs = { FSUtils.file(ProjectConfig.DATADIR, data_path).get_path() };
+			var system_data_dirs = Environment.get_system_data_dirs();
+			var user_data_dir = Environment.get_user_data_dir();
+			var user_config_dir = Environment.get_user_config_dir();
+
+			if(system_data_dirs != null && system_data_dirs.length > 0)
+			{
+				foreach(var system_data_dir in system_data_dirs)
+				{
+					var dir = FSUtils.file(system_data_dir, data_path).get_path();
+					if(!(dir in data_dirs)) data_dirs += dir;
+				}
+			}
+
+			if(user_data_dir != null && user_data_dir.length > 0)
+			{
+				var dir = FSUtils.file(user_data_dir, data_path).get_path();
+				if(!(dir in data_dirs)) data_dirs += dir;
+			}
+
+			if(user_config_dir != null && user_config_dir.length > 0)
+			{
+				var dir = FSUtils.file(user_config_dir, data_path).get_path();
+				if(!(dir in data_dirs)) data_dirs += dir;
+			}
+
+			var dirs = new ArrayList<File>();
+
+			foreach(var d in data_dirs)
+			{
+				var dir = FSUtils.file(d);
+				if(dir != null && (with_nonexistent || dir.query_exists()))
+				{
+					dirs.add(dir);
+				}
+			}
+
+			return dirs;
+		}
+
 		public static File? mkdir(string? path, string? file=null, HashMap<string, string>? variables=null)
 		{
 			try
@@ -352,7 +430,7 @@ namespace GameHub.Utils
 
 		public static void rm(string path, string? file=null, string flags="-f", HashMap<string, string>? variables=null)
 		{
-			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ") }, null, null, false, false, false);
+			Utils.run({"bash", "-c", "rm " + flags + " " + FSUtils.expand(path, file, variables).replace(" ", "\\ ")}).run_sync();
 		}
 
 		public static void mv_up(File? path, string dirname)
@@ -386,16 +464,23 @@ namespace GameHub.Utils
 			}
 			catch(IOError.WOULD_MERGE e)
 			{
-				FileInfo? finfo = null;
-				var enumerator = source.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
-				while((finfo = enumerator.next_file()) != null)
+				try
 				{
-					var src = source.get_child(finfo.get_name());
-					var dest = destination.get_child(finfo.get_name());
-					debug("[FSUtils.mv_merge] '%s' -> '%s'", src.get_path(), dest.get_path());
-					FSUtils.mv_merge(src, dest);
+					FileInfo? finfo = null;
+					var enumerator = source.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+					while((finfo = enumerator.next_file()) != null)
+					{
+						var src = source.get_child(finfo.get_name());
+						var dest = destination.get_child(finfo.get_name());
+						debug("[FSUtils.mv_merge] '%s' -> '%s'", src.get_path(), dest.get_path());
+						FSUtils.mv_merge(src, dest);
+					}
+					source.delete();
 				}
-				source.delete();
+				catch(Error e)
+				{
+					warning("[FSUtils.mv_merge] %s", e.message);
+				}
 			}
 			catch(Error e)
 			{
@@ -409,6 +494,14 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.Cache.Graphics);
 			mkdir(FSUtils.Paths.Humble.Cache);
 
+			mkdir(FSUtils.Paths.LocalData.Home);
+			mkdir(FSUtils.Paths.LocalData.Tweaks);
+			mkdir(FSUtils.Paths.LocalData.DOSBoxConfigs);
+
+			mkdir(FSUtils.Paths.Config.Home);
+			mkdir(FSUtils.Paths.Config.Tweaks);
+			mkdir(FSUtils.Paths.Config.DOSBoxConfigs);
+
 			// remove old images cache
 			var old_images_cache = file(FSUtils.Paths.Cache.OldImages);
 			if(old_images_cache != null && old_images_cache.query_exists())
@@ -416,7 +509,7 @@ namespace GameHub.Utils
 				rm(old_images_cache.get_path(), null, "-rf");
 			}
 
-			#if FLATPAK
+			#if PKG_FLATPAK
 			var paths = Paths.Settings.instance;
 			if(paths.steam_home == paths.schema.get_default_value("steam-home").get_string())
 			{

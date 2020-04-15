@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Marc Riera <marc.riera.irigoyen@gmail.com>, 2019.
+# Marc Riera <marcriera@softcatala.org>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 00:49+0300\n"
-"PO-Revision-Date: 2019-11-09 16:04+0000\n"
-"Last-Translator: Marc Riera <marc.riera.irigoyen@gmail.com>\n"
+"POT-Creation-Date: 2020-01-26 06:40+0300\n"
+"PO-Revision-Date: 2020-01-14 18:21+0000\n"
+"Last-Translator: Marc Riera <marcriera@softcatala.org>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/gamehub/"
 "translations/ca/>\n"
 "Language: ca\n"
@@ -16,65 +17,65 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 3.11-dev\n"
 
-#: src/app.vala:89
+#: src/app.vala:91
 msgid "Show help"
 msgstr "Mostra l'ajuda"
 
-#: src/app.vala:90
+#: src/app.vala:92
 msgid "Show application version and exit"
 msgstr "Mostra la versió de l'aplicació i surt"
 
-#: src/app.vala:91
+#: src/app.vala:93
 msgid "Restart with GDB debugger attached"
 msgstr "Reinicia amb el depurador del GDB acoblat"
 
-#: src/app.vala:92
+#: src/app.vala:94
 msgid "Show full GDB backtrace"
 msgstr "Mostra la traça inversa completa del GDB"
 
-#: src/app.vala:93
+#: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
 msgstr "Tracta els errors fatals com a crítics i fes fallar l'aplicació"
 
-#: src/app.vala:97
+#: src/app.vala:99
 msgid "Show main window"
 msgstr "Mostra la finestra principal"
 
-#: src/app.vala:98
+#: src/app.vala:100
 msgid "Show application settings dialog"
 msgstr "Mostra el quadre de diàleg de paràmetres de l'aplicació"
 
-#: src/app.vala:99
+#: src/app.vala:101
 msgid "Show about dialog"
 msgstr "Mostra el quadre de diàleg Quant a"
 
-#: src/app.vala:100
+#: src/app.vala:102
 msgid "Maximum number of background worker threads"
 msgstr "Nombre màxim de fils del procés de treball en segon pla"
 
-#: src/app.vala:104
+#: src/app.vala:106
 msgid "Run game"
 msgstr "Executa el joc"
 
-#: src/app.vala:105
+#: src/app.vala:107
 msgid "Show compatibility options dialog"
 msgstr "Mostra el quadre de diàleg d'opcions de compatibilitat"
 
-#: src/app.vala:106
+#: src/app.vala:108
 msgid "Open game details"
 msgstr "Obre els detalls del joc"
 
-#: src/app.vala:107
+#: src/app.vala:109
 msgid "Open game properties"
 msgstr "Obre les propietats del joc"
 
-#: src/app.vala:111
+#: src/app.vala:113
 msgid "Enable debug logging"
 msgstr "Habilita el registre de depuració"
 
-#: src/app.vala:112
+#: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
@@ -82,97 +83,97 @@ msgstr ""
 "Registra el procés d'autenticació i informació confidencial com els "
 "testimonis d'autenticació"
 
-#: src/app.vala:113
+#: src/app.vala:115
 msgid "Log download manager"
 msgstr "Registra el gestor de baixades"
 
-#: src/app.vala:114
+#: src/app.vala:116
 msgid "Log background workers start/stop"
 msgstr "Registra els inicis i aturades dels processos de treball en segon pla"
 
-#: src/app.vala:115
+#: src/app.vala:117
 msgid "Disable log messages filtering"
 msgstr "Inhabilita el filtratge dels missatges de registre"
 
-#: src/app.vala:116
+#: src/app.vala:118
 msgid "Verbose logging"
 msgstr "Registre detallat"
 
-#: src/app.vala:245
+#: src/app.vala:247
 msgid "Game Options:"
 msgstr "Opcions del joc:"
 
-#: src/app.vala:245
+#: src/app.vala:247
 msgid "Show game options help"
 msgstr "Mostra l'ajuda de les opcions del joc"
 
-#: src/app.vala:253
+#: src/app.vala:255
 msgid "Logging Options:"
 msgstr "Opcions del registre:"
 
-#: src/app.vala:253
+#: src/app.vala:255
 msgid "Show logging options help"
 msgstr "Mostra l'ajuda de les opcions del registre"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
 msgstr "Seleccioneu un executable"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:180 src/ui/views/GamesView/GamesView.vala:392
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
+#: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
 msgstr "Selecciona"
 
-#: src/data/Runnable.vala:109 src/data/Runnable.vala:111
-#: src/data/Runnable.vala:179 src/ui/widgets/FileChooserEntry.vala:55
+#: src/data/Runnable.vala:110 src/data/Runnable.vala:112
+#: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/data/Runnable.vala:165 src/ui/widgets/FileChooserEntry.vala:49
+#: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
 msgstr "Seleccioneu un directori"
 
-#: src/data/Runnable.vala:423
+#: src/data/Runnable.vala:619
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
 msgstr "Part %1$u de %2$u: %3$s"
 
-#: src/data/Runnable.vala:446 src/ui/dialogs/CorruptedInstallerDialog.vala:48
+#: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
 msgstr "%s: l'instal·lador està malmès."
 
-#: src/data/Runnable.vala:447
+#: src/data/Runnable.vala:643
 #, c-format
 msgid "Checksum mismatch in %s"
 msgstr "La suma de verificació no coincideix a %s."
 
-#: src/data/Runnable.vala:461 src/ui/dialogs/CorruptedInstallerDialog.vala:126
+#: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
 msgstr "Mostra el fitxer"
 
-#: src/data/Runnable.vala:462 src/ui/dialogs/CorruptedInstallerDialog.vala:132
+#: src/data/Runnable.vala:658 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
 msgstr "Elimina"
 
-#: src/data/Runnable.vala:463 src/ui/dialogs/CorruptedInstallerDialog.vala:128
+#: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
 msgstr "Còpia de seguretat"
 
-#: src/data/Runnable.vala:613
+#: src/data/Runnable.vala:778
 #, c-format
 msgid "%s: cannot detect main executable"
 msgstr "%s: no es pot detectar l'executable principal"
 
-#: src/data/Runnable.vala:614
+#: src/data/Runnable.vala:779
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
@@ -180,57 +181,57 @@ msgstr ""
 "No es pot detectar automàticament l'executable principal d'aquest joc.\n"
 "Definiu l'executable principal a les propietats del joc."
 
-#: src/data/Runnable.vala:850
+#: src/data/Runnable.vala:908
 msgctxt "platform"
 msgid "Emulated"
 msgstr "Emulat"
 
-#: src/data/Game.vala:547
+#: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
 msgstr "En execució"
 
-#: src/data/Game.vala:550
+#: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
 msgstr "Instal·lat"
 
-#: src/data/Game.vala:551
+#: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
 msgstr "S'està instal·lant"
 
-#: src/data/Game.vala:552
+#: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "S'està comprovant la integritat de l'instal·lador"
 
-#: src/data/Game.vala:553
+#: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
 msgstr "S'ha iniciat la baixada"
 
-#: src/data/Game.vala:555
+#: src/data/Game.vala:633
 msgctxt "status"
 msgid "Not installed"
 msgstr "No instal·lat"
 
-#: src/data/Game.vala:565
+#: src/data/Game.vala:643
 msgctxt "status_header"
 msgid "Installed"
 msgstr "Instal·lat"
 
-#: src/data/Game.vala:566
+#: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
 msgstr "S'està instal·lant"
 
-#: src/data/Game.vala:568
+#: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "S'està baixant"
 
-#: src/data/Game.vala:570
+#: src/data/Game.vala:648
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "No instal·lat"
@@ -239,61 +240,6 @@ msgstr "No instal·lat"
 #, c-format
 msgid "%s games"
 msgstr "Jocs de %s"
-
-#: src/data/adapters/GamesAdapter.vala:424
-msgctxt "status_header"
-msgid "Favorites"
-msgstr "Preferits"
-
-#: src/data/adapters/GamesAdapter.vala:429
-#, c-format
-msgctxt "status_header"
-msgid "%s: Favorites"
-msgstr "%s: Preferits"
-
-#: src/data/adapters/GamesAdapter.vala:454
-msgid "Merging games"
-msgstr "S'estan fusionant els jocs"
-
-#: src/data/adapters/GamesAdapter.vala:467
-#, c-format
-msgid "Merging games from %s"
-msgstr "S'estan fusionant els jocs de %s"
-
-#: src/data/adapters/GamesAdapter.vala:514
-#, c-format
-msgid "Loading games from %s"
-msgstr "S'estan carregant els jocs de %s"
-
-#: src/data/adapters/GamesAdapter.vala:621
-msgctxt "sort_mode"
-msgid "By name"
-msgstr "Per nom"
-
-#: src/data/adapters/GamesAdapter.vala:622
-msgctxt "sort_mode"
-msgid "By last launch"
-msgstr "Per darrera execució"
-
-#: src/data/adapters/GamesAdapter.vala:623
-msgctxt "sort_mode"
-msgid "By playtime"
-msgstr "Per temps de joc"
-
-#: src/data/adapters/GamesAdapter.vala:648
-msgctxt "group_mode"
-msgid "Do not group"
-msgstr "No agrupis"
-
-#: src/data/adapters/GamesAdapter.vala:649
-msgctxt "group_mode"
-msgid "By status"
-msgstr "Per estat"
-
-#: src/data/adapters/GamesAdapter.vala:650
-msgctxt "group_mode"
-msgid "By source"
-msgstr "Per origen"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
@@ -307,18 +253,47 @@ msgstr ""
 "No s'ha trobat el fitxer de configuració de Steam.\n"
 "Inicieu la sessió al client de Steam i torneu al GameHub."
 
-#: src/data/sources/humble/HumbleGame.vala:333
+#: src/data/sources/gog/GOGGame.vala:983
+#, c-format
+msgid "DLC: %s"
+msgstr ""
+
+#: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
 msgstr "%s: no hi ha cap instal·lador disponible"
 
-#: src/data/sources/humble/HumbleGame.vala:334
+#: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
 "No es pot obtenir l'URL de baixada de Trove.\n"
 "Assegureu-vos que la vostra subscripció a Humble Monthly es troba activa."
+
+#: src/data/sources/itch/ItchDownloader.vala:192
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%s left;"
+msgstr "%s restant;"
+
+#: src/data/sources/itch/ItchDownloader.vala:195
+#, c-format
+msgctxt "itch_dl_status"
+msgid "%d%%"
+msgstr "%d%%"
+
+#: src/data/sources/itch/ItchDownloader.vala:198
+#, c-format
+msgctxt "itch_dl_status"
+msgid "(%1$s / %2$s)"
+msgstr "(%1$s / %2$s)"
+
+#: src/data/sources/itch/ItchDownloader.vala:201
+#, c-format
+msgctxt "itch_dl_status"
+msgid "[%s/s]"
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -344,11 +319,11 @@ msgctxt "tag"
 msgid "Hidden"
 msgstr "Ocult"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
 msgstr "Edita l'script"
 
-#: src/data/compat/CustomScript.vala:59
+#: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
 msgstr "Edita l'script personalitzat"
 
@@ -375,8 +350,8 @@ msgstr "Executa"
 msgid "Show WineWrap menu"
 msgstr "Mostra el menú del WineWrap"
 
-#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:131
-#: src/data/compat/Wine.vala:87
+#: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
+#: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
 msgstr "Mata les aplicacions al prefix"
 
@@ -384,55 +359,19 @@ msgstr "Mata les aplicacions al prefix"
 msgid "Proton prefix"
 msgstr "Prefix del Proton"
 
-#: src/data/compat/Proton.vala:53
-msgid "Disable esync"
-msgstr "Inhabilita l'esync"
-
-#: src/data/compat/Proton.vala:54
-msgid "Force LARGE_ADDRESS_AWARE flag"
-msgstr "Força el senyalador LARGE_ADDRESS_AWARE"
-
-#: src/data/compat/Proton.vala:55
-msgid "Disable DirectX 11 compatibility layer"
-msgstr "Inhabilita la capa de compatibilitat amb el DirectX 11"
-
-#: src/data/compat/Proton.vala:56
-msgid "Use WineD3D11 as DirectX 11 compatibility layer"
-msgstr "Utilitza el WineD3D11 com a capa de compatibilitat amb el DirectX 11"
-
-#: src/data/compat/Proton.vala:57
-msgid "Show DXVK info overlay"
-msgstr "Superposa la informació del DXVK"
-
-#: src/data/compat/Proton.vala:64 src/data/compat/Wine.vala:66
-msgid "Silent installation"
-msgstr "Instal·lació silenciosa"
-
-#: src/data/compat/Proton.vala:65 src/data/compat/Wine.vala:67
-msgid "Very silent installation"
-msgstr "Instal·lació molt silenciosa"
-
-#: src/data/compat/Proton.vala:66 src/data/compat/Wine.vala:68
-msgid "Suppress messages"
-msgstr "Suprimeix els missatges"
-
-#: src/data/compat/Proton.vala:67 src/data/compat/Wine.vala:69
-msgid "No GUI"
-msgstr "Sense GUI"
-
-#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:75
+#: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
 msgstr "Obre el directori del prefix"
 
-#: src/data/compat/Proton.vala:122 src/data/compat/Wine.vala:78
+#: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
 msgstr "Executa el winecfg"
 
-#: src/data/compat/Proton.vala:125 src/data/compat/Wine.vala:81
+#: src/data/compat/Proton.vala:116 src/data/compat/Wine.vala:77
 msgid "Run winetricks"
 msgstr "Executa el winetricks"
 
-#: src/data/compat/Proton.vala:128 src/data/compat/Wine.vala:84
+#: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:80
 msgid "Run taskmgr"
 msgstr "Executa el taskmgr"
 
@@ -464,6 +403,61 @@ msgstr "Emulador"
 msgid "Launch in game directory"
 msgstr "Executa al directori del joc"
 
+#: src/data/adapters/GamesAdapter.vala:440
+msgctxt "status_header"
+msgid "Favorites"
+msgstr "Preferits"
+
+#: src/data/adapters/GamesAdapter.vala:445
+#, c-format
+msgctxt "status_header"
+msgid "%s: Favorites"
+msgstr "%s: Preferits"
+
+#: src/data/adapters/GamesAdapter.vala:491
+msgid "Merging games"
+msgstr "S'estan fusionant els jocs"
+
+#: src/data/adapters/GamesAdapter.vala:504
+#, c-format
+msgid "Merging games from %s"
+msgstr "S'estan fusionant els jocs de %s"
+
+#: src/data/adapters/GamesAdapter.vala:551
+#, c-format
+msgid "Loading games from %s"
+msgstr "S'estan carregant els jocs de %s"
+
+#: src/data/adapters/GamesAdapter.vala:678
+msgctxt "sort_mode"
+msgid "By name"
+msgstr "Per nom"
+
+#: src/data/adapters/GamesAdapter.vala:679
+msgctxt "sort_mode"
+msgid "By last launch"
+msgstr "Per darrera execució"
+
+#: src/data/adapters/GamesAdapter.vala:680
+msgctxt "sort_mode"
+msgid "By playtime"
+msgstr "Per temps de joc"
+
+#: src/data/adapters/GamesAdapter.vala:705
+msgctxt "group_mode"
+msgid "Do not group"
+msgstr "No agrupis"
+
+#: src/data/adapters/GamesAdapter.vala:706
+msgctxt "group_mode"
+msgid "By status"
+msgstr "Per estat"
+
+#: src/data/adapters/GamesAdapter.vala:707
+msgctxt "group_mode"
+msgid "By source"
+msgstr "Per origen"
+
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
@@ -478,12 +472,14 @@ msgstr "Restaura la clau API per defecte"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:108
 msgid "API key"
 msgstr "Clau API"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:53
 msgid "Generate key"
 msgstr "Genera una clau"
 
@@ -539,8 +535,8 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
-#: src/ui/views/GamesView/GamesView.vala:270
-#: src/ui/views/GamesView/GamesView.vala:652
+#: src/ui/views/GamesView/GamesView.vala:230
+#: src/ui/views/GamesView/GamesView.vala:629
 msgid "Settings"
 msgstr "Paràmetres"
 
@@ -575,7 +571,8 @@ msgstr "Alguns paràmetres s'aplicaran després de reiniciar l'aplicació"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:71
 msgid "Games directory contains space. It may cause problems for some games"
-msgstr "El directori de jocs conté espais. Pot causar problemes amb alguns jocs"
+msgstr ""
+"El directori de jocs conté espais. Pot causar problemes amb alguns jocs"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
@@ -668,7 +665,7 @@ msgstr "Opcions de la quadrícula"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
 msgid "List options"
-msgstr "Opcions de la lista"
+msgstr "Opcions de la llista"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -719,12 +716,12 @@ msgid "Installers"
 msgstr "Instal·ladors"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:99
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:98
 msgid "DLC"
 msgstr "Contingut addicional"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
-#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:132
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:197
 msgid "Bonus content"
 msgstr "Contingut de bonificació"
 
@@ -773,8 +770,42 @@ msgstr "Surt"
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:92
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:95
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:36
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:77
 msgid "Disabled"
 msgstr "Inhabilitat"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:33
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:47
+#: src/ui/dialogs/GameTweaksDialog.vala:53
+#: src/ui/views/GamesView/GameContextMenu.vala:183
+msgid "Tweaks"
+msgstr "Ajustaments"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
+#, fuzzy
+msgid "Tweak launch options and apply them to games automatically"
+msgstr "Ajusteu les opcions d'execució i apliqueu-les als jocs automàticament"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
+msgid ""
+"Tweaks are loaded from following directories in order\n"
+"Last tweak overrides previous tweaks with same identifiers"
+msgstr ""
+"Els ajustaments es carreguen dels directoris següents en ordre.\n"
+"L'últim ajustament anul·la els ajustaments anteriors amb els mateixos "
+"identificadors."
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
+msgid "Click to open"
+msgstr "Feu clic per obrir"
+
+#: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
+#, c-format
+msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
+msgstr ""
+"Els ajustaments es carreguen des de <b>%1$s</b> i %2$d directoris més "
+"<b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -785,11 +816,13 @@ msgid "Steam API keys have limited number of uses per day"
 msgstr "Les claus API de Steam tenen un nombre limitat d'usos per dia"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:57
 msgid "Installation directory"
 msgstr "Directori d'instal·lació"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:176
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:81
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:34
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:75
 msgid "Not installed"
@@ -798,11 +831,13 @@ msgstr "No instal·lat"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:116
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:96
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:99
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:85
 msgid "Not authenticated"
 msgstr "No autenticat"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 #, c-format
 msgid "Authenticated as <b>%s</b>"
 msgstr "Autenticat com a <b>%s</b>"
@@ -810,14 +845,16 @@ msgstr "Autenticat com a <b>%s</b>"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:103
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
 msgid "Authenticated"
 msgstr "Autenticat"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:183
-#: src/ui/dialogs/InstallDialog.vala:57 src/ui/dialogs/InstallDialog.vala:114
+#: src/ui/dialogs/InstallDialog.vala:53 src/ui/dialogs/InstallDialog.vala:111
 #: src/ui/views/GamesView/GameContextMenu.vala:80
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
+#: src/ui/widgets/TweaksList.vala:95
 msgid "Install"
 msgstr "Instal·la"
 
@@ -827,6 +864,7 @@ msgstr "Clau API de Steam"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
+#: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:48
 msgid "Games directory"
 msgstr "Directori dels jocs"
 
@@ -914,7 +952,7 @@ msgid "Name"
 msgstr "Nom"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
-#: src/ui/dialogs/GamePropertiesDialog.vala:191
+#: src/ui/dialogs/GamePropertiesDialog.vala:201
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
 msgstr "Arguments"
@@ -942,7 +980,7 @@ msgid "Select emulator directory"
 msgstr "Selecciona el directori de l'emulador"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
-#: src/ui/dialogs/GamePropertiesDialog.vala:209
+#: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Force compatibility mode"
 msgstr "Força el mode de compatibilitat"
 
@@ -1053,26 +1091,26 @@ msgctxt "about_link"
 msgid "Forks"
 msgstr "Bifurcacions"
 
-#: src/ui/dialogs/InstallDialog.vala:112
+#: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
 msgstr "Importa"
 
-#: src/ui/dialogs/InstallDialog.vala:113
+#: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 msgid "Download"
 msgstr "Baixa"
 
-#: src/ui/dialogs/InstallDialog.vala:210
+#: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
 msgstr "Seleccioneu un instal·lador"
 
-#: src/ui/dialogs/InstallDialog.vala:219
+#: src/ui/dialogs/InstallDialog.vala:216
 #, c-format
 msgid "Installer size: %s"
 msgstr "Mida de l'instal·lador: %s"
 
-#: src/ui/dialogs/InstallDialog.vala:329
+#: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
 msgstr "Desconegut"
 
@@ -1103,23 +1141,33 @@ msgstr "URL de la imatge vertical"
 msgid "Icon URL"
 msgstr "URL de la icona"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:204
+#: src/ui/dialogs/GamePropertiesDialog.vala:173
+#, fuzzy
+msgid "Select working directory"
+msgstr "Seleccioneu un directori"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:173
+#, fuzzy
+msgid "Working directory"
+msgstr "Obre un directori"
+
+#: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
 msgstr "Compatibilitat"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:226
+#: src/ui/dialogs/GamePropertiesDialog.vala:236
 msgid "Launch from terminal"
 msgstr "Executa des del terminal"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:242
+#: src/ui/dialogs/GamePropertiesDialog.vala:252
 msgid "Copy to clipboard"
 msgstr "Copia al porta-retalls"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:244
+#: src/ui/dialogs/GamePropertiesDialog.vala:254
 msgid "Add to Steam"
 msgstr "Afegeix a Steam"
 
-#: src/ui/dialogs/GamePropertiesDialog.vala:245
+#: src/ui/dialogs/GamePropertiesDialog.vala:255
 msgid "Add to the Steam library"
 msgstr "Afegeix a la biblioteca de Steam"
 
@@ -1130,7 +1178,7 @@ msgstr "%s: Capes"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid "Overlays are disabled"
-msgstr "Les capes estan inhabiitades"
+msgstr "Les capes estan inhabilitades"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid ""
@@ -1226,6 +1274,11 @@ msgstr "Selecciona-ho tot"
 msgid "Select directory to import"
 msgstr "Seleccioneu un directori per a importar-lo"
 
+#: src/ui/dialogs/GameTweaksDialog.vala:40
+#, c-format
+msgid "%s: Tweaks"
+msgstr "%s: Ajustaments"
+
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
 msgstr "No hi ha cap origen de jocs habilitat"
@@ -1263,87 +1316,99 @@ msgstr "Instal·la %s"
 msgid "Return to GameHub after installing"
 msgstr "Torna al GameHub després de la instal·lació"
 
-#: src/ui/views/GamesView/GamesView.vala:134
+#: src/ui/views/GamesView/GamesView.vala:136
 msgid "No games"
 msgstr "No hi ha jocs"
 
-#: src/ui/views/GamesView/GamesView.vala:134
+#: src/ui/views/GamesView/GamesView.vala:136
 msgid "Get some games or enable some game sources in settings"
 msgstr "Obteniu alguns jocs o habiliteu alguns orígens de jocs als paràmetres"
 
-#: src/ui/views/GamesView/GamesView.vala:190
+#: src/ui/views/GamesView/GamesView.vala:150
 msgid "Grid view"
 msgstr "Visualització de quadrícula"
 
-#: src/ui/views/GamesView/GamesView.vala:191
+#: src/ui/views/GamesView/GamesView.vala:151
 msgid "List view"
 msgstr "Visualització de llista"
 
-#: src/ui/views/GamesView/GamesView.vala:199
+#: src/ui/views/GamesView/GamesView.vala:159
 msgid "All games"
 msgstr "Tots els jocs"
 
-#: src/ui/views/GamesView/GamesView.vala:222
+#: src/ui/views/GamesView/GamesView.vala:182
 msgid "Downloads"
 msgstr "Baixades"
 
-#: src/ui/views/GamesView/GamesView.vala:248
+#: src/ui/views/GamesView/GamesView.vala:208
 msgid "Filters"
 msgstr "Filtres"
 
-#: src/ui/views/GamesView/GamesView.vala:256
+#: src/ui/views/GamesView/GamesView.vala:216
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
 msgstr "Afegeix un joc"
 
-#: src/ui/views/GamesView/GamesView.vala:263
+#: src/ui/views/GamesView/GamesView.vala:223
 msgid "Search"
 msgstr "Cerca"
 
-#: src/ui/views/GamesView/GamesView.vala:390
+#: src/ui/views/GamesView/GamesView.vala:328
 msgid "Menu"
 msgstr "Menú"
 
-#: src/ui/views/GamesView/GamesView.vala:391
+#: src/ui/views/GamesView/GamesView.vala:329
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
 msgstr "Enrere"
 
-#: src/ui/views/GamesView/GamesView.vala:570
+#: src/ui/views/GamesView/GamesView.vala:550
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
 msgstr[0] "%u joc"
 msgstr[1] "%u jocs"
 
-#: src/ui/views/GamesView/GamesView.vala:586
+#: src/ui/views/GamesView/GamesView.vala:553
+#, fuzzy, c-format
+msgctxt "games_view_subtitle_filtered_games"
+msgid "%1$u / %2$s"
+msgstr "(%1$s / %2$s)"
+
+#: src/ui/views/GamesView/GamesView.vala:557
+#, fuzzy, c-format
+msgctxt "games_view_subtitle"
+msgid "%1$s: %2$s"
+msgstr "(%1$s / %2$s)"
+
+#: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
 msgstr "No hi ha cap joc afegit per l'usuari"
 
-#: src/ui/views/GamesView/GamesView.vala:587
+#: src/ui/views/GamesView/GamesView.vala:569
 msgid "Add some games using plus button"
 msgstr "Afegiu alguns jocs mitjançant el botó «+»"
 
-#: src/ui/views/GamesView/GamesView.vala:591
+#: src/ui/views/GamesView/GamesView.vala:573
 #, c-format
 msgid "No %s games"
 msgstr "No hi ha jocs de %s"
 
-#: src/ui/views/GamesView/GamesView.vala:592
+#: src/ui/views/GamesView/GamesView.vala:574
 msgid "Get some Linux-compatible games"
 msgstr "Obteniu alguns jocs compatibles amb el Linux"
 
-#: src/ui/views/GamesView/GamesView.vala:602
+#: src/ui/views/GamesView/GamesView.vala:584
 #, c-format
 msgid "No games matching “%s”"
 msgstr "No hi ha jocs que coincideixin amb «%s»"
 
-#: src/ui/views/GamesView/GamesView.vala:607
+#: src/ui/views/GamesView/GamesView.vala:589
 #, c-format
 msgid "No %1$s games matching “%2$s”"
 msgstr "No hi ha jocs de %1$s que coincideixin amb «%2$s»"
 
-#: src/ui/views/GamesView/GamesView.vala:650
+#: src/ui/views/GamesView/GamesView.vala:627
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
@@ -1352,30 +1417,30 @@ msgstr ""
 "llista de jocs com a pública o utilitzeu la vostra pròpia clau API de Steam "
 "als paràmetres."
 
-#: src/ui/views/GamesView/GamesView.vala:651
+#: src/ui/views/GamesView/GamesView.vala:628
 msgid "Privacy"
 msgstr "Privadesa"
 
-#: src/ui/views/GamesView/GamesView.vala:798
+#: src/ui/views/GamesView/GamesView.vala:739
 msgid "Downloading images"
 msgstr "S'estan baixant les imatges"
 
-#: src/ui/views/GamesView/GamesView.vala:812
+#: src/ui/views/GamesView/GamesView.vala:753
 #, c-format
 msgid "Downloading image: %s"
 msgstr "S'està baixant la imatge: %s"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:125
+#: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
 msgstr "Pausa la baixada"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:130
+#: src/ui/views/GamesView/DownloadProgressView.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
 msgstr "Reprèn la baixada"
 
-#: src/ui/views/GamesView/DownloadProgressView.vala:135
+#: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
 msgstr "Cancel·la la baixada"
@@ -1389,7 +1454,7 @@ msgid "Sort"
 msgstr "Ordena"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
-#: src/ui/widgets/GameTagsList.vala:59
+#: src/ui/widgets/GameTagsList.vala:58
 msgid "Tags"
 msgstr "Etiquetes"
 
@@ -1449,7 +1514,7 @@ msgstr "Obre el directori de captures de pantalla"
 msgid "Uninstall"
 msgstr "Desinstal·la"
 
-#: src/ui/views/GamesView/GameContextMenu.vala:184
+#: src/ui/views/GamesView/GameContextMenu.vala:192
 msgid "Properties"
 msgstr "Propietats"
 
@@ -1513,6 +1578,19 @@ msgstr "Obre la pàgina de la botiga"
 msgid "Game properties"
 msgstr "Propietats del joc"
 
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
+msgid "Playtime"
+msgstr "Temps de joc"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
+msgid "Playtime (local)"
+msgstr "Temps de joc (local)"
+
+#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
+msgid "Last launch"
+msgstr "Darrera execució"
+
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
 msgstr "Assoliments"
@@ -1527,31 +1605,6 @@ msgstr "Heu aconseguit: %s"
 msgid "Global percentage: %g%%"
 msgstr "Percentatge global: %g%%"
 
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
-msgid "Playtime"
-msgstr "Temps de joc"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
-msgid "Playtime (local)"
-msgstr "Temps de joc (local)"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
-msgid "Last launch"
-msgstr "Darrera execució"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dh"
-msgstr "%d h"
-
-#: src/ui/views/GameDetailsView/blocks/Playtime.vala:81
-#, c-format
-msgctxt "time"
-msgid "%dm"
-msgstr "%d min"
-
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
@@ -1561,6 +1614,11 @@ msgstr "Llengua"
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
 msgstr "Llengües"
+
+#: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
+#, fuzzy, c-format
+msgid "%u DLCs cannot be installed"
+msgstr "%s: l'instal·lador està malmès."
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1670,51 +1728,36 @@ msgstr "Capa de compatibilitat:"
 msgid "Configure"
 msgstr "Configura"
 
-#: src/ui/widgets/GameTagsList.vala:110
+#: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
 msgstr "Afegeix una etiqueta"
 
-#: src/utils/downloader/Downloader.vala:159
-msgctxt "dl_status"
-msgid "Queued"
-msgstr "A la cua"
+#: src/ui/widgets/TweaksList.vala:86
+msgid "No description"
+msgstr ""
 
-#: src/utils/downloader/Downloader.vala:160
-msgctxt "dl_status"
-msgid "Starting download"
-msgstr "S'està iniciant la baixada"
+#: src/ui/widgets/TweaksList.vala:124
+#, fuzzy
+msgid "Edit file"
+msgstr "Edita el fitxer"
 
-#: src/utils/downloader/Downloader.vala:161
-msgctxt "dl_status"
-msgid "Download started"
-msgstr "S'ha iniciat la baixada"
-
-#: src/utils/downloader/Downloader.vala:162
-msgctxt "dl_status"
-msgid "Download finished"
-msgstr "S'ha finalitzat la baixada"
-
-#: src/utils/downloader/Downloader.vala:163
-msgctxt "dl_status"
-msgid "Download failed"
-msgstr "Ha fallat la baixada"
-
-#: src/utils/downloader/Downloader.vala:165
+#: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
-msgctxt "dl_status"
-msgid "Downloading: %d%% (%s / %s) [%s/s]"
-msgstr "S'està baixant: %d%% (%s / %s) [%s/s]"
+msgctxt "time"
+msgid "%dh"
+msgstr "%d h"
 
-#: src/utils/downloader/Downloader.vala:167
+#: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
-msgctxt "dl_status"
-msgid "Paused: %d%% (%s / %s)"
-msgstr "En pausa: %d%% (%s / %s)"
+msgctxt "time"
+msgid "%dm"
+msgstr "%d min"
 
-#: src/utils/downloader/Downloader.vala:169
-msgctxt "dl_status"
-msgid "Download cancelled"
-msgstr "S'ha cancel·lat la baixada"
+#: src/utils/Utils.vala:464
+#, c-format
+msgctxt "time"
+msgid "%ds"
+msgstr "%ds"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1745,3 +1788,93 @@ msgstr "Quadrada"
 msgctxt "grid_size_preset"
 msgid "Custom"
 msgstr "Personalitzada"
+
+#: src/utils/downloader/Downloader.vala:200
+msgctxt "dl_status"
+msgid "Queued"
+msgstr "A la cua"
+
+#: src/utils/downloader/Downloader.vala:201
+msgctxt "dl_status"
+msgid "Starting download"
+msgstr "S'està iniciant la baixada"
+
+#: src/utils/downloader/Downloader.vala:202
+msgctxt "dl_status"
+msgid "Download started"
+msgstr "S'ha iniciat la baixada"
+
+#: src/utils/downloader/Downloader.vala:203
+msgctxt "dl_status"
+msgid "Download finished"
+msgstr "S'ha finalitzat la baixada"
+
+#: src/utils/downloader/Downloader.vala:204
+msgctxt "dl_status"
+msgid "Download failed"
+msgstr "Ha fallat la baixada"
+
+#: src/utils/downloader/Downloader.vala:208
+#, c-format
+msgctxt "dl_status"
+msgid "Downloading: %s"
+msgstr "S'està baixant: %s"
+
+#: src/utils/downloader/Downloader.vala:210
+msgctxt "dl_status"
+msgid "Downloading"
+msgstr "S'està baixant"
+
+#: src/utils/downloader/Downloader.vala:214
+#, c-format
+msgctxt "dl_status"
+msgid "Paused: %s"
+msgstr "En pausa: %s"
+
+#: src/utils/downloader/Downloader.vala:216
+msgctxt "dl_status"
+msgid "Paused"
+msgstr "En pausa"
+
+#: src/utils/downloader/Downloader.vala:218
+msgctxt "dl_status"
+msgid "Download cancelled"
+msgstr "S'ha cancel·lat la baixada"
+
+#. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
+#: src/utils/downloader/Downloader.vala:262
+#, c-format
+msgctxt "dl_status"
+msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
+
+#~ msgid "Disable esync"
+#~ msgstr "Inhabilita l'esync"
+
+#~ msgid "Force LARGE_ADDRESS_AWARE flag"
+#~ msgstr "Força el senyalador LARGE_ADDRESS_AWARE"
+
+#~ msgid "Disable DirectX 11 compatibility layer"
+#~ msgstr "Inhabilita la capa de compatibilitat amb el DirectX 11"
+
+#~ msgid "Use WineD3D11 as DirectX 11 compatibility layer"
+#~ msgstr ""
+#~ "Utilitza el WineD3D11 com a capa de compatibilitat amb el DirectX 11"
+
+#~ msgid "Show DXVK info overlay"
+#~ msgstr "Superposa la informació del DXVK"
+
+#~ msgid "Enable DirectX 9 compatibility layer"
+#~ msgstr "Habilita la capa de compatibilitat amb el DirectX 9"
+
+#~ msgid "Silent installation"
+#~ msgstr "Instal·lació silenciosa"
+
+#~ msgid "Very silent installation"
+#~ msgstr "Instal·lació molt silenciosa"
+
+#~ msgid "Suppress messages"
+#~ msgstr "Suprimeix els missatges"
+
+#~ msgid "No GUI"
+#~ msgstr "Sense GUI"

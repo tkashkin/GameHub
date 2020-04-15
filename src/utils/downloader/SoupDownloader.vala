@@ -22,7 +22,7 @@ using Soup;
 
 using GameHub.Utils.Downloader;
 
-namespace GameHub.Utils.Downloader.Soup
+namespace GameHub.Utils.Downloader.SoupDownloader
 {
 	public class SoupDownloader: Downloader
 	{
@@ -32,7 +32,8 @@ namespace GameHub.Utils.Downloader.Soup
 		private HashTable<string, DownloadInfo> dl_info;
 		private ArrayQueue<string> dl_queue;
 
-		private static string[] supported_schemes = { "http", "https" };
+		private static string[] URL_SCHEMES = { "http", "https" };
+		private static string[] FILENAME_BLACKLIST = { "download" };
 
 		public SoupDownloader()
 		{
@@ -44,20 +45,29 @@ namespace GameHub.Utils.Downloader.Soup
 			session.max_conns_per_host = 16;
 		}
 
-		public override Download? get_download(File remote)
+		public override Download? get_download(string id)
 		{
 			lock(downloads)
 			{
-				return downloads.get(remote.get_uri());
+				return downloads.get(id);
 			}
 		}
 
-		public override async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true, bool queue=true) throws Error
+		public SoupDownload? get_file_download(File? remote)
+		{
+			if(remote == null) return null;
+			lock(downloads)
+			{
+				return (SoupDownload?) downloads.get(remote.get_uri());
+			}
+		}
+
+		public async File? download(File remote, File local, DownloadInfo? info=null, bool preserve_filename=true, bool queue=true) throws Error
 		{
 			if(remote == null || remote.get_uri() == null || remote.get_uri().length == 0) return null;
 
 			var uri = remote.get_uri();
-			SoupDownload? download = (SoupDownload?) get_download(remote);
+			var download = get_file_download(remote);
 
 			if(download != null) return yield await_download(download);
 
@@ -99,25 +109,25 @@ namespace GameHub.Utils.Downloader.Soup
 				debug("[SoupDownloader] Downloading '%s'...", uri);
 			}
 
-			download.status = new DownloadStatus(DownloadState.STARTING);
+			download.status = new FileDownload.Status(Download.State.STARTING);
 
 			try
 			{
-				if(remote.get_uri_scheme() in supported_schemes)
+				if(remote.get_uri_scheme() in URL_SCHEMES)
 					yield download_from_http(download, preserve_filename, queue);
 				else
 					yield download_from_filesystem(download);
 			}
 			catch(IOError.CANCELLED error)
 			{
-				download.status = new DownloadStatus(DownloadState.CANCELLED);
+				download.status = new FileDownload.Status(Download.State.CANCELLED);
 				download_cancelled(download, error);
 				if(info != null) dl_ended(info);
 				throw error;
 			}
 			catch(Error error)
 			{
-				download.status = new DownloadStatus(DownloadState.FAILED);
+				download.status = new FileDownload.Status(Download.State.FAILED);
 				download_failed(download, error);
 				if(info != null) dl_ended(info);
 				throw error;
@@ -139,7 +149,7 @@ namespace GameHub.Utils.Downloader.Soup
 				debug("[SoupDownloader] Downloaded '%s'", uri);
 			}
 
-			downloaded(download);
+			download_finished(download);
 			if(info != null) dl_ended(info);
 
 			return download.local;
@@ -156,7 +166,7 @@ namespace GameHub.Utils.Downloader.Soup
 			if(queue)
 			{
 				yield await_queue(download);
-				download.status = new DownloadStatus(DownloadState.STARTING);
+				download.status = new FileDownload.Status(Download.State.STARTING);
 			}
 
 			if(download.is_cancelled)
@@ -164,7 +174,7 @@ namespace GameHub.Utils.Downloader.Soup
 				throw new IOError.CANCELLED("Download cancelled by user");
 			}
 
-			#if !FLATPAK
+			#if !PKG_FLATPAK
 			var address = msg.get_address();
 			var connectable = new NetworkAddress(address.name, (uint16) address.port);
 			var network_monitor = NetworkMonitor.get_default();
@@ -230,27 +240,28 @@ namespace GameHub.Utils.Downloader.Soup
 							filename = download.remote.get_basename();
 						}
 
-						if(filename != null)
+						if(filename != null && !(filename in FILENAME_BLACKLIST))
 						{
 							download.local = download.local.get_parent().get_child(filename);
-							if(download.local.query_exists())
-							{
-								if(GameHub.Application.log_downloader)
-								{
-									debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
-								}
-								var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
-								if(info.get_size() == dl_bytes_total)
-								{
-									session.cancel_message(msg, Status.OK);
-									return;
-								}
-							}
-							if(GameHub.Application.log_downloader)
-							{
-								debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
-							}
 						}
+					}
+
+					if(download.local.query_exists())
+					{
+						if(GameHub.Application.log_downloader)
+						{
+							debug(@"[SoupDownloader] '%s' exists", download.local.get_path());
+						}
+						var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
+						if(info.get_size() == dl_bytes_total)
+						{
+							session.cancel_message(msg, Status.OK);
+							return;
+						}
+					}
+					if(GameHub.Application.log_downloader)
+					{
+						debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
 					}
 
 					#if SOUP_2_60
@@ -295,7 +306,7 @@ namespace GameHub.Utils.Downloader.Soup
 					if(diff > 1000000)
 					{
 						int64 dl_speed = (int64) (((double) dl_bytes_from_last_update) / ((double) diff) * ((double) 1000000));
-						download.status = new DownloadStatus(DownloadState.DOWNLOADING, dl_bytes, dl_bytes_total, dl_speed);
+						download.status = new FileDownload.Status(Download.State.DOWNLOADING, dl_bytes, dl_bytes_total, dl_speed);
 						last_update = now;
 						dl_bytes_from_last_update = 0;
 					}
@@ -340,25 +351,25 @@ namespace GameHub.Utils.Downloader.Soup
 			Error download_error = null;
 
 			SourceFunc callback = await_download.callback;
-			var downloaded_id = downloaded.connect((downloader, downloaded) => {
-				if(downloaded.remote.get_uri() != download.remote.get_uri()) return;
-				downloaded_file = downloaded.local_tmp;
+			var download_finished_id = download_finished.connect((downloader, downloaded) => {
+				if(((SoupDownload) downloaded).remote.get_uri() != download.remote.get_uri()) return;
+				downloaded_file = ((SoupDownload) downloaded).local_tmp;
 				callback();
 			});
 			var download_cancelled_id = download_cancelled.connect((downloader, cancelled_download, error) => {
-				if(cancelled_download.remote.get_uri() != download.remote.get_uri()) return;
+				if(((SoupDownload) cancelled_download).remote.get_uri() != download.remote.get_uri()) return;
 				download_error = error;
 				callback();
 			});
 			var download_failed_id = download_failed.connect((downloader, failed_download, error) => {
-				if(failed_download.remote.get_uri() != download.remote.get_uri()) return;
+				if(((SoupDownload) failed_download).remote.get_uri() != download.remote.get_uri()) return;
 				download_error = error;
 				callback();
 			});
 
 			yield;
 
-			disconnect(downloaded_id);
+			disconnect(download_finished_id);
 			disconnect(download_cancelled_id);
 			disconnect(download_failed_id);
 
@@ -375,23 +386,23 @@ namespace GameHub.Utils.Downloader.Soup
 				dl_queue.add(download.remote.get_uri());
 			}
 
-			var downloaded_id = downloaded.connect((downloader, downloaded) => {
-				lock(dl_queue) dl_queue.remove(downloaded.remote.get_uri());
+			var download_finished_id = download_finished.connect((downloader, downloaded) => {
+				lock(dl_queue) dl_queue.remove(((SoupDownload) downloaded).remote.get_uri());
 			});
 			var download_cancelled_id = download_cancelled.connect((downloader, cancelled_download, error) => {
-				lock(dl_queue) dl_queue.remove(cancelled_download.remote.get_uri());
+				lock(dl_queue) dl_queue.remove(((SoupDownload) cancelled_download).remote.get_uri());
 			});
 			var download_failed_id = download_failed.connect((downloader, failed_download, error) => {
-				lock(dl_queue) dl_queue.remove(failed_download.remote.get_uri());
+				lock(dl_queue) dl_queue.remove(((SoupDownload) failed_download).remote.get_uri());
 			});
 
 			while(dl_queue.peek() != null && dl_queue.peek() != download.remote.get_uri() && !download.is_cancelled)
 			{
-				download.status = new DownloadStatus(DownloadState.QUEUED);
+				download.status = new FileDownload.Status(Download.State.QUEUED);
 				yield Utils.sleep_async(2000);
 			}
 
-			disconnect(downloaded_id);
+			disconnect(download_finished_id);
 			disconnect(download_cancelled_id);
 			disconnect(download_failed_id);
 		}
@@ -410,13 +421,13 @@ namespace GameHub.Utils.Downloader.Soup
 					FileCopyFlags.OVERWRITE,
 					Priority.DEFAULT,
 					null,
-					(current, total) => { download.status = new DownloadStatus(DownloadState.DOWNLOADING, current, total); });
+					(current, total) => { download.status = new FileDownload.Status(Download.State.DOWNLOADING, current, total); });
 			}
 			catch(IOError.EXISTS error){}
 		}
 	}
 
-	public class SoupDownload: PausableDownload
+	public class SoupDownload: FileDownload, PausableDownload
 	{
 		public weak Session? session;
 		public weak Message? message;
@@ -427,18 +438,18 @@ namespace GameHub.Utils.Downloader.Soup
 			base(remote, local, local_tmp);
 		}
 
-		public override void pause()
+		public void pause()
 		{
-			if(session != null && message != null && _status.state == DownloadState.DOWNLOADING)
+			if(session != null && message != null && _status.state == Download.State.DOWNLOADING)
 			{
 				session.pause_message(message);
-				_status.state = DownloadState.PAUSED;
+				_status.state = Download.State.PAUSED;
 				status_change(_status);
 			}
 		}
-		public override void resume()
+		public void resume()
 		{
-			if(session != null && message != null && _status.state == DownloadState.PAUSED)
+			if(session != null && message != null && _status.state == Download.State.PAUSED)
 			{
 				session.unpause_message(message);
 			}
@@ -448,7 +459,7 @@ namespace GameHub.Utils.Downloader.Soup
 			is_cancelled = true;
 			if(session != null && message != null)
 			{
-				session.cancel_message(message, Status.CANCELLED);
+				session.cancel_message(message, Soup.Status.CANCELLED);
 			}
 		}
 	}
