@@ -255,8 +255,11 @@ namespace GameHub.Data
 			{
 				if(from_all_overlays)
 				{
-					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
-					dirs += install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(Overlay.BASE);
+					dirs = {
+						install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child("_overlay").get_child("merged"),
+						install_dir.get_child(FSUtils.GAMEHUB_DIR).get_child(FSUtils.OVERLAYS_DIR).get_child(Overlay.BASE),
+						install_dir
+					};
 					foreach(var overlay in overlays)
 					{
 						if(overlay.id == Overlay.BASE) continue;
@@ -342,7 +345,7 @@ namespace GameHub.Data
 					{
 						if(value.get_path().has_prefix(dir.get_path()))
 						{
-							work_dir_path = value.get_path().replace(dir.get_path(), "$game_dir");
+							work_dir_path = value.get_path().replace(dir.get_path(), "$game_dir/");
 							break;
 						}
 					}
