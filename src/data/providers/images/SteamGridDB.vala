@@ -204,6 +204,7 @@ namespace GameHub.Data.Providers.Images
 				style = Style.from_string(raw_style);
 				author = obj.has_member("author") ? obj.get_object_member("author").get_string_member("name") : null;
 				score = obj.has_member("score") ? (int) obj.get_int_member("score") : 0;
+				thumb_url = obj.has_member("thumb") ? obj.get_string_member("thumb") : null;
 
 				description = """<span weight="600">%s</span>: %s""".printf(C_("imagesource_steamgriddb_image_property", "Style"), style == null ? raw_style : style.name()) + "\n"
 				            + """<span weight="600">%s</span>: %d""".printf(C_("imagesource_steamgriddb_image_property", "Score"), score);

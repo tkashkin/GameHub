@@ -246,7 +246,7 @@ namespace GameHub.UI.Widgets
 				card.tooltip_markup = image.description;
 
 				var img = new AutoSizeImage();
-				img.load(image.url, null, @"games/$(game.source.id)/$(game.id)/images/providers/$(provider.id)/");
+				img.load(image.has_thumbnail ? image.thumb_url : image.url, null, @"games/$(game.source.id)/$(game.id)/images/providers/$(provider.id)/");
 
 				card.add(img);
 

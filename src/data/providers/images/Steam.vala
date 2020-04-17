@@ -84,7 +84,7 @@ namespace GameHub.Data.Providers.Images
 					case 600:
 						// Enforced since 2019, possibly not available
 						local_result = yield search_local(appid, "p");
-						remote_result = yield search_remote(appid, "library_600x900_2x.jpg");
+						remote_result = yield search_remote(appid, "library_600x900.jpg");
 						break;
 					}
 
@@ -95,7 +95,7 @@ namespace GameHub.Data.Providers.Images
 
 					if(remote_result != null)
 					{
-						result.images.add(new Image(remote_result, "Remote download"));
+						result.images.add(new Image(yield search_remote(appid, "library_600x900_2x.jpg", false), "Remote download", remote_result));
 					}
 
 					if(result.images.size > 0)

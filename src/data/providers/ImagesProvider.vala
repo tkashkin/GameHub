@@ -39,11 +39,14 @@ namespace GameHub.Data.Providers
 		{
 			public string  url         { get; protected construct set; }
 			public string? description { get; protected construct set; default = null; }
+			public string? thumb_url   { get; protected construct set; default = null; }
 
-			public Image(string url, string? description=null)
+			public Image(string url, string? description=null, string? thumb_url=null)
 			{
-				Object(url: url, description: description);
+				Object(url: url, description: description, thumb_url: thumb_url);
 			}
+
+			public bool has_thumbnail { get { return thumb_url != null && thumb_url != ""; } }
 		}
 
 		public struct ImageSize
