@@ -11,13 +11,14 @@
 # anonymous <noreply@weblate.org>, 2020.
 # Sascha Bohrmann <weblate@saschabohrmann.de>, 2020.
 # Sascha Bohrmann <github@dakunier.de>, 2020.
+# Jeannette L <j.lavoie@net-c.ca>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-03-20 10:36+0000\n"
-"Last-Translator: anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2020-04-18 05:11+0000\n"
+"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -25,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -284,7 +285,7 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s übrig;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
@@ -618,7 +619,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "Symbol-Stil"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 #, fuzzy
