@@ -495,23 +495,54 @@ namespace GameHub.Data.Sources.Steam
 				root_node = root_node.get("shortcuts") as BinaryVDF.ListNode;
 			}
 
-			var game_node = new BinaryVDF.ListNode.node(root_node.nodes.size.to_string());
+			BinaryVDF.ListNode? game_node = null;
 
-			game_node.add_node(new BinaryVDF.StringNode.node("AppName", game.name));
+			foreach(BinaryVDF.Node node in root_node.nodes.values)
+			{
+				var tmp = node as BinaryVDF.ListNode;
+				var existing_node = tmp.get("LaunchOptions") as BinaryVDF.StringNode;
+				if(existing_node.value == "--run " + game.full_id)
+				{
+					game_node = tmp;
+					break;
+				}
+			}
+
+			if(game_node == null)
+			{
+				game_node = new BinaryVDF.ListNode.node(root_node.nodes.size.to_string());
+			}
+
+			game_node.add_node(new BinaryVDF.StringNode.node("appname", game.name));
 			game_node.add_node(new BinaryVDF.StringNode.node("exe", ProjectConfig.PROJECT_NAME));
 			game_node.add_node(new BinaryVDF.StringNode.node("LaunchOptions", "--run " + game.full_id));
 			game_node.add_node(new BinaryVDF.StringNode.node("ShortcutPath", ProjectConfig.DATADIR + "/applications/" + ProjectConfig.PROJECT_NAME + ".desktop"));
 			game_node.add_node(new BinaryVDF.StringNode.node("StartDir", "."));
-			game_node.add_node(new BinaryVDF.IntNode.node("IsHidden", 0));
-			game_node.add_node(new BinaryVDF.IntNode.node("OpenVR", 0));
-			game_node.add_node(new BinaryVDF.IntNode.node("AllowOverlay", 1));
-			game_node.add_node(new BinaryVDF.IntNode.node("AllowDesktopConfig", 1));
-			game_node.add_node(new BinaryVDF.IntNode.node("LastPlayTime", 1));
 
-			if(game.image != null)
+			if(game.icon != null)
+			{
+				var cached = ImageCache.local_file(game.icon, @"games/$(game.source.id)/$(game.id)/icons/");
+				game_node.add_node(new BinaryVDF.StringNode.node("icon", cached.get_path()));
+			}
+			else if(game.image != null)
 			{
 				var cached = ImageCache.local_file(game.image, @"games/$(game.source.id)/$(game.id)/images/");
 				game_node.add_node(new BinaryVDF.StringNode.node("icon", cached.get_path()));
+			}
+
+			// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
+			var custom_appid = (crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000).to_string();
+
+			if(game.image != null)
+			{
+				try
+				{
+					var cached = ImageCache.local_file(game.image, @"games/$(game.source.id)/$(game.id)/images/");
+
+					var dest = FSUtils.file(get_userdata_dir().get_child("config").get_child("grid").get_path(), custom_appid + ".png");
+					cached.copy(dest, FileCopyFlags.OVERWRITE);
+				}
+				catch (Error e) {}
 			}
 
 			if(game.image_vertical != null)
@@ -519,22 +550,31 @@ namespace GameHub.Data.Sources.Steam
 				try
 				{
 					var cached = ImageCache.local_file(game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
-					// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
-					uint64 id = crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000;
-					var dest = FSUtils.file(get_userdata_dir().get_child("config").get_child("grid").get_path(), id.to_string() + "p.png");
-					cached.copy(dest, NONE);
+					var dest = FSUtils.file(get_userdata_dir().get_child("config").get_child("grid").get_path(), custom_appid + "p.png");
+					cached.copy(dest, FileCopyFlags.OVERWRITE);
 				}
 				catch (Error e) {}
 			}
 
-			var tags_node = new BinaryVDF.ListNode.node("tags");
+			var tags_node = game_node.get("tags") as BinaryVDF.ListNode;
+			if(tags_node == null) tags_node = new BinaryVDF.ListNode.node("tags");
 			tags_node.add_node(new BinaryVDF.StringNode.node("0", "GameHub"));
 
 			foreach(var tag in game.tags)
 			{
-				if(tag.removable)
+				var tag_exists = false;
+				foreach(var value in tags_node.nodes.values)
 				{
-					tags_node.add_node(new BinaryVDF.StringNode.node((game.tags.index_of(tag) + 1).to_string(), tag.name));
+					var tmp = value as BinaryVDF.StringNode;
+					if(tag.name == tmp.value)
+					{
+						tag_exists = true;
+						break;
+					}
+				}
+				if(!tag_exists)
+				{
+					tags_node.add_node(new BinaryVDF.StringNode.node(tags_node.nodes.size.to_string(), tag.name));
 				}
 			}
 
