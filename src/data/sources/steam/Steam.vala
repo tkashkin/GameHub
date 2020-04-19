@@ -556,30 +556,6 @@ namespace GameHub.Data.Sources.Steam
 				catch (Error e) {}
 			}
 
-			var tags_node = game_node.get("tags") as BinaryVDF.ListNode;
-			if(tags_node == null) tags_node = new BinaryVDF.ListNode.node("tags");
-			tags_node.add_node(new BinaryVDF.StringNode.node("0", "GameHub"));
-
-			foreach(var tag in game.tags)
-			{
-				var tag_exists = false;
-				foreach(var value in tags_node.nodes.values)
-				{
-					var tmp = value as BinaryVDF.StringNode;
-					if(tag.name == tmp.value)
-					{
-						tag_exists = true;
-						break;
-					}
-				}
-				if(!tag_exists)
-				{
-					tags_node.add_node(new BinaryVDF.StringNode.node(tags_node.nodes.size.to_string(), tag.name));
-				}
-			}
-
-			game_node.add_node(tags_node);
-
 			root_node.add_node(game_node);
 
 			root_node.show();
