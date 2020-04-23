@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Mirko Brombin <send@mirko.pm>, 2019.
 # Francesco Bisignani <tassobaramba2@gmail.com>, 2020.
+# Jeannette L <j.lavoie@net-c.ca>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-01-14 18:21+0000\n"
-"Last-Translator: Francesco Bisignani <tassobaramba2@gmail.com>\n"
+"PO-Revision-Date: 2020-04-25 13:11+0000\n"
+"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gamehub/"
 "translations/it/>\n"
 "Language: it\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -85,7 +86,7 @@ msgstr ""
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr "Log del download manager"
+msgstr "Rigestra il gestore di scaricamento"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
@@ -109,11 +110,11 @@ msgstr "Mostra aiuto opzioni gioco"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr "Opzioni Log:"
+msgstr "Opzioni di registro:"
 
 #: src/app.vala:255
 msgid "Show logging options help"
-msgstr "Mostra aiuto nelle opzioni log"
+msgstr "Mostra aiuto nelle opzioni di registro"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
@@ -146,7 +147,7 @@ msgstr "Parte %1$u di %2$u : %3$s"
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr "%s : Installer corrotto"
+msgstr "%s: programma di installazione corrotto"
 
 #: src/data/Runnable.vala:643
 #, c-format
@@ -210,7 +211,7 @@ msgstr "Verificando l'integrità dell'installer"
 #: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
-msgstr "Download iniziato"
+msgstr "Scaricamento iniziato"
 
 #: src/data/Game.vala:633
 msgctxt "status"
@@ -269,7 +270,7 @@ msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
-"Impossibile ottenere l'URL di download di Trove.\n"
+"Impossibile ottenere l'URL di scaricamento di Trove.\n"
 "Assicurati che l'abbonamento mensile Humble sia attivo."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
@@ -294,7 +295,7 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -427,7 +428,7 @@ msgstr "Unendo giochi da %s"
 #: src/data/adapters/GamesAdapter.vala:551
 #, c-format
 msgid "Loading games from %s"
-msgstr "Loggando giochi da %s"
+msgstr "Caricamento di giochi da %s"
 
 #: src/data/adapters/GamesAdapter.vala:678
 msgctxt "sort_mode"
@@ -615,7 +616,7 @@ msgstr "Stile delle icone"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 msgid "Game card"
-msgstr "Card gioco"
+msgstr "Carta da gioco"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
 msgid "Show platform icons"
@@ -680,7 +681,7 @@ msgstr "Parametri comportamento"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:42
 msgid "Run games with double click"
-msgstr "Avvia gioco col doppio click"
+msgstr "Avvia gioco col doppio clic"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:46
 msgid "Merge games from different sources"
@@ -756,7 +757,7 @@ msgstr "Attiva focus sulla finestra GameHub dal pulsante Guida"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
-msgstr "Controllers"
+msgstr "Controller"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
