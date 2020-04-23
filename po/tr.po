@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-01-27 13:21+0000\n"
+"PO-Revision-Date: 2020-04-15 12:11+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gamehub/"
 "translations/tr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -26,7 +26,7 @@ msgstr "Yardımı göster"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr "Uygulama versiyonunu göster ve çık"
+msgstr "Uygulama sürümünü göster ve çık"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
@@ -146,7 +146,7 @@ msgstr "Parça %1$u / %2$u: %3$s"
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr "%s: bozuk yükleyici"
+msgstr "%s: bozuk kurucu"
 
 #: src/data/Runnable.vala:643
 #, c-format
@@ -204,7 +204,7 @@ msgstr "Yükleniyor"
 #: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr "Yükleyici bütünlüğü doğrulanıyor"
+msgstr "Kurucu bütünlüğü doğrulanıyor"
 
 #: src/data/Game.vala:631
 msgctxt "status"
@@ -261,7 +261,7 @@ msgstr "DLC: %s"
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr "%s: kullanılabilir yükleyici yok"
+msgstr "%s: kullanılabilir kurucu yok"
 
 #: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
@@ -385,7 +385,7 @@ msgstr "Ortam değişkenleri"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr "InnoSetup varsayılan seçenekleri"
+msgstr "InnoSetup öntanımlı seçenekleri"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
@@ -462,13 +462,13 @@ msgstr "Kaynağa göre"
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
-msgstr "Varsayılan"
+msgstr "Öntanımlı"
 
 #: src/data/providers/images/SteamGridDB.vala:158
 #: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
-msgstr "Varsayılan API anahtarını geri yükle"
+msgstr "Öntanımlı API anahtarını geri yükle"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
@@ -714,7 +714,7 @@ msgstr "Oyun dizini"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Installers"
-msgstr "Yükleyiciler"
+msgstr "Kurucular"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:98
@@ -741,7 +741,7 @@ msgstr "Platform"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
 msgid "Controller"
-msgstr "Kontrolör"
+msgstr "Denetleyici"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
@@ -750,11 +750,11 @@ msgstr "Etkin"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
 msgid "Focus GameHub window with Guide button"
-msgstr "Rehber butonu ile GameHub penceresini odakla"
+msgstr "Rehber düğmesi ile GameHub penceresini odakla"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
-msgstr "Kontrolörler"
+msgstr "Denetleyiciler"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
@@ -940,7 +940,7 @@ msgstr "Çalıştırılabilir"
 #: src/ui/views/GamesView/AddGamePopover.vala:68
 #: src/ui/views/GamesView/AddGamePopover.vala:143
 msgid "Installer"
-msgstr "Yükleyici"
+msgstr "Kurucu"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
 #: src/ui/dialogs/GamePropertiesDialog.vala:64
@@ -1028,7 +1028,7 @@ msgstr "Görüntü sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:68
 msgid "Metadata providers"
-msgstr "Meta veri sağlayıcıları"
+msgstr "Üst veri sağlayıcıları"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:137
 msgid "Open website"
@@ -1100,12 +1100,12 @@ msgstr "İndir"
 
 #: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
-msgstr "Yükleyiciyi seçin"
+msgstr "Kurucuyu seçin"
 
 #: src/ui/dialogs/InstallDialog.vala:216
 #, c-format
 msgid "Installer size: %s"
-msgstr "Yükleyici boyutu: %s"
+msgstr "Kurucu boyutu: %s"
 
 #: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
@@ -1246,7 +1246,7 @@ msgstr "Uyumluluk katmanıyla çalıştır"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
-msgstr "Bozuk yükleyici: sağlama toplamı uyuşmazlığı"
+msgstr "Bozuk kurucu: sağlama toplamı uyuşmazlığı"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
@@ -1490,7 +1490,7 @@ msgstr "Kurulum dizinini aç"
 #: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
 msgid "Open installers collection directory"
-msgstr "Yükleyici koleksiyon dizinini aç"
+msgstr "Kurucu koleksiyon dizinini aç"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238

@@ -143,7 +143,7 @@ namespace GameHub
 
 			GameSources = { new Steam(), new GOG(), new Humble(), new Trove(), new Itch(), new User() };
 
-			Providers.ImageProviders = { new Providers.Images.SteamGridDB(), new Providers.Images.JinxSGVI() };
+			Providers.ImageProviders = { new Providers.Images.Steam(), new Providers.Images.SteamGridDB(), new Providers.Images.JinxSGVI() };
 			Providers.DataProviders  = { new Providers.Data.IGDB() };
 
 			var proton_latest = new Compat.Proton(Compat.Proton.LATEST);
