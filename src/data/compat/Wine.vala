@@ -205,15 +205,52 @@ namespace GameHub.Data.Compat
 
 			var dosdevices = prefix.get_child("dosdevices");
 
-			if(dosdevices.get_child("c:").query_exists() && !dosdevices.get_child("d:").query_exists())
+			if(dosdevices.get_child("c:").query_exists() && dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
 			{
-				if(dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
+				var has_symlink = false;
+				for(var letter = 'd'; letter <= 'y'; letter++)
 				{
-					Utils.run({"ln", "-nsf", "../../../../", "d:"}).dir(dosdevices.get_path()).run_sync();
+					if(is_symlink_and_correct(dosdevices.get_child(@"$(letter):")))
+					{
+						has_symlink = true;
+						break;
+					}
+				}
+
+				for(var letter = 'd'; has_symlink == false && letter <= 'y'; letter++)
+				{
+					if(!dosdevices.get_child(@"$(letter):").query_exists() && !dosdevices.get_child(@"$(letter)::").query_exists())
+					{
+						Utils.run({"ln", "-nsf", "../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync();
+						break;
+					}
 				}
 			}
 
 			return prefix;
+		}
+
+		private bool is_symlink_and_correct(File symlink)
+		{
+			if(!symlink.query_exists())
+			{
+				return false;
+			}
+
+			try
+			{
+				var symlink_info = symlink.query_info("*", NONE);
+				if(symlink_info == null || !symlink_info.get_is_symlink() || symlink_info.get_symlink_target() != "../../../../")
+				{
+					return false;
+				}
+			}
+			catch (Error e)
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		protected virtual string[] prepare_env(Traits.SupportsCompatTools runnable, bool parse_opts=true)

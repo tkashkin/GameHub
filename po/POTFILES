@@ -49,6 +49,7 @@ src/data/adapters/GamesAdapter.vala
 src/data/providers/Provider.vala
 src/data/providers/ImagesProvider.vala
 src/data/providers/DataProvider.vala
+src/data/providers/images/Steam.vala
 src/data/providers/images/SteamGridDB.vala
 src/data/providers/images/JinxSGVI.vala
 src/data/providers/data/IGDB.vala
