@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 using GameHub.Data.DB;
 using GameHub.Utils;
+using LevelDB;
 using ZLib.Utility;
 
 namespace GameHub.Data.Sources.Steam
@@ -477,13 +478,20 @@ namespace GameHub.Data.Sources.Steam
 
 		public static void add_game_shortcut(Game game)
 		{
+			// TODO: Make sure steam isn't running!
+			set_shortcut(game);
+			set_shortcut_collection(game);
+			set_shortcut_assets(game);
+		}
+
+		// add or update shortcut
+		private static void set_shortcut(Game game)
+		{
 			var config_dir = FSUtils.find_case_insensitive(get_userdata_dir(), "config");
 			if(config_dir == null || !config_dir.query_exists()) return;
 
 			var shortcuts = FSUtils.find_case_insensitive(config_dir, "shortcuts.vdf") ?? FSUtils.file(config_dir.get_path(), "shortcuts.vdf");
-
 			var vdf = new BinaryVDF(shortcuts);
-
 			var root_node = vdf.read() as BinaryVDF.ListNode;
 
 			if(root_node.get("shortcuts") == null)
@@ -530,6 +538,16 @@ namespace GameHub.Data.Sources.Steam
 				game_node.add_node(new BinaryVDF.StringNode.node("icon", cached.get_path()));
 			}
 
+			root_node.add_node(game_node);
+
+			root_node.show();
+
+			BinaryVDF.write(shortcuts, root_node);
+		}
+
+		// add or update artwork
+		private static void set_shortcut_assets(Game game)
+		{
 			// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
 			var custom_appid = (crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000).to_string();
 
@@ -538,7 +556,6 @@ namespace GameHub.Data.Sources.Steam
 				try
 				{
 					var cached = ImageCache.local_file(game.image, @"games/$(game.source.id)/$(game.id)/images/");
-
 					var dest = FSUtils.file(get_userdata_dir().get_child("config").get_child("grid").get_path(), custom_appid + ".png");
 					cached.copy(dest, FileCopyFlags.OVERWRITE);
 				}
@@ -555,12 +572,142 @@ namespace GameHub.Data.Sources.Steam
 				}
 				catch (Error e) {}
 			}
+		}
 
-			root_node.add_node(game_node);
+		// add or update collections
+		private static void set_shortcut_collection(Game game)
+		{
+			string? error;
 
-			root_node.show();
+			var config_dir = FSUtils.find_case_insensitive(get_userdata_dir(), "config");
+			if(config_dir == null || !config_dir.query_exists()) return;
 
-			BinaryVDF.write(shortcuts, root_node);
+			var collections_db = new SteamCollectionDatabase(instance.user_id, out error);
+			if(error != null) return;
+
+			collections_db.read(out error);
+			if(error != null) return;
+
+			var localconfig = Parser.parse_vdf_file(config_dir.get_path(), "localconfig.vdf");
+			if(localconfig == null || localconfig.get_node_type() != Json.NodeType.OBJECT) return;
+			var user_collections = Parser.parse_json(localconfig.get_object().get_object_member("UserLocalConfigStore").get_object_member("WebStorage").get_string_member("user-collections"));
+			if(user_collections == null || user_collections.get_node_type() != Json.NodeType.OBJECT) return;
+
+			int64? custom_appid_int;
+			try
+			{
+				// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
+				var custom_appid = (crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000).to_string();
+				int64.from_string(custom_appid, out custom_appid_int);
+				if(custom_appid_int == null) return;
+			}
+			catch (Error e) {return;}
+
+			// Remove from collections where the game doesn't have the tag anymore
+			user_collections.get_object().foreach_member((object, name, node) =>
+			{
+				if(name.has_prefix("gh-"))
+				{
+					foreach(var tag in game.tags)
+					{
+						if(node.get_object().get_string_member("id") == @"gh-$(tag.name)") return;
+					}
+
+					if(node.get_object().has_member("added") && node.get_object().get_member("added").get_node_type() == Json.NodeType.ARRAY)
+					{
+						uint? index = null;
+
+						node.get_object().get_array_member("added").foreach_element((a, i, n) =>
+						{
+							if(n.get_int() == custom_appid_int) index = i;
+						});
+
+						if(index != null)
+						{
+							node.get_object().get_array_member("added").remove_element(index);
+							return;
+						}
+					}
+
+				}
+			});
+
+			// add new tags
+			var created_collection = false;
+			foreach(var tag in game.tags)
+			{
+				var key = @"gh-$(tag.name)";
+				var collection = collections_db.get_collection(key);
+
+				// create categorie if it doesn't exist already
+				if(collection == null)
+				{
+					collection = new Json.Object();
+					collection.set_string_member("id", key);
+					collection.set_string_member("name", tag.name);
+					collection.set_array_member("added", new Json.Array());
+					collection.set_array_member("removed", new Json.Array());
+					collections_db.set_collection(key, collection);
+					created_collection = true;
+				}
+
+				if(!user_collections.get_object().has_member(key))
+				{
+					var object = new Json.Object();
+					object.set_string_member("id", key);
+					object.set_array_member("added", new Json.Array());
+					object.set_array_member("removed", new Json.Array());
+					user_collections.get_object().set_object_member(key, object);
+				}
+
+				var already_present = false;
+				user_collections.get_object().get_object_member(key).get_array_member("added").foreach_element((array, index, node) =>
+				{
+					if(node.get_int() == custom_appid_int) already_present = true;
+				});
+				if(!already_present)
+				{
+					user_collections.get_object().get_object_member(key).get_array_member("added").add_int_element(custom_appid_int);
+				}
+			}
+
+			debug(@"[Sources.Steam.set_shortcut_collection]\n$(Json.to_string(user_collections, true))");
+
+			var generator = new Json.Generator();
+			generator.set_root(user_collections);
+			localconfig.get_object().get_object_member("UserLocalConfigStore").get_object_member("WebStorage").set_string_member("user-collections", generator.to_data(null));
+			FSUtils.write_string_to_file(FSUtils.file(config_dir.get_path(), "localconfig.vdf"), generate_vdf_from_json(localconfig.get_object()));
+			if(created_collection) collections_db.save(out error);
+			if(error != null) warning(@"[Sources.Steam.set_shortcut_collection] Error saving database: `%s`", error);
+		}
+
+		// https://github.com/node-steam/vdf/blob/master/src/index.ts#L78-L117
+		private static string generate_vdf_from_json(Json.Object object, int level = 0)
+		{
+			var seperator = "	";
+			var result = "";
+			var indent = "";
+
+			for(var i = 0; i < level; i++)
+			{
+				indent += seperator;
+			}
+
+			object.foreach_member((object, name, node) =>
+			{
+				if(node.get_node_type() == Json.NodeType.OBJECT && node.get_object() != null)
+				{
+					result += indent + "\"" + name + "\"\n" + indent + "{\n" + generate_vdf_from_json(node.get_object(), level + 1) + indent + "}\n";
+				}
+				else
+				{
+					var generator = new Json.Generator();
+					generator.set_root(node);
+					result += indent + "\"" + name + "\"" + seperator + seperator + generator.to_data(null) + "\n";
+				}
+			});
+
+			return result;
 		}
 
 		public static bool IsAnyAppRunning = false;

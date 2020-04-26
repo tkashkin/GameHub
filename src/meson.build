@@ -22,6 +22,10 @@ project_config = vcs_tag(
 	fallback: ''
 )
 
+# vala compiler flags
+vapi_dir = meson.current_source_dir() / 'vapi'
+add_project_arguments('--vapidir=' + vapi_dir, language: 'vala')
+
 deps = [
 	dependency('gdk-3.0'),
 	dependency('json-glib-1.0'),
@@ -30,8 +34,10 @@ deps = [
 	dependency('libxml-2.0'),
 	dependency('gio-unix-2.0'),
 	dependency('zlib'),
+	dependency('leveldb'),
 	meson.get_compiler('vala').find_library('posix'),
-	meson.get_compiler('vala').find_library('linux')
+	meson.get_compiler('vala').find_library('linux'),
+	meson.get_compiler('vala').find_library('leveldb', dirs: vapi_dir)
 ]
 
 sources = [
@@ -44,6 +50,7 @@ sources = [
 
 	'data/sources/steam/Steam.vala',
 	'data/sources/steam/SteamGame.vala',
+	'data/sources/steam/SteamCollectionDatabase.vala',
 
 	'data/sources/gog/GOG.vala',
 	'data/sources/gog/GOGGame.vala',

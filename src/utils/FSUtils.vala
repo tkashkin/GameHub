@@ -107,6 +107,8 @@ namespace GameHub.Utils
 
 				public const string AppInfoVDF = "steam/appcache/appinfo.vdf";
 				public const string PackageInfoVDF = "steam/appcache/packageinfo.vdf";
+
+				public const string LevelDB = "steam/config/htmlcache/Local Storage/leveldb";
 			}
 
 			public class GOG
@@ -524,6 +526,24 @@ namespace GameHub.Utils
 				paths.humble_games = Environment.get_user_data_dir() + "/games/HumbleBundle";
 			}
 			#endif
+		}
+
+		public static void write_string_to_file(File? file, string? data)
+		{
+			if(file == null || data == null) return;
+
+			try
+			{
+				var stream = new DataOutputStream(file.replace(null, true, FileCreateFlags.NONE));
+				stream.set_byte_order(DataStreamByteOrder.LITTLE_ENDIAN);
+				stream.put_string(data);
+				stream.flush();
+				stream.close();
+			}
+			catch(Error e)
+			{
+				warning("[FSUtils.write_string_to_file] Error writing `%s`: %s", file.get_path(), e.message);
+			}
 		}
 	}
 }

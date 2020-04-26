@@ -293,8 +293,8 @@ namespace GameHub.Utils
 			return buf.content();
 		}
 
-		public delegate void JsonBulderDelegate(Json.Builder builder);
-		public static Json.Node json(JsonBulderDelegate? d=null)
+		public delegate void JsonBuilderDelegate(Json.Builder builder);
+		public static Json.Node json(JsonBuilderDelegate? d=null)
 		{
 			var builder = new Json.Builder();
 			builder.begin_object();
