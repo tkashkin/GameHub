@@ -321,13 +321,13 @@ namespace GameHub.Data.Sources.Steam
 			return pkgs;
 		}
 
-		public static async string? get_appid_from_name(string game_name)
+		public static async string? find_appid_by_name(string name)
 		{
 			if(instance == null) return null;
-
 			instance.load_appinfo();
-
 			if(instance.appinfo == null) return null;
+
+			var name_normalized = Utils.strip_name(name, null, true).casefold();
 
 			foreach(var app_node in instance.appinfo.nodes.values)
 			{
@@ -345,12 +345,16 @@ namespace GameHub.Data.Sources.Steam
 
 						if(name_node != null && name_node is BinaryVDF.StringNode && type_node != null && type_node is BinaryVDF.StringNode)
 						{
-							var name = ((BinaryVDF.StringNode) name_node).value;
+							var app_name = ((BinaryVDF.StringNode) name_node).value;
 							var type = ((BinaryVDF.StringNode) type_node).value;
 
-							if(type != null && type.down() == "game" && name != null && name.down() == game_name.down())
+							if(type != null && type.down() == "game" && app_name != null)
 							{
-								return app.key;
+								var app_name_normalized = Utils.strip_name(app_name, null, true).casefold();
+								if(name_normalized == app_name_normalized)
+								{
+									return app.key;
+								}
 							}
 						}
 					}
@@ -472,6 +476,7 @@ namespace GameHub.Data.Sources.Steam
 
 		public static File? get_userdata_dir()
 		{
+			if(instance == null || instance.user_id == null) return null;
 			uint64 communityid = uint64.parse(instance.user_id);
 			uint64 steamid3 = communityid_to_steamid3(communityid);
 			return FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), @"steam/userdata/$(steamid3)");

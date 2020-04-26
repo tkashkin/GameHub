@@ -174,19 +174,19 @@ namespace GameHub
 
 			proton_latest.init();
 
-			IconTheme.get_default().add_resource_path("/com/github/tkashkin/gamehub/icons");
+			IconTheme.get_default().add_resource_path("/res/icons");
 
 			screen = Screen.get_default();
 
-			var app_provider = new CssProvider();
-			app_provider.load_from_resource("/com/github/tkashkin/gamehub/css/app.css");
-			StyleContext.add_provider_for_screen(screen, app_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+			var common_provider = new CssProvider();
+			common_provider.load_from_resource("/res/styles/common/_style.css");
+			StyleContext.add_provider_for_screen(screen, common_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 			theme_providers = new HashMap<string, CssProvider>();
 			foreach(var theme in THEME_SPECIFIC_STYLES)
 			{
 				var provider = new CssProvider();
-				provider.load_from_resource(@"/com/github/tkashkin/gamehub/css/themes/$(theme).css");
+				provider.load_from_resource(@"/res/styles/themes/$(theme)/_style.css");
 				theme_providers.set(theme, provider);
 			}
 

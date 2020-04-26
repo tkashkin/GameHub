@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-	<gresource prefix="/com/github/tkashkin/gamehub/icons">
+	<gresource prefix="/res/icons">
 		<file alias="scalable/actions/sources-all-symbolic.svg">symbolic/sources/sources-all.svg</file>
 		<file alias="scalable/actions/source-steam-symbolic.svg">symbolic/sources/steam.svg</file>
 		<file alias="scalable/actions/source-gog-symbolic.svg">symbolic/sources/gog.svg</file>

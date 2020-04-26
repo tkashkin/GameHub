@@ -1,15 +1,4 @@
-@define-color colorPrimary mix(#7239b3, @titlebar_color, 0.2);
-@define-color colorAccent #8c53cb;
-@define-color selected_bg_color @colorAccent;
-@define-color theme_selected_bg_color @colorAccent;
-@define-color textColorPrimary mix(@colorPrimary, #fafafa, 0.95);
-@define-color textColorPrimaryShadow alpha(#7239b3, 0.4);
-
-@define-color textColorPrimaryDefault mix(@titlebar_color, @text_color, 0.75);
-@define-color textColorPrimaryShadowDefault alpha(shade(@titlebar_color, 1.4), 0.4);
-
-@define-color settings_separator @menu_separator;
-@define-color settings_separator_shadow @menu_separator_shadow;
+@import url("colors.css");
 
 .titlebar.flat .title,
 .titlebar.flat .subtitle,

@@ -137,6 +137,7 @@ sources = [
 	'ui/dialogs/InstallDialog/steps/CompatToolStep.vala',
 
 	'ui/dialogs/GamePropertiesDialog/GamePropertiesDialog.vala',
+	'ui/dialogs/GamePropertiesDialog/tabs/General.vala',
 
 	'ui/dialogs/GameDetailsDialog.vala',
 	'ui/dialogs/GameFSOverlaysDialog.vala',
@@ -296,8 +297,8 @@ executable(
 
 	sources,
 
-	icons_gresource,
-	css_gresource,
+	res_icons,
+	res_styles,
 
 	dependencies: deps,
 	install: true,

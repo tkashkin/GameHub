@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+	<gresource prefix="/res/styles/"> <!-- common -->
+		<file compressed="true">common/_style.css</file>
+		<file compressed="true">common/app.css</file>
+		<file compressed="true">common/dialogs/GamePropertiesDialog.css</file>
+		<file compressed="true">common/views/GamesView.css</file>
+	</gresource>
+
+	<gresource prefix="/res/styles/"> <!-- elementary -->
+		<file compressed="true">themes/elementary/_style.css</file>
+		<file compressed="true">themes/elementary/colors.css</file>
+	</gresource>
+</gresources>

@@ -39,56 +39,73 @@ namespace GameHub.Data.Providers.Images
 
 		public override async ArrayList<ImagesProvider.Result> images(Game game)
 		{
-			var result = new ImagesProvider.Result();
-			result.name = "%s: %s".printf(name, game.name);
-			result.url = BASE_URL + "/?s=" + Uri.escape_string(game.name);
-			result.images = new ArrayList<ImagesProvider.Image>();
-
-			yield parse_page(result.url, result);
-
 			var results = new ArrayList<ImagesProvider.Result>();
-			results.add(result);
+			results.add(new Result(this, game));
 			return results;
 		}
 
-		private async void parse_page(string url, ImagesProvider.Result result)
+		public class Result: ImagesProvider.Result
 		{
-			var html = yield Parser.parse_remote_html_file_async(url, "GET");
-			if(html == null) return;
+			private Game game;
+			private ArrayList<ImagesProvider.Image>? images = null;
 
-			var xpath = new Xml.XPath.Context(html);
-
-			var galleries = xpath.eval("//div[contains(@class,'ngg-galleryoverview')]")->nodesetval;
-			if(galleries != null && galleries->length() > 0)
+			public Result(JinxSGVI source, Game game)
 			{
-				for(int g = 0; g < galleries->length(); g++)
+				this.game = game;
+				provider = source;
+				name = "%s: %s".printf(source.name, game.name);
+				title = source.name;
+				subtitle = game.name;
+				url = JinxSGVI.BASE_URL + "/?s=" + Uri.escape_string(game.name);
+			}
+
+			public override async ArrayList<ImagesProvider.Image>? load_images()
+			{
+				if(images != null) return images;
+				images = new ArrayList<ImagesProvider.Image>();
+				yield parse_page(url);
+				return images;
+			}
+
+			private async void parse_page(string url)
+			{
+				var html = yield Parser.parse_remote_html_file_async(url, "GET");
+				if(html == null) return;
+
+				var xpath = new Xml.XPath.Context(html);
+
+				var galleries = xpath.eval("//div[contains(@class,'ngg-galleryoverview')]")->nodesetval;
+				if(galleries != null && galleries->length() > 0)
 				{
-					var gallery = galleries->item(g);
-					xpath.node = gallery;
-
-					var images = xpath.eval("div/div[@class='ngg-gallery-thumbnail']/a")->nodesetval;
-					if(images != null && images->length() > 0)
+					for(int g = 0; g < galleries->length(); g++)
 					{
-						for(int i = 0; i < images->length(); i++)
+						var gallery = galleries->item(g);
+						xpath.node = gallery;
+
+						var imgs = xpath.eval("div/div[@class='ngg-gallery-thumbnail']/a")->nodesetval;
+						if(imgs != null && imgs->length() > 0)
 						{
-							var img = images->item(i);
-							if(img == null) continue;
-							result.images.add(new ImagesProvider.Image(img->get_prop("data-src"), img->get_prop("data-title")));
+							for(int i = 0; i < imgs->length(); i++)
+							{
+								var img = imgs->item(i);
+								if(img == null) continue;
+								this.images.add(new ImagesProvider.Image(img->get_prop("data-src"), img->get_prop("data-title")));
+							}
 						}
-					}
 
-					var next_page = xpath.eval("div[@class='ngg-navigation']/a[@class='next']")->nodesetval;
-					if(next_page != null && next_page->length() > 0)
-					{
-						var next_page_url = next_page->item(0)->get_prop("href").strip();
-						if(next_page_url != null)
+						var next_page = xpath.eval("div[@class='ngg-navigation']/a[@class='next']")->nodesetval;
+						if(next_page != null && next_page->length() > 0)
 						{
-							yield parse_page(next_page_url, result);
+							var next_page_url = next_page->item(0)->get_prop("href").strip();
+							if(next_page_url != null)
+							{
+								yield parse_page(next_page_url);
+							}
 						}
 					}
 				}
+				delete html;
 			}
-			delete html;
 		}
 	}
 }
