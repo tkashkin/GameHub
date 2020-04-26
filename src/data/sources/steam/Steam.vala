@@ -478,7 +478,11 @@ namespace GameHub.Data.Sources.Steam
 
 		public static void add_game_shortcut(Game game)
 		{
-			// TODO: Make sure steam isn't running!
+			if(is_running())
+			{
+				notify("[Sources.Steam.add_game_shortcut] No shortcut created because Steam is running, make sure Steam is closed properly.");
+				return;
+			}
 			set_shortcut(game);
 			set_shortcut_collection(game);
 			set_shortcut_assets(game);
@@ -734,6 +738,12 @@ namespace GameHub.Data.Sources.Steam
 			});
 
 			return result;
+		}
+
+		public static bool is_running()
+		{
+			if(Utils.run({"pidof", "steam"}).run_sync(true).exit_code == 0) return true;
+			return false;
 		}
 
 		public static bool IsAnyAppRunning = false;
