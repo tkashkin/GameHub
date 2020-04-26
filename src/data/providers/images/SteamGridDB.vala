@@ -62,34 +62,7 @@ namespace GameHub.Data.Providers.Images
 				{
 					foreach(var size in SIZES)
 					{
-						var result = new ImagesProvider.Result();
-						result.image_size = size ?? ImageSize(460, 215);
-						result.name = "%s: %s (%d × %d)".printf(name, g.name, result.image_size.width, result.image_size.height);
-						result.url = "%s/game/%s".printf(DOMAIN, g.id);
-
-						var dimensions = size != null ? "?dimensions=%dx%d".printf(size.width, size.height) : "";
-
-						var endpoint = "/grids/game/%s%s".printf(g.id, dimensions);
-						//if(game is GameHub.Data.Sources.Steam.SteamGame) endpoint = "/grids/steam/%s%s".printf(game.id, dimensions);
-
-						var root = yield Parser.parse_remote_json_file_async(BASE_URL + endpoint, "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
-						if(root == null || root.get_node_type() != Json.NodeType.OBJECT) continue;
-						var obj = root.get_object();
-						var data = obj.has_member("data") ? obj.get_array_member("data") : null;
-						if(data == null || data.get_length() < 1) continue;
-
-						result.images = new ArrayList<Image>();
-						foreach(var img_node in data.get_elements())
-						{
-							var img = img_node != null && img_node.get_node_type() == Json.NodeType.OBJECT ? img_node.get_object() : null;
-							if(img == null || !img.has_member("url")) continue;
-							result.images.add(new Image(img));
-						}
-
-						if(result.images.size > 0)
-						{
-							results.add(result);
-						}
+						results.add(new Result(this, g, size));
 					}
 				}
 			}
@@ -128,7 +101,7 @@ namespace GameHub.Data.Providers.Images
 			return games;
 		}
 
-		private class SGDBGame
+		public class SGDBGame
 		{
 			public string id;
 			public string name;
@@ -190,6 +163,48 @@ namespace GameHub.Data.Providers.Images
 				grid.attach(entry_wrapper, 1, 0);
 
 				return grid;
+			}
+		}
+
+		public class Result: ImagesProvider.Result
+		{
+			private SGDBGame game;
+			private string dimensions;
+			private ArrayList<ImagesProvider.Image>? images = null;
+
+			public Result(SteamGridDB source, SGDBGame game, ImagesProvider.ImageSize? size)
+			{
+				this.game = game;
+				provider = source;
+				image_size = size ?? ImageSize(460, 215);
+				name = "%s: %s (%d × %d)".printf(source.name, game.name, image_size.width, image_size.height);
+				title = "%s: %d × %d".printf(source.name, image_size.width, image_size.height);
+				subtitle = game.name;
+				url = "%s/game/%s".printf(SteamGridDB.DOMAIN, game.id);
+				dimensions = size != null ? "?dimensions=%dx%d".printf(size.width, size.height) : "";
+			}
+
+			public override async ArrayList<ImagesProvider.Image>? load_images()
+			{
+				if(images != null) return images;
+
+				var endpoint = "/grids/game/%s%s".printf(game.id, dimensions);
+
+				var root = yield Parser.parse_remote_json_file_async(SteamGridDB.BASE_URL + endpoint, "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
+				if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return images;
+				var obj = root.get_object();
+				var data = obj.has_member("data") ? obj.get_array_member("data") : null;
+				if(data == null || data.get_length() < 1) return images;
+
+				images = new ArrayList<ImagesProvider.Image>();
+				foreach(var img_node in data.get_elements())
+				{
+					var img = img_node != null && img_node.get_node_type() == Json.NodeType.OBJECT ? img_node.get_object() : null;
+					if(img == null || !img.has_member("url")) continue;
+					images.add(new Image(img));
+				}
+
+				return images;
 			}
 		}
 

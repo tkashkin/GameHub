@@ -69,14 +69,3 @@ install_data(
 	meson.project_name() + '-overlayfs-helper',
 	install_dir: join_paths(get_option('prefix'), get_option('bindir'))
 )
-
-icons_gresource = gnome.compile_resources(
-	'gresource_icons',
-	'icons/icons.gresource.xml',
-	source_dir: 'icons'
-)
-
-css_gresource = gnome.compile_resources(
-	'gresource_css',
-	meson.project_name() + '.gresource.xml'
-)

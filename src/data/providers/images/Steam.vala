@@ -25,13 +25,13 @@ namespace GameHub.Data.Providers.Images
 {
 	public class Steam: ImagesProvider
 	{
-		private const string DOMAIN       = "https://store.steampowered.com/";
-		private const string CDN_BASE_URL = "http://cdn.akamai.steamstatic.com/steam/apps/";
+		private const string DOMAIN       = "https://store.steampowered.com";
+		private const string CDN_BASE_URL = "http://cdn.akamai.steamstatic.com/steam/apps";
+		private const string API_BASE_URL = "https://api.steampowered.com";
 		private const string API_KEY_PAGE = "https://steamcommunity.com/dev/apikey";
-		private const string API_BASE_URL = "https://api.steampowered.com/";
 
 		private const string APPLIST_CACHE_FILE = "applist.json";
-		private ImagesProvider.ImageSize?[] SIZES = { ImageSize(460, 215), ImageSize(600, 900) };
+		private ImagesProvider.ImageSize[] SIZES = { ImageSize(460, 215), ImageSize(600, 900) };
 
 		public override string id   { get { return "steam"; } }
 		public override string name { get { return "Steam"; } }
@@ -55,10 +55,8 @@ namespace GameHub.Data.Providers.Images
 			}
 			else
 			{
-				appid = yield GameHub.Data.Sources.Steam.Steam.get_appid_from_name(game.name);
-
-				// also contains unowned games:
-				if(appid == null) appid = yield get_appid_from_name(game.name);
+				appid = yield GameHub.Data.Sources.Steam.Steam.find_appid_by_name(game.name);
+				if(appid == null) appid = yield find_appid_by_name(game.name);
 			}
 
 			if(appid != null)
@@ -66,98 +64,16 @@ namespace GameHub.Data.Providers.Images
 				debug("[Provider.Images.Steam] Found appid %s for game %s", appid, game.name);
 				foreach(var size in SIZES)
 				{
-					var result = new ImagesProvider.Result();
-					result.images = new ArrayList<ImagesProvider.Image>();
-					result.image_size = size ?? ImageSize(460, 215);
-					result.name = "%s: %s (%d × %d)".printf(name, game.name, result.image_size.width, result.image_size.height);
-					result.url = "%sapp/%s".printf(DOMAIN, appid);
-
-					string? remote_result = null;
-					string? local_result = null;
-					switch (size.width) {
-					case 460:
-						// Always enforced by steam, exists for everything
-						local_result = yield search_local(appid);
-						remote_result = yield search_remote(appid, "header.jpg", false);
-						break;
-					//  case 920:
-						// Higher resolution of the one above at the same location
-						//  break;
-					case 600:
-						// Enforced since 2019, possibly not available
-						local_result = yield search_local(appid, "p");
-						remote_result = yield search_remote(appid, "library_600x900_2x.jpg");
-						break;
-					}
-
-					if(local_result != null)
-					{
-						result.images.add(new Image(local_result, "Local custom steam grid image"));
-					}
-
-					if(remote_result != null)
-					{
-						result.images.add(new Image(remote_result, "Remote download"));
-					}
-
-					if(result.images.size > 0)
-					{
-						results.add(result);
-					}
+					results.add(new Result(this, game, appid, size));
 				}
 			}
 
 			return results;
 		}
 
-		private async string? search_local(string appid, string format="")
+		private async string? find_appid_by_name(string name)
 		{
-			string[] extensions = { ".png", ".jpg" };
-			File? griddir = Sources.Steam.Steam.get_userdata_dir().get_child("config").get_child("grid");
-
-			foreach(var extension in extensions)
-			{
-				if(griddir.get_child(appid + format + extension).query_exists())
-				{
-					return "file://" + griddir.get_child(appid + format + extension).get_path();
-				}
-			}
-
-			return null;
-		}
-
-		private async string? search_remote(string appid, string format, bool needs_check=true)
-		{
-			var exists = !needs_check;
-			var endpoint = "%s/%s".printf(appid, format);
-
-			if(needs_check)
-			{
-				exists = yield image_exists("%s%s".printf(CDN_BASE_URL, endpoint));
-			}
-
-			if(exists)
-			{
-				return "%s%s".printf(CDN_BASE_URL, endpoint);
-			}
-
-			return null;
-		}
-
-		private async bool image_exists(string url)
-		{
-			uint status;
-			yield Parser.load_remote_file_async(url, "GET", null, null, null, out status);
-			if(status == 200)
-			{
-				return true;
-			}
-			return false;
-		}
-
-		private async string? get_appid_from_name(string game_name)
-		{
-			var applist_cache_path = @"$(FS.Paths.Cache.Providers)/steam/";
+			var applist_cache_path = @"$(FS.Paths.Cache.Providers)/steam";
 			var cache_file = FS.file(applist_cache_path, APPLIST_CACHE_FILE);
 			DateTime? modification_date = null;
 
@@ -181,7 +97,7 @@ namespace GameHub.Data.Providers.Images
 
 			if(!cache_file.query_exists() || modification_date == null || modification_date.compare(new DateTime.now_utc().add_days(-1)) < 0)
 			{
-				var url = @"$(API_BASE_URL)ISteamApps/GetAppList/v0002/";
+				var url = @"$(API_BASE_URL)/ISteamApps/GetAppList/v0002/";
 
 				FS.mkdir(applist_cache_path);
 				cache_file = FS.file(applist_cache_path, APPLIST_CACHE_FILE);
@@ -194,7 +110,7 @@ namespace GameHub.Data.Providers.Images
 					{
 						var dos = new DataOutputStream(cache_file.replace(null, false, FileCreateFlags.NONE));
 						dos.put_string(json_string);
-						debug("[Provider.Images.Steam] Refreshed steam applist");
+						debug("[Provider.Images.Steam] Refreshed Steam applist");
 					}
 					else
 					{
@@ -211,21 +127,136 @@ namespace GameHub.Data.Providers.Images
 			var json = Parser.parse_json_file(applist_cache_path, APPLIST_CACHE_FILE);
 			if(json == null || json.get_node_type() != Json.NodeType.OBJECT)
 			{
-				debug("[Provider.Images.Steam] Error reading steam applist");
+				debug("[Provider.Images.Steam] Error reading Steam applist");
 				return null;
 			}
 
-			var apps = json.get_object().get_object_member("applist").get_array_member("apps").get_elements();
-			foreach(var app in apps)
+			var applist = Parser.json_object(json, {"applist"});
+			if(applist == null) return null;
+
+			var apps = applist.has_member("apps") ? applist.get_array_member("apps") : null;
+			if(apps == null) return null;
+
+			var name_normalized = Utils.strip_name(name, null, true).casefold();
+
+			foreach(var app in apps.get_elements())
 			{
-				if(app.get_object().get_string_member("name").down() == game_name.down())
+				if(app.get_node_type() != Json.NodeType.OBJECT) continue;
+				var obj = app.get_object();
+				if(obj == null) continue;
+
+				var appname = obj.has_member("name") ? obj.get_string_member("name") : null;
+				var appid = obj.has_member("appid") ? obj.get_int_member("appid").to_string() : null;
+
+				if(appid != null && appname != null)
 				{
-					var appid = app.get_object().get_int_member("appid").to_string();
-					return appid;
+					var app_name_normalized = Utils.strip_name(appname, null, true).casefold();
+					if(app_name_normalized == name_normalized)
+					{
+						return appid;
+					}
 				}
 			}
 
 			return null;
+		}
+
+		public class Result: ImagesProvider.Result
+		{
+			private Game game;
+			private string appid;
+			private ArrayList<ImagesProvider.Image>? images = null;
+
+			public Result(Steam source, Game game, string appid, ImagesProvider.ImageSize? size)
+			{
+				this.game = game;
+				this.appid = appid;
+				provider = source;
+				image_size = size ?? ImageSize(460, 215);
+				name = "%s: %s (%d × %d)".printf(source.name, game.name, image_size.width, image_size.height);
+				title = "%s: %d × %d".printf(source.name, image_size.width, image_size.height);
+				subtitle = game.name;
+				url = "%s/app/%s".printf(Steam.DOMAIN, appid);
+			}
+
+			public override async ArrayList<ImagesProvider.Image>? load_images()
+			{
+				if(images != null) return images;
+
+				images = new ArrayList<ImagesProvider.Image>();
+
+				string? remote = null;
+				string? local = null;
+				switch(image_size.width)
+				{
+					case 460:
+						local = yield search_local();
+						remote = yield search_remote( "header.jpg", false);
+						break;
+					case 600:
+						local = yield search_local("p");
+						remote = yield search_remote("library_600x900_2x.jpg");
+						break;
+				}
+
+				if(local != null)
+				{
+					images.add(new Image(local, _("Local grid image")));
+				}
+
+				if(remote != null)
+				{
+					images.add(new Image(remote, _("Remote grid image")));
+				}
+
+				return images;
+			}
+
+			private async string? search_local(string format="")
+			{
+				string[] extensions = { ".png", ".jpg" };
+				var grid_dir = Sources.Steam.Steam.get_userdata_dir().get_child("config").get_child("grid");
+
+				foreach(var extension in extensions)
+				{
+					var img_file = grid_dir.get_child(appid + format + extension);
+					if(img_file.query_exists())
+					{
+						return img_file.get_uri();
+					}
+				}
+
+				return null;
+			}
+
+			private async string? search_remote(string format, bool needs_check=true)
+			{
+				var exists = !needs_check;
+				var endpoint = "%s/%s".printf(appid, format);
+
+				if(needs_check)
+				{
+					exists = yield image_exists("%s/%s".printf(CDN_BASE_URL, endpoint));
+				}
+
+				if(exists)
+				{
+					return "%s/%s".printf(CDN_BASE_URL, endpoint);
+				}
+
+				return null;
+			}
+
+			private async bool image_exists(string url)
+			{
+				uint status;
+				yield Parser.load_remote_file_async(url, "GET", null, null, null, out status);
+				if(status == 200)
+				{
+					return true;
+				}
+				return false;
+			}
 		}
 	}
 }

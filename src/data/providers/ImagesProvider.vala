@@ -29,12 +29,16 @@ namespace GameHub.Data.Providers
 
 		public abstract async ArrayList<Result> images(Game game);
 
-		public class Result: Object
+		public abstract class Result: Object
 		{
-			public string?           name   { get; set; default = null; }
-			public string?           url    { get; set; default = null; }
-			public ArrayList<Image>? images { get; set; default = null; }
-			public ImageSize         image_size { get; set; default = ImageSize(460, 215); }
+			public ImagesProvider provider   { get; set; }
+			public string?        name       { get; set; default = null; }
+			public string?        title      { get; set; default = null; }
+			public string?        subtitle   { get; set; default = null; }
+			public string?        url        { get; set; default = null; }
+			public ImageSize      image_size { get; set; default = ImageSize(460, 215); }
+
+			public abstract async ArrayList<Image>? load_images();
 		}
 
 		public class Image: Object

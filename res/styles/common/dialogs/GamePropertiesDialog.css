@@ -1,0 +1,27 @@
+.game-properties-dialog .root-stack
+{
+	margin: -2px;
+}
+
+.game-properties-dialog-tab .content
+{
+	padding: 4px 16px;
+}
+
+.game-properties-dialog-tab .content-padding-vertical
+{
+	padding: 4px 0;
+}
+
+.game-properties-dialog-tab .content-padding-top
+{
+	padding-top: 4px;
+}
+
+.game-properties-dialog .run-cmd-button
+{
+	margin-left: -8px;
+	margin-right: -8px;
+	opacity: 0.8;
+	padding: 2px 6px;
+}

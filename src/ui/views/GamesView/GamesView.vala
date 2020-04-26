@@ -766,15 +766,16 @@ namespace GameHub.UI.Views.GamesView
 				if(results == null || results.size < 1) continue;
 				foreach(var result in results)
 				{
-					if(result.images != null && result.images.size > 0)
+					var images = yield result.load_images();
+					if(images != null && images.size > 0)
 					{
 						if(image == null && result.image_size.width >= result.image_size.height)
 						{
-							image = result.images.get(0).url;
+							image = images.get(0).url;
 						}
 						else if(image_vertical == null && result.image_size.width < result.image_size.height)
 						{
-							image_vertical = result.images.get(0).url;
+							image_vertical = images.get(0).url;
 						}
 					}
 

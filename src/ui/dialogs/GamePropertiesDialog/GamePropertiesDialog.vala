@@ -31,6 +31,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog
 		public Game game { get; construct; }
 
 		private HeaderBar headerbar;
+		private Notebook tabs;
 
 		public GamePropertiesDialog(Game game)
 		{
@@ -39,24 +40,101 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog
 
 		construct
 		{
-			set_size_request(700, 500);
+			//set_size_request(700, 500);
+			set_size_request(800, 640);
+
+			get_style_context().add_class("game-properties-dialog");
 
 			headerbar = (HeaderBar) get_header_bar();
 			headerbar.has_subtitle = true;
 			headerbar.show_close_button = true;
 			headerbar.subtitle = _("Properties");
 
-			var icon = new AutoSizeImage();
-			icon.valign = Align.CENTER;
-			icon.set_constraint(36, 36);
-			icon.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
-			game.notify["icon"].connect(() => {
-				Idle.add(() => {
-					icon.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
-					return Source.REMOVE;
+			tabs = new Notebook();
+			tabs.show_border = false;
+			tabs.expand = true;
+
+			var stack = new Stack();
+			stack.get_style_context().add_class("root-stack");
+			stack.expand = true;
+			stack.transition_type = StackTransitionType.CROSSFADE;
+			stack.vhomogeneous = true;
+
+			var loading_spinner = new Spinner();
+			loading_spinner.active = true;
+			loading_spinner.set_size_request(36, 36);
+			loading_spinner.halign = Align.CENTER;
+			loading_spinner.valign = Align.CENTER;
+
+			stack.add(loading_spinner);
+			stack.add(tabs);
+			stack.visible_child = loading_spinner;
+
+			get_content_area().add(stack);
+
+			game.update_game_info.begin((obj, res) => {
+				game.update_game_info.end(res);
+
+				var icon = new AutoSizeImage();
+				icon.valign = Align.CENTER;
+				icon.set_constraint(36, 36);
+				icon.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
+				game.notify["icon"].connect(() => {
+					Idle.add(() => {
+						icon.load(game.icon, null, @"games/$(game.source.id)/$(game.id)/icons/");
+						return Source.REMOVE;
+					});
 				});
+				headerbar.pack_start(icon);
+				headerbar.show_all();
+
+				game.notify["name"].connect(() => {
+					Idle.add(() => {
+						headerbar.title = game.name;
+						return Source.REMOVE;
+					});
+				});
+
+				add_tab(new Tabs.General(game));
+				add_tab(new DummyTab(game, _("Executable")));
+				add_tab(new DummyTab(game, _("Compatibility")));
+				add_tab(new DummyTab(game, _("Tweaks")));
+				add_tab(new DummyTab(game, _("Overlays")));
+
+				tabs.show_tabs = tabs.get_n_pages() > 1;
+				tabs.show_all();
+				stack.visible_child = tabs;
 			});
-			headerbar.pack_start(icon);
+
+			show_all();
+		}
+
+		private void add_tab(GamePropertiesDialogTab tab)
+		{
+			tabs.append_page(tab, new Label(tab.title));
+		}
+	}
+
+	public abstract class GamePropertiesDialogTab: Box
+	{
+		public Game game { get; construct; }
+		public string title { get; construct; }
+
+		construct
+		{
+			get_style_context().add_class(Gtk.STYLE_CLASS_BACKGROUND);
+			get_style_context().add_class("game-properties-dialog-tab");
+		}
+	}
+
+	private class DummyTab: GamePropertiesDialogTab
+	{
+		public DummyTab(Game game, string title)
+		{
+			Object(
+				game: game,
+				title: title
+			);
 		}
 	}
 }

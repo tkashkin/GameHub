@@ -39,6 +39,7 @@ conf_data.set('BINDIR', join_paths(get_option('prefix'), get_option('bindir')))
 conf_data.set('RUNTIME', get_option('runtime'))
 
 subdir('data')
+subdir('res')
 subdir('src')
 subdir('po')
 

@@ -17,7 +17,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-
+using Gee;
 
 using GameHub.Data;
 using GameHub.Data.Providers;
@@ -29,15 +29,27 @@ namespace GameHub.UI.Widgets
 	{
 		public Game game { get; construct; }
 
-		private Box vbox;
 		private Box search_links;
+
+		private Stack root_stack;
+		private Spinner root_spinner;
+		private Box content_hbox;
+
+		private ListBox results_list;
 
 		private Stack stack;
 		private Spinner spinner;
 		private AlertView no_images_alert;
 		private ScrolledWindow images_scroll;
-		private Box images;
+		private FlowBox images;
 
+		private Grid images_header;
+		private Image images_header_icon;
+		private Label images_header_title;
+		private Label images_header_subtitle;
+		private Button images_header_url;
+
+		private bool results_load_started = false;
 		private bool images_load_started = false;
 
 		public ImagesDownloadPopover(Game game, MenuButton button, int r_width=520, int r_height=400)
@@ -46,25 +58,55 @@ namespace GameHub.UI.Widgets
 			button.popover = this;
 			position = PositionType.LEFT;
 
-			images_scroll.set_size_request(int.max(r_width, 520), int.max(r_height, 400));
+			set_size_request(int.max(r_width, 520), int.max(r_height, 400));
 
-			button.clicked.connect(load_images);
+			button.clicked.connect(load_results);
 
 			game.notify["name"].connect(() => {
-				images.foreach(i => i.destroy());
-				images_load_started = false;
-				stack.visible_child = spinner;
+				results_load_started = false;
 			});
 		}
 
 		construct
 		{
-			vbox = new Box(Orientation.VERTICAL, 0);
+			var vbox = new Box(Orientation.VERTICAL, 0);
+
+			root_stack = new Stack();
+			root_stack.expand = true;
+			root_stack.transition_type = StackTransitionType.CROSSFADE;
+			root_stack.vhomogeneous = false;
+			root_stack.interpolate_size = true;
+			root_stack.no_show_all = true;
+
+			root_spinner = new Spinner();
+			root_spinner.halign = root_spinner.valign = Align.CENTER;
+			root_spinner.set_size_request(32, 32);
+			root_spinner.margin = 16;
+			root_spinner.start();
+
+			var results_scroll = new ScrolledWindow(null, null);
+			results_scroll.set_size_request(200, -1);
+			results_scroll.hexpand = false;
+			results_scroll.vexpand = true;
+
+			results_list = new ListBox();
+			results_list.get_style_context().add_class(Gtk.STYLE_CLASS_BACKGROUND);
+
+			results_list.row_selected.connect(r => {
+				var row = (ResultRow) r;
+				if(row != null)
+				{
+					load_images(row.result);
+				}
+			});
+
+			results_scroll.add(results_list);
 
 			stack = new Stack();
+			stack.expand = true;
 			stack.transition_type = StackTransitionType.CROSSFADE;
+			stack.vhomogeneous = false;
 			stack.interpolate_size = true;
-			stack.no_show_all = true;
 
 			spinner = new Spinner();
 			spinner.halign = spinner.valign = Align.CENTER;
@@ -72,20 +114,90 @@ namespace GameHub.UI.Widgets
 			spinner.margin = 16;
 			spinner.start();
 
-			no_images_alert = new AlertView(_("No images"), _("There are no images found for this game\nMake sure game name is correct"), "dialog-information");
+			no_images_alert = new AlertView(_("No images"), _("No images were found for this game"), "dialog-information");
 			no_images_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 
 			images_scroll = new ScrolledWindow(null, null);
+			images_scroll.expand = true;
 
-			images = new Box(Orientation.VERTICAL, 0);
+			images_header = new Grid();
+			images_header.column_spacing = 12;
+			images_header.margin_start = images_header.margin_end = 8;
+			images_header.margin_top = 4;
+			images_header.no_show_all = true;
+
+			images_header_icon = new Image();
+			images_header_icon.icon_size = IconSize.LARGE_TOOLBAR;
+			images_header_icon.valign = Align.CENTER;
+
+			images_header_title = new Label(null);
+			images_header_title.get_style_context().add_class("category-label");
+			images_header_title.hexpand = true;
+			images_header_title.ellipsize = Pango.EllipsizeMode.END;
+			images_header_title.xalign = 0;
+			images_header_title.valign = Align.CENTER;
+
+			images_header_subtitle = new Label(null);
+			images_header_subtitle.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+			images_header_subtitle.hexpand = true;
+			images_header_subtitle.ellipsize = Pango.EllipsizeMode.END;
+			images_header_subtitle.xalign = 0;
+			images_header_subtitle.valign = Align.CENTER;
+
+			images_header.attach(images_header_icon, 0, 0, 1, 2);
+			images_header.attach(images_header_title, 1, 0);
+			images_header.attach(images_header_subtitle, 1, 1);
+
+			images_header_url = new Button.from_icon_name("web-browser-symbolic", IconSize.SMALL_TOOLBAR);
+			images_header_url.valign = Align.CENTER;
+			images_header_url.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+
+			images_header_url.clicked.connect(() => {
+				Utils.open_uri(images_header_url.tooltip_text);
+			});
+
+			images_header.attach(images_header_url, 2, 0, 1, 2);
+
+			images = new FlowBox();
+			images.hexpand = true;
+			images.vexpand = false;
+			images.valign = Align.START;
 			images.margin = 4;
+			images.activate_on_single_click = true;
+			images.homogeneous = true;
+			images.min_children_per_line = 1;
+			images.selection_mode = SelectionMode.SINGLE;
 
-			images_scroll.add(images);
+			images.child_activated.connect(i => {
+				var item = (ImageItem) i;
+				if(item != null)
+				{
+					if(item.size.width >= item.size.height)
+					{
+						game.image = item.image.url;
+					}
+					else
+					{
+						game.image_vertical = item.image.url;
+					}
+					game.save();
+				}
+
+				#if GTK_3_22
+				popdown();
+				#else
+				hide();
+				#endif
+			});
+
+			var images_vbox = new Box(Orientation.VERTICAL, 8);
+			images_vbox.add(images_header);
+			images_vbox.add(images);
+			images_scroll.add(images_vbox);
 
 			stack.add(spinner);
 			stack.add(no_images_alert);
 			stack.add(images_scroll);
-
 			spinner.show();
 			stack.visible_child = spinner;
 
@@ -98,121 +210,125 @@ namespace GameHub.UI.Widgets
 			search_links_label.hexpand = true;
 			search_links.add(search_links_label);
 
-			add_search_link("SteamGridDB", "https://steamgriddb.com/game/%s");
+			add_search_link("SteamGridDB", "https://steamgriddb.com/search/grids?term=%s");
 			add_search_link("Jinx's SGVI", "https://steam.cryotank.net/?s=%s");
 			add_search_link("Google", "https://google.com/search?tbm=isch&tbs=isz:ex,iszw:460,iszh:215&q=%s");
 
-			vbox.add(stack);
+			content_hbox = new Box(Orientation.HORIZONTAL, 0);
+			content_hbox.add(results_scroll);
+			content_hbox.add(new Separator(Orientation.VERTICAL));
+			content_hbox.add(stack);
+
+			root_stack.add(root_spinner);
+			root_stack.add(content_hbox);
+			root_spinner.show();
+			root_stack.visible_child = root_spinner;
+
+			vbox.add(root_stack);
 			vbox.add(new Separator(Orientation.HORIZONTAL));
 			vbox.add(search_links);
 
 			child = vbox;
 
 			vbox.show_all();
-			stack.show();
+			root_stack.show();
 		}
 
-		private void load_images()
+		private void load_results()
 		{
-			if(images_load_started) return;
-			images_load_started = true;
-
-			load_images_async.begin();
+			if(results_load_started) return;
+			results_load_started = true;
+			results_list.foreach(r => r.destroy());
+			root_stack.visible_child = root_spinner;
+			Utils.thread("ImagesDownloadPopover.load_results", () => {
+				load_results_async.begin();
+			});
 		}
 
-		private async void load_images_async()
+		private async void load_results_async()
 		{
+			var all_results = new ArrayList<ImagesProvider.Result>();
+
 			foreach(var src in ImageProviders)
 			{
 				if(!src.enabled) continue;
-
 				var results = yield src.images(game);
 				if(results == null || results.size < 1) continue;
 				foreach(var result in results)
 				{
-					if(result != null && result.images != null && result.images.size > 0)
+					if(result != null)
 					{
-						if(images.get_children().length() > 0)
-						{
-							var separator = new Separator(Orientation.HORIZONTAL);
-							separator.margin = 4;
-							separator.margin_bottom = 0;
-							images.add(separator);
-						}
-
-						var header_hbox = new Box(Orientation.HORIZONTAL, 8);
-						header_hbox.margin_start = header_hbox.margin_end = 4;
-
-						var header = Styled.H4Label(result.name);
-						header.hexpand = true;
-
-						header_hbox.add(header);
-
-						if(result.url != null)
-						{
-							var link = new Button.from_icon_name("web-browser-symbolic");
-							link.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-							link.tooltip_text = result.url;
-							link.clicked.connect(() => {
-								Utils.open_uri(result.url);
-							});
-							header_hbox.add(link);
-						}
-
-						images.add(header_hbox);
-
-						var flow = new FlowBox();
-						flow.activate_on_single_click = true;
-						flow.homogeneous = true;
-						flow.min_children_per_line = 1;
-						flow.selection_mode = SelectionMode.SINGLE;
-
-						flow.child_activated.connect(i => {
-							var item = (ImageItem) i;
-
-							if(item.size.width >= item.size.height)
-							{
-								game.image = item.image.url;
-							}
-							else
-							{
-								game.image_vertical = item.image.url;
-							}
-							game.save();
-
-							#if GTK_3_22
-							popdown();
-							#else
-							hide();
-							#endif
-						});
-
-						foreach(var img in result.images)
-						{
-							var item = new ImageItem(img, result.image_size, src, game);
-							flow.add(item);
-							if(img.url == game.image)
-							{
-								flow.select_child(item);
-								item.grab_focus();
-							}
-						}
-
-						images.add(flow);
+						all_results.add(result);
 					}
 				}
 			}
 
-			if(images.get_children().length() > 0)
-			{
-				images_scroll.show_all();
-				stack.visible_child = images_scroll;
-			}
-			else
-			{
-				no_images_alert.show_all();
-				stack.visible_child = no_images_alert;
-			}
+			Idle.add(() => {
+				foreach(var result in all_results)
+				{
+					var row = new ResultRow(result, game);
+					results_list.add(row);
+					if(results_list.get_selected_row() == null)
+					{
+						results_list.select_row(row);
+					}
+				}
+				content_hbox.show_all();
+				root_stack.visible_child = content_hbox;
+				return Source.REMOVE;
+			}, Priority.LOW);
+		}
+
+		private void load_images(ImagesProvider.Result result)
+		{
+			if(images_load_started) return;
+			images_load_started = true;
+			images.foreach(i => i.destroy());
+			stack.visible_child = spinner;
+			Utils.thread("ImagesDownloadPopover.load_images", () => {
+				load_images_async.begin(result);
+			});
+		}
+
+		private async void load_images_async(ImagesProvider.Result result)
+		{
+			var imgs = yield result.load_images();
+
+			Idle.add(() => {
+				if(imgs != null)
+				{
+					foreach(var img in imgs)
+					{
+						var item = new ImageItem(img, result.image_size, result.provider, game);
+						images.add(item);
+						if(img.url == game.image)
+						{
+							images.select_child(item);
+							item.grab_focus();
+						}
+					}
+				}
+
+				images_header_icon.icon_name = result.provider.icon;
+				images_header_title.label = result.title;
+				images_header_subtitle.label = result.subtitle;
+				images_header_url.tooltip_text = result.url;
+				images_header.no_show_all = false;
+				images_header.show_all();
+
+				if(images.get_children().length() > 0)
+				{
+					images_scroll.show_all();
+					stack.visible_child = images_scroll;
+				}
+				else
+				{
+					no_images_alert.show_all();
+					stack.visible_child = no_images_alert;
+				}
+				images_load_started = false;
+				return Source.REMOVE;
+			}, Priority.LOW);
 		}
 
 		private void add_search_link(string text, string url)
@@ -221,6 +337,29 @@ namespace GameHub.UI.Widgets
 			link.halign = Align.START;
 			link.margin = 0;
 			search_links.add(link);
+		}
+
+		private class ResultRow: ListBoxRow
+		{
+			public ImagesProvider.Result result { get; construct; }
+			public Game game { get; construct; }
+
+			public ResultRow(ImagesProvider.Result result, Game game)
+			{
+				Object(result: result, game: game);
+			}
+
+			construct
+			{
+				var title = new Label(result.name ?? result.title ?? result.provider.name);
+				title.hexpand = true;
+				title.ellipsize = Pango.EllipsizeMode.END;
+				title.xalign = 0;
+				title.margin_start = title.margin_end = 8;
+				title.margin_top = title.margin_bottom = 4;
+				child = title;
+				tooltip_text = title.label;
+			}
 		}
 
 		private class ImageItem: FlowBoxChild
@@ -242,7 +381,6 @@ namespace GameHub.UI.Widgets
 
 				var card = Styled.Card("gamecard", "static");
 				card.sensitive = false;
-				card.margin = 4;
 
 				card.tooltip_markup = image.description;
 
@@ -257,7 +395,7 @@ namespace GameHub.UI.Widgets
 
 				var w_1x = size.width > 500 ? size.width / 2 : size.width;
 
-				var min = int.max((int) (w_1x / 2f), 100);
+				var min = int.max((int) (w_1x / 2), 100);
 				var max = int.min(w_1x, 460);
 				img.set_constraint(min, max, ratio);
 
