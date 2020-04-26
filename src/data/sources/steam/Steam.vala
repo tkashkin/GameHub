@@ -606,11 +606,25 @@ namespace GameHub.Data.Sources.Steam
 			// Remove from collections where the game doesn't have the tag anymore
 			user_collections.get_object().foreach_member((object, name, node) =>
 			{
-				if(name.has_prefix("gh-"))
+				if(name.has_prefix("gh-") || name == "favorite" || name == "hidden")
 				{
 					foreach(var tag in game.tags)
 					{
-						if(node.get_object().get_string_member("id") == @"gh-$(tag.name)") return;
+						string key;
+						if(tag.id == "builtin:favorites")
+						{
+							key = "favorite";
+						}
+						else if(tag.id == "builtin:hidden")
+						{
+							key = "hidden";
+						}
+						else
+						{
+							key = @"gh-$(tag.name)";
+						}
+
+						if(node.get_object().get_string_member("id") == key) return;
 					}
 
 					if(node.get_object().has_member("added") && node.get_object().get_member("added").get_node_type() == Json.NodeType.ARRAY)
@@ -628,7 +642,6 @@ namespace GameHub.Data.Sources.Steam
 							return;
 						}
 					}
-
 				}
 			});
 
@@ -636,11 +649,24 @@ namespace GameHub.Data.Sources.Steam
 			var created_collection = false;
 			foreach(var tag in game.tags)
 			{
-				var key = @"gh-$(tag.name)";
+				string key;
+				if(tag.id == "builtin:favorites")
+				{
+					key = "favorite";
+				}
+				else if(tag.id == "builtin:hidden")
+				{
+					key = "hidden";
+				}
+				else
+				{
+					key = @"gh-$(tag.name)";
+				}
+
 				var collection = collections_db.get_collection(key);
 
 				// create categorie if it doesn't exist already
-				if(collection == null)
+				if(collection == null && key.has_prefix("gh-"))
 				{
 					collection = new Json.Object();
 					collection.set_string_member("id", key);
