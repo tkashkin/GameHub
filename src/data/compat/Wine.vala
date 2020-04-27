@@ -29,6 +29,7 @@ namespace GameHub.Data.Compat
 
 		public string binary { get; construct; default = "wine"; }
 		public string arch { get; construct; default = "win64"; }
+		public string kind { get; construct; default = "system"; }
 		public File? wine_binary { get; protected set; }
 
 		public CompatTool.FileOption opt_prefix;
@@ -36,15 +37,15 @@ namespace GameHub.Data.Compat
 
 		public CompatTool.BoolOption install_opt_innosetup_args;
 
-		public Wine(string binary="wine", string arch="win64")
+		public Wine(string binary="wine", string arch="win64", string kind="system")
 		{
-			Object(binary: binary, arch: arch);
+			Object(binary: binary, arch: arch, kind: kind);
 		}
 
 		construct
 		{
-			id = @"wine_$(binary)_$(arch)";
-			name = @"Wine ($(binary)) [arch: $(arch)]";
+			id = @"wine_$(binary)_$(arch)_$(kind)";
+			name = @"Wine $(kind) ($(binary)) [arch: $(arch)]";
 			icon = "tool-wine-symbolic";
 
 			executable = wine_binary = Utils.find_executable(binary);

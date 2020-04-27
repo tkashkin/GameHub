@@ -32,6 +32,11 @@ using GameHub.Utils;
 
 namespace GameHub
 {
+	struct WineBinary {
+		string path;
+		string kind;
+	}
+
 	public class Application: Gtk.Application
 	{
 		public static Application instance;
@@ -154,15 +159,23 @@ namespace GameHub
 
 			CompatTool[] tools = CompatTools;
 
-			string[] wine_binaries = { "wine"/*, "wine64", "wine32"*/ };
+			WineBinary[] wine_binaries = {
+				// System installed version
+				{ path: "wine", kind: "system" }, /*"wine64", "wine32",*/
+				
+				// Paths used by the WINE Debian repository
+				{ path: "/opt/wine-stable/bin/wine", kind: "stable" },
+				{ path: "/opt/wine-staging/bin/wine", kind: "staging" },
+				{ path: "/opt/wine-devel/bin/wine", kind: "devel" },
+			};
 			string[] wine_arches = { "win64", "win32" };
 
 			foreach(var wine_binary in wine_binaries)
 			{
 				foreach(var wine_arch in wine_arches)
 				{
-					if(wine_binary == "wine32" && wine_arch == "win64") continue;
-					tools += new Compat.Wine(wine_binary, wine_arch);
+					if(wine_binary.path == "wine32" && wine_arch == "win64") continue;
+					tools += new Compat.Wine(wine_binary.path, wine_arch, wine_binary.kind);
 				}
 			}
 
