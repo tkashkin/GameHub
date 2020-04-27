@@ -52,7 +52,11 @@ namespace GameHub.Data.Compat.Tools
 			}
 
 			/*executable = wine_binary = Utils.find_executable(binary);
+			#if !PKG_FLATPAK
 			installed = executable != null && executable.query_exists();
+			#else
+			installed = executable != null;
+			#endif
 
 			opt_prefix = new CompatTool.FileOption(Wine.OPT_PREFIX, _("Wine prefix"), null, null, Gtk.FileChooserAction.SELECT_FOLDER);
 			opt_prefix.icon = icon;
