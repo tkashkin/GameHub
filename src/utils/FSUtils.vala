@@ -545,5 +545,35 @@ namespace GameHub.Utils
 				warning("[FSUtils.write_string_to_file] Error writing `%s`: %s", file.get_path(), e.message);
 			}
 		}
+
+		// https://stackoverflow.com/a/16454105
+		public static bool copy(File src, File dest, FileCopyFlags flags=FileCopyFlags.NONE, Cancellable? cancellable=null) throws GLib.Error
+		{
+			FileType src_type = src.query_file_type(FileQueryInfoFlags.NONE, cancellable);
+			if(src_type == FileType.DIRECTORY)
+			{
+				dest.make_directory(cancellable);
+				src.copy_attributes(dest, flags, cancellable);
+
+				string src_path = src.get_path();
+				string dest_path = dest.get_path();
+				FileEnumerator enumerator = src.enumerate_children(FileAttribute.STANDARD_NAME, FileQueryInfoFlags.NONE, cancellable);
+				for(FileInfo? info = enumerator.next_file(cancellable); info != null; info = enumerator.next_file(cancellable))
+				{
+					// copy recursive
+					copy(
+						File.new_for_path(Path.build_filename (src_path, info.get_name ())),
+						File.new_for_path(Path.build_filename (dest_path, info.get_name ())),
+						flags,
+						cancellable);
+				}
+			}
+			else if(src_type == FileType.REGULAR)
+			{
+				src.copy(dest, flags, cancellable);
+			}
+
+			return true;
+		}
 	}
 }

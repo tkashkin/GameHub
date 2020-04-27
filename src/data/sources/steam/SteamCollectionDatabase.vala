@@ -280,6 +280,20 @@ namespace GameHub.Data.Sources.Steam
 				return true;
 			});
 
+			try
+			{
+				if(!FSUtils.copy(FSUtils.file(db_path), FSUtils.file(db_path + "~"), FileCopyFlags.OVERWRITE))
+				{
+					error = "Failed creating backup";
+					return;
+				}
+			}
+			catch (Error e)
+			{
+				error = e.message;
+				return;
+			}
+
 			write_batch.write(db, db_write_options, out error);
 			if(error != null) return;
 		}
