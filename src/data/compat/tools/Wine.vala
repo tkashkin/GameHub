@@ -46,7 +46,11 @@ namespace GameHub.Data.Compat.Tools
 
 		construct
 		{
+			#if PKG_FLATPAK
+			if(executable != null)
+			#else
 			if(executable != null && executable.query_exists())
+			#endif
 			{
 				version = Utils.replace_prefix(Utils.exec({executable.get_path(), "--version"}).log(false).sync(true).output, "wine-", "").strip();
 			}
@@ -354,7 +358,7 @@ namespace GameHub.Data.Compat.Tools
 				foreach(var binary in WINE_BINARIES)
 				{
 					var wine = Utils.find_executable("%s%s".printf(binary, suffix));
-					if(wine != null && wine.query_exists())
+					if(wine != null)
 					{
 						var wineserver = wine.get_parent().get_child("wineserver%s".printf(suffix));
 						add_wine_version(wine, wineserver, suffix);
@@ -364,7 +368,7 @@ namespace GameHub.Data.Compat.Tools
 				foreach(var opt_path in WINE_OPT_PATHS)
 				{
 					var wine = Utils.find_executable(opt_path.printf(suffix));
-					if(wine != null && wine.query_exists())
+					if(wine != null)
 					{
 						var wineserver = wine.get_parent().get_child("wineserver");
 						add_wine_version(wine, wineserver, suffix);
