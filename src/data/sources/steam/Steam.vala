@@ -576,8 +576,7 @@ namespace GameHub.Data.Sources.Steam
 		// add or update artwork
 		private static void set_shortcut_assets(Game game)
 		{
-			// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
-			var custom_appid = (crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000).to_string();
+			var custom_appid_int = generate_new_appid(ProjectConfig.PROJECT_NAME, game.name);
 
 			if(game.image != null)
 			{
@@ -621,15 +620,13 @@ namespace GameHub.Data.Sources.Steam
 			var user_collections = Parser.parse_json(localconfig.get_object().get_object_member("UserLocalConfigStore").get_object_member("WebStorage").get_string_member("user-collections"));
 			if(user_collections == null || user_collections.get_node_type() != Json.NodeType.OBJECT) return;
 
-			int64? custom_appid_int;
+			int64? custom_appid_int = null;
 			try
 			{
-				// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
-				var custom_appid = (crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000).to_string();
-				int64.from_string(custom_appid, out custom_appid_int);
-				if(custom_appid_int == null) return;
+				custom_appid_int = int64.from_string(generate_new_appid(ProjectConfig.PROJECT_NAME, game.name));
 			}
 			catch (Error e) {return;}
+			if(custom_appid_int == null) return;
 
 			// Remove from collections where the game doesn't have the tag anymore
 			user_collections.get_object().foreach_member((object, name, node) =>
@@ -649,7 +646,7 @@ namespace GameHub.Data.Sources.Steam
 						}
 						else
 						{
-							key = @"gh-$(tag.name)";
+							key = @"gh-$(tag.id)";
 						}
 
 						if(node.get_object().get_string_member("id") == key) return;
@@ -688,7 +685,7 @@ namespace GameHub.Data.Sources.Steam
 				}
 				else
 				{
-					key = @"gh-$(tag.name)";
+					key = @"gh-$(tag.id)";
 				}
 
 				var collection = collections_db.get_collection(key);
@@ -768,6 +765,12 @@ namespace GameHub.Data.Sources.Steam
 		{
 			if(Utils.run({"pidof", "steam"}).run_sync(true).exit_code == 0) return true;
 			return false;
+		}
+
+		public static string generate_new_appid(string exe, string name)
+		{
+			// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
+			return (crc32(0, (exe + name).data) | 0x80000000).to_string();
 		}
 
 		public static bool IsAnyAppRunning = false;
