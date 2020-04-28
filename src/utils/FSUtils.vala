@@ -552,7 +552,7 @@ namespace GameHub.Utils
 			FileType src_type = src.query_file_type(FileQueryInfoFlags.NONE, cancellable);
 			if(src_type == FileType.DIRECTORY)
 			{
-				dest.make_directory(cancellable);
+				DirUtils.create_with_parents(dest.get_path(), 777);
 				src.copy_attributes(dest, flags, cancellable);
 
 				string src_path = src.get_path();

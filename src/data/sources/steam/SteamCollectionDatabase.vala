@@ -252,7 +252,6 @@ namespace GameHub.Data.Sources.Steam
 
 				if(object.has_member("value") && object.get_member("value").get_value_type() == Type.STRING)
 				{
-					debug("test2");
 					if(Parser.parse_json((string) object.get_string_member("value")).get_node_type() == Json.NodeType.OBJECT)
 					{
 						object.set_member("value", Parser.parse_json((string) object.get_string_member("value")));
@@ -304,7 +303,7 @@ namespace GameHub.Data.Sources.Steam
 				var raw_string = serialize_collections(namespace_collections.get(k)).data;
 				if(raw_string == null) return false;
 
-				debug(@"[Sources.Steam.SteamCollectionsDatabase.Save]\n$(serialize_collections(namespace_collections.get(k), false))");
+				debug(@"[Sources.Steam.SteamCollectionsDatabase.Save]\n$(serialize_collections(namespace_collections.get(k)), false)");
 				write_batch.put(k.data, raw_string);
 				return true;
 			});
