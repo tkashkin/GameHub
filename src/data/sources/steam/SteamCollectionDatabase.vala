@@ -58,6 +58,7 @@ namespace GameHub.Data.Sources.Steam
 				if(!namespaces.add(namespace_key)) return;
 			});
 
+			bool abort = false;
 			namespaces.foreach((namespace_key) =>
 			{
 				string? e;
@@ -69,9 +70,23 @@ namespace GameHub.Data.Sources.Steam
 					return false;
 				}
 
-				namespace_collections.set(namespace_key, unserialize_collections((string) prepare_bytes(namespace_value).data));
+				//  debug_bytes(namespace_value);
+				var namespace_json = unserialize_collections((string) prepare_bytes(namespace_value).data);
+				if(namespace_json == null)
+				{
+					abort = true;
+					return false;
+				}
+
+				namespace_collections.set(namespace_key, namespace_json);
 				return true;
 			});
+
+			if(abort)
+			{
+				error = "Error parsing json";
+				return;
+			}
 		}
 
 		//  Example:
@@ -215,8 +230,16 @@ namespace GameHub.Data.Sources.Steam
 			return bytes;
 		}
 
-		private Json.Node? unserialize_collections(string raw_json)
+		private Json.Node? unserialize_collections(string raw_iso)
 		{
+			string? raw_json;
+			try
+			{
+				// string has 'e4' for 'ä' so the character set can be Cp1252, ISO 8859-1 or ISO 8859-15
+				// according to some random website ISO 8859-1 is often used for html ¯\_(ツ)_/¯
+				raw_json = convert(raw_iso, -1, "UTF-8", "ISO 8859-1");
+			} catch (Error e) {return null;}
+
 			var root = Parser.parse_json(raw_json);
 			if(root == null || root.get_node_type() != Json.NodeType.ARRAY) return null;
 
@@ -224,14 +247,15 @@ namespace GameHub.Data.Sources.Steam
 			{
 				if(node == null || node.get_node_type() != Json.NodeType.ARRAY) return;
 
-				var o = node.get_array().get_object_element(1);
-				if(o == null) return;
+				var object = node.get_array().get_object_element(1);
+				if(object == null) return;
 
-				if(o.has_member("value") && o.get_member("value").get_value_type() == Type.STRING)
+				if(object.has_member("value") && object.get_member("value").get_value_type() == Type.STRING)
 				{
-					if(Parser.parse_json(o.get_string_member("value")).get_node_type() == Json.NodeType.OBJECT)
+					debug("test2");
+					if(Parser.parse_json((string) object.get_string_member("value")).get_node_type() == Json.NodeType.OBJECT)
 					{
-						o.set_member("value", Parser.parse_json(o.get_string_member("value")));
+						object.set_member("value", Parser.parse_json((string) object.get_string_member("value")));
 					}
 				}
 			});
@@ -242,7 +266,7 @@ namespace GameHub.Data.Sources.Steam
 		private string? serialize_collections(Json.Node root)
 		{
 			if(root.get_node_type() != Json.NodeType.ARRAY) return null;
-			var raw_json = "";
+			string? raw_json;
 			var generator = new Json.Generator();
 
 			root.get_array().foreach_element((array, index, node) =>
@@ -250,11 +274,11 @@ namespace GameHub.Data.Sources.Steam
 				if(node.get_node_type() != Json.NodeType.ARRAY) return;
 				if(node.get_array().get_object_element(1).has_member("value") && node.get_array().get_object_element(1).get_member("value").get_node_type() == Json.NodeType.OBJECT)
 				{
-					var o = node.get_array().get_object_element(1).get_object_member("value");
-					if(o == null) return;
-					var object = new Json.Node(Json.NodeType.OBJECT);
-					object.init_object(o);
-					generator.set_root(object);
+					var object = node.get_array().get_object_element(1).get_object_member("value");
+					if(object == null) return;
+					var new_object = new Json.Node(Json.NodeType.OBJECT);
+					new_object.init_object(object);
+					generator.set_root(new_object);
 					node.get_array().get_object_element(1).remove_member("value");
 					node.get_array().get_object_element(1).set_string_member("value", generator.to_data(null));
 				}
@@ -262,8 +286,13 @@ namespace GameHub.Data.Sources.Steam
 			generator.set_root(root);
 			raw_json = generator.to_data(null);
 
-			// We've stripped the first byte, add it back
-			return @"\x1$(raw_json)";
+			try
+			{
+				var raw_iso = convert(raw_json, -1, "ISO 8859-1", "UTF-8");
+
+				// We've stripped the first byte, add it back
+				return @"\x1$(raw_iso)";
+			} catch (Error e) {return null;}
 		}
 
 		public void save(out string? error)
@@ -275,7 +304,7 @@ namespace GameHub.Data.Sources.Steam
 				var raw_string = serialize_collections(namespace_collections.get(k)).data;
 				if(raw_string == null) return false;
 
-				debug(@"[Sources.Steam.SteamCollectionsDatabase.Save]\n$(Json.to_string(namespace_collections.get(k), false))");
+				debug(@"[Sources.Steam.SteamCollectionsDatabase.Save]\n$(serialize_collections(namespace_collections.get(k), false))");
 				write_batch.put(k.data, raw_string);
 				return true;
 			});
@@ -296,6 +325,17 @@ namespace GameHub.Data.Sources.Steam
 
 			write_batch.write(db, db_write_options, out error);
 			if(error != null) return;
+		}
+
+		private void debug_bytes(int8[] bytes)
+		{
+			// View raw bytes for debugging purposes
+			string tmp = "";
+			for(int i = 0; i < bytes.length; i++)
+			{
+				tmp = tmp + " %2x".printf(bytes[i]);
+			}
+			debug(tmp);
 		}
 	}
 }

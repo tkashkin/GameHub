@@ -576,7 +576,7 @@ namespace GameHub.Data.Sources.Steam
 		// add or update artwork
 		private static void set_shortcut_assets(Game game)
 		{
-			var custom_appid_int = generate_new_appid(ProjectConfig.PROJECT_NAME, game.name);
+			var custom_appid = generate_new_appid(ProjectConfig.PROJECT_NAME, game.name);
 
 			if(game.image != null)
 			{
@@ -620,12 +620,8 @@ namespace GameHub.Data.Sources.Steam
 			var user_collections = Parser.parse_json(localconfig.get_object().get_object_member("UserLocalConfigStore").get_object_member("WebStorage").get_string_member("user-collections"));
 			if(user_collections == null || user_collections.get_node_type() != Json.NodeType.OBJECT) return;
 
-			int64? custom_appid_int = null;
-			try
-			{
-				custom_appid_int = int64.from_string(generate_new_appid(ProjectConfig.PROJECT_NAME, game.name));
-			}
-			catch (Error e) {return;}
+			int64? custom_appid_int;
+			int64.try_parse(generate_new_appid(ProjectConfig.PROJECT_NAME, game.name), out custom_appid_int);
 			if(custom_appid_int == null) return;
 
 			// Remove from collections where the game doesn't have the tag anymore
