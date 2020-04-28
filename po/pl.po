@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # AngryPenguinPL <angrypenguinpoland@gmail.com>, 2019.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
-# Antek Karaś <antos.karas@gmail.com>, 2019.
+# Antek Karaś <antos.karas@gmail.com>, 2019, 2020.
 # Garreciq <adamzygiel@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-02-04 23:50+0000\n"
-"Last-Translator: Garreciq <adamzygiel@gmail.com>\n"
+"PO-Revision-Date: 2020-04-29 07:11+0000\n"
+"Last-Translator: Antek Karaś <antos.karas@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
 "translations/pl/>\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.0.2\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -40,7 +40,7 @@ msgstr "Pokaż pełen log z GDB"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "Traktujemy błędy krytyczne jako awarie aplikacji."
 
 #: src/app.vala:99
 msgid "Show main window"
