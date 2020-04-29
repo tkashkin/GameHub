@@ -24,6 +24,7 @@ using GameHub.Utils;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
+using GameHub.Data.Sources.EpicGames;
 
 namespace GameHub.Data.DB.Tables
 {

@@ -96,6 +96,7 @@ namespace GameHub.UI.Views
 
 			foreach(var src in GameSources)
 			{
+				debug("[GS] %s", src.icon);
 				welcome.append(src.icon, src.name, "");
 			}
 
@@ -126,12 +127,11 @@ namespace GameHub.UI.Views
 				var src = GameSources[index];
 
 				var btn = welcome.get_button_from_index(index);
-
 				welcome.set_item_visible(index, !(src is Sources.Humble.Trove) && !(src is Sources.User.User) && src.enabled);
 
 				if(src is Sources.Humble.Trove || !src.enabled) continue;
 				enabled_sources++;
-
+				debug("[GS] %s %s", src.name, src.is_installed(true).to_string());
 				if(src.is_installed(true))
 				{
 					btn.title = src.name;

@@ -22,6 +22,7 @@ using Sqlite;
 using GameHub.Utils;
 
 using GameHub.Data.Sources.Steam;
+using GameHub.Data.Sources.EpicGames;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
 

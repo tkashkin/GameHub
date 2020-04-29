@@ -89,6 +89,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			#endif
 
 			add_page("sources/steam", new Pages.Sources.Steam(this));
+			add_page("sources/epicgames", new Pages.Sources.EpicGames(this));
 			add_page("sources/gog", new Pages.Sources.GOG(this));
 			add_page("sources/humble", new Pages.Sources.Humble(this));
 			add_page("sources/itch", new Pages.Sources.Itch(this));
