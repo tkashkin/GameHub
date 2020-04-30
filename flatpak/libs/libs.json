@@ -15,6 +15,7 @@
 	],
 
 	"modules": [
+		"shared/intltool/intltool-0.51.json",
 
 		{
 			"name": "libevdev",

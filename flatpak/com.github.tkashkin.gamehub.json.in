@@ -1,9 +1,9 @@
 {
 	"app-id": "com.github.tkashkin.gamehub",
 	"base": "io.elementary.BaseApp",
-	"base-version": "juno",
+	"base-version": "juno-19.08",
 	"runtime": "org.gnome.Platform",
-	"runtime-version": "3.28",
+	"runtime-version": "3.36",
 	"sdk": "org.gnome.Sdk",
 	"command": "com.github.tkashkin.gamehub",
 	"separate-locales": false,
