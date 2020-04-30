@@ -36,6 +36,8 @@
 					"path": "bundled/libmanette-0.2.2.tar.gz"
 				}
 			]
-		}
+		},
+		
+		"valac.json"
 	]
 }
