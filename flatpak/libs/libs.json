@@ -16,6 +16,7 @@
 
 	"modules": [
 		"shared/intltool/intltool-0.51.json",
+		"valac.json",
 
 		{
 			"name": "libevdev",
