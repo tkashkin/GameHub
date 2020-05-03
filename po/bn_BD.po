@@ -7,62 +7,65 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-05-04 12:11+0000\n"
+"Last-Translator: Oymate <dhruboadittya96@gmail.com>\n"
+"Language-Team: Bengali (Bangladesh) <https://hosted.weblate.org/projects/"
+"gamehub/translations/bn_BD/>\n"
 "Language: bn_BD\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr ""
+msgstr "সহায়তা দেখান"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr ""
+msgstr "অ্যাপ্লিকেশন সংস্করণ দেখান এবং বের হন"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "সংযুক্ত জিডিবি ডিবাগার যুক্ত করে পুনরায় চালু করুন"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "সম্পূর্ণ জিডিবি ব্যাকট্রেস দেখান"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
 msgstr ""
+"ভয়ঙ্কর ত্রুটিগুলোকে মারাত্বক বলে বিবেচনা করুন এবং অ্যাপ্লিকেশন ক্র্যাশ করুন"
 
 #: src/app.vala:99
 msgid "Show main window"
-msgstr ""
+msgstr "প্রধান উইন্ডোটি দেখান"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "অ্যাপ্লিকেশন সেটিংস ডায়ালগ দেখান"
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr ""
+msgstr "অ্যাপ্লিকেশন সম্পর্কে ডায়লগ দেখান"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "সর্বোচ্চ সংখ্যক ব্যাকগ্রাউন্ড কার্যকর থ্রেড"
 
 #: src/app.vala:106
 msgid "Run game"
-msgstr ""
+msgstr "গেম চালান"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "উপযুক্ততার অপশন ডায়ালগ দেখান"
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr ""
+msgstr "গেমের বিস্তারিত খুলুন"
 
 #: src/app.vala:109
 msgid "Open game properties"
