@@ -119,7 +119,7 @@ namespace GameHub.Data.Sources.Itch
 			update_status();
 		}
 
-		public override async void update_game_info()
+		public override async void update_game_info() throws Utils.RunError
 		{
 			update_status();
 		}

@@ -127,7 +127,7 @@ namespace GameHub.Data.Sources.User
 			update_status();
 		}
 
-		public override async void update_game_info()
+		public override async void update_game_info() throws Utils.RunError
 		{
 			yield mount_overlays();
 			update_status();
@@ -141,7 +141,7 @@ namespace GameHub.Data.Sources.User
 			save();
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE) throws Utils.RunError
 		{
 			yield update_game_info();
 			if(installer == null) return;
@@ -151,7 +151,7 @@ namespace GameHub.Data.Sources.User
 			yield;
 		}
 
-		public override async void uninstall()
+		public override async void uninstall() throws Utils.RunError
 		{
 			yield umount_overlays();
 			remove();

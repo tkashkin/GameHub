@@ -139,8 +139,9 @@ namespace GameHub.Data.Compat
 
 		private static bool is_dos_executable(File? file)
 		{
+			//XXX: Switch to using libmagic directly here
 			if(file == null || !file.query_exists()) return false;
-			var type = Utils.run({"file", "-b", file.get_path()}).log(false).run_sync(true).output;
+			var type = Utils.run({"file", "-b", file.get_path()}).log(false).run_sync_nofail(true).output;
 			if(type != null && type.length > 0)
 			{
 				return "DOS" in type;
@@ -154,9 +155,16 @@ namespace GameHub.Data.Compat
 				&& (is_dos_executable(runnable.executable) || find_configs(runnable.install_dir).size > 0);
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Runnable runnable) throws Utils.RunError
 		{
-			if(!can_run(runnable)) return;
+			this.ensure_installed();
+			if(!can_run(runnable))
+			{
+				throw new Utils.RunError.INVALID_ARGUMENT(
+					_("File “%s” does not look like a DOS executable"),
+					runnable.executable.get_path()
+				);
+			}
 
 			string[] cmd = { executable.get_path() };
 

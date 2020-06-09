@@ -105,9 +105,9 @@ namespace GameHub.Data
 
 		public int64 last_launch { get; set; default = 0; }
 
-		public abstract async void uninstall();
+		public abstract async void uninstall() throws Utils.RunError;
 
-		public override async void run()
+		public override async void run() throws Utils.RunError
 		{
 			if(can_be_launched(true) && executable.query_exists())
 			{
@@ -161,7 +161,7 @@ namespace GameHub.Data
 			}
 		}
 
-		public async void run_or_install(bool show_compat=false)
+		public async void run_or_install(bool show_compat=false) throws Utils.RunError
 		{
 			if(status.state == Game.State.INSTALLED)
 			{
@@ -180,7 +180,7 @@ namespace GameHub.Data
 			}
 		}
 
-		public virtual async void update_game_info(){}
+		public virtual async void update_game_info() throws Utils.RunError {}
 
 		protected void update_version()
 		{
@@ -474,7 +474,7 @@ namespace GameHub.Data
 			}
 		}
 
-		public async void mount_overlays(File? persist=null)
+		public async void mount_overlays(File? persist=null) throws Utils.RunError
 		{
 			if(this is Sources.GOG.GOGGame.DLC)
 			{
@@ -503,12 +503,18 @@ namespace GameHub.Data
 			fs_overlay = new FSOverlay(merged_dir, dirs, persist_dir, work_dir);
 			if(fs_overlay.options != fs_overlay_last_options)
 			{
-				fs_overlay_last_options = fs_overlay.options;
-				yield fs_overlay.mount();
+				try
+				{
+					yield fs_overlay.mount();
+					
+					// Only remember this configuration after applying successfully
+					fs_overlay_last_options = fs_overlay.options;
+				}
+				finally {}
 			}
 		}
 
-		public async void umount_overlays()
+		public async void umount_overlays() throws Utils.RunError
 		{
 			if(this is Sources.GOG.GOGGame.DLC)
 			{
@@ -578,7 +584,11 @@ namespace GameHub.Data
 				if(!removable) return;
 
 				game.umount_overlays.begin((obj, res) => {
-					game.umount_overlays.end(res);
+					try {
+						game.umount_overlays.end(res);
+					} catch(RunError e) {
+						warning("[Game.Overlay.remove] %s", e.message);
+					}
 
 					if(id != BASE)
 					{

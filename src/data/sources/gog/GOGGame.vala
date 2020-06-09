@@ -154,7 +154,7 @@ namespace GameHub.Data.Sources.GOG
 			update_status();
 		}
 
-		public override async void update_game_info()
+		public override async void update_game_info() throws Utils.RunError
 		{
 			if(game_info_updating) return;
 			game_info_updating = true;
@@ -309,7 +309,7 @@ namespace GameHub.Data.Sources.GOG
 			game_info_updating = false;
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE) throws Utils.RunError
 		{
 			yield update_game_info();
 			if(installers == null || installers.size < 1) return;
@@ -317,7 +317,7 @@ namespace GameHub.Data.Sources.GOG
 			yield;
 		}
 
-		public override async void uninstall()
+		public override async void uninstall() throws Utils.RunError
 		{
 			if(install_dir != null && install_dir.query_exists())
 			{
@@ -874,19 +874,26 @@ namespace GameHub.Data.Sources.GOG
 
 				var elapsed = new DateTime.now_local().difference(start_date);
 
-				if(elapsed <= 10 * TimeSpan.SECOND) open();
+				if(elapsed <= 10 * TimeSpan.SECOND)
+				{
+					try
+					{
+						open();
+					}
+					catch(Utils.RunError _)
+					{
+						// Not very important – ignore this problem here
+					}
+				}
 
 				return downloaded_file;
 			}
 
-			public void open()
+			public void open() throws Utils.RunError
 			{
 				if(downloaded_file != null && downloaded_file.query_exists())
 				{
-					Idle.add(() => {
-						Utils.open_uri(downloaded_file.get_uri());
-						return Source.REMOVE;
-					});
+					Utils.open_uri(downloaded_file.get_uri());
 				}
 			}
 
@@ -983,7 +990,14 @@ namespace GameHub.Data.Sources.GOG
 			public async void update_downloads_info()
 			{
 				info_detailed = info;
-				yield update_game_info();
+				try
+				{
+					yield update_game_info();
+				}
+				catch(Utils.RunError _)
+				{
+					// Ignore as there are no immediate problems caused by this failing here
+				}
 				info_detailed = null;
 			}
 
@@ -994,7 +1008,7 @@ namespace GameHub.Data.Sources.GOG
 				base.update_status();
 			}
 
-			public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+			public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE) throws Utils.RunError
 			{
 				if(game.install_dir == null || !game.install_dir.query_exists()) return;
 

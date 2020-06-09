@@ -1,6 +1,7 @@
 /*
 This file is part of GameHub.
 Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) 2020 Alexander Schlarb
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -51,15 +52,22 @@ namespace GameHub.Utils
 
 	private static ThreadPool<Worker>? threadpool = null;
 
-	public static void open_uri(string uri)
+	public static void open_uri(string uri) throws RunError
 	{
 		try
 		{
 			AppInfo.launch_default_for_uri(uri, null);
 		}
+		catch(IOError e)
+		{
+			throw RunError.from_io_error(e, _("Could not open “%s”: "), uri);
+		}
 		catch(Error e)
 		{
-			warning("[Utils.open_uri] Error while opening '%s': %s", uri, e.message);
+			throw new RunError.FAILED(
+				_("Could not open “%s”: ") + "%s (%s:%d)",
+				uri, e.message, e.domain.to_string(), e.code
+			);
 		}
 	}
 
@@ -81,6 +89,20 @@ namespace GameHub.Utils
 		return null;
 	}
 
+	/**
+	 * Convert the given argument array into a valid shell command string
+	 * 
+	 * (Used for user-visible strings.)
+	 */
+	public static string serialize_argv(string[] argv)
+	{
+		string[] quoted = {};
+		foreach(unowned string arg in argv) {
+			quoted += Shell.quote(arg);
+		}
+		return string.joinv(" ", quoted);
+	}
+	
 	public class RunTask
 	{
 		private string[] _cmd;
@@ -107,7 +129,7 @@ namespace GameHub.Utils
 
 			var cmd_expanded = false;
 
-			if(_log) debug("[RunTask] {'%s'}", string.joinv("' '", _cmd));
+			if(_log) debug("[RunTask] About to run: %s", serialize_argv(_cmd));
 
 			_dir = _dir ?? Environment.get_home_dir();
 			_env = _env ?? Environ.get();
@@ -200,16 +222,14 @@ namespace GameHub.Utils
 					debug("     env: {\n                  '%s'\n              }", string.joinv("'\n                  '", env_diff));
 				}
 			}
-
 		}
 
-		public Result? run_sync(bool capture_output=false)
+		private Result run_sync_unchecked(bool capture_output=false) throws RunError
 		{
-			var is_called_from_thread = _expanded;
-			expand();
-			try
-			{
-				if(_log && !is_called_from_thread) debug("     .run_sync()");
+			try {
+				var is_called_from_thread = _expanded;
+				expand();
+				if(_log && !is_called_from_thread) debug("     .run_sync_nofail()");
 				int status;
 				if(capture_output)
 				{
@@ -223,35 +243,72 @@ namespace GameHub.Utils
 						if(sout.length > 0) print(sout + "\n");
 						if(serr.length > 0) warning(serr);
 					}
-					return new Result(status, sout, serr);
+					return new Result(this, status, sout, serr);
 				}
 				else
 				{
-					Process.spawn_sync(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH | SpawnFlags.CHILD_INHERITS_STDIN | SpawnFlags.STDERR_TO_DEV_NULL, null, null, null, out status);
-					return new Result(status);
+					Process.spawn_sync(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH | SpawnFlags.CHILD_INHERITS_STDIN, null, null, null, out status);
+					return new Result(this, status);
 				}
+			} catch(SpawnError e) {
+				throw RunError.from_spawn_error(e, "Error spawning “%s”: ", serialize_argv(this._cmd));
 			}
-			catch (Error e)
-			{
-				warning("[RunTask.run_sync] %s", e.message);
+		}
+
+		public Result? run_sync_nofail(bool capture_output=false)
+		{
+			try {
+				return this.run_sync_unchecked(capture_output);
+			} catch(RunError e) {
+				warning("[RunTask.run_sync_nofail] %s", e.message);
 			}
 			return null;
 		}
 
-		public async Result? run_sync_thread(bool capture_output=false)
+		public Result run_sync(bool capture_output=false) throws RunError
+		{
+			Result result = this.run_sync_unchecked(capture_output);
+			result.check_status();
+			return result;
+		}
+
+		public async Result? run_sync_thread_nofail(bool capture_output=false)
 		{
 			expand();
 			Result? result = null;
-			Utils.thread("RunTask.run_sync_thread", () => {
-				if(_log) debug("     .run_sync_thread()");
-				result = run_sync(capture_output);
-				Idle.add(run_sync_thread.callback);
+			Utils.thread("RunTask.run_sync_thread_nofail", () => {
+				if(_log) debug("     .run_sync_thread_nofail()");
+				result = this.run_sync_nofail(capture_output);
+				Idle.add(run_sync_thread_nofail.callback);
 			}, _log);
 			yield;
 			return result;
 		}
 
-		public async Result? run_async(bool wait=true)
+		public async Result run_sync_thread(bool capture_output=false) throws RunError
+		{
+			expand();
+			Result? result = null;
+			RunError? error = null;
+			Utils.thread("RunTask.run_sync_thread", () => {
+				if(_log) debug("     .run_sync_thread()");
+				try {
+					result = this.run_sync(capture_output);
+				} catch(RunError e) {
+					error = e;
+				}
+				Idle.add(run_sync_thread.callback);
+			}, _log);
+			yield;
+			
+			if(error != null) {
+				throw error;
+			}
+			assert(result != null);
+			return result;
+		}
+
+		public async Result run_async(bool wait=true) throws RunError
 		{
 			expand();
 			Result? result = null;
@@ -262,27 +319,39 @@ namespace GameHub.Utils
 				Process.spawn_async(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
 				ChildWatch.add(pid, (pid, status) => {
 					Process.close_pid(pid);
-					result = new Result(status);
-					Idle.add(run_async.callback);
+					result = new Result(this, status);
+					
+					if(wait)
+					{
+						Idle.add(run_async.callback);
+					}
 				});
 			}
-			catch (Error e)
+			catch (SpawnError e)
 			{
-				warning("[RunTask.run_async] %s", e.message);
+				throw RunError.from_spawn_error(e, "Error spawning “%s”: ", serialize_argv(this._cmd));
 			}
-			if(wait) yield;
+			
+			if(wait)
+			{
+				yield;
+			}
+			
+			assert(result != null);
 			return result;
 		}
 
 		public class Result
 		{
+			public string[] cmd;
 			public int? status;
 			public int? exit_code;
 			public string? output;
 			public string? errors;
 
-			public Result(int? status, string? output=null, string? errors=null)
+			public Result(RunTask task, int? status, string? output=null, string? errors=null)
 			{
+				this.cmd = task._cmd;
 				this.status = status;
 				this.output = output;
 				this.errors = errors;
@@ -292,13 +361,50 @@ namespace GameHub.Utils
 				}
 			}
 
-			public bool check_status() throws Error
+			// Missing VAPI binding for matching “Process exited with error code”
+			// domain (probably as the code parameter of this error is the actual
+			// process exit code and not the usual short list of well-known codes)
+			[CCode(cname="g_spawn_exit_error_quark")]
+			private static extern Quark SpawnExitError_quark();
+
+			public void check_status() throws RunError
 			{
 				if(this.status != null)
 				{
-					return Process.check_exit_status(this.status);
+					try
+					{
+						Process.check_exit_status(this.status);
+					}
+					catch(SpawnError e)
+					{
+						// Re-raise received SpawnError as RunError with the same code
+						throw RunError.from_spawn_error(e,
+							_("Failed to execute command “%s”: "),
+							serialize_argv(this.cmd)
+						);
+					}
+					catch(Error e)
+					{
+						assert(e.domain == SpawnExitError_quark());
+						
+						#if G_OS_WIN32
+						if(e.code == 9009) {
+						#else
+						if(e.code == 127) {
+						#endif
+							// Happens when `pkexec` or `flatpak-run` don't find stuff for instance
+							throw new RunError.COMMAND_NOT_FOUND(
+								_("Error after running command “%s”: Command Not Found (exit code %d) returned"),
+								serialize_argv(this.cmd), e.code
+							);
+						} else {
+							throw new RunError.ERROR_STATUS(
+								_("Error after running command “%s”: Exit code %d returned"),
+								serialize_argv(this.cmd), e.code
+							);
+						}
+					}
 				}
-				return true;
 			}
 		}
 	}
@@ -311,7 +417,7 @@ namespace GameHub.Utils
 	public static File? find_executable(string? name)
 	{
 		if(name == null || name.length == 0) return null;
-		var which = Environment.find_program_in_path(name) ?? run({"which", name}).log(false).run_sync(true).output;
+		var which = Environment.find_program_in_path(name) ?? run({"which", name}).log(false).run_sync_nofail(true).output;
 		if(which == null || which.length == 0 || !which.has_prefix("/"))
 		{
 			return null;
@@ -340,7 +446,7 @@ namespace GameHub.Utils
 		if(distro != null) return distro;
 
 		#if OS_LINUX
-			distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}).log(false).run_sync(true).output.replace("\"", "");
+			distro = Utils.run({"bash", "-c", "lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om"}).log(false).run_sync_nofail(true).output.replace("\"", "");
 			#if PKG_APPIMAGE
 				distro = "[AppImage] " + distro;
 			#elif PKG_FLATPAK
@@ -402,7 +508,7 @@ namespace GameHub.Utils
 		#if PKG_APPIMAGE || PKG_FLATPAK
 		return false;
 		#elif PM_APT
-		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package}).log(false).run_sync(true).output;
+		var output = Utils.run({"dpkg-query", "-W", "-f=${Status}", package}).log(false).run_sync_nofail(true).output;
 		return "install ok installed" in output;
 		#else
 		return false;

@@ -189,7 +189,9 @@ namespace GameHub.UI.Widgets
 			var btn = new Button.with_label(action.name);
 			btn.tooltip_text = action.description;
 			btn.hexpand = true;
-			btn.clicked.connect(() => action.invoke(runnable));
+			btn.clicked.connect(() => action.invoke.begin(runnable, (obj, res) => {
+				action.invoke.end(res);
+			}));
 			actions.add(btn);
 		}
 

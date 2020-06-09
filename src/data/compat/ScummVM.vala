@@ -47,7 +47,7 @@ namespace GameHub.Data.Compat
 		{
 			if(dir != null && dir.query_exists())
 			{
-				var output = Utils.run({executable.get_path(), "--detect"}).dir(dir.get_path()).log(false).run_sync(true).output;
+				var output = Utils.run({executable.get_path(), "--detect"}).dir(dir.get_path()).log(false).run_sync_nofail(true).output;
 				return !(SCUMMVM_NO_GAMES_WARNING in output);
 			}
 			return false;
@@ -59,9 +59,16 @@ namespace GameHub.Data.Compat
 				&& (scummvm_detect(runnable.install_dir) || scummvm_detect(runnable.install_dir.get_child("data")));
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Runnable runnable) throws Utils.RunError
 		{
-			if(!can_run(runnable)) return;
+			this.ensure_installed();
+			if(!can_run(runnable))
+			{
+				throw new Utils.RunError.INVALID_ARGUMENT(
+					_("Directory “%s” does not appear to contain any ScummVM compatible game files"),
+					runnable.install_dir.get_path()
+				);
+			}
 
 			var dir = runnable.install_dir;
 			var data_dir = runnable.install_dir.get_child("data");

@@ -119,7 +119,7 @@ namespace GameHub.Data.Sources.Steam
 			update_status();
 		}
 
-		public override async void update_game_info()
+		public override async void update_game_info() throws Utils.RunError
 		{
 			if(game_info_updating) return;
 			game_info_updating = true;
@@ -259,13 +259,13 @@ namespace GameHub.Data.Sources.Steam
 			status = new Game.Status(state, this);
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE) throws Utils.RunError
 		{
 			Steam.install_app(id);
 			update_status();
 		}
 
-		public override async void run()
+		public override async void run() throws Utils.RunError
 		{
 			if(!can_be_launched(true)) return;
 			last_launch = get_real_time() / 1000000;
@@ -274,12 +274,12 @@ namespace GameHub.Data.Sources.Steam
 			update_status();
 		}
 
-		public override async void run_with_compat(bool is_opened_from_menu=false)
+		public override async void run_with_compat(bool is_opened_from_menu=false) throws Utils.RunError
 		{
 			yield run();
 		}
 
-		public override async void uninstall()
+		public override async void uninstall() throws Utils.RunError
 		{
 			Utils.open_uri(@"steam://uninstall/$(id)");
 			update_status();

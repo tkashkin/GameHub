@@ -87,7 +87,7 @@ namespace GameHub.Utils
 			}
 		}
 
-		public async void mount()
+		public async void mount() throws RunError
 		{
 			yield umount();
 
@@ -102,10 +102,13 @@ namespace GameHub.Utils
 
 			yield polkit_authenticate();
 
-			yield Utils.run({"pkexec", POLKIT_HELPER, "mount", id, options, target.get_path()}).log(GameHub.Application.log_verbose).run_sync_thread();
+			yield Utils.run({
+				"pkexec", POLKIT_HELPER,
+				"mount", id, options, target.get_path()
+			}).log(GameHub.Application.log_verbose).run_sync_thread();
 		}
 
-		public async void umount()
+		public async void umount() throws RunError
 		{
 			yield polkit_authenticate();
 

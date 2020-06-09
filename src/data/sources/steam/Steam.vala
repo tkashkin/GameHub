@@ -119,17 +119,20 @@ namespace GameHub.Data.Sources.Steam
 			return find_app_install_dir(app, null);
 		}
 
-		public override async bool install()
+		public override async bool install() throws Utils.RunError
 		{
 			var distro = Utils.get_distro().down();
+			//XXX: Why is this list so short?
 			if("elementary" in distro || "pop!_os" in distro)
 			{
 				Utils.open_uri("appstream://steam.desktop");
 			}
-			return true;
+			throw new Utils.RunError.NOT_SUPPORTED(
+				_("Installing Steam is not supported on this platform")
+			);
 		}
 
-		public override async bool authenticate()
+		public override async bool authenticate() throws Utils.RunError
 		{
 			Settings.Auth.Steam.instance.authenticated = true;
 
@@ -358,12 +361,12 @@ namespace GameHub.Data.Sources.Steam
 			return null;
 		}
 
-		public static void install_app(string appid)
+		public static void install_app(string appid) throws Utils.RunError
 		{
 			Utils.open_uri(@"steam://install/$(appid)");
 		}
 
-		public static void install_multiple_apps(string[] appids)
+		public static void install_multiple_apps(string[] appids) throws Utils.RunError
 		{
 			if(instance.packageinfo == null) return;
 			var packages = "";

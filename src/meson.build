@@ -168,6 +168,7 @@ sources = [
 	'ui/widgets/SettingsSidebar.vala',
 	'ui/widgets/TweaksList.vala',
 
+	'utils/RunError.vala',
 	'utils/Utils.vala',
 	'utils/ImageCache.vala',
 	'utils/FSUtils.vala',

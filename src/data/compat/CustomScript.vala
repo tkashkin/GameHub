@@ -57,7 +57,11 @@ GH_GAME_NAME_ESCAPED="${10}"
 			installed = true;
 
 			actions = {
-				new CompatTool.Action(_("Edit script"), _("Edit custom script"), edit_script)
+				new CompatTool.Action(_("Edit script"), _("Edit custom script"), (r, cb) => {
+					this.edit_script.begin(r, cb((obj, res) => {
+						this.edit_script.end(res);
+					}));
+				}),
 			};
 		}
 
@@ -66,14 +70,23 @@ GH_GAME_NAME_ESCAPED="${10}"
 			return true;
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Runnable runnable) throws Utils.RunError
 		{
-			if(runnable.install_dir == null || !runnable.install_dir.query_exists()) return;
+			if(runnable.install_dir == null || !runnable.install_dir.query_exists())
+			{
+				throw new Utils.RunError.INVALID_ARGUMENT(
+					_("Runnable directory “%s” does not exist"),
+					runnable.install_dir.get_path()
+				);
+			}
+
 			var gh_dir = FSUtils.mkdir(runnable.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
 			{
-				Utils.run({"chmod", "+x", script.get_path()}).run_sync();
+				//XXX: Use GIO for changing permissions
+				Utils.run({"chmod", "+x", script.get_path()}).run_sync_nofail();
+				
 				var executable_path = runnable.executable != null ? runnable.executable.get_path() : "null";
 				string[]? cmd = null;
 				if(runnable is Game)
@@ -95,18 +108,27 @@ GH_GAME_NAME_ESCAPED="${10}"
 			}
 			else
 			{
-				edit_script(runnable);
+				yield this.edit_script(runnable);
 			}
 		}
 
-		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
+		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false) throws Utils.RunError
 		{
-			if(emu.install_dir == null || !emu.install_dir.query_exists()) return;
+			if(emu.install_dir == null || !emu.install_dir.query_exists())
+			{
+				throw new Utils.RunError.INVALID_ARGUMENT(
+					_("Runnable directory “%s” does not exist"),
+					emu.install_dir.get_path()
+				);
+			}
+
 			var gh_dir = FSUtils.mkdir(emu.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
 			{
-				Utils.run({"chmod", "+x", script.get_path()}).run_sync();
+				//XXX: Use GIO for changing permissions
+				Utils.run({"chmod", "+x", script.get_path()}).run_sync_nofail();
+				
 				var executable_path = emu.executable != null ? emu.executable.get_path() : "null";
 				var game_executable_path = game != null && game.executable != null ? game.executable.get_path() : "null";
 				string[] cmd = { script.get_path(), executable_path, emu.id, emu.name, game_executable_path, game.id, game.full_id, game.name, game.escaped_name };
@@ -121,13 +143,20 @@ GH_GAME_NAME_ESCAPED="${10}"
 			}
 			else
 			{
-				edit_script(emu);
+				yield this.edit_script(emu);
 			}
 		}
 
-		public void edit_script(Runnable runnable)
+		public async void edit_script(Runnable runnable) throws Utils.RunError
 		{
-			if(runnable.install_dir == null || !runnable.install_dir.query_exists()) return;
+			if(runnable.install_dir == null || !runnable.install_dir.query_exists())
+			{
+				throw new Utils.RunError.INVALID_ARGUMENT(
+					_("Runnable directory “%s” does not exist"),
+					runnable.install_dir.get_path()
+				);
+			}
+			
 			var gh_dir = FSUtils.mkdir(runnable.install_dir.get_path(), FSUtils.GAMEHUB_DIR);
 			var script = gh_dir.get_child(SCRIPT);
 			if(!script.query_exists())
@@ -148,7 +177,7 @@ GH_GAME_NAME_ESCAPED="${10}"
 					warning("[CustomScript.edit_script] %s", e.message);
 				}
 			}
-			Utils.run({"chmod", "+x", script.get_path()}).run_sync();
+			yield Utils.run({"chmod", "+x", script.get_path()}).run_sync_thread();
 			Utils.open_uri(script.get_uri());
 		}
 	}

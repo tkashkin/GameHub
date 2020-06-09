@@ -266,7 +266,7 @@ namespace GameHub.UI.Dialogs
 							sp = sp.substring(sp.index_of_nth_char(2));
 						}
 
-						var files_list = Utils.run({"find", root.get_path(), "-path", "*/" + sp, "-type", "f"}).log(false).run_sync(true).output;
+						var files_list = Utils.run({"find", root.get_path(), "-path", "*/" + sp, "-type", "f"}).log(false).run_sync_nofail(true).output;
 						var files = files_list.split("\n");
 
 						foreach(var file_path in files)
@@ -383,7 +383,7 @@ namespace GameHub.UI.Dialogs
 							ext = ext.strip();
 							if(ext in ignored_extensions) continue;
 
-							var files_list = Utils.run({"find", root.get_path(), "-path", "*/*." + ext, "-type", "f"}).log(false).run_sync(true).output;
+							var files_list = Utils.run({"find", root.get_path(), "-path", "*/*." + ext, "-type", "f"}).log(false).run_sync_nofail(true).output;
 							var files = files_list.split("\n");
 
 							foreach(var file_path in files)
@@ -629,7 +629,7 @@ namespace GameHub.UI.Dialogs
 
 						sp = sp.replace("${basename}", basename).replace("$basename", basename);
 
-						var files_list = Utils.run({"find", directory.get_path(), "-path", "*/" + sp}).log(false).run_sync(true).output;
+						var files_list = Utils.run({"find", directory.get_path(), "-path", "*/" + sp}).log(false).run_sync_nofail(true).output;
 						var files = files_list.split("\n");
 
 						foreach(var file_path in files)

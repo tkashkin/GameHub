@@ -38,9 +38,9 @@ namespace GameHub.Data
 
 		public abstract bool is_installed(bool refresh=false);
 
-		public abstract async bool install();
+		public abstract async bool install() throws Utils.RunError;
 
-		public abstract async bool authenticate();
+		public abstract async bool authenticate() throws Utils.RunError;
 		public abstract bool is_authenticated();
 		public abstract bool can_authenticate_automatically();
 

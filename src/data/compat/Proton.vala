@@ -107,26 +107,36 @@ namespace GameHub.Data.Compat
 			if(installed)
 			{
 				actions = {
-					new CompatTool.Action("prefix", _("Open prefix directory"), r => {
-						Utils.open_uri(get_wineprefix(r).get_parent().get_uri());
+					new CompatTool.Action("prefix", _("Open prefix directory"), (r, cb) => {
+						Utils.sleep_async.begin(0, GLib.Priority.DEFAULT, cb((obj, res) => {
+							Utils.open_uri(get_wineprefix(r).get_parent().get_uri());
+						}));
 					}),
-					new CompatTool.Action("winecfg", _("Run winecfg"), r => {
-						wineutil.begin(r, "winecfg");
+					new CompatTool.Action("winecfg", _("Run winecfg"), (r, cb) => {
+						wineutil.begin(r, "winecfg", null, cb((obj, res) => {
+							wineutil.end(res);
+						}));
 					}),
-					new CompatTool.Action("winetricks", _("Run winetricks"), r => {
-						winetricks.begin(r);
+					new CompatTool.Action("winetricks", _("Run winetricks"), (r, cb) => {
+						winetricks.begin(r, cb((obj, res) => {
+							winetricks.end(res);
+						}));
 					}),
-					new CompatTool.Action("taskmgr", _("Run taskmgr"), r => {
-						wineutil.begin(r, "taskmgr");
+					new CompatTool.Action("taskmgr", _("Run taskmgr"), (r, cb) => {
+						wineutil.begin(r, "taskmgr", null, cb((obj, res) => {
+							wineutil.end(res);
+						}));
 					}),
-					new CompatTool.Action("kill", _("Kill apps in prefix"), r => {
-						wineboot.begin(r, {"-k"});
+					new CompatTool.Action("kill", _("Kill apps in prefix"), (r, cb) => {
+						wineboot.begin(r, {"-k"}, cb((obj, res) => {
+							wineboot.end(res);
+						}));
 					})
 				};
 			}
 		}
 
-		protected override async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected override async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true) throws Utils.RunError
 		{
 			string[] cmd = { executable.get_path(), "run", file.get_path() };
 			if(file.get_path().down().has_suffix(".msi"))
@@ -150,7 +160,8 @@ namespace GameHub.Data.Compat
 
 			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(id)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}).dir(install_dir.get_path()).run_sync();
+				//XXX: This looks very bad…
+				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(id) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(id)"}).dir(install_dir.get_path()).run_sync_nofail();
 				FSUtils.rm(dosdevices.get_child("d:").get_path());
 			}
 
@@ -168,6 +179,7 @@ namespace GameHub.Data.Compat
 
 			var dosdevices = prefix.get_child("dosdevices");
 
+			//XXX: Why is this duplicated from Compat.Wine?
 			if(dosdevices.get_child("c:").query_exists() && dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
 			{
 				var has_symlink = false;
@@ -184,7 +196,7 @@ namespace GameHub.Data.Compat
 				{
 					if(!dosdevices.get_child(@"$(letter):").query_exists() && !dosdevices.get_child(@"$(letter)::").query_exists())
 					{
-						Utils.run({"ln", "-nsf", "../../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync();
+						Utils.run({"ln", "-nsf", "../../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync_nofail();
 						break;
 					}
 				}
@@ -193,6 +205,7 @@ namespace GameHub.Data.Compat
 			return prefix;
 		}
 
+		//XXX: … and this?
 		private bool is_symlink_and_correct(File symlink)
 		{
 			if(!symlink.query_exists())
@@ -202,7 +215,7 @@ namespace GameHub.Data.Compat
 
 			try
 			{
-				var symlink_info = symlink.query_info("*", NONE);
+				var symlink_info = symlink.query_info("standard::is-symlink,standard::symlink-target", NONE);
 				if(symlink_info == null || !symlink_info.get_is_symlink() || symlink_info.get_symlink_target() != "../../../../../")
 				{
 					return false;
@@ -247,7 +260,7 @@ namespace GameHub.Data.Compat
 			return env;
 		}
 
-		protected override async void wineboot(Runnable runnable, string[]? args=null)
+		protected override async void wineboot(Runnable runnable, string[]? args=null) throws Utils.RunError
 		{
 			if(args == null)
 			{
@@ -257,7 +270,7 @@ namespace GameHub.Data.Compat
 			yield wineutil(runnable, "wineboot", args);
 		}
 
-		protected async void proton_init_prefix(Runnable runnable)
+		protected async void proton_init_prefix(Runnable runnable) throws Utils.RunError
 		{
 			var prefix = get_wineprefix(runnable);
 			if(opt_prefix.file != null && opt_prefix.file.query_exists())
@@ -276,7 +289,7 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		public void install_app()
+		public void install_app() throws Utils.RunError
 		{
 			if(!is_latest && !installed)
 			{

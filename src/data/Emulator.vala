@@ -169,7 +169,7 @@ namespace GameHub.Data
 			return result_args;
 		}
 
-		public override async void run()
+		public override async void run() throws Utils.RunError
 		{
 			if(can_be_launched(true) && executable.query_exists())
 			{
@@ -184,7 +184,7 @@ namespace GameHub.Data
 			}
 		}
 
-		public async void run_game(Game? game, bool launch_in_game_dir=false)
+		public async void run_game(Game? game, bool launch_in_game_dir=false) throws Utils.RunError
 		{
 			if(use_compat)
 			{

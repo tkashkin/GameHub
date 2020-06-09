@@ -70,15 +70,20 @@ namespace GameHub.Data.Compat
 		public override bool can_run(Runnable runnable)
 		{
 			update_emulators();
-			return installed && runnable is Game && emulator_names.size > 0;
+			return runnable is Game && emulator_names.size > 0;
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Runnable runnable) throws Utils.RunError
 		{
-			if(!can_run(runnable)) return;
+			if(!can_run(runnable))
+			{
+				throw new Utils.RunError.FAILED(
+					_("No custom emulators were set up")
+				);
+			}
 
 			var emu = Tables.Emulators.by_name(emu_option.value);
-			if(emu == null) return;
+			if(emu == null) return;  //XXX: Does this actually happen?
 
 			yield emu.run_game(runnable as Game, game_dir_option.enabled);
 		}

@@ -68,20 +68,30 @@ namespace GameHub.Data.Compat
 			if(installed)
 			{
 				actions = {
-					new CompatTool.Action("prefix", _("Open prefix directory"), r => {
-						Utils.open_uri(get_wineprefix(r).get_uri());
+					new CompatTool.Action("prefix", _("Open prefix directory"), (r, cb) => {
+						Utils.sleep_async.begin(0, GLib.Priority.DEFAULT, cb((obj, res) => {
+							Utils.open_uri(get_wineprefix(r).get_uri());
+						}));
 					}),
-					new CompatTool.Action("winecfg", _("Run winecfg"), r => {
-						wineutil.begin(r, "winecfg");
+					new CompatTool.Action("winecfg", _("Run winecfg"), (r, cb) => {
+						wineutil.begin(r, "winecfg", null, cb((obj, res) => {
+							wineutil.end(res);
+						}));
 					}),
-					new CompatTool.Action("winetricks", _("Run winetricks"), r => {
-						winetricks.begin(r);
+					new CompatTool.Action("winetricks", _("Run winetricks"), (r, cb) => {
+						winetricks.begin(r, cb((obj, res) => {
+							winetricks.end(res);
+						}));
 					}),
-					new CompatTool.Action("taskmgr", _("Run taskmgr"), r => {
-						wineutil.begin(r, "taskmgr");
+					new CompatTool.Action("taskmgr", _("Run taskmgr"), (r, cb) => {
+						wineutil.begin(r, "taskmgr", null, cb((obj, res) => {
+							wineutil.end(res);
+						}));
 					}),
-					new CompatTool.Action("kill", _("Kill apps in prefix"), r => {
-						wineboot.begin(r, {"-k"});
+					new CompatTool.Action("kill", _("Kill apps in prefix"), (r, cb) => {
+						wineboot.begin(r, {"-k"}, cb((obj, res) => {
+							wineboot.end(res);
+						}));
 					})
 				};
 			}
@@ -126,9 +136,17 @@ namespace GameHub.Data.Compat
 			return opts;
 		}
 
-		public override async void install(Runnable runnable, File installer)
+		public override async void install(Runnable runnable, File installer) throws Utils.RunError
 		{
-			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
+			this.ensure_installed();
+			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE)
+			{
+				throw new Utils.RunError.INVALID_ARGUMENT(
+					_("File “%s” does not appear to be a Windows executable"),
+					installer.get_path()
+				);
+			}
+			
 			yield wineboot(runnable);
 			yield exec(runnable, installer, installer.get_parent(), yield prepare_installer_args(runnable));
 
@@ -139,28 +157,40 @@ namespace GameHub.Data.Compat
 			}
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Runnable runnable) throws Utils.RunError
 		{
-			if(!can_run(runnable)) return;
+			this.ensure_installed();
+			if(!can_run(runnable))
+			{
+				throw new Utils.RunError.INVALID_ARGUMENT(
+					_("File “%s” does not appear to be a Windows executable"),
+					runnable.executable.get_path()
+				);
+			}
+			
 			yield wineboot(runnable);
 			yield exec(runnable, runnable.executable, runnable.work_dir, Utils.parse_args(runnable.arguments));
 		}
 
-		public override async void run_action(Runnable runnable, Runnable.RunnableAction action)
+		public override async void run_action(Runnable runnable, Runnable.RunnableAction action) throws Utils.RunError
 		{
-			if(!can_run_action(runnable, action)) return;
+			this.ensure_installed();
+			assert(can_run_action(runnable, action));  // Cannot happen unless the types are lying
+			
 			yield wineboot(runnable);
 			yield exec(runnable, action.file, action.workdir, Utils.parse_args(action.args));
 		}
 
-		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
+		public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false) throws Utils.RunError
 		{
-			if(!can_run(emu)) return;
+			this.ensure_installed();
+			assert(can_run(emu));  // Cannot happen unless the types are lying
+			
 			var dir = game != null && launch_in_game_dir ? game.work_dir : emu.work_dir;
 			yield exec(emu, emu.executable, dir, emu.get_args(game));
 		}
 
-		protected virtual async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
+		protected virtual async void exec(Runnable runnable, File file, File dir, string[]? args=null, bool parse_opts=true) throws Utils.RunError
 		{
 			string[] cmd = { executable.get_path(), file.get_path() };
 			if(file.get_path().down().has_suffix(".msi"))
@@ -184,7 +214,8 @@ namespace GameHub.Data.Compat
 
 			if(FSUtils.file(install_dir.get_path(), @"$(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(binary)_$(arch)"}).dir(install_dir.get_path()).run_sync();
+				//XXX: Quite spooky and probably not whitespace safe…
+				Utils.run({"bash", "-c", @"mv -f $(FSUtils.GAMEHUB_DIR)/$(binary)_$(arch) $(FSUtils.GAMEHUB_DIR)/$(FSUtils.COMPAT_DATA_DIR)/$(binary)_$(arch)"}).dir(install_dir.get_path()).run_sync_nofail();
 				FSUtils.rm(dosdevices.get_child("d:").get_path());
 			}
 
@@ -202,6 +233,7 @@ namespace GameHub.Data.Compat
 
 			var dosdevices = prefix.get_child("dosdevices");
 
+			//XXX: What does this section do?
 			if(dosdevices.get_child("c:").query_exists() && dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
 			{
 				var has_symlink = false;
@@ -218,7 +250,7 @@ namespace GameHub.Data.Compat
 				{
 					if(!dosdevices.get_child(@"$(letter):").query_exists() && !dosdevices.get_child(@"$(letter)::").query_exists())
 					{
-						Utils.run({"ln", "-nsf", "../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync();
+						Utils.run({"ln", "-nsf", "../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync_nofail();
 						break;
 					}
 				}
@@ -236,7 +268,7 @@ namespace GameHub.Data.Compat
 
 			try
 			{
-				var symlink_info = symlink.query_info("*", NONE);
+				var symlink_info = symlink.query_info("standard::is-symlink,standard::symlink-target", NONE);
 				if(symlink_info == null || !symlink_info.get_is_symlink() || symlink_info.get_symlink_target() != "../../../../")
 				{
 					return false;
@@ -301,12 +333,12 @@ namespace GameHub.Data.Compat
 			return env;
 		}
 
-		protected virtual async void wineboot(Runnable runnable, string[]? args=null)
+		protected virtual async void wineboot(Runnable runnable, string[]? args=null) throws Utils.RunError
 		{
 			yield wineutil(runnable, "wineboot", args);
 		}
 
-		protected async void wineutil(Runnable runnable, string util="winecfg", string[]? args=null)
+		protected async void wineutil(Runnable runnable, string util="winecfg", string[]? args=null) throws Utils.RunError
 		{
 			string[] cmd = { wine_binary.get_path(), util };
 
@@ -321,14 +353,15 @@ namespace GameHub.Data.Compat
 			yield Utils.run(cmd).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
 		}
 
-		protected async void winetricks(Runnable runnable)
+		protected async void winetricks(Runnable runnable) throws Utils.RunError
 		{
 			yield Utils.run({"winetricks"}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
 		}
 
 		public async string convert_path(Runnable runnable, File path)
 		{
-			var win_path = (yield Utils.run({wine_binary.get_path(), "winepath", "-w", path.get_path()}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).log(false).run_sync_thread(true)).output.strip();
+			//XXX: This is technically fallible, but really shouldn't be? 
+			var win_path = (yield Utils.run({wine_binary.get_path(), "winepath", "-w", path.get_path()}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).log(false).run_sync_thread_nofail(true)).output.strip();
 			debug("[Wine.convert_path] '%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
 		}

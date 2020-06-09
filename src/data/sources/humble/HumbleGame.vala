@@ -190,7 +190,7 @@ namespace GameHub.Data.Sources.Humble
 			update_version();
 		}
 
-		public override async void update_game_info()
+		public override async void update_game_info() throws Utils.RunError
 		{
 			if(game_info_updating) return;
 			game_info_updating = true;
@@ -279,7 +279,7 @@ namespace GameHub.Data.Sources.Humble
 			game_info_updating = false;
 		}
 
-		private async void update_installers()
+		private async void update_installers() throws Utils.RunError
 		{
 			if(installers.size > 0) return;
 
@@ -395,7 +395,7 @@ namespace GameHub.Data.Sources.Humble
 			return refresh;
 		}
 
-		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE)
+		public override async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE) throws Utils.RunError
 		{
 			yield update_installers();
 			if(installers.size < 1) return;
@@ -403,7 +403,7 @@ namespace GameHub.Data.Sources.Humble
 			yield;
 		}
 
-		public override async void uninstall()
+		public override async void uninstall() throws Utils.RunError
 		{
 			if(install_dir != null && install_dir.query_exists())
 			{

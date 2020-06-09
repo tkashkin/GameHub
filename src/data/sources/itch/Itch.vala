@@ -252,7 +252,18 @@ namespace GameHub.Data.Sources.Itch
 				}
 				if(file != null)
 				{
-					Utils.open_uri(file.get_uri());
+					try
+					{
+						Utils.open_uri(file.get_uri());
+					}
+					catch(Utils.RunError e)
+					{
+						//XXX: Should this be propagated to the UI?
+						warning(
+							"[Sources.Itch] Error while processing %s action: %s-(%s:%d)",
+							method, e.message, e.domain.to_string(), e.code
+						);
+					}
 				}
 				responder.respond();
 			});

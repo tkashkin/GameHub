@@ -58,15 +58,21 @@ namespace GameHub.Data.Compat
 			if(wrappers.size > 0)
 			{
 				actions = {
-					new CompatTool.Action("play", _("Run"), r => {
-						action.begin(r, "play");
+					new CompatTool.Action("play", _("Run"), (r, cb) => {
+						this.run.begin(r, cb((obj, res) => {
+							this.run.end(res);
+						}));
 					}),
-					new CompatTool.Action("menu", _("Show WineWrap menu"), r => {
-						action.begin(r, "menu");
+					new CompatTool.Action("menu", _("Show WineWrap menu"), (r, cb) => {
+						this.show_menu.begin(r, cb((obj, res) => {
+							this.show_menu.end(res);
+						}));
 					}),
-					new CompatTool.Action("kill", _("Kill apps in prefix"), r => {
-						action.begin(r, "kill");
-					})
+					new CompatTool.Action("kill", _("Kill apps in prefix"), (r, cb) => {
+						this.kill.begin(r, cb((obj, res) => {
+							this.kill.end(res);
+						}));
+					}),
 				};
 			}
 			else
@@ -85,7 +91,7 @@ namespace GameHub.Data.Compat
 			return installed && runnable != null && runnable is GOGGame && wrappers.has_key(runnable.id);
 		}
 
-		public override async void install(Runnable runnable, File installer)
+		public override async void install(Runnable runnable, File installer) throws Utils.RunError
 		{
 			if(!can_install(runnable)) return;
 
@@ -119,7 +125,12 @@ namespace GameHub.Data.Compat
 			}
 			catch(Error e)
 			{
-				warning("[WineWrap] %s", e.message);
+				var message = (_("Installing WineWrap from “%s” failed: ") + "%s (%s:%d)").printf(
+					wrapper_remote.get_uri(),
+					e.message, e.domain.to_string(), e.code
+				);
+				warning("[WineWrap] %s", message);
+				throw new Utils.RunError.FAILED("%s", message);
 			}
 		}
 
@@ -128,14 +139,30 @@ namespace GameHub.Data.Compat
 			return can_install(runnable) || runnable.compat_tool == id;
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Runnable runnable) throws Utils.RunError
 		{
 			yield action(runnable, "play");
 		}
 
-		private async void action(Runnable runnable, string action)
+		public async void show_menu(Runnable runnable) throws Utils.RunError
 		{
-			if(!can_run(runnable)) return;
+			yield action(runnable, "menu");
+		}
+
+		public async void kill(Runnable runnable) throws Utils.RunError
+		{
+			yield action(runnable, "kill");
+		}
+
+		private async void action(Runnable runnable, string action) throws Utils.RunError
+		{
+			if(!can_run(runnable))
+			{
+				throw new Utils.RunError.FAILED(
+					_("Runnable “%s” does not expect WineWrap as its compat tool"),
+					runnable.name
+				);
+			}
 
 			string[] cmd = { runnable.install_dir.get_child("start.sh").get_path(), action };
 

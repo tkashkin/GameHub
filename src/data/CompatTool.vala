@@ -1,6 +1,7 @@
 /*
 This file is part of GameHub.
 Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) 2020 Alexander Schlarb
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,10 +43,10 @@ namespace GameHub.Data
 
 		public virtual File get_install_root(Runnable runnable) { return runnable.install_dir; }
 
-		public virtual async void install(Runnable runnable, File installer){}
-		public virtual async void run(Runnable game){}
-		public virtual async void run_action(Runnable runnable, Runnable.RunnableAction action){}
-		public virtual async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false){}
+		public virtual async void install(Runnable runnable, File installer) throws Utils.RunError {}
+		public virtual async void run(Runnable game) throws Utils.RunError {}
+		public virtual async void run_action(Runnable runnable, Runnable.RunnableAction action) throws Utils.RunError {}
+		public virtual async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false) throws Utils.RunError {}
 
 		protected string[] combine_cmd_with_args(string[] cmd, Runnable runnable, string[]? args_override=null)
 		{
@@ -84,6 +85,14 @@ namespace GameHub.Data
 			}
 
 			return full_cmd;
+		}
+
+		protected void ensure_installed() throws Utils.RunError
+		{
+			if(!this.installed)
+			{
+				throw new Utils.RunError.COMMAND_NOT_FOUND("%s does not appear to be installed", this.name);
+			}
 		}
 
 		public static CompatTool? by_id(string? id)
@@ -146,7 +155,28 @@ namespace GameHub.Data
 
 		public class Action: Object
 		{
-			public delegate void Delegate(Runnable runnable);
+			// `GLib.AsyncReadyCallback` compatible callback returned by `DelegateCallback`
+			private delegate void DelegateCallback2(Object? obj, AsyncResult res);
+			
+			// Callback passed to `DelegateCallback` that is invoked when the action
+			// has been completed to collect the result
+			//
+			// (Needed as `<async-func>.end` is not a function pointer that can be
+			//  passed around in Vala.)
+			public delegate void FinishCallback(Object? obj, AsyncResult res) throws Utils.RunError;
+			
+			// Callback passed to the caller to generate the `DelegateCallback2`
+			// instance that may be passed `<async-func>.begin` while storing a
+			// reference to the given `FinishCallback`
+			public delegate DelegateCallback2 DelegateCallback(FinishCallback callback);
+			
+			// Callback passed in the constructor to start an async transaction
+			// whenever the action is invoked
+			//
+			// All callbacks but this one would be unnecessary if Vala allowed
+			// passing around references to async-functions directly.
+			public delegate void Delegate(Runnable runnable, DelegateCallback callback);
+			
 			public string name { get; construct; }
 			public string description { get; construct; }
 			private Delegate action;
@@ -155,9 +185,28 @@ namespace GameHub.Data
 				Object(name: name, description: description);
 				this.action = (owned) action;
 			}
-			public void invoke(Runnable runnable)
+			public async void invoke(Runnable runnable) throws Utils.RunError
 			{
-				action(runnable);
+				Utils.RunError? err_result = null;
+				this.action(runnable, (callback) => {
+					return (obj, res) => {
+						try
+						{
+							callback(obj, res);
+						}
+						catch(Utils.RunError e)
+						{
+							err_result = e;
+						}
+						Idle.add(invoke.callback);
+					};
+				});
+				yield;
+				
+				if(err_result != null)
+				{
+					throw err_result;
+				}
 			}
 		}
 	}

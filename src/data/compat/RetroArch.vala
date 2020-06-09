@@ -73,7 +73,7 @@ namespace GameHub.Data.Compat
 			try
 			{
 				FileInfo? finfo = null;
-				var enumerator = dir.enumerate_children("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+				var enumerator = dir.enumerate_children("standard::name", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
 				while((finfo = enumerator.next_file()) != null)
 				{
 					var fname = finfo.get_name();
@@ -99,11 +99,18 @@ namespace GameHub.Data.Compat
 			return installed && runnable is Game && has_cores;
 		}
 
-		public override async void run(Runnable runnable)
+		public override async void run(Runnable runnable) throws Utils.RunError
 		{
-			if(!can_run(runnable)) return;
+			this.ensure_installed();
+			if(!can_run(runnable))
+			{
+				throw new Utils.RunError.COMMAND_NOT_FOUND(
+					_("RetroArch has no core, please check the logs")
+				);
+			}
+			
 			var core = core_option.value;
-			if(core == null) return;
+			if(core == null) return;  //XXX: When does this happen?
 
 			if(!core.has_prefix("/"))
 			{

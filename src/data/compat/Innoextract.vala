@@ -46,7 +46,7 @@ namespace GameHub.Data.Compat
 
 			if(installed)
 			{
-				version = Utils.run({executable.get_path(), "-v", "-q", "-c", "0"}).log(false).run_sync(true).output.replace(id, "").strip();
+				version = Utils.run({executable.get_path(), "-v", "-q", "-c", "0"}).log(false).run_sync_nofail(true).output.replace(id, "").strip();
 				name = name + " (" + version + ")";
 
 				if(Utils.compare_versions(Utils.parse_version(version), Innoextract.MIN_SUPPORTED_VERSION) < 0)
@@ -64,9 +64,16 @@ namespace GameHub.Data.Compat
 			return installed && runnable != null && Platform.WINDOWS in runnable.platforms;
 		}
 
-		public override async void install(Runnable runnable, File installer)
+		public override async void install(Runnable runnable, File installer) throws Utils.RunError
 		{
-			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE) return;
+			this.ensure_installed();
+			if(!can_install(runnable) || (yield Runnable.Installer.guess_type(installer)) != Runnable.Installer.InstallerType.WINDOWS_EXECUTABLE)
+			{
+				throw new Utils.RunError.INVALID_ARGUMENT(
+					_("File “%s” does not appear to be an InnoSetup installer file"),
+					installer.get_path()
+				);
+			}
 
 			runnable.install_dir = runnable.install_dir ?? runnable.default_install_dir;
 

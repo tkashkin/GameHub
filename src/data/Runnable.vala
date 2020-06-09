@@ -73,8 +73,8 @@ namespace GameHub.Data
 
 		public ArrayList<RunnableAction> actions { get; protected set; default = new ArrayList<RunnableAction>(); }
 
-		public abstract async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE);
-		public abstract async void run();
+		public abstract async void install(Runnable.Installer.InstallMode install_mode=Runnable.Installer.InstallMode.INTERACTIVE) throws Utils.RunError;
+		public abstract async void run() throws Utils.RunError;
 
 		public virtual bool can_be_launched(bool is_launch_attempt=false)
 		{
@@ -92,7 +92,7 @@ namespace GameHub.Data
 			return true;
 		}
 
-		public virtual async void run_with_compat(bool is_opened_from_menu=false)
+		public virtual async void run_with_compat(bool is_opened_from_menu=false) throws Utils.RunError
 		{
 			if(can_be_launched(true))
 			{
@@ -148,7 +148,7 @@ namespace GameHub.Data
 			executable = file;
 			if(executable != null && executable.query_exists())
 			{
-				Utils.run({"chmod", "+x", executable.get_path()}).run_sync();
+				Utils.run({"chmod", "+x", executable.get_path()}).run_sync_nofail();
 			}
 
 			if(update)
@@ -159,7 +159,7 @@ namespace GameHub.Data
 		}
 
 		public virtual void save(){}
-		public virtual void update_status(){}
+		public virtual void update_status() {}
 
 		public virtual void import(bool update=true)
 		{
@@ -196,7 +196,7 @@ namespace GameHub.Data
 
 				if(executable.query_exists())
 				{
-					Utils.run({"chmod", "+x", executable.get_path()}).run_sync();
+					Utils.run({"chmod", "+x", executable.get_path()}).run_sync_nofail();
 				}
 
 				if(update)
@@ -348,7 +348,7 @@ namespace GameHub.Data
 
 			public virtual string name { owned get { return id; } }
 
-			public abstract async void install(Runnable runnable, CompatTool? tool=null);
+			public abstract async void install(Runnable runnable, CompatTool? tool=null) throws Utils.RunError;
 
 			public static async InstallerType guess_type(File file, bool is_part=false)
 			{
@@ -363,6 +363,7 @@ namespace GameHub.Data
 
 					if(type != InstallerType.UNKNOWN) return type;
 
+					//XXX: Is this fallback really needed?
 					var info = Utils.run({"file", "-bi", file.get_path()}).log(false).run_sync(true).output;
 					if(info != null && info.length > 0)
 					{
@@ -401,7 +402,7 @@ namespace GameHub.Data
 						if(file.get_basename().down().has_suffix(@".$(ext)")) return InstallerType.ARCHIVE;
 					}
 				}
-				catch(Error e){}
+				catch(Error e){} //XXX: Shouldn't there be one of these per detection kind?
 
 				return type;
 			}
@@ -464,12 +465,12 @@ namespace GameHub.Data
 			public File? file { get; protected set; }
 			public int64 size { get; protected set; }
 
-			public override async void install(Runnable runnable, CompatTool? tool=null)
+			public override async void install(Runnable runnable, CompatTool? tool=null) throws Utils.RunError
 			{
 				yield install_file(file, false, runnable, tool);
 			}
 
-			public static async void install_file(File? file, bool is_part, Runnable runnable, CompatTool? tool=null, out bool is_windows_installer=null, out bool is_nsis_installer=null)
+			public static async void install_file(File? file, bool is_part, Runnable runnable, CompatTool? tool=null, out bool is_windows_installer=null, out bool is_nsis_installer=null) throws Utils.RunError
 			{
 				is_windows_installer = false;
 				is_nsis_installer = false;
@@ -482,8 +483,9 @@ namespace GameHub.Data
 					game = runnable as Game;
 				}
 
+				//XXX: Do `chmod` using GIO rather than spawning process for this
 				var path = file.get_path();
-				Utils.run({"chmod", "+x", path}).run_sync();
+				Utils.run({"chmod", "+x", path}).run_sync_nofail();
 
 				FSUtils.mkdir(runnable.install_dir.get_path());
 
@@ -491,7 +493,8 @@ namespace GameHub.Data
 
 				if(type == InstallerType.WINDOWS_EXECUTABLE && tool is Compat.Innoextract)
 				{
-					var desc = Utils.run({"file", "-b", path}).log(false).run_sync(true).output;
+					//XXX: Use libmagic directly here
+					var desc = Utils.run({"file", "-b", path}).log(false).run_sync_nofail(true).output;
 					if(desc != null && desc.length > 0 && NSIS_INSTALLER_DESCRIPTION in desc)
 					{
 						type = InstallerType.WINDOWS_NSIS_INSTALLER;
@@ -856,7 +859,7 @@ namespace GameHub.Data
 				return false;
 			}
 
-			public async void invoke(CompatTool? tool=null)
+			public async void invoke(CompatTool? tool=null) throws Utils.RunError
 			{
 				if(file == null && uri != null)
 				{
