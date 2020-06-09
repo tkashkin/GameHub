@@ -534,13 +534,47 @@ namespace GameHub
 				{
 					var loop = new MainLoop();
 					game.update_game_info.begin((obj, res) => {
-						game.update_game_info.end(res);
+						try
+						{
+							game.update_game_info.end(res);
+						}
+						catch(Utils.RunError error)
+						{
+							Utils.RunError.prefix(ref error, _("Error while updating game information: "));
+							
+							GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+								null, error, Log.METHOD,
+								_("Launching game “%s” failed").printf(game.name),
+								(result_id) => {
+									loop.quit();
+								}
+							);
+							return;
+						}
+						
 						switch(action.name)
 						{
 							case ACTION_GAME_RUN:
 								info("Starting `%s`", game.name);
 								game.run_or_install.begin(opt_show_compat, (obj, res) => {
-									game.run_or_install.end(res);
+									try
+									{
+										game.run_or_install.end(res);
+									}
+									catch(Utils.RunError error)
+									{
+										Utils.RunError.prefix(ref error, _("Error while launching: "));
+										
+										GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+											null, error, Log.METHOD,
+											_("Launching game “%s” failed").printf(game.name),
+											(result_id) => {
+												loop.quit();
+											}
+										);
+										return;
+									}
+									
 									info("`%s` finished", game.name);
 									loop.quit();
 								});

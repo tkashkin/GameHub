@@ -639,7 +639,18 @@ namespace GameHub.UI.Views.GamesView
 						switch(r)
 						{
 							case 1:
-								Utils.open_uri("steam://openurl/https://steamcommunity.com/my/edit/settings");
+								try
+								{
+									Utils.open_uri("steam://openurl/https://steamcommunity.com/my/edit/settings");
+								}
+								catch(Utils.RunError error)
+								{
+									//FIXME [DEV-ART]: Replace this with inline error display?
+									GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+										this, error, Log.METHOD,
+										_("Launching Stream Community settings failed")
+									);
+								}
 								break;
 
 							case 2:

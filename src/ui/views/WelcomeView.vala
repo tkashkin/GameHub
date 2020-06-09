@@ -151,7 +151,18 @@ namespace GameHub.UI.Views
 						{
 							btn.description = _("Authenticating…");
 							welcome.set_item_sensitivity(index, false);
-							yield src.authenticate();
+							try
+							{
+								yield src.authenticate();
+							}
+							catch(Utils.RunError error)
+							{
+								//FIXME [DEV-ART]: Replace this with inline error display?
+								yield GameHub.UI.Dialogs.QuickErrorDialog.display_and_log(
+									this, error, Log.METHOD,
+									_("Authenticating with “%s” failed").printf(src.name)
+								);
+							}
 							is_updating = false;
 							update_entries.begin();
 							return;
@@ -203,7 +214,21 @@ namespace GameHub.UI.Views
 			{
 				if(!src.is_authenticated())
 				{
-					if(!(yield src.authenticate()))
+					bool succeeded = false;
+					try
+					{
+						succeeded = yield src.authenticate();
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						yield GameHub.UI.Dialogs.QuickErrorDialog.display_and_log(
+							this, error, Log.METHOD,
+							_("Authenticating with “%s” failed").printf(src.name)
+						);
+					}
+					
+					if(!succeeded)
 					{
 						welcome.set_item_sensitivity(index, true);
 						return;
@@ -213,7 +238,18 @@ namespace GameHub.UI.Views
 			}
 			else
 			{
-				yield src.install();
+				try
+				{
+					yield src.install();
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					yield GameHub.UI.Dialogs.QuickErrorDialog.display_and_log(
+						this, error, Log.METHOD,
+						_("Installing “%s” failed").printf(src.name)
+					);
+				}
 				welcome.set_item_sensitivity(index, true);
 			}
 		}

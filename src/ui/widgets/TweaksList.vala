@@ -112,7 +112,20 @@ namespace GameHub.UI.Widgets
 					url.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 					url.clicked.connect(() => {
-						Utils.open_uri(tweak.url);
+						try
+						{
+							Utils.open_uri(tweak.url);
+						}
+						catch(Utils.RunError error)
+						{
+							//FIXME [DEV-ART]: Replace this with inline error display?
+							GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+								this, error, Log.METHOD,
+								_("Opening tweak website “%s” of tweak “%s” failed").printf(
+									tweak.url, tweak.name ?? tweak.id
+								)
+							);
+						}
 					});
 
 					grid.attach(url, 2, 0, 1, 2);
@@ -126,7 +139,20 @@ namespace GameHub.UI.Widgets
 					edit.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 					edit.clicked.connect(() => {
-						Utils.open_uri(tweak.file.get_uri());
+						try
+						{
+							Utils.open_uri(tweak.file.get_uri());
+						}
+						catch(Utils.RunError error)
+						{
+							//FIXME [DEV-ART]: Replace this with inline error display?
+							GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+								this, error, Log.METHOD,
+								_("Opening editor for tweak file “%s” of tweak “%s” failed").printf(
+									tweak.file.get_path(), tweak.name ?? tweak.id
+								)
+							);
+						}
 					});
 
 					grid.attach(edit, 3, 0, 1, 2);

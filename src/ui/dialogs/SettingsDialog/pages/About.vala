@@ -159,7 +159,18 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			button.tooltip_text = url;
 
 			button.clicked.connect(() => {
-				Utils.open_uri(url);
+				try
+				{
+					Utils.open_uri(url);
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, error, Log.METHOD,
+						_("Opening website “%s” failed").printf(url)
+					);
+				}
 			});
 
 			(parent ?? links_view).add(button);

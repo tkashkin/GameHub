@@ -132,7 +132,20 @@ namespace GameHub.UI.Dialogs
 				emulated_game.is_running = true;
 				emulated_game.update_status();
 				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, launch_in_game_dir, (obj, res) => {
-					compat_tool_picker.selected.run_emulator.end(res);
+					try
+					{
+						compat_tool_picker.selected.run_emulator.end(res);
+					}
+					catch(Utils.RunError e)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						QuickErrorDialog.display_and_log.begin(
+							this, e, Log.METHOD,
+							_("Launching game “%s” in emulator “%s” failed").printf(
+								emulated_game.name, game.name
+							)
+						);
+					}
 					Timeout.add_seconds(1, () => {
 						Runnable.IsLaunched = game.is_running = emulated_game.is_running = false;
 						emulated_game.update_status();
@@ -147,7 +160,20 @@ namespace GameHub.UI.Dialogs
 				(game as Game).last_launch = get_real_time() / 1000000;
 				game.save();
 				compat_tool_picker.selected.run.begin(game, (obj, res) => {
-					compat_tool_picker.selected.run.end(res);
+					try
+					{
+						compat_tool_picker.selected.run.end(res);
+					}
+					catch(Utils.RunError e)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						QuickErrorDialog.display_and_log.begin(
+							this, e, Log.METHOD,
+							_("Launching game “%s” in compatiblity tool “%s” failed").printf(
+								game.name, compat_tool_picker.selected.name
+							)
+						);
+					}
 					Timeout.add_seconds(1, () => {
 						Runnable.IsLaunched = game.is_running = false;
 						game.update_status();

@@ -332,9 +332,21 @@ namespace GameHub.UI.Dialogs
 					yield dl_installer.download(runnable);
 				}
 			}
+
 			if(response_id == ResponseType.ACCEPT)
 			{
-				yield installer.install(runnable, tool);
+				try
+				{
+					yield installer.install(runnable, tool);
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					yield QuickErrorDialog.display_and_log(
+						this, error, Log.METHOD,
+						_("Installing game “%s” failed").printf(runnable.name)
+					);
+				}
 			}
 			if(callback != null) callback();
 		}

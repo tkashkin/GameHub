@@ -194,7 +194,20 @@ namespace GameHub.UI.Views.GameDetailsView
 				}
 				if(steam_apps.length > 0)
 				{
-					Sources.Steam.Steam.install_multiple_apps(steam_apps);
+					try
+					{
+						Sources.Steam.Steam.install_multiple_apps(steam_apps);
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Installing Steam apps “%s” failed").printf(
+								string.joinv(_("”, “"), steam_apps)
+							)
+						);
+					}
 				}
 			}
 
@@ -202,7 +215,20 @@ namespace GameHub.UI.Views.GameDetailsView
 			{
 				if(!(game is Sources.Steam.SteamGame))
 				{
-					game.install.begin(Runnable.Installer.InstallMode.AUTOMATIC);
+					game.install.begin(Runnable.Installer.InstallMode.AUTOMATIC, (obj, res) => {
+						try
+						{
+							game.install.end(res);
+						}
+						catch(Utils.RunError error)
+						{
+							//FIXME [DEV-ART]: Replace this with inline error display?
+							GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+								this, error, Log.METHOD,
+								_("Installing game “%s” failed").printf(game.name)
+							);
+						}
+					});
 				}
 			}
 			update();
@@ -248,7 +274,18 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			foreach(var game in games)
 			{
-				yield game.uninstall();
+				try
+				{
+					yield game.uninstall();
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, error, Log.METHOD,
+						_("Uninstalling game “%s” failed").printf(game.name)
+					);
+				}
 			}
 			update();
 		}

@@ -422,7 +422,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 
 					emulator.executable = null;
 					emulator.install.begin(Runnable.Installer.InstallMode.INTERACTIVE, (obj, res) => {
-						emulator.install.end(res);
+						try
+						{
+							emulator.install.end(res);
+						}
+						catch(Utils.RunError error)
+						{
+							//FIXME [DEV-ART]: Replace this with inline error display?
+							GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+								this, error, Log.METHOD,
+								//TODO: Is this accurate?
+								_("Installing emulator “%s” failed").printf(emulator.name)
+							);
+						}
 						sensitive = true;
 						mode.selected = 0;
 						executable.select_file(emulator.executable);

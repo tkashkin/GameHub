@@ -213,11 +213,25 @@ namespace GameHub.UI.Views.GamesView
 			#endif
 		}
 
+		//XXX: Why are these duplicated from `GameHub.UI.Views.GameDetailsView.GameDetailsPage`?
 		private void open_game_directory()
 		{
 			if(game != null && game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
 			{
-				Utils.open_uri(game.install_dir.get_uri());
+				try
+				{
+					Utils.open_uri(game.install_dir.get_uri());
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, error, Log.METHOD,
+						_("Opening game directory “%s” of game “%s” failed").printf(
+							game.install_dir.get_path(), game.name
+						)
+					);
+				}
 			}
 		}
 
@@ -225,7 +239,20 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(game != null && game.installers_dir != null && game.installers_dir.query_exists())
 			{
-				Utils.open_uri(game.installers_dir.get_uri());
+				try
+				{
+					Utils.open_uri(game.installers_dir.get_uri());
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, error, Log.METHOD,
+						_("Opening installer directory “%s” of game “%s” failed").printf(
+							game.installers_dir.get_path(), game.name
+						)
+					);
+				}
 			}
 		}
 
@@ -236,7 +263,20 @@ namespace GameHub.UI.Views.GamesView
 				var gog_game = game as GameHub.Data.Sources.GOG.GOGGame;
 				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
 				{
-					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
+					try
+					{
+						Utils.open_uri(gog_game.bonus_content_dir.get_uri());
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Opening bonus content directory “%s” of game “%s” failed").printf(
+								gog_game.bonus_content_dir.get_path(), game.name
+							)
+						);
+					}
 				}
 			}
 		}
@@ -248,7 +288,20 @@ namespace GameHub.UI.Views.GamesView
 				var steam_game = game as GameHub.Data.Sources.Steam.SteamGame;
 				if(steam_game != null && steam_game.screenshots_dir != null && steam_game.screenshots_dir.query_exists())
 				{
-					Utils.open_uri(steam_game.screenshots_dir.get_uri());
+					try
+					{
+						Utils.open_uri(steam_game.screenshots_dir.get_uri());
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Opening screenshot directory “%s” of game “%s” failed").printf(
+								steam_game.screenshots_dir.get_path(), game.name
+							)
+						);
+					}
 				}
 			}
 		}

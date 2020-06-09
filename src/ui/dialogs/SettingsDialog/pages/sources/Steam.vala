@@ -201,7 +201,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 					install.clicked.connect(() => {
 						install.sensitive = false;
 						page.request_restart();
-						proton.install_app();
+						
+						try
+						{
+							proton.install_app();
+						}
+						catch(Utils.RunError error)
+						{
+							//FIXME [DEV-ART]: Replace this with inline error display?
+							GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+								this, error, Log.METHOD,
+								_("Installing Proton failed")
+							);
+						}
 					});
 				}
 

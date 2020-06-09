@@ -181,7 +181,20 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 				});
 
 				open.clicked.connect(() => {
-					Utils.open_uri(provider.url);
+					try
+					{
+						Utils.open_uri(provider.url);
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Opening provider website “%s” of provider “%s” failed").printf(
+								provider.url, provider.name
+							)
+						);
+					}
 				});
 			}
 		}

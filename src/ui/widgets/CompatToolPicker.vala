@@ -190,7 +190,18 @@ namespace GameHub.UI.Widgets
 			btn.tooltip_text = action.description;
 			btn.hexpand = true;
 			btn.clicked.connect(() => action.invoke.begin(runnable, (obj, res) => {
-				action.invoke.end(res);
+				try
+				{
+					action.invoke.end(res);
+				}
+				catch(Utils.RunError e)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, e, Log.METHOD,
+						_("Launching action “%s” failed").printf(action.name)
+					);
+				}
 			}));
 			actions.add(btn);
 		}

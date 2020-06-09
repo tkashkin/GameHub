@@ -347,9 +347,22 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(game == null) return;
 
-			yield game.update_game_info();
-
-			is_updated = true;
+			try
+			{
+				yield game.update_game_info();
+				
+				is_updated = true;
+			}
+			catch(Utils.RunError error)
+			{
+				is_updated = false;
+				
+				//FIXME [DEV-ART]: Replace this with inline error display?
+				yield GameHub.UI.Dialogs.QuickErrorDialog.display_and_log(
+					this, error, Log.METHOD,
+					_("Updating game information failed")
+				);
+			}
 
 			title.label = game.name;
 			src_icon.icon_name = game.source.icon;
@@ -436,7 +449,20 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			if(_game != null && game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
 			{
-				Utils.open_uri(game.install_dir.get_uri());
+				try
+				{
+					Utils.open_uri(game.install_dir.get_uri());
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, error, Log.METHOD,
+						_("Opening game directory “%s” of game “%s” failed").printf(
+							game.install_dir.get_path(), game.name
+						)
+					);
+				}
 			}
 		}
 
@@ -444,7 +470,20 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			if(_game != null && game.installers_dir != null && game.installers_dir.query_exists())
 			{
-				Utils.open_uri(game.installers_dir.get_uri());
+				try
+				{
+					Utils.open_uri(game.installers_dir.get_uri());
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, error, Log.METHOD,
+						_("Opening installer directory “%s” of game “%s” failed").printf(
+							game.installers_dir.get_path(), game.name
+						)
+					);
+				}
 			}
 		}
 
@@ -455,7 +494,20 @@ namespace GameHub.UI.Views.GameDetailsView
 				var gog_game = game as GameHub.Data.Sources.GOG.GOGGame;
 				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
 				{
-					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
+					try
+					{
+						Utils.open_uri(gog_game.bonus_content_dir.get_uri());
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Opening bonus content directory “%s” of game “%s” failed").printf(
+								gog_game.bonus_content_dir.get_path(), game.name
+							)
+						);
+					}
 				}
 			}
 		}
@@ -467,7 +519,20 @@ namespace GameHub.UI.Views.GameDetailsView
 				var steam_game = game as GameHub.Data.Sources.Steam.SteamGame;
 				if(steam_game != null && steam_game.screenshots_dir != null && steam_game.screenshots_dir.query_exists())
 				{
-					Utils.open_uri(steam_game.screenshots_dir.get_uri());
+					try
+					{
+						Utils.open_uri(steam_game.screenshots_dir.get_uri());
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Opening screenshot directory “%s” of game “%s” failed").printf(
+								steam_game.screenshots_dir.get_path(), game.name
+							)
+						);
+					}
 				}
 			}
 		}
@@ -476,7 +541,20 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			if(_game != null && game.store_page != null)
 			{
-				Utils.open_uri(game.store_page);
+				try
+				{
+					Utils.open_uri(game.store_page);
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, error, Log.METHOD,
+						_("Opening game store page “%s” of game “%s” failed").printf(
+							game.store_page, game.name
+						)
+					);
+				}
 			}
 		}
 
@@ -484,7 +562,20 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
-				game.run.begin();
+				game.run.begin((obj, res) => {
+					try
+					{
+						game.run.end(res);
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Launching game “%s” failed").printf(game.name)
+						);
+					}
+				});
 			}
 		}
 
@@ -492,7 +583,20 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
-				game.run_with_compat.begin(false);
+				game.run_with_compat.begin(false, (obj, res) => {
+					try
+					{
+						game.run_with_compat.end(res);
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Launching game “%s” failed").printf(game.name)
+						);
+					}
+				});
 			}
 		}
 
@@ -500,7 +604,20 @@ namespace GameHub.UI.Views.GameDetailsView
 		{
 			if(_game != null && game.status.state == Game.State.INSTALLED)
 			{
-				game.uninstall.begin();
+				game.uninstall.begin((obj, res) => {
+					try
+					{
+						game.uninstall.end(res);
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Uninstalling game “%s” failed").printf(game.name)
+						);
+					}
+				});
 			}
 		}
 

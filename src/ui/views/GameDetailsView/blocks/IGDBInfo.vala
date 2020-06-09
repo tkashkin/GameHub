@@ -65,7 +65,18 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			{
 				igdb_link.tooltip_text = result.url;
 				igdb_link.clicked.connect(() => {
-					Utils.open_uri(result.url);
+					try
+					{
+						Utils.open_uri(result.url);
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Opening website “%s” failed").printf(result.url)
+						);
+					}
 				});
 			}
 			else
@@ -174,7 +185,18 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					}
 					var link = new ActionButton(site.category.icon(), null, desc, false, true);
 					link.clicked.connect(() => {
-						Utils.open_uri(site.url);
+						try
+						{
+							Utils.open_uri(site.url);
+						}
+						catch(Utils.RunError error)
+						{
+							//FIXME [DEV-ART]: Replace this with inline error display?
+							GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+								this, error, Log.METHOD,
+								_("Opening website “%s” failed").printf(site.url)
+							);
+						}
 					});
 					links_box.add(link);
 				}

@@ -121,6 +121,7 @@ sources = [
 	'ui/dialogs/CorruptedInstallerDialog.vala',
 	'ui/dialogs/ImportEmulatedGamesDialog.vala',
 	'ui/dialogs/GameTweaksDialog.vala',
+	'ui/dialogs/QuickErrorDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',

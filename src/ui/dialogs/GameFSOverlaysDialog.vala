@@ -287,7 +287,20 @@ namespace GameHub.UI.Dialogs
 				child = grid;
 
 				open.clicked.connect(() => {
-					Utils.open_uri(overlay.directory.get_uri());
+					try
+					{
+						Utils.open_uri(overlay.directory.get_uri());
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Opening overlay directory “%s” of overlay “%s” failed").printf(
+								overlay.directory.get_path(), overlay.name
+							)
+						);
+					}
 				});
 
 				remove.clicked.connect(() => {

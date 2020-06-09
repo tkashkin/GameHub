@@ -153,7 +153,18 @@ namespace GameHub.UI.Widgets
 							link.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 							link.tooltip_text = result.url;
 							link.clicked.connect(() => {
-								Utils.open_uri(result.url);
+								try
+								{
+									Utils.open_uri(result.url);
+								}
+								catch(Utils.RunError error)
+								{
+									//FIXME [DEV-ART]: Replace this with inline error display?
+									GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+										this, error, Log.METHOD,
+										_("Opening website “%s” failed").printf(result.url)
+									);
+								}
 							});
 							header_hbox.add(link);
 						}

@@ -97,7 +97,20 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 			dirs_btn.add(dirs_btn_label);
 
-			dirs_btn.clicked.connect(() => { Utils.open_uri(last_dir.get_uri()); });
+			dirs_btn.clicked.connect(() => {
+				try
+				{
+					Utils.open_uri(last_dir.get_uri());
+				}
+				catch(Utils.RunError error)
+				{
+					//FIXME [DEV-ART]: Replace this with inline error display?
+					GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+						this, error, Log.METHOD,
+						_("Opening directory “%s” failed").printf(last_dir.get_path())
+					);
+				}
+			});
 
 			add_widget(dirs_btn);
 		}

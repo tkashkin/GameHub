@@ -178,7 +178,19 @@ namespace GameHub.Data.Providers.Images
 				link.tooltip_text = API_KEY_PAGE;
 
 				link.clicked.connect(() => {
-					Utils.open_uri(API_KEY_PAGE);
+					try
+					{
+						Utils.open_uri(API_KEY_PAGE);
+					}
+					catch(Error e)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						(new Gtk.MessageDialog(
+							grid.get_toplevel() as Gtk.Window,
+							Gtk.DialogFlags.MODAL, Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
+							"%s\n\n%s", _("Opening SteamGrid API key page failed"), e.message
+						)).show();
+					}
 				});
 
 				entry_wrapper.add(entry);

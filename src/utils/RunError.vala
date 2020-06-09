@@ -210,5 +210,23 @@ namespace GameHub.Utils
 				return RunError.from_spawn_error_literal(e, "");
 			}
 		}
+		
+		
+		/**
+		 * Like `GLib.Error.prefix` but with different output type
+		 * 
+		 * This cannot be a method as Vala does not support methods on error
+		 * domains “yet”.
+		 */
+		[PrintfFormat]
+		public static void prefix(ref RunError? error, string fmt, ...)
+		{
+			if(error == null) {
+				return;
+			}
+			
+			va_list va_list = va_list();
+			error.message = fmt.vprintf(va_list) + error.message;
+		}
 	}
 }

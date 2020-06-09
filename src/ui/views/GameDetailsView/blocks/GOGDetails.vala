@@ -56,7 +56,18 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			{
 				link.tooltip_text = game.store_page;
 				link.clicked.connect(() => {
-					Utils.open_uri(game.store_page);
+					try
+					{
+						Utils.open_uri(game.store_page);
+					}
+					catch(Utils.RunError error)
+					{
+						//FIXME [DEV-ART]: Replace this with inline error display?
+						GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+							this, error, Log.METHOD,
+							_("Opening website “%s” failed").printf(game.store_page)
+						);
+					}
 				});
 			}
 
@@ -316,7 +327,18 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 						}
 						else if(bonus.status.state == GOGGame.BonusContent.State.DOWNLOADED)
 						{
-							bonus.open();
+							try
+							{
+								bonus.open();
+							}
+							catch(Utils.RunError error)
+							{
+								//FIXME [DEV-ART]: Replace this with inline error display?
+								GameHub.UI.Dialogs.QuickErrorDialog.display_and_log.begin(
+									this, error, Log.METHOD,
+									_("Opening bonus content “%s” failed").printf(bonus.text)
+								);
+							}
 						}
 					}
 					return true;
