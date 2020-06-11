@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Goudarz Jafari <goudarz.jafari@gmail.com>, 2019.
+# Alireza Jabbari <rhrurhraj@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2019-08-03 20:23+0000\n"
-"Last-Translator: Goudarz Jafari <goudarz.jafari@gmail.com>\n"
+"PO-Revision-Date: 2020-06-12 19:41+0000\n"
+"Last-Translator: Alireza Jabbari <rhrurhraj@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/gamehub/"
 "translations/fa/>\n"
 "Language: fa\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -28,7 +29,7 @@ msgstr "نمایش نسخه برنامه و خروج"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "ری‌استارت همراه با عیب یاب GDB"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
@@ -48,7 +49,7 @@ msgstr ""
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr ""
+msgstr "نمایش درباره گفت‌وگو"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
