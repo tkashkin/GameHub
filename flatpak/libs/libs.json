@@ -26,16 +26,8 @@
 				}
 			]
 		},
-		{
-			"name": "manette",
-			"buildsystem": "meson",
-			"config-opts": ["--libdir=lib"],
-			"sources": [
-				{
-					"type": "archive",
-					"path": "bundled/libmanette-0.2.2.tar.gz"
-				}
-			]
-		}
+
+		"manette.json",
+		"file-roller.json"
 	]
 }
