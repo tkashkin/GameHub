@@ -1,0 +1,15 @@
+{
+	"name": "file-roller",
+	"buildsystem": "meson",
+	"config-opts": ["-Dnautilus-actions=false", "-Dpackagekit=false"],
+	"cleanup": [
+		"/share/help"
+	],
+	"sources": [
+		{
+			"type": "archive",
+			"url": "https://download.gnome.org/sources/file-roller/3.36/file-roller-3.36.2.tar.xz",
+			"sha256": "268f7fdad8d2a78dfed5e82eb8710bad389c311b720666d6f07a04ed51056bd2"
+		}
+	]
+}

@@ -84,8 +84,6 @@
 					"branch": "$BRANCH"
 				}
 			]
-		},
-
-		"bin/bin.json"
+		}
 	]
 }

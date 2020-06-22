@@ -16,6 +16,7 @@
 
 	"modules": [
 		"shared/intltool/intltool-0.51.json",
+		"valac.json",
 
 		{
 			"name": "libevdev",
@@ -26,18 +27,8 @@
 				}
 			]
 		},
-		{
-			"name": "manette",
-			"buildsystem": "meson",
-			"config-opts": ["--libdir=lib"],
-			"sources": [
-				{
-					"type": "archive",
-					"path": "bundled/libmanette-0.2.2.tar.gz"
-				}
-			]
-		},
-		
-		"valac.json"
+
+		"manette.json",
+		"file-roller.json"
 	]
 }
