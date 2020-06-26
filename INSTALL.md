@@ -7,6 +7,7 @@
 - [Fedora](#fedora)
 - [OpenMandriva](#openmandriva)
 - [openSUSE](#opensuse)
+- [Pop!_OS](#pop_os)
 - [Ubuntu-based distributions](#ubuntu-based-distributions)
 - [AppImage](#appimage)
 - [Flatpak](#flatpak)
@@ -55,8 +56,16 @@ sudo dnf install gamehub
 sudo zypper install gamehub
 ```
 
+## Pop!_OS
+
+```bash
+sudo apt install com.github.tkashkin.gamehub
+```
+
 ## Ubuntu-based distributions
 Install Debian package from the [releases page](https://github.com/tkashkin/GameHub/releases) or import the [PPA](https://launchpad.net/~tkashkin/+archive/ubuntu/gamehub):
+
+**THIS EXCLUDES [POP!_OS](#pop_os)!**
 ```bash
 # install if `add-apt-repository` is not available
 sudo apt install --no-install-recommends software-properties-common
