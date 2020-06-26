@@ -1,37 +1,34 @@
 # [GameHub](https://tkashkin.tk/projects/gamehub) [![Build status](https://ci.appveyor.com/api/projects/status/cgw5hc4kos4uvmy9/branch/master?svg=true)](https://ci.appveyor.com/project/tkashkin/gamehub/branch/master) [![Translation status](https://hosted.weblate.org/widgets/gamehub/-/translations/svg-badge.svg)](https://hosted.weblate.org/engage/gamehub/?utm_source=widget)
 Mirrors: [GitHub](https://github.com/tkashkin/GameHub), [codeberg.org](https://codeberg.org/tkashkin/GameHub), [repo.or.cz](https://repo.or.cz/GameHub.git), [git.froggi.es](https://git.froggi.es/tkashkin/gamehub)
 
-Unified library for all your games.
+## Overview
+GameHub is a unified library for all your games. It allows you to store your games from different platforms into one program to make it easier for you to manage your games.
 
 ### [Features](https://tkashkin.tk/projects/gamehub/#/features)
-GameHub allows to view, download, install, run and uninstall games from [supported sources](#game-sources).
+With GameHub, you can:
+- store your games in one place;
+- view your games;
+- login to multiple platforms;
+- download and install games from the supported sources;
+- [enable tweaks](https://github.com/tkashkin/GameHub/wiki/Tweaks);
+- add new tweaks;
+- download installers, DLCs and bonus contents;
+- add custom emulators.
 
-### [Games](https://tkashkin.tk/projects/gamehub/#/games)
-GameHub supports non-native games as well as native games for Linux.
-
-It supports multiple [compatibility layers](https://github.com/tkashkin/GameHub/wiki/Compatibility-layers) for non-native games:
-* Wine / Proton
-* DOSBox
-* RetroArch
-* ScummVM
-
-It also allows to add custom emulators.
-
-GameHub supports [WineWrap](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post1) — a set of preconfigured wrappers for [supported games](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post3).
-
-### [Game sources](https://tkashkin.tk/projects/gamehub/#/sources)
-GameHub supports multiple game sources and services:
-* Steam
-* GOG
-* Humble Bundle
-* Humble Trove
-
-Locally installed games can also be added to GameHub.
-
-### [Collection](https://tkashkin.tk/projects/gamehub/#/collection)
-GameHub makes storing and managing your DRM-free game collection easier.
-
-Download installers, DLCs and bonus content and GameHub will save your downloads according to settings.
+GameHub supports:
+- native games for Linux;
+- multiple [compatibility layers](https://github.com/tkashkin/GameHub/wiki/Compatibility-layers), such as:
+	- WINE / Proton;
+	- DOSBox;
+	- RetroArch;
+	- ScummVM;
+	- custom emulators.
+- multiple game platforms, such as:
+	- Steam;
+	- GOG;
+	- Humble Bundle;
+	- Humble Trove;
+	- [WineWrap](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post1) — a set of preconfigured wrappers for [supported games](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post3).
 
 ## Installation
 See [INSTALL.md](INSTALL.md).
