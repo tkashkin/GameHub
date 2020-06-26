@@ -17,7 +17,7 @@
 	- [Installing](#installing)
 
 ## Arch-based distributions
-[gamehub-git](https://aur.archlinux.org/packages/gamehub-git/) and [gamehub](https://aur.archlinux.org/packages/gamehub/) are available in AUR.
+[`gamehub-git`](https://aur.archlinux.org/packages/gamehub-git/) and [`gamehub`](https://aur.archlinux.org/packages/gamehub/) are available in AUR.
 
 ## Debian
 Unfortunately, there is no package available in the Debian repository, so it will be required to run the [`/scripts/build.sh build_deb`](../scripts/build.sh#L171-L210) script. The script will install the dependencies and GameHub.
@@ -49,7 +49,7 @@ sudo dnf install gamehub
 ```
 
 ## OpenMandriva
-[gamehub](https://abf.openmandriva.org/openmandriva/gamehub/build_lists) is available in the OpenMandriva repository.
+[`gamehub`](https://abf.openmandriva.org/openmandriva/gamehub/build_lists) is available in the OpenMandriva repository.
 
 ## openSUSE
 ```bash
