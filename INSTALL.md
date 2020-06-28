@@ -80,8 +80,14 @@ sudo apt install com.github.tkashkin.gamehub
 AppImages can be found in the [releases page](https://github.com/tkashkin/GameHub/releases).
 
 ## Flatpak
-Unfortunately, there is no package available in the Flathub repository, so it will be required to run the [`/scripts/build.sh build_flatpak`](../scripts/build.sh#L311-L334) script:
+Flatpak releases can be found in the [releases page](https://github.com/tkashkin/GameHub/releases).
 
+Then install the package by executing this command:
+```bash
+flatpak install GameHub-*.flatpak
+```
+
+If you want to build it from source instead of installing the binary, execute the commands:
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
 cd GameHub
