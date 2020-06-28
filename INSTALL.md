@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+- [Dependencies](#dependencies)
 - [Arch-based distributions](#arch-based-distributions)
 - [Debian](#debian)
 - [Fedora](#fedora)
@@ -16,26 +17,26 @@
 	- [Building](#building)
 	- [Installing](#installing)
 
+## Dependencies
+- `meson`
+- `valac`
+- `libgtk-3-dev`
+- `libglib2.0-dev`
+- `libwebkit2gtk-4.0-dev`
+- `libjson-glib-dev`
+- `libgee-0.8-dev`
+- `libsoup2.4-dev`
+- `libsqlite3-dev`
+- `libxml2-dev`
+- `libpolkit-gobject-1-dev`
+- `libunity-dev` (optional, required for launcher icon quicklist, progress indicator and counter; pass `-Duse_libunity=true` to `meson` to use)
+- `libmanette-0.2-dev`, `libx11-dev`, `libxtst-dev` (optional, required for gamepad support)
+
 ## Arch-based distributions
 [`gamehub-git`](https://aur.archlinux.org/packages/gamehub-git/) and [`gamehub`](https://aur.archlinux.org/packages/gamehub/) are available in AUR.
 
 ## Debian
 Unfortunately, there is no package available in the Debian repository, so it will be required to run the [`/scripts/build.sh build_deb`](../scripts/build.sh#L171-L210) script. The script will install the dependencies and GameHub.
-
-**Build dependencies**
-* `meson`
-* `valac`
-* `libgtk-3-dev`
-* `libglib2.0-dev`
-* `libwebkit2gtk-4.0-dev`
-* `libjson-glib-dev`
-* `libgee-0.8-dev`
-* `libsoup2.4-dev`
-* `libsqlite3-dev`
-* `libxml2-dev`
-* `libpolkit-gobject-1-dev`
-* `libunity-dev` (optional, required for launcher icon quicklist, progress indicator and counter; pass `-Duse_libunity=true` to `meson` to use)
-* `libmanette-0.2-dev`, `libx11-dev`, `libxtst-dev` (optional, required for gamepad support)
 
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
