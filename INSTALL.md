@@ -79,8 +79,12 @@ sudo apt install com.github.tkashkin.gamehub
 ## AppImage
 AppImages can be found in the [releases page](https://github.com/tkashkin/GameHub/releases).
 
+**WARNING: AppImages are unstable! You might experience issues.**
+
 ## Flatpak
 Flatpak releases can be found in the [releases page](https://github.com/tkashkin/GameHub/releases).
+
+**WARNING: Flatpak releases are unstable! You might experience issues.**
 
 Then install the package by executing this command:
 ```bash
