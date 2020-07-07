@@ -1,5 +1,8 @@
 @import url("app.css");
 
 @import url("dialogs/GamePropertiesDialog.css");
+@import url("dialogs/SettingsDialog.css");
 
 @import url("views/GamesView.css");
+
+@import url("widgets/settings/SettingsGroup.css");

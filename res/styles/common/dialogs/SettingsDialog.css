@@ -1,0 +1,56 @@
+.settings-dialog actionbar, .settings-dialog actionbar > revealer
+{
+	padding: 0;
+}
+.settings-dialog actionbar > revealer > box
+{
+	padding: 4px;
+}
+
+.settings-dialog:dir(ltr)
+{
+	background-image: linear-gradient(to right,
+		                              shade(@theme_bg_color, 0.95) 202px,
+	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
+	                                  transparent 204px, transparent);
+}
+.settings-dialog headerbar:dir(ltr)
+{
+	background-image: linear-gradient(to right,
+		                              alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
+	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
+	                                  transparent 204px, transparent);
+}
+.settings-dialog:dir(rtl)
+{
+	background-image: linear-gradient(to left,
+		                              shade(@theme_bg_color, 0.95) 202px,
+	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
+	                                  transparent 204px, transparent);
+}
+.settings-dialog headerbar:dir(rtl)
+{
+	background-image: linear-gradient(to left,
+		                              alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
+	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
+	                                  transparent 204px, transparent);
+}
+
+.settings-dialog > .titlebar > .vertical:dir(ltr)
+{
+    padding-left: 200px;
+}
+
+.settings-dialog > .titlebar > .vertical:dir(rtl)
+{
+    padding-right: 200px;
+}
+
+.settings-dialog .settings-pages-sidebar list
+{
+	background: shade(@theme_bg_color, 0.95);
+}

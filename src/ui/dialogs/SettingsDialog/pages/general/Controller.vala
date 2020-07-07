@@ -17,16 +17,17 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
-using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 {
 	public class Controller: SettingsDialogPage
 	{
 		private Settings.Controller settings;
-		private ListBox controllers;
+		private SettingsGroup sgrp_controllers;
 		private Grid shortcuts_grid;
 
 		public Controller(SettingsDialog dlg)
@@ -34,87 +35,58 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			Object(
 				dialog: dlg,
 				title: _("Controller"),
-				description: _("Enabled"),
 				icon_name: "gamehub-symbolic",
-				activatable: true
+				has_active_switch: true
 			);
-			status = description;
 		}
 
 		construct
 		{
-			root_grid.margin = 0;
-			header_grid.margin = 12;
-			content_area.margin = 0;
-
 			settings = Settings.Controller.instance;
 
-			var focus_switch = add_switch(_("Focus GameHub window with Guide button"), settings.focus_window, v => { settings.focus_window = v; update(); request_restart(); });
-			focus_switch.margin_start = 16;
-			focus_switch.margin_end = 12;
+			settings.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
-			var controllers_header = add_header(_("Controllers"));
-			controllers_header.margin_start = controllers_header.margin_end = 12;
+			var sgrp_controller_options = new SettingsGroup();
+			sgrp_controller_options.add_setting(new SwitchSetting.bind(_("Focus GameHub window with Guide button"), null, settings, "focus-window"));
+			add_widget(sgrp_controller_options);
 
-			var controllers_scroll = add_widget(new ScrolledWindow(null, null));
-			controllers_scroll.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			controllers_scroll.hscrollbar_policy = PolicyType.NEVER;
-
-			controllers_scroll.margin_start = 7;
-			controllers_scroll.margin_end = 3;
-			controllers_scroll.margin_top = 0;
-			controllers_scroll.margin_bottom = 6;
-
-			controllers = new ListBox();
-			controllers.selection_mode = SelectionMode.NONE;
-			controllers.get_style_context().add_class("separated-list");
-
-			controllers_scroll.add(controllers);
+			sgrp_controllers = new SettingsGroup(_("Controllers"));
+			add_widget(sgrp_controllers);
 
 			shortcuts_grid = add_widget(new Grid());
 			shortcuts_grid.valign = Align.END;
 			shortcuts_grid.column_spacing = 12;
 			shortcuts_grid.margin_start = 16;
 			shortcuts_grid.margin_end = 12;
-
-			#if GTK_3_22
-			controllers_scroll.propagate_natural_width = true;
-			controllers_scroll.propagate_natural_height = true;
 			shortcuts_grid.expand = true;
-			#else
-			controllers_scroll.expand = true;
-			#endif
 
 			add_shortcut(0, 0, _("Move focus"), "trigger-left", "/", "trigger-right");
 			shortcuts_grid.add(new Separator(Orientation.VERTICAL));
 			add_shortcut(2, 0, _("Exit"), "guide", "+", "b");
-
-			status_switch.active = settings.enabled;
-			status_switch.notify["active"].connect(() => {
-				settings.enabled = status_switch.active;
-				update();
-				request_restart();
-			});
 
 			update();
 		}
 
 		private void update()
 		{
-			content_area.sensitive = settings.enabled;
-			status = description = settings.enabled ? _("Enabled") : _("Disabled");
-
-			controllers.foreach(r => {
+			sgrp_controllers.settings.foreach(r => {
 				if(r != null) r.destroy();
 			});
 
-			foreach(var controller in settings.known_controllers)
+			if(settings.known_controllers.length == 0)
 			{
-				controllers.add(new ControllerRow(controller, !(controller in settings.ignored_controllers), this));
+			    sgrp_controllers.add_setting(new LabelSetting(_("No controllers detected. Connected controllers will appear here")));
+			}
+			else
+			{
+			    foreach(var controller in settings.known_controllers)
+			    {
+			        sgrp_controllers.add_setting(new ControllerRow(controller, !(controller in settings.ignored_controllers), this));
+			    }
 			}
 		}
 
-		private class ControllerRow: ListBoxRow
+		private class ControllerRow: ListBoxRow, ActivatableSetting
 		{
 			public string controller { get; construct; }
 			public bool enabled { get; construct set; }
@@ -123,22 +95,22 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 			public ControllerRow(string controller, bool enabled, Controller page)
 			{
-				Object(controller: controller, enabled: enabled, page: page);
+				Object(controller: controller, enabled: enabled, page: page, activatable: true, selectable: false);
 			}
 
 			construct
 			{
 				var settings = Settings.Controller.instance;
 
-				var hbox = new Box(Orientation.HORIZONTAL, 8);
-				hbox.margin_start = hbox.margin_end = 8;
-				hbox.margin_top = hbox.margin_bottom = 4;
+				get_style_context().add_class("setting");
+                get_style_context().add_class("controller");
+
+				var hbox = new Box(Orientation.HORIZONTAL, 12);
 
 				var icon = new Image.from_icon_name("gamehub-symbolic", IconSize.SMALL_TOOLBAR);
 				icon.valign = Align.CENTER;
 
 				var name = new Label(controller);
-				name.get_style_context().add_class("category-label");
 				name.hexpand = true;
 				name.ellipsize = Pango.EllipsizeMode.END;
 				name.xalign = 0;
@@ -147,6 +119,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				var enabled_switch = new Switch();
 				enabled_switch.active = enabled;
 				enabled_switch.valign = Align.CENTER;
+				enabled_switch.can_focus = false;
 
 				hbox.add(icon);
 				hbox.add(name);
@@ -177,6 +150,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 						page.request_restart();
 					}
 				});
+
+				setting_activated.connect(() => {
+                    enabled_switch.activate();
+                });
 			}
 		}
 

@@ -28,6 +28,8 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 {
 	private class General: GamePropertiesDialogTab
 	{
+		public Game game { get; construct; }
+
 		public General(Game game)
 		{
 			Object(
@@ -183,8 +185,8 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 
 		private void load_images()
 		{
-			//image_entry.reset();
-			//image_vertical_entry.reset();
+			image_entry.reset();
+			image_vertical_entry.reset();
 			image_view.load(game.image, null, @"games/$(game.source.id)/$(game.id)/images/");
 			image_vertical_view.load(null, game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
 		}

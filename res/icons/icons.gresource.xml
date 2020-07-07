@@ -34,6 +34,15 @@
 		<file alias="scalable/actions/gh-game-favorite-symbolic.svg">symbolic/game-favorite.svg</file>
 		<file alias="scalable/actions/gh-game-updated-symbolic.svg">symbolic/game-updated.svg</file>
 
+		<file alias="scalable/actions/gh-settings-cog-symbolic.svg">symbolic/settings/cog.svg</file>
+		<file alias="scalable/actions/gh-settings-cogs-symbolic.svg">symbolic/settings/cogs.svg</file>
+		<file alias="scalable/actions/gh-settings-file-cog-symbolic.svg">symbolic/settings/file-cog.svg</file>
+		<file alias="scalable/actions/gh-settings-folder-symbolic.svg">symbolic/settings/folder.svg</file>
+		<file alias="scalable/actions/gh-settings-grid-cog-symbolic.svg">symbolic/settings/grid-cog.svg</file>
+		<file alias="scalable/actions/gh-settings-sliders-symbolic.svg">symbolic/settings/sliders.svg</file>
+
+		<file alias="scalable/actions/web-symbolic.svg">symbolic/web.svg</file>
+
 		<file alias="scalable/actions/gamehub-symbolic.svg">symbolic/gamehub.svg</file>
 
 		<file alias="scalable/actions/controller-button-a.svg">normal/controller/a.svg</file>

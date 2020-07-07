@@ -424,7 +424,7 @@ namespace GameHub.Data.Sources.GOG
 			string? d = null;
 			if(this is DLC)
 			{
-				g = (this as DLC).game.name;
+				g = ((DLC) this).game.name;
 				d = name;
 			}
 			/*installers_dir = FS.file(FS.Paths.Collection.GOG.expand_installers(g, d));
@@ -573,7 +573,7 @@ namespace GameHub.Data.Sources.GOG
 				string? d = null;
 				if(game is DLC)
 				{
-					g = (game as DLC).game.name;
+					g = ((DLC) this).game.name;
 					d = game.name;
 				}
 				//installers_dir = FS.file(FS.Paths.Collection.GOG.expand_installers(g, d, platform)) ?? game.installers_dir;

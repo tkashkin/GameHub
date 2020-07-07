@@ -17,14 +17,12 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Data;
-using GameHub.Utils;
-
-using GameHub.UI.Widgets;
-
 using GameHub.Data.DB;
+using GameHub.Utils;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Emulators
 {

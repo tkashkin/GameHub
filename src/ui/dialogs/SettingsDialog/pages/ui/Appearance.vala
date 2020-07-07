@@ -17,7 +17,10 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using Gee;
+
 using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
 
@@ -35,96 +38,29 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 				dialog: dlg,
 				header: _("Interface"),
 				title: _("Appearance"),
-				description: _("General interface settings"),
-				icon_name: "preferences-desktop"
+				icon_name: "gh-settings-grid-cog-symbolic"
 			);
-			status = description;
 		}
 
 		construct
 		{
 			settings = Settings.UI.Appearance.instance;
 
-			add_switch(_("Dark theme"), settings.dark_theme, v => { settings.dark_theme = v; });
-
-			var icon_style = new ModeButton();
-			icon_style.homogeneous = false;
-			icon_style.halign = Align.END;
-			icon_style.append_text(C_("icon_style", "Theme-based"));
-			icon_style.append_text(C_("icon_style", "Symbolic"));
-			icon_style.append_text(C_("icon_style", "Colored"));
-
-			var icon_style_label = new Label(C_("icon_style", "Icon style"));
-			icon_style_label.halign = Align.START;
-			icon_style_label.hexpand = true;
-
-			var icon_style_hbox = new Box(Orientation.HORIZONTAL, 12);
-			icon_style_hbox.add(icon_style_label);
-			icon_style_hbox.add(icon_style);
-			add_widget(icon_style_hbox);
-
-			icon_style.selected = settings.icon_style;
-			icon_style.mode_changed.connect(() => {
-				settings.icon_style = (Settings.UI.Appearance.IconStyle) icon_style.selected;
-			});
-
-			add_separator();
-
-			var tabs_switcher = add_widget(new StackSwitcher());
-			tabs_switcher.halign = Align.CENTER;
-
-			var tabs_stack = add_widget(new Stack());
-			tabs_stack.margin = 0;
-
-			tabs_switcher.stack = tabs_stack;
-
-			var tab_grid = new Box(Orientation.VERTICAL, 4);
-			tab_grid.margin = 4;
-
-			tab_grid.add(Styled.H4Label(_("Game card")));
-
-			add_checkbox(_("Show platform icons"), settings.grid_platform_icons, v => { settings.grid_platform_icons = v; }, tab_grid);
-
-			var grid_size_separator = new Separator(Orientation.HORIZONTAL);
-			grid_size_separator.margin_top = grid_size_separator.margin_bottom = 4;
-			tab_grid.add(grid_size_separator);
-
-			var grid_size_wrap_hbox = new Box(Orientation.HORIZONTAL, 12);
 			var grid_size_hbox = new Box(Orientation.HORIZONTAL, 8);
-
 			var grid_width_spinbutton = add_spinbutton(settings.grid_card_width, v => { settings.grid_card_width = v; update_grid_size_presets(); }, grid_size_hbox);
 			grid_size_hbox.add(new Label("×"));
 			var grid_height_spinbutton = add_spinbutton(settings.grid_card_height, v => { settings.grid_card_height = v; update_grid_size_presets(); }, grid_size_hbox);
 
-			var grid_size_label = new Label(C_("grid_size", "Card size"));
-			grid_size_label.halign = Align.START;
-			grid_size_label.hexpand = true;
-
-			grid_size_wrap_hbox.add(grid_size_label);
-			grid_size_wrap_hbox.add(grid_size_hbox);
-
-			tab_grid.add(grid_size_wrap_hbox);
-
 			grid_size_presets = new ModeButton();
 			StyleClass.add(grid_size_presets, "icons-modebutton");
-			grid_size_presets.halign = Align.END;
 
 			foreach(var preset in Settings.UI.Appearance.GameGridSizePreset.PRESETS)
 			{
 				grid_size_presets.append_icon(preset.icon(), IconSize.BUTTON, preset.description(), true);
 			}
 
-			var grid_size_presets_label = new Label(C_("grid_size_preset", "Presets"));
-			grid_size_presets_label.halign = Align.START;
-			grid_size_presets_label.hexpand = true;
-
-			var grid_size_presets_hbox = new Box(Orientation.HORIZONTAL, 12);
-			grid_size_presets_hbox.add(grid_size_presets_label);
-			grid_size_presets_hbox.add(grid_size_presets);
-			tab_grid.add(grid_size_presets_hbox);
-
-			var tab_list = new Box(Orientation.HORIZONTAL, 8);
-			tab_list.margin = 4;
+			var list_hbox = new Box(Orientation.HORIZONTAL, 8);
+			list_hbox.margin_start = list_hbox.margin_end = 8;
 
 			var list_installed = new Box(Orientation.VERTICAL, 4);
 			list_installed.hexpand = true;
@@ -132,12 +68,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			var list_uninstalled = new Box(Orientation.VERTICAL, 4);
 			list_uninstalled.hexpand = true;
 
-			tab_list.add(list_installed);
-			tab_list.add(new Separator(Orientation.VERTICAL));
-			tab_list.add(list_uninstalled);
+			list_hbox.add(list_installed);
+			list_hbox.add(new Separator(Orientation.VERTICAL));
+			list_hbox.add(list_uninstalled);
 
-			list_installed.add(Styled.H4Label(_("Games list: installed")));
-			list_uninstalled.add(Styled.H4Label(_("Games list: not installed")));
+			list_installed.add(Styled.H4Label(_("Installed games")));
+			list_uninstalled.add(Styled.H4Label(_("Not installed games")));
 
 			add_list_style_checkbox(C_("list_style", "Show icon"), "installed-icon", list_installed);
 			add_list_style_checkbox(C_("list_style", "Bold title"), "installed-title-bold", list_installed);
@@ -146,10 +82,22 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			add_list_style_checkbox(C_("list_style", "Show icon"), "uninstalled-icon", list_uninstalled);
 			add_list_style_checkbox(C_("list_style", "Bold title"), "uninstalled-title-bold", list_uninstalled);
 			add_list_style_checkbox(C_("list_style", "Show status"), "uninstalled-status", list_uninstalled);
-			add_list_style_checkbox(C_("list_style", "Dim"), "uninstalled-dim", list_uninstalled);
+			add_list_style_checkbox(C_("list_style", "Dimmed title"), "uninstalled-dim", list_uninstalled);
 
-			tabs_stack.add_titled(tab_grid, "grid", _("Grid options"));
-			tabs_stack.add_titled(tab_list, "list", _("List options"));
+			var sgrp_appearance = new SettingsGroup();
+			sgrp_appearance.add_setting(new SwitchSetting.bind(_("Prefer dark theme"), null, settings, "dark-theme"));
+            sgrp_appearance.add_setting(new ModeButtonSetting.bind(_("Icon style"), _("Colored icons may look better for some themes"), { C_("icon_style", "Automatic"), C_("icon_style", "Symbolic"), C_("icon_style", "Colored") }, settings, "icon-style"));
+			add_widget(sgrp_appearance);
+
+			var sgrp_grid = new SettingsGroup(_("Grid"));
+			sgrp_grid.add_setting(new SwitchSetting.bind(_("Show platform icons"), null, settings, "grid-platform-icons"));
+			sgrp_grid.add_setting(new BaseSetting(_("Card size"), null, grid_size_hbox));
+			sgrp_grid.add_setting(new BaseSetting(_("Card size presets"), null, grid_size_presets));
+			add_widget(sgrp_grid);
+
+			var sgrp_list = new SettingsGroup(_("List"));
+			sgrp_list.add_setting(new CustomWidgetSetting(list_hbox));
+			add_widget(sgrp_list);
 
 			grid_size_presets.mode_changed.connect(() => {
 				var preset = Settings.UI.Appearance.GameGridSizePreset.PRESETS[grid_size_presets.selected];

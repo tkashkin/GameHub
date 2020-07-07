@@ -17,9 +17,10 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
-using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
@@ -35,15 +36,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				title: "itch.io",
 				description: _("Disabled"),
 				icon_name: "source-itch-symbolic",
-				activatable: true
+				has_active_switch: true
 			);
-			status = description;
 		}
 
 		construct
 		{
 			var paths = Settings.Paths.Itch.instance;
 			itch_auth = Settings.Auth.Itch.instance;
+
+			itch_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
 			//games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.itch_games, v => { paths.itch_games = v; request_restart(); update(); }).get_children().last().data as FileChooserEntry;
 
@@ -56,11 +58,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			//add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.itch_home, v => { paths.itch_home = v; request_restart(); }, false);
 
-			status_switch.active = itch_auth.enabled;
-			status_switch.notify["active"].connect(() => {
-				itch_auth.enabled = status_switch.active;
+			notify["active"].connect(() => {
 				update();
-				request_restart();
+				//request_restart();
 			});
 
 			update();
@@ -70,23 +70,21 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		{
 			/*var itch = GameHub.Data.Sources.Itch.Itch.instance;
 
-			content_area.sensitive = itch.enabled;
-
 			if(!itch.enabled)
 			{
-				status = description = _("Disabled");
+				description = _("Disabled");
 			}
 			else if(!itch.is_installed())
 			{
-				status = description = _("Not installed");
+				description = _("Not installed");
 			}
 			else if(!itch.is_authenticated())
 			{
-				status = description = _("Not authenticated");
+				description = _("Not authenticated");
 			}
 			else
 			{
-				status = description = itch.user_name != null ? _("Authenticated as <b>%s</b>").printf(itch.user_name) : _("Authenticated");
+				description = itch.user_name != null ? _("Authenticated as <b>%s</b>").printf(itch.user_name) : _("Authenticated");
 			}*/
 		}
 

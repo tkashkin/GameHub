@@ -17,11 +17,12 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Data;
 using GameHub.Utils;
 using GameHub.Settings;
-using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 {
@@ -31,15 +32,15 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 		private Paths.Collection.GOG gog;
 		private Paths.Collection.Humble humble;
 
-		private FileChooserEntry collection_root;
+		private FileSetting collection_root;
 
-		private Entry gog_game_dir;
-		private Entry gog_installers;
-		private Entry gog_dlc;
-		private Entry gog_bonus;
+		private EntrySetting gog_game_dir;
+		private EntrySetting gog_installers;
+		private EntrySetting gog_dlc;
+		private EntrySetting gog_bonus;
 
-		private Entry humble_game_dir;
-		private Entry humble_installers;
+		private EntrySetting humble_game_dir;
+		private EntrySetting humble_installers;
 
 		private int syntax_info_grid_rows = 0;
 		private Grid syntax_info_grid;
@@ -51,9 +52,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				header: _("General"),
 				title: _("Collection"),
 				description: _("Empty"),
-				icon_name: "folder-download"
+				icon_name: "gh-settings-folder-symbolic"
 			);
-			status = description;
 		}
 
 		construct
@@ -62,21 +62,27 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			gog = Paths.Collection.GOG.instance;
 			humble = Paths.Collection.Humble.instance;
 
-			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update(); }).get_children().last().data as FileChooserEntry;
+            var sgrp_collection = new SettingsGroup();
+			collection_root = sgrp_collection.add_setting(
+			    new FileSetting.bind(
+			        _("Collection root directory"), _("Installers and bonus content will be downloaded in the collection directory"),
+			        file_chooser(_("Select collection root directory"), FileChooserAction.SELECT_FOLDER),
+			        collection, "root"
+			    )
+			);
+			add_widget(sgrp_collection);
 
-			add_separator();
+            var sgrp_gog = new SettingsGroup("GOG");
+            gog_game_dir = sgrp_gog.add_setting(new EntrySetting.bind(_("Game root directory") + " ($game_dir)", _("All files of a game are downloaded there"), entry("source-gog-symbolic"), gog, "game-dir"));
+            gog_installers = sgrp_gog.add_setting(new EntrySetting.bind(_("Installers directory"), null, entry("source-gog-symbolic"), gog, "installers"));
+            gog_dlc = sgrp_gog.add_setting(new EntrySetting.bind(_("DLC directory"), null, entry("folder-download-symbolic"), gog, "dlc"));
+            gog_bonus = sgrp_gog.add_setting(new EntrySetting.bind(_("Bonus content directory"), null, entry("folder-music-symbolic"), gog, "bonus"));
+			add_widget(sgrp_gog);
 
-			add_header("GOG");
-			gog_game_dir = add_entry(_("Game directory") + " ($game_dir)", gog.game_dir, v => { gog.game_dir = v; update(); }, "source-gog-symbolic").get_children().last().data as Entry;
-			gog_installers = add_entry(_("Installers"), gog.installers, v => { gog.installers = v; update(); }, "source-gog-symbolic").get_children().last().data as Entry;
-			gog_dlc = add_entry(_("DLC"), gog.dlc, v => { gog.dlc = v; update(); }, "folder-download-symbolic").get_children().last().data as Entry;
-			gog_bonus = add_entry(_("Bonus content"), gog.bonus, v => { gog.bonus = v; update(); }, "folder-music-symbolic").get_children().last().data as Entry;
-
-			add_separator();
-
-			add_header("Humble Bundle");
-			humble_game_dir = add_entry(_("Game directory") + " ($game_dir)", humble.game_dir, v => { humble.game_dir = v; update(); }, "source-humble-symbolic").get_children().last().data as Entry;
-			humble_installers = add_entry(_("Installers"), humble.installers, v => { humble.installers = v; update(); }, "source-humble-symbolic").get_children().last().data as Entry;
+            var sgrp_humble = new SettingsGroup("Humble Bundle");
+            humble_game_dir = sgrp_humble.add_setting(new EntrySetting.bind(_("Game root directory") + " ($game_dir)", _("All files of a game are downloaded there"), entry("source-humble-symbolic"), humble, "game-dir"));
+            humble_installers = sgrp_humble.add_setting(new EntrySetting.bind(_("Installers directory"), null, entry("source-humble-symbolic"), humble, "installers"));
+			add_widget(sgrp_humble);
 
 			syntax_info_grid = new Grid();
 			syntax_info_grid.column_spacing = 72;
@@ -94,7 +100,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			syntax_info.get_content_area().add(syntax_info_grid);
 
 			add_widget(syntax_info);
-			syntax_info.margin = 0;
+			syntax_info.margin_start = syntax_info.margin_end = 18;
 
 			update();
 		}
@@ -116,7 +122,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				{
 					FileMeasureProgressCallback callback = (reporting, size, dirs, files) => {
 						Idle.add(() => {
-							status = description = format_size(size);
+							description = format_size(size);
 							return Source.REMOVE;
 						});
 					};

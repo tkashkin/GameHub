@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
 
@@ -28,26 +29,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		public SettingsDialog dialog { construct; protected get; }
 
 		public bool restart_requested = false;
-
-		protected Grid root_grid;
-		protected Grid header_grid;
-
-		construct
-		{
-			content_area.orientation = Orientation.VERTICAL;
-			content_area.row_spacing = 0;
-
-			root_grid = content_area.get_parent() as Grid;
-			header_grid = root_grid.get_child_at(0, 0) as Grid;
-
-			header_grid.row_spacing = 0;
-
-			var description_label = header_grid.get_child_at(1, 1) as Label;
-			if(description_label != null)
-			{
-				description_label.use_markup = true;
-			}
-		}
 
 		protected void request_restart()
 		{
@@ -191,15 +172,21 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			return add_widget(new Separator(Orientation.HORIZONTAL));
 		}
 
-		protected T add_widget<T>(T widget)
+		protected Entry entry(string? icon=null)
 		{
-			if(!((widget as Widget).get_style_context().has_class(StyleClass.Label.H4)))
-			{
-				(widget as Widget).margin = 4;
-				(widget as Widget).margin_end = 0;
-			}
-			content_area.add(widget as Widget);
-			return widget;
+			var entry = new Entry();
+			entry.set_size_request(280, -1);
+			entry.primary_icon_name = icon;
+			return entry;
+		}
+
+		protected FileChooserEntry file_chooser(string text, FileChooserAction mode, bool create=true, string? icon=null, bool allow_url=false, bool allow_executable=false)
+		{
+			var chooser = new FileChooserEntry(text, mode, icon, null, allow_url, allow_executable);
+			chooser.chooser.create_folders = create;
+			chooser.chooser.show_hidden = true;
+			chooser.set_size_request(280, -1);
+			return chooser;
 		}
 
 		public delegate void SwitchAction(bool active);

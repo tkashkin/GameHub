@@ -17,9 +17,10 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
-using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
@@ -38,19 +39,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				title: "GOG",
 				description: _("Disabled"),
 				icon_name: "source-gog-symbolic",
-				activatable: true
+				has_active_switch: true
 			);
-			status = description;
 		}
 
 		construct
 		{
-			root_grid.margin = 0;
-			header_grid.margin = 12;
-			content_area.margin = 0;
-
-			action_area.margin = 12;
-			action_area.margin_top = 0;
+			gog_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
 			var game_dirs_header = add_header(_("Game directories"));
 			game_dirs_header.margin_start = game_dirs_header.margin_end = 12;
@@ -63,7 +58,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			game_dirs_list.margin_bottom = 0;
 
 			game_dirs_list.notify["directories"].connect(() => {
-				warning("[dirs] '%s'", string.joinv("', '", game_dirs_list.directories_array));
 				gog_paths.game_directories = game_dirs_list.directories_array;
 			});
 
@@ -71,15 +65,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				gog_paths.default_game_directory = dir;
 			});
 
-			status_switch.active = gog_auth.enabled;
-			status_switch.notify["active"].connect(() => {
-				gog_auth.enabled = status_switch.active;
-				request_restart();
+			notify["active"].connect(() => {
+				//request_restart();
 				update();
 			});
 
 			logout_btn = new Button.with_label(_("Logout"));
-			action_area.add(logout_btn);
+			//action_area.add(logout_btn);
 
 			logout_btn.clicked.connect(() => {
 				gog_auth.authenticated = false;
@@ -94,7 +86,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private void update()
 		{
-			content_area.sensitive = gog_auth.enabled;
 			logout_btn.sensitive = gog_auth.authenticated && gog_auth.access_token.length > 0;
 
 			/*if(" " in FS.Paths.Settings.instance.gog_games)
@@ -111,16 +102,16 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			if(!gog_auth.enabled)
 			{
-				status = description = _("Disabled");
+				description = _("Disabled");
 			}
 			else if(!gog_auth.authenticated || gog_auth.access_token.length == 0)
 			{
-				status = description = _("Not authenticated");
+				description = _("Not authenticated");
 			}
 			else
 			{
 				var user_name = GameHub.Data.Sources.GOG.GOG.instance.user_name;
-				status = description = user_name != null ? _("Authenticated as <b>%s</b>").printf(user_name) : _("Authenticated");
+				description = user_name != null ? _("Authenticated as <b>%s</b>").printf(user_name) : _("Authenticated");
 			}
 		}
 	}

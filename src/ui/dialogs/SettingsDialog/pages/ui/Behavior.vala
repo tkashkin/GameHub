@@ -17,6 +17,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
 
@@ -29,25 +31,22 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			Object(
 				dialog: dlg,
 				title: _("Behavior"),
-				description: _("Behavior settings"),
-				icon_name: "preferences-system"
+				icon_name: "gh-settings-cog-symbolic"
 			);
-			status = description;
 		}
 
 		construct
 		{
 			var settings = Settings.UI.Behavior.instance;
 
-			add_switch(_("Run games with double click"), settings.grid_doubleclick, v => { settings.grid_doubleclick = v; });
+			var sgrp_ui = new SettingsGroup();
+			sgrp_ui.add_setting(new SwitchSetting.bind(_("Run games with double click"), null, settings, "grid-doubleclick"));
+			sgrp_ui.add_setting(new SwitchSetting.bind(_("Merge games from different sources"), _("Merge games with matching names into one entry"), settings, "merge-games"));
+			add_widget(sgrp_ui);
 
-			add_separator();
-
-			add_switch(_("Merge games from different sources"), settings.merge_games, v => { settings.merge_games = v; request_restart(); });
-
-			add_separator();
-
-			add_switch(_("Use imported tags"), settings.import_tags, v => { settings.import_tags = v; });
+			var sgrp_tags = new SettingsGroup(_("Tags"));
+			sgrp_tags.add_setting(new SwitchSetting.bind(_("Import tags from sources"), null, settings, "import-tags"));
+			add_widget(sgrp_tags);
 		}
 	}
 }

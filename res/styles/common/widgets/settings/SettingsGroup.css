@@ -1,0 +1,27 @@
+.settings-group
+{
+    padding: 12px 18px;
+}
+
+.settings-group > .title
+{
+	font-weight: bold;
+	margin-bottom: 6px;
+}
+
+.settings-group .setting:not(.custom-widget) > box,
+.settings-group .setting.label > label
+{
+    padding: 6px 12px;
+    min-height: 36px;
+}
+
+.settings-group .setting .description
+{
+    font-size: 0.9em;
+}
+
+.settings-group .setting.list-row:not(:last-child), .settings-group row.setting:not(:last-child)
+{
+	border-bottom: 1px @borders solid;
+}

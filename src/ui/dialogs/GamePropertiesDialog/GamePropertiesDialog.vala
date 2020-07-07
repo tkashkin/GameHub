@@ -96,10 +96,12 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog
 				});
 
 				add_tab(new Tabs.General(game));
-				add_tab(new DummyTab(game, _("Executable")));
-				add_tab(new DummyTab(game, _("Compatibility")));
-				add_tab(new DummyTab(game, _("Tweaks")));
-				add_tab(new DummyTab(game, _("Overlays")));
+
+				game.cast<Traits.HasExecutableFile>(game => add_tab(new DummyTab(_("Executable"))));
+				game.cast<Traits.SupportsCompatTools>(game => add_tab(new DummyTab(_("Compatibility"))));
+				game.cast<Traits.Game.SupportsTweaks>(game => add_tab(new DummyTab(_("Tweaks"))));
+
+				game.cast<Traits.Game.SupportsOverlays>(game => add_tab(new Tabs.Overlays(game)));
 
 				tabs.show_tabs = tabs.get_n_pages() > 1;
 				tabs.show_all();
@@ -117,7 +119,6 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog
 
 	public abstract class GamePropertiesDialogTab: Box
 	{
-		public Game game { get; construct; }
 		public string title { get; construct; }
 
 		construct
@@ -129,12 +130,9 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog
 
 	private class DummyTab: GamePropertiesDialogTab
 	{
-		public DummyTab(Game game, string title)
+		public DummyTab(string title)
 		{
-			Object(
-				game: game,
-				title: title
-			);
+			Object(title: title);
 		}
 	}
 }
