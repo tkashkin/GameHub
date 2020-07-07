@@ -125,7 +125,7 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 				info_label.xalign = 0;
 				info_label.valign = Align.CENTER;
 
-				options_button = new Button.from_icon_name("open-menu-symbolic", IconSize.BUTTON);
+				options_button = new Button.from_icon_name("gh-settings-symbolic", IconSize.BUTTON);
 				options_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 				options_button.valign = Align.CENTER;
 				options_button.tooltip_text = _("Options");

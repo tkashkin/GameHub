@@ -18,6 +18,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
 
@@ -34,9 +35,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 		{
 			Object(
 				header: _("About"),
-				title: "GameHub",
-				status: ProjectConfig.VERSION,
-				icon_name: ProjectConfig.PROJECT_NAME
+				title: _("About GameHub"),
+				description: ProjectConfig.VERSION,
+				icon_name: "gamehub-symbolic"
 			);
 		}
 

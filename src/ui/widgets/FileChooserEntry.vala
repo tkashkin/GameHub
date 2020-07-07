@@ -38,6 +38,12 @@ namespace GameHub.UI.Widgets
 
 		public FileChooser       chooser          { get; protected set; }
 
+		public string? file_path
+		{
+		    get { return text; }
+		    set { select_file_path(value); }
+		}
+
 		public FileChooserEntry(string? title, FileChooserAction action, string? icon=null, string? hint=null, bool allow_url=false, bool allow_executable=false)
 		{
 			Object(title: title, action: action, allow_url: allow_url, allow_executable: allow_executable);
@@ -149,6 +155,7 @@ namespace GameHub.UI.Widgets
 
 			file_set();
 			uri_set();
+			notify_property("file-path");
 		}
 
 		public void select_file(File? f)
@@ -179,9 +186,9 @@ namespace GameHub.UI.Widgets
 		private int run_chooser()
 		{
 			#if GTK_3_22
-			return (chooser as FileChooserNative).run();
+			return ((FileChooserNative) chooser).run();
 			#else
-			return (chooser as FileChooserDialog).run();
+			return ((FileChooserDialog) chooser).run();
 			#endif
 		}
 

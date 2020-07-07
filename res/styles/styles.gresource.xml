@@ -4,7 +4,9 @@
 		<file compressed="true">common/_style.css</file>
 		<file compressed="true">common/app.css</file>
 		<file compressed="true">common/dialogs/GamePropertiesDialog.css</file>
+		<file compressed="true">common/dialogs/SettingsDialog.css</file>
 		<file compressed="true">common/views/GamesView.css</file>
+		<file compressed="true">common/widgets/settings/SettingsGroup.css</file>
 	</gresource>
 
 	<gresource prefix="/res/styles/"> <!-- elementary -->

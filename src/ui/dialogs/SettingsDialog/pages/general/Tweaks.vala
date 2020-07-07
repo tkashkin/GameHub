@@ -17,10 +17,11 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Data;
 using GameHub.Utils;
-using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 {
@@ -32,17 +33,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				dialog: dlg,
 				title: _("Tweaks"),
 				description: _("Tweak launch options and apply them to games automatically"),
-				icon_name: "system-run"
+				icon_name: "gh-settings-cogs-symbolic"
 			);
-			status = description;
 		}
 
 		construct
 		{
-			root_grid.margin = 0;
-			header_grid.margin = 12;
-			content_area.margin = 0;
-
 			var header = add_header(_("Tweaks"));
 			header.margin_start = header.margin_end = 12;
 

@@ -17,9 +17,10 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
-using GameHub.UI.Widgets;
 using GameHub.Data.Providers;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
@@ -38,17 +39,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 				header: _("Data"),
 				title: _("Providers"),
 				description: _("Third-party data providers"),
-				icon_name: "web-browser"
+				icon_name: "web-symbolic"
 			);
-			status = description;
 		}
 
 		construct
 		{
-			root_grid.margin = 0;
-			header_grid.margin = 12;
-			content_area.margin = 0;
-
 			igdb = Settings.Providers.Data.IGDB.instance;
 
 			var image_providers_header = add_header(_("Image providers"));

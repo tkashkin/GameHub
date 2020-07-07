@@ -17,6 +17,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Data;
 using GameHub.Data.Compat;
@@ -39,20 +41,17 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				title: "Steam",
 				description: _("Disabled"),
 				icon_name: "source-steam-symbolic",
-				activatable: true
+				has_active_switch: true
 			);
-			status = description;
 		}
 
 		construct
 		{
-			root_grid.margin = 0;
-			header_grid.margin = 12;
-			content_area.margin = 0;
-
 			var paths = Settings.Paths.Steam.instance;
 
 			steam_auth = Settings.Auth.Steam.instance;
+
+			steam_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
 			add_steam_apikey_entry();
 			adjust_margins(add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey"));
@@ -86,11 +85,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			proton_scroll.expand = true;
 			#endif
 
-			status_switch.active = steam_auth.enabled;
-			status_switch.notify["active"].connect(() => {
-				steam_auth.enabled = status_switch.active;
+			notify["active"].connect(() => {
 				update();
-				request_restart();
+				//request_restart();
 			});
 
 			update();
@@ -100,23 +97,21 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		{
 			var steam = GameHub.Data.Sources.Steam.Steam.instance;
 
-			content_area.sensitive = steam.enabled;
-
 			if(!steam.enabled)
 			{
-				status = description = _("Disabled");
+				description = _("Disabled");
 			}
 			else if(!steam.is_installed())
 			{
-				status = description = _("Not installed");
+				description = _("Not installed");
 			}
 			else if(!steam.is_authenticated_in_steam_client)
 			{
-				status = description = _("Not authenticated");
+				description = _("Not authenticated");
 			}
 			else
 			{
-				status = description = steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated");
+				description = steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated");
 			}
 
 			proton.foreach(r => {

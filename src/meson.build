@@ -138,6 +138,7 @@ sources = [
 
 	'ui/dialogs/GamePropertiesDialog/GamePropertiesDialog.vala',
 	'ui/dialogs/GamePropertiesDialog/tabs/General.vala',
+	'ui/dialogs/GamePropertiesDialog/tabs/Overlays.vala',
 
 	'ui/dialogs/GameDetailsDialog.vala',
 	'ui/dialogs/GameFSOverlaysDialog.vala',
@@ -189,9 +190,12 @@ sources = [
 	'ui/widgets/ModeButton.vala',
 	'ui/widgets/OverlayBar.vala',
 	'ui/widgets/Welcome.vala',
-	'ui/widgets/SettingsSidebar.vala',
 	'ui/widgets/TweaksList.vala',
 	'ui/widgets/DirectoriesList.vala',
+
+	'ui/widgets/settings/SettingsSidebar.vala',
+	'ui/widgets/settings/SettingsGroup.vala',
+	'ui/widgets/settings/Settings.vala',
 
 	'utils/Utils.vala',
 

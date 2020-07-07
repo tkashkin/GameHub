@@ -17,9 +17,10 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 using GameHub.Utils;
-using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
@@ -36,9 +37,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				title: "Humble Bundle",
 				description: _("Disabled"),
 				icon_name: "source-humble-symbolic",
-				activatable: true
+				has_active_switch: true
 			);
-			status = description;
 		}
 
 		construct
@@ -47,21 +47,21 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			humble_auth = Settings.Auth.Humble.instance;
 
+			humble_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
+
 			add_switch(_("Load games from Humble Trove"), humble_auth.load_trove_games, v => { humble_auth.load_trove_games = v; update(); request_restart(); });
 
 			add_separator();
 
 			//games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; update(); request_restart(); }).get_children().last().data as FileChooserEntry;
 
-			status_switch.active = humble_auth.enabled;
-			status_switch.notify["active"].connect(() => {
-				humble_auth.enabled = status_switch.active;
-				request_restart();
+			notify["active"].connect(() => {
+				//request_restart();
 				update();
 			});
 
 			logout_btn = new Button.with_label(_("Logout"));
-			action_area.add(logout_btn);
+			//action_area.add(logout_btn);
 
 			logout_btn.clicked.connect(() => {
 				humble_auth.authenticated = false;
@@ -75,7 +75,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private void update()
 		{
-			/*content_area.sensitive = humble_auth.enabled;
+			/*
 			logout_btn.sensitive = humble_auth.authenticated && humble_auth.access_token.length > 0;
 
 			if(" " in FS.Paths.Settings.instance.humble_games)
@@ -92,15 +92,15 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			if(!humble_auth.enabled)
 			{
-				status = description = _("Disabled");
+				description = _("Disabled");
 			}
 			else if(!humble_auth.authenticated || humble_auth.access_token.length == 0)
 			{
-				status = description = _("Not authenticated");
+				description = _("Not authenticated");
 			}
 			else
 			{
-				status = description = _("Authenticated");
+				description = _("Authenticated");
 			}*/
 		}
 
