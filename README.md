@@ -18,7 +18,7 @@ GameHub also has features like:
 * [Tweaks](https://github.com/tkashkin/GameHub/wiki/Tweaks) — environment variable and command line overrides that can be applied to games automatically
 
 GameHub supports:
-* native games for Linux;
+* native games for Linux
 * multiple [compatibility layers](https://github.com/tkashkin/GameHub/wiki/Compatibility-layers):
 	- Wine
 	- Proton
