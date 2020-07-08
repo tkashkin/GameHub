@@ -2,7 +2,7 @@
 
 ## Table of contents
 
-* Packages
+* [Distribution-specific packages](#distribution-specific-packages)
 	- [Arch-based distributions](#arch-based-distributions)
 	- [Debian](#debian)
 	- [Fedora](#fedora)
@@ -10,25 +10,28 @@
 	- [openSUSE](#opensuse)
 	- [Pop!\_OS](#pop_os)
 	- [Ubuntu-based distributions](#ubuntu-based-distributions)
-* [AppImage](#appimage)
-* [Flatpak](#flatpak)
+* [Portable packages](#portable-packages)
+	- [AppImage](#appimage)
+	- [Flatpak](#flatpak)
 * [Prebuilt releases](#prebuilt-releases)
-* [Source](#source)
+* [Build from source](#build-from-source)
 	- [Dependencies](#dependencies)
-	- [Building](#building)
-	- [Installing](#installing)
+	- [Debian and Ubuntu-based distributions](#debian-and-ubuntu-based-distributions)
+	- [Other distributions](#other-distributions)
+
+## Distribution-specific packages
 
 ### Arch-based distributions
 [`gamehub-git`](https://aur.archlinux.org/packages/gamehub-git) and [`gamehub`](https://aur.archlinux.org/packages/gamehub) are available in AUR.
 
 ### Debian
-Prebuilt .deb packages from [releases page](https://github.com/tkashkin/GameHub/releases) were not tested on Debian, but should work.
-
-Alternatively you can build a package from source:
+Install Debian package from the [releases page](https://github.com/tkashkin/GameHub/releases) or import the [PPA](https://launchpad.net/~tkashkin/+archive/ubuntu/gamehub):
 ```bash
-git clone https://github.com/tkashkin/GameHub.git
-cd GameHub
-scripts/build.sh build_deb
+sudo apt install dirmngr
+sudo sh -c "echo 'deb http://ppa.launchpad.net/tkashkin/gamehub/ubuntu focal main' > /etc/apt/sources.list.d/gamehub-ppa.list
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 5B63B42CE14BA47CC1B69E7C32B600D632AF380D
+sudo apt update
+sudo apt install com.github.tkashkin.gamehub
 ```
 
 ### Fedora
@@ -62,17 +65,19 @@ sudo apt update
 sudo apt install com.github.tkashkin.gamehub
 ```
 
-## AppImage
+## Portable packages
+
+### AppImage
 AppImages can be found in the [releases page](https://github.com/tkashkin/GameHub/releases).
 
 **WARNING: AppImages are unstable! You might experience issues.**
 
-## Flatpak
+### Flatpak
 Flatpak releases can be found in the [releases page](https://github.com/tkashkin/GameHub/releases).
 
 **WARNING: Flatpak releases are unstable! You might experience issues.**
 
-Then install the package by executing this command:
+Install the package by executing this command:
 ```bash
 flatpak install GameHub-*.flatpak
 ```
@@ -87,7 +92,7 @@ scripts/build.sh build_flatpak
 ## Prebuilt releases
 Prebuilt releases can be found in the [releases page](https://github.com/tkashkin/GameHub/releases).
 
-## Source
+## Build from source
 
 ### Dependencies
 * `meson`
@@ -104,7 +109,20 @@ Prebuilt releases can be found in the [releases page](https://github.com/tkashki
 * `libunity-dev` (optional, required for launcher icon quicklist, progress indicator and counter; pass `-Duse_libunity=true` to `meson` to use)
 * `libmanette-0.2-dev`, `libx11-dev`, `libxtst-dev` (optional, required for gamepad support)
 
-### Building
+### Debian and Ubuntu-based distributions
+* Build a .deb package (this will build `GameHub-*.deb` package in the parent directory):
+```bash
+git clone https://github.com/tkashkin/GameHub.git
+cd GameHub
+scripts/build.sh build_deb
+```
+* Install built package:
+```bash
+sudo apt install ../GameHub-*.deb
+```
+
+### Other distributions
+* Build:
 ```bash
 git clone https://github.com/tkashkin/GameHub.git
 cd GameHub
@@ -112,7 +130,8 @@ meson build --prefix=/usr --buildtype=debug
 cd build
 ninja
 ```
-### Installing
-```
+* Install:
+```bash
 sudo ninja install
 ```
+Do not remove build directory if you want to uninstall GameHub later, build directory is used in uninstallation process.
