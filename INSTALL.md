@@ -14,7 +14,7 @@
 	- [AppImage](#appimage)
 	- [Flatpak](#flatpak)
 * [Prebuilt releases](#prebuilt-releases)
-* [Source](#source)
+* [Build from source](#build-from-source)
 	- [Dependencies](#dependencies)
 	- [Debian and Ubuntu-based distributions](#debian-and-ubuntu-based-distributions)
 	- [Other distributions](#other-distributions)
@@ -92,7 +92,7 @@ scripts/build.sh build_flatpak
 ## Prebuilt releases
 Prebuilt releases can be found in the [releases page](https://github.com/tkashkin/GameHub/releases).
 
-## Source
+## Build from source
 
 ### Dependencies
 * `meson`
