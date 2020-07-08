@@ -22,13 +22,12 @@
 [`gamehub-git`](https://aur.archlinux.org/packages/gamehub-git) and [`gamehub`](https://aur.archlinux.org/packages/gamehub) are available in AUR.
 
 ### Debian
-Prebuilt .deb packages from [releases page](https://github.com/tkashkin/GameHub/releases) were not tested on Debian, but should work.
-
-Alternatively you can build a package from source:
-```bash
-git clone https://github.com/tkashkin/GameHub.git
-cd GameHub
-scripts/build.sh build_deb
+Install Debian package from the [releases page](https://github.com/tkashkin/GameHub/releases) or import the [PPA](https://launchpad.net/~tkashkin/+archive/ubuntu/gamehub):
+```
+sudo apt install dirmngr
+sudo sh -c "echo 'deb http://ppa.launchpad.net/tkashkin/gamehub/ubuntu focal main' > /etc/apt/sources.list.d/gamehub-ppa.list
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 5B63B42CE14BA47CC1B69E7C32B600D632AF380D
+sudo apt install com.github.tkashkin.gamehub
 ```
 
 ### Fedora
