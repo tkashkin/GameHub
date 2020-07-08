@@ -6,29 +6,32 @@ GameHub is a unified library for all your games. It allows you to store your gam
 
 ### [Features](https://tkashkin.tk/projects/gamehub/#/features)
 With GameHub, you can:
-- store your games in one place;
-- view your games;
-- login to multiple platforms;
-- download and install games from the supported sources;
-- [enable tweaks](https://github.com/tkashkin/GameHub/wiki/Tweaks);
-- add new tweaks;
-- download installers, DLCs and bonus contents;
-- add custom emulators.
+* store your games in one place
+* login to multiple platforms
+* install games from the supported sources
+* download game installers, DLCs and bonus content
+* automatically find artwork for games on [SteamGridDB](https://steamgriddb.com)
+* setup emulators and automatically import emulated games
+
+GameHub also has features like:
+* [Overlays](https://tkashkin.tk/projects/gamehub/#/overlays) — multiple directories applied on top of each other. Each overlay is stored separately and doesn't affect other overlays. Overlays can be useful to manage DLCs and mods
+* [Tweaks](https://github.com/tkashkin/GameHub/wiki/Tweaks) — environment variable and command line overrides that can be applied to games automatically
 
 GameHub supports:
-- native games for Linux;
-- multiple [compatibility layers](https://github.com/tkashkin/GameHub/wiki/Compatibility-layers), such as:
-	- WINE / Proton;
-	- DOSBox;
-	- RetroArch;
-	- ScummVM;
-	- custom emulators.
-- multiple game platforms, such as:
-	- Steam;
-	- GOG;
-	- Humble Bundle;
-	- Humble Trove;
-	- [WineWrap](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post1) — a set of preconfigured wrappers for [supported games](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post3).
+* native games for Linux;
+* multiple [compatibility layers](https://github.com/tkashkin/GameHub/wiki/Compatibility-layers):
+	- Wine
+	- Proton
+	- DOSBox
+	- RetroArch
+	- ScummVM
+	- [WineWrap](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post1) — a set of preconfigured wrappers for [supported games](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post3);
+	- custom emulators
+* multiple game platforms:
+	- Steam
+	- GOG
+	- Humble Bundle (including Humble Trove)
+	- itch.io
 
 ## Installation
 See [INSTALL.md](INSTALL.md).
