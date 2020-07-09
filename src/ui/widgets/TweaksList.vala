@@ -20,19 +20,22 @@ using Gtk;
 using Gdk;
 using Gee;
 
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
+
 using GameHub.Data;
 using GameHub.Data.Tweaks;
 using GameHub.Data.Runnables;
 
 namespace GameHub.UI.Widgets
 {
-	public class TweaksList: ListBox
+	public class TweaksList: Notebook
 	{
 		public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
 
-		public TweaksList(Traits.Game.SupportsTweaks? game=null)
+		public TweaksList(Traits.Game.SupportsTweaks? game = null)
 		{
-			Object(game: game, selection_mode: SelectionMode.NONE);
+			Object(game: game, show_border: false);
 		}
 
 		construct
@@ -44,39 +47,81 @@ namespace GameHub.UI.Widgets
 		{
 			this.foreach(w => w.destroy());
 
-			var tweaks = Tweak.load_tweaks(game == null);
+			var tweaks = Tweak.load_tweaks_grouped(game == null);
 
-			foreach(var tweak in tweaks.values)
-			{
-				if(game == null || tweak.is_applicable_to(game, compat_tool))
-				{
-					add(new TweakRow(tweak, game));
-				}
+            if(tweaks != null)
+            {
+			    foreach(var group in tweaks.entries)
+			    {
+			        var tab = new TweakGroupTab(game, compat_tool, group.key ?? _("Ungrouped"), group.value);
+			        append_page(tab, new Label(tab.group));
+			    }
 			}
 		}
 
-		private class TweakRow: ListBoxRow
+		private class TweakGroupTab: ScrolledWindow
+		{
+		    public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
+		    public CompatTool? compat_tool { get; construct; default = null; }
+		    public string? group { get; construct; default = null; }
+		    public HashMap<string, Tweak>? tweaks { get; construct; default = null; }
+
+		    public TweakGroupTab(Traits.Game.SupportsTweaks? game = null, CompatTool? compat_tool = null, string? group = null, HashMap<string, Tweak>? tweaks = null)
+		    {
+		        Object(game: game, compat_tool: compat_tool, group: group, tweaks: tweaks, hscrollbar_policy: PolicyType.NEVER, expand: true);
+		    }
+
+		    construct
+		    {
+		        var tweaks_list = new ListBox();
+		        tweaks_list.selection_mode = SelectionMode.NONE;
+		        child = tweaks_list;
+
+		        if(tweaks != null)
+		        {
+		            foreach(var tweak in tweaks.values)
+			        {
+				        if(game == null || tweak.is_applicable_to(game, compat_tool))
+				        {
+					        tweaks_list.add(new TweakRow(tweak, game));
+				        }
+			        }
+			        show_all();
+			    }
+
+			    tweaks_list.row_activated.connect(row => {
+                    var setting = row as ActivatableSetting;
+                    if(setting != null)
+                    {
+                        setting.setting_activated();
+                    }
+                });
+		    }
+		}
+
+		private class TweakRow: ListBoxRow, ActivatableSetting
 		{
 			public Tweak tweak { get; construct; }
 			public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
 
 			public TweakRow(Tweak tweak, Traits.Game.SupportsTweaks? game=null)
 			{
-				Object(tweak: tweak, game: game);
+				Object(tweak: tweak, game: game, activatable: true, selectable: false);
 			}
 
 			construct
 			{
+				get_style_context().add_class("setting");
+                get_style_context().add_class("tweak-setting");
+
 				var grid = new Grid();
 				grid.column_spacing = 12;
-				grid.margin_start = grid.margin_end = 8;
-				grid.margin_top = grid.margin_bottom = 4;
 
 				var icon = new Image.from_icon_name(tweak.icon, IconSize.LARGE_TOOLBAR);
 				icon.valign = Align.CENTER;
 
 				var name = new Label(tweak.name ?? tweak.id);
-				name.get_style_context().add_class("category-label");
+				name.get_style_context().add_class("title");
 				name.set_size_request(96, -1);
 				name.hexpand = true;
 				name.ellipsize = Pango.EllipsizeMode.END;
@@ -85,6 +130,7 @@ namespace GameHub.UI.Widgets
 				name.valign = Align.CENTER;
 
 				var description = new Label(tweak.description ?? _("No description"));
+				description.get_style_context().add_class("description");
 				description.tooltip_text = tweak.description;
 				description.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
 				description.hexpand = true;
@@ -140,6 +186,10 @@ namespace GameHub.UI.Widgets
 				});
 
 				child = grid;
+
+				setting_activated.connect(() => {
+                    enabled.activate();
+                });
 			}
 		}
 	}

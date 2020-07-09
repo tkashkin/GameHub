@@ -32,69 +32,63 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			Object(
 				dialog: dlg,
 				title: _("Tweaks"),
-				description: _("Tweak launch options and apply them to games automatically"),
 				icon_name: "gh-settings-cogs-symbolic"
 			);
 		}
 
 		construct
 		{
-			var header = add_header(_("Tweaks"));
-			header.margin_start = header.margin_end = 12;
-
-			var tweaks_list_scroll = add_widget(new ScrolledWindow(null, null));
-			tweaks_list_scroll.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			tweaks_list_scroll.hscrollbar_policy = PolicyType.NEVER;
-
-			tweaks_list_scroll.margin_start = 7;
-			tweaks_list_scroll.margin_end = 3;
-			tweaks_list_scroll.margin_top = 0;
-			tweaks_list_scroll.margin_bottom = 6;
-
-			var tweaks_list = new TweaksList();
-			tweaks_list.get_style_context().add_class("separated-list");
-
-			tweaks_list_scroll.add(tweaks_list);
-
-			#if GTK_3_22
-			tweaks_list_scroll.propagate_natural_width = true;
-			tweaks_list_scroll.propagate_natural_height = true;
-			#else
-			tweaks_list_scroll.expand = true;
-			#endif
-
-			add_dirs_info();
-		}
-
-		private void add_dirs_info()
-		{
-			var dirs = FS.get_data_dirs("tweaks", true);
+		    var dirs = FS.get_data_dirs("tweaks", true);
 			var last_dir = dirs.last();
 
-			var dirs_tooltip = """<span size="smaller" weight="600">%s</span>""".printf(_("Tweaks are loaded from following directories in order\nLast tweak overrides previous tweaks with same identifiers")) + "\n";
+            var sgrp_dirs = new SettingsGroup();
+            var dirs_btn = new MenuButton();
+			dirs_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+            dirs_btn.tooltip_text = _("Tweak directories");
+            dirs_btn.can_focus = false;
+
+			var dirs_setting = sgrp_dirs.add_setting(new BaseSetting(
+		        _("Tweak directories"),
+		        _("Tweaks are loaded from these directories in order\nLast tweak overrides previous tweaks with same identifiers"),
+		        dirs_btn
+		    ));
+
+		    var dirs_menu = new Gtk.Menu();
+			dirs_menu.halign = Align.END;
+
 			foreach(var dir in dirs)
 			{
-				if(dir == last_dir)
-					dirs_tooltip += "\n• <b>%s</b> (%s)".printf(dir.get_path(), _("Click to open"));
+				var dir_item = new Gtk.MenuItem.with_label(dir.get_path());
+				if(dir.query_exists())
+				{
+				    dir_item.activate.connect(() => {
+					    Utils.open_uri(dir.get_uri());
+				    });
+				}
 				else
-					dirs_tooltip += "\n• %s".printf(dir.get_path());
+				{
+				    dir_item.sensitive = false;
+				}
+				dirs_menu.add(dir_item);
 			}
 
-			var dirs_btn = new Button();
-			dirs_btn.hexpand = true;
-			dirs_btn.tooltip_markup = dirs_tooltip;
-			StyleClass.add(dirs_btn, Gtk.STYLE_CLASS_FLAT);
+			dirs_menu.show_all();
+			dirs_btn.popup = dirs_menu;
 
-			var dirs_btn_label = new Label(_("Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>").printf(last_dir.get_path(), dirs.size - 1));
-			dirs_btn_label.wrap = true;
-			dirs_btn_label.xalign = 0;
-			dirs_btn_label.use_markup = true;
+		    dirs_setting.activatable = true;
+		    dirs_setting.setting_activated.connect(() => {
+		        #if GTK_3_22
+				dirs_menu.popup_at_widget(dirs_btn, Gdk.Gravity.SOUTH_EAST, Gdk.Gravity.NORTH_EAST);
+			    #else
+			    dirs_menu.popup(null, null, null, 0, get_current_event_time());
+			    #endif
+		    });
+			add_widget(sgrp_dirs);
 
-			dirs_btn.add(dirs_btn_label);
-
-			dirs_btn.clicked.connect(() => { Utils.open_uri(last_dir.get_uri()); });
-
-			add_widget(dirs_btn);
+            var sgrp_tweaks = new SettingsGroupBox();
+            sgrp_tweaks.container.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+            sgrp_tweaks.add_widget(new TweaksList());
+			add_widget(sgrp_tweaks);
 		}
 	}
 }

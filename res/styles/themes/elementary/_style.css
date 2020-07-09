@@ -1,37 +1,37 @@
 @import url("colors.css");
 
-.titlebar.flat .title,
-.titlebar.flat .subtitle,
-.titlebar.flat .titlebutton,
-.titlebar.flat button,
-.titlebar.flat label,
-.titlebar.flat *:not(entry) image
+window .titlebar.flat .title,
+window .titlebar.flat .subtitle,
+window .titlebar.flat .titlebutton,
+window .titlebar.flat button,
+window .titlebar.flat label,
+window .titlebar.flat *:not(entry) image
 {
 	color: @textColorPrimaryDefault;
 	text-shadow: 0 1px @textColorPrimaryShadowDefault;
 	-gtk-icon-shadow: 0 1px @textColorPrimaryShadowDefault;
 }
 
-.titlebar.flat .title:backdrop,
-.titlebar.flat .subtitle:backdrop,
-.titlebar.flat .titlebutton:backdrop,
-.titlebar.flat button:backdrop,
-.titlebar.flat label:backdrop,
-.titlebar.flat *:not(entry) image:backdrop
+window .titlebar.flat .title:backdrop,
+window .titlebar.flat .subtitle:backdrop,
+window .titlebar.flat .titlebutton:backdrop,
+window .titlebar.flat button:backdrop,
+window .titlebar.flat label:backdrop,
+window .titlebar.flat *:not(entry) image:backdrop
 {
 	color: mix(@textColorPrimaryDefault, @titlebar_color, 0.3);
 	text-shadow: none;
 	-gtk-icon-shadow: none;
 }
 
-.titlebar:not(.flat) label
+window .titlebar:not(.flat) label
 {
 	color: @textColorPrimary;
 	text-shadow: 0 1px @textColorPrimaryShadow;
 	-gtk-icon-shadow: 0 1px @textColorPrimaryShadow;
 }
 
-.titlebar:not(.flat) label:backdrop
+window .titlebar:not(.flat) label:backdrop
 {
 	color: mix(@textColorPrimary, @titlebar_color, 0.3);
 	text-shadow: none;

@@ -3,14 +3,22 @@
     padding: 12px 18px;
 }
 
-.settings-group > .title
+.settings-group > .title,
+.settings-group-standalone-title
 {
 	font-weight: bold;
 	margin-bottom: 6px;
 }
+.settings-group-standalone-title
+{
+    margin-top: 12px;
+    margin-left: 18px;
+    margin-right: 18px;
+}
 
-.settings-group .setting:not(.custom-widget) > box,
-.settings-group .setting.label > label
+.settings-group .setting:not(.custom-widget-setting) > box,
+.settings-group .setting:not(.custom-widget-setting) > grid,
+.settings-group .setting.label-setting > label
 {
     padding: 6px 12px;
     min-height: 36px;
@@ -21,7 +29,27 @@
     font-size: 0.9em;
 }
 
-.settings-group .setting.list-row:not(:last-child), .settings-group row.setting:not(:last-child)
+.settings-group .setting.list-row,
+.settings-group row.setting
 {
 	border-bottom: 1px @borders solid;
+}
+
+.settings-group .setting.list-row:last-child,
+.settings-group row.setting:last-child
+{
+    margin-bottom: -1px;
+}
+
+.settings-group .setting.provider-setting > box
+{
+    padding: 0;
+}
+.settings-group .setting.provider-setting > box > grid
+{
+    padding: 6px 12px;
+}
+.settings-group .setting.provider-setting .provider-settings
+{
+	background: alpha(@borders, 0.5);
 }

@@ -251,19 +251,35 @@ namespace GameHub.Utils.Gamepad
 		}
 	}
 
-	// hack, but works (on X11)
+	public static unowned X.Display? get_xdisplay(bool wnd_active = true)
+	{
+	    foreach(var wnd in Gtk.Window.list_toplevels())
+		{
+			if(!wnd_active || wnd.is_active)
+			{
+			    var display = wnd.screen.get_display();
+			    if(display is Gdk.X11.Display)
+			    {
+				    return (wnd.screen.get_display() as Gdk.X11.Display).get_xdisplay();
+				}
+			}
+		}
+		return null;
+	}
+
+	public static bool is_supported()
+	{
+	    return get_xdisplay(false) != null;
+	}
+
 	private static void emit_key_event(uint key_code, bool press)
 	{
 		if(key_code == 0) return;
-		foreach(var wnd in Gtk.Window.list_toplevels())
+		unowned var xdisplay = get_xdisplay(true);
+		if(xdisplay != null)
 		{
-			if(wnd.is_active)
-			{
-				unowned X.Display xdisplay = (wnd.screen.get_display() as Gdk.X11.Display).get_xdisplay();
-				XTest.fake_key_event(xdisplay, xdisplay.keysym_to_keycode((ulong) key_code), press, X.CURRENT_TIME);
-				Gamepad.ButtonPressed = true;
-				break;
-			}
+		    XTest.fake_key_event(xdisplay, xdisplay.keysym_to_keycode((ulong) key_code), press, X.CURRENT_TIME);
+			Gamepad.ButtonPressed = true;
 		}
 	}
 }

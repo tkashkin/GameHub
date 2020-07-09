@@ -1,5 +1,4 @@
-@define-color settings_separator alpha(shade(@theme_fg_color, 0.8), 0.15);
-@define-color settings_separator_shadow alpha(shade(@theme_bg_color, 0.8), 0.2);
+@define-color settings_separator @borders;
 
 .h1
 {
@@ -425,11 +424,6 @@ dialog .sidebar list
 .separated-list-all .list-row, .separated-list-all row
 {
 	border-bottom: 1px shade(@theme_bg_color, 0.9) solid;
-}
-
-.provider-settings
-{
-	background: alpha(shade(@theme_bg_color, 0.95), 0.5);
 }
 
 .import-emulated-games-dialog .select-all

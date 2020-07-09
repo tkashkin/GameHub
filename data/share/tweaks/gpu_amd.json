@@ -1,9 +1,10 @@
 {
-	"id": "amdgpu_vulkan_aco",
+	"id": "gpu_amd_vulkan_aco",
 	"name": "AMD: Radeon ACO Vulkan Compiler",
 	"description": "Enable ACO based Vulkan shader compiler for RADV instead of LLVM",
 	"url": "https://github.com/mesa3d/mesa",
-	"applicable_to": {
+	"group": "GPU",
+	"requires": {
 		"kmod": ["amdgpu"]
 	},
 	"env": {

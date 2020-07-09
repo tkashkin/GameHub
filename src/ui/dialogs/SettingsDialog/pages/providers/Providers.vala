@@ -29,8 +29,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 	{
 		private Settings.Providers.Data.IGDB igdb;
 
-		private ListBox image_providers;
-		private ListBox data_providers;
+		private SettingsGroup sgrp_image_providers;
+		private SettingsGroup sgrp_data_providers;
 
 		public Providers(SettingsDialog dlg)
 		{
@@ -47,86 +47,72 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 		{
 			igdb = Settings.Providers.Data.IGDB.instance;
 
-			var image_providers_header = add_header(_("Image providers"));
-			image_providers_header.margin_start = image_providers_header.margin_end = 12;
+			sgrp_image_providers = new SettingsGroup(_("Image providers"));
+			add_widget(sgrp_image_providers);
 
-			image_providers = add_widget(new ListBox());
-			image_providers.selection_mode = SelectionMode.NONE;
-			image_providers.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			image_providers.get_style_context().add_class("flat-list");
-
-			image_providers.margin_start = 7;
-			image_providers.margin_end = 3;
-			image_providers.margin_top = 0;
-			image_providers.margin_bottom = 6;
-
-			var data_providers_header = add_header(_("Metadata providers"));
-			data_providers_header.margin_start = data_providers_header.margin_end = 12;
-
-			data_providers = add_widget(new ListBox());
-			data_providers.selection_mode = SelectionMode.NONE;
-			data_providers.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			data_providers.get_style_context().add_class("flat-list");
-
-			data_providers.margin_start = 7;
-			data_providers.margin_end = 3;
-			data_providers.margin_top = 0;
-			data_providers.margin_bottom = 6;
+			sgrp_data_providers = new SettingsGroup(_("Metadata providers"));
+			add_widget(sgrp_data_providers);
 
 			update();
 		}
 
 		private void update()
 		{
-			image_providers.foreach(r => {
+			sgrp_image_providers.settings.foreach(r => {
+				if(r != null) r.destroy();
+			});
+
+			sgrp_data_providers.settings.foreach(r => {
 				if(r != null) r.destroy();
 			});
 
 			foreach(var src in ImageProviders)
 			{
-				image_providers.add(new ProviderRow(src));
+				sgrp_image_providers.add_setting(new ProviderRow(src));
 			}
 
 			foreach(var src in DataProviders)
 			{
-				data_providers.add(new ProviderRow(src));
+				sgrp_data_providers.add_setting(new ProviderRow(src));
 			}
 		}
 
-		private class ProviderRow: ListBoxRow
+		private class ProviderRow: ListBoxRow, ActivatableSetting
 		{
 			public Provider provider { get; construct; }
 
 			public ProviderRow(Provider provider)
 			{
-				Object(provider: provider);
+				Object(provider: provider, activatable: true, selectable: false);
 			}
 
 			construct
 			{
+			    get_style_context().add_class("setting");
+                get_style_context().add_class("provider-setting");
+
 				var root_vbox = new Box(Orientation.VERTICAL, 0);
 
 				var grid = new Grid();
 				grid.column_spacing = 12;
-				grid.margin_start = grid.margin_end = 8;
-				grid.margin_top = grid.margin_bottom = 4;
 
 				var icon = new Image.from_icon_name(provider.icon, IconSize.LARGE_TOOLBAR);
 				icon.valign = Align.CENTER;
 
 				var name = new Label(provider.name);
-				name.get_style_context().add_class("category-label");
+				name.get_style_context().add_class("label");
 				name.hexpand = true;
 				name.xalign = 0;
 				name.valign = Align.CENTER;
 
 				var url = new Label(provider.url);
+				url.get_style_context().add_class("description");
 				url.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
 				url.hexpand = true;
 				url.xalign = 0;
 				url.valign = Align.CENTER;
 
-				var open = new Button.from_icon_name("web-browser-symbolic", IconSize.SMALL_TOOLBAR);
+				var open = new Button.from_icon_name("web-symbolic", IconSize.SMALL_TOOLBAR);
 				open.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 				open.valign = Align.CENTER;
 				open.tooltip_text = _("Open website");
@@ -155,7 +141,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 					provider_settings_wrapper.get_style_context().add_class("provider-settings");
 
 					provider_settings.margin_top = provider_settings.margin_bottom = 4;
-					provider_settings.margin_start = 44;
+					provider_settings.margin_start = 48;
 					provider_settings.margin_end = 8;
 
 					provider_settings_wrapper.add(provider_settings);
@@ -178,6 +164,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 				open.clicked.connect(() => {
 					Utils.open_uri(provider.url);
 				});
+
+				setting_activated.connect(() => {
+                    enabled_switch.activate();
+                });
 			}
 		}
 	}

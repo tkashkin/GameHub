@@ -28,6 +28,7 @@ namespace GameHub.Data.Tweaks
 		public string id { get; protected set; }
 		public string? name { get; protected set; default = null; }
 		public string? description { get; protected set; default = null; }
+		public string? group { get; protected set; default = null; }
 		public string? url { get; protected set; default = null; }
 
 		public ApplicabilityOptions? applicability_options { get; protected set; default = null; }
@@ -36,9 +37,9 @@ namespace GameHub.Data.Tweaks
 		public string? command { get; protected set; default = null; }
 		public File? file { get; protected set; default = null; }
 
-		public Tweak(string id, string? name, string? description, string? url, ApplicabilityOptions? applicability_options, HashMap<string, string?>? env, string? command, File? file)
+		public Tweak(string id, string? name, string? description, string? group, string? url, ApplicabilityOptions? applicability_options, HashMap<string, string?>? env, string? command, File? file)
 		{
-			Object(id: id, name: name, description: description, url: url, applicability_options: applicability_options, env: env, command: command, file: file);
+			Object(id: id, name: name, description: description, group: group, url: url, applicability_options: applicability_options, env: env, command: command, file: file);
 		}
 
 		public Tweak.from_json_object(Json.Object obj, File? file, string? default_id=null)
@@ -46,6 +47,7 @@ namespace GameHub.Data.Tweaks
 			string id = default_id ?? "tweak";
 			string? name = null;
 			string? description = null;
+			string? group = null;
 			string? url = null;
 			ApplicabilityOptions? applicability_options = null;
 			HashMap<string, string?>? env = null;
@@ -54,10 +56,13 @@ namespace GameHub.Data.Tweaks
 			if(obj.has_member("id")) id = obj.get_string_member("id");
 			if(obj.has_member("name")) name = obj.get_string_member("name");
 			if(obj.has_member("description")) description = obj.get_string_member("description");
+			if(obj.has_member("group")) group = obj.get_string_member("group");
 			if(obj.has_member("url")) url = obj.get_string_member("url");
 
 			if(obj.has_member("applicable_to"))
+			{
 				applicability_options = new ApplicabilityOptions.from_json(obj.get_member("applicable_to"));
+			}
 
 			if(obj.has_member("env"))
 			{
@@ -77,9 +82,12 @@ namespace GameHub.Data.Tweaks
 				}
 			}
 
-			if(obj.has_member("command")) command = obj.get_string_member("command");
+			if(obj.has_member("command"))
+			{
+			    command = obj.get_string_member("command");
+			}
 
-			Object(id: id, name: name, description: description, url: url, applicability_options: applicability_options, env: env, command: command, file: file);
+			Object(id: id, name: name, description: description, group: group, url: url, applicability_options: applicability_options, env: env, command: command, file: file);
 		}
 
 		public static ArrayList<Tweak> load_from_file(File file)
@@ -253,6 +261,24 @@ namespace GameHub.Data.Tweaks
 			return tweaks;
 		}
 
+		public static HashMap<string?, HashMap<string, Tweak>>? load_tweaks_grouped(bool refresh=false)
+		{
+		    var tweaks = load_tweaks(refresh);
+		    if(tweaks == null || tweaks.size == 0) return null;
+
+		    var groups = new HashMap<string?, HashMap<string, Tweak>>();
+		    foreach(var tweak in tweaks.entries)
+		    {
+                if(!groups.has_key(tweak.value.group))
+                {
+                    groups[tweak.value.group] = new HashMap<string, Tweak>();
+                }
+                groups[tweak.value.group][tweak.value.id] = tweak.value;
+		    }
+
+		    return groups;
+		}
+
 		public Json.Object to_json()
 		{
 			var obj = new Json.Object();
@@ -260,6 +286,7 @@ namespace GameHub.Data.Tweaks
 			obj.set_string_member("id", id);
 			if(name != null) obj.set_string_member("name", name);
 			if(description != null) obj.set_string_member("description", description);
+			if(group != null) obj.set_string_member("group", group);
 			if(url != null) obj.set_string_member("url", url);
 
 			if(applicability_options != null)
