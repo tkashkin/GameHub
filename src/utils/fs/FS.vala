@@ -184,7 +184,7 @@ namespace GameHub.Utils.FS
 	{
 		var data_path = subdir != null ? @"$(ProjectConfig.PROJECT_NAME)/$(subdir)" : ProjectConfig.PROJECT_NAME;
 
-		string[] data_dirs = { FS.file(ProjectConfig.DATADIR, data_path).get_path() };
+		string[] data_dirs = {};
 		var system_data_dirs = Environment.get_system_data_dirs();
 		var user_data_dir = Environment.get_user_data_dir();
 		var user_config_dir = Environment.get_user_config_dir();
@@ -197,6 +197,9 @@ namespace GameHub.Utils.FS
 				if(!(dir in data_dirs)) data_dirs += dir;
 			}
 		}
+
+		var project_data_dir = FS.file(ProjectConfig.DATADIR, data_path).get_path();
+		if(!(project_data_dir in data_dirs)) data_dirs += project_data_dir;
 
 		if(user_data_dir != null && user_data_dir.length > 0)
 		{

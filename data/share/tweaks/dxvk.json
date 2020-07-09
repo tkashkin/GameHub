@@ -1,0 +1,46 @@
+{
+	"id": "dxvk_hud",
+	"name": "DXVK: Show HUD",
+	"description": "Enable DXVK HUD",
+	"url": "https://github.com/doitsujin/dxvk#hud",
+	"group": "DXVK",
+	"applicable_to": {
+		"platforms": ["windows"],
+		"compat": ["wine", "proton"]
+	},
+	"env": {
+		"DXVK_HUD": "${option:hud}"
+	},
+	"options": {
+		"hud": {
+			"type": "list",
+			"separator": ",",
+			"values": {
+				"devinfo": "Show name of GPU and driver version",
+				"fps": "Show frame rate",
+				"frametimes": "Show a frame time graph",
+				"submissions": "Show number of command buffers submitted per frame",
+				"drawcalls": "Show number of draw calls and render passes per frame",
+				"pipelines": "Show total number of graphics and compute pipelines",
+				"memory": "Show amount of device memory allocated and used",
+				"gpuload": "Show estimated GPU load. May be inaccurate",
+				"version": "Show DXVK version",
+				"api": "Show D3D feature level used by the application",
+				"compiler": "Show shader compiler activity",
+				"samplers": "Show current number of sampler pairs used [D3D9 Only]"
+			},
+			"presets": {
+				"default": {
+					"name": "Default",
+					"description": "Show name of GPU, driver version and frame rate",
+					"value": "devinfo,fps"
+				},
+				"full": {
+					"name": "Full",
+					"description": "Show all available HUD elements",
+					"value": "full"
+				}
+			}
+		}
+	}
+}

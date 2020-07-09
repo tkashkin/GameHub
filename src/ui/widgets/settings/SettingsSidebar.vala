@@ -60,6 +60,8 @@ namespace GameHub.UI.Widgets.Settings
 
 		construct
 		{
+			get_style_context().add_class("settings-sidebar");
+
 			hscrollbar_policy = PolicyType.NEVER;
 			width_request = 200;
 			listbox = new ListBox();
@@ -236,6 +238,8 @@ namespace GameHub.UI.Widgets.Settings
 
 			construct
 			{
+			    get_style_context().add_class("settings-sidebar-row");
+
 				icon = new Image();
 				icon.halign = Align.START;
 				icon.valign = Align.CENTER;
@@ -254,19 +258,13 @@ namespace GameHub.UI.Widgets.Settings
 				status_icon.no_show_all = true;
 
 				var hbox = new Box(Orientation.HORIZONTAL, 8);
-				hbox.margin = 6;
 
 				hbox.add(icon);
 				hbox.add(title_label);
 				hbox.add(status_icon);
 				hbox.show_all();
 
-				add(hbox);
-
-                header = page.header;
-				icon_name = page.icon_name;
-				title = page.title;
-				status_type = page.status_type;
+				child = hbox;
 
 				page.bind_property("header", this, "header", BindingFlags.SYNC_CREATE);
 				page.bind_property("icon-name", this, "icon-name", BindingFlags.SYNC_CREATE);

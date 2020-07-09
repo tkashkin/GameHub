@@ -65,7 +65,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
             var sgrp_collection = new SettingsGroup();
 			collection_root = sgrp_collection.add_setting(
 			    new FileSetting.bind(
-			        _("Collection root directory"), _("Installers and bonus content will be downloaded in the collection directory"),
+			        _("Collection directory") + """<span foreground="gray"> • $root</span>""", _("Installers and bonus content will be downloaded in the collection directory"),
 			        file_chooser(_("Select collection root directory"), FileChooserAction.SELECT_FOLDER),
 			        collection, "root"
 			    )
@@ -73,16 +73,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			add_widget(sgrp_collection);
 
             var sgrp_gog = new SettingsGroup("GOG");
-            gog_game_dir = sgrp_gog.add_setting(new EntrySetting.bind(_("Game root directory") + " ($game_dir)", _("All files of a game are downloaded there"), entry("source-gog-symbolic"), gog, "game-dir"));
+            gog_game_dir = sgrp_gog.add_setting(new EntrySetting.bind(_("Game directory") + """<span foreground="gray"> • $game_dir</span>""", null, entry("source-gog-symbolic"), gog, "game-dir"));
             gog_installers = sgrp_gog.add_setting(new EntrySetting.bind(_("Installers directory"), null, entry("source-gog-symbolic"), gog, "installers"));
             gog_dlc = sgrp_gog.add_setting(new EntrySetting.bind(_("DLC directory"), null, entry("folder-download-symbolic"), gog, "dlc"));
             gog_bonus = sgrp_gog.add_setting(new EntrySetting.bind(_("Bonus content directory"), null, entry("folder-music-symbolic"), gog, "bonus"));
 			add_widget(sgrp_gog);
 
             var sgrp_humble = new SettingsGroup("Humble Bundle");
-            humble_game_dir = sgrp_humble.add_setting(new EntrySetting.bind(_("Game root directory") + " ($game_dir)", _("All files of a game are downloaded there"), entry("source-humble-symbolic"), humble, "game-dir"));
+            humble_game_dir = sgrp_humble.add_setting(new EntrySetting.bind(_("Game directory") + """<span foreground="gray"> • $game_dir</span>""", null, entry("source-humble-symbolic"), humble, "game-dir"));
             humble_installers = sgrp_humble.add_setting(new EntrySetting.bind(_("Installers directory"), null, entry("source-humble-symbolic"), humble, "installers"));
 			add_widget(sgrp_humble);
+
+			gog_game_dir.ellipsize_description = gog_installers.ellipsize_description = gog_dlc.ellipsize_description = gog_bonus.ellipsize_description = Pango.EllipsizeMode.START;
+			humble_game_dir.ellipsize_description = humble_installers.ellipsize_description = Pango.EllipsizeMode.START;
 
 			syntax_info_grid = new Grid();
 			syntax_info_grid.column_spacing = 72;
@@ -109,13 +112,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 		{
 			var game = "Game";
 
-			/*gog_game_dir.tooltip_text = FS.Paths.Collection.GOG.expand_game_dir(game);
-			gog_installers.tooltip_text = FS.Paths.Collection.GOG.expand_installers(game, null, Platform.CURRENT);
-			gog_dlc.tooltip_text = FS.Paths.Collection.GOG.expand_dlc(game);
-			gog_bonus.tooltip_text = FS.Paths.Collection.GOG.expand_bonus(game);
+			gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(game);
+			gog_installers.description = Paths.Collection.GOG.expand_installers(game, null, Platform.CURRENT);
+			gog_dlc.description = Paths.Collection.GOG.expand_dlc(game);
+			gog_bonus.description = Paths.Collection.GOG.expand_bonus(game);
 
-			humble_game_dir.tooltip_text = FS.Paths.Collection.Humble.expand_game_dir(game);
-			humble_installers.tooltip_text = FS.Paths.Collection.Humble.expand_installers(game);*/
+			humble_game_dir.description = Paths.Collection.Humble.expand_game_dir(game);
+			humble_installers.description = Paths.Collection.Humble.expand_installers(game);
 
 			Utils.thread("CollectionDiskUsage", () => {
 				try

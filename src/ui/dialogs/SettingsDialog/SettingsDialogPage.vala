@@ -134,8 +134,9 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		protected Label add_header(string text)
 		{
-			var label = Styled.H4Label(text);
-			label.xpad = 4;
+			var label = new Label(text);
+			label.get_style_context().add_class("settings-group-standalone-title");
+			label.xalign = 0;
 			label.halign = Align.START;
 			label.hexpand = true;
 			return add_widget(label);
@@ -175,7 +176,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		protected Entry entry(string? icon=null)
 		{
 			var entry = new Entry();
-			entry.set_size_request(280, -1);
+			entry.set_size_request(320, -1);
 			entry.primary_icon_name = icon;
 			return entry;
 		}
@@ -185,7 +186,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var chooser = new FileChooserEntry(text, mode, icon, null, allow_url, allow_executable);
 			chooser.chooser.create_folders = create;
 			chooser.chooser.show_hidden = true;
-			chooser.set_size_request(280, -1);
+			chooser.set_size_request(320, -1);
 			return chooser;
 		}
 

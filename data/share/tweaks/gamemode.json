@@ -3,5 +3,9 @@
 	"name": "Feral GameMode",
 	"description": "Temporarily apply a set of optimizations to a game process and OS. Requires Feral GameMode to be installed",
 	"url": "https://github.com/FeralInteractive/gamemode",
+	"group": "Performance",
+	"requires": {
+		"executable": ["gamemoderun"]
+	},
 	"command": "gamemoderun ${command}"
 }

@@ -36,7 +36,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				dialog: dlg,
 				title: _("Controller"),
 				icon_name: "gamehub-symbolic",
-				has_active_switch: true
+				has_active_switch: Gamepad.is_supported()
 			);
 		}
 
@@ -44,27 +44,38 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 		{
 			settings = Settings.Controller.instance;
 
-			settings.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
+			if(has_active_switch)
+			{
+			    settings.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
-			var sgrp_controller_options = new SettingsGroup();
-			sgrp_controller_options.add_setting(new SwitchSetting.bind(_("Focus GameHub window with Guide button"), null, settings, "focus-window"));
-			add_widget(sgrp_controller_options);
+			    var sgrp_controller_options = new SettingsGroup();
+			    sgrp_controller_options.add_setting(new SwitchSetting.bind(_("Focus GameHub window with Guide button"), null, settings, "focus-window"));
+			    add_widget(sgrp_controller_options);
 
-			sgrp_controllers = new SettingsGroup(_("Controllers"));
-			add_widget(sgrp_controllers);
+			    sgrp_controllers = new SettingsGroup(_("Controllers"));
+			    add_widget(sgrp_controllers);
 
-			shortcuts_grid = add_widget(new Grid());
-			shortcuts_grid.valign = Align.END;
-			shortcuts_grid.column_spacing = 12;
-			shortcuts_grid.margin_start = 16;
-			shortcuts_grid.margin_end = 12;
-			shortcuts_grid.expand = true;
+			    shortcuts_grid = add_widget(new Grid());
+			    shortcuts_grid.valign = Align.END;
+			    shortcuts_grid.column_spacing = 12;
+			    shortcuts_grid.margin_top = 12;
+			    shortcuts_grid.margin_start = 18;
+			    shortcuts_grid.margin_end = 18;
+			    shortcuts_grid.margin_bottom = 6;
+			    shortcuts_grid.expand = true;
 
-			add_shortcut(0, 0, _("Move focus"), "trigger-left", "/", "trigger-right");
-			shortcuts_grid.add(new Separator(Orientation.VERTICAL));
-			add_shortcut(2, 0, _("Exit"), "guide", "+", "b");
+			    add_shortcut(0, 0, _("Move focus"), "trigger-left", "/", "trigger-right");
+			    shortcuts_grid.add(new Separator(Orientation.VERTICAL));
+			    add_shortcut(2, 0, _("Quit GameHub"), "guide", "+", "b");
 
-			update();
+			    update();
+			}
+			else
+			{
+			    var xorg_warning = new AlertView(_("Controllers are not supported"), _("GameHub currently only supports controllers when running under X.Org display server"), "dialog-warning-symbolic");
+			    xorg_warning.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+			    add_widget(xorg_warning);
+			}
 		}
 
 		private void update()
@@ -103,11 +114,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				var settings = Settings.Controller.instance;
 
 				get_style_context().add_class("setting");
-                get_style_context().add_class("controller");
+                get_style_context().add_class("controller-setting");
 
 				var hbox = new Box(Orientation.HORIZONTAL, 12);
 
-				var icon = new Image.from_icon_name("gamehub-symbolic", IconSize.SMALL_TOOLBAR);
+				var icon = new Image.from_icon_name("gamehub-symbolic", IconSize.LARGE_TOOLBAR);
 				icon.valign = Align.CENTER;
 
 				var name = new Label(controller);

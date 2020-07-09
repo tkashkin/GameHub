@@ -33,6 +33,9 @@ namespace GameHub.UI.Widgets.Settings
         public string? description { get; construct set; }
         public Widget? widget { get; construct set; }
 
+        public Pango.EllipsizeMode ellipsize_title { get; set; default = Pango.EllipsizeMode.NONE; }
+        public Pango.EllipsizeMode ellipsize_description { get; set; default = Pango.EllipsizeMode.NONE; }
+
         private Box hbox;
         private Label title_label;
         private Label description_label;
@@ -52,13 +55,15 @@ namespace GameHub.UI.Widgets.Settings
             text_vbox.hexpand = true;
             text_vbox.valign = Align.CENTER;
 
-            title_label = new Label(title);
+            title_label = new Label(null);
+            title_label.use_markup = true;
             title_label.get_style_context().add_class("title");
             title_label.hexpand = true;
             title_label.wrap = true;
             title_label.xalign = 0;
 
-            description_label = new Label(title);
+            description_label = new Label(null);
+            description_label.use_markup = true;
             description_label.get_style_context().add_class("description");
             description_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
             description_label.hexpand = true;
@@ -80,7 +85,19 @@ namespace GameHub.UI.Widgets.Settings
             });
 
             bind_property("title", title_label, "label", BindingFlags.SYNC_CREATE);
+
             bind_property("description", description_label, "label", BindingFlags.SYNC_CREATE);
+            bind_property("description", description_label, "tooltip-text", BindingFlags.SYNC_CREATE);
+
+            notify["ellipsize-title"].connect(() => {
+                title_label.ellipsize = ellipsize_title;
+                title_label.wrap = ellipsize_title == Pango.EllipsizeMode.NONE;
+            });
+
+            notify["ellipsize-description"].connect(() => {
+                description_label.ellipsize = ellipsize_description;
+                description_label.wrap = ellipsize_description == Pango.EllipsizeMode.NONE;
+            });
 
             notify["widget"].connect(() => replace_widget(widget));
             replace_widget(widget);
@@ -117,7 +134,7 @@ namespace GameHub.UI.Widgets.Settings
         construct
         {
             get_style_context().add_class("setting");
-            get_style_context().add_class("custom-widget");
+            get_style_context().add_class("custom-widget-setting");
             child = widget;
             show_all();
         }
@@ -135,7 +152,7 @@ namespace GameHub.UI.Widgets.Settings
         construct
         {
             get_style_context().add_class("setting");
-            get_style_context().add_class("label");
+            get_style_context().add_class("label-setting");
             label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
             child = label;
             show_all();
@@ -162,7 +179,7 @@ namespace GameHub.UI.Widgets.Settings
 
         construct
         {
-            get_style_context().add_class("switch");
+            get_style_context().add_class("switch-setting");
             setting_activated.connect(() => {
                 @switch.activate();
             });
@@ -187,7 +204,7 @@ namespace GameHub.UI.Widgets.Settings
 
         construct
         {
-            get_style_context().add_class("entry");
+            get_style_context().add_class("entry-setting");
         }
     }
 
@@ -242,7 +259,7 @@ namespace GameHub.UI.Widgets.Settings
 
         construct
         {
-            get_style_context().add_class("mode-button");
+            get_style_context().add_class("mode-button-setting");
             button.homogeneous = false;
             button.mode_changed.connect(() => {
                 selected_option = button.selected;
@@ -268,7 +285,7 @@ namespace GameHub.UI.Widgets.Settings
 
         construct
         {
-            get_style_context().add_class("file");
+            get_style_context().add_class("file-setting");
         }
     }
 }

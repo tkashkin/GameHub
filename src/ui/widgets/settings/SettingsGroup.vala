@@ -66,4 +66,43 @@ namespace GameHub.UI.Widgets.Settings
             return setting;
         }
     }
+
+    public class SettingsGroupBox: Box
+    {
+        public string? title { get; construct; }
+
+        private Label? title_label;
+        public Box container;
+
+        public SettingsGroupBox(string? title = null)
+        {
+            Object(title: title, orientation: Orientation.VERTICAL);
+        }
+
+        construct
+        {
+            get_style_context().add_class("settings-group");
+
+            if(title != null)
+            {
+                title_label = new Label(title);
+                title_label.get_style_context().add_class("title");
+                title_label.ellipsize = Pango.EllipsizeMode.END;
+                title_label.xalign = 0;
+                add(title_label);
+            }
+
+            container = new Box(Orientation.VERTICAL, 0);
+            container.get_style_context().add_class("settings-group-frame");
+            container.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+            container.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW);
+            add(container);
+        }
+
+        public T add_widget<T>(T widget)
+        {
+            container.add((Widget) widget);
+            return widget;
+        }
+    }
 }

@@ -12,42 +12,48 @@
 	background-image: linear-gradient(to right,
 		                              shade(@theme_bg_color, 0.95) 202px,
 	                                  @settings_separator 202px, @settings_separator 203px,
-	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
-	                                  transparent 204px, transparent);
+	                                  transparent 203px, transparent);
 }
-.settings-dialog headerbar:dir(ltr)
+.settings-dialog > headerbar:dir(ltr)
 {
 	background-image: linear-gradient(to right,
 		                              alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
 	                                  @settings_separator 202px, @settings_separator 203px,
-	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
-	                                  transparent 204px, transparent);
+	                                  transparent 203px, transparent);
 }
 .settings-dialog:dir(rtl)
 {
 	background-image: linear-gradient(to left,
 		                              shade(@theme_bg_color, 0.95) 202px,
 	                                  @settings_separator 202px, @settings_separator 203px,
-	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
-	                                  transparent 204px, transparent);
+	                                  transparent 203px, transparent);
 }
-.settings-dialog headerbar:dir(rtl)
+.settings-dialog > headerbar:dir(rtl)
 {
 	background-image: linear-gradient(to left,
 		                              alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
 	                                  @settings_separator 202px, @settings_separator 203px,
-	                                  @settings_separator_shadow 203px, @settings_separator_shadow 204px,
-	                                  transparent 204px, transparent);
+	                                  transparent 203px, transparent);
 }
 
-.settings-dialog > .titlebar > .vertical:dir(ltr)
+.settings-dialog > headerbar > .vertical:dir(ltr)
 {
     padding-left: 200px;
 }
 
-.settings-dialog > .titlebar > .vertical:dir(rtl)
+.settings-dialog > headerbar > .vertical:dir(rtl)
 {
     padding-right: 200px;
+}
+
+.settings-dialog > headerbar switch
+{
+    margin: 0px;
+}
+
+.settings-dialog .settings-sidebar-row
+{
+    padding: 8px;
 }
 
 .settings-dialog .settings-pages-sidebar list

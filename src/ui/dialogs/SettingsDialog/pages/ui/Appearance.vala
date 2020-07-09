@@ -31,6 +31,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 		private Settings.UI.Appearance settings;
 
 		private ModeButton grid_size_presets;
+		private BaseSetting setting_card_size_preset;
 
 		public Appearance(SettingsDialog dlg)
 		{
@@ -91,8 +92,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 			var sgrp_grid = new SettingsGroup(_("Grid"));
 			sgrp_grid.add_setting(new SwitchSetting.bind(_("Show platform icons"), null, settings, "grid-platform-icons"));
-			sgrp_grid.add_setting(new BaseSetting(_("Card size"), null, grid_size_hbox));
-			sgrp_grid.add_setting(new BaseSetting(_("Card size presets"), null, grid_size_presets));
+			sgrp_grid.add_setting(new BaseSetting(_("Card size"), _("Cards may be scaled to fit window"), grid_size_hbox));
+			setting_card_size_preset = sgrp_grid.add_setting(new BaseSetting(_("Card size preset"), null, grid_size_presets));
 			add_widget(sgrp_grid);
 
 			var sgrp_list = new SettingsGroup(_("List"));
@@ -106,6 +107,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 					grid_width_spinbutton.value = preset.width();
 					grid_height_spinbutton.value = preset.height();
 				}
+				setting_card_size_preset.description = preset.name();
 			});
 
 			update_grid_size_presets();

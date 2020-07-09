@@ -1,0 +1,11 @@
+{
+	"id": "mangohud",
+	"name": "MangoHud",
+	"description": "A modification of the Mesa Vulkan overlay. Including GUI improvements, temperature reporting, and logging capabilities",
+	"url": "https://github.com/flightlessmango/MangoHud",
+	"group": "Overlays",
+	"requires": {
+		"executable": ["mangohud"]
+	},
+	"command": "mangohud ${command}"
+}
