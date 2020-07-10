@@ -261,6 +261,21 @@
 			</key>
 		</schema>
 
+		<schema path="@SCHEMA_PATH@/paths/collection/gamerzilla/" id="@SCHEMA_ID@.paths.collection.gamerzilla">
+			<key name="url" type="s">
+				<default>''</default>
+				<summary>Gamerzilla: Hubzilla url</summary>
+			</key>
+			<key name="username" type="s">
+				<default>''</default>
+				<summary>Gamerzilla: username</summary>
+			</key>
+			<key name="password" type="s">
+				<default>''</default>
+				<summary>Gamerzilla: password</summary>
+			</key>
+		</schema>
+
 	<!-- Controller -->
 		<schema path="@SCHEMA_PATH@/controller/" id="@SCHEMA_ID@.controller">
 			<key name="enabled" type="b">

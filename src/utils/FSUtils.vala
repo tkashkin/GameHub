@@ -85,6 +85,7 @@ namespace GameHub.Utils
 				public const string Home = "~/.local/share/" + ProjectConfig.PROJECT_NAME;
 				public const string Tweaks = FSUtils.Paths.LocalData.Home + "/tweaks";
 				public const string DOSBoxConfigs = FSUtils.Paths.LocalData.Home + "/compat/dosbox";
+				public const string GamerzillaSave = FSUtils.Paths.LocalData.Home + "/gamerzilla/";
 			}
 
 			public class Config
@@ -283,6 +284,31 @@ namespace GameHub.Utils
 							if(_instance == null)
 							{
 								_instance = new Humble();
+							}
+							return _instance;
+						}
+					}
+				}
+
+				public class Gamerzilla: GameHub.Settings.SettingsSchema
+				{
+					public string url { get; set; }
+					public string username { get; set; }
+					public string password { get; set; }
+
+					public Gamerzilla()
+					{
+						base(ProjectConfig.PROJECT_NAME + ".paths.collection.gamerzilla");
+					}
+
+					private static Gamerzilla? _instance;
+					public static unowned Gamerzilla instance
+					{
+						get
+						{
+							if(_instance == null)
+							{
+								_instance = new Gamerzilla();
 							}
 							return _instance;
 						}
@@ -497,6 +523,7 @@ namespace GameHub.Utils
 			mkdir(FSUtils.Paths.LocalData.Home);
 			mkdir(FSUtils.Paths.LocalData.Tweaks);
 			mkdir(FSUtils.Paths.LocalData.DOSBoxConfigs);
+			mkdir(FSUtils.Paths.LocalData.GamerzillaSave);
 
 			mkdir(FSUtils.Paths.Config.Home);
 			mkdir(FSUtils.Paths.Config.Tweaks);

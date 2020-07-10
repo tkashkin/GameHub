@@ -133,6 +133,17 @@ namespace GameHub
 		private Gtk.Settings gtk_settings;
 		private HashMap<string, CssProvider> theme_providers;
 
+		#if GAMERZILLA
+		private void* gamerzilla_thread()
+		{
+			while (true)
+			{
+				Gamerzilla.process(null);
+			}
+			return null;
+		}
+		#endif
+
 		private void init()
 		{
 			if(GameSources != null && CompatTools != null) return;
@@ -193,6 +204,29 @@ namespace GameHub
 			gtk_settings = Gtk.Settings.get_for_screen(screen);
 			gtk_settings.notify["gtk-theme-name"].connect(gtk_theme_handler);
 			gtk_theme_handler();
+			#if GAMERZILLA
+			if (!Thread.supported())
+			{
+				debug("No threading");
+			}
+			else
+			{
+				Gamerzilla.start(true, FSUtils.Paths.LocalData.GamerzillaSave);
+				FSUtils.Paths.Collection.Gamerzilla gamerzilla = FSUtils.Paths.Collection.Gamerzilla.instance;
+				if (gamerzilla.url.length != 0)
+				{
+					Gamerzilla.connect(gamerzilla.url, gamerzilla.username, gamerzilla.password);
+				}
+				try {
+					Thread<void*> thread = new Thread<void*>.try("Gamerzilla Thread.", gamerzilla_thread);
+					debug("Starting gamerzilla");
+				}
+				catch (Error e)
+				{
+					debug("Failed to start gamerzilla");
+				}
+			}
+			#endif
 		}
 
 		private void gtk_theme_handler()

@@ -30,6 +30,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 		private FSUtils.Paths.Collection collection;
 		private FSUtils.Paths.Collection.GOG gog;
 		private FSUtils.Paths.Collection.Humble humble;
+		private FSUtils.Paths.Collection.Gamerzilla gamerzilla;
 
 		private FileChooserEntry collection_root;
 
@@ -40,6 +41,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 		private Entry humble_game_dir;
 		private Entry humble_installers;
+
+		private Entry gamerzilla_url;
+		private Entry gamerzilla_username;
+		private Entry gamerzilla_password;
 
 		private int syntax_info_grid_rows = 0;
 		private Grid syntax_info_grid;
@@ -61,6 +66,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			collection = FSUtils.Paths.Collection.instance;
 			gog = FSUtils.Paths.Collection.GOG.instance;
 			humble = FSUtils.Paths.Collection.Humble.instance;
+			gamerzilla = FSUtils.Paths.Collection.Gamerzilla.instance;
 
 			collection_root = add_file_chooser(_("Collection directory"), FileChooserAction.SELECT_FOLDER, collection.root, v => { collection.root = v; update(); }).get_children().last().data as FileChooserEntry;
 
@@ -77,6 +83,15 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			add_header("Humble Bundle");
 			humble_game_dir = add_entry(_("Game directory") + " ($game_dir)", humble.game_dir, v => { humble.game_dir = v; update(); }, "source-humble-symbolic").get_children().last().data as Entry;
 			humble_installers = add_entry(_("Installers"), humble.installers, v => { humble.installers = v; update(); }, "source-humble-symbolic").get_children().last().data as Entry;
+
+			#if GAMERZILLA
+			add_separator();
+
+			add_header("Gamerzilla");
+			gamerzilla_url = add_entry(_("Hubzilla URL"), gamerzilla.url, v => { gamerzilla.url = v; update(); }, "source-gamerzilla-symbolic").get_children().last().data as Entry;
+			gamerzilla_username = add_entry(_("Username"), gamerzilla.username, v => { gamerzilla.username = v; update(); }, "source-gamerzilla-symbolic").get_children().last().data as Entry;
+			gamerzilla_password = add_entry(_("Password"), gamerzilla.password, v => { gamerzilla.password = v; update(); }, "source-gamerzilla-symbolic").get_children().last().data as Entry;
+			#endif
 
 			syntax_info_grid = new Grid();
 			syntax_info_grid.column_spacing = 72;
