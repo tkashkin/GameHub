@@ -5,7 +5,7 @@
 	"url": "https://github.com/flightlessmango/MangoHud",
 	"group": "Overlays",
 	"requires": {
-		"executable": ["mangohud"]
+		"executables": ["mangohud"]
 	},
 	"command": "mangohud ${command}"
 }

@@ -5,7 +5,7 @@
 	"url": "https://github.com/mesa3d/mesa",
 	"group": "GPU",
 	"requires": {
-		"kmod": ["amdgpu"]
+		"kernel_modules": ["amdgpu"]
 	},
 	"env": {
 		"RADV_PERFTEST": "aco"

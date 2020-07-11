@@ -28,6 +28,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 {
 	public class Collection: SettingsDialogPage
 	{
+	    private const string EXAMPLE_GAME_NAME = "Factorio";
+
 		private Paths.Collection collection;
 		private Paths.Collection.GOG gog;
 		private Paths.Collection.Humble humble;
@@ -105,20 +107,28 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			add_widget(syntax_info);
 			syntax_info.margin_start = syntax_info.margin_end = 18;
 
+			gog.notify["game-dir"].connect(() => gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(EXAMPLE_GAME_NAME));
+			gog.notify["installers"].connect(() => gog_installers.description = Paths.Collection.GOG.expand_installers(EXAMPLE_GAME_NAME, null, Platform.CURRENT));
+			gog.notify["dlc"].connect(() => gog_dlc.description = Paths.Collection.GOG.expand_dlc(EXAMPLE_GAME_NAME));
+			gog.notify["bonus"].connect(() => gog_bonus.description = Paths.Collection.GOG.expand_bonus(EXAMPLE_GAME_NAME));
+
+			humble.notify["game-dir"].connect(() => humble_game_dir.description = Paths.Collection.Humble.expand_game_dir(EXAMPLE_GAME_NAME));
+			humble.notify["installers"].connect(() => humble_installers.description = Paths.Collection.Humble.expand_installers(EXAMPLE_GAME_NAME, Platform.CURRENT));
+
+			collection.notify["root"].connect(update);
+
 			update();
 		}
 
 		private void update()
 		{
-			var game = "Game";
+			gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(EXAMPLE_GAME_NAME);
+			gog_installers.description = Paths.Collection.GOG.expand_installers(EXAMPLE_GAME_NAME, null, Platform.CURRENT);
+			gog_dlc.description = Paths.Collection.GOG.expand_dlc(EXAMPLE_GAME_NAME);
+			gog_bonus.description = Paths.Collection.GOG.expand_bonus(EXAMPLE_GAME_NAME);
 
-			gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(game);
-			gog_installers.description = Paths.Collection.GOG.expand_installers(game, null, Platform.CURRENT);
-			gog_dlc.description = Paths.Collection.GOG.expand_dlc(game);
-			gog_bonus.description = Paths.Collection.GOG.expand_bonus(game);
-
-			humble_game_dir.description = Paths.Collection.Humble.expand_game_dir(game);
-			humble_installers.description = Paths.Collection.Humble.expand_installers(game);
+			humble_game_dir.description = Paths.Collection.Humble.expand_game_dir(EXAMPLE_GAME_NAME);
+			humble_installers.description = Paths.Collection.Humble.expand_installers(EXAMPLE_GAME_NAME, Platform.CURRENT);
 
 			Utils.thread("CollectionDiskUsage", () => {
 				try
