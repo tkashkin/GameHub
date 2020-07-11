@@ -1,7 +1,7 @@
 [
 	{
 		"id": "proton_dx_wined3d",
-		"name": "Proton: Use WineD3D",
+		"name": "Use WineD3D",
 		"description": "Use OpenGL-based WineD3D for D3D11, D3D10 and D3D9 instead of Vulkan-based DXVK",
 		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
 		"group": "Proton",
@@ -15,7 +15,7 @@
 	},
 	{
 		"id": "proton_dx_disable_d3d11",
-		"name": "Proton: Disable D3D11",
+		"name": "Disable D3D11",
 		"description": "Disable d3d11.dll, for D3D11 games which can fall back to and run better with D3D9",
 		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
 		"group": "Proton",
@@ -29,7 +29,7 @@
 	},
 	{
 		"id": "proton_dx_disable_d3d10",
-		"name": "Proton: Disable D3D10",
+		"name": "Disable D3D10",
 		"description": "Disable d3d10.dll and dxgi.dll, for D3D10 games which can fall back to and run better with D3D9",
 		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
 		"group": "Proton",
@@ -43,7 +43,7 @@
 	},
 	{
 		"id": "proton_no_esync",
-		"name": "Proton: Disable esync",
+		"name": "Disable esync",
 		"description": "Disable eventfd-based in-process synchronization primitives",
 		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
 		"group": "Proton",
@@ -57,7 +57,7 @@
 	},
 	{
 		"id": "proton_no_fsync",
-		"name": "Proton: Disable fsync",
+		"name": "Disable fsync",
 		"description": "Disable futex-based in-process synchronization primitives",
 		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
 		"group": "Proton",

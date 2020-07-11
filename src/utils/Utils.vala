@@ -353,6 +353,7 @@ namespace GameHub.Utils
 		}
 	}
 
+    private static string? distro = null;
 	public static string get_distro()
 	{
 		if(distro != null) return distro;
@@ -425,6 +426,24 @@ namespace GameHub.Utils
 		#else
 		return false;
 		#endif
+	}
+
+    private static string[]? kmods = null;
+	public static bool is_kernel_module_loaded(string? name)
+	{
+	    if(name == null || name.length == 0) return true;
+        if(kmods == null)
+        {
+            kmods = {};
+            string proc_modules;
+			FileUtils.get_contents("/proc/modules", out proc_modules);
+			var module_lines = proc_modules.split("\n");
+		    foreach(var line in module_lines)
+		    {
+			    kmods += line.split(" ")[0];
+		    }
+        }
+        return name in kmods;
 	}
 
 	public static async void sleep_async(uint interval, int priority=GLib.Priority.DEFAULT)
@@ -639,8 +658,6 @@ namespace GameHub.Utils
 	{
 		widget.tooltip_markup = markup_accel_tooltip({ accel }, tooltip);
 	}
-
-	private static string? distro;
 
 	/* Based on Granite.Services.Logger */
 	public class Logger: Object
