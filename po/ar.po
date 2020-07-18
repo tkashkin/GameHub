@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-07-07 03:10+0000\n"
+"PO-Revision-Date: 2020-07-19 08:41+0000\n"
 "Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gamehub/"
 "translations/ar/>\n"
@@ -26,7 +26,7 @@ msgstr "عرض التعليمات"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr "عرض اصدار التطبيق والخروج"
+msgstr "اظهر إصدار التطبيق و اغلق"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
@@ -138,9 +138,9 @@ msgid "Select directory"
 msgstr "إختر دليل"
 
 #: src/data/Runnable.vala:619
-#, c-format
+#, c-format, fuzzy
 msgid "Part %1$u of %2$u: %3$s"
-msgstr ""
+msgstr "الجزء %1$u من %2$u: %3$s"
 
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
@@ -150,7 +150,7 @@ msgstr "%s: مثبت تالف"
 #: src/data/Runnable.vala:643
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr ""
+msgstr "عدم تطابق تدقيق المجموع في %s"
 
 #: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
@@ -274,7 +274,7 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr "%s باقية؛"
+msgstr "%s باقية;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
@@ -283,16 +283,16 @@ msgid "%d%%"
 msgstr ""
 
 #: src/data/sources/itch/ItchDownloader.vala:198
-#, c-format
+#, c-format, fuzzy
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "(%1$s / %2$s)"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s\\ثا]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -334,7 +334,7 @@ msgid ""
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
 "Innoextract <b>%1$s</b> غير مدعوم وقد لا يتمكن من استخراج اللعبة بشكل صحيح\n"
-"قم بتثبيت النسخة <b>%2$s</b> أو احدث"
+"قم بتثبيت النسخة <b>%2$s</b> أو احدث."
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
@@ -378,7 +378,6 @@ msgid "Wine prefix"
 msgstr ""
 
 #: src/data/compat/Wine.vala:55
-#, fuzzy
 msgid "Environment variables"
 msgstr "متغيرات البيئة"
 
@@ -493,7 +492,6 @@ msgid "Score"
 msgstr "التقييم"
 
 #: src/data/providers/images/SteamGridDB.vala:213
-#, fuzzy
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
 msgstr "المالك"
@@ -569,7 +567,7 @@ msgstr "بعض الاعدادات تحتاج لإعادة التشغيل لتط�
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:71
 msgid "Games directory contains space. It may cause problems for some games"
-msgstr ""
+msgstr "يحتوي اسم الدليل على مسافات. قد يسبب مشاكل لبعض الألعاب"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
@@ -694,7 +692,7 @@ msgstr "التجميعة"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
 msgid "Empty"
-msgstr ""
+msgstr "فارغ"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
@@ -777,11 +775,11 @@ msgstr "مٌعطل"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "تطويعات"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr ""
+msgstr "طوع إعدادات البدء وطبقهم على اللعبة تلقائيا"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
@@ -791,7 +789,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "انقر للفتح"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
@@ -875,7 +873,7 @@ msgstr "المحاكيات"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 msgid "Libretro core directory"
-msgstr ""
+msgstr "دليل أنوية Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
 msgid "Libretro core info directory"
@@ -883,7 +881,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
-msgstr ""
+msgstr "أنوية libretro المتجاهلة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
@@ -891,18 +889,18 @@ msgstr "تجاهل ملحق ملف اللعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
-msgstr ""
+msgstr "بدون أنوية"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:70
 #, c-format
 msgid "%u core found"
 msgid_plural "%u cores found"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "بدون أنوية"
+msgstr[1] "نواة واحدة"
+msgstr[2] "نواتان"
+msgstr[3] "%u أنوية"
+msgstr[4] "%u نواةً"
+msgstr[5] "%u أنوية"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:168
@@ -913,12 +911,12 @@ msgstr "بدون محاكي مخصص"
 #, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "بدون محاكٍ مخصص"
+msgstr[1] "محاكٍ مخصص واحد"
+msgstr[2] "محاكيان مخصصان %u"
+msgstr[3] "%u محاكيات مخصصة"
+msgstr[4] "%u محاكٍ مخصص"
+msgstr[5] "%u محاكيات مخصصة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
@@ -954,7 +952,7 @@ msgstr "الاسم"
 #: src/ui/dialogs/GamePropertiesDialog.vala:201
 #: src/ui/views/GamesView/AddGamePopover.vala:78
 msgid "Arguments"
-msgstr ""
+msgstr "المعطيات"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:276
 msgid "Variables"
@@ -966,12 +964,11 @@ msgstr "الملف التنفيذي للعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:278
 msgid "Game arguments"
-msgstr ""
+msgstr "معطيات اللعبة"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
-#, fuzzy
 msgid "Directory"
 msgstr "الدليل"
 
@@ -1150,7 +1147,7 @@ msgstr "التوافق"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:236
 msgid "Launch from terminal"
-msgstr ""
+msgstr "شغل في الطرفية"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:252
 msgid "Copy to clipboard"
@@ -1234,7 +1231,7 @@ msgstr ""
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
-msgstr ""
+msgstr "مثبت تالف: عدم تطابق تدقيق المجموع في"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
@@ -1325,16 +1322,16 @@ msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:208
 msgid "Filters"
-msgstr ""
+msgstr "مرشحات"
 
 #: src/ui/views/GamesView/GamesView.vala:216
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
-msgstr ""
+msgstr "أضف لعبة"
 
 #: src/ui/views/GamesView/GamesView.vala:223
 msgid "Search"
-msgstr ""
+msgstr "اِبحث"
 
 #: src/ui/views/GamesView/GamesView.vala:328
 msgid "Menu"
@@ -1346,15 +1343,15 @@ msgid "Back"
 msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:550
-#, fuzzy, c-format
+#, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] "شغل اللعبة"
-msgstr[1] "شغل اللعبة"
-msgstr[2] "شغل اللعبة"
-msgstr[3] "شغل اللعبة"
-msgstr[4] "شغل اللعبة"
-msgstr[5] "شغل اللعبة"
+msgstr[0] "%u لعبة"
+msgstr[1] "لعبة واحدة"
+msgstr[2] "لعبتان"
+msgstr[3] "%u ألعاب"
+msgstr[4] "%u لعبة"
+msgstr[5] "%u ألعاب"
 
 #: src/ui/views/GamesView/GamesView.vala:553
 #, c-format
@@ -1620,9 +1617,9 @@ msgid "Languages"
 msgstr ""
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
-#, fuzzy, c-format
+#, c-format
 msgid "%u DLCs cannot be installed"
-msgstr "%s: مثبت تالف"
+msgstr "لا يمكن تثبيت DLC %u"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1663,12 +1660,12 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
 msgid "Release date"
-msgstr ""
+msgstr "تاريخ الاصدار"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:133
 msgctxt "igdb"
 msgid "Platforms"
-msgstr ""
+msgstr "المنصات"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:139
 msgctxt "igdb"
@@ -1678,12 +1675,12 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:145
 msgctxt "igdb"
 msgid "Keywords"
-msgstr ""
+msgstr "الكلمات المفتاحية"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:152
 msgctxt "igdb"
 msgid "Links"
-msgstr ""
+msgstr "الروابط"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:208
 #, c-format
@@ -1699,28 +1696,30 @@ msgstr[5] ""
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:290
 msgctxt "igdb"
 msgid "Summary"
-msgstr ""
+msgstr "خلاصة"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:301
 msgctxt "igdb"
 msgid "Storyline"
-msgstr ""
+msgstr "مجرى القصة"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select file"
-msgstr ""
+msgstr "حدد ملف"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid "No images"
-msgstr ""
+msgstr "بدون صور"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
+"لم يعثر على صور لهذه اللعبة\n"
+"تأكد من صحة الاسم"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:94
 msgid "Search images:"
@@ -1732,38 +1731,37 @@ msgstr ""
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
-msgstr ""
+msgstr "إعداد"
 
 #: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
-msgstr ""
+msgstr "أضف وسم"
 
 #: src/ui/widgets/TweaksList.vala:86
 msgid "No description"
-msgstr ""
+msgstr "بدون وصف"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
-msgstr "عدل البرنامج النصي"
+msgstr "عدل الملف"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
 msgctxt "time"
 msgid "%dh"
-msgstr ""
+msgstr "%dسا"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr ""
+msgstr "%dد"
 
 #: src/utils/Utils.vala:464
 #, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr ""
+msgstr "%dثا"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1788,49 +1786,48 @@ msgstr ""
 #: src/settings/UI.vala:157
 msgctxt "grid_size_preset"
 msgid "Square"
-msgstr ""
+msgstr "مربع"
 
 #: src/settings/UI.vala:158
 msgctxt "grid_size_preset"
 msgid "Custom"
-msgstr ""
+msgstr "مخصص"
 
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
-msgstr ""
+msgstr "في قائمة الانتظار"
 
 #: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr ""
+msgstr "بدء التنزيل"
 
 #: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
 msgid "Download started"
-msgstr ""
+msgstr "بدأَ التنزيل"
 
 #: src/utils/downloader/Downloader.vala:203
 msgctxt "dl_status"
 msgid "Download finished"
-msgstr ""
+msgstr "تم التنزيل"
 
 #: src/utils/downloader/Downloader.vala:204
 msgctxt "dl_status"
 msgid "Download failed"
-msgstr ""
+msgstr "فشل التنزيل"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "يحمل"
+msgstr "ينزل: %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
-msgstr "يحمل"
+msgstr "ينزل"
 
 #: src/utils/downloader/Downloader.vala:214
 #, c-format
@@ -1846,7 +1843,7 @@ msgstr ""
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
 msgid "Download cancelled"
-msgstr ""
+msgstr "ألغي التنزيل"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
