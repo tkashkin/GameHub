@@ -88,6 +88,15 @@ namespace GameHub.Data.Sources.User
 			playtime_source = Tables.Games.PLAYTIME_SOURCE.get_int64(s);
 			playtime_tracked = Tables.Games.PLAYTIME_TRACKED.get_int64(s);
 			image_vertical = Tables.Games.IMAGE_VERTICAL.get(s);
+			gamerzilla_name = Tables.Games.GAMERZILLA.get(s);
+
+			if((image == null || image == "") && (gamerzilla_name != null && gamerzilla_name != ""))
+			{
+				int game_id = Gamerzilla.get_game(gamerzilla_name);
+				string found = Gamerzilla.get_game_image(game_id);
+				image = @"file:///" + found;
+				Gamerzilla.free_game(game_id);
+			}
 
 			platforms.clear();
 			var pls = Tables.Games.PLATFORMS.get(s).split(",");
@@ -188,6 +197,42 @@ namespace GameHub.Data.Sources.User
 			}
 		}
 
+		private bool loading_achievements = false;
+		public override async ArrayList<Game.Achievement>? load_achievements()
+		{
+			if (gamerzilla_name == null || gamerzilla_name == "")
+				return null;
+			if(achievements != null || loading_achievements)
+			{
+				return achievements;
+			}
+
+			loading_achievements = true;
+			int game_id = Gamerzilla.get_game(gamerzilla_name);
+			int num_trophy = Gamerzilla.get_trophy_num(game_id);
+			var _achievements = new ArrayList<Game.Achievement>();
+
+			for (int i = 0; i < num_trophy; i++)
+			{
+				unowned string a_name;
+				unowned string a_desc;
+				string a_image_unlocked;
+				string a_image_locked;
+				bool a_unlocked = false;
+				Gamerzilla.get_trophy_by_index(game_id, i, out a_name, out a_desc);
+				a_image_unlocked = @"file:///" + Gamerzilla.get_trophy_image(game_id, a_name, true);
+				a_image_locked = @"file:///" + Gamerzilla.get_trophy_image(game_id, a_name, false);
+				Gamerzilla.get_trophy(game_id, a_name, out a_unlocked);
+				_achievements.add(new Achievement(a_name, a_name, a_desc, a_image_locked, a_image_unlocked,
+				                                  a_unlocked));
+			}
+			Gamerzilla.free_game(game_id);
+
+			achievements = _achievements;
+			loading_achievements = false;
+			return achievements;
+		}
+
 		public class Installer: Runnable.FileInstaller
 		{
 			private string game_name;
@@ -199,6 +244,20 @@ namespace GameHub.Data.Sources.User
 				id = "installer";
 				platform = installer.get_path().down().has_suffix(".exe") ? Platform.WINDOWS : Platform.LINUX;
 				file = installer;
+			}
+		}
+
+		public class Achievement: Game.Achievement
+		{
+			public Achievement(string id, string name, string desc, string? image_locked, string? image_unlocked,
+			                   bool unlocked)
+			{
+				this.id = id;
+				this.name = name;
+				this.description = desc;
+				this.image_locked = image_locked;
+				this.image_unlocked = image_unlocked;
+				this.unlocked = unlocked;
 			}
 		}
 	}

@@ -101,6 +101,8 @@ namespace GameHub.Data
 		public File? installers_dir { get; protected set; default = null; }
 		public bool is_installable { get; protected set; default = true; }
 
+		public string? gamerzilla_name { get; set; }
+
 		public string? store_page { get; protected set; default = null; }
 
 		public int64 last_launch { get; set; default = 0; }
