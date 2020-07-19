@@ -87,7 +87,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 			var sgrp_appearance = new SettingsGroup();
 			sgrp_appearance.add_setting(new SwitchSetting.bind(_("Prefer dark theme"), null, settings, "dark-theme"));
-            sgrp_appearance.add_setting(new ModeButtonSetting.bind(_("Icon style"), _("Colored icons may look better for some themes"), { C_("icon_style", "Automatic"), C_("icon_style", "Symbolic"), C_("icon_style", "Colored") }, settings, "icon-style"));
+			sgrp_appearance.add_setting(new ModeButtonSetting.bind(_("Icon style"), _("Colored icons may look better for some themes"), { C_("icon_style", "Automatic"), C_("icon_style", "Symbolic"), C_("icon_style", "Colored") }, settings, "icon-style"));
 			add_widget(sgrp_appearance);
 
 			var sgrp_grid = new SettingsGroup(_("Grid"));

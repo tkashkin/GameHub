@@ -88,8 +88,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 
 			construct
 			{
-			    get_style_context().add_class("setting");
-                get_style_context().add_class("provider-setting");
+				get_style_context().add_class("setting");
+				get_style_context().add_class("provider-setting");
 
 				var root_vbox = new Box(Orientation.VERTICAL, 0);
 
@@ -166,8 +166,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Providers
 				});
 
 				setting_activated.connect(() => {
-                    enabled_switch.activate();
-                });
+					enabled_switch.activate();
+				});
 			}
 		}
 	}

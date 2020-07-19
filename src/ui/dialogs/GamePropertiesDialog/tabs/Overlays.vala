@@ -31,7 +31,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 	{
 		public Traits.Game.SupportsOverlays game { get; construct; }
 
-        private Stack stack;
+		private Stack stack;
 
 		private Box disabled_box;
 		private AlertView disabled_alert;
@@ -56,7 +56,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 
 		construct
 		{
-            stack = new Stack();
+			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
 
 			content = new Box(Orientation.VERTICAL, 0);

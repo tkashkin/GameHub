@@ -93,7 +93,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			pages.interpolate_size = true;
 
 			pages.notify["visible-child"].connect(() => {
-			    update_current_page((SettingsSidebar.SettingsPage) pages.visible_child);
+				update_current_page((SettingsSidebar.SettingsPage) pages.visible_child);
 			});
 
 			add_page("ui/appearance", new Pages.UI.Appearance(this));
@@ -159,53 +159,53 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 
 		private void update_current_page(SettingsSidebar.SettingsPage page)
 		{
-            if(current_page != null)
-            {
-                current_page.disconnect(current_page_title_handler);
-                current_page.disconnect(current_page_desc_handler);
-                current_page.disconnect(current_page_has_active_switch_handler);
-                if(current_page_active_binding != null)
-                {
-                    current_page_active_binding.unbind();
-                    current_page_active_binding = null;
-                }
-            }
-            current_page = page;
-            current_page_title_handler = current_page.notify["title"].connect(update_current_page_title);
-            current_page_desc_handler = current_page.notify["description"].connect(update_current_page_title);
-            current_page_has_active_switch_handler = current_page.notify["has-active-switch"].connect(update_current_page_active_switch);
-            update_current_page_title();
-            update_current_page_active_switch();
+			if(current_page != null)
+			{
+				current_page.disconnect(current_page_title_handler);
+				current_page.disconnect(current_page_desc_handler);
+				current_page.disconnect(current_page_has_active_switch_handler);
+				if(current_page_active_binding != null)
+				{
+					current_page_active_binding.unbind();
+					current_page_active_binding = null;
+				}
+			}
+			current_page = page;
+			current_page_title_handler = current_page.notify["title"].connect(update_current_page_title);
+			current_page_desc_handler = current_page.notify["description"].connect(update_current_page_title);
+			current_page_has_active_switch_handler = current_page.notify["has-active-switch"].connect(update_current_page_active_switch);
+			update_current_page_title();
+			update_current_page_active_switch();
 		}
 
 		private void update_current_page_title()
 		{
-		    if(headerbar == null || current_page == null) return;
-		    var title = current_page.title;
-		    var desc = current_page.description;
-		    if(desc != null)
-		    {
-                headerbar.subtitle = "%s • %s".printf(title, desc);
-		    }
-		    else
-		    {
-		        headerbar.subtitle = title;
-		    }
+			if(headerbar == null || current_page == null) return;
+			var title = current_page.title;
+			var desc = current_page.description;
+			if(desc != null)
+			{
+				headerbar.subtitle = "%s • %s".printf(title, desc);
+			}
+			else
+			{
+				headerbar.subtitle = title;
+			}
 		}
 
 		private void update_current_page_active_switch()
 		{
-		    if(headerbar_page_active_switch == null || current_page == null) return;
-		    headerbar_page_active_switch.visible = current_page.has_active_switch;
-		    if(current_page_active_binding != null)
-            {
-                current_page_active_binding.unbind();
-                current_page_active_binding = null;
-            }
-            if(current_page.has_active_switch)
-            {
-                current_page_active_binding = current_page.bind_property("active", headerbar_page_active_switch, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
-            }
+			if(headerbar_page_active_switch == null || current_page == null) return;
+			headerbar_page_active_switch.visible = current_page.has_active_switch;
+			if(current_page_active_binding != null)
+			{
+				current_page_active_binding.unbind();
+				current_page_active_binding = null;
+			}
+			if(current_page.has_active_switch)
+			{
+				current_page_active_binding = current_page.bind_property("active", headerbar_page_active_switch, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
+			}
 		}
 
 		private void add_page(string id, SettingsSidebar.SettingsPage page)

@@ -20,89 +20,89 @@ using Gtk;
 
 namespace GameHub.UI.Widgets.Settings
 {
-    public class SettingsGroup: Box
-    {
-        public string? title { get; construct; }
+	public class SettingsGroup: Box
+	{
+		public string? title { get; construct; }
 
-        private Label? title_label;
-        public ListBox settings;
+		private Label? title_label;
+		public ListBox settings;
 
-        public SettingsGroup(string? title = null)
-        {
-            Object(title: title, orientation: Orientation.VERTICAL);
-        }
+		public SettingsGroup(string? title = null)
+		{
+			Object(title: title, orientation: Orientation.VERTICAL);
+		}
 
-        construct
-        {
-            get_style_context().add_class("settings-group");
+		construct
+		{
+			get_style_context().add_class("settings-group");
 
-            if(title != null)
-            {
-                title_label = new Label(title);
-                title_label.get_style_context().add_class("title");
-                title_label.ellipsize = Pango.EllipsizeMode.END;
-                title_label.xalign = 0;
-                add(title_label);
-            }
+			if(title != null)
+			{
+				title_label = new Label(title);
+				title_label.get_style_context().add_class("title");
+				title_label.ellipsize = Pango.EllipsizeMode.END;
+				title_label.xalign = 0;
+				add(title_label);
+			}
 
-            settings = new ListBox();
-            settings.get_style_context().add_class("settings-group-frame");
-            settings.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-            settings.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW);
-            add(settings);
+			settings = new ListBox();
+			settings.get_style_context().add_class("settings-group-frame");
+			settings.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			settings.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW);
+			add(settings);
 
-            settings.row_activated.connect(row => {
-                var setting = row as ActivatableSetting;
-                if(setting != null)
-                {
-                    setting.setting_activated();
-                }
-            });
-        }
+			settings.row_activated.connect(row => {
+				var setting = row as ActivatableSetting;
+				if(setting != null)
+				{
+					setting.setting_activated();
+				}
+			});
+		}
 
-        public T add_setting<T>(T setting)
-        {
-            settings.add((Widget) setting);
-            return setting;
-        }
-    }
+		public T add_setting<T>(T setting)
+		{
+			settings.add((Widget) setting);
+			return setting;
+		}
+	}
 
-    public class SettingsGroupBox: Box
-    {
-        public string? title { get; construct; }
+	public class SettingsGroupBox: Box
+	{
+		public string? title { get; construct; }
 
-        private Label? title_label;
-        public Box container;
+		private Label? title_label;
+		public Box container;
 
-        public SettingsGroupBox(string? title = null)
-        {
-            Object(title: title, orientation: Orientation.VERTICAL);
-        }
+		public SettingsGroupBox(string? title = null)
+		{
+			Object(title: title, orientation: Orientation.VERTICAL);
+		}
 
-        construct
-        {
-            get_style_context().add_class("settings-group");
+		construct
+		{
+			get_style_context().add_class("settings-group");
 
-            if(title != null)
-            {
-                title_label = new Label(title);
-                title_label.get_style_context().add_class("title");
-                title_label.ellipsize = Pango.EllipsizeMode.END;
-                title_label.xalign = 0;
-                add(title_label);
-            }
+			if(title != null)
+			{
+				title_label = new Label(title);
+				title_label.get_style_context().add_class("title");
+				title_label.ellipsize = Pango.EllipsizeMode.END;
+				title_label.xalign = 0;
+				add(title_label);
+			}
 
-            container = new Box(Orientation.VERTICAL, 0);
-            container.get_style_context().add_class("settings-group-frame");
-            container.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-            container.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW);
-            add(container);
-        }
+			container = new Box(Orientation.VERTICAL, 0);
+			container.get_style_context().add_class("settings-group-frame");
+			container.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
+			container.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW);
+			add(container);
+		}
 
-        public T add_widget<T>(T widget)
-        {
-            container.add((Widget) widget);
-            return widget;
-        }
-    }
+		public T add_widget<T>(T widget)
+		{
+			container.add((Widget) widget);
+			return widget;
+		}
+	}
 }

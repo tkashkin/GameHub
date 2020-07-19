@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using GameHub.UI.Widgets;
 using GameHub.UI.Widgets.Settings;
+using GameHub.UI.Widgets.Tweaks;
 
 using GameHub.Data;
 using GameHub.Utils;
@@ -38,22 +39,22 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 		construct
 		{
-		    var dirs = FS.get_data_dirs("tweaks", true);
+			var dirs = FS.get_data_dirs("tweaks", true);
 			var last_dir = dirs.last();
 
-            var sgrp_dirs = new SettingsGroup();
-            var dirs_btn = new MenuButton();
+			var sgrp_dirs = new SettingsGroup();
+			var dirs_btn = new MenuButton();
 			dirs_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-            dirs_btn.tooltip_text = _("Tweak directories");
-            dirs_btn.can_focus = false;
+			dirs_btn.tooltip_text = _("Tweak directories");
+			dirs_btn.can_focus = false;
 
 			var dirs_setting = sgrp_dirs.add_setting(new BaseSetting(
-		        _("Tweak directories"),
-		        _("Tweaks are loaded from these directories in order\nLast tweak overrides previous tweaks with same identifiers"),
-		        dirs_btn
-		    ));
+				_("Tweak directories"),
+				_("Tweaks are loaded from these directories in order\nLast tweak overrides previous tweaks with same identifiers"),
+				dirs_btn
+			));
 
-		    var dirs_menu = new Gtk.Menu();
+			var dirs_menu = new Gtk.Menu();
 			dirs_menu.halign = Align.END;
 
 			foreach(var dir in dirs)
@@ -61,13 +62,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				var dir_item = new Gtk.MenuItem.with_label(dir.get_path());
 				if(dir.query_exists())
 				{
-				    dir_item.activate.connect(() => {
-					    Utils.open_uri(dir.get_uri());
-				    });
+					dir_item.activate.connect(() => {
+						Utils.open_uri(dir.get_uri());
+					});
 				}
 				else
 				{
-				    dir_item.sensitive = false;
+					dir_item.sensitive = false;
 				}
 				dirs_menu.add(dir_item);
 			}
@@ -75,19 +76,19 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			dirs_menu.show_all();
 			dirs_btn.popup = dirs_menu;
 
-		    dirs_setting.activatable = true;
-		    dirs_setting.setting_activated.connect(() => {
-		        #if GTK_3_22
+			dirs_setting.activatable = true;
+			dirs_setting.setting_activated.connect(() => {
+				#if GTK_3_22
 				dirs_menu.popup_at_widget(dirs_btn, Gdk.Gravity.SOUTH_EAST, Gdk.Gravity.NORTH_EAST);
-			    #else
-			    dirs_menu.popup(null, null, null, 0, get_current_event_time());
-			    #endif
-		    });
+				#else
+				dirs_menu.popup(null, null, null, 0, get_current_event_time());
+				#endif
+			});
 			add_widget(sgrp_dirs);
 
-            var sgrp_tweaks = new SettingsGroupBox();
-            sgrp_tweaks.container.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
-            sgrp_tweaks.add_widget(new TweaksList());
+			var sgrp_tweaks = new SettingsGroupBox();
+			sgrp_tweaks.container.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+			sgrp_tweaks.add_widget(new TweaksList());
 			add_widget(sgrp_tweaks);
 		}
 	}

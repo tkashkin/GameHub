@@ -6,3 +6,5 @@
 @import url("views/GamesView.css");
 
 @import url("widgets/settings/SettingsGroup.css");
+
+@import url("widgets/tweaks/TweakOptionsPopover.css");

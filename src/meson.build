@@ -190,12 +190,15 @@ sources = [
 	'ui/widgets/ModeButton.vala',
 	'ui/widgets/OverlayBar.vala',
 	'ui/widgets/Welcome.vala',
-	'ui/widgets/TweaksList.vala',
 	'ui/widgets/DirectoriesList.vala',
 
 	'ui/widgets/settings/SettingsSidebar.vala',
 	'ui/widgets/settings/SettingsGroup.vala',
 	'ui/widgets/settings/Settings.vala',
+
+	'ui/widgets/tweaks/TweaksList.vala',
+	'ui/widgets/tweaks/TweakRow.vala',
+	'ui/widgets/tweaks/TweakOptionsPopover.vala',
 
 	'utils/Utils.vala',
 
