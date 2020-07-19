@@ -40,8 +40,8 @@ namespace GameHub.UI.Widgets
 
 		public string? file_path
 		{
-		    get { return text; }
-		    set { select_file_path(value); }
+			get { return text; }
+			set { select_file_path(value); }
 		}
 
 		public FileChooserEntry(string? title, FileChooserAction action, string? icon=null, string? hint=null, bool allow_url=false, bool allow_executable=false)

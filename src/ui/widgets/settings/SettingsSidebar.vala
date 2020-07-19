@@ -145,7 +145,7 @@ namespace GameHub.UI.Widgets.Settings
 
 			construct
 			{
-			    get_style_context().add_class("settings-page");
+				get_style_context().add_class("settings-page");
 			}
 		}
 
@@ -155,7 +155,7 @@ namespace GameHub.UI.Widgets.Settings
 
 			construct
 			{
-			    get_style_context().add_class("simple-settings-page");
+				get_style_context().add_class("simple-settings-page");
 				content = new Box(Orientation.VERTICAL, 0);
 				content.vexpand = true;
 				add(content);
@@ -166,13 +166,13 @@ namespace GameHub.UI.Widgets.Settings
 
 			private void update_sensitivity()
 			{
-			    content.sensitive = active || !has_active_switch;
+				content.sensitive = active || !has_active_switch;
 			}
 
 			protected T add_widget<T>(T widget)
 			{
-			    content.add((Widget) widget);
-			    return widget;
+				content.add((Widget) widget);
+				return widget;
 			}
 		}
 
@@ -185,16 +185,16 @@ namespace GameHub.UI.Widgets.Settings
 					switch(value)
 					{
 						case SettingsPage.StatusType.ERROR:
-						    status_icon.visible = true;
+							status_icon.visible = true;
 							status_icon.icon_name = "dialog-error-symbolic";
 							break;
 						case SettingsPage.StatusType.WARNING:
-						    status_icon.visible = true;
+							status_icon.visible = true;
 							status_icon.icon_name = "dialog-warning-symbolic";
 							break;
 						default:
-						    status_icon.visible = false;
-						    break;
+							status_icon.visible = false;
+							break;
 					}
 				}
 			}
@@ -238,7 +238,7 @@ namespace GameHub.UI.Widgets.Settings
 
 			construct
 			{
-			    get_style_context().add_class("settings-sidebar-row");
+				get_style_context().add_class("settings-sidebar-row");
 
 				icon = new Image();
 				icon.halign = Align.START;

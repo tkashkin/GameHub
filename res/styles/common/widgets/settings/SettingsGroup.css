@@ -1,6 +1,6 @@
 .settings-group
 {
-    padding: 12px 18px;
+	padding: 12px 18px;
 }
 
 .settings-group > .title,
@@ -11,22 +11,22 @@
 }
 .settings-group-standalone-title
 {
-    margin-top: 12px;
-    margin-left: 18px;
-    margin-right: 18px;
+	margin-top: 12px;
+	margin-left: 18px;
+	margin-right: 18px;
 }
 
 .settings-group .setting:not(.custom-widget-setting) > box,
 .settings-group .setting:not(.custom-widget-setting) > grid,
 .settings-group .setting.label-setting > label
 {
-    padding: 6px 12px;
-    min-height: 36px;
+	padding: 6px 12px;
+	min-height: 36px;
 }
 
 .settings-group .setting .description
 {
-    font-size: 0.9em;
+	font-size: 0.9em;
 }
 
 .settings-group .setting.list-row,
@@ -38,16 +38,16 @@
 .settings-group .setting.list-row:last-child,
 .settings-group row.setting:last-child
 {
-    margin-bottom: -1px;
+	margin-bottom: -1px;
 }
 
 .settings-group .setting.provider-setting > box
 {
-    padding: 0;
+	padding: 0;
 }
 .settings-group .setting.provider-setting > box > grid
 {
-    padding: 6px 12px;
+	padding: 6px 12px;
 }
 .settings-group .setting.provider-setting .provider-settings
 {

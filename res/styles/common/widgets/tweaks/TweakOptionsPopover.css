@@ -1,0 +1,28 @@
+.tweak-options-popover
+{
+	padding: 4px;
+}
+
+.tweak-options-popover .list-title
+{
+	font-weight: bold;
+	padding: 4px 8px;
+	margin-bottom: 4px;
+}
+
+.tweak-options-popover list
+{
+	background: transparent;
+}
+
+.tweak-options-popover list row > box,
+.tweak-options-popover list row > grid
+{
+	padding: 4px 8px;
+	min-height: 36px;
+}
+
+.tweak-options-popover list row .description
+{
+	font-size: 0.9em;
+}
