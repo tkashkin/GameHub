@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-07-19 08:41+0000\n"
+"PO-Revision-Date: 2020-07-22 15:41+0000\n"
 "Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gamehub/"
 "translations/ar/>\n"
@@ -74,7 +74,7 @@ msgstr "افتح خصائص اللعبة"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
-msgstr ""
+msgstr "مكِن كتابة سجلات المنقح"
 
 #: src/app.vala:114
 msgid ""
@@ -84,7 +84,7 @@ msgstr "سجل عملية المصادقة والمعلومات الحساسة �
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr ""
+msgstr "اكتب سجل مدير التحميل"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
@@ -95,8 +95,9 @@ msgid "Disable log messages filtering"
 msgstr "عطل فلترت رسائل السجل"
 
 #: src/app.vala:118
+#, fuzzy
 msgid "Verbose logging"
-msgstr ""
+msgstr "كتابة سجل مفصل"
 
 #: src/app.vala:247
 msgid "Game Options:"
@@ -255,7 +256,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -280,10 +281,10 @@ msgstr "%s باقية;"
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
-#, c-format, fuzzy
+#, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
 msgstr "(%1$s / %2$s)"
@@ -346,20 +347,20 @@ msgstr "شغل"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "اِعرض قائمة WineWrap"
 
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
 #: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
-msgstr ""
+msgstr "اقتل التطبيقات في هذا prefix"
 
 #: src/data/compat/Proton.vala:47
 msgid "Proton prefix"
-msgstr ""
+msgstr "Proton prefix"
 
 #: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
-msgstr ""
+msgstr "افتح دليل prefix"
 
 #: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
@@ -375,7 +376,7 @@ msgstr "شغل مدير المهام"
 
 #: src/data/compat/Wine.vala:53
 msgid "Wine prefix"
-msgstr ""
+msgstr "Wine prefix"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
@@ -387,7 +388,7 @@ msgstr "خيارات InnoSetup الافتراضية"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
-msgstr ""
+msgstr "ملف نواة Libretro"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
@@ -504,13 +505,13 @@ msgstr "بديل"
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "ضبابية"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:228
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
@@ -527,6 +528,7 @@ msgid ""
 "Monthly IGDB request quota has been reached. Set your own API key to use "
 "IGDB data or disable IGDB."
 msgstr ""
+"انتهى الوصول الشهري لIGDB . للوصول لبياناتك استخدم مفتاح API أو عطل IGDB."
 
 #: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
@@ -559,7 +561,7 @@ msgstr "من IGDB"
 #: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "كلاهما"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
@@ -619,9 +621,10 @@ msgid "Card size"
 msgstr "حجم البطاقة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
+#, fuzzy
 msgctxt "grid_size_preset"
 msgid "Presets"
-msgstr ""
+msgstr "إعدادات مسبقة"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 msgid "Games list: installed"
@@ -713,12 +716,13 @@ msgstr "المثبتات"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:98
 msgid "DLC"
-msgstr ""
+msgstr "DLC"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:197
+#, fuzzy
 msgid "Bonus content"
-msgstr ""
+msgstr "المحتوى المكافأة"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
@@ -786,6 +790,8 @@ msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"تحملُ التطويرات من الدلائل التالية بالترتيب\n"
+"يستخدم التطويع الأخير من التطويعات ذات نفس المعرف"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
@@ -794,7 +800,7 @@ msgstr "انقر للفتح"
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
-msgstr ""
+msgstr "حُملت التطوبعات من <b>%1$s</b> و %2$d دليلا إضافيا <b>(؟)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -877,7 +883,7 @@ msgstr "دليل أنوية Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
 msgid "Libretro core info directory"
-msgstr ""
+msgstr "دليل معلومات نواة Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
@@ -1074,7 +1080,7 @@ msgstr "المساهمون"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:114
 msgctxt "about_link"
 msgid "Pulse"
-msgstr ""
+msgstr "Pulse"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:115
 msgctxt "about_link"
@@ -1125,21 +1131,19 @@ msgstr "رابط الصورة"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Vertical image URL"
-msgstr ""
+msgstr "رابط الصورة الطولية"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
 msgstr "رابط الأيقونة"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Select working directory"
-msgstr "إختر دليل"
+msgstr "إختر الدليل الحالي"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Working directory"
-msgstr "افتح الدليل"
+msgstr "الدليل الحالي"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
@@ -1164,11 +1168,11 @@ msgstr "أضف الى مكتبة ستيم"
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:53
 #, c-format
 msgid "%s: Overlays"
-msgstr ""
+msgstr "%s: تراكيب"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid "Overlays are disabled"
-msgstr ""
+msgstr "التراكيب معطلة"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid ""
@@ -1176,19 +1180,22 @@ msgid ""
 "\n"
 "Enabling will move game to the “base“ overlay"
 msgstr ""
+"فعل التراكيب لإدارة DLC و mod\n"
+"\n"
+"تفعليها سينقل اللعبة الى التركيب ”الأساسي”"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:175
 msgid "Overlays"
-msgstr ""
+msgstr "التراكيب"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:105
 msgid "Overlay ID (directory name)"
-msgstr ""
+msgstr "معرف التركيب (اسم الدليل)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:110
 msgid "Overlay name (optional)"
-msgstr ""
+msgstr "اسم التركيب (اختياري)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
@@ -1196,7 +1203,7 @@ msgstr "أضف"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
 msgid "Enable overlays"
-msgstr ""
+msgstr "مكن التراكيب"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:182
 #, c-format
@@ -1206,6 +1213,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"استخدام التركيب من هذا المسار غير آمن\n"
+"تابع استخدامه على مسؤوليتك\n"
+"\n"
+"المسار: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1214,6 +1225,9 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"التركيب في هذا المسار غير مدعوم\n"
+"\n"
+"المسار: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
@@ -1221,13 +1235,13 @@ msgstr "افتح الدليل"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
 msgid "Remove overlay"
-msgstr ""
+msgstr "ازِل التركيب"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:235
 msgid "Run with compatibility layer"
-msgstr ""
+msgstr "شغل مع طبقة التوافق"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
@@ -1236,89 +1250,89 @@ msgstr "مثبت تالف: عدم تطابق تدقيق المجموع في"
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
 msgid "Import emulated games"
-msgstr ""
+msgstr "استورد ألعاب المحاكيات"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
 msgid "Select directory with emulated games"
-msgstr ""
+msgstr "حدد دليل ألعبا المحاكيات"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
 msgid "Detected games"
-msgstr ""
+msgstr "الألعاب المكتشفة"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 msgid "Select all"
-msgstr ""
+msgstr "حدد الكل"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
 msgid "Select directory to import"
-msgstr ""
+msgstr "حدد دليلا للاستراد منه"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
 #, c-format
 msgid "%s: Tweaks"
-msgstr ""
+msgstr "%s: تطويعات"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
-msgstr ""
+msgstr "بدون مصادر ألعاب ممكنة"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "Enable some game sources in settings"
-msgstr ""
+msgstr "مكن مصادر ألعاب في الاعدادات"
 
 #: src/ui/views/WelcomeView.vala:57
 msgid "Let's get started"
-msgstr ""
+msgstr "لِنبدأ"
 
 #: src/ui/views/WelcomeView.vala:71
 msgid "Skip"
-msgstr ""
+msgstr "تخطي"
 
 #: src/ui/views/WelcomeView.vala:141
 msgid "Ready"
-msgstr ""
+msgstr "جاهز"
 
 #: src/ui/views/WelcomeView.vala:147
 msgid "Authentication required"
-msgstr ""
+msgstr "يتطلب المصادقة"
 
 #: src/ui/views/WelcomeView.vala:152
 msgid "Authenticating…"
-msgstr ""
+msgstr "يصادق…"
 
 #: src/ui/views/WelcomeView.vala:163
 #, c-format
 msgid "Install %s"
-msgstr ""
+msgstr "يثبت %s"
 
 #: src/ui/views/WelcomeView.vala:164
 msgid "Return to GameHub after installing"
-msgstr ""
+msgstr "عد الى GameHub بعد التثبيت"
 
 #: src/ui/views/GamesView/GamesView.vala:136
 msgid "No games"
-msgstr ""
+msgstr "بدون ألعاب"
 
 #: src/ui/views/GamesView/GamesView.vala:136
 msgid "Get some games or enable some game sources in settings"
-msgstr ""
+msgstr "أضف ألعاب أو مكن مصادر ألعاب في الأعدادات"
 
 #: src/ui/views/GamesView/GamesView.vala:150
 msgid "Grid view"
-msgstr ""
+msgstr "عرض كشبكة"
 
 #: src/ui/views/GamesView/GamesView.vala:151
 msgid "List view"
-msgstr ""
+msgstr "عرض كقائمة"
 
 #: src/ui/views/GamesView/GamesView.vala:159
 msgid "All games"
-msgstr ""
+msgstr "كل الألعاب"
 
 #: src/ui/views/GamesView/GamesView.vala:182
 msgid "Downloads"
-msgstr ""
+msgstr "التنزيلات"
 
 #: src/ui/views/GamesView/GamesView.vala:208
 msgid "Filters"
@@ -1335,12 +1349,12 @@ msgstr "اِبحث"
 
 #: src/ui/views/GamesView/GamesView.vala:328
 msgid "Menu"
-msgstr ""
+msgstr "القائمة"
 
 #: src/ui/views/GamesView/GamesView.vala:329
 #: src/ui/views/GameDetailsView/GameDetailsView.vala:104
 msgid "Back"
-msgstr ""
+msgstr "خلف"
 
 #: src/ui/views/GamesView/GamesView.vala:550
 #, c-format
@@ -1354,209 +1368,211 @@ msgstr[4] "%u لعبة"
 msgstr[5] "%u ألعاب"
 
 #: src/ui/views/GamesView/GamesView.vala:553
-#, c-format
+#, c-format, fuzzy
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
-msgstr ""
+msgstr "%1$u / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
-#, c-format
+#, c-format, fuzzy
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
-msgstr ""
+msgstr "%1$s: %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
-msgstr ""
+msgstr "بدون ألعب مضافة يدويا"
 
 #: src/ui/views/GamesView/GamesView.vala:569
 msgid "Add some games using plus button"
-msgstr ""
+msgstr "أضف بعض الألعب باستخدام زر الإضافة"
 
 #: src/ui/views/GamesView/GamesView.vala:573
 #, c-format
 msgid "No %s games"
-msgstr ""
+msgstr "بدون %s لعبة"
 
 #: src/ui/views/GamesView/GamesView.vala:574
 msgid "Get some Linux-compatible games"
-msgstr ""
+msgstr "احصل على ألعاب متوافقة مع لينكس"
 
 #: src/ui/views/GamesView/GamesView.vala:584
 #, c-format
 msgid "No games matching “%s”"
-msgstr ""
+msgstr "لا ألعاب متطايقة مع “%s”"
 
 #: src/ui/views/GamesView/GamesView.vala:589
 #, c-format
 msgid "No %1$s games matching “%2$s”"
-msgstr ""
+msgstr "بدون %1$s ألعاب تتطابق مع ”%2$s“"
 
 #: src/ui/views/GamesView/GamesView.vala:627
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
+"لم يتمكن من تحميل قائمة ألعاب Steam. اِجعل قائمة ألعابك عامة أو استخدم مفتاح "
+"Steam API في الاعدادات."
 
 #: src/ui/views/GamesView/GamesView.vala:628
 msgid "Privacy"
-msgstr ""
+msgstr "الخصوصية"
 
 #: src/ui/views/GamesView/GamesView.vala:739
 msgid "Downloading images"
-msgstr ""
+msgstr "يحمل الصور"
 
 #: src/ui/views/GamesView/GamesView.vala:753
 #, c-format
 msgid "Downloading image: %s"
-msgstr ""
+msgstr "يحمل الصورة: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
-msgstr ""
+msgstr "أوقف التنزيل مؤقتا"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
-msgstr ""
+msgstr "تابع التحميل"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
-msgstr ""
+msgstr "ألغ التحميل"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:77
 msgid "Group"
-msgstr ""
+msgstr "مجموعة"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:102
 msgid "Sort"
-msgstr ""
+msgstr "فرز"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
 #: src/ui/widgets/GameTagsList.vala:58
 msgid "Tags"
-msgstr ""
+msgstr "وسوم"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:353
 msgid "All platforms"
-msgstr ""
+msgstr "كل المنصات"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Select game executable"
-msgstr ""
+msgstr "حدد ملف تشغيل اللعبة"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Select game directory"
-msgstr ""
+msgstr "حدد دليل اللعبة"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
 msgid "Download game images"
-msgstr ""
+msgstr "نزل صور اللعبة"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
-msgstr ""
+msgstr "تفاصيل"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:117
 msgctxt "game_context_menu"
 msgid "Favorite"
-msgstr ""
+msgstr "المفضلة"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:121
 msgctxt "game_context_menu"
 msgid "Hidden"
-msgstr ""
+msgstr "مخفية"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:133
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:236
 msgid "Open installation directory"
-msgstr ""
+msgstr "افتح دليل التثبيت"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
 msgid "Open installers collection directory"
-msgstr ""
+msgstr "افتح دليل مجموعة المثبتات"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
 msgid "Open bonus collection directory"
-msgstr ""
+msgstr "افتح دليل مجموعة الكافآت"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:239
 msgid "Open screenshots directory"
-msgstr ""
+msgstr "افتح دليل صور الشاشة"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 msgid "Uninstall"
-msgstr ""
+msgstr "ألغ التثبيت"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:192
 msgid "Properties"
-msgstr ""
+msgstr "خصائص"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:100
 #, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "بدون ألعاب محددة"
+msgstr[1] "لعبة واحدة محددة"
+msgstr[2] "لعبتان محددتان"
+msgstr[3] "%d ألعاب محددة"
+msgstr[4] "%d لعبة محددة"
+msgstr[5] "%d لعبة محددة"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
 #, c-format
 msgid "%d game will be installed"
 msgid_plural "%d games will be installed"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لن تثبت أي لعبة"
+msgstr[1] "ستثبت لعبة واحدة"
+msgstr[2] "ستثبت لعبتان"
+msgstr[3] "%d ألعاب ستثبت"
+msgstr[4] "%d لعبة ستثبت"
+msgstr[5] "%d لعبة ستثبت"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:154
 #, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لن تنزل أي لعبة"
+msgstr[1] "لعبة واحدة ستنزل"
+msgstr[2] "لعبتان ستنزلان"
+msgstr[3] "%d ألعاب ستنزل"
+msgstr[4] "%d لعبة ستنزل"
+msgstr[5] "%d لعبة ستنزل"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 #, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لن يُبحث عن أي صورة للعبة"
+msgstr[1] "سيبحث عن صورة واحدة للعبة"
+msgstr[2] "سيبحث عن صورتين للعبة"
+msgstr[3] "سيبحث عن %d صور للعبة"
+msgstr[4] "سيبحث عن %d صورة للعبة"
+msgstr[5] "سيبحث عن %d صورة للعبة"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
 #, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لن تحذف اي لعبة"
+msgstr[1] "لعبة واحدة ستحذف"
+msgstr[2] "لعبتان ستحذفان"
+msgstr[3] "%d ألعاب ستحذف"
+msgstr[4] "%d لعابة ستحذف"
+msgstr[5] "%d لعابة ستحذف"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
 msgid "Refresh"
-msgstr ""
+msgstr "تحديث"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:175
 #, c-format
@@ -1573,48 +1589,48 @@ msgstr[5] ""
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 msgid "Open store page"
-msgstr ""
+msgstr "فتح صفحة المتجر"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:242
 msgid "Game properties"
-msgstr ""
+msgstr "خصائص اللعبة"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
 msgid "Playtime"
-msgstr ""
+msgstr "وقت اللعب"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
 msgid "Playtime (local)"
-msgstr ""
+msgstr "وقت اللعب (محلي)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
 msgid "Last launch"
-msgstr ""
+msgstr "آخر تشغيل"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
-msgstr ""
+msgstr "الإنجازات"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:85
 #, c-format
 msgid "Unlocked: %s"
-msgstr ""
+msgstr "تم فتح: %s"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:90
 #, c-format
 msgid "Global percentage: %g%%"
-msgstr ""
+msgstr "النسبة العالمية: %g%%"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
-msgstr ""
+msgstr "اللغة"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:80
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
-msgstr ""
+msgstr "اللغات"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
 #, c-format
@@ -1623,24 +1639,24 @@ msgstr "لا يمكن تثبيت DLC %u"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
-msgstr ""
+msgstr "الفئة"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:74
 msgid "Categories"
-msgstr ""
+msgstr "الفئات"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:90
 msgid "Genre"
-msgstr ""
+msgstr "التصنيف"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:93
 msgid "Genres"
-msgstr ""
+msgstr "التصنيفات"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:109
 msgctxt "igdb"
 msgid "Popularity"
-msgstr ""
+msgstr "الشعبية"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:115
 msgctxt "igdb"
@@ -1650,12 +1666,12 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr ""
+msgstr "تقييم IGDB"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:117
 msgctxt "igdb"
 msgid "Total rating"
-msgstr ""
+msgstr "التقييم الإجمالي"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
@@ -1670,7 +1686,7 @@ msgstr "المنصات"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:139
 msgctxt "igdb"
 msgid "Genres"
-msgstr ""
+msgstr "التصنيفات"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:145
 msgctxt "igdb"
@@ -1686,12 +1702,12 @@ msgstr "الروابط"
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "بدون <b>تقييمات</b>"
+msgstr[1] "مبني على تقييم <b>واحد</b>"
+msgstr[2] "مبني على <b>تقييمين</b>"
+msgstr[3] "مبني على <b>%d</b> تقييمات"
+msgstr[4] "مبني على <b>%d</b> تقييماً"
+msgstr[5] "مبني على <b>%d</b> تقييمٍ"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:290
 msgctxt "igdb"
@@ -1723,11 +1739,11 @@ msgstr ""
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:94
 msgid "Search images:"
-msgstr ""
+msgstr "صور البحث:"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
-msgstr ""
+msgstr "طبقة التوافقية:"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
@@ -1766,22 +1782,22 @@ msgstr "%dثا"
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
 msgid "Steam"
-msgstr ""
+msgstr "Steam"
 
 #: src/settings/UI.vala:154
 msgctxt "grid_size_preset"
 msgid "Steam (vertical)"
-msgstr ""
+msgstr "Steam (عمودي)"
 
 #: src/settings/UI.vala:155
 msgctxt "grid_size_preset"
 msgid "GOG"
-msgstr ""
+msgstr "GOG"
 
 #: src/settings/UI.vala:156
 msgctxt "grid_size_preset"
 msgid "GOG (vertical)"
-msgstr ""
+msgstr "GOG (عمودي)"
 
 #: src/settings/UI.vala:157
 msgctxt "grid_size_preset"
@@ -1833,12 +1849,12 @@ msgstr "ينزل"
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr ""
+msgstr "موَقف: %s"
 
 #: src/utils/downloader/Downloader.vala:216
 msgctxt "dl_status"
 msgid "Paused"
-msgstr ""
+msgstr "موَقف"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1850,7 +1866,7 @@ msgstr "ألغي التنزيل"
 #, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr ""
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/ثا["
 
 #~ msgid "Disable esync"
 #~ msgstr "عطل esync"
