@@ -661,7 +661,7 @@ namespace GameHub.Data.Tweaks
 			public string? name { get; protected set; default = null; }
 			public string? description { get; protected set; default = null; }
 
-			public Type option_type { get; protected set; default = Type.SINGLE; }
+			public Type option_type { get; protected set; default = Type.LIST; }
 			public string separator { get; protected set; default = DEFAULT_SEPARATOR; }
 
 			public HashMap<string, string>? values { get; protected set; default = null; }
@@ -672,7 +672,7 @@ namespace GameHub.Data.Tweaks
 				string? name = null;
 				string? description = null;
 
-				Type option_type = Type.SINGLE;
+				Type option_type = Type.LIST;
 				string separator = DEFAULT_SEPARATOR;
 
 				HashMap<string, string>? values = null;
@@ -795,14 +795,13 @@ namespace GameHub.Data.Tweaks
 
 			public enum Type
 			{
-				SINGLE, LIST;
+				LIST;
 
 				public string to_string()
 				{
 					switch(this)
 					{
-						case SINGLE: return "single";
-						case LIST:   return "list";
+						case LIST: return "list";
 					}
 					assert_not_reached();
 				}
@@ -811,8 +810,7 @@ namespace GameHub.Data.Tweaks
 				{
 					switch(type)
 					{
-						case "single": return SINGLE;
-						case "list":   return LIST;
+						case "list": return LIST;
 					}
 					assert_not_reached();
 				}

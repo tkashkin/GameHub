@@ -33,7 +33,13 @@ namespace GameHub.UI.Widgets.Tweaks
 	{
 		public Tweak tweak { get; construct; }
 
-		private Box option_details_hbox;
+		private Tweak.Option? selected_option;
+		private Tweak.Option.Preset? selected_preset;
+
+		private Box option_details_vbox;
+		private Box? presets_vbox;
+		private Box? values_vbox;
+		private ListBox? values_list;
 
 		public TweakOptionsPopover(Tweak tweak)
 		{
@@ -56,7 +62,7 @@ namespace GameHub.UI.Widgets.Tweaks
 
 			var hbox = new Box(Orientation.HORIZONTAL, 0);
 			hbox.expand = true;
-			hbox.set_size_request(640, 480);
+			hbox.set_size_request(640, 580);
 
 			if(tweak.options.size > 1)
 			{
@@ -94,10 +100,10 @@ namespace GameHub.UI.Widgets.Tweaks
 				}
 			}
 
-			option_details_hbox = new Box(Orientation.HORIZONTAL, 0);
-			option_details_hbox.expand = true;
+			option_details_vbox = new Box(Orientation.VERTICAL, 0);
+			option_details_vbox.expand = true;
 
-			hbox.add(option_details_hbox);
+			hbox.add(option_details_vbox);
 
 			hbox.show_all();
 			child = hbox;
@@ -107,7 +113,14 @@ namespace GameHub.UI.Widgets.Tweaks
 
 		private void select_option(Tweak.Option? option)
 		{
-			option_details_hbox.foreach(w => w.destroy());
+			selected_option = option;
+			selected_preset = null;
+
+			option_details_vbox.foreach(w => w.destroy());
+
+			presets_vbox = null;
+			values_vbox = null;
+			values_list = null;
 
 			if(option == null) return;
 
@@ -116,19 +129,20 @@ namespace GameHub.UI.Widgets.Tweaks
 
 			if(has_presets)
 			{
-				var presets_vbox = new Box(Orientation.VERTICAL, 0);
-				presets_vbox.expand = true;
+				presets_vbox = new Box(Orientation.VERTICAL, 0);
+				presets_vbox.hexpand = true;
 
 				var presets_title = new Label(_("Presets"));
 				presets_title.get_style_context().add_class("list-title");
 				presets_title.xalign = 0;
 
 				var presets_scrolled = new ScrolledWindow(null, null);
-				presets_scrolled.expand = true;
+				presets_scrolled.propagate_natural_height = true;
+				presets_scrolled.max_content_height = 300;
+				presets_scrolled.hexpand = true;
 				presets_scrolled.hscrollbar_policy = PolicyType.NEVER;
 
 				var presets_list = new ListBox();
-				presets_list.set_size_request(200, -1);
 				presets_list.get_style_context().add_class("presets-list");
 				presets_list.selection_mode = SelectionMode.NONE;
 
@@ -136,8 +150,10 @@ namespace GameHub.UI.Widgets.Tweaks
 				presets_vbox.add(presets_title);
 				presets_vbox.add(presets_scrolled);
 
-				presets_list.row_activated.connect(row => {
-					((PresetRow) row).selected = true;
+				presets_list.row_activated.connect(r => {
+					var row = (PresetRow) r;
+					row.selected = true;
+					select_preset(row.preset);
 				});
 
 				RadioButton? prev_radio = null;
@@ -148,18 +164,26 @@ namespace GameHub.UI.Widgets.Tweaks
 					prev_radio = row.radio;
 				}
 
-				option_details_hbox.add(presets_vbox);
+				if(has_values)
+				{
+					var row = new PresetRow(null, prev_radio);
+					presets_list.add(row);
+					prev_radio = row.radio;
+				}
+
+				option_details_vbox.add(presets_vbox);
 			}
 
 			if(has_presets && has_values)
 			{
-				option_details_hbox.add(new Separator(Orientation.VERTICAL));
+				option_details_vbox.add(new Separator(Orientation.HORIZONTAL));
 			}
 
 			if(has_values)
 			{
-				var values_vbox = new Box(Orientation.VERTICAL, 0);
-				values_vbox.expand = true;
+				values_vbox = new Box(Orientation.VERTICAL, 0);
+				values_vbox.sensitive = !has_presets;
+				values_vbox.hexpand = true;
 
 				var values_title = new Label(_("Values"));
 				values_title.get_style_context().add_class("list-title");
@@ -169,8 +193,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				values_scrolled.expand = true;
 				values_scrolled.hscrollbar_policy = PolicyType.NEVER;
 
-				var values_list = new ListBox();
-				values_list.set_size_request(200, -1);
+				values_list = new ListBox();
 				values_list.get_style_context().add_class("values-list");
 				values_list.selection_mode = SelectionMode.NONE;
 
@@ -181,6 +204,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				values_list.row_activated.connect(r => {
 					var row = (ValueRow) r;
 					row.selected = !row.selected;
+					update_option_value();
 				});
 
 				foreach(var value in option.values.entries)
@@ -188,10 +212,55 @@ namespace GameHub.UI.Widgets.Tweaks
 					values_list.add(new ValueRow(value.key, value.value));
 				}
 
-				option_details_hbox.add(values_vbox);
+				option_details_vbox.add(values_vbox);
 			}
 
-			option_details_hbox.show_all();
+			option_details_vbox.show_all();
+			update_option_value();
+		}
+
+		private void select_preset(Tweak.Option.Preset? preset)
+		{
+			selected_preset = preset;
+			if(selected_option != null && values_vbox != null)
+			{
+				values_vbox.sensitive = selected_preset == null;
+			}
+			update_option_value();
+		}
+
+		private void update_option_value()
+		{
+			if(selected_option == null) return;
+
+			warning("[TweakOptionsPopover.update_option_value] Option: '%s'", selected_option.id);
+			warning("[TweakOptionsPopover.update_option_value] Preset: %s", selected_preset != null ? "'%s'".printf(selected_preset.id) : "custom");
+
+			string? value = null;
+
+			if(selected_preset != null)
+			{
+				value = selected_preset.value;
+			}
+			else if(values_list != null)
+			{
+				string[] values = {};
+
+				values_list.foreach(r => {
+					var row = (ValueRow) r;
+					if(row.selected)
+					{
+						values += row.value;
+					}
+				});
+
+				if(selected_option.option_type == Tweak.Option.Type.LIST)
+				{
+					value = string.joinv(selected_option.separator, values);
+				}
+			}
+
+			warning("[TweakOptionsPopover.update_option_value] Value:  %s", value != null ? "'%s'".printf(value) : "null");
 		}
 
 		private class OptionRow: ListBoxRow
@@ -236,12 +305,12 @@ namespace GameHub.UI.Widgets.Tweaks
 
 		private class PresetRow: ListBoxRow
 		{
-			public Tweak.Option.Preset preset { get; construct; }
+			public Tweak.Option.Preset? preset { get; construct; }
 
 			public bool selected { get; set; }
 			public RadioButton? radio { get; construct; }
 
-			public PresetRow(Tweak.Option.Preset preset, RadioButton? prev_radio = null)
+			public PresetRow(Tweak.Option.Preset? preset, RadioButton? prev_radio = null)
 			{
 				Object(preset: preset, radio: new RadioButton.from_widget(prev_radio), selectable: false, activatable: true);
 			}
@@ -251,6 +320,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				get_style_context().add_class("preset");
 
 				var grid = new Grid();
+				grid.column_spacing = 6;
 				grid.hexpand = true;
 				grid.valign = Align.CENTER;
 
@@ -258,7 +328,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				radio.can_focus = false;
 				radio.valign = Align.CENTER;
 
-				var title = new Label(preset.name ?? preset.id);
+				var title = new Label(preset != null ? (preset.name ?? preset.id) : _("Custom"));
 				title.get_style_context().add_class("title");
 				title.hexpand = true;
 				title.ellipsize = Pango.EllipsizeMode.END;
@@ -266,9 +336,9 @@ namespace GameHub.UI.Widgets.Tweaks
 
 				grid.attach(title, 0, 0);
 
-				if(preset.description != null)
+				if(preset == null || preset.description != null)
 				{
-					var description = new Label(preset.description);
+					var description = new Label(preset != null ? preset.description : _("Select custom values"));
 					description.get_style_context().add_class("description");
 					description.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
 					description.tooltip_text = description.label;
@@ -307,6 +377,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				get_style_context().add_class("value");
 
 				var grid = new Grid();
+				grid.column_spacing = 6;
 				grid.hexpand = true;
 				grid.valign = Align.CENTER;
 
