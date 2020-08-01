@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-03-03 19:33+0000\n"
+"PO-Revision-Date: 2020-08-02 18:42+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://hosted.weblate.org/projects/gamehub/"
 "translations/mr/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -32,291 +32,297 @@ msgstr "संलग्न जीडीबी डीबगरसह रीस्
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "पूर्ण जीडीबी बॅकट्रेस दर्शवा"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "गंभीर आणि क्रॅश अनुप्रयोग म्हणून गंभीर त्रुटींना दुरुस्त करा"
 
 #: src/app.vala:99
 msgid "Show main window"
-msgstr ""
+msgstr "मुख्य विंडो दर्शवा"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "अनुप्रयोग सेटिंग्ज संवाद दर्शवा"
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr ""
+msgstr "संवाद बद्दल दर्शवा"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "पार्श्वभूमी कामगार थ्रेडची कमाल संख्या"
 
 #: src/app.vala:106
 msgid "Run game"
-msgstr ""
+msgstr "खेळ चालवा"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "अनुकूलता पर्याय संवाद दर्शवा"
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr ""
+msgstr "खेळाचा तपशील उघडा"
 
 #: src/app.vala:109
 msgid "Open game properties"
-msgstr ""
+msgstr "खेळाचे गुणधर्म उघडा"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
-msgstr ""
+msgstr "डीबग लॉगिंग सक्षम करा"
 
 #: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
-msgstr ""
+msgstr "लॉग प्रमाणीकरण प्रक्रिया आणि प्रमाणीकरण टोकन सारखी संवेदनशील माहिती"
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr ""
+msgstr "लॉग डाउनलोड व्यवस्थापक"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "लॉग पार्श्वभूमी कामगार कार्य प्रारंभ / अंत"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "लॉग संदेश फिल्टरिंग अक्षम करा"
 
 #: src/app.vala:118
 msgid "Verbose logging"
-msgstr ""
+msgstr "वर्बोज लॉगिंग"
 
 #: src/app.vala:247
 msgid "Game Options:"
-msgstr ""
+msgstr "खेळ  पर्याय:"
 
 #: src/app.vala:247
 msgid "Show game options help"
-msgstr ""
+msgstr "खेळ पर्याय मदत दर्शवा"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr ""
+msgstr "लॉगिंग पर्याय:"
 
 #: src/app.vala:255
 msgid "Show logging options help"
-msgstr ""
+msgstr "लॉगिंग पर्याय मदत दर्शवा"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
-msgstr ""
+msgstr "एक्झिक्युटेबल निवडा"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "निवडा"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "रद्द करा"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr ""
+msgstr "निर्देशिका निवडा"
 
 #: src/data/Runnable.vala:619
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
-msgstr ""
+msgstr "%2$u पैकी %1$u भाग :%3$s"
 
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr ""
+msgstr "%s: दूषित इन्स्टॉलर"
 
 #: src/data/Runnable.vala:643
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr ""
+msgstr "%s यात चेकसम बेमेल"
 
 #: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
-msgstr ""
+msgstr "फाईल दर्शवा"
 
 #: src/data/Runnable.vala:658 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
-msgstr ""
+msgstr "काढा"
 
 #: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
-msgstr ""
+msgstr "बॅकअप"
 
 #: src/data/Runnable.vala:778
 #, c-format
 msgid "%s: cannot detect main executable"
-msgstr ""
+msgstr "%s: मुख्य एक्झिक्युटेबल शोधू शकत नाही"
 
 #: src/data/Runnable.vala:779
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"या गेमसाठी मुख्य एक्झिक्युटेबल फाइल स्वयंचलितपणे शोधली जाऊ शकत नाही.\n"
+"कृपया खेळाच्या गुणधर्मांमध्ये मुख्य एक्झिक्युटेबल सेट करा."
 
 #: src/data/Runnable.vala:908
 msgctxt "platform"
 msgid "Emulated"
-msgstr ""
+msgstr "नक्कल केलेले"
 
 #: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "चालू आहे"
 
 #: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "स्थापित केले"
 
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "स्थापित करीत आहे"
 
 #: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr ""
+msgstr "इंस्टॉलरची अखंडता सत्यापित करीत आहे"
 
 #: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
-msgstr ""
+msgstr "डाउनलोड सुरू झाले"
 
 #: src/data/Game.vala:633
 msgctxt "status"
 msgid "Not installed"
-msgstr ""
+msgstr "स्थापित केलेले नाही"
 
 #: src/data/Game.vala:643
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "स्थापित केले"
 
 #: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "स्थापित करीत आहे"
 
 #: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "डाउनलोड करत आहे"
 
 #: src/data/Game.vala:648
 msgctxt "status_header"
 msgid "Not installed"
-msgstr ""
+msgstr "स्थापित केलेले नाही"
 
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr ""
+msgstr "%s खेळ"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr ""
+msgstr "आपले स्टीमआयडी स्टीम कॉन्फिगरेशन फाईलमधून वाचले जाईल"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
+"स्टीम कॉन्फिगरेशन फाइल आढळली नाही.\n"
+"स्टीम क्लायंटमध्ये आपल्या खात्यात लॉग इन करा आणि गेमहबवर परत या"
 
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "डीएलसी:%s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr ""
+msgstr "%s: कोणतेही इंस्टॉलर उपलब्ध नाहीत"
 
 #: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
+"ट्राव्ह डाउनलोड URL मिळवू शकत नाही.\n"
+"आपली नम्र मासिक सदस्यता सक्रिय असल्याचे सुनिश्चित करा."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s बाहेर पडले ;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "(%1$s / %2$s)"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr ""
+msgstr "वापरकर्ता खेळ"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "आवडी"
 
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
 msgid "Not installed"
-msgstr ""
+msgstr "स्थापित केलेले नाही"
 
 #: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
-msgstr ""
+msgstr "स्थापित केले"
 
 #: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "लपवलेले"
 
 #: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
-msgstr ""
+msgstr "स्क्रिप्ट संपादित करा"
 
 #: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
-msgstr ""
+msgstr "सानुकूल स्क्रिप्ट संपादित करा"
 
 #: src/data/compat/Innoextract.vala:55
 #, c-format
@@ -332,114 +338,114 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
-msgstr ""
+msgstr "चालवा"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "वाईन रॅप मेनू दर्शवा"
 
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
 #: src/data/compat/Wine.vala:83
 msgid "Kill apps in prefix"
-msgstr ""
+msgstr "उपसर्ग मध्ये अनुप्रयोग नष्ट करा"
 
 #: src/data/compat/Proton.vala:47
 msgid "Proton prefix"
-msgstr ""
+msgstr "प्रोटॉन उपसर्ग"
 
 #: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
 msgid "Open prefix directory"
-msgstr ""
+msgstr "उपसर्ग निर्देशिका उघडा"
 
 #: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
 msgid "Run winecfg"
-msgstr ""
+msgstr "Winecfg चालवा"
 
 #: src/data/compat/Proton.vala:116 src/data/compat/Wine.vala:77
 msgid "Run winetricks"
-msgstr ""
+msgstr "वाईन ट्रिक्स चालवा"
 
 #: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:80
 msgid "Run taskmgr"
-msgstr ""
+msgstr "taskmgr चालवा"
 
 #: src/data/compat/Wine.vala:53
 msgid "Wine prefix"
-msgstr ""
+msgstr "वाईन उपसर्ग"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
-msgstr ""
+msgstr "पर्यावरणीय चल"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr ""
+msgstr "InnoSetup डीफॉल्ट पर्याय"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
-msgstr ""
+msgstr "लिब्रेट्रो कोर फाइल"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
-msgstr ""
+msgstr "सानुकूल एमुलेटर"
 
 #: src/data/compat/CustomEmulator.vala:48
 msgid "Emulator"
-msgstr ""
+msgstr "एमुलेटर"
 
 #: src/data/compat/CustomEmulator.vala:49
 msgid "Launch in game directory"
-msgstr ""
+msgstr "गेम निर्देशिकेत लाँच करा"
 
 #: src/data/adapters/GamesAdapter.vala:440
 msgctxt "status_header"
 msgid "Favorites"
-msgstr ""
+msgstr "आवडी"
 
 #: src/data/adapters/GamesAdapter.vala:445
 #, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr ""
+msgstr "%s:आवडी"
 
 #: src/data/adapters/GamesAdapter.vala:491
 msgid "Merging games"
-msgstr ""
+msgstr "खेळ विलीन होत आहे"
 
 #: src/data/adapters/GamesAdapter.vala:504
 #, c-format
 msgid "Merging games from %s"
-msgstr ""
+msgstr "%s कडून गेम विलीन होत आहे"
 
 #: src/data/adapters/GamesAdapter.vala:551
 #, c-format
 msgid "Loading games from %s"
-msgstr ""
+msgstr "%s येथून गेम लोड करीत आहे"
 
 #: src/data/adapters/GamesAdapter.vala:678
 msgctxt "sort_mode"
 msgid "By name"
-msgstr ""
+msgstr "नावाने"
 
 #: src/data/adapters/GamesAdapter.vala:679
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr ""
+msgstr "अंतिम लाँच करून"
 
 #: src/data/adapters/GamesAdapter.vala:680
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr ""
+msgstr "प्लेटाइमद्वारे"
 
 #: src/data/adapters/GamesAdapter.vala:705
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr ""
+msgstr "गट करू नका"
 
 #: src/data/adapters/GamesAdapter.vala:706
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "स्थितीनुसार"
 
 #: src/data/adapters/GamesAdapter.vala:707
 msgctxt "group_mode"
