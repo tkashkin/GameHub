@@ -662,7 +662,8 @@ namespace GameHub.Data.Tweaks
 			public string? description { get; protected set; default = null; }
 
 			public Type option_type { get; protected set; default = Type.LIST; }
-			public string separator { get; protected set; default = DEFAULT_SEPARATOR; }
+			public string list_separator { get; protected set; default = DEFAULT_LIST_SEPARATOR; }
+			public string? string_value { get; protected set; default = null; }
 
 			public HashMap<string, string>? values { get; protected set; default = null; }
 			public ArrayList<Preset>? presets { get; protected set; default = null; }
@@ -673,7 +674,8 @@ namespace GameHub.Data.Tweaks
 				string? description = null;
 
 				Type option_type = Type.LIST;
-				string separator = DEFAULT_SEPARATOR;
+				string list_separator = DEFAULT_LIST_SEPARATOR;
+				string? string_value = null;
 
 				HashMap<string, string>? values = null;
 				ArrayList<Preset>? presets = null;
@@ -686,7 +688,8 @@ namespace GameHub.Data.Tweaks
 					if(obj.has_member("description")) description = obj.get_string_member("description");
 
 					if(obj.has_member("type")) option_type = Type.from_string(obj.get_string_member("type"));
-					if(obj.has_member("separator")) separator = obj.get_string_member("separator");
+					if(obj.has_member("separator")) list_separator = obj.get_string_member("separator");
+					if(obj.has_member("value")) string_value = obj.get_string_member("value");
 
 					if(obj.has_member("values"))
 					{
@@ -709,7 +712,7 @@ namespace GameHub.Data.Tweaks
 					}
 				}
 
-				Object(id: id, name: name, description: description, option_type: option_type, separator: separator, values: values, presets: presets);
+				Object(id: id, name: name, description: description, option_type: option_type, list_separator: list_separator, string_value: string_value, values: values, presets: presets);
 			}
 
 			public Json.Node? to_json()
@@ -722,7 +725,8 @@ namespace GameHub.Data.Tweaks
 				if(description != null) obj.set_string_member("description", description);
 
 				obj.set_string_member("type", option_type.to_string());
-				if(separator != DEFAULT_SEPARATOR) obj.set_string_member("separator", separator);
+				if(list_separator != DEFAULT_LIST_SEPARATOR) obj.set_string_member("separator", list_separator);
+				if(string_value != null) obj.set_string_member("value", string_value);
 
 				if(values != null && values.size > 0)
 				{
@@ -795,13 +799,14 @@ namespace GameHub.Data.Tweaks
 
 			public enum Type
 			{
-				LIST;
+				LIST, STRING;
 
 				public string to_string()
 				{
 					switch(this)
 					{
-						case LIST: return "list";
+						case LIST:   return "list";
+						case STRING: return "string";
 					}
 					assert_not_reached();
 				}
@@ -810,13 +815,14 @@ namespace GameHub.Data.Tweaks
 				{
 					switch(type)
 					{
-						case "list": return LIST;
+						case "list":   return LIST;
+						case "string": return STRING;
 					}
 					assert_not_reached();
 				}
 			}
 
-			private static string DEFAULT_SEPARATOR = ",";
+			private static string DEFAULT_LIST_SEPARATOR = ",";
 		}
 	}
 }
