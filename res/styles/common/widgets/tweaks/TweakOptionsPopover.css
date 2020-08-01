@@ -10,6 +10,11 @@
 	margin-bottom: 4px;
 }
 
+.tweak-options-popover .custom-value
+{
+	margin: 0 10px;
+}
+
 .tweak-options-popover list
 {
 	background: transparent;

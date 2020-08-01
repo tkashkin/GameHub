@@ -40,6 +40,7 @@ namespace GameHub.UI.Widgets.Tweaks
 		private Box? presets_vbox;
 		private Box? values_vbox;
 		private ListBox? values_list;
+		private Entry? string_value_entry;
 
 		public TweakOptionsPopover(Tweak tweak)
 		{
@@ -121,11 +122,13 @@ namespace GameHub.UI.Widgets.Tweaks
 			presets_vbox = null;
 			values_vbox = null;
 			values_list = null;
+			string_value_entry = null;
 
 			if(option == null) return;
 
 			var has_presets = option.presets != null && option.presets.size > 0;
-			var has_values = option.values != null && option.values.size > 0;
+			var has_values_list = option.option_type == Tweak.Option.Type.LIST && option.values != null && option.values.size > 0;
+			var has_string_value = option.option_type == Tweak.Option.Type.STRING;
 
 			if(has_presets)
 			{
@@ -164,7 +167,7 @@ namespace GameHub.UI.Widgets.Tweaks
 					prev_radio = row.radio;
 				}
 
-				if(has_values)
+				if(has_values_list || has_string_value)
 				{
 					var row = new PresetRow(null, prev_radio);
 					presets_list.add(row);
@@ -174,12 +177,12 @@ namespace GameHub.UI.Widgets.Tweaks
 				option_details_vbox.add(presets_vbox);
 			}
 
-			if(has_presets && has_values)
+			if(has_presets && (has_values_list || has_string_value))
 			{
 				option_details_vbox.add(new Separator(Orientation.HORIZONTAL));
 			}
 
-			if(has_values)
+			if(has_values_list)
 			{
 				values_vbox = new Box(Orientation.VERTICAL, 0);
 				values_vbox.sensitive = !has_presets;
@@ -214,6 +217,26 @@ namespace GameHub.UI.Widgets.Tweaks
 
 				option_details_vbox.add(values_vbox);
 			}
+			else if(has_string_value)
+			{
+				values_vbox = new Box(Orientation.VERTICAL, 0);
+				values_vbox.sensitive = !has_presets;
+				values_vbox.hexpand = true;
+
+				var value_title = new Label(_("Custom value"));
+				value_title.get_style_context().add_class("list-title");
+				value_title.xalign = 0;
+
+				string_value_entry = new Entry();
+				string_value_entry.get_style_context().add_class("custom-value");
+
+				values_vbox.add(value_title);
+				values_vbox.add(string_value_entry);
+
+				string_value_entry.changed.connect(update_option_value);
+
+				option_details_vbox.add(values_vbox);
+			}
 
 			option_details_vbox.show_all();
 			update_option_value();
@@ -242,21 +265,35 @@ namespace GameHub.UI.Widgets.Tweaks
 			{
 				value = selected_preset.value;
 			}
-			else if(values_list != null)
+			else
 			{
-				string[] values = {};
-
-				values_list.foreach(r => {
-					var row = (ValueRow) r;
-					if(row.selected)
-					{
-						values += row.value;
-					}
-				});
-
-				if(selected_option.option_type == Tweak.Option.Type.LIST)
+				switch(selected_option.option_type)
 				{
-					value = string.joinv(selected_option.separator, values);
+					case Tweak.Option.Type.LIST:
+						if(values_list != null)
+						{
+							string[] values = {};
+							values_list.foreach(r => {
+								var row = (ValueRow) r;
+								if(row.selected)
+								{
+									values += row.value;
+								}
+							});
+							value = string.joinv(selected_option.list_separator, values);
+						}
+						break;
+
+					case Tweak.Option.Type.STRING:
+						if(string_value_entry != null)
+						{
+							value = string_value_entry.text;
+							if(selected_option.string_value != null)
+							{
+								value = selected_option.string_value.replace("${value}", value).replace("$value", value);
+							}
+						}
+						break;
 				}
 			}
 
@@ -336,9 +373,9 @@ namespace GameHub.UI.Widgets.Tweaks
 
 				grid.attach(title, 0, 0);
 
-				if(preset == null || preset.description != null)
+				if(preset != null && preset.description != null)
 				{
-					var description = new Label(preset != null ? preset.description : _("Select custom values"));
+					var description = new Label(preset.description);
 					description.get_style_context().add_class("description");
 					description.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
 					description.tooltip_text = description.label;
