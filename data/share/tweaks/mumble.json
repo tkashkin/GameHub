@@ -1,0 +1,11 @@
+{
+	"id": "mumble",
+	"name": "Mumble",
+	"description": "Overlay the nicknames of users over your game",
+	"url": "https://wiki.mumble.info/wiki/Overlay",
+	"group": "Overlays",
+	"requires": {
+		"executables": ["mumble-overlay"]
+	},
+	"command": "mumble-overlay ${command}"
+}

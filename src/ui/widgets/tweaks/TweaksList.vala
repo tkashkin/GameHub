@@ -35,7 +35,7 @@ namespace GameHub.UI.Widgets.Tweaks
 
 		public TweaksList(Traits.Game.SupportsTweaks? game = null)
 		{
-			Object(game: game, show_border: false, expand: true);
+			Object(game: game, show_border: false, expand: true, scrollable: true);
 		}
 
 		construct
@@ -101,6 +101,15 @@ namespace GameHub.UI.Widgets.Tweaks
 						setting.setting_activated();
 					}
 				});
+
+				tweaks_list.set_sort_func((r1, r2) => {
+					var first = (TweakRow) r1;
+					var second = (TweakRow) r2;
+					if(first.is_available && !second.is_available) return -1;
+					if(!first.is_available && second.is_available) return 1;
+					return first.tweak.name.collate(second.tweak.name);
+				});
+				tweaks_list.invalidate_sort();
 
 				show_all();
 			}

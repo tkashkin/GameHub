@@ -1,0 +1,10 @@
+{
+	"id": "vkbasalt",
+	"name": "vkBasalt",
+	"description": "Vulkan post processing layer to enhance the visual graphics of games",
+	"url": "https://github.com/DadSchoorse/vkBasalt",
+	"group": "Post-processing",
+	"env": {
+		"ENABLE_VKBASALT": "1"
+	}
+}

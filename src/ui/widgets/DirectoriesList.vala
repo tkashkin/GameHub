@@ -218,7 +218,7 @@ namespace GameHub.UI.Widgets
 
 				if(list.subdir_suffix != null)
 				{
-					title = """%s<span alpha="75%">/%s</span>""".printf(title, list.subdir_suffix);
+					title = """<b>%s</b><span alpha="75%">/%s</span>""".printf(title, list.subdir_suffix);
 				}
 
 				if(!list.is_readonly)

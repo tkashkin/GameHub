@@ -26,9 +26,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
 	public class Humble: SettingsDialogPage
 	{
-		private Settings.Auth.Humble humble_auth;
-		private Button logout_btn;
-		private FileChooserEntry games_dir_chooser;
+		private Settings.Auth.Humble humble_auth = Settings.Auth.Humble.instance;
+		private Settings.Paths.Humble humble_paths = Settings.Paths.Humble.instance;
+
+		private Button? logout_btn;
 
 		public Humble(SettingsDialog dlg)
 		{
@@ -43,30 +44,52 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = Settings.Paths.Humble.instance;
-
-			humble_auth = Settings.Auth.Humble.instance;
-
 			humble_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
-			add_switch(_("Load games from Humble Trove"), humble_auth.load_trove_games, v => { humble_auth.load_trove_games = v; update(); request_restart(); });
+			if(humble_auth.access_token != null)
+			{
+				var sgrp_account = new SettingsGroup();
 
-			add_separator();
+				var account_actions_box = new Box(Orientation.HORIZONTAL, 12);
+				logout_btn = new Button.from_icon_name("system-log-out-symbolic", IconSize.BUTTON);
+				logout_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+				logout_btn.tooltip_text = _("Logout");
+				logout_btn.clicked.connect(() => {
+					humble_auth.authenticated = false;
+					humble_auth.access_token = "";
+					request_restart();
+					update();
+				});
+				var account_link = new LinkButton.with_label("https://humblebundle.com/home/library", _("View library"));
+				account_actions_box.add(logout_btn);
+				account_actions_box.add(account_link);
 
-			//games_dir_chooser = add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, paths.humble_games, v => { paths.humble_games = v; update(); request_restart(); }).get_children().last().data as FileChooserEntry;
+				var account_setting = sgrp_account.add_setting(new BaseSetting(_("Authenticated"), null, account_actions_box));
+				account_setting.icon_name = "avatar-default-symbolic";
+				account_setting.activatable = true;
+				account_setting.setting_activated.connect(() => account_link.clicked());
+				account_link.can_focus = false;
+				add_widget(sgrp_account);
+			}
+
+			var sgrp_trove = new SettingsGroup();
+			sgrp_trove.add_setting(new SwitchSetting.bind(_("Import games from Humble Trove"), _("Humble Trove requires an active subscription to use"), humble_auth, "load-trove-games"));
+			add_widget(sgrp_trove);
+
+			var sgrp_game_dirs = new SettingsGroupBox(_("Game directories"));
+			var game_dirs_list = sgrp_game_dirs.add_widget(new DirectoriesList.with_array(humble_paths.game_directories, humble_paths.default_game_directory, null, false));
+			add_widget(sgrp_game_dirs);
+
+			game_dirs_list.notify["directories"].connect(() => {
+				humble_paths.game_directories = game_dirs_list.directories_array;
+			});
+
+			game_dirs_list.directory_selected.connect(dir => {
+				humble_paths.default_game_directory = dir;
+			});
 
 			notify["active"].connect(() => {
 				//request_restart();
-				update();
-			});
-
-			logout_btn = new Button.with_label(_("Logout"));
-			//action_area.add(logout_btn);
-
-			logout_btn.clicked.connect(() => {
-				humble_auth.authenticated = false;
-				humble_auth.access_token = "";
-				request_restart();
 				update();
 			});
 
@@ -75,10 +98,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private void update()
 		{
-			/*
-			logout_btn.sensitive = humble_auth.authenticated && humble_auth.access_token.length > 0;
+			if(logout_btn != null)
+			{
+				logout_btn.sensitive = humble_auth.authenticated && humble_auth.access_token.length > 0;
+			}
 
-			if(" " in FS.Paths.Settings.instance.humble_games)
+			/*if(" " in FS.Paths.Settings.instance.humble_games)
 			{
 				games_dir_chooser.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
 				status_type = StatusType.ERROR;
@@ -88,20 +113,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				games_dir_chooser.get_style_context().remove_class(Gtk.STYLE_CLASS_ERROR);
 				status_type = restart_requested ? StatusType.WARNING : StatusType.NONE;
 			}
-			dialog.update_games_dir_space_message();
-
-			if(!humble_auth.enabled)
-			{
-				description = _("Disabled");
-			}
-			else if(!humble_auth.authenticated || humble_auth.access_token.length == 0)
-			{
-				description = _("Not authenticated");
-			}
-			else
-			{
-				description = _("Authenticated");
-			}*/
+			dialog.update_games_dir_space_message();*/
 		}
 
 	}
