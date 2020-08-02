@@ -88,7 +88,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			add_separator();
 
 			add_header("Gamerzilla");
-			gamerzilla_url = add_entry(_("Hubzilla URL"), gamerzilla.url, v => { gamerzilla.url = v; update(); }, "source-gamerzilla-symbolic").get_children().last().data as Entry;
+			gamerzilla_url = add_entry(_("Trophy URL"), gamerzilla.url, v => { gamerzilla.url = v; update(); }, "source-gamerzilla-symbolic").get_children().last().data as Entry;
 			gamerzilla_username = add_entry(_("Username"), gamerzilla.username, v => { gamerzilla.username = v; update(); }, "source-gamerzilla-symbolic").get_children().last().data as Entry;
 			gamerzilla_password = add_entry(_("Password"), gamerzilla.password, v => { gamerzilla.password = v; update(); }, "source-gamerzilla-symbolic").get_children().last().data as Entry;
 			#endif

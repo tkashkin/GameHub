@@ -264,7 +264,7 @@
 		<schema path="@SCHEMA_PATH@/paths/collection/gamerzilla/" id="@SCHEMA_ID@.paths.collection.gamerzilla">
 			<key name="url" type="s">
 				<default>''</default>
-				<summary>Gamerzilla: Hubzilla url</summary>
+				<summary>Gamerzilla: Trophy url</summary>
 			</key>
 			<key name="username" type="s">
 				<default>''</default>
