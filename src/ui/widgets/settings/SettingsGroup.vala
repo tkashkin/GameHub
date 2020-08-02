@@ -101,7 +101,13 @@ namespace GameHub.UI.Widgets.Settings
 
 		public T add_widget<T>(T widget)
 		{
-			container.add((Widget) widget);
+			var w = (Widget) widget;
+			container.add(w);
+			if(w.get_style_context().has_class(Gtk.STYLE_CLASS_FRAME))
+			{
+				container.get_style_context().remove_class(Gtk.STYLE_CLASS_FRAME);
+				container.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+			}
 			return widget;
 		}
 	}

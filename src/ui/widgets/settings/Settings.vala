@@ -94,7 +94,7 @@ namespace GameHub.UI.Widgets.Settings
 			bind_property("title", title_label, "label", BindingFlags.SYNC_CREATE);
 
 			bind_property("description", description_label, "label", BindingFlags.SYNC_CREATE);
-			bind_property("description", description_label, "tooltip-text", BindingFlags.SYNC_CREATE);
+			bind_property("description", description_label, "tooltip-markup", BindingFlags.SYNC_CREATE);
 
 			notify["ellipsize-title"].connect(() => {
 				title_label.ellipsize = ellipsize_title;

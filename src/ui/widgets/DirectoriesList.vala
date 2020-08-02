@@ -19,6 +19,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gee;
 
+using GameHub.UI.Widgets.Settings;
+
 using GameHub.Utils;
 
 namespace GameHub.UI.Widgets
@@ -190,7 +192,7 @@ namespace GameHub.UI.Widgets
 			update();
 		}
 
-		public class DirectoryRow: ListBoxRow
+		public class DirectoryRow: BaseSetting
 		{
 			public string directory { get; construct set; }
 			public DirectoriesList list { get; construct; }
@@ -204,44 +206,19 @@ namespace GameHub.UI.Widgets
 
 			construct
 			{
+				get_style_context().add_class("directory");
+
 				var dir = FS.file(directory);
 
-				var grid = new Grid();
-				grid.margin_start = grid.margin_end = 8;
-				grid.margin_top = grid.margin_bottom = 4;
+				ellipsize_title = Pango.EllipsizeMode.MIDDLE;
 
-				var icon = new Image.from_icon_name("folder", IconSize.LARGE_TOOLBAR);
-				icon.valign = Align.CENTER;
-				icon.margin_end = 12;
-
-				var path_label = new Label(dir.get_path());
-				path_label.tooltip_text = dir.get_path();
-				path_label.get_style_context().add_class("bold");
-				path_label.ellipsize = Pango.EllipsizeMode.MIDDLE;
-				path_label.xalign = 0;
-				path_label.valign = Align.CENTER;
-
-				info_label = new Label(_("Measuring available disk space…"));
-				info_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-				info_label.use_markup = true;
-				info_label.hexpand = true;
-				info_label.ellipsize = Pango.EllipsizeMode.MIDDLE;
-				info_label.xalign = 0;
-				info_label.valign = Align.CENTER;
-
-				grid.attach(icon, 0, 0, 1, 2);
-				grid.attach(path_label, 1, 0);
-				grid.attach(info_label, 1, 1, 2, 1);
+				icon_name = "folder";
+				title = dir.get_path();
+				description = _("Measuring available disk space…");
 
 				if(list.subdir_suffix != null)
 				{
-					var subdir_suffix_label = new Label(@"/$(list.subdir_suffix)");
-					subdir_suffix_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-					subdir_suffix_label.hexpand = true;
-					subdir_suffix_label.ellipsize = Pango.EllipsizeMode.MIDDLE;
-					subdir_suffix_label.xalign = 0;
-					subdir_suffix_label.valign = Align.CENTER;
-					grid.attach(subdir_suffix_label, 2, 0);
+					title = """%s<span alpha="75%">/%s</span>""".printf(title, list.subdir_suffix);
 				}
 
 				if(!list.is_readonly)
@@ -252,16 +229,13 @@ namespace GameHub.UI.Widgets
 					remove_button.tooltip_text = _("Remove");
 					remove_button.margin_start = 12;
 					remove_button.sensitive = list.directories.size > 1;
-					grid.attach(remove_button, 3, 0, 1, 2);
-
 					remove_button.clicked.connect(() => {
 						list.dir_remove(directory);
 					});
+					replace_widget(remove_button);
 				}
 
-				child = grid;
 				show_all();
-
 				measure_disk_space.begin(dir);
 			}
 
@@ -293,7 +267,7 @@ namespace GameHub.UI.Widgets
 								}
 
 								Idle.add(() => {
-									info_label.label = string.joinv(" • ", info_parts);
+									description = string.joinv(" • ", info_parts);
 									return Source.REMOVE;
 								});
 								return;
