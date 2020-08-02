@@ -11,28 +11,28 @@
 {
 	background-image: linear-gradient(to right,
 	                                  shade(@theme_bg_color, 0.95) 202px,
-	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @borders 202px, @borders 203px,
 	                                  transparent 203px, transparent);
 }
 .settings-dialog > headerbar:dir(ltr)
 {
 	background-image: linear-gradient(to right,
 	                                  alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
-	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @borders 202px, @borders 203px,
 	                                  transparent 203px, transparent);
 }
 .settings-dialog:dir(rtl)
 {
 	background-image: linear-gradient(to left,
 	                                  shade(@theme_bg_color, 0.95) 202px,
-	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @borders 202px, @borders 203px,
 	                                  transparent 203px, transparent);
 }
 .settings-dialog > headerbar:dir(rtl)
 {
 	background-image: linear-gradient(to left,
 	                                  alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
-	                                  @settings_separator 202px, @settings_separator 203px,
+	                                  @borders 202px, @borders 203px,
 	                                  transparent 203px, transparent);
 }
 
@@ -59,4 +59,5 @@
 .settings-dialog .settings-pages-sidebar list
 {
 	background: shade(@theme_bg_color, 0.95);
+	margin-bottom: 16px;
 }

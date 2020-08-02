@@ -39,7 +39,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				dialog: dlg,
 				header: _("Game sources"),
 				title: "Steam",
-				description: _("Disabled"),
 				icon_name: "source-steam-symbolic",
 				has_active_switch: true
 			);
@@ -47,18 +46,42 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = Settings.Paths.Steam.instance;
+			var steam = GameHub.Data.Sources.Steam.Steam.instance;
 
+			var paths = Settings.Paths.Steam.instance;
 			steam_auth = Settings.Auth.Steam.instance;
 
 			steam_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
-			add_steam_apikey_entry();
-			adjust_margins(add_labeled_link(_("Steam API keys have limited number of uses per day"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey"));
+			var sgrp_dirs = new SettingsGroup();
+			sgrp_dirs.add_setting(
+				new FileSetting.bind(
+					_("Installation directory"), null,
+					file_chooser(_("Select Steam installation directory"), FileChooserAction.SELECT_FOLDER),
+					paths, "home"
+				)
+			);
+			sgrp_dirs.add_setting(
+				new DirectoriesMenuSetting.paths(
+					_("Steam library directories"),
+					_("Steam library directories that are configured in the Steam client"),
+					GameHub.Data.Sources.Steam.Steam.LibraryFolders
+				)
+			);
+			add_widget(sgrp_dirs);
 
-			adjust_margins(add_separator());
+			if(steam.user_id != null)
+			{
+				var sgrp_account = new SettingsGroup();
+				var account_setting = sgrp_account.add_setting(new BaseSetting(steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated"), steam.user_id));
+				account_setting.icon_name = "avatar-default-symbolic";
+				add_widget(sgrp_account);
+			}
 
-			adjust_margins(add_file_chooser(_("Installation directory"), FileChooserAction.SELECT_FOLDER, paths.home, v => { paths.home = v; request_restart(); }, false));
+			var sgrp_api_key = new SettingsGroup();
+			sgrp_api_key.add_setting(new EntrySetting(_("API key"), null, get_steam_apikey_entry()));
+			sgrp_api_key.add_setting(new LinkLabelSetting(_("Provide your API key to access private Steam profile or if default key does not work"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey"));
+			add_widget(sgrp_api_key);
 
 			var proton_header = add_header("Proton");
 			proton_header.margin_start = proton_header.margin_end = 12;
@@ -95,25 +118,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private void update()
 		{
-			var steam = GameHub.Data.Sources.Steam.Steam.instance;
-
-			if(!steam.enabled)
-			{
-				description = _("Disabled");
-			}
-			else if(!steam.is_installed())
-			{
-				description = _("Not installed");
-			}
-			else if(!steam.is_authenticated_in_steam_client)
-			{
-				description = _("Not authenticated");
-			}
-			else
-			{
-				description = steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated");
-			}
-
 			proton.foreach(r => {
 				if(r != null) r.destroy();
 			});
@@ -203,7 +207,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			}
 		}
 
-		protected Box add_steam_apikey_entry()
+		private Entry get_steam_apikey_entry()
 		{
 			var steam_auth = Settings.Auth.Steam.instance;
 
@@ -217,7 +221,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			entry.primary_icon_name = "source-steam-symbolic";
 			entry.secondary_icon_name = "edit-delete-symbolic";
 			entry.secondary_icon_tooltip_text = _("Restore default API key");
-			entry.set_size_request(280, -1);
+			entry.set_size_request(ENTRY_WIDTH, -1);
 
 			entry.notify["text"].connect(() => { steam_auth.api_key = entry.text; request_restart(); });
 			entry.icon_press.connect((pos, e) => {
@@ -227,18 +231,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				}
 			});
 
-			var label = new Label(_("Steam API key"));
-			label.halign = Align.START;
-			label.hexpand = true;
-
-			var hbox = new Box(Orientation.HORIZONTAL, 12);
-			hbox.add(label);
-			hbox.add(entry);
-			add_widget(hbox);
-
-			adjust_margins(hbox);
-
-			return hbox;
+			return entry;
 		}
 
 		private void adjust_margins(Widget w)
