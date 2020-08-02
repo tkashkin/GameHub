@@ -101,10 +101,16 @@ namespace GameHub.UI.Widgets.Tweaks
 				}
 			}
 
+			var option_details_scrolled = new ScrolledWindow(null, null);
+			option_details_scrolled.expand = true;
+			option_details_scrolled.hscrollbar_policy = PolicyType.NEVER;
+
 			option_details_vbox = new Box(Orientation.VERTICAL, 0);
 			option_details_vbox.expand = true;
 
-			hbox.add(option_details_vbox);
+			option_details_scrolled.add(option_details_vbox);
+
+			hbox.add(option_details_scrolled);
 
 			hbox.show_all();
 			child = hbox;
@@ -139,20 +145,13 @@ namespace GameHub.UI.Widgets.Tweaks
 				presets_title.get_style_context().add_class("list-title");
 				presets_title.xalign = 0;
 
-				var presets_scrolled = new ScrolledWindow(null, null);
-				presets_scrolled.propagate_natural_height = true;
-				presets_scrolled.max_content_height = 300;
-				presets_scrolled.hexpand = true;
-				presets_scrolled.hscrollbar_policy = PolicyType.NEVER;
-
 				var presets_list = new ListBox();
 				presets_list.get_style_context().add_class("presets-list");
 				presets_list.selection_mode = SelectionMode.NONE;
 				presets_list.activate_on_single_click = true;
 
-				presets_scrolled.add(presets_list);
 				presets_vbox.add(presets_title);
-				presets_vbox.add(presets_scrolled);
+				presets_vbox.add(presets_list);
 
 				RadioButton? prev_radio = null;
 				foreach(var preset in option.presets)
@@ -195,18 +194,13 @@ namespace GameHub.UI.Widgets.Tweaks
 				values_title.get_style_context().add_class("list-title");
 				values_title.xalign = 0;
 
-				var values_scrolled = new ScrolledWindow(null, null);
-				values_scrolled.expand = true;
-				values_scrolled.hscrollbar_policy = PolicyType.NEVER;
-
 				values_list = new ListBox();
 				values_list.get_style_context().add_class("values-list");
 				values_list.selection_mode = SelectionMode.NONE;
 				values_list.activate_on_single_click = true;
 
-				values_scrolled.add(values_list);
 				values_vbox.add(values_title);
-				values_vbox.add(values_scrolled);
+				values_vbox.add(values_list);
 
 				foreach(var value in option.values.entries)
 				{

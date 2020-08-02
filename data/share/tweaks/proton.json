@@ -68,5 +68,61 @@
 		"env": {
 			"PROTON_NO_FSYNC": "1"
 		}
+	},
+	{
+		"id": "proton_no_laa",
+		"name": "Disable LARGE_ADDRESS_AWARE",
+		"description": "Disable Wines LARGE_ADDRESS_AWARE flag for all executables",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_FORCE_LARGE_ADDRESS_AWARE": "0"
+		}
+	},
+	{
+		"id": "proton_old_gl",
+		"name": "Use old GL strings",
+		"description": "Set some driver overrides to limit the length of the GL extension string, for old games that crash on very long extension strings",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_OLD_GL_STRING": "1"
+		}
+	},
+	{
+		"id": "proton_int_scale",
+		"name": "Use integer scaling",
+		"description": "Enable integer scaling mode, to give sharp pixels when upscaling",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"WINE_FULLSCREEN_INTEGER_SCALING": "1"
+		}
+	},
+	{
+		"id": "proton_seccomp",
+		"name": "Enable seccomp-bpf",
+		"description": "Enable seccomp-bpf filter to emulate native syscalls, required for some DRM protections to work",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_USE_SECCOMP": "1"
+		}
 	}
 ]

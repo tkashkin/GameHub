@@ -16,7 +16,6 @@
 			"name": "HUD elements",
 			"description": "Select HUD elements to show",
 			"type": "list",
-			"separator": ",",
 			"values": {
 				"devinfo": "Show name of GPU and driver version",
 				"fps": "Show frame rate",
@@ -29,13 +28,13 @@
 				"version": "Show DXVK version",
 				"api": "Show D3D feature level used by the application",
 				"compiler": "Show shader compiler activity",
-				"samplers": "Show current number of sampler pairs used [D3D9 Only]"
+				"samplers": "Show current number of sampler pairs used (D3D9 only)"
 			},
 			"presets": {
 				"default": {
 					"name": "Default",
 					"description": "Show name of GPU, driver version and frame rate",
-					"value": "devinfo,fps"
+					"value": "1"
 				},
 				"full": {
 					"name": "Full",

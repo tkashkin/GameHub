@@ -30,7 +30,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		private Settings.Paths.GOG gog_paths = Settings.Paths.GOG.instance;
 
 		private Button? logout_btn;
-		private DirectoriesList game_dirs_list;
 
 		public GOG(SettingsDialog dlg)
 		{

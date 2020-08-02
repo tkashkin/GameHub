@@ -1,0 +1,54 @@
+[
+	{
+		"id": "gpu_nvidia_glthread",
+		"name": "NVIDIA: Threaded Optimizations",
+		"description": "Offload CPU computations to a worker thread",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/410.104/README/openglenvvariables.html",
+		"group": "GPU",
+		"requires": {
+			"kernel_modules": ["nvidia"]
+		},
+		"env": {
+			"__GL_THREADED_OPTIMIZATIONS": "1"
+		}
+	},
+	{
+		"id": "gpu_nvidia_sync_gsync",
+		"name": "NVIDIA: G-SYNC",
+		"description": "Controls G-SYNC, also called “variable refresh rate”",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/410.104/README/openglenvvariables.html",
+		"group": "GPU",
+		"requires": {
+			"kernel_modules": ["nvidia"]
+		},
+		"env": {
+			"__GL_GSYNC_ALLOWED": "1"
+		}
+	},
+	{
+		"id": "gpu_nvidia_sync_vblank",
+		"name": "NVIDIA: vblank",
+		"description": "Limit frame rate to the refresh rate of the monitor",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/410.104/README/openglenvvariables.html",
+		"group": "GPU",
+		"requires": {
+			"kernel_modules": ["nvidia"]
+		},
+		"env": {
+			"__GL_SYNC_TO_VBLANK": "1"
+		}
+	},
+	{
+		"id": "gpu_nvidia_osd",
+		"name": "NVIDIA: Graphics API Visual Indicator",
+		"description": "Control whether the graphics API visual indicator is rendered on top of OpenGL and Vulkan applications",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/410.104/README/openglenvvariables.html",
+		"group": "Overlays",
+		"requires": {
+			"kernel_modules": ["nvidia"]
+		},
+		"env": {
+			"__GL_SHOW_GRAPHICS_OSD": "1"
+		}
+	}
+]

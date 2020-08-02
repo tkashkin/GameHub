@@ -1,0 +1,28 @@
+[
+	{
+		"id": "wine_dlloverrides",
+		"name": "DLL overrides",
+		"group": "Wine",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["wine", "proton"]
+		},
+		"env": {
+			"WINEDLLOVERRIDES": "${option:common},${option:custom}"
+		},
+		"options": {
+			"common": {
+				"name": "Recommended overrides",
+				"type": "list",
+				"values": {
+					"winex11.drv=d": "Hide the prefix update dialog of Wine and Gecko install question",
+					"winemenubuilder=d": "Prevent changing the filetype associations or adding menu entries/desktop links"
+				}
+			},
+			"custom": {
+				"name": "Custom overrides",
+				"type": "string"
+			}
+		}
+	}
+]

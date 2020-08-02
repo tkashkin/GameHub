@@ -34,6 +34,9 @@ namespace GameHub.UI.Widgets.Tweaks
 		public Tweak tweak { get; construct; }
 		public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
 
+		public Tweak.Requirements? unavailable_reqs { get; private set; }
+		public bool is_available { get { return unavailable_reqs == null; } }
+
 		public TweakRow(Tweak tweak, Traits.Game.SupportsTweaks? game=null)
 		{
 			Object(tweak: tweak, game: game, activatable: true, selectable: false);
@@ -123,7 +126,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				buttons_hbox.add(options);
 			}
 
-			var unavailable_reqs = tweak.get_unavailable_requirements();
+			unavailable_reqs = tweak.get_unavailable_requirements();
 			if(unavailable_reqs != null)
 			{
 				string[] reqs = {};
