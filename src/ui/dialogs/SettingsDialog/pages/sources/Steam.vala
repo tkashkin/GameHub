@@ -29,9 +29,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
 	public class Steam: SettingsDialogPage
 	{
-		private Settings.Auth.Steam steam_auth;
+		private Settings.Auth.Steam steam_auth = Settings.Auth.Steam.instance;
+		private Settings.Paths.Steam steam_paths = Settings.Paths.Steam.instance;
 
-		private ListBox proton;
+		private SettingsGroup sgrp_proton;
 
 		public Steam(SettingsDialog dlg)
 		{
@@ -48,17 +49,26 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		{
 			var steam = GameHub.Data.Sources.Steam.Steam.instance;
 
-			var paths = Settings.Paths.Steam.instance;
-			steam_auth = Settings.Auth.Steam.instance;
-
 			steam_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
+
+			if(steam.user_id != null)
+			{
+				var sgrp_account = new SettingsGroup();
+				var account_link = new LinkButton.with_label("steam://url/SteamIDMyProfile", _("View profile"));
+				var account_setting = sgrp_account.add_setting(new BaseSetting(steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated"), steam.user_id, account_link));
+				account_setting.icon_name = "avatar-default-symbolic";
+				account_setting.activatable = true;
+				account_setting.setting_activated.connect(() => account_link.clicked());
+				account_link.can_focus = false;
+				add_widget(sgrp_account);
+			}
 
 			var sgrp_dirs = new SettingsGroup();
 			sgrp_dirs.add_setting(
 				new FileSetting.bind(
 					_("Installation directory"), null,
 					file_chooser(_("Select Steam installation directory"), FileChooserAction.SELECT_FOLDER),
-					paths, "home"
+					steam_paths, "home"
 				)
 			);
 			sgrp_dirs.add_setting(
@@ -70,43 +80,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			);
 			add_widget(sgrp_dirs);
 
-			if(steam.user_id != null)
-			{
-				var sgrp_account = new SettingsGroup();
-				var account_setting = sgrp_account.add_setting(new BaseSetting(steam.user_name != null ? _("Authenticated as <b>%s</b>").printf(steam.user_name) : _("Authenticated"), steam.user_id));
-				account_setting.icon_name = "avatar-default-symbolic";
-				add_widget(sgrp_account);
-			}
-
 			var sgrp_api_key = new SettingsGroup();
 			sgrp_api_key.add_setting(new EntrySetting(_("API key"), null, get_steam_apikey_entry()));
 			sgrp_api_key.add_setting(new LinkLabelSetting(_("Provide your API key to access private Steam profile or if default key does not work"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey"));
 			add_widget(sgrp_api_key);
 
-			var proton_header = add_header("Proton");
-			proton_header.margin_start = proton_header.margin_end = 12;
-
-			var proton_scroll = add_widget(new ScrolledWindow(null, null));
-			proton_scroll.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			proton_scroll.hscrollbar_policy = PolicyType.NEVER;
-
-			proton_scroll.margin_start = 7;
-			proton_scroll.margin_end = 3;
-			proton_scroll.margin_top = 0;
-			proton_scroll.margin_bottom = 6;
-
-			proton = new ListBox();
-			proton.selection_mode = SelectionMode.NONE;
-			proton.get_style_context().add_class("separated-list");
-
-			proton_scroll.add(proton);
-
-			#if GTK_3_22
-			proton_scroll.propagate_natural_width = true;
-			proton_scroll.propagate_natural_height = true;
-			#else
-			proton_scroll.expand = true;
-			#endif
+			sgrp_proton = new SettingsGroup("Proton");
+			add_widget(sgrp_proton);
 
 			notify["active"].connect(() => {
 				update();
@@ -118,7 +98,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private void update()
 		{
-			proton.foreach(r => {
+			sgrp_proton.settings.foreach(r => {
 				if(r != null) r.destroy();
 			});
 
@@ -126,85 +106,30 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			{
 				if(tool is Proton)
 				{
-					var p = tool as Proton;
-					if(p != null && !p.is_latest)
+					var proton = tool as Proton;
+					if(proton != null && !proton.is_latest)
 					{
-						proton.add(new ProtonRow(p, this));
+						Button? install = null;
+						var description = _("Not installed");
+						if(proton.installed && proton.executable != null)
+						{
+							description = proton.executable.get_path();
+						}
+						else
+						{
+							install = new Button.with_label(_("Install"));
+							install.clicked.connect(() => {
+								install.sensitive = false;
+								request_restart();
+								proton.install_app();
+							});
+						}
+						sgrp_proton.add_setting(new BaseSetting("""%s<span alpha="75%"> • %s</span>""".printf(proton.name, proton.appid), description, install)).icon_name = proton.icon;
 					}
 				}
 			}
 
-			proton.show_all();
-		}
-
-		private class ProtonRow: ListBoxRow
-		{
-			public Proton proton { get; construct; }
-
-			public Steam page { private get; construct; }
-
-			public ProtonRow(Proton proton, Steam page)
-			{
-				Object(proton: proton, page: page);
-			}
-
-			construct
-			{
-				var grid = new Grid();
-				grid.column_spacing = 12;
-				grid.margin_start = grid.margin_end = 8;
-				grid.margin_top = grid.margin_bottom = 4;
-
-				var icon = new Image.from_icon_name("source-steam-symbolic", IconSize.LARGE_TOOLBAR);
-				icon.valign = Align.CENTER;
-
-				var name = new Label(proton.name);
-				name.get_style_context().add_class("category-label");
-				name.set_size_request(96, -1);
-				name.hexpand = false;
-				name.xalign = 0;
-				name.valign = Align.CENTER;
-
-				var appid = new Label(proton.appid);
-				appid.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-				appid.hexpand = true;
-				appid.xalign = 0;
-				appid.valign = Align.CENTER;
-
-				var status = new Label(_("Not installed"));
-				status.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-				status.hexpand = true;
-				status.ellipsize = Pango.EllipsizeMode.MIDDLE;
-				status.xalign = 0;
-				status.valign = Align.CENTER;
-
-				var install = new Button.with_label(_("Install"));
-				install.valign = Align.CENTER;
-				install.sensitive = false;
-
-				grid.attach(icon, 0, 0, 1, 2);
-				grid.attach(name, 1, 0);
-				grid.attach(appid, 2, 0);
-				grid.attach(status, 1, 1, 2, 1);
-
-				if(proton.installed && proton.executable != null)
-				{
-					status.label = status.tooltip_text = proton.executable.get_path();
-				}
-				else
-				{
-					install.sensitive = true;
-					grid.attach(install, 3, 0, 1, 2);
-
-					install.clicked.connect(() => {
-						install.sensitive = false;
-						page.request_restart();
-						proton.install_app();
-					});
-				}
-
-				child = grid;
-			}
+			sgrp_proton.show_all();
 		}
 
 		private Entry get_steam_apikey_entry()
@@ -232,12 +157,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			});
 
 			return entry;
-		}
-
-		private void adjust_margins(Widget w)
-		{
-			w.margin_start = 16;
-			w.margin_end = 12;
 		}
 	}
 }

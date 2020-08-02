@@ -29,7 +29,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		private Settings.Auth.GOG gog_auth = Settings.Auth.GOG.instance;
 		private Settings.Paths.GOG gog_paths = Settings.Paths.GOG.instance;
 
-		private Button logout_btn;
+		private Button? logout_btn;
 		private DirectoriesList game_dirs_list;
 
 		public GOG(SettingsDialog dlg)
@@ -37,7 +37,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			Object(
 				dialog: dlg,
 				title: "GOG",
-				description: _("Disabled"),
 				icon_name: "source-gog-symbolic",
 				has_active_switch: true
 			);
@@ -45,17 +44,40 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
+			var gog = GameHub.Data.Sources.GOG.GOG.instance;
+
 			gog_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
-			var game_dirs_header = add_header(_("Game directories"));
-			game_dirs_header.margin_start = game_dirs_header.margin_end = 12;
+			if(gog.user_id != null)
+			{
+				var sgrp_account = new SettingsGroup();
 
-			var game_dirs_list = add_widget(new DirectoriesList.with_array(gog_paths.game_directories, gog_paths.default_game_directory, null, false));
+				var account_actions_box = new Box(Orientation.HORIZONTAL, 12);
+				logout_btn = new Button.from_icon_name("system-log-out-symbolic", IconSize.BUTTON);
+				logout_btn.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+				logout_btn.tooltip_text = _("Logout");
+				logout_btn.clicked.connect(() => {
+					gog_auth.authenticated = false;
+					gog_auth.access_token = "";
+					gog_auth.refresh_token = "";
+					request_restart();
+					update();
+				});
+				var account_link = new LinkButton.with_label("https://gog.com/u/%s".printf(gog.user_name), _("View profile"));
+				account_actions_box.add(logout_btn);
+				account_actions_box.add(account_link);
 
-			game_dirs_list.margin_start = 7;
-			game_dirs_list.margin_end = 3;
-			game_dirs_list.margin_top = 0;
-			game_dirs_list.margin_bottom = 0;
+				var account_setting = sgrp_account.add_setting(new BaseSetting(gog.user_name != null ? _("Authenticated as <b>%s</b>").printf(gog.user_name) : _("Authenticated"), gog.user_id, account_actions_box));
+				account_setting.icon_name = "avatar-default-symbolic";
+				account_setting.activatable = true;
+				account_setting.setting_activated.connect(() => account_link.clicked());
+				account_link.can_focus = false;
+				add_widget(sgrp_account);
+			}
+
+			var sgrp_game_dirs = new SettingsGroupBox(_("Game directories"));
+			var game_dirs_list = sgrp_game_dirs.add_widget(new DirectoriesList.with_array(gog_paths.game_directories, gog_paths.default_game_directory, null, false));
+			add_widget(sgrp_game_dirs);
 
 			game_dirs_list.notify["directories"].connect(() => {
 				gog_paths.game_directories = game_dirs_list.directories_array;
@@ -70,23 +92,15 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				update();
 			});
 
-			logout_btn = new Button.with_label(_("Logout"));
-			//action_area.add(logout_btn);
-
-			logout_btn.clicked.connect(() => {
-				gog_auth.authenticated = false;
-				gog_auth.access_token = "";
-				gog_auth.refresh_token = "";
-				request_restart();
-				update();
-			});
-
 			update();
 		}
 
 		private void update()
 		{
-			logout_btn.sensitive = gog_auth.authenticated && gog_auth.access_token.length > 0;
+			if(logout_btn != null)
+			{
+				logout_btn.sensitive = gog_auth.authenticated && gog_auth.access_token.length > 0;
+			}
 
 			/*if(" " in FS.Paths.Settings.instance.gog_games)
 			{
@@ -99,20 +113,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				status_type = restart_requested ? StatusType.WARNING : StatusType.NONE;
 			}
 			dialog.update_games_dir_space_message();*/
-
-			if(!gog_auth.enabled)
-			{
-				description = _("Disabled");
-			}
-			else if(!gog_auth.authenticated || gog_auth.access_token.length == 0)
-			{
-				description = _("Not authenticated");
-			}
-			else
-			{
-				var user_name = GameHub.Data.Sources.GOG.GOG.instance.user_name;
-				description = user_name != null ? _("Authenticated as <b>%s</b>").printf(user_name) : _("Authenticated");
-			}
 		}
 	}
 }
