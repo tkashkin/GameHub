@@ -92,57 +92,33 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			{
 				foreach(var controller in settings.known_controllers)
 				{
-					sgrp_controllers.add_setting(new ControllerRow(controller, !(controller in settings.ignored_controllers), this));
+					sgrp_controllers.add_setting(new ControllerSetting(controller, !(controller in settings.ignored_controllers), this));
 				}
 			}
 		}
 
-		private class ControllerRow: ListBoxRow, ActivatableSetting
+		private class ControllerSetting: SwitchSetting, ActivatableSetting
 		{
 			public string controller { get; construct; }
 			public bool enabled { get; construct set; }
 
 			public Controller page { get; construct; }
 
-			public ControllerRow(string controller, bool enabled, Controller page)
+			public ControllerSetting(string controller, bool enabled, Controller page)
 			{
-				Object(controller: controller, enabled: enabled, page: page, activatable: true, selectable: false);
+				Object(controller: controller, enabled: enabled, page: page, title: controller, widget: new Switch(), activatable: true, selectable: false);
 			}
 
 			construct
 			{
-				var settings = Settings.Controller.instance;
+				get_style_context().add_class("controller-setting");
+				icon_name = "gamehub-symbolic";
 
-				get_style_context().add_class("setting");
-                get_style_context().add_class("controller-setting");
-
-				var hbox = new Box(Orientation.HORIZONTAL, 12);
-
-				var icon = new Image.from_icon_name("gamehub-symbolic", IconSize.LARGE_TOOLBAR);
-				icon.valign = Align.CENTER;
-
-				var name = new Label(controller);
-				name.hexpand = true;
-				name.ellipsize = Pango.EllipsizeMode.END;
-				name.xalign = 0;
-				name.valign = Align.CENTER;
-
-				var enabled_switch = new Switch();
-				enabled_switch.active = enabled;
-				enabled_switch.valign = Align.CENTER;
-				enabled_switch.can_focus = false;
-
-				hbox.add(icon);
-				hbox.add(name);
-				hbox.add(enabled_switch);
-
-				child = hbox;
-
-				enabled_switch.notify["active"].connect(() => {
-					enabled = enabled_switch.active;
-				});
+				@switch.can_focus = false;
+				bind_property("enabled", @switch, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
 				notify["enabled"].connect(() => {
+					var settings = Settings.Controller.instance;
 					var ignored = settings.ignored_controllers;
 					if(enabled && controller in ignored)
 					{
@@ -160,10 +136,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 						settings.ignored_controllers = ignored;
 						page.request_restart();
 					}
-				});
-
-				setting_activated.connect(() => {
-					enabled_switch.activate();
 				});
 			}
 		}

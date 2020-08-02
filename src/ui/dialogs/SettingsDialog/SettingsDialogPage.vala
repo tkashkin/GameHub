@@ -26,6 +26,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 {
 	public abstract class SettingsDialogPage: SettingsSidebar.SimpleSettingsPage
 	{
+		protected const int ENTRY_WIDTH = 320;
+
 		public SettingsDialog dialog { construct; protected get; }
 
 		public bool restart_requested = false;
@@ -59,7 +61,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var entry = new Entry();
 			entry.text = val;
 			entry.notify["text"].connect(() => { action(entry.text); });
-			entry.set_size_request(280, -1);
+			entry.set_size_request(ENTRY_WIDTH, -1);
 
 			entry.primary_icon_name = icon;
 
@@ -89,7 +91,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			chooser.select_file(FS.file(val));
 			chooser.tooltip_text = chooser.file.get_path();
 			chooser.file_set.connect(() => { chooser.tooltip_text = chooser.file != null ? chooser.file.get_path() : null; action(chooser.tooltip_text); });
-			chooser.set_size_request(280, -1);
+			chooser.set_size_request(ENTRY_WIDTH, -1);
 
 			var label = new Label(text);
 			label.halign = Align.START;
@@ -124,7 +126,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			label2.xalign = 0;
 			label2.wrap = true;
 			label2.use_markup = use_markup;
-			label2.set_size_request(280, -1);
+			label2.set_size_request(ENTRY_WIDTH, -1);
 
 			var hbox = new Box(Orientation.HORIZONTAL, 12);
 			hbox.add(label);
@@ -176,7 +178,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 		protected Entry entry(string? icon=null)
 		{
 			var entry = new Entry();
-			entry.set_size_request(320, -1);
+			entry.set_size_request(ENTRY_WIDTH, -1);
 			entry.primary_icon_name = icon;
 			return entry;
 		}
@@ -186,7 +188,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			var chooser = new FileChooserEntry(text, mode, icon, null, allow_url, allow_executable);
 			chooser.chooser.create_folders = create;
 			chooser.chooser.show_hidden = true;
-			chooser.set_size_request(320, -1);
+			chooser.set_size_request(ENTRY_WIDTH, -1);
 			return chooser;
 		}
 

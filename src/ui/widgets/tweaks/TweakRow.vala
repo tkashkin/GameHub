@@ -157,6 +157,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				}
 
 				enabled.sensitive = false;
+				enabled.active = false;
 				activatable = false;
 				icon.icon_name = "action-unavailable-symbolic";
 				icon.tooltip_markup = enabled.tooltip_markup = string.joinv("\n", reqs).strip();

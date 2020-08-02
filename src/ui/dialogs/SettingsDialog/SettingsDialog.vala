@@ -100,10 +100,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			add_page("ui/behavior", new Pages.UI.Behavior(this));
 
 			add_page("general/collection", new Pages.General.Collection(this));
-			add_page("general/tweaks", new Pages.General.Tweaks(this));
 			#if MANETTE
 			add_page("general/controller", new Pages.General.Controller(this));
 			#endif
+			add_page("general/tweaks", new Pages.General.Tweaks(this));
 
 			add_page("sources/steam", new Pages.Sources.Steam(this));
 			add_page("sources/gog", new Pages.Sources.GOG(this));

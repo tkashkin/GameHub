@@ -18,7 +18,9 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 using Gee;
+
 using GameHub.UI.Widgets;
+using GameHub.Utils;
 
 namespace GameHub.UI.Widgets.Settings
 {
@@ -31,6 +33,7 @@ namespace GameHub.UI.Widgets.Settings
 	{
 		public string title { get; construct set; }
 		public string? description { get; construct set; }
+		public string? icon_name { get; set; }
 		public Widget? widget { get; construct set; }
 
 		public Pango.EllipsizeMode ellipsize_title { get; set; default = Pango.EllipsizeMode.NONE; }
@@ -50,6 +53,12 @@ namespace GameHub.UI.Widgets.Settings
 			get_style_context().add_class("setting");
 
 			hbox = new Box(Orientation.HORIZONTAL, 12);
+
+			var icon = new Image.from_icon_name("gamehub-symbolic", IconSize.LARGE_TOOLBAR);
+			icon.no_show_all = true;
+			icon.valign = Align.CENTER;
+
+			hbox.add(icon);
 
 			var text_vbox = new Box(Orientation.VERTICAL, 0);
 			text_vbox.hexpand = true;
@@ -97,6 +106,11 @@ namespace GameHub.UI.Widgets.Settings
 				description_label.wrap = ellipsize_description == Pango.EllipsizeMode.NONE;
 			});
 
+			notify["icon-name"].connect(() => {
+				icon.icon_name = icon_name;
+				icon.visible = icon_name != null;
+			});
+
 			notify["widget"].connect(() => replace_widget(widget));
 			replace_widget(widget);
 		}
@@ -124,7 +138,7 @@ namespace GameHub.UI.Widgets.Settings
 	{
 		public Widget widget { get; construct; }
 
-		public CustomWidgetSetting(Widget widget = null)
+		public CustomWidgetSetting(Widget widget)
 		{
 			Object(widget: widget, activatable: false, selectable: false);
 		}
@@ -152,8 +166,44 @@ namespace GameHub.UI.Widgets.Settings
 			get_style_context().add_class("setting");
 			get_style_context().add_class("label-setting");
 			label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+			label.wrap = true;
 			child = label;
 			show_all();
+		}
+	}
+
+	public class LinkLabelSetting: ListBoxRow, ActivatableSetting
+	{
+		public Label label { get; construct; }
+		public LinkButton link { get; construct; }
+
+		public LinkLabelSetting(string label, string link_label, string url)
+		{
+			Object(label: new Label(label), link: new LinkButton.with_label(url, link_label), activatable: true, selectable: false);
+		}
+
+		construct
+		{
+			get_style_context().add_class("setting");
+			get_style_context().add_class("label-setting");
+			get_style_context().add_class("link-label-setting");
+
+			label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+			label.halign = Align.START;
+			label.xalign = 0;
+			label.wrap = true;
+
+			link.halign = Align.END;
+			link.can_focus = false;
+
+			var hbox = new Box(Orientation.HORIZONTAL, 12);
+			hbox.add(label);
+			hbox.add(link);
+
+			child = hbox;
+			show_all();
+
+			setting_activated.connect(() => link.activate());
 		}
 	}
 
@@ -191,7 +241,7 @@ namespace GameHub.UI.Widgets.Settings
 		public EntrySetting(string title, string? description = null, Entry text_entry, string? value = null)
 		{
 			Object(title: title, description: description, widget: text_entry, activatable: false, selectable: false);
-			entry.text = value;
+			if(value != null) entry.text = value;
 		}
 
 		public EntrySetting.bind(string title, string? description = null, Entry text_entry, Object target, string prop, BindingFlags flags = BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL)
@@ -284,6 +334,62 @@ namespace GameHub.UI.Widgets.Settings
 		construct
 		{
 			get_style_context().add_class("file-setting");
+		}
+	}
+
+	public class DirectoriesMenuSetting: BaseSetting
+	{
+		public MenuButton? button { get { return widget as MenuButton; } }
+		public ArrayList<File> directories { get; construct; }
+
+		public DirectoriesMenuSetting(string title, string? description = null, ArrayList<File> directories)
+		{
+			Object(title: title, description: description, widget: new MenuButton(), directories: directories, activatable: true, selectable: false);
+		}
+
+		public DirectoriesMenuSetting.paths(string title, string? description = null, ArrayList<string> paths)
+		{
+			var directories = new ArrayList<File>();
+			foreach(var path in paths)
+			{
+				directories.add(FS.file(path));
+			}
+			Object(title: title, description: description, widget: new MenuButton(), directories: directories, activatable: true, selectable: false);
+		}
+
+		construct
+		{
+			get_style_context().add_class("directories-menu-setting");
+
+			button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			button.can_focus = false;
+
+			var menu = new Gtk.Menu();
+			menu.reserve_toggle_size = false;
+			menu.halign = Align.END;
+
+			foreach(var dir in directories)
+			{
+				var dir_item = new Gtk.MenuItem.with_label(dir.get_path());
+				if(dir.query_exists())
+				{
+					dir_item.activate.connect(() => {
+						Utils.open_uri(dir.get_uri());
+					});
+				}
+				else
+				{
+					dir_item.sensitive = false;
+				}
+				menu.add(dir_item);
+			}
+
+			menu.show_all();
+			button.popup = menu;
+
+			setting_activated.connect(() => {
+				button.clicked();
+			});
 		}
 	}
 }

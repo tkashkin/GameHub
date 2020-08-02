@@ -148,16 +148,11 @@ namespace GameHub.UI.Widgets.Tweaks
 				var presets_list = new ListBox();
 				presets_list.get_style_context().add_class("presets-list");
 				presets_list.selection_mode = SelectionMode.NONE;
+				presets_list.activate_on_single_click = true;
 
 				presets_scrolled.add(presets_list);
 				presets_vbox.add(presets_title);
 				presets_vbox.add(presets_scrolled);
-
-				presets_list.row_activated.connect(r => {
-					var row = (PresetRow) r;
-					row.selected = true;
-					select_preset(row.preset);
-				});
 
 				RadioButton? prev_radio = null;
 				foreach(var preset in option.presets)
@@ -165,6 +160,9 @@ namespace GameHub.UI.Widgets.Tweaks
 					var row = new PresetRow(preset, prev_radio);
 					presets_list.add(row);
 					prev_radio = row.radio;
+					row.notify["selected"].connect(() => {
+						if(row.selected) select_preset(row.preset);
+					});
 				}
 
 				if(has_values_list || has_string_value)
@@ -172,7 +170,12 @@ namespace GameHub.UI.Widgets.Tweaks
 					var row = new PresetRow(null, prev_radio);
 					presets_list.add(row);
 					prev_radio = row.radio;
+					row.notify["selected"].connect(() => {
+						if(row.selected) select_preset(row.preset);
+					});
 				}
+
+				presets_list.row_activated.connect(r => ((PresetRow) r).toggle());
 
 				option_details_vbox.add(presets_vbox);
 			}
@@ -199,21 +202,20 @@ namespace GameHub.UI.Widgets.Tweaks
 				values_list = new ListBox();
 				values_list.get_style_context().add_class("values-list");
 				values_list.selection_mode = SelectionMode.NONE;
+				values_list.activate_on_single_click = true;
 
 				values_scrolled.add(values_list);
 				values_vbox.add(values_title);
 				values_vbox.add(values_scrolled);
 
-				values_list.row_activated.connect(r => {
-					var row = (ValueRow) r;
-					row.selected = !row.selected;
-					update_option_value();
-				});
-
 				foreach(var value in option.values.entries)
 				{
-					values_list.add(new ValueRow(value.key, value.value));
+					var row = new ValueRow(value.key, value.value);
+					values_list.add(row);
+					row.notify["selected"].connect(update_option_value);
 				}
+
+				values_list.row_activated.connect(r => ((ValueRow) r).toggle());
 
 				option_details_vbox.add(values_vbox);
 			}
@@ -361,7 +363,6 @@ namespace GameHub.UI.Widgets.Tweaks
 				grid.hexpand = true;
 				grid.valign = Align.CENTER;
 
-				radio.set_events(0);
 				radio.can_focus = false;
 				radio.valign = Align.CENTER;
 
@@ -395,6 +396,11 @@ namespace GameHub.UI.Widgets.Tweaks
 
 				child = grid;
 			}
+
+			public void toggle()
+			{
+				radio.clicked();
+			}
 		}
 
 		private class ValueRow: ListBoxRow
@@ -403,6 +409,8 @@ namespace GameHub.UI.Widgets.Tweaks
 			public string description { get; construct; }
 
 			public bool selected { get; set; }
+
+			private CheckButton check;
 
 			public ValueRow(string value, string description)
 			{
@@ -418,10 +426,9 @@ namespace GameHub.UI.Widgets.Tweaks
 				grid.hexpand = true;
 				grid.valign = Align.CENTER;
 
-				var selected = new CheckButton();
-				selected.set_events(0);
-				selected.can_focus = false;
-				selected.valign = Align.CENTER;
+				check = new CheckButton();
+				check.can_focus = false;
+				check.valign = Align.CENTER;
 
 				var title = new Label(this.value);
 				title.get_style_context().add_class("title");
@@ -440,11 +447,16 @@ namespace GameHub.UI.Widgets.Tweaks
 				description.xalign = 0;
 
 				grid.attach(description, 0, 1);
-				grid.attach(selected, 1, 0, 1, 2);
+				grid.attach(check, 1, 0, 1, 2);
 
-				bind_property("selected", selected, "active", BindingFlags.SYNC_CREATE);
+				bind_property("selected", check, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
 				child = grid;
+			}
+
+			public void toggle()
+			{
+				check.clicked();
 			}
 		}
 	}
