@@ -51,9 +51,18 @@ namespace GameHub.UI.Widgets.Tweaks
 
 			if(tweaks != null && tweaks.size > 0)
 			{
-				foreach(var group in tweaks.entries)
+				var tab_names = new ArrayList<string?>();
+				tab_names.add_all(tweaks.keys);
+				tab_names.sort((first, second) => {
+					if(first == null && second == null) return 0;
+					if(first != null && second == null) return -1;
+					if(first == null && second != null) return 1;
+					return first.collate(second);
+				});
+
+				foreach(var tab_name in tab_names)
 				{
-					var tab = new TweakGroupTab(game, compat_tool, group.key ?? _("Ungrouped"), group.value);
+					var tab = new TweakGroupTab(game, compat_tool, tab_name ?? _("Ungrouped"), tweaks[tab_name]);
 					append_page(tab, new Label(tab.group));
 				}
 				show_tabs = tweaks.size > 1;
