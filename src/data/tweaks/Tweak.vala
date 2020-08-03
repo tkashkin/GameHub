@@ -30,6 +30,7 @@ namespace GameHub.Data.Tweaks
 		public string? description { get; protected set; default = null; }
 		public string? group { get; protected set; default = null; }
 		public string? url { get; protected set; default = null; }
+		public string? icon_name { get; protected set; default = null; }
 
 		public ApplicabilityOptions? applicability_options { get; protected set; default = null; }
 		public Requirements? requirements { get; protected set; default = null; }
@@ -40,9 +41,9 @@ namespace GameHub.Data.Tweaks
 		public string? command { get; protected set; default = null; }
 		public File? file { get; protected set; default = null; }
 
-		public Tweak(string id, string? name, string? description, string? group, string? url, ApplicabilityOptions? applicability_options, Requirements? requirements, ArrayList<Option>? options, HashMap<string, string?>? env, string? command, File? file)
+		public Tweak(string id, string? name, string? description, string? group, string? url, string? icon_name, ApplicabilityOptions? applicability_options, Requirements? requirements, ArrayList<Option>? options, HashMap<string, string?>? env, string? command, File? file)
 		{
-			Object(id: id, name: name, description: description, group: group, url: url, applicability_options: applicability_options, requirements: requirements, options: options, env: env, command: command, file: file);
+			Object(id: id, name: name, description: description, group: group, url: url, icon_name: icon_name, applicability_options: applicability_options, requirements: requirements, options: options, env: env, command: command, file: file);
 		}
 
 		public Tweak.from_json_object(Json.Object obj, File? file, string? default_id=null)
@@ -52,6 +53,7 @@ namespace GameHub.Data.Tweaks
 			string? description = null;
 			string? group = null;
 			string? url = null;
+			string? icon_name = null;
 			ApplicabilityOptions? applicability_options = null;
 			Requirements? requirements = null;
 			ArrayList<Option>? options = null;
@@ -63,6 +65,7 @@ namespace GameHub.Data.Tweaks
 			if(obj.has_member("description")) description = obj.get_string_member("description");
 			if(obj.has_member("group")) group = obj.get_string_member("group");
 			if(obj.has_member("url")) url = obj.get_string_member("url");
+			if(obj.has_member("icon")) icon_name = obj.get_string_member("icon");
 
 			if(obj.has_member("applicable_to"))
 			{
@@ -107,7 +110,7 @@ namespace GameHub.Data.Tweaks
 				command = obj.get_string_member("command");
 			}
 
-			Object(id: id, name: name, description: description, group: group, url: url, applicability_options: applicability_options, requirements: requirements, options: options, env: env, command: command, file: file);
+			Object(id: id, name: name, description: description, group: group, url: url, icon_name: icon_name, applicability_options: applicability_options, requirements: requirements, options: options, env: env, command: command, file: file);
 		}
 
 		public static ArrayList<Tweak> load_from_file(File file)
@@ -207,6 +210,10 @@ namespace GameHub.Data.Tweaks
 		{
 			owned get
 			{
+				if(icon_name != null)
+				{
+					return icon_name;
+				}
 				var icon = "gh-settings-cogs-symbolic";
 				if(applicability_options != null)
 				{
@@ -314,6 +321,7 @@ namespace GameHub.Data.Tweaks
 			if(description != null) obj.set_string_member("description", description);
 			if(group != null) obj.set_string_member("group", group);
 			if(url != null) obj.set_string_member("url", url);
+			if(icon_name != null) obj.set_string_member("icon", icon_name);
 
 			if(applicability_options != null)
 			{

@@ -45,6 +45,9 @@
 
 		<file alias="scalable/actions/gamehub-symbolic.svg">symbolic/gamehub.svg</file>
 
+		<file alias="scalable/actions/hardware-gpu-amd-symbolic.svg">symbolic/hardware/gpu-amd.svg</file>
+		<file alias="scalable/actions/hardware-gpu-nvidia-symbolic.svg">symbolic/hardware/gpu-nvidia.svg</file>
+
 		<file alias="scalable/actions/controller-button-a.svg">normal/controller/a.svg</file>
 		<file alias="scalable/actions/controller-button-b.svg">normal/controller/b.svg</file>
 		<file alias="scalable/actions/controller-button-x.svg">normal/controller/x.svg</file>

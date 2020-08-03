@@ -256,7 +256,7 @@ namespace GameHub.Data.Compat
 		protected virtual string[] prepare_env(Traits.SupportsCompatTools runnable, bool parse_opts=true)
 		{
 			var env = Environ.get();
-			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mshtml=d;winemenubuilder.exe=d");
+			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mscoree=d;mshtml=d;winemenubuilder.exe=d");
 
 			if(wine_binary != null && wine_binary.query_exists())
 			{

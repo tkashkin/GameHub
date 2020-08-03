@@ -60,15 +60,6 @@ namespace GameHub.UI.Widgets.Tweaks
 			name.xalign = 0;
 			name.valign = Align.CENTER;
 
-			var description = new Label(tweak.description ?? _("No description"));
-			description.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-			description.get_style_context().add_class("description");
-			description.tooltip_text = tweak.description;
-			description.hexpand = true;
-			description.ellipsize = Pango.EllipsizeMode.END;
-			description.xalign = 0;
-			description.valign = Align.CENTER;
-
 			var install = new Button.with_label(_("Install"));
 			install.valign = Align.CENTER;
 			install.sensitive = false;
@@ -81,10 +72,26 @@ namespace GameHub.UI.Widgets.Tweaks
 			buttons_hbox.valign = Align.CENTER;
 
 			grid.attach(icon, 0, 0, 1, 2);
-			grid.attach(name, 1, 0);
-			grid.attach(description, 1, 1);
 			grid.attach(buttons_hbox, 2, 0, 1, 2);
 			grid.attach(enabled, 4, 0, 1, 2);
+
+			if(tweak.description != null)
+			{
+				var description = new Label(tweak.description);
+				description.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
+				description.get_style_context().add_class("description");
+				description.tooltip_text = tweak.description;
+				description.hexpand = true;
+				description.ellipsize = Pango.EllipsizeMode.END;
+				description.xalign = 0;
+				description.valign = Align.CENTER;
+				grid.attach(name, 1, 0);
+				grid.attach(description, 1, 1);
+			}
+			else
+			{
+				grid.attach(name, 1, 0, 1, 2);
+			}
 
 			if(tweak.url != null)
 			{
@@ -116,7 +123,6 @@ namespace GameHub.UI.Widgets.Tweaks
 			if(tweak.options != null && tweak.options.size > 0)
 			{
 				var options_popover = new TweakOptionsPopover(tweak);
-
 				options = new MenuButton();
 				options.tooltip_text = _("Options");
 				options.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
@@ -162,8 +168,13 @@ namespace GameHub.UI.Widgets.Tweaks
 				enabled.sensitive = false;
 				enabled.active = false;
 				activatable = false;
-				icon.icon_name = "action-unavailable-symbolic";
-				icon.tooltip_markup = enabled.tooltip_markup = string.joinv("\n", reqs).strip();
+				name.sensitive = false;
+				tooltip_markup = string.joinv("\n", reqs).strip();
+				icon.opacity = 0.6;
+				if(icon.icon_name == "gh-settings-cogs-symbolic")
+				{
+					icon.icon_name = "action-unavailable-symbolic";
+				}
 			}
 			else
 			{
