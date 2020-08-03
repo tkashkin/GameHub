@@ -239,58 +239,64 @@ namespace GameHub.Data.Tweaks
 			}
 		}
 
-		private static HashMap<string, Tweak>? tweaks = null;
+		private static HashMap<string, Tweak>? cached_tweaks = null;
 		public static HashMap<string, Tweak> load_tweaks(bool refresh=false)
 		{
-			if(tweaks != null && tweaks.size > 0 && !refresh)
+			if(cached_tweaks != null && cached_tweaks.size > 0 && !refresh)
 			{
-				return tweaks;
+				return cached_tweaks;
 			}
 
-			tweaks = new HashMap<string, Tweak>();
+			cached_tweaks = new HashMap<string, Tweak>();
 
 			foreach(var data_dir in FS.get_data_dirs("tweaks"))
 			{
-				if(GameHub.Application.log_verbose)
+				var dir_tweaks = load_tweaks_recursive(data_dir);
+				if(dir_tweaks != null && dir_tweaks.size > 0)
 				{
-					debug("[Tweak.load_tweaks] Directory: '%s'", data_dir.get_path());
-				}
-
-				try
-				{
-					FileInfo? finfo = null;
-					var enumerator = data_dir.enumerate_children("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
-					while((finfo = enumerator.next_file()) != null)
+					foreach(var tweak in dir_tweaks)
 					{
-						var fname = finfo.get_name();
-						if(fname.down().has_suffix(".json"))
-						{
-							var file = data_dir.get_child(fname);
-							var loaded_tweaks = load_from_file(file);
-
-							if(GameHub.Application.log_verbose)
-							{
-								debug("[Tweak.load_tweaks] File: '%s'; %d tweak(s):", file.get_path(), loaded_tweaks.size);
-							}
-
-							foreach(var tweak in loaded_tweaks)
-							{
-								tweaks.set(tweak.id, tweak);
-
-								if(GameHub.Application.log_verbose)
-								{
-									debug("[Tweak.load_tweaks] %s", Json.to_string(new Json.Node(Json.NodeType.OBJECT).init_object(tweak.to_json()), false));
-								}
-							}
-						}
+						cached_tweaks.set(tweak.id, tweak);
 					}
-				}
-				catch(Error e)
-				{
-					warning("[Tweak.load_tweaks] %s", e.message);
 				}
 			}
 
+			return cached_tweaks;
+		}
+
+		private static ArrayList<Tweak>? load_tweaks_recursive(File directory)
+		{
+			var tweaks = new ArrayList<Tweak>();
+			try
+			{
+				FileInfo? finfo = null;
+				var enumerator = directory.enumerate_children("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+				while((finfo = enumerator.next_file()) != null)
+				{
+					var fname = finfo.get_name();
+					var file = directory.get_child(fname);
+					if(finfo.get_file_type() == FileType.DIRECTORY)
+					{
+						var subdir_tweaks = load_tweaks_recursive(file);
+						if(subdir_tweaks != null && subdir_tweaks.size > 0)
+						{
+							tweaks.add_all(subdir_tweaks);
+						}
+					}
+					else if(fname.down().has_suffix(".json"))
+					{
+						var file_tweaks = load_from_file(file);
+						if(file_tweaks != null && file_tweaks.size > 0)
+						{
+							tweaks.add_all(file_tweaks);
+						}
+					}
+				}
+			}
+			catch(Error e)
+			{
+				warning("[Tweak.load_tweaks_recursive] Error while loading tweaks from '%s': %s", directory.get_path(), e.message);
+			}
 			return tweaks;
 		}
 
