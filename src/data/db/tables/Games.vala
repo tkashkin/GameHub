@@ -282,6 +282,35 @@ namespace GameHub.Data.DB.Tables
 			return true;
 		}
 
+
+		public static new Game? getByName(string name)
+		{
+			if(name == null) return null;
+
+			unowned Sqlite.Database? db = Database.instance.db;
+			if(db == null) return null;
+
+			Statement st;
+			int res;
+
+			res = db.prepare_v2("SELECT source, id FROM `games` WHERE `name` = ?", -1, out st);
+			res = st.bind_text(1, name);
+
+			if(res != Sqlite.OK)
+			{
+				warning("[Database.Games.get] Can't prepare SELECT query (%d): %s", db.errcode(), db.errmsg());
+				return null;
+			}
+
+			if((res = st.step()) == Sqlite.ROW)
+			{
+				string src = SOURCE.get(st);
+				string id = ID.get(st);
+				return get(src, id);
+			}
+			return null;
+		}
+
 		public static new Game? get(string src, string id)
 		{
 			if(src == null || id == null) return null;

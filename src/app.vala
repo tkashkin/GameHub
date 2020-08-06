@@ -142,6 +142,16 @@ namespace GameHub
 			}
 			return null;
 		}
+
+		public void gamerzilla_access(string short_name, string name)
+		{
+			var game = GameHub.Data.DB.Tables.Games.getByName(name);
+			if (game != null)
+			{
+				game.gamerzilla_name = short_name;
+				game.save();
+			}
+		}
 		#endif
 
 		private void init()
@@ -217,6 +227,7 @@ namespace GameHub
 				{
 					Gamerzilla.connect(gamerzilla.url, gamerzilla.username, gamerzilla.password);
 				}
+				Gamerzilla.listen(gamerzilla_access);
 				try {
 					Thread<void*> thread = new Thread<void*>.try("Gamerzilla Thread.", gamerzilla_thread);
 					debug("Starting gamerzilla");
