@@ -116,7 +116,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 
 			enable_btn = new Button.with_label(_("Enable overlays"));
 			enable_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
-			enable_btn.grab_default();
+			//enable_btn.grab_default();
 
 			/*response.connect((source, response_id) => {
 				switch(response_id)

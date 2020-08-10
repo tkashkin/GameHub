@@ -32,14 +32,14 @@ namespace GameHub.UI.Widgets.Tweaks
 	public class TweakRow: ListBoxRow, ActivatableSetting
 	{
 		public Tweak tweak { get; construct; }
-		public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
+		public TweakSet tweakset { get; construct; }
 
-		public Tweak.Requirements? unavailable_reqs { get; private set; }
+		public Requirements? unavailable_reqs { get; private set; }
 		public bool is_available { get { return unavailable_reqs == null; } }
 
-		public TweakRow(Tweak tweak, Traits.Game.SupportsTweaks? game=null)
+		public TweakRow(Tweak tweak, TweakSet tweakset)
 		{
-			Object(tweak: tweak, game: game, activatable: true, selectable: false);
+			Object(tweak: tweak, tweakset: tweakset, activatable: true, selectable: false);
 		}
 
 		construct
@@ -65,7 +65,7 @@ namespace GameHub.UI.Widgets.Tweaks
 			install.sensitive = false;
 
 			var enabled = new Switch();
-			enabled.active = tweak.is_enabled(game);
+			enabled.active = tweakset.is_enabled(tweak.id);
 			enabled.valign = Align.CENTER;
 
 			var buttons_hbox = new Box(Orientation.HORIZONTAL, 0);
@@ -122,7 +122,7 @@ namespace GameHub.UI.Widgets.Tweaks
 			MenuButton? options = null;
 			if(tweak.options != null && tweak.options.size > 0)
 			{
-				var options_popover = new TweakOptionsPopover(tweak);
+				var options_popover = new TweakOptionsPopover(tweak, tweakset);
 				options = new MenuButton();
 				options.tooltip_text = _("Options");
 				options.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
@@ -178,8 +178,18 @@ namespace GameHub.UI.Widgets.Tweaks
 			}
 			else
 			{
+				if(!tweakset.is_global && tweakset.get_or_create_options(tweak).state == TweakOptions.State.GLOBAL)
+				{
+					enabled.opacity = 0.6;
+					enabled.tooltip_text = enabled.active ? _("Enabled globally") : _("Disabled globally");
+				}
+
 				enabled.notify["active"].connect(() => {
-					tweak.set_enabled(enabled.active, game);
+					var tweak_opts = tweakset.get_or_create_options(tweak);
+					tweak_opts.state = enabled.active ? TweakOptions.State.ENABLED : TweakOptions.State.DISABLED;
+					tweakset.set_options_for_tweak(tweak, tweak_opts);
+					enabled.opacity = 1;
+					enabled.tooltip_text = null;
 				});
 				setting_activated.connect(() => {
 					enabled.activate();

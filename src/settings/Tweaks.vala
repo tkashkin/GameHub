@@ -16,13 +16,14 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
+using GameHub.Data.Tweaks;
+using GameHub.Utils;
 
 namespace GameHub.Settings
 {
 	public class Tweaks: SettingsSchema
 	{
-		public string[] global { get; set; }
+		public string global { get; set; }
 
 		public Tweaks()
 		{
@@ -39,6 +40,22 @@ namespace GameHub.Settings
 					_instance = new Tweaks();
 				}
 				return _instance;
+			}
+		}
+
+		private static TweakSet? _global_tweakset;
+		public static unowned TweakSet global_tweakset
+		{
+			get
+			{
+				if(_global_tweakset == null)
+				{
+					_global_tweakset = new TweakSet.from_json(true, Parser.parse_json(instance.global));
+					_global_tweakset.changed.connect(() => {
+						instance.global = Json.to_string(_global_tweakset.to_json(), false);
+					});
+				}
+				return _global_tweakset;
 			}
 		}
 	}

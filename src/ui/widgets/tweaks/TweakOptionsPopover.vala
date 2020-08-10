@@ -32,9 +32,11 @@ namespace GameHub.UI.Widgets.Tweaks
 	public class TweakOptionsPopover: Popover
 	{
 		public Tweak tweak { get; construct; }
+		public TweakSet tweakset { get; construct; }
+		public TweakOptions tweak_options { get; construct; }
 
-		private Tweak.Option? selected_option;
-		private Tweak.Option.Preset? selected_preset;
+		private Option? selected_option;
+		private Option.Preset? selected_preset;
 
 		private Box option_details_vbox;
 		private Box? presets_vbox;
@@ -42,9 +44,9 @@ namespace GameHub.UI.Widgets.Tweaks
 		private ListBox? values_list;
 		private Entry? string_value_entry;
 
-		public TweakOptionsPopover(Tweak tweak)
+		public TweakOptionsPopover(Tweak tweak, TweakSet tweakset)
 		{
-			Object(tweak: tweak);
+			Object(tweak: tweak, tweakset: tweakset, tweak_options: tweakset.get_or_create_options(tweak));
 		}
 
 		construct
@@ -118,7 +120,7 @@ namespace GameHub.UI.Widgets.Tweaks
 			select_option(tweak.options.first());
 		}
 
-		private void select_option(Tweak.Option? option)
+		private void select_option(Option? option)
 		{
 			selected_option = option;
 			selected_preset = null;
@@ -132,9 +134,11 @@ namespace GameHub.UI.Widgets.Tweaks
 
 			if(option == null) return;
 
+			var option_properties = tweak_options.get_or_create_properties(option);
+
 			var has_presets = option.presets != null && option.presets.size > 0;
-			var has_values_list = option.option_type == Tweak.Option.Type.LIST && option.values != null && option.values.size > 0;
-			var has_string_value = option.option_type == Tweak.Option.Type.STRING;
+			var has_values_list = option.option_type == Option.Type.LIST && option.values != null && option.values.size > 0;
+			var has_string_value = option.option_type == Option.Type.STRING;
 
 			if(has_presets)
 			{
@@ -162,6 +166,10 @@ namespace GameHub.UI.Widgets.Tweaks
 					row.notify["selected"].connect(() => {
 						if(row.selected) select_preset(row.preset);
 					});
+					if(option_properties.preset == preset)
+					{
+						row.toggle();
+					}
 				}
 
 				if(has_values_list || has_string_value)
@@ -172,10 +180,13 @@ namespace GameHub.UI.Widgets.Tweaks
 					row.notify["selected"].connect(() => {
 						if(row.selected) select_preset(row.preset);
 					});
+					if(option_properties.preset == null)
+					{
+						row.toggle();
+					}
 				}
 
 				presets_list.row_activated.connect(r => ((PresetRow) r).toggle());
-
 				option_details_vbox.add(presets_vbox);
 			}
 
@@ -206,6 +217,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				{
 					var row = new ValueRow(value.key, value.value);
 					values_list.add(row);
+					row.selected = option_properties.selected_values != null && value.key in option_properties.selected_values;
 					row.notify["selected"].connect(update_option_value);
 				}
 
@@ -235,10 +247,12 @@ namespace GameHub.UI.Widgets.Tweaks
 			}
 
 			option_details_vbox.show_all();
+
+			select_preset(option_properties.preset);
 			update_option_value();
 		}
 
-		private void select_preset(Tweak.Option.Preset? preset)
+		private void select_preset(Option.Preset? preset)
 		{
 			selected_preset = preset;
 			if(selected_option != null && values_vbox != null)
@@ -252,55 +266,42 @@ namespace GameHub.UI.Widgets.Tweaks
 		{
 			if(selected_option == null) return;
 
-			warning("[TweakOptionsPopover.update_option_value] Option: '%s'", selected_option.id);
-			warning("[TweakOptionsPopover.update_option_value] Preset: %s", selected_preset != null ? "'%s'".printf(selected_preset.id) : "custom");
+			var properties = new TweakOptions.OptionProperties(selected_option, selected_preset);
 
-			string? value = null;
-
-			if(selected_preset != null)
+			switch(selected_option.option_type)
 			{
-				value = selected_preset.value;
-			}
-			else
-			{
-				switch(selected_option.option_type)
-				{
-					case Tweak.Option.Type.LIST:
-						if(values_list != null)
-						{
-							string[] values = {};
-							values_list.foreach(r => {
-								var row = (ValueRow) r;
-								if(row.selected)
-								{
-									values += row.value;
-								}
-							});
-							value = string.joinv(selected_option.list_separator, values);
-						}
-						break;
-
-					case Tweak.Option.Type.STRING:
-						if(string_value_entry != null)
-						{
-							value = string_value_entry.text;
-							if(selected_option.string_value != null)
+				case Option.Type.LIST:
+					if(values_list != null)
+					{
+						string[] values = {};
+						values_list.foreach(r => {
+							var row = (ValueRow) r;
+							if(row.selected)
 							{
-								value = selected_option.string_value.replace("${value}", value).replace("$value", value);
+								values += row.value;
 							}
-						}
-						break;
-				}
+						});
+						properties.selected_values = values;
+					}
+					break;
+
+				case Option.Type.STRING:
+					if(string_value_entry != null)
+					{
+						properties.string_value = string_value_entry.text;
+					}
+					break;
 			}
 
-			warning("[TweakOptionsPopover.update_option_value] Value:  %s", value != null ? "'%s'".printf(value) : "null");
+			tweak_options.set_properties_for_option(selected_option, properties);
+			tweakset.set_options_for_tweak(tweak, tweak_options);
 		}
 
 		private class OptionRow: ListBoxRow
 		{
-			public Tweak.Option option { get; construct; }
+			public Option option { get; construct; }
 
-			public OptionRow(Tweak.Option option)
+			public OptionRow(Option option)
 			{
 				Object(option: option);
 			}
@@ -338,12 +339,12 @@ namespace GameHub.UI.Widgets.Tweaks
 
 		private class PresetRow: ListBoxRow
 		{
-			public Tweak.Option.Preset? preset { get; construct; }
+			public Option.Preset? preset { get; construct; }
 
 			public bool selected { get; set; }
 			public RadioButton? radio { get; construct; }
 
-			public PresetRow(Tweak.Option.Preset? preset, RadioButton? prev_radio = null)
+			public PresetRow(Option.Preset? preset, RadioButton? prev_radio = null)
 			{
 				Object(preset: preset, radio: new RadioButton.from_widget(prev_radio), selectable: false, activatable: true);
 			}

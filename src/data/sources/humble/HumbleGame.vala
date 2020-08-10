@@ -21,6 +21,8 @@ using Gee;
 using GameHub.Data.DB;
 using GameHub.Data.Runnables;
 using GameHub.Data.Runnables.Tasks.Install;
+using GameHub.Data.Tweaks;
+
 using GameHub.Utils;
 using GameHub.Utils.FS;
 
@@ -45,7 +47,7 @@ namespace GameHub.Data.Sources.Humble
 		protected override string? fs_overlay_last_options { get; set; }
 
 		// Traits.Game.SupportsTweaks
-		public override string[]? tweaks { get; set; default = null; }
+		public override TweakSet? tweaks { get; set; default = null; }
 
 		public string order_id;
 

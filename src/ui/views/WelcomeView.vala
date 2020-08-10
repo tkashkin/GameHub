@@ -80,8 +80,8 @@ namespace GameHub.UI.Views
 			settings.action_name = Application.ACTION_PREFIX + Application.ACTION_SETTINGS;
 
 			ui_settings.notify["symbolic-icons"].connect(() => {
-				(settings.image as Image).icon_name = "open-menu" + Settings.UI.Appearance.symbolic_icon_suffix;
-				(settings.image as Image).icon_size = Settings.UI.Appearance.headerbar_icon_size;
+				((Image) settings.image).icon_name = "open-menu" + Settings.UI.Appearance.symbolic_icon_suffix;
+				((Image) settings.image).icon_size = Settings.UI.Appearance.headerbar_icon_size;
 			});
 
 			empty_alert.action_activated.connect(() => settings.clicked());

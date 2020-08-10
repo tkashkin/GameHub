@@ -111,6 +111,11 @@ sources = [
 	'data/providers/data/IGDB.vala',
 
 	'data/tweaks/Tweak.vala',
+	'data/tweaks/Option.vala',
+	'data/tweaks/ApplicabilityOptions.vala',
+	'data/tweaks/Requirements.vala',
+	'data/tweaks/TweakOptions.vala',
+	'data/tweaks/TweakSet.vala',
 
 	'ui/windows/MainWindow.vala',
 	'ui/windows/WebAuthWindow.vala',
@@ -121,6 +126,7 @@ sources = [
 	'ui/dialogs/SettingsDialog/pages/ui/Appearance.vala',
 	'ui/dialogs/SettingsDialog/pages/ui/Behavior.vala',
 	'ui/dialogs/SettingsDialog/pages/general/Collection.vala',
+	'ui/dialogs/SettingsDialog/pages/general/CompatTools.vala',
 	'ui/dialogs/SettingsDialog/pages/general/Tweaks.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Steam.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/GOG.vala',
@@ -138,6 +144,7 @@ sources = [
 
 	'ui/dialogs/GamePropertiesDialog/GamePropertiesDialog.vala',
 	'ui/dialogs/GamePropertiesDialog/tabs/General.vala',
+	'ui/dialogs/GamePropertiesDialog/tabs/Tweaks.vala',
 	'ui/dialogs/GamePropertiesDialog/tabs/Overlays.vala',
 
 	'ui/dialogs/GameDetailsDialog.vala',
@@ -192,6 +199,8 @@ sources = [
 	'ui/widgets/Welcome.vala',
 	'ui/widgets/DirectoriesList.vala',
 
+	'ui/widgets/compat/CompatToolsList.vala',
+
 	'ui/widgets/settings/SettingsSidebar.vala',
 	'ui/widgets/settings/SettingsGroup.vala',
 	'ui/widgets/settings/Settings.vala',
@@ -201,6 +210,8 @@ sources = [
 	'ui/widgets/tweaks/TweakOptionsPopover.vala',
 
 	'utils/Utils.vala',
+	'utils/ExecTask.vala',
+	'utils/OS.vala',
 
 	'utils/fs/FS.vala',
 	'utils/fs/FSOverlay.vala',

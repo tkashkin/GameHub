@@ -123,7 +123,7 @@ namespace GameHub.Data.Runnables.Traits
 
 			yield pre_run();
 
-			yield prepare_run_task().run_sync_thread();
+			yield prepare_exec_task().sync_thread();
 
 			yield post_run();
 
@@ -149,7 +149,7 @@ namespace GameHub.Data.Runnables.Traits
 			return variables;
 		}
 
-		protected virtual RunTask prepare_run_task()
+		protected virtual ExecTask prepare_exec_task()
 		{
 			string[] cmd = _cmdline;
 			string[] full_cmd = cmd;
@@ -185,7 +185,7 @@ namespace GameHub.Data.Runnables.Traits
 				}
 			}
 
-			var task = Utils.run(full_cmd).override_runtime(true);
+			var task = Utils.exec(full_cmd).override_runtime(true);
 			if(work_dir != null && work_dir.query_exists()) task.dir(work_dir.get_path());
 
 			return task;

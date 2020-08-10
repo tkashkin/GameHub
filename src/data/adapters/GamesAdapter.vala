@@ -91,10 +91,10 @@ namespace GameHub.Data.Adapters
 			if(this.grid != null)
 			{
 				this.grid.set_filter_func(c => {
-					return filter((c as GameCard).game);
+					return filter(((GameCard) c).game);
 				});
 				this.grid.set_sort_func((c, c2) => {
-					return sort((c as GameCard).game, (c2 as GameCard).game);
+					return sort(((GameCard) c).game, ((GameCard) c2).game);
 				});
 				add_cached_views(false);
 			}
@@ -106,10 +106,10 @@ namespace GameHub.Data.Adapters
 			if(this.list != null)
 			{
 				this.list.set_filter_func(r => {
-					return filter((r as GameListRow).game);
+					return filter(((GameListRow) r).game);
 				});
 				this.list.set_sort_func((r, r2) => {
-					return sort((r as GameListRow).game, (r2 as GameListRow).game);
+					return sort(((GameListRow) r).game, ((GameListRow) r2).game);
 				});
 				this.list.set_header_func(list_header);
 				add_cached_views(false);

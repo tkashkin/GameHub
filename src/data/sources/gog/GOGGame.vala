@@ -21,6 +21,8 @@ using Gee;
 using GameHub.Data.DB;
 using GameHub.Data.Runnables;
 using GameHub.Data.Runnables.Tasks.Install;
+using GameHub.Data.Tweaks;
+
 using GameHub.Utils;
 using GameHub.Utils.FS;
 
@@ -51,7 +53,7 @@ namespace GameHub.Data.Sources.GOG
 		protected override string? fs_overlay_last_options { get; set; }
 
 		// Traits.Game.SupportsTweaks
-		public override string[]? tweaks { get; set; default = null; }
+		public override TweakSet? tweaks { get; set; default = null; }
 
 		public ArrayList<BonusContent>? bonus_content { get; protected set; default = null; }
 		public ArrayList<DLC>? dlc { get; protected set; default = null; }
@@ -316,7 +318,7 @@ namespace GameHub.Data.Sources.GOG
 				{
 					uninstaller = FS.expand(install_dir.get_path(), uninstaller);
 					debug("[GOGGame] Running uninstaller '%s'...", uninstaller);
-					yield Utils.run({uninstaller, "--noprompt", "--force"}).override_runtime(true).run_sync_thread();
+					yield Utils.exec({uninstaller, "--noprompt", "--force"}).override_runtime(true).sync_thread();
 				}
 				else
 				{

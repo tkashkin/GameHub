@@ -141,7 +141,7 @@ namespace GameHub.Data.Compat
 		private static bool is_dos_executable(File? file)
 		{
 			if(file == null || !file.query_exists()) return false;
-			var type = Utils.run({"file", "-b", file.get_path()}).log(false).run_sync(true).output;
+			var type = Utils.exec({"file", "-b", file.get_path()}).log(false).sync(true).output;
 			if(type != null && type.length > 0)
 			{
 				return "DOS" in type;
@@ -216,11 +216,11 @@ namespace GameHub.Data.Compat
 				wdir = bundled_win_dosbox.get_parent();
 			}
 
-			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(wdir.get_path());
+			var task = Utils.exec(combine_cmd_with_args(cmd, runnable)).dir(wdir.get_path());
 			runnable.cast<Traits.Game.SupportsTweaks>(game => {
 				task.tweaks(game.get_enabled_tweaks(this));
 			});
-			yield task.run_sync_thread();
+			yield task.sync_thread();
 		}
 	}
 }

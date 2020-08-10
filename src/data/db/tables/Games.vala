@@ -220,7 +220,7 @@ namespace GameHub.Data.DB.Tables
 			game.cast<Traits.Game.SupportsTweaks>(game => {
 				if(game.tweaks != null)
 				{
-					tweaks = string.joinv(",", game.tweaks);
+					tweaks = Json.to_string(game.tweaks.to_json(), false);
 				}
 			});
 

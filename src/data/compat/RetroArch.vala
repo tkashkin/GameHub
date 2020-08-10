@@ -117,7 +117,7 @@ namespace GameHub.Data.Compat
 
 			string[] cmd = { executable.get_path(), "-L", core, runnable.executable.get_path() };
 
-			yield Utils.run(combine_cmd_with_args(cmd, runnable)).dir(runnable.work_dir.get_path()).run_sync_thread();
+			yield Utils.exec(combine_cmd_with_args(cmd, runnable)).dir(runnable.work_dir.get_path()).sync_thread();
 		}
 	}
 }

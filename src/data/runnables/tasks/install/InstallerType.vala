@@ -41,7 +41,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			var type = yield guess_from_mime_or_extension(file, can_be_data);
 			if(type == InstallerType.WINDOWS_EXECUTABLE)
 			{
-				var desc = Utils.run({"file", "-b", file.get_path()}).log(false).run_sync(true).output;
+				var desc = Utils.exec({"file", "-b", file.get_path()}).log(false).sync(true).output;
 				if(desc != null && DESC_NSIS_INSTALLER in desc)
 				{
 					return InstallerType.WINDOWS_NSIS_INSTALLER;
@@ -61,7 +61,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 
 				if(type != null) return type;
 
-				var info = Utils.run({"file", "-bi", file.get_path()}).log(false).run_sync(true).output;
+				var info = Utils.exec({"file", "-bi", file.get_path()}).log(false).sync(true).output;
 				if(info != null)
 				{
 					mime = info.split(";")[0];

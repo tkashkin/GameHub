@@ -244,7 +244,7 @@ namespace GameHub.Utils.FS
 
 	public static void rm(string path, string? file=null, string flags="-f", HashMap<string, string>? variables=null)
 	{
-		Utils.run({"bash", "-c", "rm " + flags + " " + expand(path, file, variables).replace(" ", "\\ ")}).run_sync();
+		Utils.exec({"bash", "-c", "rm " + flags + " " + expand(path, file, variables).replace(" ", "\\ ")}).sync();
 	}
 
 	public static void mv_up(File? path, string dirname)

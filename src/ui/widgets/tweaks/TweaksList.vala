@@ -98,7 +98,7 @@ namespace GameHub.UI.Widgets.Tweaks
 					{
 						if(game == null || tweak.is_applicable_to(game, compat_tool))
 						{
-							tweaks_list.add(new TweakRow(tweak, game));
+							tweaks_list.add(new TweakRow(tweak, game == null ? GameHub.Settings.Tweaks.global_tweakset : game.tweaks));
 						}
 					}
 				}

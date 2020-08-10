@@ -86,7 +86,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_install(Traits.SupportsCompatTools runnable, InstallTask task)
 		{
-			return installed && runnable != null && runnable is GOGGame && wrappers.has_key(runnable.id);
+			return can_run(runnable);
 		}
 
 		public override async void install(Traits.SupportsCompatTools runnable, InstallTask task, File installer)
@@ -107,7 +107,7 @@ namespace GameHub.Data.Compat
 				if(wrapper == null || !wrapper.query_exists()) return;
 
 				string[] cmd = { "tar", "xf", wrapper.get_path(), "-C", wrapper_dir.get_path(), "--strip-components=1" };
-				yield Utils.run(cmd).dir(wrapper_dir.get_path()).run_sync_thread();
+				yield Utils.exec(cmd).dir(wrapper_dir.get_path()).sync_thread();
 
 				var winewrap_env = Environ.get();
 				winewrap_env = Environ.set_variable(winewrap_env, "WINEWRAP_RESPATH", installer.get_parent().get_path());
@@ -116,8 +116,8 @@ namespace GameHub.Data.Compat
 
 				FS.rm(runnable.install_dir.get_path(), null, "-rf");
 
-				cmd = { "bash", "-c", "./*_wine.sh -dirname=" + (runnable as GOGGame).name_escaped };
-				yield Utils.run(cmd).dir(wrapper_dir.get_path()).env(winewrap_env).run_sync_thread();
+				cmd = { "bash", "-c", "./*_wine.sh -dirname=" + runnable.name_escaped };
+				yield Utils.exec(cmd).dir(wrapper_dir.get_path()).env(winewrap_env).sync_thread();
 
 				runnable.executable = runnable.install_dir.get_child("start.sh");
 			}
@@ -129,7 +129,7 @@ namespace GameHub.Data.Compat
 
 		public override bool can_run(Traits.SupportsCompatTools runnable)
 		{
-			return can_install(runnable, null) || runnable.compat_tool == id;
+			return installed && runnable != null && runnable is GOGGame && wrappers.has_key(runnable.id);
 		}
 
 		public override async void run(Traits.SupportsCompatTools runnable)
@@ -143,11 +143,11 @@ namespace GameHub.Data.Compat
 
 			string[] cmd = { runnable.install_dir.get_child("start.sh").get_path(), action };
 
-			var task = Utils.run(combine_cmd_with_args(cmd, runnable)).dir(runnable.work_dir.get_path());
+			var task = Utils.exec(combine_cmd_with_args(cmd, runnable)).dir(runnable.work_dir.get_path());
 			runnable.cast<Traits.Game.SupportsTweaks>(game => {
 				task.tweaks(game.get_enabled_tweaks(this));
 			});
-			yield task.run_sync_thread();
+			yield task.sync_thread();
 		}
 	}
 }

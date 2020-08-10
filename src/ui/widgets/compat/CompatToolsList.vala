@@ -16,40 +16,39 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Gtk;
+using Gdk;
 using Gee;
 
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
+
 using GameHub.Data;
-using GameHub.Data.DB;
 using GameHub.Data.Tweaks;
 using GameHub.Data.Runnables;
-using GameHub.Utils;
 
-namespace GameHub.Data.Runnables.Traits.Game
+namespace GameHub.UI.Widgets.Compat
 {
-	public interface SupportsTweaks: Runnables.Game
+	public class CompatToolsList: Notebook
 	{
-		public abstract TweakSet? tweaks { get; set; default = null; }
+		public Runnable? runnable { get; construct; default = null; }
 
-		protected void dbinit_tweaks(Sqlite.Statement s)
+		public CompatToolsList(Runnable? runnable = null)
 		{
-			tweaks = new TweakSet.from_json(false, Parser.parse_json(Tables.Games.TWEAKS.get(s)));
-			tweaks.changed.connect(() => {
-				save();
-			});
+			Object(runnable: runnable, show_border: false, expand: true, scrollable: true);
 		}
 
-		public Tweak[] get_enabled_tweaks(CompatTool? tool=null)
+		construct
 		{
-			Tweak[] enabled_tweaks = {};
-			var all_tweaks = Tweak.load_tweaks();
-			foreach(var tweak in all_tweaks.values)
-			{
-				if(tweaks.is_enabled(tweak.id) && tweak.is_applicable_to(this, tool))
-				{
-					enabled_tweaks += tweak;
-				}
-			}
-			return enabled_tweaks;
+			update();
+		}
+
+		private void update()
+		{
+			this.foreach(w => w.destroy());
+
+			append_page(new Box(Orientation.VERTICAL, 0), new Label("Wine"));
+			append_page(new Box(Orientation.VERTICAL, 0), new Label("Proton"));
 		}
 	}
 }

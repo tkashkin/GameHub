@@ -81,7 +81,7 @@ namespace GameHub.Data.Compat
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
 			{
-				var task = Utils.run({ script.get_path() }).dir(runnable.install_dir.get_path());
+				var task = Utils.exec({ script.get_path() }).dir(runnable.install_dir.get_path());
 
 				runnable.cast<Game>(game => {
 					task.env_var("GH_INSTALL_DIR", game.install_dir.get_path())
@@ -107,7 +107,7 @@ namespace GameHub.Data.Compat
 				runnable.cast<Traits.Game.SupportsTweaks>(game => {
 					task.tweaks(game.get_enabled_tweaks(this));
 				});
-				yield task.run_sync_thread();
+				yield task.sync_thread();
 			}
 			else
 			{
@@ -122,17 +122,17 @@ namespace GameHub.Data.Compat
 			var script = gh_dir.get_child(SCRIPT);
 			if(script.query_exists())
 			{
-				Utils.run({"chmod", "+x", script.get_path()}).run_sync();
+				Utils.exec({"chmod", "+x", script.get_path()}).sync();
 				var executable_path = emu.executable != null ? emu.executable.get_path() : "null";
 				var game_executable_path = game != null && game.executable != null ? game.executable.get_path() : "null";
 				string[] cmd = { script.get_path(), executable_path, emu.id, emu.name, game_executable_path, game.id, game.full_id, game.name, game.escaped_name };
 				var dir = game != null && launch_in_game_dir ? game.work_dir : emu.work_dir;
 
-				var task = Utils.run(cmd).dir(dir.get_path());
+				var task = Utils.exec(cmd).dir(dir.get_path());
 				runnable.cast<Traits.Game.SupportsTweaks>(game => {
 					task.tweaks(game.get_enabled_tweaks(this));
 				});
-				yield task.run_sync_thread();
+				yield task.sync_thread();
 			}
 			else
 			{
@@ -157,7 +157,7 @@ namespace GameHub.Data.Compat
 					warning("[CustomScript.edit_script] %s", e.message);
 				}
 			}
-			Utils.run({"chmod", "+x", script.get_path()}).run_sync();
+			Utils.exec({"chmod", "+x", script.get_path()}).sync();
 			Utils.open_uri(script.get_uri());
 		}
 	}

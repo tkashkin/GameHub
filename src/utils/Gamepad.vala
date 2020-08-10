@@ -260,7 +260,7 @@ namespace GameHub.Utils.Gamepad
 				var display = wnd.screen.get_display();
 				if(display is Gdk.X11.Display)
 				{
-					return (wnd.screen.get_display() as Gdk.X11.Display).get_xdisplay();
+					return ((Gdk.X11.Display) wnd.screen.get_display()).get_xdisplay();
 				}
 			}
 		}
