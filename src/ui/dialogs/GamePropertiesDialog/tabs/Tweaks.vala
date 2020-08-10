@@ -16,40 +16,39 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using Gee;
+using Gtk;
 
 using GameHub.Data;
-using GameHub.Data.DB;
-using GameHub.Data.Tweaks;
 using GameHub.Data.Runnables;
+
 using GameHub.Utils;
+using GameHub.Utils.FS;
 
-namespace GameHub.Data.Runnables.Traits.Game
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Tweaks;
+using GameHub.UI.Widgets.Settings;
+
+namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 {
-	public interface SupportsTweaks: Runnables.Game
+	private class Tweaks: GamePropertiesDialogTab
 	{
-		public abstract TweakSet? tweaks { get; set; default = null; }
+		public Traits.Game.SupportsTweaks game { get; construct; }
 
-		protected void dbinit_tweaks(Sqlite.Statement s)
+		public Tweaks(Traits.Game.SupportsTweaks game)
 		{
-			tweaks = new TweakSet.from_json(false, Parser.parse_json(Tables.Games.TWEAKS.get(s)));
-			tweaks.changed.connect(() => {
-				save();
-			});
+			Object(
+				game: game,
+				title: _("Tweaks"),
+				orientation: Orientation.HORIZONTAL
+			);
 		}
 
-		public Tweak[] get_enabled_tweaks(CompatTool? tool=null)
+		construct
 		{
-			Tweak[] enabled_tweaks = {};
-			var all_tweaks = Tweak.load_tweaks();
-			foreach(var tweak in all_tweaks.values)
-			{
-				if(tweaks.is_enabled(tweak.id) && tweak.is_applicable_to(this, tool))
-				{
-					enabled_tweaks += tweak;
-				}
-			}
-			return enabled_tweaks;
+			var sgrp_tweaks = new SettingsGroupBox();
+			sgrp_tweaks.container.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+			sgrp_tweaks.add_widget(new TweaksList(game));
+			add(sgrp_tweaks);
 		}
 	}
 }

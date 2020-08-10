@@ -138,10 +138,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 
 			info += "- Environment\n";
 			#if OS_LINUX
-			info += "    Distro:  %s\n".printf(Utils.get_distro());
-			info += "    DE:      %s\n".printf(Utils.get_desktop_environment() ?? "unknown");
+			info += "    Distro:  %s\n".printf(OS.get_distro());
+			info += "    DE:      %s\n".printf(OS.get_desktop_environment() ?? "unknown");
 			#else
-			info += "    OS:      %s\n".printf(Utils.get_distro());
+			info += "    OS:      %s\n".printf(OS.get_distro());
 			#endif
 			info += "    GTK:     %u.%u.%u\n".printf(Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version());
 

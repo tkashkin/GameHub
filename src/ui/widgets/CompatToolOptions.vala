@@ -34,7 +34,7 @@ namespace GameHub.UI.Widgets
 
 		public CompatToolOptions(Traits.SupportsCompatTools runnable, CompatToolPicker picker, bool install = false)
 		{
-			this.runnable = runnable;
+			/*this.runnable = runnable;
 			this.compat_tool_picker = picker;
 			this.install = install;
 			this.settings_key = install ? "install_options" : "options";
@@ -42,12 +42,12 @@ namespace GameHub.UI.Widgets
 			get_style_context().add_class("tags-list");
 			selection_mode = SelectionMode.NONE;
 			update_options();
-			compat_tool_picker.notify["selected"].connect(update_options);
+			compat_tool_picker.notify["selected"].connect(update_options);*/
 		}
 
 		public void update_options()
 		{
-			this.foreach(r => r.destroy());
+			/*this.foreach(r => r.destroy());
 			visible = false;
 
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
@@ -99,12 +99,12 @@ namespace GameHub.UI.Widgets
 				add(new OptionRow(opt));
 			}
 
-			show_all();
+			show_all();*/
 		}
 
 		public void save_options()
 		{
-			runnable.compat_options_saved = true;
+			/*runnable.compat_options_saved = true;
 
 			if(compat_tool_picker == null || compat_tool_picker.selected == null) return;
 			var options = install ? compat_tool_picker.selected.install_options : compat_tool_picker.selected.options;
@@ -157,7 +157,7 @@ namespace GameHub.UI.Widgets
 				}
 			}
 			tool_settings.set_object_member(settings_key, ts_options);
-			runnable.set_compat_settings(compat_tool_picker.selected, tool_settings);
+			runnable.set_compat_settings(compat_tool_picker.selected, tool_settings);*/
 		}
 
 		public class OptionRow: ListBoxRow

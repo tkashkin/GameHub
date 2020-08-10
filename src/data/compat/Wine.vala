@@ -171,11 +171,11 @@ namespace GameHub.Data.Compat
 			{
 				cmd = { executable.get_path(), "msiexec", "/i", file.get_path() };
 			}
-			var task = Utils.run(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
+			var task = Utils.exec(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
 			runnable.cast<Traits.Game.SupportsTweaks>(game => {
 				task.tweaks(game.get_enabled_tweaks(this));
 			});
-			yield task.run_sync_thread();
+			yield task.sync_thread();
 		}
 
 		public virtual File get_default_wineprefix(Traits.SupportsCompatTools runnable)
@@ -187,7 +187,7 @@ namespace GameHub.Data.Compat
 
 			if(FS.file(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FS.GAMEHUB_DIR)/$(binary)_$(arch) $(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(binary)_$(arch)"}).dir(install_dir.get_path()).run_sync();
+				Utils.exec({"bash", "-c", @"mv -f $(FS.GAMEHUB_DIR)/$(binary)_$(arch) $(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(binary)_$(arch)"}).dir(install_dir.get_path()).sync();
 				FS.rm(dosdevices.get_child("d:").get_path());
 			}
 
@@ -221,7 +221,7 @@ namespace GameHub.Data.Compat
 				{
 					if(!dosdevices.get_child(@"$(letter):").query_exists() && !dosdevices.get_child(@"$(letter)::").query_exists())
 					{
-						Utils.run({"ln", "-nsf", "../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync();
+						Utils.exec({"ln", "-nsf", "../../../../", @"$(letter):"}).dir(dosdevices.get_path()).sync();
 						break;
 					}
 				}
@@ -316,17 +316,17 @@ namespace GameHub.Data.Compat
 				}
 			}
 
-			yield Utils.run(cmd).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
+			yield Utils.exec(cmd).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).sync_thread();
 		}
 
 		protected async void winetricks(Traits.SupportsCompatTools runnable)
 		{
-			yield Utils.run({"winetricks"}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
+			yield Utils.exec({"winetricks"}).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).sync_thread();
 		}
 
 		public async string convert_path(Traits.SupportsCompatTools runnable, File path)
 		{
-			var win_path = (yield Utils.run({wine_binary.get_path(), "winepath", "-w", path.get_path()}).env(prepare_env(runnable)).log(false).run_sync_thread(true)).output.strip();
+			var win_path = (yield Utils.exec({wine_binary.get_path(), "winepath", "-w", path.get_path()}).env(prepare_env(runnable)).log(false).sync_thread(true)).output.strip();
 			debug("[Wine.convert_path] '%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
 		}

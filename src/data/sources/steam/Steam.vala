@@ -82,19 +82,21 @@ namespace GameHub.Data.Sources.Steam
 				return (!) installed;
 			}
 
-			var distro = Utils.get_distro().down();
+			#if OS_LINUX
+			var distro = OS.get_distro().down();
 			if("ubuntu" in distro || "elementary" in distro || "pop!_os" in distro)
 			{
-				installed = Utils.is_package_installed("steam")
-				         || Utils.is_package_installed("steam64")
-				         || Utils.is_package_installed("steam-launcher")
-				         || Utils.is_package_installed("steam-installer")
+				installed = OS.is_package_installed("steam")
+				         || OS.is_package_installed("steam64")
+				         || OS.is_package_installed("steam-launcher")
+				         || OS.is_package_installed("steam-installer")
 				         || FS.file(GameHub.Settings.Paths.Steam.instance.home).query_exists();
 			}
 			else
 			{
 				installed = FS.file(GameHub.Settings.Paths.Steam.instance.home).query_exists();
 			}
+			#endif
 
 			return (!) installed;
 		}
@@ -123,11 +125,13 @@ namespace GameHub.Data.Sources.Steam
 
 		public override async bool install()
 		{
-			var distro = Utils.get_distro().down();
+			#if OS_LINUX
+			var distro = OS.get_distro().down();
 			if("elementary" in distro || "pop!_os" in distro)
 			{
 				Utils.open_uri("appstream://steam.desktop");
 			}
+			#endif
 			return true;
 		}
 

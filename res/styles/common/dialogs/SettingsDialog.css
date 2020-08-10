@@ -7,38 +7,51 @@
 	padding: 4px;
 }
 
+.settings-dialog > .dialog-vbox:dir(ltr)
+{
+	margin-left: -2px;
+}
+
 .settings-dialog:dir(ltr)
 {
 	background-image: linear-gradient(to right,
-	                                  shade(@theme_bg_color, 0.95) 202px,
-	                                  @borders 202px, @borders 203px,
-	                                  transparent 203px, transparent);
+	                                  shade(@theme_bg_color, 0.95) 200px,
+	                                  @borders 200px, @borders 201px,
+	                                  transparent 201px, transparent);
 }
+
 .settings-dialog > headerbar:dir(ltr)
 {
 	background-image: linear-gradient(to right,
-	                                  alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
-	                                  @borders 202px, @borders 203px,
-	                                  transparent 203px, transparent);
-}
-.settings-dialog:dir(rtl)
-{
-	background-image: linear-gradient(to left,
-	                                  shade(@theme_bg_color, 0.95) 202px,
-	                                  @borders 202px, @borders 203px,
-	                                  transparent 203px, transparent);
-}
-.settings-dialog > headerbar:dir(rtl)
-{
-	background-image: linear-gradient(to left,
-	                                  alpha(shade(@theme_bg_color, 0.1), 0.05) 202px,
-	                                  @borders 202px, @borders 203px,
-	                                  transparent 203px, transparent);
+	                                  alpha(shade(@theme_bg_color, 0.1), 0.05) 200px,
+	                                  @borders 200px, @borders 201px,
+	                                  transparent 201px, transparent);
 }
 
 .settings-dialog > headerbar > .vertical:dir(ltr)
 {
 	padding-left: 200px;
+}
+
+.settings-dialog > .dialog-vbox:dir(rtl)
+{
+	margin-right: -2px;
+}
+
+.settings-dialog:dir(rtl)
+{
+	background-image: linear-gradient(to left,
+	                                  shade(@theme_bg_color, 0.95) 200px,
+	                                  @borders 200px, @borders 201px,
+	                                  transparent 201px, transparent);
+}
+
+.settings-dialog > headerbar:dir(rtl)
+{
+	background-image: linear-gradient(to left,
+	                                  alpha(shade(@theme_bg_color, 0.1), 0.05) 200px,
+	                                  @borders 200px, @borders 201px,
+	                                  transparent 201px, transparent);
 }
 
 .settings-dialog > headerbar > .vertical:dir(rtl)

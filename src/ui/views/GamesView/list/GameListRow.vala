@@ -286,7 +286,7 @@ namespace GameHub.UI.Views.GamesView.List
 		private void updates_handler()
 		{
 			Idle.add(() => {
-				updated_icon.visible = game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).has_updates;
+				updated_icon.visible = game is GameHub.Data.Sources.GOG.GOGGame && ((GameHub.Data.Sources.GOG.GOGGame) game).has_updates;
 				return Source.REMOVE;
 			}, Priority.LOW);
 		}

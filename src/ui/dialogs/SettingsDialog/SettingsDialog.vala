@@ -103,6 +103,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			#if MANETTE
 			add_page("general/controller", new Pages.General.Controller(this));
 			#endif
+			add_page("general/compat", new Pages.General.CompatTools(this));
 			add_page("general/tweaks", new Pages.General.Tweaks(this));
 
 			add_page("sources/steam", new Pages.Sources.Steam(this));

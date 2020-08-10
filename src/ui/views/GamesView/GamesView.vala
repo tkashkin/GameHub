@@ -244,11 +244,11 @@ namespace GameHub.UI.Views.GamesView
 			search.activate.connect(search_run_first_matching_game);
 
 			ui_settings.notify["icon-style"].connect(() => {
-				(filters.image as Image).icon_name = "tag" + Settings.UI.Appearance.symbolic_icon_suffix;
-				(add_game_button.image as Image).icon_name = "list-add" + Settings.UI.Appearance.symbolic_icon_suffix;
-				(downloads.image as Image).icon_name = "folder-download" + Settings.UI.Appearance.symbolic_icon_suffix;
-				(settings.image as Image).icon_name = "open-menu" + Settings.UI.Appearance.symbolic_icon_suffix;
-				(filters.image as Image).icon_size = (add_game_button.image as Image).icon_size = (downloads.image as Image).icon_size = (settings.image as Image).icon_size = Settings.UI.Appearance.headerbar_icon_size;
+				((Image) filters.image).icon_name = "tag" + Settings.UI.Appearance.symbolic_icon_suffix;
+				((Image) add_game_button.image).icon_name = "list-add" + Settings.UI.Appearance.symbolic_icon_suffix;
+				((Image) downloads.image).icon_name = "folder-download" + Settings.UI.Appearance.symbolic_icon_suffix;
+				((Image) settings.image).icon_name = "open-menu" + Settings.UI.Appearance.symbolic_icon_suffix;
+				((Image) filters.image).icon_size = ((Image) add_game_button.image).icon_size = ((Image) downloads.image).icon_size = ((Image) settings.image).icon_size = Settings.UI.Appearance.headerbar_icon_size;
 			});
 
 			filters_popover.filters_changed.connect(() => {

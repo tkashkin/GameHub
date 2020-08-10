@@ -134,11 +134,11 @@ namespace GameHub.Data.Compat
 			{
 				cmd = { executable.get_path(), "run", "msiexec", "/i", file.get_path() };
 			}
-			var task = Utils.run(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
+			var task = Utils.exec(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
 			runnable.cast<Traits.Game.SupportsTweaks>(game => {
 				task.tweaks(game.get_enabled_tweaks(this));
 			});
-			yield task.run_sync_thread();
+			yield task.sync_thread();
 		}
 
 		public override File get_default_wineprefix(Traits.SupportsCompatTools runnable)
@@ -150,7 +150,7 @@ namespace GameHub.Data.Compat
 
 			if(FS.file(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
 			{
-				Utils.run({"bash", "-c", @"mv -f $(FS.GAMEHUB_DIR)/$(binary)_$(arch) $(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(id)"}).dir(install_dir.get_path()).run_sync();
+				Utils.exec({"bash", "-c", @"mv -f $(FS.GAMEHUB_DIR)/$(binary)_$(arch) $(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(id)"}).dir(install_dir.get_path()).sync();
 				FS.rm(dosdevices.get_child("d:").get_path());
 			}
 
@@ -184,7 +184,7 @@ namespace GameHub.Data.Compat
 				{
 					if(!dosdevices.get_child(@"$(letter):").query_exists() && !dosdevices.get_child(@"$(letter)::").query_exists())
 					{
-						Utils.run({"ln", "-nsf", "../../../../../", @"$(letter):"}).dir(dosdevices.get_path()).run_sync();
+						Utils.exec({"ln", "-nsf", "../../../../../", @"$(letter):"}).dir(dosdevices.get_path()).sync();
 						break;
 					}
 				}
@@ -269,10 +269,10 @@ namespace GameHub.Data.Compat
 
 			if(!cmd.query_exists())
 			{
-				yield Utils.run({executable.get_path(), "run", cmd.get_path(), "/c", "exit"})
+				yield Utils.exec({executable.get_path(), "run", cmd.get_path(), "/c", "exit"})
 					.dir(runnable.install_dir.get_path())
 					.env(prepare_env(runnable))
-					.run_sync_thread(true);
+					.sync_thread(true);
 			}
 		}
 

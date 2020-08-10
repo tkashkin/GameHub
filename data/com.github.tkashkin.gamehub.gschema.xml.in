@@ -82,7 +82,7 @@
 
 	<!-- UI / Appearance -->
 		<enum id="@SCHEMA_ID@.ui.appearance.icon-styles">
-			<value nick="Theme-based" value="0" />
+			<value nick="Automatic" value="0" />
 			<value nick="Symbolic" value="1" />
 			<value nick="Colored" value="2" />
 		</enum>
@@ -93,7 +93,7 @@
 				<summary>Dark theme</summary>
 			</key>
 			<key name="icon-style" enum="@SCHEMA_ID@.ui.appearance.icon-styles">
-				<default>"Theme-based"</default>
+				<default>"Automatic"</default>
 				<summary>Icon style</summary>
 			</key>
 			<key name="list-style" type="as">
@@ -375,9 +375,9 @@
 
 	<!-- Tweaks -->
 		<schema path="@SCHEMA_PATH@/tweaks/" id="@SCHEMA_ID@.tweaks">
-			<key name="global" type="as">
-				<default>[]</default>
-				<summary>Global tweaks list</summary>
+			<key name="global" type="s">
+				<default>''</default>
+				<summary>Global tweak options</summary>
 			</key>
 		</schema>
 </schemalist>

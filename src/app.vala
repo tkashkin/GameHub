@@ -339,7 +339,7 @@ namespace GameHub
 				};
 
 				info("Restarting with GDB");
-				Utils.run(exec_cmd).dir(Environment.get_current_dir()).run_sync();
+				Utils.exec(exec_cmd).dir(Environment.get_current_dir()).sync();
 				exit_status = 0;
 				return true;
 			}
@@ -440,10 +440,10 @@ namespace GameHub
 
 			println(plain, "- Environment");
 			#if OS_LINUX
-			println(plain, "    Distro:  %s", Utils.get_distro());
-			println(plain, "    DE:      %s", Utils.get_desktop_environment() ?? "unknown");
+			println(plain, "    Distro:  %s", OS.get_distro());
+			println(plain, "    DE:      %s", OS.get_desktop_environment() ?? "unknown");
 			#else
-			println(plain, "    OS:      %s", Utils.get_distro());
+			println(plain, "    OS:      %s", OS.get_distro());
 			#endif
 			println(plain, "    GTK:     %u.%u.%u", Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version());
 

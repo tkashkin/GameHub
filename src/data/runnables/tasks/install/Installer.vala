@@ -94,7 +94,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			{
 				try
 				{
-					return (yield Utils.run(cmd).run_async()).check_status();
+					return (yield Utils.exec(cmd).async()).check_status();
 				}
 				catch(Error e)
 				{
