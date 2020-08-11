@@ -173,7 +173,7 @@ namespace GameHub.Data.Compat
 			}
 			var task = Utils.exec(combine_cmd_with_args(cmd, runnable, args)).dir(dir.get_path()).env(prepare_env(runnable, parse_opts));
 			runnable.cast<Traits.Game.SupportsTweaks>(game => {
-				task.tweaks(game.get_enabled_tweaks(this));
+				task.tweaks(game.tweaks, game, this);
 			});
 			yield task.sync_thread();
 		}

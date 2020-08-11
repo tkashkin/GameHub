@@ -26,6 +26,7 @@ using GameHub.Data.Runnables.Tasks.Install;
 
 using GameHub.Utils;
 using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 namespace GameHub.UI.Dialogs.InstallDialog.Steps
 {
@@ -41,17 +42,15 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 
 		construct
 		{
-			var content = new Box(Orientation.VERTICAL, 0);
-			content.expand = true;
-
-			string? subdir_suffix = null;
+			string? subdir = null;
 			if(task.runnable != null)
 			{
-				subdir_suffix = task.runnable.name_escaped;
+				subdir = task.runnable.name_escaped;
 			}
 
-			install_dirs_list = new DirectoriesList.with_files(task.install_dirs, task.install_dir, subdir_suffix);
-			install_dirs_list.margin = 8;
+			var sgrp_install_dirs = new SettingsGroupBox();
+			install_dirs_list = sgrp_install_dirs.add_widget(new DirectoriesList.with_files(task.install_dirs, task.install_dir, subdir));
+			add(sgrp_install_dirs);
 
 			install_dirs_list.directory_selected.connect(dir => {
 				task.install_dir = FS.file(install_dirs_list.selected_directory);
@@ -59,23 +58,16 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 
 			install_dirs_list.directory_activated.connect(dir => {
 				Idle.add(() => {
-					task.install_dir = FS.file(dir);
+					task.install_dir = FS.file(dir, subdir);
 					task.step_next();
 					return Source.REMOVE;
 				});
 			});
 
-			content.add(install_dirs_list);
-
-			add(content);
-
-			var actionbar = new ActionBar();
-
-			selected_installer_row = new InstallerStep.InstallerRow(task, task.selected_installer);
-			selected_installer_row.margin_start = selected_installer_row.margin_end = 4;
-			actionbar.add(selected_installer_row);
-
-			add(actionbar);
+			var sgrp_selected_installer = new SettingsGroup();
+			sgrp_selected_installer.settings.selection_mode = SelectionMode.NONE;
+			selected_installer_row = sgrp_selected_installer.add_setting(new InstallerStep.InstallerRow(task, task.selected_installer));
+			add(sgrp_selected_installer);
 		}
 
 		public override void update()

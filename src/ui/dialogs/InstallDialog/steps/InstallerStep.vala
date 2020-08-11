@@ -26,12 +26,13 @@ using GameHub.Data.Runnables.Tasks.Install;
 
 using GameHub.Utils;
 using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 namespace GameHub.UI.Dialogs.InstallDialog.Steps
 {
 	public class InstallerStep: InstallDialogStep
 	{
-		private ListBox installers_list;
+		private SettingsGroup sgrp_installers;
 
 		public InstallerStep(InstallTask task)
 		{
@@ -41,28 +42,28 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 		construct
 		{
 			var scroll = new ScrolledWindow(null, null);
-			scroll.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
 			scroll.hscrollbar_policy = PolicyType.NEVER;
-			scroll.expand = true;
-			scroll.margin = 8;
 
 			#if GTK_3_22
 			scroll.propagate_natural_height = true;
 			scroll.max_content_height = 600;
 			#endif
 
-			installers_list = new ListBox();
-			installers_list.selection_mode = SelectionMode.SINGLE;
-			installers_list.get_style_context().add_class("separated-list-all");
+			sgrp_installers = new SettingsGroup();
+			sgrp_installers.settings.selection_mode = SelectionMode.SINGLE;
+			sgrp_installers.settings.expand = true;
 
-			installers_list.row_selected.connect(row => {
+			scroll.add(sgrp_installers);
+			add(scroll);
+
+			sgrp_installers.settings.row_selected.connect(row => {
 				if(row != null)
 				{
 					task.selected_installer = ((InstallerRow) row).installer;
 				}
 			});
 
-			installers_list.row_activated.connect(row => {
+			sgrp_installers.settings.row_activated.connect(row => {
 				if(row != null)
 				{
 					task.selected_installer = ((InstallerRow) row).installer;
@@ -73,91 +74,44 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 				}
 			});
 
-			scroll.add(installers_list);
-			add(scroll);
-
 			show_all();
-
 			update();
 		}
 
 		public override void update()
 		{
-			installers_list.foreach(r => r.destroy());
+			sgrp_installers.settings.foreach(r => r.destroy());
 			foreach(var installer in task.installers)
 			{
 				var row = new InstallerRow(task, installer);
-				installers_list.add(row);
+				sgrp_installers.add_setting(row);
 				if(installer == task.selected_installer)
 				{
-					installers_list.select_row(row);
+					sgrp_installers.settings.select_row(row);
 				}
 			}
+			sgrp_installers.show_all();
 		}
 
-		public class InstallerRow: ListBoxRow
+		public class InstallerRow: BaseSetting
 		{
 			public InstallTask task { get; construct; }
 			public Installer installer { get; construct set; }
 
 			private Grid grid;
-			private Image icon;
-			private Label name_label;
-			private Label info_label;
-			private Label detail_info_label;
-			private Button download_button;
+
+			private Button? download_button { get { return widget as Button; } }
 
 			public InstallerRow(InstallTask task, Installer installer)
 			{
-				Object(task: task, installer: installer);
+				Object(title: installer.name, widget: new Button.from_icon_name("folder-download-symbolic", IconSize.BUTTON), task: task, installer: installer);
 			}
 
 			construct
 			{
-				grid = new Grid();
-				grid.column_spacing = 0;
-				grid.margin_start = grid.margin_end = 8;
-				grid.margin_top = grid.margin_bottom = 4;
-
-				icon = new Image.from_icon_name(installer.platform.icon(), IconSize.LARGE_TOOLBAR);
-				icon.valign = Align.CENTER;
-				icon.margin_end = 12;
-
-				name_label = new Label(null);
-				name_label.get_style_context().add_class("bold");
-				name_label.ellipsize = Pango.EllipsizeMode.END;
-				name_label.xalign = 0;
-				name_label.valign = Align.CENTER;
-
-				info_label = new Label(null);
-				info_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-				info_label.use_markup = true;
-				info_label.hexpand = true;
-				info_label.ellipsize = Pango.EllipsizeMode.END;
-				info_label.xalign = 0;
-				info_label.valign = Align.CENTER;
-
-				detail_info_label = new Label(null);
-				detail_info_label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-				detail_info_label.use_markup = true;
-				detail_info_label.hexpand = true;
-				detail_info_label.ellipsize = Pango.EllipsizeMode.END;
-				detail_info_label.xalign = 0;
-				detail_info_label.valign = Align.CENTER;
-
-				download_button = new Button.from_icon_name("folder-download-symbolic", IconSize.BUTTON);
 				download_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 				download_button.valign = Align.CENTER;
 				download_button.tooltip_text = _("Download");
-				download_button.margin_start = 12;
-
-				grid.attach(icon, 0, 0, 1, 2);
-				grid.attach(name_label, 1, 0);
-				grid.attach(info_label, 2, 0);
-				grid.attach(detail_info_label, 1, 1, 2, 1);
-				grid.attach(download_button, 3, 0, 1, 2);
-
-				child = grid;
 
 				notify["installer"].connect(() => update());
 				update();
@@ -194,15 +148,19 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 					detail_info_parts += _("Language: %s").printf(@"<b>$(lang)</b>");
 				}
 
-				icon.icon_name = installer.platform.icon();
-				name_label.label = installer.name;
-				info_label.label = " • " + string.joinv(" • ", info_parts);
-				detail_info_label.label = string.joinv(" • ", detail_info_parts);
-				detail_info_label.tooltip_markup = string.joinv("\r\n", detail_info_parts);
+				icon_name = installer.platform.icon();
+				title = """<b>%s</b><span alpha="75%"> • %s</span>""".printf(installer.name, string.joinv(" • ", info_parts));
+				description = string.joinv(" • ", detail_info_parts);
 
-				icon.opacity = installer.is_installable ? 1 : 0.6;
+				Idle.add(() => {
+					description_label.tooltip_markup = string.joinv("\r\n", detail_info_parts);
+					return Source.REMOVE;
+				});
+
+				icon_image.opacity = installer.is_installable ? 1 : 0.6;
 				selectable = installer.is_installable;
 				activatable = selectable;
+				title_label.sensitive = selectable;
 			}
 		}
 	}

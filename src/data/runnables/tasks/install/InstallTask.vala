@@ -154,11 +154,13 @@ namespace GameHub.Data.Runnables.Tasks.Install
 				runnable.save();
 				runnable.update_status();
 			}
+			info("[InstallTask.install] Starting installation of %s; installer: '%s'; install_dir: `%s`", runnable != null ? runnable.full_id : "(null)", selected_installer.id, install_dir.get_path());
 			yield selected_installer.install(this);
 		}
 
 		public void finish()
 		{
+			info("[InstallTask.finish] Finishing installation of %s", runnable != null ? runnable.full_id : "(null)");
 			if(runnable != null)
 			{
 				var gh_marker = install_dir.get_child(".gamehub_" + runnable.id);

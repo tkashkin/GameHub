@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Runnables;
 using GameHub.Data.Tweaks;
 
 namespace GameHub.Utils
@@ -31,8 +32,10 @@ namespace GameHub.Utils
 		private HashMap<string, string>? _env_vars = null;
 		private bool _override_runtime = false;
 		private bool _log = true;
-		private Tweak[]? _tweaks = null;
-		private TweakOptions? _tweak_options = null;
+
+		private TweakSet? _tweaks = null;
+		private Traits.Game.SupportsTweaks? _tweaks_game = null;
+		private CompatTool? _tweaks_compat_tool = null;
 
 		public ExecTask(string[] cmd) { _cmd = cmd; }
 
@@ -42,16 +45,7 @@ namespace GameHub.Utils
 		public ExecTask env_var(string name, string? value=null) { if(_env_vars == null) _env_vars = new HashMap<string, string>(); _env_vars.set(name, value); return this; }
 		public ExecTask override_runtime(bool override_runtime=false) { _override_runtime = override_runtime; return this; }
 		public ExecTask log(bool log=true) { _log = log; return this; }
-		public ExecTask tweaks(Tweak[]? tweaks=null, TweakOptions? tweak_options=null) { _tweaks = tweaks; _tweak_options = tweak_options; return this; }
-
-		private string expand_options(string value)
-		{
-			if(_tweak_options != null)
-			{
-				return _tweak_options.expand(value);
-			}
-			return value;
-		}
+		public ExecTask tweaks(TweakSet? tweaks=null, Traits.Game.SupportsTweaks? game=null, CompatTool? tool=null) { _tweaks = tweaks; _tweaks_game = game; _tweaks_compat_tool = tool; return this; }
 
 		private bool _expanded = false;
 		private void expand()
@@ -77,7 +71,7 @@ namespace GameHub.Utils
 				{
 					if(env_var.value != null)
 					{
-						_env = Environ.set_variable(_env, env_var.key, expand_options(env_var.value));
+						_env = Environ.set_variable(_env, env_var.key, env_var.value);
 					}
 					else
 					{
@@ -88,15 +82,21 @@ namespace GameHub.Utils
 
 			if(_tweaks != null)
 			{
-				foreach(var tweak in _tweaks)
+				var all_tweaks = Tweak.load_tweaks();
+
+				foreach(var tweak in all_tweaks.values)
 				{
+					if(!_tweaks.is_enabled(tweak.id) || (_tweaks_game != null && !tweak.is_applicable_to(_tweaks_game, _tweaks_compat_tool))) continue;
+
+					var tweak_options = _tweaks.get_or_create_options(tweak);
+
 					if(tweak.env != null)
 					{
 						foreach(var env_var in tweak.env.entries)
 						{
 							if(env_var.value != null)
 							{
-								_env = Environ.set_variable(_env, env_var.key, expand_options(env_var.value));
+								_env = Environ.set_variable(_env, env_var.key, tweak_options.expand(env_var.value));
 							}
 							else
 							{
@@ -126,7 +126,7 @@ namespace GameHub.Utils
 								}
 								else
 								{
-									tweaked_cmd += expand_options(arg);
+									tweaked_cmd += tweak_options.expand(arg);
 								}
 							}
 							cmd_expanded = true;

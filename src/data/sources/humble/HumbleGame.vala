@@ -106,9 +106,11 @@ namespace GameHub.Data.Sources.Humble
 			}
 
 			install_dir = null;
-			executable_path = "$game_dir/start.sh";
-			work_dir_path = "$game_dir";
+			executable_path = "${install_dir}/start.sh";
+			work_dir_path = "${install_dir}";
 			info_detailed = @"{\"order\":\"$(order_id)\"}";
+
+			init_tweaks();
 
 			mount_overlays.begin();
 			update_status();
@@ -364,6 +366,8 @@ namespace GameHub.Data.Sources.Humble
 
 			return refresh;
 		}
+
+		public override async void run(){ yield run_executable(); }
 
 		public override async void uninstall()
 		{

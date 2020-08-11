@@ -144,6 +144,7 @@ sources = [
 
 	'ui/dialogs/GamePropertiesDialog/GamePropertiesDialog.vala',
 	'ui/dialogs/GamePropertiesDialog/tabs/General.vala',
+	'ui/dialogs/GamePropertiesDialog/tabs/Executable.vala',
 	'ui/dialogs/GamePropertiesDialog/tabs/Tweaks.vala',
 	'ui/dialogs/GamePropertiesDialog/tabs/Overlays.vala',
 

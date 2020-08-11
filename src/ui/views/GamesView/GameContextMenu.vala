@@ -40,9 +40,9 @@ namespace GameHub.UI.Views.GamesView
 
 		construct
 		{
-			/*if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
+			if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
 			{
-				if(game.use_compat)
+				/*if(game.use_compat)
 				{
 					var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
 					run_with_compat.sensitive = game.can_be_launched();
@@ -50,15 +50,15 @@ namespace GameHub.UI.Views.GamesView
 					add(run_with_compat);
 				}
 				else
-				{
+				{*/
 					var run = new Gtk.MenuItem.with_label(_("Run"));
 					run.sensitive = game.can_be_launched();
 					run.activate.connect(() => game.run.begin());
 					add(run);
-				}
+				//}
 				add(new Gtk.SeparatorMenuItem());
 
-				if(game.actions != null && game.actions.size > 0)
+				/*if(game.actions != null && game.actions.size > 0)
 				{
 					var compat_tool = CompatTool.by_id(game.compat_tool);
 					foreach(var action in game.actions)
@@ -74,16 +74,16 @@ namespace GameHub.UI.Views.GamesView
 						add(action_item);
 					}
 					add(new Gtk.SeparatorMenuItem());
-				}
+				}*/
 			}
 			else if(game.status.state == Game.State.UNINSTALLED)
-			{*/
+			{
 				var install = new Gtk.MenuItem.with_label(_("Install"));
 				install.sensitive = game.is_installable;
 				install.activate.connect(() => game.install.begin());
 				add(install);
 				add(new Gtk.SeparatorMenuItem());
-			/*}
+			}
 
 			var details = new Gtk.MenuItem.with_label(_("Details"));
 			details.activate.connect(() => new Dialogs.GameDetailsDialog(game).show_all());

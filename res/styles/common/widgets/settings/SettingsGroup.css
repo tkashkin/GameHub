@@ -1,5 +1,16 @@
 .settings-group
 {
+	padding: 8px;
+}
+.settings-group-standalone-title
+{
+	margin-top: 8px;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.settings-dialog .settings-group
+{
 	padding: 12px 18px;
 }
 
@@ -9,7 +20,7 @@
 	font-weight: bold;
 	margin-bottom: 6px;
 }
-.settings-group-standalone-title
+.settings-dialog .settings-group-standalone-title
 {
 	margin-top: 12px;
 	margin-left: 18px;

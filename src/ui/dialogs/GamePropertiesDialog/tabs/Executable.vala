@@ -16,34 +16,36 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using Gee;
+using Gtk;
 
 using GameHub.Data;
-using GameHub.Data.DB;
-using GameHub.Data.Tweaks;
 using GameHub.Data.Runnables;
+
 using GameHub.Utils;
+using GameHub.Utils.FS;
 
-namespace GameHub.Data.Runnables.Traits.Game
+using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Tweaks;
+using GameHub.UI.Widgets.Settings;
+
+namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 {
-	public interface SupportsTweaks: Runnables.Game
+	private class Executable: GamePropertiesDialogTab
 	{
-		public abstract TweakSet? tweaks { get; set; default = null; }
+		public Traits.HasExecutableFile game { get; construct; }
 
-		protected void init_tweaks()
+		public Executable(Traits.HasExecutableFile game)
 		{
-			tweaks = new TweakSet.from_json(false, null);
-			tweaks.changed.connect(() => {
-				save();
-			});
+			Object(
+				game: game,
+				title: _("Executable"),
+				orientation: Orientation.VERTICAL
+			);
 		}
 
-		protected void dbinit_tweaks(Sqlite.Statement s)
+		construct
 		{
-			tweaks = new TweakSet.from_json(false, Parser.parse_json(Tables.Games.TWEAKS.get(s)));
-			tweaks.changed.connect(() => {
-				save();
-			});
+
 		}
 	}
 }

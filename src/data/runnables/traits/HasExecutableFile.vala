@@ -114,7 +114,7 @@ namespace GameHub.Data.Runnables.Traits
 			return can_be_launched_base(is_launch_attempt) && executable != null && executable.query_exists();
 		}
 
-		public virtual async void run()
+		protected async void run_executable()
 		{
 			if(!can_be_launched(true)) return;
 
@@ -187,6 +187,8 @@ namespace GameHub.Data.Runnables.Traits
 
 			var task = Utils.exec(full_cmd).override_runtime(true);
 			if(work_dir != null && work_dir.query_exists()) task.dir(work_dir.get_path());
+
+			cast<Traits.Game.SupportsTweaks>(game => task.tweaks(game.tweaks, game));
 
 			return task;
 		}
