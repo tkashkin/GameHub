@@ -39,7 +39,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 			Object(
 				game: game,
 				title: _("Tweaks"),
-				orientation: Orientation.HORIZONTAL
+				orientation: Orientation.VERTICAL
 			);
 		}
 

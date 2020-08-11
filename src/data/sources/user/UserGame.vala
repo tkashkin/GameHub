@@ -88,6 +88,8 @@ namespace GameHub.Data.Sources.User
 
 			((User) source).add_game(this);
 
+			init_tweaks();
+
 			mount_overlays.begin();
 			update_status();
 		}
@@ -128,6 +130,8 @@ namespace GameHub.Data.Sources.User
 			new GameHub.UI.Dialogs.InstallDialog(this, installers, install_mode, install.callback);
 			yield;*/
 		}
+
+		public override async void run(){ yield run_executable(); }
 
 		public override async void uninstall()
 		{

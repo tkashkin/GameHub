@@ -256,7 +256,8 @@ namespace GameHub.Data.Tweaks
 			return tweaks;
 		}
 
-		public static HashMap<string?, HashMap<string, Tweak>>? load_tweaks_grouped(bool refresh=false)
+		public delegate bool TweakFilterPredicate(Tweak tweak);
+		public static HashMap<string?, HashMap<string, Tweak>>? load_tweaks_grouped(bool refresh = false, TweakFilterPredicate? filter = null)
 		{
 			var tweaks = load_tweaks(refresh);
 			if(tweaks == null || tweaks.size == 0) return null;
@@ -264,6 +265,7 @@ namespace GameHub.Data.Tweaks
 			var groups = new HashMap<string?, HashMap<string, Tweak>>();
 			foreach(var tweak in tweaks.entries)
 			{
+				if(filter != null && !filter(tweak.value)) continue;
 				if(!groups.has_key(tweak.value.group))
 				{
 					groups[tweak.value.group] = new HashMap<string, Tweak>();

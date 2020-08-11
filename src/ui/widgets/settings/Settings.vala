@@ -40,8 +40,9 @@ namespace GameHub.UI.Widgets.Settings
 		public Pango.EllipsizeMode ellipsize_description { get; set; default = Pango.EllipsizeMode.NONE; }
 
 		private Box hbox;
-		private Label title_label;
-		private Label description_label;
+		protected Image icon_image;
+		protected Label title_label;
+		protected Label description_label;
 
 		public BaseSetting(string title, string? description = null, Widget? widget = null)
 		{
@@ -54,11 +55,11 @@ namespace GameHub.UI.Widgets.Settings
 
 			hbox = new Box(Orientation.HORIZONTAL, 12);
 
-			var icon = new Image.from_icon_name("gamehub-symbolic", IconSize.LARGE_TOOLBAR);
-			icon.no_show_all = true;
-			icon.valign = Align.CENTER;
+			icon_image = new Image.from_icon_name("gamehub-symbolic", IconSize.LARGE_TOOLBAR);
+			icon_image.no_show_all = true;
+			icon_image.valign = Align.CENTER;
 
-			hbox.add(icon);
+			hbox.add(icon_image);
 
 			var text_vbox = new Box(Orientation.VERTICAL, 0);
 			text_vbox.hexpand = true;
@@ -107,8 +108,8 @@ namespace GameHub.UI.Widgets.Settings
 			});
 
 			notify["icon-name"].connect(() => {
-				icon.icon_name = icon_name;
-				icon.visible = icon_name != null;
+				icon_image.icon_name = icon_name;
+				icon_image.visible = icon_name != null;
 			});
 
 			notify["widget"].connect(() => replace_widget(widget));

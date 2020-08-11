@@ -40,16 +40,14 @@ namespace GameHub.UI.Dialogs.InstallDialog
 		private Button back_button;
 		private Button next_button;
 
-		public InstallDialog(InstallTask task, owned SourceFunc? callback=null)
+		public InstallDialog(InstallTask task, owned SourceFunc? callback = null)
 		{
-			Object(/*transient_for: Windows.MainWindow.instance, */resizable: false, use_header_bar: 1, title: task.runnable.name, task: task);
+			Object(resizable: false, use_header_bar: 1, title: task.runnable.name, task: task);
 			this.callback = (owned) callback;
 		}
 
 		construct
 		{
-			//modal = true;
-
 			set_size_request(700, 500);
 
 			headerbar = (HeaderBar) get_header_bar();
@@ -57,6 +55,8 @@ namespace GameHub.UI.Dialogs.InstallDialog
 			headerbar.show_close_button = true;
 
 			back_button = new Button.from_icon_name("go-previous" + Settings.UI.Appearance.symbolic_icon_suffix, Settings.UI.Appearance.headerbar_icon_size);
+			back_button.get_style_context().add_class("back-button");
+			back_button.tooltip_text = _("Back");
 			back_button.valign = Align.CENTER;
 			back_button.sensitive = task.config_prev_step_available;
 			headerbar.pack_start(back_button);
@@ -140,6 +140,11 @@ namespace GameHub.UI.Dialogs.InstallDialog
 					steps_stack.set_visible_child_full(step.to_string(), StackTransitionType.CROSSFADE);
 					headerbar.subtitle = null;
 					next_button.visible = false;
+					break;
+
+				case InstallTask.ConfigStep.FINISH:
+					destroy();
+					task.install.begin();
 					break;
 
 				default:

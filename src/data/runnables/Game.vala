@@ -220,7 +220,7 @@ namespace GameHub.Data.Runnables
 
 		public override void save()
 		{
-			//Tables.Games.add(this);
+			Tables.Games.add(this);
 		}
 
 		public async void run_or_install(bool show_compat=false)

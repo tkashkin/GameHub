@@ -107,8 +107,10 @@ namespace GameHub.Data.Sources.GOG
 			has_updates = json_obj.has_member("updates") && json_obj.get_int_member("updates") > 0;
 
 			install_dir = null;
-			executable_path = "$game_dir/start.sh";
-			work_dir_path = "$game_dir";
+			executable_path = "${install_dir}/start.sh";
+			work_dir_path = "${install_dir}";
+
+			init_tweaks();
 
 			mount_overlays.begin();
 			update_status();
@@ -291,6 +293,8 @@ namespace GameHub.Data.Sources.GOG
 			yield update_game_info();
 			return installers;
 		}
+
+		public override async void run(){ yield run_executable(); }
 
 		public override async void uninstall()
 		{
@@ -578,7 +582,7 @@ namespace GameHub.Data.Sources.GOG
 					g = ((DLC) this).game.name;
 					d = game.name;
 				}
-				//installers_dir = FS.file(FS.Paths.Collection.GOG.expand_installers(g, d, platform)) ?? game.installers_dir;
+				installers_dir = FS.file(Settings.Paths.Collection.GOG.expand_installers(g, d, platform));
 
 				full_size = json.get_int_member("total_size");
 				version = json.get_string_member("version");
@@ -601,6 +605,8 @@ namespace GameHub.Data.Sources.GOG
 
 						Utils.thread("GOGGame.Installer.fetch_part", () => {
 							loading_count++;
+
+							debug("[GOGGame.Installer.fetch_part] Trying to fetch part %s; downlink: '%s'", id, downlink_url);
 
 							var root_node = Parser.parse_remote_json_file(downlink_url, "GET", ((GOG) game.source).user_token);
 							if(root_node != null && root_node.get_node_type() == Json.NodeType.OBJECT)
@@ -638,8 +644,7 @@ namespace GameHub.Data.Sources.GOG
 									}
 
 									var local = installers_dir.get_child(local_filename ?? "gog_" + game.id + "_" + this.id + "_" + id);
-
-									//parts.add(new Runnable.DownloadableInstaller.Part(id, url, size, remote, local, hash, hash_type));
+									parts.add(new Part(id, url, size, remote, local, hash, hash_type));
 								}
 							}
 

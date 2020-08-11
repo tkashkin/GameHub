@@ -60,6 +60,8 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			if(file == null || !file.query_exists()) return false;
 			var type = installer_type ?? yield InstallerType.guess(file, can_be_data);
 
+			debug("[FileInstaller.install_file] Installing file: `%s`; installer_type: %s", file.get_path(), installer_type.to_string());
+
 			var file_path = file.get_path();
 			var install_dir_path = task.install_dir.get_path();
 
@@ -90,6 +92,8 @@ namespace GameHub.Data.Runnables.Tasks.Install
 					break;
 			}
 
+			FileUtils.chmod(file_path, 0755);
+
 			if(cmd != null)
 			{
 				try
@@ -98,7 +102,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 				}
 				catch(Error e)
 				{
-					warning("[FileInstaller.install_file] %s", e.message);
+					warning("[FileInstaller.install_file] Exec error: %s", e.message);
 				}
 				return false;
 			}
@@ -148,6 +152,8 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			try
 			{
 				var files = yield download(task);
+
+				debug("[DownloadableInstaller.install] .download() returned %d files", files.size);
 
 				task.status = new InstallTask.Status();
 
@@ -208,6 +214,9 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			try
 			{
 				task.status = new InstallTask.Status(InstallTask.State.DOWNLOADING);
+				yield fetch_parts();
+
+				debug("[DownloadableInstaller.download] Starting (%d parts)", parts.size);
 
 				uint current_part = 1;
 				foreach(var part in parts)
@@ -242,6 +251,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 
 						if(part.checksum == null || file_checksum == null || part.checksum == file_checksum)
 						{
+							debug("[DownloadableInstaller.download] Downloaded `%s`; checksum: '%s' (matched)", file.get_path(), file_checksum != null ? file_checksum : "(null)");
 							files.add(file);
 						}
 						else
@@ -270,7 +280,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 								}
 							);
 
-							warning("Checksum mismatch in `%s`, skipping; expected: `%s`, actual: `%s`", file.get_basename(), part.checksum, file_checksum);
+							warning("Checksum mismatch in `%s`; expected: `%s`, actual: `%s`", file.get_basename(), part.checksum, file_checksum);
 						}
 					}
 

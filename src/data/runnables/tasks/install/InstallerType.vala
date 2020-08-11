@@ -25,6 +25,19 @@ namespace GameHub.Data.Runnables.Tasks.Install
 	{
 		EXECUTABLE, WINDOWS_EXECUTABLE, ARCHIVE, WINDOWS_NSIS_INSTALLER, DATA;
 
+		public string to_string()
+		{
+			switch(this)
+			{
+				case EXECUTABLE:             return "executable";
+				case WINDOWS_EXECUTABLE:     return "windows_executable";
+				case ARCHIVE:                return "archive";
+				case WINDOWS_NSIS_INSTALLER: return "windows_nsis_installer";
+				case DATA:                   return "data";
+			}
+			assert_not_reached();
+		}
+
 		public static InstallerType? from_mime(string? type)
 		{
 			if(type == null) return null;

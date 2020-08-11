@@ -54,7 +54,7 @@ namespace GameHub.Data.Runnables
 		// Run
 
 		public bool is_running { get; set; default = false; }
-		public virtual async void run(){ assert_not_reached(); }
+		public abstract async void run();
 
 		public bool can_be_launched_base(bool is_launch_attempt=false)
 		{

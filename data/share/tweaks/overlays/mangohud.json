@@ -12,7 +12,7 @@
 		"MANGOHUD_CONFIG": "${option:read_cfg},${option:hud},${option:media_player},${option:vsync},${option:gl_vsync},${option:position},${option:fps_limit}"
 	},
 	"options": {
-		"general": {
+		"hud": {
 			"name": "HUD elements",
 			"description": "Select HUD elements to show",
 			"type": "list",

@@ -105,7 +105,7 @@ namespace GameHub.Data.Compat
 				});*/
 
 				runnable.cast<Traits.Game.SupportsTweaks>(game => {
-					task.tweaks(game.get_enabled_tweaks(this));
+					task.tweaks(game.tweaks, game, this);
 				});
 				yield task.sync_thread();
 			}
@@ -130,7 +130,7 @@ namespace GameHub.Data.Compat
 
 				var task = Utils.exec(cmd).dir(dir.get_path());
 				runnable.cast<Traits.Game.SupportsTweaks>(game => {
-					task.tweaks(game.get_enabled_tweaks(this));
+					task.tweaks(game.tweaks, game, this);
 				});
 				yield task.sync_thread();
 			}

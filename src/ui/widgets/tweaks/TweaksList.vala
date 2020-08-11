@@ -47,7 +47,7 @@ namespace GameHub.UI.Widgets.Tweaks
 		{
 			this.foreach(w => w.destroy());
 
-			var tweaks = Tweak.load_tweaks_grouped(game == null);
+			var tweaks = Tweak.load_tweaks_grouped(game == null, t => game == null || t.is_applicable_to(game, compat_tool));
 
 			if(tweaks != null && tweaks.size > 0)
 			{
@@ -96,10 +96,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				{
 					foreach(var tweak in tweaks.values)
 					{
-						if(game == null || tweak.is_applicable_to(game, compat_tool))
-						{
-							tweaks_list.add(new TweakRow(tweak, game == null ? GameHub.Settings.Tweaks.global_tweakset : game.tweaks));
-						}
+						tweaks_list.add(new TweakRow(tweak, game == null ? GameHub.Settings.Tweaks.global_tweakset : game.tweaks));
 					}
 				}
 

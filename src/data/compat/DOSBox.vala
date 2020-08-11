@@ -218,7 +218,7 @@ namespace GameHub.Data.Compat
 
 			var task = Utils.exec(combine_cmd_with_args(cmd, runnable)).dir(wdir.get_path());
 			runnable.cast<Traits.Game.SupportsTweaks>(game => {
-				task.tweaks(game.get_enabled_tweaks(this));
+				task.tweaks(game.tweaks, game, this);
 			});
 			yield task.sync_thread();
 		}

@@ -97,11 +97,15 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog
 
 				add_tab(new Tabs.General(game));
 
-				game.cast<Traits.HasExecutableFile>(game => add_tab(new DummyTab(_("Executable"))));
-				game.cast<Traits.SupportsCompatTools>(game => add_tab(new DummyTab(_("Compatibility"))));
+				if(game.status.state == Game.State.INSTALLED)
+				{
+					game.cast<Traits.HasExecutableFile>(game => add_tab(new Tabs.Executable(game)));
 
-				game.cast<Traits.Game.SupportsTweaks>(game => add_tab(new Tabs.Tweaks(game)));
-				game.cast<Traits.Game.SupportsOverlays>(game => add_tab(new Tabs.Overlays(game)));
+					game.cast<Traits.SupportsCompatTools>(game => add_tab(new DummyTab(_("Compatibility"))));
+
+					game.cast<Traits.Game.SupportsTweaks>(game => add_tab(new Tabs.Tweaks(game)));
+					game.cast<Traits.Game.SupportsOverlays>(game => add_tab(new Tabs.Overlays(game)));
+				}
 
 				tabs.show_tabs = tabs.get_n_pages() > 1;
 				tabs.show_all();
