@@ -393,4 +393,26 @@ namespace GameHub.UI.Widgets.Settings
 			});
 		}
 	}
+
+	namespace InlineWidgets
+	{
+		public const int ENTRY_WIDTH = 320;
+
+		public Entry entry(string? icon=null)
+		{
+			var entry = new Entry();
+			entry.set_size_request(ENTRY_WIDTH, -1);
+			entry.primary_icon_name = icon;
+			return entry;
+		}
+
+		public FileChooserEntry file_chooser(string text, FileChooserAction mode, bool create=true, string? icon=null, bool allow_url=false, bool allow_executable=false)
+		{
+			var chooser = new FileChooserEntry(text, mode, icon, null, allow_url, allow_executable);
+			chooser.chooser.create_folders = create;
+			chooser.chooser.show_hidden = true;
+			chooser.set_size_request(ENTRY_WIDTH, -1);
+			return chooser;
+		}
+	}
 }

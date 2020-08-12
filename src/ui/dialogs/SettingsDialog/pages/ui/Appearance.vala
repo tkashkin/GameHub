@@ -118,7 +118,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			grid_size_presets.selected = (int) Settings.UI.Appearance.GameGridSizePreset.from_size(settings.grid_card_width, settings.grid_card_height);
 		}
 
-		private CheckButton add_checkbox(string label, bool active, owned SettingsDialogPage.SwitchAction action, Box parent)
+		private CheckButton add_checkbox(string label, bool active, owned SwitchAction action, Box parent)
 		{
 			var check = new CheckButton.with_label(label);
 			StyleClass.add(check, "default-padding");
@@ -158,6 +158,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			return button;
 		}
 
+
+		delegate void SwitchAction(bool active);
 		delegate void SpinButtonAction(int value);
 	}
 }

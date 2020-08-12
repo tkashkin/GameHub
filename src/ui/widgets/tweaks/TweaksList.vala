@@ -47,7 +47,7 @@ namespace GameHub.UI.Widgets.Tweaks
 		{
 			this.foreach(w => w.destroy());
 
-			var tweaks = Tweak.load_tweaks_grouped(game == null, t => game == null || t.is_applicable_to(game, compat_tool));
+			var tweaks = Tweak.load_tweaks_grouped(t => game == null || t.is_applicable_to(game, compat_tool));
 
 			if(tweaks != null && tweaks.size > 0)
 			{

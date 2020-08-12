@@ -40,8 +40,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog
 
 		construct
 		{
-			//set_size_request(700, 500);
-			set_size_request(800, 640);
+			set_size_request(900, 700);
 
 			get_style_context().add_class("game-properties-dialog");
 

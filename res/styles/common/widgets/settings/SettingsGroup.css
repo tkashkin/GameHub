@@ -27,12 +27,18 @@
 	margin-right: 18px;
 }
 
-.settings-group .setting:not(.custom-widget-setting) > box,
-.settings-group .setting:not(.custom-widget-setting) > grid,
+.settings-group .setting:not(.custom-widget-setting):not(.env-variable-setting) > box,
+.settings-group .setting:not(.custom-widget-setting):not(.env-variable-setting) > grid,
 .settings-group .setting.label-setting > label
 {
 	padding: 6px 12px;
 	min-height: 36px;
+}
+
+.settings-group .setting.env-variable-setting entry.flat
+{
+	margin: 0;
+	padding: 6px 12px;
 }
 
 .settings-group .setting .description
