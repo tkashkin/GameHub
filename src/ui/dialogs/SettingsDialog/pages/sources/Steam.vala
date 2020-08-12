@@ -67,7 +67,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			sgrp_dirs.add_setting(
 				new FileSetting.bind(
 					_("Installation directory"), null,
-					file_chooser(_("Select Steam installation directory"), FileChooserAction.SELECT_FOLDER),
+					InlineWidgets.file_chooser(_("Select Steam installation directory"), FileChooserAction.SELECT_FOLDER),
 					steam_paths, "home"
 				)
 			);
@@ -146,7 +146,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			entry.primary_icon_name = "source-steam-symbolic";
 			entry.secondary_icon_name = "edit-delete-symbolic";
 			entry.secondary_icon_tooltip_text = _("Restore default API key");
-			entry.set_size_request(ENTRY_WIDTH, -1);
+			entry.set_size_request(InlineWidgets.ENTRY_WIDTH, -1);
 
 			entry.notify["text"].connect(() => { steam_auth.api_key = entry.text; request_restart(); });
 			entry.icon_press.connect((pos, e) => {

@@ -96,6 +96,24 @@ namespace GameHub.Data.Tweaks
 			return get_options_for_tweak(tweak) ?? new TweakOptions(tweak);
 		}
 
+		public TweakOptions get_or_create_global_options(Tweak tweak)
+		{
+			if(is_global)
+			{
+				return get_or_create_options(tweak);
+			}
+			return GameHub.Settings.Tweaks.global_tweakset.get_or_create_global_options(tweak);
+		}
+
+		public TweakOptions get_options_or_copy_global(Tweak tweak)
+		{
+			var local = get_options_for_tweak(tweak);
+			if(local != null && local.properties.size > 0) return local;
+			var global = get_or_create_global_options(tweak);
+			set_options_for_tweak(tweak, global);
+			return global;
+		}
+
 		public bool is_enabled(string tweak_id)
 		{
 			var opts = get_options_for_id(tweak_id);

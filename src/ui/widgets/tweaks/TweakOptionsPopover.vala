@@ -33,7 +33,7 @@ namespace GameHub.UI.Widgets.Tweaks
 	{
 		public Tweak tweak { get; construct; }
 		public TweakSet tweakset { get; construct; }
-		public TweakOptions tweak_options { get; construct; }
+		public TweakOptions? tweak_options { get; construct; default = null; }
 
 		private Option? selected_option;
 		private Option.Preset? selected_preset;
@@ -46,7 +46,7 @@ namespace GameHub.UI.Widgets.Tweaks
 
 		public TweakOptionsPopover(Tweak tweak, TweakSet tweakset)
 		{
-			Object(tweak: tweak, tweakset: tweakset, tweak_options: tweakset.get_or_create_options(tweak));
+			Object(tweak: tweak, tweakset: tweakset, tweak_options: tweakset.get_options_for_tweak(tweak));
 		}
 
 		construct
@@ -56,6 +56,16 @@ namespace GameHub.UI.Widgets.Tweaks
 			if(tweak.options == null || tweak.options.size == 0)
 			{
 				var options_warning = new AlertView(_("%s: no configurable options").printf(tweak.name), _("This tweak does not have any configurable options"), "dialog-warning-symbolic");
+				options_warning.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
+				options_warning.set_size_request(640, 240);
+				options_warning.show_all();
+				child = options_warning;
+				return;
+			}
+
+			if(tweak_options == null)
+			{
+				var options_warning = new AlertView(_("%s: using global options").printf(tweak.name), _("Enable this tweak for a game to configure game-specific options"), "dialog-warning-symbolic");
 				options_warning.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 				options_warning.set_size_request(640, 240);
 				options_warning.show_all();
@@ -132,7 +142,7 @@ namespace GameHub.UI.Widgets.Tweaks
 			values_list = null;
 			string_value_entry = null;
 
-			if(option == null) return;
+			if(option == null || tweak_options == null) return;
 
 			var option_properties = tweak_options.get_or_create_properties(option);
 
@@ -264,7 +274,7 @@ namespace GameHub.UI.Widgets.Tweaks
 
 		private void update_option_value()
 		{
-			if(selected_option == null) return;
+			if(selected_option == null || tweak_options == null) return;
 
 			var properties = new TweakOptions.OptionProperties(selected_option, selected_preset);
 

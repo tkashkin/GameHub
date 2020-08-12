@@ -60,10 +60,6 @@ namespace GameHub.UI.Widgets.Tweaks
 			name.xalign = 0;
 			name.valign = Align.CENTER;
 
-			var install = new Button.with_label(_("Install"));
-			install.valign = Align.CENTER;
-			install.sensitive = false;
-
 			var enabled = new Switch();
 			enabled.active = tweakset.is_enabled(tweak.id);
 			enabled.valign = Align.CENTER;
@@ -119,16 +115,23 @@ namespace GameHub.UI.Widgets.Tweaks
 				buttons_hbox.add(edit);
 			}
 
-			MenuButton? options = null;
+			Button? options = null;
+			TweakOptionsPopover? options_popover = null;
 			if(tweak.options != null && tweak.options.size > 0)
 			{
-				var options_popover = new TweakOptionsPopover(tweak, tweakset);
-				options = new MenuButton();
-				options.tooltip_text = _("Options");
+				options = new Button.from_icon_name("gh-settings-cog-symbolic", IconSize.BUTTON);
 				options.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-				options.image = new Image.from_icon_name("gh-settings-cog-symbolic", IconSize.BUTTON);
-				options.popover = options_popover;
-				options_popover.position = PositionType.LEFT;
+				options.tooltip_text = _("Options");
+				options.sensitive = false;
+				options.clicked.connect(() => {
+					if(options_popover == null)
+					{
+						options_popover = new TweakOptionsPopover(tweak, tweakset);
+						options_popover.relative_to = options;
+						options_popover.position = PositionType.LEFT;
+					}
+					options_popover.popup();
+				});
 				buttons_hbox.add(options);
 			}
 
@@ -178,18 +181,52 @@ namespace GameHub.UI.Widgets.Tweaks
 			}
 			else
 			{
-				if(!tweakset.is_global && tweakset.get_or_create_options(tweak).state == TweakOptions.State.GLOBAL)
+				if(options != null)
 				{
-					enabled.opacity = 0.6;
-					enabled.tooltip_text = enabled.active ? _("Enabled globally") : _("Disabled globally");
+					options.sensitive = enabled.active;
+				}
+
+				if(!tweakset.is_global)
+				{
+					var local_options = tweakset.get_options_for_tweak(tweak);
+					if(local_options == null || local_options.state == TweakOptions.State.GLOBAL)
+					{
+						enabled.opacity = 0.6;
+						enabled.tooltip_text = enabled.active ? _("Enabled globally") : _("Disabled globally");
+						if(options != null)
+						{
+							options.sensitive = false;
+						}
+					}
 				}
 
 				enabled.notify["active"].connect(() => {
-					var tweak_opts = tweakset.get_or_create_options(tweak);
-					tweak_opts.state = enabled.active ? TweakOptions.State.ENABLED : TweakOptions.State.DISABLED;
-					tweakset.set_options_for_tweak(tweak, tweak_opts);
+					TweakOptions? local_options;
+
+					if(!tweakset.is_global)
+					{
+						local_options = tweakset.get_options_for_tweak(tweak);
+						if(local_options == null || local_options.state == TweakOptions.State.GLOBAL)
+						{
+							local_options = tweakset.get_options_or_copy_global(tweak);
+							options_popover = null; // recreate options popover
+						}
+					}
+
+					if(local_options == null)
+					{
+						local_options = tweakset.get_or_create_options(tweak);
+					}
+
+					local_options.state = enabled.active ? TweakOptions.State.ENABLED : TweakOptions.State.DISABLED;
+					tweakset.set_options_for_tweak(tweak, local_options);
+
 					enabled.opacity = 1;
 					enabled.tooltip_text = null;
+					if(options != null)
+					{
+						options.sensitive = enabled.active;
+					}
 				});
 				setting_activated.connect(() => {
 					enabled.activate();

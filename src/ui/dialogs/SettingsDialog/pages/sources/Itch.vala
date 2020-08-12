@@ -42,7 +42,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		construct
 		{
-			var paths = Settings.Paths.Itch.instance;
+			/*var paths = Settings.Paths.Itch.instance;
 			itch_auth = Settings.Auth.Itch.instance;
 
 			itch_auth.bind_property("enabled", this, "active", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
@@ -63,7 +63,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				//request_restart();
 			});
 
-			update();
+			update();*/
 		}
 
 		private void update()
