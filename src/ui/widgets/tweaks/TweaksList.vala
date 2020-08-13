@@ -32,22 +32,37 @@ namespace GameHub.UI.Widgets.Tweaks
 	public class TweaksList: Notebook
 	{
 		public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
+		public TweakSet tweakset { get; construct; }
+
+		private Button reset_button;
 
 		public TweaksList(Traits.Game.SupportsTweaks? game = null)
 		{
-			Object(game: game, show_border: false, expand: true, scrollable: true);
+			Object(game: game, tweakset: game == null ? GameHub.Settings.Tweaks.global_tweakset : game.tweaks, show_border: false, expand: true, scrollable: true);
 		}
 
 		construct
 		{
+			reset_button = new Button.from_icon_name("edit-delete-symbolic", IconSize.SMALL_TOOLBAR);
+			reset_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			reset_button.valign = Align.CENTER;
+			reset_button.tooltip_markup = """<span weight="600" size="smaller" alpha="75%">%s</span>%s%s""".printf(
+				_("Reset to default"), "\n",
+				tweakset.is_global
+					? _("Disable all tweaks and reset all options globally\nOptions set for specific games will be kept")
+					: _("Remove all tweaks and options set for the game and use global options")
+			);
+			reset_button.clicked.connect(reset);
+			reset_button.show();
+			set_action_widget(reset_button, PackType.END);
 			update();
 		}
 
-		public void update(CompatTool? compat_tool=null)
+		private void update(CompatTool? compat_tool=null)
 		{
 			this.foreach(w => w.destroy());
 
-			var tweaks = Tweak.load_tweaks_grouped(t => game == null || t.is_applicable_to(game, compat_tool));
+			var tweaks = Tweak.load_tweaks_grouped(t => tweakset.is_global || t.is_applicable_to(game, compat_tool));
 
 			if(tweaks != null && tweaks.size > 0)
 			{
@@ -62,10 +77,10 @@ namespace GameHub.UI.Widgets.Tweaks
 
 				foreach(var tab_name in tab_names)
 				{
-					var tab = new TweakGroupTab(game, compat_tool, tab_name ?? _("Ungrouped"), tweaks[tab_name]);
+					var tab = new TweakGroupTab(tweakset, tab_name ?? _("Ungrouped"), tweaks[tab_name]);
 					append_page(tab, new Label(tab.group));
 				}
-				show_tabs = tweaks.size > 1;
+				show_tabs = true;
 			}
 			else
 			{
@@ -74,16 +89,23 @@ namespace GameHub.UI.Widgets.Tweaks
 			}
 		}
 
+		private void reset()
+		{
+			var current_tab = page;
+			tweakset.reset();
+			update();
+			page = current_tab;
+		}
+
 		private class TweakGroupTab: ScrolledWindow
 		{
-			public Traits.Game.SupportsTweaks? game { get; construct; default = null; }
-			public CompatTool? compat_tool { get; construct; default = null; }
+			public TweakSet tweakset { get; construct; }
 			public string? group { get; construct; default = null; }
 			public HashMap<string, Tweak>? tweaks { get; construct; default = null; }
 
-			public TweakGroupTab(Traits.Game.SupportsTweaks? game = null, CompatTool? compat_tool = null, string? group = null, HashMap<string, Tweak>? tweaks = null)
+			public TweakGroupTab(TweakSet tweakset, string? group = null, HashMap<string, Tweak>? tweaks = null)
 			{
-				Object(game: game, compat_tool: compat_tool, group: group, tweaks: tweaks, hscrollbar_policy: PolicyType.NEVER, expand: true);
+				Object(tweakset: tweakset, group: group, tweaks: tweaks, hscrollbar_policy: PolicyType.NEVER, expand: true);
 			}
 
 			construct
@@ -96,7 +118,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				{
 					foreach(var tweak in tweaks.values)
 					{
-						tweaks_list.add(new TweakRow(tweak, game == null ? GameHub.Settings.Tweaks.global_tweakset : game.tweaks));
+						tweaks_list.add(new TweakRow(tweak, tweakset));
 					}
 				}
 

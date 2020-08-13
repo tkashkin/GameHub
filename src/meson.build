@@ -149,11 +149,9 @@ sources = [
 	'ui/dialogs/GamePropertiesDialog/tabs/Overlays.vala',
 
 	'ui/dialogs/GameDetailsDialog.vala',
-	'ui/dialogs/GameFSOverlaysDialog.vala',
 	'ui/dialogs/CompatRunDialog.vala',
 	'ui/dialogs/CorruptedInstallerDialog.vala',
 	#'ui/dialogs/ImportEmulatedGamesDialog.vala',
-	'ui/dialogs/GameTweaksDialog.vala',
 
 	'ui/views/BaseView.vala',
 	'ui/views/WelcomeView.vala',

@@ -29,7 +29,7 @@ using GameHub.Data.Runnables;
 
 namespace GameHub.UI.Widgets.Tweaks
 {
-	public class TweakRow: ListBoxRow, ActivatableSetting
+	public class TweakRow: BaseSetting
 	{
 		public Tweak tweak { get; construct; }
 		public TweakSet tweakset { get; construct; }
@@ -37,68 +37,33 @@ namespace GameHub.UI.Widgets.Tweaks
 		public Requirements? unavailable_reqs { get; private set; }
 		public bool is_available { get { return unavailable_reqs == null; } }
 
+		public string? tweak_state { get; private set; }
+		private Box? buttons_hbox { get { return widget as Box; } }
+
 		public TweakRow(Tweak tweak, TweakSet tweakset)
 		{
-			Object(tweak: tweak, tweakset: tweakset, activatable: true, selectable: false);
+			Object(tweak: tweak, tweakset: tweakset, widget: new Box(Orientation.HORIZONTAL, 0), activatable: true, selectable: false);
 		}
 
 		construct
 		{
-			get_style_context().add_class("setting");
 			get_style_context().add_class("tweak-setting");
 
-			var grid = new Grid();
-			grid.column_spacing = 12;
+			ellipsize_title = Pango.EllipsizeMode.END;
+			ellipsize_description = Pango.EllipsizeMode.END;
 
-			var icon = new Image.from_icon_name(tweak.icon, IconSize.LARGE_TOOLBAR);
-			icon.valign = Align.CENTER;
+			title = tweak.name ?? tweak.id;
+			icon_name = tweak.icon;
 
-			var name = new Label(tweak.name ?? tweak.id);
-			name.get_style_context().add_class("title");
-			name.hexpand = true;
-			name.ellipsize = Pango.EllipsizeMode.END;
-			name.xalign = 0;
-			name.valign = Align.CENTER;
-
-			var enabled = new Switch();
-			enabled.active = tweakset.is_enabled(tweak.id);
-			enabled.valign = Align.CENTER;
-
-			var buttons_hbox = new Box(Orientation.HORIZONTAL, 0);
 			buttons_hbox.valign = Align.CENTER;
-
-			grid.attach(icon, 0, 0, 1, 2);
-			grid.attach(buttons_hbox, 2, 0, 1, 2);
-			grid.attach(enabled, 4, 0, 1, 2);
-
-			if(tweak.description != null)
-			{
-				var description = new Label(tweak.description);
-				description.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
-				description.get_style_context().add_class("description");
-				description.tooltip_text = tweak.description;
-				description.hexpand = true;
-				description.ellipsize = Pango.EllipsizeMode.END;
-				description.xalign = 0;
-				description.valign = Align.CENTER;
-				grid.attach(name, 1, 0);
-				grid.attach(description, 1, 1);
-			}
-			else
-			{
-				grid.attach(name, 1, 0, 1, 2);
-			}
 
 			if(tweak.url != null)
 			{
 				var url = new Button.from_icon_name("web-symbolic", IconSize.BUTTON);
 				url.tooltip_markup = """<span weight="600" size="smaller" alpha="75%">%s</span>%s%s""".printf(_("Open URL"), "\n", tweak.url);
 				url.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-
-				url.clicked.connect(() => {
-					Utils.open_uri(tweak.url);
-				});
-
+				url.valign = Align.CENTER;
+				url.clicked.connect(() => { Utils.open_uri(tweak.url); });
 				buttons_hbox.add(url);
 			}
 
@@ -107,11 +72,8 @@ namespace GameHub.UI.Widgets.Tweaks
 				var edit = new Button.from_icon_name("accessories-text-editor-symbolic", IconSize.BUTTON);
 				edit.tooltip_markup = """<span weight="600" size="smaller" alpha="75%">%s</span>%s%s""".printf(_("Edit file"), "\n", tweak.file.get_path());
 				edit.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-
-				edit.clicked.connect(() => {
-					Utils.open_uri(tweak.file.get_uri());
-				});
-
+				edit.valign = Align.CENTER;
+				edit.clicked.connect(() => { Utils.open_uri(tweak.file.get_uri()); });
 				buttons_hbox.add(edit);
 			}
 
@@ -123,6 +85,7 @@ namespace GameHub.UI.Widgets.Tweaks
 				options.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 				options.tooltip_text = _("Options");
 				options.sensitive = false;
+				options.valign = Align.CENTER;
 				options.clicked.connect(() => {
 					if(options_popover == null)
 					{
@@ -134,6 +97,12 @@ namespace GameHub.UI.Widgets.Tweaks
 				});
 				buttons_hbox.add(options);
 			}
+
+			var enabled = new Switch();
+			enabled.active = tweakset.is_enabled(tweak.id);
+			enabled.valign = Align.CENTER;
+			enabled.margin_start = 12;
+			buttons_hbox.add(enabled);
 
 			unavailable_reqs = tweak.get_unavailable_requirements();
 			if(unavailable_reqs != null)
@@ -168,15 +137,16 @@ namespace GameHub.UI.Widgets.Tweaks
 					options.sensitive = false;
 				}
 
+				tweak_state = _("Unavailable");
 				enabled.sensitive = false;
 				enabled.active = false;
 				activatable = false;
-				name.sensitive = false;
+				title_label.sensitive = false;
 				tooltip_markup = string.joinv("\n", reqs).strip();
-				icon.opacity = 0.6;
-				if(icon.icon_name == "gh-settings-cogs-symbolic")
+				icon_image.opacity = 0.6;
+				if(icon_name == "gh-settings-cogs-symbolic")
 				{
-					icon.icon_name = "action-unavailable-symbolic";
+					icon_name = "action-unavailable-symbolic";
 				}
 			}
 			else
@@ -186,13 +156,16 @@ namespace GameHub.UI.Widgets.Tweaks
 					options.sensitive = enabled.active;
 				}
 
+				tweak_state = enabled.active ? _("Enabled") : _("Disabled");
+
 				if(!tweakset.is_global)
 				{
 					var local_options = tweakset.get_options_for_tweak(tweak);
 					if(local_options == null || local_options.state == TweakOptions.State.GLOBAL)
 					{
 						enabled.opacity = 0.6;
-						enabled.tooltip_text = enabled.active ? _("Enabled globally") : _("Disabled globally");
+						tweak_state = enabled.active ? _("Enabled globally") : _("Disabled globally");
+						enabled.tooltip_text = tweak_state;
 						if(options != null)
 						{
 							options.sensitive = false;
@@ -221,6 +194,7 @@ namespace GameHub.UI.Widgets.Tweaks
 					local_options.state = enabled.active ? TweakOptions.State.ENABLED : TweakOptions.State.DISABLED;
 					tweakset.set_options_for_tweak(tweak, local_options);
 
+					tweak_state = enabled.active ? _("Enabled") : _("Disabled");
 					enabled.opacity = 1;
 					enabled.tooltip_text = null;
 					if(options != null)
@@ -233,7 +207,21 @@ namespace GameHub.UI.Widgets.Tweaks
 				});
 			}
 
-			child = grid;
+			notify["tweak-state"].connect(() => {
+				if(tweak_state != null)
+				{
+					description = "%s • %s".printf(tweak_state, tweak.description);
+					Idle.add(() => {
+						description_label.tooltip_text = tweak.description;
+						return Source.REMOVE;
+					});
+				}
+				else
+				{
+					description = tweak.description;
+				}
+			});
+			notify_property("tweak-state");
 		}
 	}
 }

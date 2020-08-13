@@ -129,6 +129,12 @@ namespace GameHub.Data.Tweaks
 			return global_opts != null && global_opts.state == TweakOptions.State.ENABLED;
 		}
 
+		public void reset()
+		{
+			tweaks = null;
+			changed();
+		}
+
 		public Json.Node? to_json()
 		{
 			var node = new Json.Node(Json.NodeType.OBJECT);
