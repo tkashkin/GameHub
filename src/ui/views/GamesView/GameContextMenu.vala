@@ -169,20 +169,6 @@ namespace GameHub.UI.Views.GamesView
 				uninstall.activate.connect(() => game.uninstall.begin());
 				add(new Gtk.SeparatorMenuItem());
 				add(uninstall);
-
-				game.cast<Traits.Game.SupportsOverlays>(game => {
-					add(new Gtk.SeparatorMenuItem());
-					var fs_overlays = new Gtk.MenuItem.with_label(_("Overlays"));
-					fs_overlays.activate.connect(() => new Dialogs.GameFSOverlaysDialog(game).show_all());
-					add(fs_overlays);
-				});
-
-				game.cast<Traits.Game.SupportsTweaks>(game => {
-					add(new Gtk.SeparatorMenuItem());
-					var tweaks = new Gtk.MenuItem.with_label(_("Tweaks"));
-					tweaks.activate.connect(() => new Dialogs.GameTweaksDialog(game).show_all());
-					add(tweaks);
-				});
 			}
 
 			if(!(game is Sources.GOG.GOGGame.DLC))
