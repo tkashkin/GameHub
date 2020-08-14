@@ -53,7 +53,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			var grid_height_spinbutton = add_spinbutton(settings.grid_card_height, v => { settings.grid_card_height = v; update_grid_size_presets(); }, grid_size_hbox);
 
 			grid_size_presets = new ModeButton();
-			StyleClass.add(grid_size_presets, "icons-modebutton");
 
 			foreach(var preset in Settings.UI.Appearance.GameGridSizePreset.PRESETS)
 			{
@@ -92,6 +91,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 			var sgrp_grid = new SettingsGroup(_("Grid"));
 			sgrp_grid.add_setting(new SwitchSetting.bind(_("Show platform icons"), null, settings, "grid-platform-icons"));
+			sgrp_grid.add_setting(new SwitchSetting.bind(_("Show game titles"), null, settings, "grid-titles"));
 			sgrp_grid.add_setting(new BaseSetting(_("Card size"), _("Cards may be scaled to fit window"), grid_size_hbox));
 			setting_card_size_preset = sgrp_grid.add_setting(new BaseSetting(_("Card size preset"), null, grid_size_presets));
 			add_widget(sgrp_grid);
@@ -115,7 +115,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 		private void update_grid_size_presets()
 		{
-			grid_size_presets.selected = (int) Settings.UI.Appearance.GameGridSizePreset.from_size(settings.grid_card_width, settings.grid_card_height);
+			var index = (int) Settings.UI.Appearance.GameGridSizePreset.from_size(settings.grid_card_width, settings.grid_card_height);
+			if(index >= 0 && index < grid_size_presets.n_items)
+			{
+				grid_size_presets.selected = index;
+			}
 		}
 
 		private CheckButton add_checkbox(string label, bool active, owned SwitchAction action, Box parent)

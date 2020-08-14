@@ -302,7 +302,10 @@ namespace GameHub.UI.Widgets.Settings
 			set
 			{
 				_selected_option = value;
-				button.selected = _selected_option;
+				if(_selected_option >= 0 && _selected_option < button.n_items)
+				{
+					button.selected = _selected_option;
+				}
 			}
 		}
 
