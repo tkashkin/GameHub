@@ -73,7 +73,7 @@
 	box-shadow: none;
 }
 
-.gamecard .actions
+.gamecard .scrim
 {
 	background-color: rgba(0, 0, 0, 0.4);
 	border: 1px rgba(0, 0, 0, 0.6) solid;
@@ -81,21 +81,21 @@
 	transition: 100ms;
 }
 
-.gamecard.installed .actions, .gamecard.static .actions
+.gamecard.installed .scrim, .gamecard.static .scrim
 {
 	background-color: rgba(0, 0, 0, 0);
 }
 
-.gamecard.hover .actions,
-.games-grid flowboxchild:focus .gamecard .actions,
-.games-grid flowboxchild:selected .gamecard .actions
+.gamecard.hover .scrim,
+.games-grid flowboxchild:focus .gamecard .scrim,
+.games-grid flowboxchild:selected .gamecard .scrim
 {
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
-.gamecard.installed.hover .actions,
-.games-grid flowboxchild:focus .gamecard.installed .actions,
-.games-grid flowboxchild:selected .gamecard.installed .actions
+.gamecard.installed.hover .scrim,
+.games-grid flowboxchild:focus .gamecard.installed .scrim,
+.games-grid flowboxchild:selected .gamecard.installed .scrim
 {
 	background-color: rgba(255, 255, 255, 0.2);
 }
@@ -139,10 +139,10 @@
 	background: @theme_selected_bg_color;
 }
 
-.gamecard.running .actions,
-.gamecard.hover.running .actions,
-.games-grid flowboxchild:focus .gamecard.running .actions,
-.games-grid flowboxchild:selected .gamecard.running .actions
+.gamecard.running .scrim,
+.gamecard.hover.running .scrim,
+.games-grid flowboxchild:focus .gamecard.running .scrim,
+.games-grid flowboxchild:selected .gamecard.running .scrim
 {
 	background-color: rgba(0, 0, 0, 0.6);
 }

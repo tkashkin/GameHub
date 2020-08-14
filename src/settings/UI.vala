@@ -28,6 +28,7 @@ namespace GameHub.Settings.UI
 		public bool dark_theme { get; set; }
 		public Appearance.IconStyle icon_style { get; set; }
 
+		public bool grid_titles { get; set; }
 		public bool grid_platform_icons { get; set; }
 
 		public int grid_card_width  { get; set; }

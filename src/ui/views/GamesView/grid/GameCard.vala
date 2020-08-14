@@ -52,7 +52,10 @@ namespace GameHub.UI.Views.GamesView.Grid
 
 		private Frame card;
 		private Overlay content;
+		private Box scrim;
 		private AutoSizeImage image;
+
+		private Box info;
 		private Label label;
 		private Label status_label;
 
@@ -63,8 +66,6 @@ namespace GameHub.UI.Views.GamesView.Grid
 		private Image updated_icon;
 
 		private Box platform_icons;
-
-		private Box actions;
 
 		private Frame progress_bar;
 
@@ -150,16 +151,16 @@ namespace GameHub.UI.Views.GamesView.Grid
 			status_label.justify = Justification.CENTER;
 			status_label.lines = 1;
 
-			var info = new Box(Orientation.VERTICAL, 0);
+			info = new Box(Orientation.VERTICAL, 0);
 			info.get_style_context().add_class("info");
 			info.add(label);
 			info.add(status_label);
 			info.valign = Align.END;
 
-			actions = new Box(Orientation.VERTICAL, 0);
-			actions.get_style_context().add_class("actions");
-			actions.hexpand = true;
-			actions.vexpand = true;
+			scrim = new Box(Orientation.VERTICAL, 0);
+			scrim.get_style_context().add_class("scrim");
+			scrim.hexpand = true;
+			scrim.vexpand = true;
 
 			progress_bar = new Frame(null);
 			progress_bar.halign = Align.START;
@@ -179,7 +180,7 @@ namespace GameHub.UI.Views.GamesView.Grid
 			running_indicator.opacity = 0;
 
 			content.add(image);
-			content.add_overlay(actions);
+			content.add_overlay(scrim);
 			content.add_overlay(info);
 			content.add_overlay(platform_icons);
 			content.add_overlay(src_icons);
@@ -228,8 +229,14 @@ namespace GameHub.UI.Views.GamesView.Grid
 				return false;
 			});
 
-			Settings.UI.Appearance.instance.notify["grid-platform-icons"].connect(update_grid_icons);
-			update_grid_icons();
+			show_all();
+			favorite_icon.no_show_all = true;
+			updated_icon.no_show_all = true;
+			info.no_show_all = true;
+
+			Settings.UI.Appearance.instance.notify["grid-titles"].connect(update_appearance);
+			Settings.UI.Appearance.instance.notify["grid-platform-icons"].connect(update_appearance);
+			update_appearance();
 
 			Settings.UI.Appearance.instance.notify["grid-card-width"].connect(update_image_constraints);
 			Settings.UI.Appearance.instance.notify["grid-card-height"].connect(update_image_constraints);
@@ -363,6 +370,8 @@ namespace GameHub.UI.Views.GamesView.Grid
 				}
 				platform_icons.show_all();
 
+				update_appearance();
+
 				return Source.REMOVE;
 			});
 
@@ -463,9 +472,10 @@ namespace GameHub.UI.Views.GamesView.Grid
 			}, Priority.LOW);
 		}
 
-		private void update_grid_icons()
+		private void update_appearance()
 		{
 			Idle.add(() => {
+				info.visible = Settings.UI.Appearance.instance.grid_titles;
 				src_icons.visible = platform_icons.visible = Settings.UI.Appearance.instance.grid_platform_icons;
 				return Source.REMOVE;
 			}, Priority.LOW);

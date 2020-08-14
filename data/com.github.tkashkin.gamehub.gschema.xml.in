@@ -100,6 +100,10 @@
 				<default>['installed-icon', 'installed-title-bold', 'installed-status', 'uninstalled-icon', 'uninstalled-dim']</default>
 				<summary>List style</summary>
 			</key>
+			<key name="grid-titles" type="b">
+				<default>true</default>
+				<summary>Show game titles in grid view</summary>
+			</key>
 			<key name="grid-platform-icons" type="b">
 				<default>true</default>
 				<summary>Show platform icons in grid view</summary>
