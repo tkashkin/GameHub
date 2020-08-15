@@ -36,6 +36,7 @@ namespace GameHub.Data.Tweaks
 		public Requirements? requirements { get; protected set; default = null; }
 
 		public ArrayList<Option>? options { get; protected set; default = null; }
+		public bool has_options { get { return options != null && options.size > 0; } }
 
 		public HashMap<string, string?>? env { get; protected set; default = null; }
 		public string? command { get; protected set; default = null; }
@@ -154,7 +155,7 @@ namespace GameHub.Data.Tweaks
 
 		public Option? get_option(string id)
 		{
-			if(options == null || options.size == 0) return null;
+			if(!has_options) return null;
 			foreach(var option in options)
 			{
 				if(option.id == id) return option;
@@ -299,7 +300,7 @@ namespace GameHub.Data.Tweaks
 				if(reqs != null) obj.set_member("requires", reqs);
 			}
 
-			if(options != null && options.size > 0)
+			if(has_options)
 			{
 				var options_obj = new Json.Object();
 				foreach(var option in options)

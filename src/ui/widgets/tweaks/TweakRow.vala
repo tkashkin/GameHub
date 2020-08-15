@@ -79,7 +79,7 @@ namespace GameHub.UI.Widgets.Tweaks
 
 			Button? options = null;
 			TweakOptionsPopover? options_popover = null;
-			if(tweak.options != null && tweak.options.size > 0)
+			if(tweak.has_options)
 			{
 				options = new Button.from_icon_name("gh-settings-cog-symbolic", IconSize.BUTTON);
 				options.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
