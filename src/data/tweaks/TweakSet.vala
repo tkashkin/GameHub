@@ -108,8 +108,8 @@ namespace GameHub.Data.Tweaks
 		public TweakOptions get_options_or_copy_global(Tweak tweak)
 		{
 			var local = get_options_for_tweak(tweak);
-			if(local != null && local.properties.size > 0) return local;
-			var global = get_or_create_global_options(tweak);
+			if(local != null && (!tweak.has_options || local.has_properties)) return local;
+			var global = get_or_create_global_options(tweak).copy();
 			set_options_for_tweak(tweak, global);
 			return global;
 		}
@@ -121,7 +121,7 @@ namespace GameHub.Data.Tweaks
 				return get_or_create_options(tweak);
 			}
 			var local = get_options_for_tweak(tweak);
-			if(local != null && local.properties.size > 0) return local;
+			if(local != null && (!tweak.has_options || local.has_properties)) return local;
 			return get_or_create_global_options(tweak);
 		}
 
@@ -132,12 +132,11 @@ namespace GameHub.Data.Tweaks
 			{
 				return opts != null && opts.state == TweakOptions.State.ENABLED;
 			}
-			if(opts != null && opts.state != TweakOptions.State.GLOBAL)
+			if(opts == null || opts.state == TweakOptions.State.GLOBAL)
 			{
-				return opts.state == TweakOptions.State.ENABLED;
+				return GameHub.Settings.Tweaks.global_tweakset.is_enabled(tweak_id);
 			}
-			var global_opts = GameHub.Settings.Tweaks.global_tweakset.get_options_for_id(tweak_id);
-			return global_opts != null && global_opts.state == TweakOptions.State.ENABLED;
+			return opts.state == TweakOptions.State.ENABLED;
 		}
 
 		public void reset()

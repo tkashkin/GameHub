@@ -53,7 +53,7 @@ namespace GameHub.UI.Widgets.Tweaks
 		{
 			get_style_context().add_class("tweak-options-popover");
 
-			if(tweak.options == null || tweak.options.size == 0)
+			if(!tweak.has_options)
 			{
 				var options_warning = new AlertView(_("%s: no configurable options").printf(tweak.name), _("This tweak does not have any configurable options"), "dialog-warning-symbolic");
 				options_warning.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);

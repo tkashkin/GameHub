@@ -28,6 +28,7 @@ namespace GameHub.Data.Tweaks
 		public Tweak tweak { get; set; }
 		public State state { get; set; default = State.GLOBAL; }
 		public ArrayList<OptionProperties>? properties { get; protected set; default = null; }
+		public bool has_properties { get { return properties != null && properties.size > 0; } }
 
 		public TweakOptions(Tweak tweak, State state = State.GLOBAL, ArrayList<OptionProperties>? properties = null)
 		{
@@ -61,9 +62,14 @@ namespace GameHub.Data.Tweaks
 			Object(tweak: tweak, state: state, properties: properties);
 		}
 
+		public TweakOptions copy()
+		{
+			return new TweakOptions.from_json(tweak, to_json());
+		}
+
 		public OptionProperties? get_properties_for_id(string option_id)
 		{
-			if(properties == null || properties.size == 0) return null;
+			if(!has_properties) return null;
 			foreach(var opt_props in properties)
 			{
 				if(opt_props.option.id == option_id) return opt_props;
@@ -111,14 +117,14 @@ namespace GameHub.Data.Tweaks
 		public string expand(string value)
 		{
 			var result = value;
-			if(properties != null && properties.size > 0)
+			if(has_properties)
 			{
 				foreach(var option_props in properties)
 				{
 					result = result.replace("${option:%s}".printf(option_props.option.id), option_props.value);
 				}
 			}
-			if(tweak.options != null && tweak.options.size > 0)
+			if(tweak.has_options)
 			{
 				foreach(var option in tweak.options)
 				{
@@ -135,7 +141,7 @@ namespace GameHub.Data.Tweaks
 
 			obj.set_string_member("state", state.to_string());
 
-			if(properties != null && properties.size > 0)
+			if(has_properties)
 			{
 				var options = new Json.Object();
 				foreach(var opt_props in properties)

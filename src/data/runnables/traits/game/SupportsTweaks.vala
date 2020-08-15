@@ -33,14 +33,17 @@ namespace GameHub.Data.Runnables.Traits.Game
 		protected void init_tweaks()
 		{
 			tweaks = new TweakSet.from_json(false, null);
-			tweaks.changed.connect(() => {
-				save();
-			});
+			_tweaks_init();
 		}
 
 		protected void dbinit_tweaks(Sqlite.Statement s)
 		{
 			tweaks = new TweakSet.from_json(false, Parser.parse_json(Tables.Games.TWEAKS.get(s)));
+			_tweaks_init();
+		}
+
+		private void _tweaks_init()
+		{
 			tweaks.changed.connect(() => {
 				save();
 			});
