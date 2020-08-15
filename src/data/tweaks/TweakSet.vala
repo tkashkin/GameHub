@@ -114,6 +114,17 @@ namespace GameHub.Data.Tweaks
 			return global;
 		}
 
+		public TweakOptions get_options_or_use_global(Tweak tweak)
+		{
+			if(is_global)
+			{
+				return get_or_create_options(tweak);
+			}
+			var local = get_options_for_tweak(tweak);
+			if(local != null && local.properties.size > 0) return local;
+			return get_or_create_global_options(tweak);
+		}
+
 		public bool is_enabled(string tweak_id)
 		{
 			var opts = get_options_for_id(tweak_id);

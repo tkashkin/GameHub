@@ -88,7 +88,7 @@ namespace GameHub.Utils
 				{
 					if(!_tweaks.is_enabled(tweak.id) || (_tweaks_game != null && !tweak.is_applicable_to(_tweaks_game, _tweaks_compat_tool))) continue;
 
-					var tweak_options = _tweaks.get_or_create_options(tweak);
+					var tweak_options = _tweaks.get_options_or_use_global(tweak);
 
 					if(tweak.env != null)
 					{

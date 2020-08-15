@@ -209,7 +209,7 @@ namespace GameHub.Data.Runnables
 		public virtual async void install(InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE)
 		{
 			if(status.state != Game.State.UNINSTALLED || !is_installable) return;
-			var task = new InstallTask(this, installers, source.game_dirs, install_mode);
+			var task = new InstallTask(this, installers, source.game_dirs, install_mode, true);
 			yield task.start();
 		}
 

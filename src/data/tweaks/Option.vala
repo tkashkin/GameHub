@@ -93,6 +93,15 @@ namespace GameHub.Data.Tweaks
 			return null;
 		}
 
+		public string default_value
+		{
+			get
+			{
+				if(presets != null && presets.size >= 1) return presets.first().value;
+				return "";
+			}
+		}
+
 		public Json.Node? to_json()
 		{
 			var node = new Json.Node(Json.NodeType.OBJECT);

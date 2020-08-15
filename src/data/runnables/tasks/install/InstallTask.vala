@@ -40,9 +40,12 @@ namespace GameHub.Data.Runnables.Tasks.Install
 		public ArrayList<CompatTool>? compat_tools { get; set; default = null; }
 		public CompatTool? selected_compat_tool { get; set; default = null; }
 
-		public InstallTask(Runnable? runnable, ArrayList<Installer>? installers, ArrayList<File>? install_dirs, InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE)
+		public bool can_import_install_dir { get; construct set; default = false; }
+		private bool install_dir_imported = false;
+
+		public InstallTask(Runnable? runnable, ArrayList<Installer>? installers, ArrayList<File>? install_dirs, InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE, bool allow_install_dir_import=true)
 		{
-			Object(runnable: runnable, installers: installers, install_dirs: install_dirs, install_mode: install_mode);
+			Object(runnable: runnable, installers: installers, install_dirs: install_dirs, install_mode: install_mode, can_import_install_dir: allow_install_dir_import);
 		}
 
 		private void init()
@@ -138,6 +141,11 @@ namespace GameHub.Data.Runnables.Tasks.Install
 
 		public async void install()
 		{
+			if(install_dir_imported)
+			{
+				warning("[InstallTask.install] Installation directory was imported, skipping installation");
+				return;
+			}
 			if(selected_installer == null)
 			{
 				warning("[InstallTask.install] No installer selected");
@@ -156,6 +164,25 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			}
 			info("[InstallTask.install] Starting installation of %s; installer: '%s'; install_dir: `%s`", runnable != null ? runnable.full_id : "(null)", selected_installer.id, install_dir.get_path());
 			yield selected_installer.install(this);
+		}
+
+		public void import_install_dir(File? dir)
+		{
+			if(dir != null && dir.query_exists())
+			{
+				install_dir = dir;
+				info("[InstallTask.import_install_dir] Importing install_dir of %s; install_dir: `%s`", runnable != null ? runnable.full_id : "(null)", install_dir.get_path());
+				if(runnable != null)
+				{
+					runnable.install_dir = dir;
+					runnable.save();
+					runnable.update_status();
+				}
+				install_dir_imported = true;
+				config_step_last_change_direction = ConfigStepChangeDirection.NEXT;
+				config_step = ConfigStep.FINISH;
+				finish();
+			}
 		}
 
 		public void finish()
@@ -198,7 +225,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 					});
 				});
 
-				if(selected_installer.version != null)
+				if(selected_installer != null && selected_installer.version != null)
 				{
 					runnable.cast<Game>(game => game.version = selected_installer.version);
 				}

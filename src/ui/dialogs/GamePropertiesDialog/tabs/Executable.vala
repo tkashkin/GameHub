@@ -47,15 +47,25 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 
 		construct
 		{
+			var install_dir_path = game.install_dir != null ? game.install_dir.get_path() : null;
+
 			var sgrp_executable = new SettingsGroup();
 			var executable_setting = sgrp_executable.add_setting(
 				new FileSetting(
 					_("Executable"), _("Game's main executable file"),
-					InlineWidgets.file_chooser(_("Select the main executable file of the game"), FileChooserAction.OPEN, false, null, false, true),
+					InlineWidgets.file_chooser(_("Select the main executable file of the game"), FileChooserAction.OPEN, false, null, false, true, install_dir_path),
 					game.executable != null ? game.executable.get_path() : null
 				)
 			);
 			executable_setting.chooser.file_set.connect(() => game.executable = executable_setting.chooser.file);
+			var work_dir_setting = sgrp_executable.add_setting(
+				new FileSetting(
+					_("Working directory"), _("Directory the executable is launched from"),
+					InlineWidgets.file_chooser(_("Select working directory of the game"), FileChooserAction.SELECT_FOLDER, false, null, false, false, install_dir_path),
+					game.work_dir != null ? game.work_dir.get_path() : null
+				)
+			);
+			work_dir_setting.chooser.file_set.connect(() => game.work_dir = work_dir_setting.chooser.file);
 			sgrp_executable.add_setting(
 				new EntrySetting.bind(
 					_("Arguments"), _("Command line arguments passed to the executable"),
