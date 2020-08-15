@@ -25,7 +25,7 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Runnables
 {
-	public abstract class Runnable: Object
+	public abstract class Runnable: BaseObject
 	{
 		// General properties
 
@@ -142,19 +142,6 @@ namespace GameHub.Data.Runnables
 
 		public virtual void update_status(){}
 		public virtual void save(){}
-
-		// Traits
-
-		public delegate void CastAction<T>(T self);
-		public T? cast<T>(CastAction<T>? action=null)
-		{
-			if(this is T)
-			{
-				if(action != null) action((T) this);
-				return (T) this;
-			}
-			return null;
-		}
 
 		// Static functions
 

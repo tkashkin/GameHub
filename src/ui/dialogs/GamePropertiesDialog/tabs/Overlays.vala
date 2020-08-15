@@ -23,7 +23,9 @@ using GameHub.Data.Runnables;
 
 using GameHub.Utils;
 using GameHub.Utils.FS;
+
 using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 {
@@ -34,10 +36,9 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 		private Stack stack;
 
 		private Box disabled_box;
-		private AlertView disabled_alert;
-		private Button enable_btn;
+		private ButtonLabelSetting enable_button;
 
-		private Box content;
+		private SettingsGroupBox content;
 		private ListBox overlays_list;
 		private ScrolledWindow overlays_scrolled;
 
@@ -59,21 +60,29 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 			stack = new Stack();
 			stack.transition_type = StackTransitionType.CROSSFADE;
 
-			content = new Box(Orientation.VERTICAL, 0);
-			content.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			content.margin = 6;
-
 			disabled_box = new Box(Orientation.VERTICAL, 0);
 
-			disabled_alert = new AlertView(_("Overlays are disabled"), _("Enable overlays to manage DLCs and mods\n\nEnabling will move game to the “base“ overlay"), "dialog-information");
-			disabled_alert.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
-			disabled_alert.halign = Align.START;
+			var sgrp_disabled = new SettingsGroup();
+			enable_button = sgrp_disabled.add_setting(new ButtonLabelSetting(_("Overlays are disabled for this game"), _("Enable")));
+			disabled_box.add(sgrp_disabled);
 
-			disabled_box.add(disabled_alert);
+			var sgrp_info_description = new SettingsGroup(_("What are Overlays?"));
+			var info_description_label = sgrp_info_description.add_setting(new LabelSetting(
+				"%s\n\n%s\n%s\n%s\n%s".printf(
+					_("Overlays are directories layered on top of each other"),
+					_("Applying overlays is equivalent to copying overlays on top of each other and replacing conflicting files"),
+					_("Overlays allow to install, uninstall, enable and disable DLCs or mods without replacing game files at any time"),
+					_("Each overlay is stored separately and does not affect other overlays"),
+					_("All changes to the game files are stored in a separate directory and are easy to revert")
+				)
+			));
+			info_description_label.label.xalign = 0;
+			disabled_box.add(sgrp_info_description);
+
+			content = new SettingsGroupBox();
+			content.container.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
 
 			overlays_list = new ListBox();
-			overlays_list.get_style_context().add_class("overlays-list");
-			overlays_list.get_style_context().add_class("separated-list-all");
 			overlays_list.selection_mode = SelectionMode.NONE;
 
 			overlays_scrolled = new ScrolledWindow(null, null);
@@ -106,26 +115,25 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 			var actionbar = new ActionBar();
 			actionbar.add(add_box);
 
-			content.add(overlays_scrolled);
-			content.add(actionbar);
+			content.add_widget(overlays_scrolled);
+			content.add_widget(actionbar);
 
 			stack.add(disabled_box);
 			stack.add(content);
 
 			add(stack);
 
-			enable_btn = new Button.with_label(_("Enable overlays"));
-			enable_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
-			//enable_btn.grab_default();
-
-			/*response.connect((source, response_id) => {
-				switch(response_id)
+			overlays_list.row_activated.connect(row => {
+				var setting = row as ActivatableSetting;
+				if(setting != null)
 				{
-					case RESPONSE_ENABLE_OVERLAYS:
-						game.enable_overlays();
-						break;
+					setting.setting_activated();
 				}
-			});*/
+			});
+
+			enable_button.button.clicked.connect(() => {
+				game.enable_overlays();
+			});
 
 			destroy.connect(() => {
 				game.save_overlays();
@@ -134,7 +142,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 
 			stack.show_all();
 
-			game.notify["overlays-enabled"].connect(update);
+			game.overlays_changed.connect(update);
 
 			add_btn.clicked.connect(add_overlay);
 
@@ -143,10 +151,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 
 			id_entry.changed.connect(() => add_btn.sensitive = id_entry.text.strip().length > 0);
 
-			Idle.add(() => {
-				update();
-				return Source.REMOVE;
-			});
+			update();
 		}
 
 		private void update()
@@ -156,7 +161,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 			if(!game.overlays_enabled)
 			{
 				disabled_box.foreach(w => {
-					if(w != disabled_alert)
+					if(w is InfoBar)
 					{
 						w.destroy();
 					}
@@ -169,12 +174,12 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 					if(safety != FSOverlay.RootPathSafety.SAFE)
 					{
 						var message_type = MessageType.WARNING;
-						var message = _("Overlay usage at this path may be unsafe\nProceed at your own risk\n\nPath: <b>%s</b>");
+						var message = _("Overlays at this path may be unsafe\nProceed at your own risk\n\nPath: <b>%s</b>");
 
 						if(safety == FSOverlay.RootPathSafety.RESTRICTED)
 						{
 							message_type = MessageType.ERROR;
-							message = _("Overlay usage at this path is not supported\n\nPath: <b>%s</b>");
+							message = _("Overlays at this path are not supported\n\nPath: <b>%s</b>");
 						}
 
 						var label = new Label(message.printf(game.install_dir.get_path()));
@@ -188,21 +193,19 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 						disabled_box.add(msg);
 					}
 
-					enable_btn.sensitive = safety != FSOverlay.RootPathSafety.RESTRICTED;
+					enable_button.sensitive = safety != FSOverlay.RootPathSafety.RESTRICTED;
 				}
 				else
 				{
-					enable_btn.sensitive = false;
+					enable_button.sensitive = false;
 				}
 
 				stack.visible_child = disabled_box;
-				enable_btn.visible = true;
 			}
 			else
 			{
 				stack.visible_child = content;
-				enable_btn.visible = false;
-				enable_btn.sensitive = false;
+				enable_button.sensitive = false;
 
 				overlays_list.foreach(w => w.destroy());
 
@@ -227,30 +230,19 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 			id_entry.grab_focus();
 		}
 
-		private class OverlayRow: ListBoxRow
+		private class OverlayRow: BaseSetting
 		{
 			public Traits.Game.SupportsOverlays.Overlay overlay { get; construct; }
+			private Box buttons { get { return widget as Box; } }
 
 			public OverlayRow(Traits.Game.SupportsOverlays.Overlay overlay)
 			{
-				Object(overlay: overlay);
+				Object(title: overlay.name, description: overlay.id, widget: new Box(Orientation.HORIZONTAL, 0), overlay: overlay, activatable: overlay.id != Traits.Game.SupportsOverlays.Overlay.BASE, selectable: false);
 			}
 
 			construct
 			{
-				var grid = new Grid();
-				grid.margin_start = grid.margin_end = 8;
-				grid.margin_top = grid.margin_bottom = 6;
-				grid.column_spacing = 8;
-
-				var name = new Label(overlay.name);
-				name.get_style_context().add_class("category-label");
-				name.hexpand = true;
-				name.xalign = 0;
-
-				var id = new Label(overlay.id);
-				id.hexpand = true;
-				id.xalign = 0;
+				get_style_context().add_class("overlay-setting");
 
 				var open = new Button.from_icon_name("folder-symbolic", IconSize.SMALL_TOOLBAR);
 				open.tooltip_text = _("Open directory");
@@ -263,18 +255,15 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 				remove.valign = Align.CENTER;
 				remove.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
-				var enabled = new Switch();
-				enabled.active = overlay.enabled;
-				enabled.sensitive = overlay.id != Traits.Game.SupportsOverlays.Overlay.BASE;
-				enabled.valign = Align.CENTER;
+				var enabled_switch = new Switch();
+				enabled_switch.active = overlay.enabled;
+				enabled_switch.sensitive = activatable;
+				enabled_switch.valign = Align.CENTER;
+				enabled_switch.margin_start = 12;
 
-				grid.attach(name, 0, 0);
-				grid.attach(id, 0, 1);
-				grid.attach(open, 1, 0, 1, 2);
-				grid.attach(remove, 2, 0, 1, 2);
-				grid.attach(enabled, 3, 0, 1, 2);
-
-				child = grid;
+				buttons.add(open);
+				buttons.add(remove);
+				buttons.add(enabled_switch);
 
 				open.clicked.connect(() => {
 					Utils.open_uri(overlay.directory.get_uri());
@@ -284,9 +273,13 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 					overlay.remove();
 				});
 
-				enabled.notify["active"].connect(() => {
-					overlay.enabled = enabled.active;
+				enabled_switch.notify["active"].connect(() => {
+					overlay.enabled = enabled_switch.active;
 					overlay.game.save_overlays();
+				});
+
+				setting_activated.connect(() => {
+					enabled_switch.activate();
 				});
 			}
 		}

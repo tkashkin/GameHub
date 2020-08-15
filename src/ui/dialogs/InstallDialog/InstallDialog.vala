@@ -17,7 +17,6 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
-
 using Gee;
 
 using GameHub.Data;
@@ -25,7 +24,9 @@ using GameHub.Data.Runnables;
 using GameHub.Data.Runnables.Tasks.Install;
 
 using GameHub.Utils;
+
 using GameHub.UI.Widgets;
+using GameHub.UI.Widgets.Settings;
 
 namespace GameHub.UI.Dialogs.InstallDialog
 {
@@ -218,6 +219,26 @@ namespace GameHub.UI.Dialogs.InstallDialog
 		}
 
 		public virtual void update(){}
+
+		protected void add_install_dir_import_button(Box parent)
+		{
+			var sgrp_import = new SettingsGroup();
+			var import = sgrp_import.add_setting(new ButtonLabelSetting(_("Import installation directory if game is already installed"), _("Import")));
+			parent.add(sgrp_import);
+
+			#if GTK_3_22
+			var install_dir_chooser = new FileChooserNative(_("Select installation directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER, _("Import"), _("Cancel"));
+			#else
+			var install_dir_chooser = new FileChooserDialog(_("Select installation directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER, _("Import"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
+			#endif
+
+			import.button.clicked.connect(() => {
+				if(install_dir_chooser.run() == ResponseType.ACCEPT)
+				{
+					task.import_install_dir(install_dir_chooser.get_file());
+				}
+			});
+		}
 	}
 
 	public class DebugDummyStep: InstallDialogStep

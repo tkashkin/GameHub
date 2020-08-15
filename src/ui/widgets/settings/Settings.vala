@@ -166,7 +166,6 @@ namespace GameHub.UI.Widgets.Settings
 		{
 			get_style_context().add_class("setting");
 			get_style_context().add_class("label-setting");
-			label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
 			label.wrap = true;
 			child = label;
 			show_all();
@@ -189,7 +188,6 @@ namespace GameHub.UI.Widgets.Settings
 			get_style_context().add_class("label-setting");
 			get_style_context().add_class("button-label-setting");
 
-			label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
 			label.halign = Align.START;
 			label.valign = Align.CENTER;
 			label.xalign = 0;

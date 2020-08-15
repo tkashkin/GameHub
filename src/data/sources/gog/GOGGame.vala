@@ -549,23 +549,22 @@ namespace GameHub.Data.Sources.GOG
 
 		public class Installer: Runnables.Tasks.Install.DownloadableInstaller
 		{
-			private GOGGame game;
-			private Json.Object json;
+			public GOGGame game { get; construct set; }
+			public Json.Object json { get; construct set; }
 			private bool fetched = false;
-			private File? installers_dir;
 
 			public Installer(GOGGame game, Json.Object json)
 			{
-				this.game = game;
-				this.json = json;
-
-				id = json.get_string_member("id");
-				name = json.get_string_member("name");
-				language = json.get_string_member("language");
-				language_name = json.get_string_member("language_full");
+				string g = game.name;
+				string? d = null;
+				if(game is DLC)
+				{
+					g = ((DLC) game).game.name;
+					d = game.name;
+				}
 
 				var os = json.get_string_member("os");
-				platform = Platform.CURRENT;
+				var platform = Platform.CURRENT;
 				foreach(var p in Platform.PLATFORMS)
 				{
 					if(os == p.id())
@@ -575,17 +574,18 @@ namespace GameHub.Data.Sources.GOG
 					}
 				}
 
-				string g = game.name;
-				string? d = null;
-				if(game is DLC)
-				{
-					g = ((DLC) game).game.name;
-					d = game.name;
-				}
-				installers_dir = FS.file(Settings.Paths.Collection.GOG.expand_installers(g, d, platform));
-
-				full_size = json.get_int_member("total_size");
-				version = json.get_string_member("version");
+				Object(
+					game: game,
+					json: json,
+					id: json.get_string_member("id"),
+					name: json.get_string_member("name"),
+					platform: platform,
+					full_size: json.get_int_member("total_size"),
+					version: json.get_string_member("version"),
+					language: json.get_string_member("language"),
+					language_name: json.get_string_member("language_full"),
+					installers_dir: FS.file(Settings.Paths.Collection.GOG.expand_installers(g, d, platform))
+				);
 			}
 
 			public override async void fetch_parts()

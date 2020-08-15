@@ -27,6 +27,8 @@ namespace GameHub.Data.Runnables.Traits.Game
 {
 	public interface SupportsOverlays: Runnables.Game
 	{
+		public signal void overlays_changed();
+
 		public abstract ArrayList<Overlay> overlays { get; set; default = new ArrayList<Overlay>(); }
 		protected abstract FSOverlay? fs_overlay { get; set; }
 		protected abstract string? fs_overlay_last_options { get; set; }
@@ -118,8 +120,7 @@ namespace GameHub.Data.Runnables.Traits.Game
 			{
 				warning("[Game.save_overlays] %s", e.message);
 			}
-
-			notify_property("overlays-enabled");
+			overlays_changed();
 		}
 
 		public void load_overlays()
@@ -271,7 +272,7 @@ namespace GameHub.Data.Runnables.Traits.Game
 							game.overlays.clear();
 							game.install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).get_child(FS.OVERLAYS_LIST).delete();
 							game.install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).delete();
-							game.notify_property("overlays-enabled");
+							game.overlays_changed();
 						}
 						catch(Error e)
 						{
