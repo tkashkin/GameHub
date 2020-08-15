@@ -68,6 +68,11 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 			sgrp_selected_installer.settings.selection_mode = SelectionMode.NONE;
 			selected_installer_row = sgrp_selected_installer.add_setting(new InstallerStep.InstallerRow(task, task.selected_installer));
 			add(sgrp_selected_installer);
+
+			if(task.can_import_install_dir && (task.installers == null || task.installers.size < 2))
+			{
+				add_install_dir_import_button(this);
+			}
 		}
 
 		public override void update()

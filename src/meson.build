@@ -209,6 +209,8 @@ sources = [
 	'ui/widgets/tweaks/TweakOptionsPopover.vala',
 
 	'utils/Utils.vala',
+	'utils/TypeUtils.vala',
+
 	'utils/ExecTask.vala',
 	'utils/OS.vala',
 

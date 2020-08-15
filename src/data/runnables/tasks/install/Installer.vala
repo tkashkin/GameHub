@@ -23,7 +23,7 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Runnables.Tasks.Install
 {
-	public abstract class Installer
+	public abstract class Installer: BaseObject
 	{
 		public string   id            { get; protected set; }
 		public string   name          { get; protected set; }
@@ -46,7 +46,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 
 	public abstract class FileInstaller: Installer
 	{
-		public File? file { get; protected set; }
+		public File? file { get; protected construct set; }
 
 		public override async bool install(InstallTask task)
 		{
@@ -144,7 +144,18 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			}
 		}
 
+		construct
+		{
+			if(installers_dir != null && installers_dir.get_child(@".installer_$(id)").query_exists())
+			{
+				download_state = new DownloadState(DownloadState.State.DOWNLOADED);
+			}
+		}
+
+		public File? installers_dir { get; protected set; }
+		public DownloadState download_state { get; protected set; default = new DownloadState(); }
 		public ArrayList<Part> parts { get; protected set; default = new ArrayList<Part>(); }
+
 		public virtual async void fetch_parts(){}
 
 		public override async bool install(InstallTask task)
@@ -226,6 +237,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 					var ds_id = Downloader.download_manager().file_download_started.connect(dl => {
 						if(dl.remote != part.remote) return;
 						task.status = new InstallTask.Status(InstallTask.State.DOWNLOADING, dl);
+						download_state = new DownloadState(DownloadState.State.DOWNLOADING, dl);
 						dl.status_change.connect(s => {
 							task.notify_property("status");
 						});
@@ -287,6 +299,12 @@ namespace GameHub.Data.Runnables.Tasks.Install
 					Downloader.download_manager().disconnect(ds_id);
 					current_part++;
 				}
+
+				download_state = new DownloadState(DownloadState.State.DOWNLOADED);
+				if(installers_dir != null)
+				{
+					FileUtils.set_contents(installers_dir.get_child(@".installer_$(id)").get_path(), "");
+				}
 			}
 			catch(IOError.CANCELLED e){}
 			catch(Error e)
@@ -295,6 +313,23 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			}
 			task.status = new InstallTask.Status();
 			return files;
+		}
+
+		public class DownloadState
+		{
+			public enum State
+			{
+				NOT_DOWNLOADED, DOWNLOADING, DOWNLOADED;
+			}
+
+			public State state;
+			public Downloader.Download? download;
+
+			public DownloadState(State state=State.NOT_DOWNLOADED, Downloader.Download? download=null)
+			{
+				this.state = state;
+				this.download = download;
+			}
 		}
 	}
 }
