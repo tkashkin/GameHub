@@ -115,8 +115,14 @@ namespace GameHub.Data.Tweaks
 			{
 				foreach(var option_props in properties)
 				{
-					var option_value = option_props.value;
 					result = result.replace("${option:%s}".printf(option_props.option.id), option_props.value);
+				}
+			}
+			if(tweak.options != null && tweak.options.size > 0)
+			{
+				foreach(var option in tweak.options)
+				{
+					result = result.replace("${option:%s}".printf(option.id), option.default_value);
 				}
 			}
 			return result;

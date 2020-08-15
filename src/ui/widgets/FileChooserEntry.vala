@@ -35,6 +35,7 @@ namespace GameHub.UI.Widgets
 		public FileChooserAction action           { get; construct; }
 		public bool              allow_url        { get; construct; }
 		public bool              allow_executable { get; construct; }
+		public string?           root_dir_prefix  { get; set; }
 
 		public FileChooser       chooser          { get; protected set; }
 
@@ -44,9 +45,9 @@ namespace GameHub.UI.Widgets
 			set { select_file_path(value); }
 		}
 
-		public FileChooserEntry(string? title, FileChooserAction action, string? icon=null, string? hint=null, bool allow_url=false, bool allow_executable=false)
+		public FileChooserEntry(string? title, FileChooserAction action, string? icon=null, string? hint=null, bool allow_url=false, bool allow_executable=false, string? root_dir_prefix=null)
 		{
-			Object(title: title, action: action, allow_url: allow_url, allow_executable: allow_executable);
+			Object(title: title, action: action, allow_url: allow_url, allow_executable: allow_executable, root_dir_prefix: root_dir_prefix);
 			placeholder_text = primary_icon_tooltip_text = hint;
 			primary_icon_name = icon ?? (directory_mode ? "folder" : "application-x-executable");
 			primary_icon_activatable = false;
@@ -110,6 +111,11 @@ namespace GameHub.UI.Widgets
 				file = FS.file(path);
 				uri = file.get_uri();
 			}
+			else if(root_dir_prefix != null && (path == "." || path.has_prefix("./")))
+			{
+				select_file_path(Utils.replace_prefix(path, ".", root_dir_prefix));
+				return;
+			}
 			else if(allow_executable && path.length > 0)
 			{
 				var executable = Utils.find_executable(path);
@@ -143,7 +149,14 @@ namespace GameHub.UI.Widgets
 				{
 					chooser.unselect_all();
 				}
-				text = file.get_path();
+				if(root_dir_prefix != null && file.get_path().has_prefix(root_dir_prefix))
+				{
+					text = file.get_path().replace(root_dir_prefix, ".");
+				}
+				else
+				{
+					text = file.get_path();
+				}
 			}
 
 			if(allow_url)

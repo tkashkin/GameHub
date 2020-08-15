@@ -53,9 +53,6 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 			sgrp_installers.settings.selection_mode = SelectionMode.SINGLE;
 			sgrp_installers.settings.expand = true;
 
-			scroll.add(sgrp_installers);
-			add(scroll);
-
 			sgrp_installers.settings.row_selected.connect(row => {
 				if(row != null)
 				{
@@ -74,6 +71,35 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 				}
 			});
 
+			if(task.can_import_install_dir)
+			{
+				var sgrp_import = new SettingsGroup();
+				var import_setting = sgrp_import.add_setting(new ButtonLabelSetting(_("Import installation directory if game is already installed"), _("Import")));
+
+				var scroll_vbox = new Box(Orientation.VERTICAL, 0);
+				scroll_vbox.add(sgrp_installers);
+				scroll_vbox.add(sgrp_import);
+				scroll.add(scroll_vbox);
+
+				#if GTK_3_22
+				var install_dir_chooser = new FileChooserNative(_("Select installation directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER, _("Import"), _("Cancel"));
+				#else
+				var install_dir_chooser = new FileChooserDialog(_("Select installation directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER, _("Import"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
+				#endif
+
+				import_setting.button.clicked.connect(() => {
+					if(install_dir_chooser.run() == ResponseType.ACCEPT)
+					{
+						task.import_install_dir(install_dir_chooser.get_file());
+					}
+				});
+			}
+			else
+			{
+				scroll.add(sgrp_installers);
+			}
+
+			add(scroll);
 			show_all();
 			update();
 		}

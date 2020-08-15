@@ -60,12 +60,10 @@ namespace GameHub.UI.Views.GamesView.Grid
 		private Label status_label;
 
 		private Box src_icons;
-		private Image src_icon;
+		private Box platform_icons;
 
 		private Image favorite_icon;
 		private Image updated_icon;
-
-		private Box platform_icons;
 
 		private Frame progress_bar;
 
@@ -118,9 +116,6 @@ namespace GameHub.UI.Views.GamesView.Grid
 			platform_icons.halign = Align.END;
 			platform_icons.margin = 8;
 			platform_icons.set_events(0);
-
-			src_icon = new Image();
-			src_icon.icon_size = IconSize.LARGE_TOOLBAR;
 
 			label = new Label("");
 			label.xpad = 8;
@@ -229,10 +224,12 @@ namespace GameHub.UI.Views.GamesView.Grid
 				return false;
 			});
 
-			show_all();
 			favorite_icon.no_show_all = true;
 			updated_icon.no_show_all = true;
+			src_icons.no_show_all = true;
+			platform_icons.no_show_all = true;
 			info.no_show_all = true;
+			show_all();
 
 			Settings.UI.Appearance.instance.notify["grid-titles"].connect(update_appearance);
 			Settings.UI.Appearance.instance.notify["grid-platform-icons"].connect(update_appearance);
@@ -319,10 +316,9 @@ namespace GameHub.UI.Views.GamesView.Grid
 
 			Idle.add(() => {
 				label.label = game.name;
-				src_icon.icon_name = game.source.icon;
 
 				src_icons.foreach(w => w.destroy());
-				src_icons.add(src_icon);
+				add_src_icon(game.source.icon);
 
 				if(game != _game)
 				{
@@ -336,7 +332,6 @@ namespace GameHub.UI.Views.GamesView.Grid
 						add_src_icon(g.source.icon);
 					}
 				}
-				src_icons.show_all();
 
 				platform_icons.foreach(w => w.destroy());
 				Platform[] platforms = {};
@@ -368,7 +363,6 @@ namespace GameHub.UI.Views.GamesView.Grid
 					icon.icon_size = IconSize.LARGE_TOOLBAR;
 					platform_icons.add(icon);
 				}
-				platform_icons.show_all();
 
 				update_appearance();
 
@@ -474,11 +468,26 @@ namespace GameHub.UI.Views.GamesView.Grid
 
 		private void update_appearance()
 		{
-			Idle.add(() => {
-				info.visible = Settings.UI.Appearance.instance.grid_titles;
-				src_icons.visible = platform_icons.visible = Settings.UI.Appearance.instance.grid_platform_icons;
-				return Source.REMOVE;
-			}, Priority.LOW);
+			info.no_show_all = !Settings.UI.Appearance.instance.grid_titles;
+			if(Settings.UI.Appearance.instance.grid_titles)
+			{
+				info.show_all();
+			}
+			else
+			{
+				info.hide();
+			}
+			src_icons.no_show_all = platform_icons.no_show_all = !Settings.UI.Appearance.instance.grid_platform_icons;
+			if(Settings.UI.Appearance.instance.grid_platform_icons)
+			{
+				src_icons.show_all();
+				platform_icons.show_all();
+			}
+			else
+			{
+				src_icons.hide();
+				platform_icons.hide();
+			}
 		}
 
 		private void update_image_constraints()

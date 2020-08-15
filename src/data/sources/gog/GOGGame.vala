@@ -579,7 +579,7 @@ namespace GameHub.Data.Sources.GOG
 				string? d = null;
 				if(game is DLC)
 				{
-					g = ((DLC) this).game.name;
+					g = ((DLC) game).game.name;
 					d = game.name;
 				}
 				installers_dir = FS.file(Settings.Paths.Collection.GOG.expand_installers(g, d, platform));

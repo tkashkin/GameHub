@@ -173,38 +173,62 @@ namespace GameHub.UI.Widgets.Settings
 		}
 	}
 
-	public class LinkLabelSetting: ListBoxRow, ActivatableSetting
+	public class ButtonLabelSetting: ListBoxRow, ActivatableSetting
 	{
 		public Label label { get; construct; }
-		public LinkButton link { get; construct; }
+		public Button button { get; construct; }
 
-		public LinkLabelSetting(string label, string link_label, string url)
+		public ButtonLabelSetting(string label, string button_label, bool activate_on_row_click = false)
 		{
-			Object(label: new Label(label), link: new LinkButton.with_label(url, link_label), activatable: true, selectable: false);
+			Object(label: new Label(label), button: new Button.with_label(button_label), activatable: activate_on_row_click, selectable: false);
 		}
 
 		construct
 		{
 			get_style_context().add_class("setting");
 			get_style_context().add_class("label-setting");
-			get_style_context().add_class("link-label-setting");
+			get_style_context().add_class("button-label-setting");
 
 			label.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
 			label.halign = Align.START;
+			label.valign = Align.CENTER;
 			label.xalign = 0;
+			label.hexpand = true;
 			label.wrap = true;
 
-			link.halign = Align.END;
-			link.can_focus = false;
+			button.halign = Align.END;
+			button.valign = Align.CENTER;
+			button.can_focus = !activatable;
 
 			var hbox = new Box(Orientation.HORIZONTAL, 12);
 			hbox.add(label);
-			hbox.add(link);
+			hbox.add(button);
 
 			child = hbox;
 			show_all();
 
-			setting_activated.connect(() => link.activate());
+			setting_activated.connect(() => {
+				if(activatable)
+				{
+					button.activate();
+				}
+			});
+		}
+	}
+
+	public class LinkLabelSetting: ButtonLabelSetting
+	{
+		public LinkButton link { get { return button as LinkButton; } }
+
+		public LinkLabelSetting(string label, string link_label, string url, bool activate_on_row_click = true)
+		{
+			Object(label: new Label(label), button: new LinkButton.with_label(url, link_label), activatable: activate_on_row_click, selectable: false);
+		}
+
+		construct
+		{
+			get_style_context().remove_class("button-label-setting");
+			get_style_context().add_class("link-label-setting");
 		}
 	}
 
@@ -409,9 +433,9 @@ namespace GameHub.UI.Widgets.Settings
 			return entry;
 		}
 
-		public FileChooserEntry file_chooser(string text, FileChooserAction mode, bool create=true, string? icon=null, bool allow_url=false, bool allow_executable=false)
+		public FileChooserEntry file_chooser(string text, FileChooserAction mode, bool create=true, string? icon=null, bool allow_url=false, bool allow_executable=false, string? root_dir_prefix=null)
 		{
-			var chooser = new FileChooserEntry(text, mode, icon, null, allow_url, allow_executable);
+			var chooser = new FileChooserEntry(text, mode, icon, null, allow_url, allow_executable, root_dir_prefix);
 			chooser.chooser.create_folders = create;
 			chooser.chooser.show_hidden = true;
 			chooser.set_size_request(ENTRY_WIDTH, -1);
