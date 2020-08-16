@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-08-10 18:32+0000\n"
+"PO-Revision-Date: 2020-08-17 15:32+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_PT/>\n"
@@ -386,7 +386,7 @@ msgstr "Variáveis de ambiente"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
-msgstr "Opções padrão do InnoSetup"
+msgstr "Opções predefinidos do InnoSetup"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
@@ -987,7 +987,7 @@ msgstr "Forçar modo de compatibilidade"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:307
 msgid "Game file patterns"
-msgstr "Padrão de ficheiros de jogos"
+msgstr "Modelos de ficheiros de jogos"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:315
 msgid "Image"
@@ -1006,10 +1006,11 @@ msgid ""
 "<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
 "name (without extension)"
 msgstr ""
-"Padrões de glob compatíveis com <b>findutils</b>\n"
+"Modelos de glob compatíveis com <b>findutils</b>\n"
 "\n"
-"<b>•</b> Vários padrões podem ser combinados com <b>|</b>\n"
-"<b>•</b> Inicie padrão com <b>./</b> para referenciar um caminho relativo\n"
+"<b>•</b> Vários modelos podem ser combinados com <b>|</b>\n"
+"<b>•</b> Inicie um modelo com <b>./</b> para referenciar um caminho "
+"relativo\n"
 "<b>•</b> A variável $<b>basename</b> será substituída pelo nome do "
 "executável do jogo (sem extensão)"
 
