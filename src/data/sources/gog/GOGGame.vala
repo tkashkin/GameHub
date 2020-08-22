@@ -134,7 +134,7 @@ namespace GameHub.Data.Sources.GOG
 			if(game_info_updating) return;
 			game_info_updating = true;
 
-			yield mount_overlays();
+			yield remount_overlays();
 			update_status();
 
 			if(info_detailed == null || info_detailed.length == 0)

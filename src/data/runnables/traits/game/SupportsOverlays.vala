@@ -177,7 +177,7 @@ namespace GameHub.Data.Runnables.Traits.Game
 			if(fs_overlay.options != fs_overlay_last_options)
 			{
 				fs_overlay_last_options = fs_overlay.options;
-				yield fs_overlay.mount();
+				yield fs_overlay.remount();
 			}
 		}
 
@@ -188,9 +188,19 @@ namespace GameHub.Data.Runnables.Traits.Game
 				if(((Sources.GOG.GOGGame.DLC) this).game != null) yield ((Sources.GOG.GOGGame.DLC) this).game.umount_overlays();
 				return;
 			}
-
 			if(!overlays_enabled || fs_overlay == null) return;
 			yield fs_overlay.umount();
+		}
+
+		public async void remount_overlays()
+		{
+			if(this is Sources.GOG.GOGGame.DLC)
+			{
+				if(((Sources.GOG.GOGGame.DLC) this).game != null) yield ((Sources.GOG.GOGGame.DLC) this).game.remount_overlays();
+				return;
+			}
+			if(!overlays_enabled || fs_overlay == null) return;
+			yield fs_overlay.remount();
 		}
 
 		public File?[] get_file_search_paths()

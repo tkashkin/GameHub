@@ -24,6 +24,7 @@ namespace GameHub.Utils.FS
 	{
 		private const string POLKIT_ACTION = ProjectConfig.PROJECT_NAME + ".polkit.overlayfs-helper";
 		private const string POLKIT_HELPER = ProjectConfig.BINDIR + "/" + ProjectConfig.PROJECT_NAME + "-overlayfs-helper";
+		private const string[] MOUNT_OPTIONS_TO_COMPARE = {"lowerdir", "upperdir", "workdir"};
 		private static Permission? permission;
 
 		public string          id       { get; construct set; }
@@ -32,10 +33,12 @@ namespace GameHub.Utils.FS
 		public File?           persist  { get; construct set; }
 		public File?           workdir  { get; construct set; }
 
+		public string full_id { owned get { return "%s_overlay_%s".printf(ProjectConfig.PROJECT_NAME, id); } }
+
 		public FSOverlay(File target, ArrayList<File> overlays, File? persist=null, File? workdir=null)
 		{
 			Object(
-				id: ProjectConfig.PROJECT_NAME + "_overlay_" + Utils.md5(target.get_path()),
+				id: Utils.md5(target.get_path()),
 				target: target, overlays: overlays, persist: persist, workdir: workdir
 			);
 		}
@@ -56,7 +59,6 @@ namespace GameHub.Utils.FS
 				if(_options != null) return _options;
 
 				string[] options_arr = {};
-
 				string[] overlay_dirs = {};
 
 				for(var i = overlays.size - 1; i >= 0; i--)
@@ -88,8 +90,6 @@ namespace GameHub.Utils.FS
 
 		public async void mount()
 		{
-			yield umount();
-
 			try
 			{
 				if(!target.query_exists()) target.make_directory_with_parents();
@@ -101,22 +101,86 @@ namespace GameHub.Utils.FS
 
 			yield polkit_authenticate();
 
-			yield Utils.exec({"pkexec", POLKIT_HELPER, "mount", id, options, target.get_path()}).log(GameHub.Application.log_verbose).sync_thread();
+			debug("[FSOverlay.mount] Mounting overlay %s", id);
+			yield Utils.exec({"pkexec", POLKIT_HELPER, "mount", full_id, options, target.get_path()}).log(GameHub.Application.log_verbose).sync_thread();
 		}
 
 		public async void umount()
 		{
 			yield polkit_authenticate();
 
-			while(id in (yield Utils.exec({"mount"}).log(false).sync_thread(true)).output)
+			debug("[FSOverlay.umount] Unmounting overlay %s", id);
+
+			while(full_id in (yield Utils.exec({"mount"}).log(false).sync_thread(true)).output)
 			{
-				yield Utils.exec({"pkexec", POLKIT_HELPER, "umount", id}).log(GameHub.Application.log_verbose).sync_thread();
+				yield Utils.exec({"pkexec", POLKIT_HELPER, "umount", full_id}).log(GameHub.Application.log_verbose).sync_thread();
 				yield Utils.sleep_async(500);
 			}
 
 			if(workdir != null && !workdir.query_exists())
 			{
 				FS.rm(workdir.get_path(), null, "-rf");
+			}
+		}
+
+		public async void remount()
+		{
+			var mounted = false;
+			var mount_options_changed = false;
+
+			var mounts_json = (yield Utils.exec({"findmnt", "-t", "overlay", "--source", full_id, "--output=SOURCE,TARGET,OPTIONS", "--json"}).log(false).sync_thread(true)).output;
+			var mounts_node = Parser.parse_json(mounts_json);
+
+			if(mounts_node != null && mounts_node.get_node_type() == Json.NodeType.OBJECT)
+			{
+				var mounts_obj = mounts_node.get_object();
+				if(mounts_obj.has_member("filesystems"))
+				{
+					var mounts = mounts_obj.get_array_member("filesystems").get_elements();
+					foreach(var mount_node in mounts)
+					{
+						var mount_obj = mount_node.get_object();
+						var mount_source = mount_obj.get_string_member("source");
+						var mount_target = mount_obj.get_string_member("target");
+						var mount_options = mount_obj.get_string_member("options");
+						if(mount_source == full_id && mount_target == target.get_path() && mount_options.length > 0)
+						{
+							mounted = true;
+							var current_options = mount_options.split(",");
+							var new_options = options.split(",");
+							foreach(var opt_name in MOUNT_OPTIONS_TO_COMPARE)
+							{
+								foreach(var current_option in current_options)
+								{
+									if(current_option.has_prefix(opt_name))
+									{
+										foreach(var new_option in new_options)
+										{
+											if(new_option.has_prefix(opt_name) && new_option != current_option)
+											{
+												mount_options_changed = true;
+												break;
+											}
+										}
+									}
+									if(mount_options_changed) break;
+								}
+								if(mount_options_changed) break;
+							}
+						}
+					}
+				}
+			}
+
+			if(mount_options_changed)
+			{
+				debug("[FSOverlay.remount] Mount options for overlay %s changed", id);
+				yield umount();
+				mounted = false;
+			}
+			if(!mounted)
+			{
+				yield mount();
 			}
 		}
 
