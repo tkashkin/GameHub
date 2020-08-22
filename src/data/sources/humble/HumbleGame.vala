@@ -165,7 +165,7 @@ namespace GameHub.Data.Sources.Humble
 			if(game_info_updating) return;
 			game_info_updating = true;
 
-			yield mount_overlays();
+			yield remount_overlays();
 			update_status();
 
 			if((icon == null || icon == "") && (info != null && info.length > 0))

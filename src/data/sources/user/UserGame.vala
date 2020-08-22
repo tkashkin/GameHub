@@ -109,7 +109,7 @@ namespace GameHub.Data.Sources.User
 
 		public override async void update_game_info()
 		{
-			yield mount_overlays();
+			yield remount_overlays();
 			update_status();
 
 			if(installer == null && info != null && info.length > 0)
