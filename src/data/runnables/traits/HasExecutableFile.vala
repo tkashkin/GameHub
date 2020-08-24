@@ -119,6 +119,7 @@ namespace GameHub.Data.Runnables.Traits
 			if(!can_be_launched(true)) return;
 
 			Runnable.IsAnyRunnableRunning = is_running = true;
+			Inhibitor.inhibit(_("%s is running").printf(name));
 			update_status();
 
 			yield pre_run();
@@ -129,6 +130,7 @@ namespace GameHub.Data.Runnables.Traits
 
 			Timeout.add_seconds(1, () => {
 				Runnable.IsAnyRunnableRunning = is_running = false;
+				Inhibitor.uninhibit();
 				update_status();
 				return Source.REMOVE;
 			});

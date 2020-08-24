@@ -132,6 +132,10 @@
 				<default>true</default>
 				<summary>Import tags</summary>
 			</key>
+			<key name="inhibit-screensaver" type="b">
+				<default>true</default>
+				<summary>Inhibit screensaver while game is running</summary>
+			</key>
 		</schema>
 
 	<!-- Auth -->
