@@ -221,6 +221,7 @@ sources = [
 	'utils/Parser.vala',
 	'utils/BinaryVDF.vala',
 	'utils/SignalRateLimiter.vala',
+	'utils/Inhibitor.vala',
 
 	'settings/Settings.vala',
 	'settings/UI.vala',

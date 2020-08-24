@@ -47,6 +47,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			var sgrp_tags = new SettingsGroup(_("Tags"));
 			sgrp_tags.add_setting(new SwitchSetting.bind(_("Import tags from sources"), null, settings, "import-tags"));
 			add_widget(sgrp_tags);
+
+			var sgrp_system = new SettingsGroup(_("System"));
+			sgrp_system.add_setting(new SwitchSetting.bind(_("Inhibit screensaver while game is running"), _("Request session manager to prevent suspending while game is running"), settings, "inhibit-screensaver"));
+			add_widget(sgrp_system);
 		}
 	}
 }
