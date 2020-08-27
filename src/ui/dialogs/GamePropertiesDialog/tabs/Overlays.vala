@@ -256,8 +256,8 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 				remove.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
 				var enabled_switch = new Switch();
-				enabled_switch.active = overlay.enabled;
 				enabled_switch.sensitive = activatable;
+				enabled_switch.active = overlay.enabled;
 				enabled_switch.valign = Align.CENTER;
 				enabled_switch.margin_start = 12;
 
@@ -281,6 +281,8 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 				setting_activated.connect(() => {
 					enabled_switch.activate();
 				});
+
+				bind_property("activatable", enabled_switch, "sensitive", BindingFlags.SYNC_CREATE);
 			}
 		}
 	}

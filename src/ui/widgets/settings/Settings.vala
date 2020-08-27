@@ -363,6 +363,34 @@ namespace GameHub.UI.Widgets.Settings
 		}
 	}
 
+	public class DirectoryButtonSetting: BaseSetting
+	{
+		public Button? button { get { return widget as Button; } }
+		public File directory { get; construct; }
+
+		public DirectoryButtonSetting(string title, string? description = null, string button_icon = "folder-symbolic", File directory)
+		{
+			Object(title: title, description: description ?? directory.get_path(), widget: new Button.from_icon_name(button_icon, IconSize.BUTTON), directory: directory, activatable: true, selectable: false);
+		}
+
+		construct
+		{
+			get_style_context().add_class("directory-button-setting");
+
+			button.tooltip_text = _("Open directory");
+			button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			button.can_focus = false;
+
+			button.clicked.connect(() => {
+				Utils.open_uri(directory.get_uri());
+			});
+
+			setting_activated.connect(() => {
+				button.clicked();
+			});
+		}
+	}
+
 	public class DirectoriesMenuSetting: BaseSetting
 	{
 		public MenuButton? button { get { return widget as MenuButton; } }

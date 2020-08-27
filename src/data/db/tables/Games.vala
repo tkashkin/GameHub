@@ -56,6 +56,7 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field IMAGE_VERTICAL;
 		public static Table.Field TWEAKS;
 		public static Table.Field WORK_DIR;
+		public static Table.Field ENVIRONMENT;
 
 		public Games()
 		{
@@ -83,6 +84,7 @@ namespace GameHub.Data.DB.Tables
 			IMAGE_VERTICAL       = f(17);
 			TWEAKS               = f(18);
 			WORK_DIR             = f(19);
+			ENVIRONMENT          = f(20);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -133,6 +135,10 @@ namespace GameHub.Data.DB.Tables
 					case 10:
 						db.exec("ALTER TABLE `games` ADD `work_dir` string");
 						break;
+
+					case 11:
+						db.exec("ALTER TABLE `games` ADD `environment` string");
+						break;
 				}
 			}
 		}
@@ -173,8 +179,9 @@ namespace GameHub.Data.DB.Tables
 					`playtime_tracked`,
 					`image_vertical`,
 					`tweaks`,
-					`work_dir`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`work_dir`,
+					`environment`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -200,11 +207,13 @@ namespace GameHub.Data.DB.Tables
 			string? work_dir = null;
 			string? executable_path = null;
 			string? arguments = null;
+			string? environment = null;
 
 			game.cast<Traits.HasExecutableFile>(game => {
 				work_dir = game.work_dir_path;
 				executable_path = game.executable_path;
 				arguments = game.arguments;
+				environment = game.environment;
 			});
 
 			string? compat_tool = null;
@@ -244,6 +253,7 @@ namespace GameHub.Data.DB.Tables
 			IMAGE_VERTICAL.bind(s, game.image_vertical);
 			TWEAKS.bind(s, tweaks);
 			WORK_DIR.bind(s, work_dir);
+			ENVIRONMENT.bind(s, environment);
 
 			res = s.step();
 

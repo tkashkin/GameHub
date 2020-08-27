@@ -47,9 +47,12 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 
 		construct
 		{
-			var install_dir_path = game.install_dir != null ? game.install_dir.get_path() : null;
+			var install_dir = game.install_dir;
+			game.cast<Traits.Game.SupportsOverlays>(game => { install_dir = game.merged_overlays_directory ?? game.install_dir; });
+			var install_dir_path = install_dir != null ? install_dir.get_path() : null;
 
 			var sgrp_executable = new SettingsGroup();
+			var install_dir_setting = sgrp_executable.add_setting(new DirectoryButtonSetting(_("Installation directory"), null, "folder-symbolic", game.install_dir));
 			var executable_setting = sgrp_executable.add_setting(
 				new FileSetting(
 					_("Executable"), _("Game's main executable file"),
@@ -89,6 +92,17 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 			sgrp_env.add_widget(env_scroll);
 			add(sgrp_env);
 
+			if(game.environment != null && game.environment.length > 0)
+			{
+				var env = Parser.json_object(Parser.parse_json(game.environment), {});
+				if(env != null)
+				{
+					env.foreach_member((obj, name, node) => {
+						add_variable(name, node.get_string());
+					});
+				}
+			}
+
 			update_env_variables();
 		}
 
@@ -125,7 +139,7 @@ namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 
 			variables_node.set_object(variables_obj);
 
-			debug("[Executable.update_env_variables] %s", Json.to_string(variables_node, false));
+			game.environment = Json.to_string(variables_node, false);
 		}
 
 		private void add_variable(string? variable = null, string? value = null)

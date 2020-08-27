@@ -20,6 +20,7 @@ using Gee;
 
 using GameHub.Data;
 
+using GameHub.Data.Compat;
 using GameHub.Data.Runnables;
 using GameHub.Data.Runnables.Tasks.Install;
 
@@ -36,15 +37,15 @@ namespace GameHub.Data.Runnables.Traits
 		{
 			if(can_be_launched(true))
 			{
-				var dlg = new UI.Dialogs.CompatRunDialog(this, is_opened_from_menu);
+				/*var dlg = new UI.Dialogs.CompatRunDialog(this, is_opened_from_menu);
 				dlg.destroy.connect(() => {
 					Idle.add(run_with_compat.callback);
 				});
-				yield;
+				yield;*/
 			}
 		}
 
-		public virtual bool supports_compat_tool(CompatTool tool)
+		public virtual bool supports_compat_tool(CompatToolTraits.Run tool)
 		{
 			return tool.can_run(this);
 		}
@@ -53,10 +54,10 @@ namespace GameHub.Data.Runnables.Traits
 		{
 			get
 			{
-				foreach(var tool in CompatTools)
+				/*foreach(var tool in CompatTools)
 				{
 					if(supports_compat_tool(tool)) return true;
-				}
+				}*/
 				return false;
 			}
 		}
@@ -173,26 +174,26 @@ namespace GameHub.Data.Runnables.Traits
 		public ArrayList<CompatTool> get_supported_compat_tools()
 		{
 			var tools = new ArrayList<CompatTool>();
-			foreach(var tool in CompatTools)
+			/*foreach(var tool in CompatTools)
 			{
 				if(tool.installed && tool.can_run(this))
 				{
 					tools.add(tool);
 				}
-			}
+			}*/
 			return tools;
 		}
 
 		public ArrayList<CompatTool> get_supported_compat_tools_for_installation(InstallTask task)
 		{
 			var tools = new ArrayList<CompatTool>();
-			foreach(var tool in CompatTools)
+			/*foreach(var tool in CompatTools)
 			{
 				if(tool.installed && tool.can_install(this, task))
 				{
 					tools.add(tool);
 				}
-			}
+			}*/
 			return tools;
 		}
 	}

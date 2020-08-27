@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Utils;
+using GameHub.Data.Compat;
 using GameHub.Data.Runnables;
 
 namespace GameHub.Data.Tweaks
@@ -131,7 +132,7 @@ namespace GameHub.Data.Tweaks
 				{
 					foreach(var id in compat_tool_ids)
 					{
-						if(compat_tool_id == id || compat_tool_id.has_prefix(@"$(id)_"))
+						if(compat_tool_id == id || compat_tool_id.has_prefix(@"$(id)_") || compat_tool_id.has_prefix(@"$(id):"))
 						{
 							has_tool = true;
 							break;

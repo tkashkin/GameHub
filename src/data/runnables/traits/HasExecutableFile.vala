@@ -30,6 +30,7 @@ namespace GameHub.Data.Runnables.Traits
 		public abstract string? executable_path { owned get; set; }
 		public abstract string? work_dir_path { owned get; set; }
 		public abstract string? arguments { owned get; set; }
+		public abstract string? environment { owned get; set; }
 
 		public File? executable
 		{
@@ -107,6 +108,7 @@ namespace GameHub.Data.Runnables.Traits
 			executable_path = Tables.Games.EXECUTABLE.get(s);
 			work_dir_path = Tables.Games.WORK_DIR.get(s);
 			arguments = Tables.Games.ARGUMENTS.get(s);
+			environment = Tables.Games.ENVIRONMENT.get(s);
 		}
 
 		public bool can_be_launched(bool is_launch_attempt=false)
@@ -191,6 +193,17 @@ namespace GameHub.Data.Runnables.Traits
 			if(work_dir != null && work_dir.query_exists()) task.dir(work_dir.get_path());
 
 			cast<Traits.Game.SupportsTweaks>(game => task.tweaks(game.tweaks, game));
+
+			if(environment != null && environment.length > 0)
+			{
+				var env = Parser.json_object(Parser.parse_json(environment), {});
+				if(env != null)
+				{
+					env.foreach_member((obj, name, node) => {
+						task.env_var(name, node.get_string());
+					});
+				}
+			}
 
 			return task;
 		}

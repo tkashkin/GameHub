@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Compat;
 using GameHub.Data.DB;
 using GameHub.Data.Runnables;
 using GameHub.Utils;
@@ -76,10 +77,10 @@ namespace GameHub.Data.Runnables.Traits
 				}
 
 				var runnable = runnable.cast<Traits.SupportsCompatTools>();
-				if(runnable != null && is_available(tool) && tool.can_run_action(runnable, this))
+				/*if(runnable != null && is_available(tool) && tool.can_run_action(runnable, this))
 				{
 					yield tool.run_action(runnable, this);
-				}
+				}*/
 			}
 		}
 	}

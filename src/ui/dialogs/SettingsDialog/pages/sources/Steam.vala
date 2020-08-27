@@ -85,8 +85,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			sgrp_api_key.add_setting(new LinkLabelSetting(_("Provide your API key to access private Steam profile or if default key does not work"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey"));
 			add_widget(sgrp_api_key);
 
-			sgrp_proton = new SettingsGroup("Proton");
-			add_widget(sgrp_proton);
+			/*sgrp_proton = new SettingsGroup("Proton");
+			add_widget(sgrp_proton);*/
 
 			notify["active"].connect(() => {
 				update();
@@ -102,7 +102,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				if(r != null) r.destroy();
 			});
 
-			foreach(var tool in CompatTools)
+			/*foreach(var tool in CompatTools)
 			{
 				if(tool is Proton)
 				{
@@ -129,7 +129,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				}
 			}
 
-			sgrp_proton.show_all();
+			sgrp_proton.show_all();*/
 		}
 
 		private Entry get_steam_apikey_entry()
