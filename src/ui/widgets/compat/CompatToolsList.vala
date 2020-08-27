@@ -31,9 +31,9 @@ namespace GameHub.UI.Widgets.Compat
 {
 	public class CompatToolsList: Notebook
 	{
-		public Runnable? runnable { get; construct; default = null; }
+		public Traits.SupportsCompatTools? runnable { get; construct; default = null; }
 
-		public CompatToolsList(Runnable? runnable = null)
+		public CompatToolsList(Traits.SupportsCompatTools? runnable = null)
 		{
 			Object(runnable: runnable, show_border: false, expand: true, scrollable: true);
 		}
@@ -47,8 +47,54 @@ namespace GameHub.UI.Widgets.Compat
 		{
 			this.foreach(w => w.destroy());
 
-			append_page(new Box(Orientation.VERTICAL, 0), new Label("Wine"));
-			append_page(new Box(Orientation.VERTICAL, 0), new Label("Proton"));
+			add_tab(new Tabs.Wine());
+		}
+
+		private void add_tab(CompatToolsGroupTab tab)
+		{
+			append_page(tab, new Label(tab.title));
+		}
+	}
+
+	public class CompatToolsGroupTab: Box
+	{
+		public string title { get; construct set; }
+
+		private ListBox tools_list;
+		private Box tool_options;
+
+		public CompatToolsGroupTab()
+		{
+			Object();
+		}
+
+		construct
+		{
+			orientation = Orientation.HORIZONTAL;
+
+			var tools_list_scrolled = new ScrolledWindow(null, null);
+			tools_list_scrolled.set_size_request(200, -1);
+			tools_list_scrolled.hscrollbar_policy = PolicyType.NEVER;
+			tools_list_scrolled.vexpand = true;
+
+			tools_list = new ListBox();
+			tools_list.selection_mode = SelectionMode.NONE;
+
+			var tool_options_scrolled = new ScrolledWindow(null, null);
+			tool_options_scrolled.get_style_context().add_class(Gtk.STYLE_CLASS_BACKGROUND);
+			tool_options_scrolled.hscrollbar_policy = PolicyType.NEVER;
+			tool_options_scrolled.expand = true;
+
+			tool_options = new Box(Orientation.VERTICAL, 0);
+
+			tools_list_scrolled.add(tools_list);
+			tool_options_scrolled.add(tool_options);
+
+			add(tools_list_scrolled);
+			add(new Separator(Orientation.VERTICAL));
+			add(tool_options_scrolled);
+
+			show_all();
 		}
 	}
 }

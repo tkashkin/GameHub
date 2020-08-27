@@ -39,6 +39,7 @@ namespace GameHub.Data.Sources.GOG
 		public override string? executable_path { owned get; set; }
 		public override string? work_dir_path { owned get; set; }
 		public override string? arguments { owned get; set; }
+		public override string? environment { owned get; set; }
 
 		// Traits.SupportsCompatTools
 		public override string? compat_tool { get; set; }
@@ -682,7 +683,7 @@ namespace GameHub.Data.Sources.GOG
 						{
 							workdir = find_file(json.has_member("workingDir") ? json.get_string_member("workingDir") : "");
 							args = json.has_member("arguments") ? json.get_string_member("arguments").replace("\\", "/").strip() : null;
-							compat_tools = { typeof(GameHub.Data.Compat.Wine) };
+							compat_tools = { typeof(GameHub.Data.Compat.Tools.Wine) };
 						}
 						else
 						{

@@ -9,11 +9,6 @@
 	margin-right: 8px;
 }
 
-.settings-dialog .settings-group
-{
-	padding: 12px 18px;
-}
-
 .settings-group > .title,
 .settings-group-standalone-title
 {
@@ -27,9 +22,10 @@
 	margin-right: 18px;
 }
 
-.settings-group .setting:not(.custom-widget-setting):not(.env-variable-setting) > box,
-.settings-group .setting:not(.custom-widget-setting):not(.env-variable-setting) > grid,
-.settings-group .setting.label-setting > label
+.settings-group .setting:not(.custom-widget-setting):not(.env-variable-setting):not(.provider-setting) > box,
+.settings-group .setting:not(.custom-widget-setting):not(.env-variable-setting):not(.provider-setting) > grid,
+.settings-group .setting.label-setting > label,
+.settings-group .setting.provider-setting > box > grid
 {
 	padding: 6px 12px;
 	min-height: 36px;
@@ -58,14 +54,6 @@
 	margin-bottom: -1px;
 }
 
-.settings-group .setting.provider-setting > box
-{
-	padding: 0;
-}
-.settings-group .setting.provider-setting > box > grid
-{
-	padding: 6px 12px;
-}
 .settings-group .setting.provider-setting .provider-settings
 {
 	background: alpha(@borders, 0.5);

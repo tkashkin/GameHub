@@ -21,6 +21,7 @@ using Gtk;
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Compat;
 using GameHub.Data.Runnables;
 using GameHub.Data.Runnables.Tasks.Install;
 
@@ -147,10 +148,10 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 				icon.icon_name = compat_tool.icon;
 				name_label.label = compat_tool.name;
 
-				if(compat_tool.executable != null)
+				/*if(compat_tool.executable != null)
 				{
 					info_label.label = compat_tool.executable.get_path();
-				}
+				}*/
 			}
 		}
 	}

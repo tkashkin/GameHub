@@ -44,6 +44,18 @@ namespace GameHub.Data.Runnables.Traits.Game
 			}
 		}
 
+		public File? merged_overlays_directory
+		{
+			owned get
+			{
+				if(overlays_enabled)
+				{
+					return install_dir.get_child(FS.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
+				}
+				return null;
+			}
+		}
+
 		public void enable_overlays()
 		{
 			if(this is Sources.GOG.GOGGame.DLC)
@@ -208,7 +220,7 @@ namespace GameHub.Data.Runnables.Traits.Game
 			File?[] dirs = get_file_search_paths_base();
 			if(overlays_enabled)
 			{
-				dirs += install_dir.get_child(FS.GAMEHUB_DIR).get_child("_overlay").get_child("merged");
+				dirs += merged_overlays_directory;
 				dirs += install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).get_child(Overlay.BASE);
 				foreach(var overlay in overlays)
 				{

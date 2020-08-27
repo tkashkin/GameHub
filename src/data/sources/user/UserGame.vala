@@ -36,6 +36,7 @@ namespace GameHub.Data.Sources.User
 		public override string? executable_path { owned get; set; }
 		public override string? work_dir_path { owned get; set; }
 		public override string? arguments { owned get; set; }
+		public override string? environment { owned get; set; }
 
 		// Traits.SupportsCompatTools
 		public override string? compat_tool { get; set; }

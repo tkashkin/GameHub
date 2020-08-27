@@ -85,12 +85,12 @@ namespace GameHub.Utils
 	public static File? find_executable(string? name)
 	{
 		if(name == null || name.length == 0) return null;
-		var which = Environment.find_program_in_path(name);
-		if(which == null || which.length == 0 || !which.has_prefix("/"))
+		var path = Environment.find_program_in_path(name);
+		if(path == null || path.length == 0 || !path.has_prefix("/"))
 		{
 			return null;
 		}
-		return File.new_for_path(which);
+		return File.new_for_path(path);
 	}
 
 	public static void thread(string name, owned Future worker, bool log=true)

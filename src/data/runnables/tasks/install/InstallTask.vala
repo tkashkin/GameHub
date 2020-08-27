@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Data;
+using GameHub.Data.Compat;
 using GameHub.Data.Runnables;
 using GameHub.Utils;
 

@@ -24,8 +24,9 @@ using GameHub.UI.Widgets;
 using GameHub.UI.Widgets.Settings;
 
 using GameHub.Data;
-using GameHub.Data.Tweaks;
+using GameHub.Data.Compat;
 using GameHub.Data.Runnables;
+using GameHub.Data.Tweaks;
 
 namespace GameHub.UI.Widgets.Tweaks
 {

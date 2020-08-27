@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Gee;
+
 using GameHub.Utils;
 
 using GameHub.Data.Runnables;
@@ -24,34 +26,53 @@ using GameHub.Data.Runnables.Tasks.Run;
 
 using GameHub.Data.Sources.Steam;
 
-namespace GameHub.Data.Compat
+namespace GameHub.Data.Compat.Tools
 {
-	public class Wine: CompatTool
+	public class Wine: CompatTool, CompatToolTraits.Run, CompatToolTraits.Install
 	{
-		public const string OPT_PREFIX = "prefix";
-		public const string OPT_ENV = "env";
+		private const string[] WINE_SYSTEM_BINARIES = {"wine"};
+		private const string[] WINE_SYSTEM_SUFFIXES = {"", "-development", "-stable"};
 
-		public string binary { get; construct; default = "wine"; }
-		public string arch { get; construct; default = "win64"; }
-		public File? wine_binary { get; protected set; }
-
-		public CompatTool.FileOption opt_prefix;
-		public CompatTool.StringOption opt_env;
-
-		public CompatTool.BoolOption install_opt_innosetup_args;
-
-		public Wine(string binary="wine", string arch="win64")
+		public static ArrayList<Wine> detect()
 		{
-			Object(binary: binary, arch: arch);
+			var detected = new ArrayList<Wine>();
+			foreach(var suffix in WINE_SYSTEM_SUFFIXES)
+			{
+				foreach(var binary in WINE_SYSTEM_BINARIES)
+				{
+					var wine = Utils.find_executable("%s%s".printf(binary, suffix));
+					if(wine != null && wine.query_exists())
+					{
+						var wineserver = wine.get_parent().get_child("wineserver%s".printf(suffix));
+						detected.add(new Wine(wine, wineserver));
+					}
+				}
+			}
+			return detected;
+		}
+
+		public File? wineserver_executable { protected get; protected construct set; }
+
+		public Wine(File wine, File? wineserver)
+		{
+			Object(
+				tool: "wine",
+				id: Utils.md5(wine.get_path()),
+				name: "Wine",
+				icon: "tool-wine-symbolic",
+				executable: wine,
+				wineserver_executable: wineserver
+			);
 		}
 
 		construct
 		{
-			id = @"wine_$(binary)_$(arch)";
-			name = @"Wine ($(binary)) [arch: $(arch)]";
-			icon = "tool-wine-symbolic";
+			if(executable != null && executable.query_exists())
+			{
+				version = Utils.replace_prefix(Utils.exec({executable.get_path(), "--version"}).log(false).sync(true).output, "wine-", "").strip();
+			}
 
-			executable = wine_binary = Utils.find_executable(binary);
+			/*executable = wine_binary = Utils.find_executable(binary);
 			installed = executable != null && executable.query_exists();
 
 			opt_prefix = new CompatTool.FileOption(Wine.OPT_PREFIX, _("Wine prefix"), null, null, Gtk.FileChooserAction.SELECT_FOLDER);
@@ -88,74 +109,74 @@ namespace GameHub.Data.Compat
 						wineboot.begin(r, {"-k"});
 					})
 				};
-			}
+			}*/
 		}
 
-		public override bool can_install(Traits.SupportsCompatTools runnable, InstallTask task)
+		public bool can_install(Traits.SupportsCompatTools runnable, InstallTask task)
 		{
 			return can_run(runnable);
 		}
 
-		public override bool can_run(Traits.SupportsCompatTools runnable)
+		public bool can_run(Traits.SupportsCompatTools runnable)
 		{
-			return installed && runnable != null && ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms))/* || runnable is Emulator*/);
+			return ((runnable is Game && (runnable is GameHub.Data.Sources.User.UserGame || Platform.WINDOWS in runnable.platforms))/* || runnable is Emulator*/);
 		}
 
-		public override bool can_run_action(Traits.SupportsCompatTools runnable, Traits.HasActions.Action action)
+		/*public override bool can_run_action(Traits.SupportsCompatTools runnable, Traits.HasActions.Action action)
 		{
 			return installed && runnable != null && action != null;
-		}
+		}*/
 
 		protected virtual async string[] prepare_installer_args(Traits.SupportsCompatTools runnable, InstallTask task)
 		{
-			var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
+			/*var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
 			var win_path = yield convert_path(runnable, task.install_dir.get_child(tmp_root));
-			var log_win_path = yield convert_path(runnable, task.install_dir.get_child("install.log"));
+			var log_win_path = yield convert_path(runnable, task.install_dir.get_child("install.log"));*/
 
 			string[] opts = {};
 
-			if(install_opt_innosetup_args.enabled)
+			/*if(install_opt_innosetup_args.enabled)
 			{
 				opts = { "/SP-", "/NOCANCEL", "/NOGUI", "/NOICONS", @"/DIR=$(win_path)", @"/LOG=$(log_win_path)" };
-			}
+			}*/
 
-			foreach(var opt in install_options)
+			/*foreach(var opt in install_options)
 			{
 				if(opt.name.has_prefix("/") && opt is CompatTool.BoolOption && ((CompatTool.BoolOption) opt).enabled)
 				{
 					opts += opt.name;
 				}
-			}
+			}*/
 
 			return opts;
 		}
 
-		public override async void install(Traits.SupportsCompatTools runnable, InstallTask task, File installer)
+		public async void install(Traits.SupportsCompatTools runnable, InstallTask task, File installer)
 		{
 			if(!can_install(runnable, task) || (yield InstallerType.guess(installer)) != InstallerType.WINDOWS_EXECUTABLE) return;
-			yield wineboot(runnable);
+			/*yield wineboot(runnable);
 			yield exec(runnable, installer, installer.get_parent(), yield prepare_installer_args(runnable, task));
 
 			var tmp_root = (runnable is Game) ? "_gamehub_game_root" : "_gamehub_app_root";
 			if(task.install_dir != null && task.install_dir.get_child(tmp_root).query_exists())
 			{
 				FS.mv_up(task.install_dir, tmp_root);
-			}
+			}*/
 		}
 
-		public override async void run(Traits.SupportsCompatTools runnable)
+		public async void run(Traits.SupportsCompatTools runnable)
 		{
 			if(!can_run(runnable)) return;
-			yield wineboot(runnable);
-			yield exec(runnable, runnable.executable, runnable.work_dir, Utils.parse_args(runnable.arguments));
+			/*yield wineboot(runnable);
+			yield exec(runnable, runnable.executable, runnable.work_dir, Utils.parse_args(runnable.arguments));*/
 		}
 
-		public override async void run_action(Traits.SupportsCompatTools runnable, Traits.HasActions.Action action)
+		/*public override async void run_action(Traits.SupportsCompatTools runnable, Traits.HasActions.Action action)
 		{
 			if(!can_run_action(runnable, action)) return;
 			yield wineboot(runnable);
 			yield exec(runnable, action.file, action.workdir, Utils.parse_args(action.args));
-		}
+		}*/
 
 		/*public override async void run_emulator(Emulator emu, Game? game, bool launch_in_game_dir=false)
 		{
@@ -164,7 +185,7 @@ namespace GameHub.Data.Compat
 			yield exec(emu, emu.executable, dir, emu.get_args(game));
 		}*/
 
-		protected virtual async void exec(Traits.SupportsCompatTools runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
+		/*protected virtual async void exec(Traits.SupportsCompatTools runnable, File file, File dir, string[]? args=null, bool parse_opts=true)
 		{
 			string[] cmd = { executable.get_path(), file.get_path() };
 			if(file.get_path().down().has_suffix(".msi"))
@@ -176,11 +197,11 @@ namespace GameHub.Data.Compat
 				task.tweaks(game.tweaks, game, this);
 			});
 			yield task.sync_thread();
-		}
+		}*/
 
-		public virtual File get_default_wineprefix(Traits.SupportsCompatTools runnable)
+		/*public virtual File get_default_wineprefix(Traits.SupportsCompatTools runnable)
 		{
-			var install_dir = runnable.install_dir /*?? runnable.default_install_dir*/;
+			var install_dir = runnable.install_dir;
 
 			var prefix = FS.mkdir(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(binary)_$(arch)");
 			var dosdevices = prefix.get_child("dosdevices");
@@ -192,9 +213,9 @@ namespace GameHub.Data.Compat
 			}
 
 			return prefix;
-		}
+		}*/
 
-		public virtual File get_wineprefix(Traits.SupportsCompatTools runnable)
+		/*public virtual File get_wineprefix(Traits.SupportsCompatTools runnable)
 		{
 			var prefix = get_default_wineprefix(runnable);
 
@@ -228,9 +249,9 @@ namespace GameHub.Data.Compat
 			}
 
 			return prefix;
-		}
+		}*/
 
-		private bool is_symlink_and_correct(File symlink)
+		/*private bool is_symlink_and_correct(File symlink)
 		{
 			if(!symlink.query_exists())
 			{
@@ -251,14 +272,14 @@ namespace GameHub.Data.Compat
 			}
 
 			return true;
-		}
+		}*/
 
 		protected virtual string[] prepare_env(Traits.SupportsCompatTools runnable, bool parse_opts=true)
 		{
 			var env = Environ.get();
 			env = Environ.set_variable(env, "WINEDLLOVERRIDES", "mscoree=d;mshtml=d;winemenubuilder.exe=d");
 
-			if(wine_binary != null && wine_binary.query_exists())
+			/*if(wine_binary != null && wine_binary.query_exists())
 			{
 				env = Environ.set_variable(env, "WINE", wine_binary.get_path());
 				env = Environ.set_variable(env, "WINELOADER", wine_binary.get_path());
@@ -294,12 +315,12 @@ namespace GameHub.Data.Compat
 						}
 					}
 				}
-			}
+			}*/
 
 			return env;
 		}
 
-		protected virtual async void wineboot(Traits.SupportsCompatTools runnable, string[]? args=null)
+		/*protected virtual async void wineboot(Traits.SupportsCompatTools runnable, string[]? args=null)
 		{
 			yield wineutil(runnable, "wineboot", args);
 		}
@@ -329,6 +350,6 @@ namespace GameHub.Data.Compat
 			var win_path = (yield Utils.exec({wine_binary.get_path(), "winepath", "-w", path.get_path()}).env(prepare_env(runnable)).log(false).sync_thread(true)).output.strip();
 			debug("[Wine.convert_path] '%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
-		}
+		}*/
 	}
 }

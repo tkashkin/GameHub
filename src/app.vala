@@ -135,7 +135,7 @@ namespace GameHub
 
 		private void init()
 		{
-			if(GameSources != null && CompatTools != null) return;
+			if(GameSources != null /*&& CompatTools != null*/) return;
 
 			FS.make_dirs();
 			ImageCache.init();
@@ -146,7 +146,14 @@ namespace GameHub
 			Providers.ImageProviders = { new Providers.Images.Steam(), new Providers.Images.SteamGridDB(), new Providers.Images.JinxSGVI() };
 			Providers.DataProviders  = { new Providers.Data.IGDB() };
 
-			var proton_latest = new Compat.Proton(Compat.Proton.LATEST);
+			var wine_versions = Compat.Tools.Wine.detect();
+
+			foreach(var wine in wine_versions)
+			{
+				debug("[Application.init] Detected Wine: '%s'; version: '%s'", wine.executable.get_path(), wine.version);
+			}
+
+			/*var proton_latest = new Compat.Proton(Compat.Proton.LATEST);
 
 			CompatTools = { new Compat.WineWrap(), new Compat.Innoextract(), new Compat.DOSBox(), new Compat.ScummVM(), proton_latest };
 
@@ -154,7 +161,7 @@ namespace GameHub
 
 			CompatTool[] tools = CompatTools;
 
-			string[] wine_binaries = { "wine"/*, "wine64", "wine32"*/ };
+			string[] wine_binaries = { "wine" };
 			string[] wine_arches = { "win64", "win32" };
 
 			foreach(var wine_binary in wine_binaries)
@@ -172,7 +179,7 @@ namespace GameHub
 
 			CompatTools = tools;
 
-			proton_latest.init();
+			proton_latest.init();*/
 
 			IconTheme.get_default().add_resource_path("/res/icons");
 

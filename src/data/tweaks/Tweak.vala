@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gee;
 
 using GameHub.Utils;
+using GameHub.Data.Compat;
 using GameHub.Data.Runnables;
 
 namespace GameHub.Data.Tweaks
@@ -182,14 +183,14 @@ namespace GameHub.Data.Tweaks
 					if(applicability_options.compat_tool_ids != null && applicability_options.compat_tool_ids.size > 0)
 					{
 						var tool_id = applicability_options.compat_tool_ids.first();
-						foreach(var tool in CompatTools)
+						/*foreach(var tool in CompatTools)
 						{
 							if(tool.id == tool_id || tool.id.has_prefix(@"$(tool_id)_"))
 							{
 								icon = tool.icon;
 								break;
 							}
-						}
+						}*/
 					}
 				}
 				return icon;
