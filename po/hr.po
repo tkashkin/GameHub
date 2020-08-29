@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-07-02 18:16+0000\n"
+"PO-Revision-Date: 2020-08-30 19:37+0000\n"
 "Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gamehub/"
 "translations/hr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.2.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -25,7 +25,7 @@ msgstr "Prikaži pomoć"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr "Prikaži inačicu aplikacije i izađi"
+msgstr "Prikaži inačicu aplikacije i zatvori"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
@@ -53,7 +53,7 @@ msgstr "Prikaži dijalog o programu"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
-msgstr "Najveći borj radnih niti"
+msgstr "Najveći broj radnih niti"
 
 #: src/app.vala:106
 msgid "Run game"
@@ -801,7 +801,7 @@ msgstr "Klikni za otvaranje"
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
-msgstr "Prilagodbe su učitane iz <b>%1$s</b> i još %2$d direktoriija <b>(?)</b>"
+msgstr "Prilagodbe su učitane iz <b>%1$s</b> i još %2$d direktorija <b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -917,7 +917,7 @@ msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
 msgstr[0] "%u prilagođeni emulator"
 msgstr[1] "%u prilagođena emulatora"
-msgstr[2] "v%u prilagođenih emulatora"
+msgstr[2] "%u prilagođenih emulatora"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
@@ -1170,11 +1170,11 @@ msgstr "Dodaj u Steam igroteku"
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:53
 #, c-format
 msgid "%s: Overlays"
-msgstr "%s: Slojeva"
+msgstr "%s: Slojeva datotečnog sustava"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid "Overlays are disabled"
-msgstr "Overlay je onemogućen"
+msgstr "Slojevi datotečnog sustava su onemogućeni"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid ""
@@ -1182,22 +1182,22 @@ msgid ""
 "\n"
 "Enabling will move game to the “base“ overlay"
 msgstr ""
-"Omogućite overlay kako bi upravljali DLC-om i modovima\n"
+"Omogućite slojeve datotečnog sustava kako bi upravljali DLC-om i modovima\n"
 "\n"
-"Omogućavanje će premjestiti igru u “base“ overlay"
+"Omogućavanje će premjestiti igru u “base“ sloj datotečnog sustava"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:175
 msgid "Overlays"
-msgstr ""
+msgstr "Slojevi datotečnog sustava"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:105
 msgid "Overlay ID (directory name)"
-msgstr ""
+msgstr "ID sloja datotečnog sustava (naziv direktorija)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:110
 msgid "Overlay name (optional)"
-msgstr ""
+msgstr "Naziv sloja datotečnog sustava (neobavezno)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
@@ -1205,7 +1205,7 @@ msgstr "Dodaj"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
 msgid "Enable overlays"
-msgstr ""
+msgstr "Omogući slojeve datotečnog sustava"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:182
 #, c-format
@@ -1215,6 +1215,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Korištenje sloja datotečnog sustava u ovoj putanji može biti nesigurno\n"
+"Nastavljate na vlastit rizik\n"
+"\n"
+"Putanja: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1223,6 +1227,9 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Korištenje sloja datotečnog sustava u ovoj putanji nije podržano\n"
+"\n"
+"Putanja: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
@@ -1230,13 +1237,13 @@ msgstr "Otvori direktorij"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
 msgid "Remove overlay"
-msgstr ""
+msgstr "Ukloni sloj datotečnog sustava"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:235
 msgid "Run with compatibility layer"
-msgstr "Pokreni ss komptibilnim slojem"
+msgstr "Pokreni s kompatibilnim slojem"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
@@ -1373,7 +1380,7 @@ msgstr "%1$s: %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
-msgstr "Nema dodanih igra od strane korinika"
+msgstr "Nema dodanih igra od strane korisnika"
 
 #: src/ui/views/GamesView/GamesView.vala:569
 msgid "Add some games using plus button"
@@ -1485,7 +1492,7 @@ msgstr "Otvori instalacijski direktorij"
 #: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
 msgid "Open installers collection directory"
-msgstr "Direktorij kolekciju instalacijskih programa"
+msgstr "Otvori direktorij kolekcije instalacijskih programa"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
@@ -1544,7 +1551,7 @@ msgstr[2] "Slika za %d igra će biti pretraženo"
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
 msgstr[0] "%d igra će biti deinstalirana"
-msgstr[1] "%d igra će biti deinstalirano"
+msgstr[1] "%d igre će biti deinstalirane"
 msgstr[2] "%d igra će biti deinstalirano"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
@@ -1646,7 +1653,7 @@ msgstr "Skupna ocjena"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr "IGDB ocjena korinika"
+msgstr "IGDB ocjena korisnika"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:117
 msgctxt "igdb"
