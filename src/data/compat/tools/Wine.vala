@@ -30,35 +30,14 @@ namespace GameHub.Data.Compat.Tools
 {
 	public class Wine: CompatTool, CompatToolTraits.Run, CompatToolTraits.Install
 	{
-		private const string[] WINE_SYSTEM_BINARIES = {"wine"};
-		private const string[] WINE_SYSTEM_SUFFIXES = {"", "-development", "-stable"};
-
-		public static ArrayList<Wine> detect()
-		{
-			var detected = new ArrayList<Wine>();
-			foreach(var suffix in WINE_SYSTEM_SUFFIXES)
-			{
-				foreach(var binary in WINE_SYSTEM_BINARIES)
-				{
-					var wine = Utils.find_executable("%s%s".printf(binary, suffix));
-					if(wine != null && wine.query_exists())
-					{
-						var wineserver = wine.get_parent().get_child("wineserver%s".printf(suffix));
-						detected.add(new Wine(wine, wineserver));
-					}
-				}
-			}
-			return detected;
-		}
-
 		public File? wineserver_executable { protected get; protected construct set; }
 
-		public Wine(File wine, File? wineserver)
+		public Wine(File wine, File? wineserver, string? name)
 		{
 			Object(
 				tool: "wine",
 				id: Utils.md5(wine.get_path()),
-				name: "Wine",
+				name: name ?? "Wine",
 				icon: "tool-wine-symbolic",
 				executable: wine,
 				wineserver_executable: wineserver
@@ -351,5 +330,62 @@ namespace GameHub.Data.Compat.Tools
 			debug("[Wine.convert_path] '%s' -> '%s'", path.get_path(), win_path);
 			return win_path;
 		}*/
+
+
+		private const string[] WINE_VERSION_SUFFIXES = {"", "-development", "-devel", "-stable", "-staging"};
+		private const string[] WINE_BINARIES = {"wine"};
+		private const string[] WINE_OPT_PATHS = {"/opt/wine%s/bin/wine"};
+
+		private static ArrayList<Wine>? wine_versions = null;
+
+		public static ArrayList<Wine> detect()
+		{
+			if(wine_versions == null)
+			{
+				wine_versions = new ArrayList<Wine>();
+			}
+
+			foreach(var suffix in WINE_VERSION_SUFFIXES)
+			{
+				foreach(var binary in WINE_BINARIES)
+				{
+					var wine = Utils.find_executable("%s%s".printf(binary, suffix));
+					if(wine != null && wine.query_exists())
+					{
+						var wineserver = wine.get_parent().get_child("wineserver%s".printf(suffix));
+						add_wine_version(wine, wineserver, suffix);
+					}
+				}
+
+				foreach(var opt_path in WINE_OPT_PATHS)
+				{
+					var wine = Utils.find_executable(opt_path.printf(suffix));
+					if(wine != null && wine.query_exists())
+					{
+						var wineserver = wine.get_parent().get_child("wineserver");
+						add_wine_version(wine, wineserver, suffix);
+					}
+				}
+			}
+
+			return wine_versions;
+		}
+
+		private static void add_wine_version(File? wine, File? wineserver, string name_suffix)
+		{
+			var already_added = false;
+			foreach(var existing_version in wine_versions)
+			{
+				if(existing_version.executable.equal(wine))
+				{
+					already_added = true;
+					break;
+				}
+			}
+			if(!already_added)
+			{
+				wine_versions.add(new Wine(wine, wineserver, "Wine%s".printf(name_suffix)));
+			}
+		}
 	}
 }
