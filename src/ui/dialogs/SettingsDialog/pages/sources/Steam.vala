@@ -98,11 +98,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private void update()
 		{
-			sgrp_proton.settings.foreach(r => {
+			/*sgrp_proton.settings.foreach(r => {
 				if(r != null) r.destroy();
 			});
 
-			/*foreach(var tool in CompatTools)
+			foreach(var tool in CompatTools)
 			{
 				if(tool is Proton)
 				{

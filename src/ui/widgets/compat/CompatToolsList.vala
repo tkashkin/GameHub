@@ -33,6 +33,8 @@ namespace GameHub.UI.Widgets.Compat
 	{
 		public Traits.SupportsCompatTools? runnable { get; construct; default = null; }
 
+		private Button add_tool_button;
+
 		public CompatToolsList(Traits.SupportsCompatTools? runnable = null)
 		{
 			Object(runnable: runnable, show_border: false, expand: true, scrollable: true);
@@ -40,6 +42,13 @@ namespace GameHub.UI.Widgets.Compat
 
 		construct
 		{
+			add_tool_button = new Button.from_icon_name("list-add-symbolic", IconSize.SMALL_TOOLBAR);
+			add_tool_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+			add_tool_button.valign = Align.CENTER;
+			add_tool_button.tooltip_text = _("Add");
+			add_tool_button.clicked.connect(add_tool);
+			add_tool_button.show();
+			set_action_widget(add_tool_button, PackType.END);
 			update();
 		}
 
@@ -50,23 +59,23 @@ namespace GameHub.UI.Widgets.Compat
 			add_tab(new Tabs.Wine());
 		}
 
+		private void add_tool()
+		{
+
+		}
+
 		private void add_tab(CompatToolsGroupTab tab)
 		{
 			append_page(tab, new Label(tab.title));
 		}
 	}
 
-	public class CompatToolsGroupTab: Box
+	public abstract class CompatToolsGroupTab: Box
 	{
 		public string title { get; construct set; }
 
-		private ListBox tools_list;
+		protected ListBox tools_list;
 		private Box tool_options;
-
-		public CompatToolsGroupTab()
-		{
-			Object();
-		}
 
 		construct
 		{
@@ -75,10 +84,11 @@ namespace GameHub.UI.Widgets.Compat
 			var tools_list_scrolled = new ScrolledWindow(null, null);
 			tools_list_scrolled.set_size_request(200, -1);
 			tools_list_scrolled.hscrollbar_policy = PolicyType.NEVER;
+			tools_list_scrolled.hexpand = false;
 			tools_list_scrolled.vexpand = true;
 
 			tools_list = new ListBox();
-			tools_list.selection_mode = SelectionMode.NONE;
+			tools_list.selection_mode = SelectionMode.SINGLE;
 
 			var tool_options_scrolled = new ScrolledWindow(null, null);
 			tool_options_scrolled.get_style_context().add_class(Gtk.STYLE_CLASS_BACKGROUND);
@@ -94,7 +104,29 @@ namespace GameHub.UI.Widgets.Compat
 			add(new Separator(Orientation.VERTICAL));
 			add(tool_options_scrolled);
 
+			tools_list.row_selected.connect((row) => {
+				tool_options.foreach(w => w.destroy());
+				if(row != null)
+				{
+					create_options_widget(row, tool_options);
+					tool_options.show_all();
+				}
+			});
+
 			show_all();
 		}
+
+		protected void clear()
+		{
+			tools_list.foreach(w => w.destroy());
+			tool_options.foreach(w => w.destroy());
+		}
+
+		protected void add_tool(ListBoxRow row)
+		{
+			tools_list.add(row);
+		}
+
+		protected virtual void create_options_widget(ListBoxRow row, Box container){}
 	}
 }
