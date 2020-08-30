@@ -22,8 +22,9 @@
 			"name": "libevdev",
 			"sources": [
 				{
-					"type": "git",
-					"url": "https://gitlab.freedesktop.org/libevdev/libevdev.git"
+					"type": "archive",
+					"url": "https://freedesktop.org/software/libevdev/libevdev-1.8.0.tar.xz",
+					"sha256": "20d3cae4efd277f485abdf8f2a7c46588e539998b5a08c2c4d368218379d4211"
 				}
 			]
 		},
