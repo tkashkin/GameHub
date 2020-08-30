@@ -62,7 +62,7 @@ namespace GameHub.Data.DB.Tables
 							`name`       string not null,
 							`executable` string,
 							`info`       string,
-							`options`    string
+							`options`    string,
 						PRIMARY KEY(`tool`, `id`))");
 						break;
 				}

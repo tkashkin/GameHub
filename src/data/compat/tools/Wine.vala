@@ -44,6 +44,34 @@ namespace GameHub.Data.Compat.Tools
 			);
 		}
 
+		public Wine.from_db(Sqlite.Statement s)
+		{
+			var executable = FS.file(DB.Tables.CompatTools.EXECUTABLE.get(s));
+			File? wineserver_executable = null;
+
+			var info = DB.Tables.CompatTools.INFO.get(s);
+			var info_node = Parser.parse_json(info);
+			if(info_node != null && info_node.get_node_type() == Json.NodeType.OBJECT)
+			{
+				var info_obj = info_node.get_object();
+				if(info_obj.has_member("wineserver"))
+				{
+					wineserver_executable = FS.file(info_obj.get_string_member("wineserver"));
+				}
+			}
+
+			Object(
+				tool: "wine",
+				id: DB.Tables.CompatTools.ID.get(s),
+				name: DB.Tables.CompatTools.NAME.get(s),
+				icon: "tool-wine-symbolic",
+				executable: executable,
+				wineserver_executable: wineserver_executable,
+				info: info,
+				options: DB.Tables.CompatTools.OPTIONS.get(s)
+			);
+		}
+
 		construct
 		{
 			if(executable != null && executable.query_exists())
@@ -89,6 +117,8 @@ namespace GameHub.Data.Compat.Tools
 					})
 				};
 			}*/
+
+			save();
 		}
 
 		public bool can_install(Traits.SupportsCompatTools runnable, InstallTask task)
@@ -331,6 +361,21 @@ namespace GameHub.Data.Compat.Tools
 			return win_path;
 		}*/
 
+		public void save()
+		{
+			var info_node = new Json.Node(Json.NodeType.OBJECT);
+			var info_obj = new Json.Object();
+
+			if(wineserver_executable != null && wineserver_executable.query_exists())
+			{
+				info_obj.set_string_member("wineserver", wineserver_executable.get_path());
+			}
+
+			info_node.set_object(info_obj);
+			info = Json.to_string(info_node, false);
+
+			DB.Tables.CompatTools.add(this);
+		}
 
 		private const string[] WINE_VERSION_SUFFIXES = {"", "-development", "-devel", "-stable", "-staging"};
 		private const string[] WINE_BINARIES = {"wine"};
@@ -373,19 +418,11 @@ namespace GameHub.Data.Compat.Tools
 
 		private static void add_wine_version(File? wine, File? wineserver, string name_suffix)
 		{
-			var already_added = false;
 			foreach(var existing_version in wine_versions)
 			{
-				if(existing_version.executable.equal(wine))
-				{
-					already_added = true;
-					break;
-				}
+				if(existing_version.executable.equal(wine)) return;
 			}
-			if(!already_added)
-			{
-				wine_versions.add(new Wine(wine, wineserver, "Wine%s".printf(name_suffix)));
-			}
+			wine_versions.add(new Wine(wine, wineserver, "Wine%s".printf(name_suffix)));
 		}
 	}
 }
