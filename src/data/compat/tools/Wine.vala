@@ -74,14 +74,7 @@ namespace GameHub.Data.Compat.Tools
 
 		construct
 		{
-			#if PKG_FLATPAK
-			if(executable != null)
-			#else
-			if(executable != null && executable.query_exists())
-			#endif
-			{
-				version = Utils.replace_prefix(Utils.exec({executable.get_path(), "--version"}).log(false).sync(true).output, "wine-", "").strip();
-			}
+			version = Utils.replace_prefix(Utils.exec({executable.get_path(), "--version"}).log(false).sync(true).output, "wine-", "").strip();
 
 			/*executable = wine_binary = Utils.find_executable(binary);
 			#if !PKG_FLATPAK

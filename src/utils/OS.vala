@@ -118,4 +118,88 @@ namespace GameHub.Utils.OS
 	}
 
 	#endif
+
+	#if PKG_FLATPAK
+
+	namespace Flatpak
+	{
+		public static bool is_app_path(string path)
+		{
+			return path.has_prefix("/app/");
+		}
+
+		public static bool is_host_path(string path)
+		{
+			return !is_app_path(path);
+		}
+
+		public static string get_sandbox_path(string path)
+		{
+			if(path.has_prefix("/usr/"))
+			{
+				// In the Flatpak environment /usr allows refers to the current runtime so search in /run/host/usr instead
+				// This should be the only observable difference from using the standard `g_find_program_in_path` below
+				return Path.build_filename("/run/host", path);
+			}
+			return path;
+		}
+
+		public static bool check_host_executable(string path)
+		{
+			// Reject paths not representable on the host
+			if(is_app_path(path))
+			{
+				return false;
+			}
+
+			// Fixup path differences between Flatpak environment and host
+			var sandbox_path = get_sandbox_path(path);
+			return File.new_for_path(sandbox_path).query_exists();
+		}
+
+		/**
+		 * An extended version of `Environment.find_program_in_path` that takes into
+		 * account Flatpak-specific quirks needed when working with host paths from
+		 * inside the Flatpak sandbox environment
+		 */
+		public static string? find_program_in_path(string name)
+		{
+			string? path = name;
+
+			if(Path.is_absolute(path))
+			{
+				// Absolute paths: Directly check rather than doing a $PATH search
+				if(check_host_executable(path))
+				{
+					return path;
+				}
+				return null;
+			}
+			else if(path.index_of(Path.DIR_SEPARATOR_S) > 0)
+			{
+				// Make relative paths (ie: paths that contain a slash but don't start with one) absolute
+				path = Path.build_filename(Environment.get_current_dir(), name);
+			}
+
+			// Search for name in $PATH
+			var searchpath = Environment.get_variable("PATH") ?? "/bin:/usr/bin:.";
+
+			foreach(var dir in searchpath.split(Path.SEARCHPATH_SEPARATOR_S))
+			{
+				// Two adjacent colons, or a colon at the beginning or the end of $PATH means to search the current directory
+				if(dir.length > 0)
+				{
+					path = Path.build_filename(dir, name);
+				}
+
+				if(check_host_executable(path))
+				{
+					return path;
+				}
+			}
+			return null;
+		}
+	}
+
+	#endif
 }

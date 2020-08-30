@@ -24,10 +24,10 @@ namespace GameHub.Utils
 	{
 		private static uint gtk_inhibit_id = 0;
 
-		// On Flatpak we can mostly rely on gtk.Application.inhibit working, since
-		// the Desktop portal D-Bus implementation it talks to should always be
-		// present – in other environments however it makes sense to have a
-		// fallback to the “classic” way of doing things
+		/**
+		 * On Flatpak we can mostly rely on gtk.Application.inhibit working, since the Desktop portal D-Bus implementation it talks to
+		 * should always be present – in other environments however it makes sense to have a fallback to the “classic” way of doing things
+		 */
 		#if !PKG_FLATPAK
 		private static DBusFreeDesktopScreenSaver? fd_screensaver = null;
 		private static uint32? fd_screensaver_inhibit_id = null;
@@ -41,7 +41,7 @@ namespace GameHub.Utils
 			}
 			catch(Error e)
 			{
-				warning("[ScreenSaver.dbus_connect] Failed to connect to DBus: %s", e.message);
+				warning("[Inhibitor.dbus_connect] Failed to connect to DBus: %s", e.message);
 			}
 		}
 		#endif
@@ -67,7 +67,7 @@ namespace GameHub.Utils
 					}
 					catch(Error e)
 					{
-						warning("[ScreenSaver.inhibit] Failed to inhibit screensaver via DBus: %s", e.message);
+						warning("[Inhibitor.inhibit] Failed to inhibit screensaver via DBus: %s", e.message);
 					}
 				}
 			}
@@ -89,7 +89,7 @@ namespace GameHub.Utils
 					}
 					catch(Error e)
 					{
-						warning("[ScreenSaver.uninhibit] Failed to uninhibit screensaver via DBus: %s", e.message);
+						warning("[Inhibitor.uninhibit] Failed to uninhibit screensaver via DBus: %s", e.message);
 					}
 				}
 			}
