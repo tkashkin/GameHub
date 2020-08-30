@@ -22,10 +22,15 @@ namespace GameHub.Utils
 {
 	public class Inhibitor
 	{
-		private static DBusFreeDesktopScreenSaver? fd_screensaver = null;
+		private static uint gtk_inhibit_id = 0;
 
+		// On Flatpak we can mostly rely on gtk.Application.inhibit working, since
+		// the Desktop portal D-Bus implementation it talks to should always be
+		// present – in other environments however it makes sense to have a
+		// fallback to the “classic” way of doing things
+		#if !PKG_FLATPAK
+		private static DBusFreeDesktopScreenSaver? fd_screensaver = null;
 		private static uint32? fd_screensaver_inhibit_id = null;
-		private static uint? gtk_inhibit_id = null;
 
 		private static void dbus_connect()
 		{
@@ -39,12 +44,19 @@ namespace GameHub.Utils
 				warning("[ScreenSaver.dbus_connect] Failed to connect to DBus: %s", e.message);
 			}
 		}
+		#endif
 
 		public static void inhibit(string? reason = null)
 		{
 			if(!GameHub.Settings.UI.Behavior.instance.inhibit_screensaver) return;
 			reason = reason ?? _("Game is running");
-			if(fd_screensaver_inhibit_id == null)
+			if(gtk_inhibit_id == 0)
+			{
+				gtk_inhibit_id = GameHub.Application.instance.inhibit(GameHub.Application.instance.active_window, ApplicationInhibitFlags.IDLE | ApplicationInhibitFlags.SUSPEND, reason);
+			}
+
+			#if !PKG_FLATPAK
+			if(gtk_inhibit_id == 0 && fd_screensaver_inhibit_id == null)
 			{
 				dbus_connect();
 				if(fd_screensaver != null)
@@ -59,14 +71,12 @@ namespace GameHub.Utils
 					}
 				}
 			}
-			if(gtk_inhibit_id == null)
-			{
-				gtk_inhibit_id = GameHub.Application.instance.inhibit(GameHub.Application.instance.active_window, ApplicationInhibitFlags.IDLE | ApplicationInhibitFlags.SUSPEND, reason);
-			}
+			#endif
 		}
 
 		public static void uninhibit()
 		{
+			#if !PKG_FLATPAK
 			if(fd_screensaver_inhibit_id != null)
 			{
 				dbus_connect();
@@ -83,18 +93,22 @@ namespace GameHub.Utils
 					}
 				}
 			}
-			if(gtk_inhibit_id != null)
+			#endif
+
+			if(gtk_inhibit_id != 0)
 			{
 				GameHub.Application.instance.uninhibit(gtk_inhibit_id);
-				gtk_inhibit_id = null;
+				gtk_inhibit_id = 0;
 			}
 		}
 
+		#if !PKG_FLATPAK
 		[DBus(name = "org.freedesktop.ScreenSaver")]
 		private interface DBusFreeDesktopScreenSaver: Object
 		{
 			public abstract uint32 inhibit(string app_name, string reason) throws Error;
 			public abstract void un_inhibit(uint32 cookie) throws Error;
 		}
+		#endif
 	}
 }

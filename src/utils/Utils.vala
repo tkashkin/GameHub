@@ -82,10 +82,125 @@ namespace GameHub.Utils
 		return null;
 	}
 
+	#if PKG_FLATPAK
+	private static bool flatpak_validate_path(string path)
+	{
+		if(path.index_of("/app/") == 0)
+		{
+			// Flatpak environment /app paths refer to the current application
+			// and are not launchable on the host
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private static string? flatpak_fixup_path(string path)
+	{
+		if(path.index_of("/usr/") == 0)
+		{
+			// In the Flatpak environment /usr allows refers to the current
+			// runtime so search in /run/host/usr instead
+			//
+			// This should be the only observable difference from using the
+			// standard `g_find_program_in_path` below.
+			return Path.build_filename("/run/host", path);
+		}
+		
+		return null;
+	}
+	
+	private static bool flatpak_check_executable_on_host(string path)
+	{
+		// Reject paths not representable on the host
+		if(!flatpak_validate_path(path))
+		{
+			return false;
+		}
+		
+		// Fixup path differences between Flatpak environment and host
+		string try_path_owned = flatpak_fixup_path(path);
+		unowned string try_path = try_path_owned ?? path;
+		
+		// Check if containerized path is an executable file
+		if(!FileUtils.test(try_path, FileTest.IS_EXECUTABLE)
+			|| FileUtils.test(try_path, FileTest.IS_DIR))
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * An extended version of `Environment.find_program_in_path` that takes into
+	 * account Flatpak-specific quirks needed when working with host paths from
+	 * inside the Flatpak sandbox environment
+	 */
+	private static string? flatpak_find_program_in_path(owned string name)
+	{
+		{
+			string owned_path = null;
+			unowned string path = name;
+			
+			// Make relative paths (ie: paths that contain a slash but don't start
+			// with one) absolute
+			if(name.index_of(Path.DIR_SEPARATOR_S) > 0)
+			{
+				owned_path = Path.build_filename(Environment.get_current_dir(), name);
+				path = owned_path;
+			}
+			
+			// Absolute paths: Directly check rather than doing a $PATH search
+			if(Path.is_absolute(path))
+			{
+				if(flatpak_check_executable_on_host(path))
+				{
+					return owned_path ?? name;
+				}
+				return null;
+			}
+		}
+		
+		
+		// Search for name in $PATH
+		unowned string searchpath = Environment.get_variable("PATH");
+		if(searchpath == null)
+		{
+			// Path fallback as used by glib, in the unlikely event that we need it
+			searchpath = "/bin:/usr/bin:.";
+		}
+		
+		foreach(unowned string p in searchpath.split(Path.SEARCHPATH_SEPARATOR_S))
+		{
+			// Two adjacent colons, or a colon at the beginning or the end
+			// of $PATH means to search the current directory
+			string owned_path = null;
+			unowned string path = name;
+			if(p.length > 0)
+			{
+				owned_path = Path.build_filename(p, name);
+				path = owned_path;
+			}
+			
+			if(flatpak_check_executable_on_host(path))
+			{
+				return owned_path ?? name;
+			}
+		}
+		return null;
+	}
+	#endif
+
 	public static File? find_executable(string? name)
 	{
 		if(name == null || name.length == 0) return null;
+		
+		#if PKG_FLATPAK
+		var path = flatpak_find_program_in_path(name);
+		#else
 		var path = Environment.find_program_in_path(name);
+		#endif
 		if(path == null || path.length == 0 || !path.has_prefix("/"))
 		{
 			return null;
