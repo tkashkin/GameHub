@@ -7,26 +7,28 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-09-04 13:36+0000\n"
+"Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gamehub/"
+"translations/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr ""
+msgstr "Mostrar la ayuda"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Mostrar la versión de la aplicación y salir"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Reiniciar con el depurador GDB acoplado"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
@@ -38,7 +40,7 @@ msgstr ""
 
 #: src/app.vala:99
 msgid "Show main window"
-msgstr ""
+msgstr "Mostrar la ventana principal"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
@@ -127,7 +129,7 @@ msgstr ""
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
@@ -330,7 +332,7 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
-msgstr ""
+msgstr "Ejecutar"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
@@ -383,7 +385,7 @@ msgstr ""
 
 #: src/data/compat/CustomEmulator.vala:48
 msgid "Emulator"
-msgstr ""
+msgstr "Emulador"
 
 #: src/data/compat/CustomEmulator.vala:49
 msgid "Launch in game directory"
@@ -719,11 +721,11 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 #: src/ui/views/GamesView/FiltersPopover.vala:127
 msgid "Platform"
-msgstr ""
+msgstr "Plataforma"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
 msgid "Controller"
-msgstr ""
+msgstr "Mando"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
@@ -736,7 +738,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
-msgstr ""
+msgstr "Mandos"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
@@ -744,7 +746,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 msgid "Exit"
-msgstr ""
+msgstr "Salir"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:40
@@ -833,7 +835,7 @@ msgstr ""
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:233
 #: src/ui/widgets/TweaksList.vala:95
 msgid "Install"
-msgstr ""
+msgstr "Instalar"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:236
 msgid "Steam API key"
@@ -857,7 +859,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:45
 msgid "Emulators"
-msgstr ""
+msgstr "Emuladores"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 msgid "Libretro core directory"
@@ -900,7 +902,7 @@ msgstr[1] ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:250
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
@@ -926,7 +928,7 @@ msgstr ""
 #: src/ui/dialogs/GamePropertiesDialog.vala:69
 #: src/ui/views/GamesView/AddGamePopover.vala:73
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:272
 #: src/ui/dialogs/GamePropertiesDialog.vala:201
@@ -967,7 +969,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:315
 msgid "Image"
-msgstr ""
+msgstr "Imagen"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:318
 msgid "Icon"
@@ -1009,7 +1011,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:36
 msgid "About"
-msgstr ""
+msgstr "Acerca de"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
 msgid "Copy application version and environment info"
@@ -1023,7 +1025,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:92
 msgctxt "about_link"
 msgid "Website"
-msgstr ""
+msgstr "Sitio web"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:96
 msgctxt "about_link"
@@ -1133,7 +1135,7 @@ msgstr ""
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:254
 msgid "Add to Steam"
-msgstr ""
+msgstr "Añadir a Steam"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:255
 msgid "Add to the Steam library"
@@ -1170,7 +1172,7 @@ msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
 msgid "Enable overlays"
@@ -1226,7 +1228,7 @@ msgstr ""
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
 msgid "Select all"
-msgstr ""
+msgstr "Seleccionar todos"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
 msgid "Select directory to import"
@@ -1288,7 +1290,7 @@ msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:151
 msgid "List view"
-msgstr ""
+msgstr "Vista de lista"
 
 #: src/ui/views/GamesView/GamesView.vala:159
 msgid "All games"
@@ -1296,20 +1298,20 @@ msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:182
 msgid "Downloads"
-msgstr ""
+msgstr "Descargas"
 
 #: src/ui/views/GamesView/GamesView.vala:208
 msgid "Filters"
-msgstr ""
+msgstr "Filtros"
 
 #: src/ui/views/GamesView/GamesView.vala:216
 #: src/ui/views/GamesView/AddGamePopover.vala:84
 msgid "Add game"
-msgstr ""
+msgstr "Añadir juego"
 
 #: src/ui/views/GamesView/GamesView.vala:223
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: src/ui/views/GamesView/GamesView.vala:328
 msgid "Menu"
@@ -1374,7 +1376,7 @@ msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:628
 msgid "Privacy"
-msgstr ""
+msgstr "Privacidad"
 
 #: src/ui/views/GamesView/GamesView.vala:739
 msgid "Downloading images"
@@ -1431,7 +1433,7 @@ msgstr ""
 
 #: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:117
 msgctxt "game_context_menu"
@@ -1471,7 +1473,7 @@ msgstr ""
 
 #: src/ui/views/GamesView/GameContextMenu.vala:192
 msgid "Properties"
-msgstr ""
+msgstr "Propiedades"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:100
 #, c-format
@@ -1559,12 +1561,12 @@ msgstr ""
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:80
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
-msgstr ""
+msgstr "Idiomas"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
 #, c-format
