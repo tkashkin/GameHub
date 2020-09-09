@@ -82,6 +82,7 @@ namespace GameHub.UI.Widgets.Compat
 			orientation = Orientation.HORIZONTAL;
 
 			var tools_list_scrolled = new ScrolledWindow(null, null);
+			tools_list_scrolled.get_style_context().add_class("compat-tools-list");
 			tools_list_scrolled.set_size_request(200, -1);
 			tools_list_scrolled.hscrollbar_policy = PolicyType.NEVER;
 			tools_list_scrolled.hexpand = false;
@@ -101,7 +102,6 @@ namespace GameHub.UI.Widgets.Compat
 			tool_options_scrolled.add(tool_options);
 
 			add(tools_list_scrolled);
-			add(new Separator(Orientation.VERTICAL));
 			add(tool_options_scrolled);
 
 			tools_list.row_selected.connect((row) => {

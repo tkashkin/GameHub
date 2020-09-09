@@ -105,7 +105,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			syntax_info.get_content_area().add(syntax_info_grid);
 
 			add_widget(syntax_info);
-			syntax_info.margin_start = syntax_info.margin_end = 18;
+			syntax_info.margin = 8;
 
 			gog.notify["game-dir"].connect(() => gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(EXAMPLE_GAME_NAME));
 			gog.notify["installers"].connect(() => gog_installers.description = Paths.Collection.GOG.expand_installers(EXAMPLE_GAME_NAME, null, Platform.CURRENT));

@@ -58,3 +58,13 @@
 {
 	background: alpha(@borders, 0.5);
 }
+
+.settings-group .compat-tools-list:dir(ltr)
+{
+	border-right: 1px @borders solid;
+}
+
+.settings-group .compat-tools-list:dir(rtl)
+{
+	border-left: 1px @borders solid;
+}
