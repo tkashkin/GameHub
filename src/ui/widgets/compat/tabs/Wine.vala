@@ -68,6 +68,54 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			setting_info.icon_name = wine.icon;
 
 			container.add(sgrp_info);
+
+			var sgrp_prefix = new SettingsGroup("Wineprefix");
+
+			var prefix_vbox = new Box(Orientation.VERTICAL, 0);
+			prefix_vbox.margin_start = prefix_vbox.margin_end = 8;
+			prefix_vbox.margin_top = prefix_vbox.margin_bottom = 4;
+
+			var prefix_shared_radio = new RadioButton.with_label_from_widget(null, _("Use shared prefix for all games"));
+			var prefix_separate_radio = new RadioButton.with_label_from_widget(prefix_shared_radio, _("Use separate prefix for each game"));
+			var prefix_custom_radio = new RadioButton.with_label_from_widget(prefix_shared_radio, _("Use custom prefix"));
+
+			prefix_vbox.add(prefix_shared_radio);
+			prefix_vbox.add(prefix_separate_radio);
+			prefix_vbox.add(prefix_custom_radio);
+
+			sgrp_prefix.add_setting(new CustomWidgetSetting(prefix_vbox));
+			var prefix_custom_path = sgrp_prefix.add_setting(new EntrySetting(_("Prefix path"), null, InlineWidgets.entry()));
+
+			prefix_custom_radio.bind_property("active", prefix_custom_path, "sensitive", BindingFlags.SYNC_CREATE);
+
+			prefix_shared_radio.clicked.connect(() => prefix_custom_path.entry.placeholder_text = "${compat_shared}/${type}/${id}");
+			prefix_separate_radio.clicked.connect(() => prefix_custom_path.entry.placeholder_text = "${install_dir}/${compat}/${type}/${id}");
+
+			container.add(sgrp_prefix);
+
+			var sgrp_vdesktop = new SettingsGroup(_("Virtual desktop"));
+
+			var vdesktop_resolution_hbox = new Box(Orientation.HORIZONTAL, 8);
+			var vdesktop_resolution_width_spinbutton = new SpinButton.with_range(640, 16384, 100);
+			var vdesktop_resolution_height_spinbutton = new SpinButton.with_range(480, 16384, 100);
+			vdesktop_resolution_width_spinbutton.value = 1920;
+			vdesktop_resolution_height_spinbutton.value = 1080;
+
+			vdesktop_resolution_hbox.add(vdesktop_resolution_width_spinbutton);
+			vdesktop_resolution_hbox.add(new Label("×"));
+			vdesktop_resolution_hbox.add(vdesktop_resolution_height_spinbutton);
+
+			var vdesktop_switch = sgrp_vdesktop.add_setting(new SwitchSetting(_("Emulate a virtual desktop")));
+			var vdesktop_resolution = sgrp_vdesktop.add_setting(new BaseSetting(_("Resolution"), null, vdesktop_resolution_hbox));
+
+			vdesktop_switch.switch.bind_property("active", vdesktop_resolution, "sensitive", BindingFlags.SYNC_CREATE);
+
+			container.add(sgrp_vdesktop);
+
+			var sgrp_dll_overrides = new SettingsGroup(_("System libraries"));
+			sgrp_dll_overrides.add_setting(new SwitchSetting("Gecko", _("HTML rendering engine")));
+			sgrp_dll_overrides.add_setting(new SwitchSetting("Mono", _(".NET framework implementation")));
+			container.add(sgrp_dll_overrides);
 		}
 
 		private class WineRow: BaseSetting

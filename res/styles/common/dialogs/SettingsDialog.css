@@ -72,5 +72,4 @@
 .settings-dialog .settings-pages-sidebar list
 {
 	background: shade(@theme_bg_color, 0.95);
-	margin-bottom: 16px;
 }
