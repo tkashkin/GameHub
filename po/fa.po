@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Goudarz Jafari <goudarz.jafari@gmail.com>, 2019.
 # Alireza Jabbari <rhrurhraj@gmail.com>, 2020.
+# Mitsuha Miamizu <mitsuha.miamizu4444@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-06-12 19:41+0000\n"
-"Last-Translator: Alireza Jabbari <rhrurhraj@gmail.com>\n"
+"PO-Revision-Date: 2020-09-16 08:36+0000\n"
+"Last-Translator: Mitsuha Miamizu <mitsuha.miamizu4444@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/gamehub/"
 "translations/fa/>\n"
 "Language: fa\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -33,11 +34,11 @@ msgstr "ری‌استارت همراه با عیب یاب GDB"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "نمایش بازگشت کامل GDB"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "خطاهای مهلک را به عنوان موارد مهم و کاربرد خرابی آن، درست کنید"
 
 #: src/app.vala:99
 msgid "Show main window"
@@ -45,7 +46,7 @@ msgstr "نمایش پنجره اصلی"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "چیدمان اپلیکیشن گفت و گو را نشان دهید."
 
 #: src/app.vala:101
 msgid "Show about dialog"
@@ -53,7 +54,7 @@ msgstr "نمایش درباره گفت‌وگو"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "حداکثر تعداد موضوعات کارگر در پس زمینه"
 
 #: src/app.vala:106
 msgid "Run game"
@@ -61,7 +62,7 @@ msgstr "اجرای بازی"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "سازگاری تنظیمات گفت و گو را نشان دهید"
 
 #: src/app.vala:108
 msgid "Open game details"
@@ -69,33 +70,33 @@ msgstr "جزئیات بازی را باز کن"
 
 #: src/app.vala:109
 msgid "Open game properties"
-msgstr ""
+msgstr "باز کردن ویژگی های بازی"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
-msgstr ""
+msgstr "ورود به سیستم حل مشکل را فعال نمایید"
 
 #: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
-msgstr ""
+msgstr "احراز هویت و اطلاعات حساس مانند نشانه های احراز هویت را وارد کنید"
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr ""
+msgstr "ورود به سیستم مدیریت دانلود"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "ورود به سیستم شروع/پایان کارگر پس زمینه"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "پیام های ورود به سیستم را غیرفعال کنید"
 
 #: src/app.vala:118
 msgid "Verbose logging"
-msgstr ""
+msgstr "ورود به سیستم لفظی"
 
 #: src/app.vala:247
 msgid "Game Options:"
@@ -107,24 +108,24 @@ msgstr "نمایش راهنمای تنظیمات بازی"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr ""
+msgstr "ورود به تنظیمات"
 
 #: src/app.vala:255
 msgid "Show logging options help"
-msgstr ""
+msgstr "نمایش راهنمای تنظیمات بازی"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
-msgstr ""
+msgstr "انتخاب قابل اجرا"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr "انتخاب کنید"
+msgstr "انتخاب"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
