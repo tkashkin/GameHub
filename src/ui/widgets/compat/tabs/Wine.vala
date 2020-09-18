@@ -26,11 +26,16 @@ using GameHub.UI.Widgets.Settings;
 using GameHub.Data;
 using GameHub.Data.Compat;
 using GameHub.Data.Compat.Tools;
+using GameHub.Data.Compat.Tools.Wine;
+
+using GameHub.Utils;
 
 namespace GameHub.UI.Widgets.Compat.Tabs
 {
 	public class Wine: CompatToolsGroupTab
 	{
+		private ArrayList<VariableEntry.Variable> wineprefix_variables = new ArrayList<VariableEntry.Variable>();
+
 		public Wine()
 		{
 			Object(title: "Wine");
@@ -38,6 +43,13 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 
 		construct
 		{
+			wineprefix_variables.add(new VariableEntry.Variable("${compat_shared}", _("Shared compatibility data directory")));
+			wineprefix_variables.add(new VariableEntry.Variable("${tool_type}", _("Type of compatibility layer (\"wine\" for Wine)")));
+			wineprefix_variables.add(new VariableEntry.Variable("${tool_id}", _("Identifier of compatibility layer")));
+			wineprefix_variables.add(new VariableEntry.Variable("${install_dir}", _("Installation directory of the game")));
+			wineprefix_variables.add(new VariableEntry.Variable("${id}", _("Identifier of the game")));
+			wineprefix_variables.add(new VariableEntry.Variable("${compat}", _("Compatibility data subdirectory")));
+
 			update();
 		}
 
@@ -45,7 +57,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 		{
 			clear();
 
-			var wine_versions = GameHub.Data.Compat.Tools.Wine.detect();
+			var wine_versions = Tools.Wine.Wine.detect();
 			foreach(var wine in wine_versions)
 			{
 				var row = new WineRow(wine);
@@ -61,6 +73,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 		{
 			var wine_row = (WineRow) row;
 			var wine = wine_row.wine;
+			var wine_options = new WineOptions.from_json(Parser.parse_json(wine.options));
 
 			var sgrp_info = new SettingsGroup();
 
@@ -84,12 +97,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			prefix_vbox.add(prefix_custom_radio);
 
 			sgrp_prefix.add_setting(new CustomWidgetSetting(prefix_vbox));
-			var prefix_custom_path = sgrp_prefix.add_setting(new EntrySetting(_("Prefix path"), null, InlineWidgets.entry()));
-
-			prefix_custom_radio.bind_property("active", prefix_custom_path, "sensitive", BindingFlags.SYNC_CREATE);
-
-			prefix_shared_radio.clicked.connect(() => prefix_custom_path.entry.placeholder_text = "${compat_shared}/${type}/${id}");
-			prefix_separate_radio.clicked.connect(() => prefix_custom_path.entry.placeholder_text = "${install_dir}/${compat}/${type}/${id}");
+			var prefix_custom_path = sgrp_prefix.add_setting(new EntrySetting.bind(_("Prefix path"), null, InlineWidgets.variable_entry(wineprefix_variables), wine_options.prefix, "custom-path"));
 
 			container.add(sgrp_prefix);
 
@@ -98,31 +106,76 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			var vdesktop_resolution_hbox = new Box(Orientation.HORIZONTAL, 8);
 			var vdesktop_resolution_width_spinbutton = new SpinButton.with_range(640, 16384, 100);
 			var vdesktop_resolution_height_spinbutton = new SpinButton.with_range(480, 16384, 100);
-			vdesktop_resolution_width_spinbutton.value = 1920;
-			vdesktop_resolution_height_spinbutton.value = 1080;
 
 			vdesktop_resolution_hbox.add(vdesktop_resolution_width_spinbutton);
 			vdesktop_resolution_hbox.add(new Label("×"));
 			vdesktop_resolution_hbox.add(vdesktop_resolution_height_spinbutton);
 
-			var vdesktop_switch = sgrp_vdesktop.add_setting(new SwitchSetting(_("Emulate a virtual desktop")));
+			var vdesktop_switch = sgrp_vdesktop.add_setting(new SwitchSetting.bind(_("Emulate a virtual desktop"), null, wine_options.desktop, "enabled"));
 			var vdesktop_resolution = sgrp_vdesktop.add_setting(new BaseSetting(_("Resolution"), null, vdesktop_resolution_hbox));
-
-			vdesktop_switch.switch.bind_property("active", vdesktop_resolution, "sensitive", BindingFlags.SYNC_CREATE);
 
 			container.add(sgrp_vdesktop);
 
 			var sgrp_dll_overrides = new SettingsGroup(_("System libraries"));
-			sgrp_dll_overrides.add_setting(new SwitchSetting("Gecko", _("HTML rendering engine")));
-			sgrp_dll_overrides.add_setting(new SwitchSetting("Mono", _(".NET framework implementation")));
+			sgrp_dll_overrides.add_setting(new SwitchSetting.bind("Gecko", _("HTML rendering engine"), wine_options.libraries, "gecko"));
+			sgrp_dll_overrides.add_setting(new SwitchSetting.bind("Mono", _(".NET framework implementation"), wine_options.libraries, "mono"));
 			container.add(sgrp_dll_overrides);
+
+			prefix_shared_radio.toggled.connect(() => {
+				if(prefix_shared_radio.active)
+				{
+					wine_options.prefix.default_path = WineOptions.Prefix.DefaultPath.SHARED;
+					prefix_custom_path.entry.placeholder_text = wine_options.prefix.path;
+				}
+			});
+			prefix_separate_radio.toggled.connect(() => {
+				if(prefix_separate_radio.active)
+				{
+					wine_options.prefix.default_path = WineOptions.Prefix.DefaultPath.SEPARATE;
+					prefix_custom_path.entry.placeholder_text = wine_options.prefix.path;
+				}
+			});
+			prefix_custom_radio.toggled.connect(() => {
+				if(prefix_custom_radio.active)
+				{
+					wine_options.prefix.default_path = WineOptions.Prefix.DefaultPath.CUSTOM;
+					prefix_custom_path.entry.placeholder_text = null;
+				}
+			});
+
+			switch(wine_options.prefix.default_path)
+			{
+				case WineOptions.Prefix.DefaultPath.SHARED:
+					prefix_shared_radio.active = true;
+					prefix_custom_path.entry.placeholder_text = wine_options.prefix.path;
+					break;
+				case WineOptions.Prefix.DefaultPath.SEPARATE:
+					prefix_separate_radio.active = true;
+					prefix_custom_path.entry.placeholder_text = wine_options.prefix.path;
+					break;
+				case WineOptions.Prefix.DefaultPath.CUSTOM:
+					prefix_custom_radio.active = true;
+					prefix_custom_path.entry.placeholder_text = null;
+					break;
+			}
+
+			prefix_custom_radio.bind_property("active", prefix_custom_path, "sensitive", BindingFlags.SYNC_CREATE);
+			vdesktop_switch.switch.bind_property("active", vdesktop_resolution, "sensitive", BindingFlags.SYNC_CREATE);
+
+			wine_options.desktop.bind_property("width", vdesktop_resolution_width_spinbutton, "value", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
+			wine_options.desktop.bind_property("height", vdesktop_resolution_height_spinbutton, "value", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
+
+			sgrp_info.destroy.connect(() => {
+				wine.options = Json.to_string(wine_options.to_json(), false);
+				wine.save();
+			});
 		}
 
 		private class WineRow: BaseSetting
 		{
-			public GameHub.Data.Compat.Tools.Wine wine { get; construct; }
+			public Tools.Wine.Wine wine { get; construct; }
 
-			public WineRow(GameHub.Data.Compat.Tools.Wine wine)
+			public WineRow(Tools.Wine.Wine wine)
 			{
 				Object(title: wine.name, description: wine.executable.get_path(), wine: wine, activatable: false, selectable: true);
 			}

@@ -38,7 +38,47 @@ namespace GameHub.Data.Compat
 
 		public File executable { get; protected construct set; }
 		public string? info { get; protected set; }
-		public string? options { get; protected set; }
+		public string? options { get; set; }
+
+		public abstract void save();
+	}
+
+	public static void init()
+	{
+		var wine_versions = Compat.Tools.Wine.Wine.detect();
+
+		foreach(var wine in wine_versions)
+		{
+			debug("[Compat.init] Detected Wine: '%s'; version: '%s'", wine.executable.get_path(), wine.version);
+		}
+
+		/*var proton_latest = new Compat.Proton(Compat.Proton.LATEST);
+
+		CompatTools = { new Compat.WineWrap(), new Compat.Innoextract(), new Compat.DOSBox(), new Compat.ScummVM(), proton_latest };
+
+		Compat.Proton.find_proton_versions();
+
+		CompatTool[] tools = CompatTools;
+
+		string[] wine_binaries = { "wine" };
+		string[] wine_arches = { "win64", "win32" };
+
+		foreach(var wine_binary in wine_binaries)
+		{
+			foreach(var wine_arch in wine_arches)
+			{
+				if(wine_binary == "wine32" && wine_arch == "win64") continue;
+				tools += new Compat.Wine(wine_binary, wine_arch);
+			}
+		}
+
+		//tools += new Compat.CustomEmulator();
+		tools += new Compat.RetroArch();
+		tools += new Compat.CustomScript();
+
+		CompatTools = tools;
+
+		proton_latest.init();*/
 	}
 
 	namespace CompatToolTraits
