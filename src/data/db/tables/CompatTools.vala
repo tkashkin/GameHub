@@ -23,6 +23,7 @@ using GameHub.Utils;
 
 using GameHub.Data;
 using GameHub.Data.Compat;
+using GameHub.Data.Compat.Tools;
 
 namespace GameHub.Data.DB.Tables
 {
@@ -106,6 +107,35 @@ namespace GameHub.Data.DB.Tables
 			}
 
 			return true;
+		}
+
+		public static ArrayList<CompatTool>? get_all(string tool)
+		{
+			unowned Sqlite.Database? db = Database.instance.db;
+			if(db == null) return null;
+
+			Statement s;
+			int res = db.prepare_v2("SELECT * FROM `compat_tools` WHERE `tool` = ?", -1, out s);
+
+			if(res != Sqlite.OK)
+			{
+				warning("[Database.CompatTools.get_all] Can't prepare SELECT query (%d): %s", db.errcode(), db.errmsg());
+				return null;
+			}
+
+			res = s.bind_text(1, tool);
+
+			var tools = new ArrayList<CompatTool>();
+			while((res = s.step()) == Sqlite.ROW)
+			{
+				switch(tool)
+				{
+					case "wine":
+						tools.add(new Tools.Wine.Wine.from_db(s));
+						break;
+				}
+			}
+			return tools;
 		}
 	}
 }

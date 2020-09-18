@@ -17,6 +17,8 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using Gtk;
+using Gee;
+
 using GameHub.UI.Widgets;
 using GameHub.UI.Widgets.Settings;
 
@@ -28,7 +30,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 {
 	public class Collection: SettingsDialogPage
 	{
-		private const string EXAMPLE_GAME_NAME = "Factorio";
+		private const string EXAMPLE_GAME_NAME = "ExampleGame";
 
 		private Paths.Collection collection;
 		private Paths.Collection.GOG gog;
@@ -43,9 +45,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 		private EntrySetting humble_game_dir;
 		private EntrySetting humble_installers;
-
-		private int syntax_info_grid_rows = 0;
-		private Grid syntax_info_grid;
 
 		public Collection(SettingsDialog dlg)
 		{
@@ -67,52 +66,44 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			var sgrp_collection = new SettingsGroup();
 			collection_root = sgrp_collection.add_setting(
 				new FileSetting.bind(
-					_("Collection directory") + """<span alpha="75%"> • $root</span>""", _("Installers and bonus content will be downloaded in the collection directory"),
+					_("Collection directory") + """<span alpha="75%"> • ${root}</span>""", _("Installers and bonus content will be downloaded in the collection directory"),
 					InlineWidgets.file_chooser(_("Select collection root directory"), FileChooserAction.SELECT_FOLDER),
 					collection, "root"
 				)
 			);
 			add_widget(sgrp_collection);
 
+			var vars_game_dir = new ArrayList<VariableEntry.Variable>();
+			vars_game_dir.add(new VariableEntry.Variable("${root}", _("Collection directory")));
+			vars_game_dir.add(new VariableEntry.Variable("${game}", _("Game name")));
+			vars_game_dir.add(new VariableEntry.Variable("${platform}", _("Platform identifier")));
+			vars_game_dir.add(new VariableEntry.Variable("${platform_name}", _("Platform name")));
+
+			var vars_subdir = new ArrayList<VariableEntry.Variable>();
+			vars_subdir.add(new VariableEntry.Variable("${game_dir}", _("Game directory")));
+			vars_subdir.add_all(vars_game_dir);
+
 			var sgrp_gog = new SettingsGroup("GOG");
-			gog_game_dir = sgrp_gog.add_setting(new EntrySetting.bind(_("Game directory") + """<span alpha="75%"> • $game_dir</span>""", null, InlineWidgets.entry("source-gog-symbolic"), gog, "game-dir"));
-			gog_installers = sgrp_gog.add_setting(new EntrySetting.bind(_("Installers directory"), null, InlineWidgets.entry("source-gog-symbolic"), gog, "installers"));
-			gog_dlc = sgrp_gog.add_setting(new EntrySetting.bind(_("DLC directory"), null, InlineWidgets.entry("folder-download-symbolic"), gog, "dlc"));
-			gog_bonus = sgrp_gog.add_setting(new EntrySetting.bind(_("Bonus content directory"), null, InlineWidgets.entry("folder-music-symbolic"), gog, "bonus"));
+			gog_game_dir = sgrp_gog.add_setting(new EntrySetting.bind(_("Game directory") + """<span alpha="75%"> • ${game_dir}</span>""", null, InlineWidgets.variable_entry(vars_game_dir, "source-gog-symbolic"), gog, "game-dir"));
+			gog_installers = sgrp_gog.add_setting(new EntrySetting.bind(_("Installers directory"), null, InlineWidgets.variable_entry(vars_subdir, "source-gog-symbolic"), gog, "installers"));
+			gog_dlc = sgrp_gog.add_setting(new EntrySetting.bind(_("DLC directory"), null, InlineWidgets.variable_entry(vars_subdir, "folder-download-symbolic"), gog, "dlc"));
+			gog_bonus = sgrp_gog.add_setting(new EntrySetting.bind(_("Bonus content directory"), null, InlineWidgets.variable_entry(vars_subdir, "folder-music-symbolic"), gog, "bonus"));
 			add_widget(sgrp_gog);
 
 			var sgrp_humble = new SettingsGroup("Humble Bundle");
-			humble_game_dir = sgrp_humble.add_setting(new EntrySetting.bind(_("Game directory") + """<span alpha="75%"> • $game_dir</span>""", null, InlineWidgets.entry("source-humble-symbolic"), humble, "game-dir"));
-			humble_installers = sgrp_humble.add_setting(new EntrySetting.bind(_("Installers directory"), null, InlineWidgets.entry("source-humble-symbolic"), humble, "installers"));
+			humble_game_dir = sgrp_humble.add_setting(new EntrySetting.bind(_("Game directory") + """<span alpha="75%"> • ${game_dir}</span>""", null, InlineWidgets.variable_entry(vars_game_dir, "source-humble-symbolic"), humble, "game-dir"));
+			humble_installers = sgrp_humble.add_setting(new EntrySetting.bind(_("Installers directory"), null, InlineWidgets.variable_entry(vars_subdir, "source-humble-symbolic"), humble, "installers"));
 			add_widget(sgrp_humble);
 
 			gog_game_dir.ellipsize_description = gog_installers.ellipsize_description = gog_dlc.ellipsize_description = gog_bonus.ellipsize_description = Pango.EllipsizeMode.START;
 			humble_game_dir.ellipsize_description = humble_installers.ellipsize_description = Pango.EllipsizeMode.START;
 
-			syntax_info_grid = new Grid();
-			syntax_info_grid.column_spacing = 72;
-
-			syntax_info_label(_("Variable syntax: <b>$var</b> or <b>${var}</b>"));
-			syntax_info_label("<b>•</b> $<b>root</b>", _("Collection directory"));
-			syntax_info_label("<b>•</b> $<b>game</b>", _("Game name"));
-			syntax_info_label("<b>•</b> $<b>game_dir</b>", _("Game directory"));
-			syntax_info_label("<b>•</b> $<b>platform</b>, $<b>platform_name</b>", _("Platform"));
-
-			var syntax_info = new InfoBar();
-			syntax_info.get_style_context().add_class(Gtk.STYLE_CLASS_FRAME);
-			syntax_info.get_style_context().add_class("settings-info");
-			syntax_info.message_type = MessageType.INFO;
-			syntax_info.get_content_area().add(syntax_info_grid);
-
-			add_widget(syntax_info);
-			syntax_info.margin = 8;
-
-			gog.notify["game-dir"].connect(() => gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(EXAMPLE_GAME_NAME));
+			gog.notify["game-dir"].connect(() => gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(EXAMPLE_GAME_NAME, Platform.CURRENT));
 			gog.notify["installers"].connect(() => gog_installers.description = Paths.Collection.GOG.expand_installers(EXAMPLE_GAME_NAME, null, Platform.CURRENT));
-			gog.notify["dlc"].connect(() => gog_dlc.description = Paths.Collection.GOG.expand_dlc(EXAMPLE_GAME_NAME));
+			gog.notify["dlc"].connect(() => gog_dlc.description = Paths.Collection.GOG.expand_dlc(EXAMPLE_GAME_NAME, Platform.CURRENT));
 			gog.notify["bonus"].connect(() => gog_bonus.description = Paths.Collection.GOG.expand_bonus(EXAMPLE_GAME_NAME));
 
-			humble.notify["game-dir"].connect(() => humble_game_dir.description = Paths.Collection.Humble.expand_game_dir(EXAMPLE_GAME_NAME));
+			humble.notify["game-dir"].connect(() => humble_game_dir.description = Paths.Collection.Humble.expand_game_dir(EXAMPLE_GAME_NAME, Platform.CURRENT));
 			humble.notify["installers"].connect(() => humble_installers.description = Paths.Collection.Humble.expand_installers(EXAMPLE_GAME_NAME, Platform.CURRENT));
 
 			collection.notify["root"].connect(update);
@@ -122,12 +113,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 
 		private void update()
 		{
-			gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(EXAMPLE_GAME_NAME);
+			gog_game_dir.description = Paths.Collection.GOG.expand_game_dir(EXAMPLE_GAME_NAME, Platform.CURRENT);
 			gog_installers.description = Paths.Collection.GOG.expand_installers(EXAMPLE_GAME_NAME, null, Platform.CURRENT);
-			gog_dlc.description = Paths.Collection.GOG.expand_dlc(EXAMPLE_GAME_NAME);
+			gog_dlc.description = Paths.Collection.GOG.expand_dlc(EXAMPLE_GAME_NAME, Platform.CURRENT);
 			gog_bonus.description = Paths.Collection.GOG.expand_bonus(EXAMPLE_GAME_NAME);
 
-			humble_game_dir.description = Paths.Collection.Humble.expand_game_dir(EXAMPLE_GAME_NAME);
+			humble_game_dir.description = Paths.Collection.Humble.expand_game_dir(EXAMPLE_GAME_NAME, Platform.CURRENT);
 			humble_installers.description = Paths.Collection.Humble.expand_installers(EXAMPLE_GAME_NAME, Platform.CURRENT);
 
 			Utils.thread("CollectionDiskUsage", () => {
@@ -145,23 +136,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 				}
 				catch(Error e){}
 			});
-		}
-
-		private void syntax_info_label(string variable, string? description=null)
-		{
-			var var_label = new Label(variable);
-			var_label.xalign = 0;
-			var_label.use_markup = true;
-			syntax_info_grid.attach(var_label, 0, syntax_info_grid_rows, description == null ? 2 : 1, 1);
-
-			if(description != null)
-			{
-				var desc_label = new Label(description);
-				desc_label.xalign = 0;
-				syntax_info_grid.attach(desc_label, 1, syntax_info_grid_rows);
-			}
-
-			syntax_info_grid_rows++;
 		}
 	}
 }

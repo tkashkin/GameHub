@@ -91,7 +91,10 @@ sources = [
 	#'data/db/tables/Emulators.vala',
 
 	'data/compat/CompatTool.vala',
-	'data/compat/tools/Wine.vala',
+
+	'data/compat/tools/wine/Wine.vala',
+	'data/compat/tools/wine/WineOptions.vala',
+
 	#'data/compat/tools/CustomScript.vala',
 	#'data/compat/tools/Innoextract.vala',
 	#'data/compat/tools/WineWrap.vala',
@@ -185,6 +188,7 @@ sources = [
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
 	'ui/widgets/FileChooserEntry.vala',
+	'ui/widgets/VariableEntry.vala',
 	'ui/widgets/ExtendedStackSwitcher.vala',
 	'ui/widgets/ImagesDownloadPopover.vala',
 	'ui/widgets/GameTagsList.vala',

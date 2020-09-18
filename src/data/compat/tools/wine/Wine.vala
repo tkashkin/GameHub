@@ -26,7 +26,7 @@ using GameHub.Data.Runnables.Tasks.Run;
 
 using GameHub.Data.Sources.Steam;
 
-namespace GameHub.Data.Compat.Tools
+namespace GameHub.Data.Compat.Tools.Wine
 {
 	public class Wine: CompatTool, CompatToolTraits.Run, CompatToolTraits.Install
 	{
@@ -118,8 +118,6 @@ namespace GameHub.Data.Compat.Tools
 					})
 				};
 			}*/
-
-			save();
 		}
 
 		public bool can_install(Traits.SupportsCompatTools runnable, InstallTask task)
@@ -362,7 +360,7 @@ namespace GameHub.Data.Compat.Tools
 			return win_path;
 		}*/
 
-		public void save()
+		public override void save()
 		{
 			var info_node = new Json.Node(Json.NodeType.OBJECT);
 			var info_obj = new Json.Object();
@@ -386,9 +384,17 @@ namespace GameHub.Data.Compat.Tools
 
 		public static ArrayList<Wine> detect()
 		{
-			if(wine_versions == null)
+			if(wine_versions != null) return wine_versions;
+
+			wine_versions = new ArrayList<Wine>();
+
+			var db_versions = (ArrayList<Wine>) DB.Tables.CompatTools.get_all("wine");
+			if(db_versions != null)
 			{
-				wine_versions = new ArrayList<Wine>();
+				foreach(var wine in db_versions)
+				{
+					add_wine_version(wine);
+				}
 			}
 
 			foreach(var suffix in WINE_VERSION_SUFFIXES)
@@ -399,7 +405,7 @@ namespace GameHub.Data.Compat.Tools
 					if(wine != null)
 					{
 						var wineserver = wine.get_parent().get_child("wineserver%s".printf(suffix));
-						add_wine_version(wine, wineserver, suffix);
+						add_wine_version_from_file(wine, wineserver, suffix);
 					}
 				}
 
@@ -409,7 +415,7 @@ namespace GameHub.Data.Compat.Tools
 					if(wine != null)
 					{
 						var wineserver = wine.get_parent().get_child("wineserver");
-						add_wine_version(wine, wineserver, suffix);
+						add_wine_version_from_file(wine, wineserver, suffix);
 					}
 				}
 			}
@@ -417,13 +423,31 @@ namespace GameHub.Data.Compat.Tools
 			return wine_versions;
 		}
 
-		private static void add_wine_version(File? wine, File? wineserver, string name_suffix)
+		private static bool is_wine_version_added(File? wine)
 		{
 			foreach(var existing_version in wine_versions)
 			{
-				if(existing_version.executable.equal(wine)) return;
+				if(existing_version.executable.equal(wine)) return true;
 			}
-			wine_versions.add(new Wine(wine, wineserver, "Wine%s".printf(name_suffix)));
+			return false;
+		}
+
+		private static void add_wine_version(Wine wine)
+		{
+			if(!is_wine_version_added(wine.executable))
+			{
+				wine_versions.add(wine);
+			}
+		}
+
+		private static void add_wine_version_from_file(File? wine, File? wineserver, string name_suffix)
+		{
+			if(!is_wine_version_added(wine))
+			{
+				var new_wine = new Wine(wine, wineserver, "Wine%s".printf(name_suffix));
+				wine_versions.add(new_wine);
+				new_wine.save();
+			}
 		}
 	}
 }

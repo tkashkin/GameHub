@@ -683,7 +683,7 @@ namespace GameHub.Data.Sources.GOG
 						{
 							workdir = find_file(json.has_member("workingDir") ? json.get_string_member("workingDir") : "");
 							args = json.has_member("arguments") ? json.get_string_member("arguments").replace("\\", "/").strip() : null;
-							compat_tools = { typeof(GameHub.Data.Compat.Tools.Wine) };
+							compat_tools = { typeof(GameHub.Data.Compat.Tools.Wine.Wine) };
 						}
 						else
 						{

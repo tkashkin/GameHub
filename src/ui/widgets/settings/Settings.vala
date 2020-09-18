@@ -456,6 +456,16 @@ namespace GameHub.UI.Widgets.Settings
 			var entry = new Entry();
 			entry.set_size_request(ENTRY_WIDTH, -1);
 			entry.primary_icon_name = icon;
+			entry.primary_icon_activatable = false;
+			return entry;
+		}
+
+		public VariableEntry variable_entry(ArrayList<VariableEntry.Variable>? variables=null, string? icon=null)
+		{
+			var entry = new VariableEntry(variables);
+			entry.set_size_request(ENTRY_WIDTH, -1);
+			entry.primary_icon_name = icon;
+			entry.primary_icon_activatable = false;
 			return entry;
 		}
 
