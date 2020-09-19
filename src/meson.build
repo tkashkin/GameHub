@@ -30,6 +30,7 @@ deps = [
 	dependency('libxml-2.0'),
 	dependency('gio-unix-2.0'),
 	dependency('zlib'),
+	dependency('appindicator3-0.1'),
 	meson.get_compiler('vala').find_library('posix'),
 	meson.get_compiler('vala').find_library('linux')
 ]
