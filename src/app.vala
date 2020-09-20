@@ -19,7 +19,6 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using Gdk;
 using Gee;
-using AppIndicator;
 
 using GameHub.Data;
 using GameHub.Data.DB;
@@ -36,6 +35,7 @@ namespace GameHub
 	public class Application: Gtk.Application
 	{
 		public static Application instance;
+		public static UI.Widgets.AppIndicator appIndicator;
 
 		public static bool log_auth = false;
 		public static bool log_downloader = false;
@@ -76,7 +76,6 @@ namespace GameHub
 
 		public const string ACCEL_SETTINGS                         = "<Control>S";
 
-		private const string APP_INDICATOR_ID                      = "gamehub.indicator";
 
 		private const GLib.ActionEntry[] action_entries = {
 			{ ACTION_SETTINGS,                        action_settings },
@@ -135,7 +134,6 @@ namespace GameHub
 		private Screen screen;
 		private Gtk.Settings gtk_settings;
 		private HashMap<string, CssProvider> theme_providers;
-		private Indicator appIndicator;
 
 		private void init()
 		{
@@ -197,10 +195,7 @@ namespace GameHub
 			gtk_settings = Gtk.Settings.get_for_screen(screen);
 			gtk_settings.notify["gtk-theme-name"].connect(gtk_theme_handler);
 			gtk_theme_handler();
-
-			appIndicator = new Indicator(APP_INDICATOR_ID, "scalable/actions/gamehub-symbolic.svg", IndicatorCategory.APPLICATION_STATUS);
-			appIndicator.set_status(IndicatorStatus.ACTIVE);
-			appIndicator.set_title("GameHub");
+			appIndicator = new UI.Widgets.AppIndicator();
 		}
 
 		private void gtk_theme_handler()

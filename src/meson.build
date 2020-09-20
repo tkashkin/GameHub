@@ -154,6 +154,7 @@ sources = [
 
 	'ui/widgets/AutoSizeImage.vala',
 	'ui/widgets/ActionButton.vala',
+	'ui/widgets/AppIndicator.vala',
 	'ui/widgets/FileChooserEntry.vala',
 	'ui/widgets/ExtendedStackSwitcher.vala',
 	'ui/widgets/ImagesDownloadPopover.vala',
