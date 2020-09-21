@@ -31,7 +31,7 @@ namespace GameHub.UI.Widgets
 
         construct
         {
-			appIndicator = new Indicator(APP_INDICATOR_ID, "gamehub-symbolic", IndicatorCategory.APPLICATION_STATUS);
+            appIndicator = new Indicator(APP_INDICATOR_ID, "gamehub-symbolic", IndicatorCategory.APPLICATION_STATUS);
 			appIndicator.set_status(IndicatorStatus.ACTIVE);
 			appIndicator.set_title("GameHub");
 

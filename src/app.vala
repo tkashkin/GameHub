@@ -35,7 +35,7 @@ namespace GameHub
 	public class Application: Gtk.Application
 	{
 		public static Application instance;
-		public static UI.Widgets.AppIndicator appIndicator;
+		public static UI.Widgets.AppIndicator app_indicator;
 
 		public static bool log_auth = false;
 		public static bool log_downloader = false;
@@ -195,7 +195,10 @@ namespace GameHub
 			gtk_settings = Gtk.Settings.get_for_screen(screen);
 			gtk_settings.notify["gtk-theme-name"].connect(gtk_theme_handler);
 			gtk_theme_handler();
-			appIndicator = new UI.Widgets.AppIndicator();
+			if (Settings.UI.Behavior.instance.use_app_indicator)
+			{
+				app_indicator = new UI.Widgets.AppIndicator();
+			}
 		}
 
 		private void gtk_theme_handler()
