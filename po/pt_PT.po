@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-08-17 15:32+0000\n"
+"PO-Revision-Date: 2020-09-23 13:41+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_PT/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -417,17 +417,17 @@ msgstr "%s: Favoritos"
 
 #: src/data/adapters/GamesAdapter.vala:491
 msgid "Merging games"
-msgstr "Mesclando jogos"
+msgstr "A mesclar jogos"
 
 #: src/data/adapters/GamesAdapter.vala:504
 #, c-format
 msgid "Merging games from %s"
-msgstr "Mesclando jogos de %s"
+msgstr "A mesclar jogos de %s"
 
 #: src/data/adapters/GamesAdapter.vala:551
 #, c-format
 msgid "Loading games from %s"
-msgstr "Carregando jogos de %s"
+msgstr "A carregar jogos de %s"
 
 #: src/data/adapters/GamesAdapter.vala:678
 msgctxt "sort_mode"
@@ -1387,7 +1387,7 @@ msgstr "Sem jogos adicionados pelo utilizador"
 
 #: src/ui/views/GamesView/GamesView.vala:569
 msgid "Add some games using plus button"
-msgstr "Adicionar alguns jogos utilizando o botão +"
+msgstr "Adicionar alguns jogos a utilizar o botão +"
 
 #: src/ui/views/GamesView/GamesView.vala:573
 #, c-format
