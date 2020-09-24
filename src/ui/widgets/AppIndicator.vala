@@ -61,7 +61,7 @@ namespace GameHub.UI.Widgets
                 visibleWindows = new List<unowned Window>();
                 activeWindows.foreach ((window) =>
                 {
-                    if (window.visible)
+                    if (window.visible && window.transient_for == UI.Windows.MainWindow.instance)
                     {
                         visibleWindows.append(window);
                         window.visible = false;
@@ -75,6 +75,7 @@ namespace GameHub.UI.Widgets
                     window.visible = true;
                 });
             }
+            UI.Windows.MainWindow.instance.visible = !isMainWindowVisible;
 		}
 
         private void quit()
