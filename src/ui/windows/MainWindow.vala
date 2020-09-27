@@ -69,9 +69,23 @@ namespace GameHub.UI.Windows
 
 			saved_state = SavedState.Window.instance;
 
-			delete_event.connect(() => { quit(); return false; });
+			delete_event.connect(on_delete);
 
 			restore_saved_state();
+		}
+
+		private bool on_delete()
+		{
+			if (GameHub.Application.app_indicator != null && GameHub.Application.app_indicator.visible)
+			{
+				visible = false;
+				return true;
+			}
+			else
+			{
+				quit();
+				return false;
+			}
 		}
 
 		public void add_view(BaseView view, bool show=true)

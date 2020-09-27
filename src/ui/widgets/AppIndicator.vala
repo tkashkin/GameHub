@@ -23,15 +23,25 @@ using Gtk;
 using AppIndicator;
 using GameHub.Data;
 using GameHub.Utils;
+using GameHub.Data.Adapters;
+using GameHub.UI.Views.GamesView;
 
 namespace GameHub.UI.Widgets
 {
     public class AppIndicator : Object
     {
         private Indicator app_indicator;
+        private unowned GamesAdapter games_adapter;
         private const string APP_INDICATOR_ID = "gamehub.indicator";
         private GLib.List<unowned Window> visible_windows;
         private Gtk.Menu menu;
+
+        private const int RECENT_GAMES_COUNT = 10;
+
+        public bool visible {
+            get { return app_indicator.get_status() == IndicatorStatus.ACTIVE; }
+            set { app_indicator.set_status(value ? IndicatorStatus.ACTIVE : IndicatorStatus.PASSIVE); }
+        }
 
         construct
         {
@@ -39,10 +49,11 @@ namespace GameHub.UI.Widgets
 			app_indicator.set_status(IndicatorStatus.ACTIVE);
 			app_indicator.set_title("GameHub");
 
-            setup_menu();
+            games_adapter = GamesView.instance.get_games_adapter();
+			games_adapter.cache_loaded.connect(() => { setup_menu(games_adapter.get_last_launched_games(RECENT_GAMES_COUNT)); });
         }
 
-        private void setup_menu(Gee.List<Game>? games = null)
+        private void setup_menu(Gee.List<Game> games)
         {
             menu = new Gtk.Menu();
 
@@ -91,14 +102,6 @@ namespace GameHub.UI.Widgets
             app_indicator.set_menu(menu);
         }
 
-        public static void set_games_shortcuts(GameHub.Data.Adapters.GamesAdapter games_adapter)
-        {
-            if (GameHub.Application.app_indicator != null)
-            {
-                GameHub.Application.app_indicator.setup_menu(games_adapter.get_last_launched_games(10));
-            }
-        }
-
 		private void show_hide()
 		{
             GLib.List<unowned Window> active_windows = Gtk.Window.list_toplevels();
@@ -128,6 +131,7 @@ namespace GameHub.UI.Widgets
 
         private void quit()
         {
+            visible = false;
             UI.Windows.MainWindow.instance.close();
         }
     }

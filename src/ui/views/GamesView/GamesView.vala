@@ -234,12 +234,6 @@ namespace GameHub.UI.Views.GamesView
 			games_adapter = new GamesAdapter();
 			games_adapter.cache_loaded.connect(update_view);
 
-			games_adapter.cache_loaded.connect(()=>
-			{
-				if (GameHub.Application.app_indicator != null)
-					GameHub.Application.app_indicator.set_games_shortcuts(games_adapter);
-			});
-
 			filter.mode_changed.connect(update_view);
 			search.search_changed.connect(() => {
 				games_adapter.filter_search_query = search.text;
@@ -420,6 +414,11 @@ namespace GameHub.UI.Views.GamesView
 			games_adapter.group_mode = filters_popover.group_mode;
 
 			load_games();
+
+			if (Settings.UI.Behavior.instance.use_app_indicator)
+			{
+				GameHub.Application.app_indicator = new UI.Widgets.AppIndicator();
+			}
 		}
 
 		public override void attach_to_window(MainWindow wnd)
@@ -790,6 +789,11 @@ namespace GameHub.UI.Views.GamesView
 			game.image = image;
 			game.image_vertical = image_vertical;
 			game.save();
+		}
+
+		public unowned GamesAdapter get_games_adapter()
+		{
+			return games_adapter;
 		}
 
 		#if UNITY
