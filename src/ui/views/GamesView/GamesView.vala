@@ -415,10 +415,7 @@ namespace GameHub.UI.Views.GamesView
 
 			load_games();
 
-			if (Settings.UI.Behavior.instance.use_app_indicator)
-			{
-				GameHub.Application.app_indicator = new UI.Widgets.AppIndicator();
-			}
+			Widgets.AppIndicator.set_games_adapter(games_adapter);
 		}
 
 		public override void attach_to_window(MainWindow wnd)

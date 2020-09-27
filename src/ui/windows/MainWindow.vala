@@ -19,6 +19,7 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 using Gtk;
 using GameHub.UI.Views;
 using GameHub.Settings;
+using GameHub.UI.Widgets;
 
 namespace GameHub.UI.Windows
 {
@@ -76,7 +77,7 @@ namespace GameHub.UI.Windows
 
 		private bool on_delete()
 		{
-			if (GameHub.Application.app_indicator != null && GameHub.Application.app_indicator.visible)
+			if (Widgets.AppIndicator.instance != null && Widgets.AppIndicator.instance.visible)
 			{
 				visible = false;
 				return true;

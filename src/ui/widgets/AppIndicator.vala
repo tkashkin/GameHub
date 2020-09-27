@@ -30,8 +30,8 @@ namespace GameHub.UI.Widgets
 {
     public class AppIndicator : Object
     {
+        public static AppIndicator instance;
         private Indicator app_indicator;
-        private unowned GamesAdapter games_adapter;
         private const string APP_INDICATOR_ID = "gamehub.indicator";
         private GLib.List<unowned Window> visible_windows;
         private Gtk.Menu menu;
@@ -49,11 +49,30 @@ namespace GameHub.UI.Widgets
 			app_indicator.set_status(IndicatorStatus.ACTIVE);
 			app_indicator.set_title("GameHub");
 
-            games_adapter = GamesView.instance.get_games_adapter();
-			games_adapter.cache_loaded.connect(() => { setup_menu(games_adapter.get_last_launched_games(RECENT_GAMES_COUNT)); });
+            if (GamesView.instance != null)
+            {
+                connect_games_adapter(GamesView.instance.get_games_adapter());
+            }
+            else
+            {
+                setup_menu();
+            }
+
+            instance = this;
         }
 
-        private void setup_menu(Gee.List<Game> games)
+        public static void set_games_adapter(GamesAdapter games_adapter) {
+            if (instance != null) {
+                instance.connect_games_adapter(games_adapter);
+            }
+        }
+
+        private void connect_games_adapter(GamesAdapter games_adapter) {
+            setup_menu(games_adapter.get_last_launched_games(RECENT_GAMES_COUNT));
+            games_adapter.cache_loaded.connect(() => { setup_menu(games_adapter.get_last_launched_games(RECENT_GAMES_COUNT)); });
+        }
+
+        private void setup_menu(Gee.List<Game>? games = null)
         {
             menu = new Gtk.Menu();
 

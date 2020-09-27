@@ -53,13 +53,13 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 
 			add_switch(_("Show tray icon"), settings.use_app_indicator, v => {
 				settings.use_app_indicator = v;
-				if (Application.app_indicator != null)
+				if (Widgets.AppIndicator.instance != null)
 				{
-					Application.app_indicator.visible = v;
+					Widgets.AppIndicator.instance.visible = v;
 				}
 				else if (v)
 				{
-					Application.app_indicator = new GameHub.UI.Widgets.AppIndicator();
+					new Widgets.AppIndicator();
 				}
 			});
 		}
