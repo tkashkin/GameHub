@@ -234,6 +234,12 @@ namespace GameHub.UI.Views.GamesView
 			games_adapter = new GamesAdapter();
 			games_adapter.cache_loaded.connect(update_view);
 
+			games_adapter.cache_loaded.connect(()=>
+			{
+				if (GameHub.Application.app_indicator != null)
+					GameHub.Application.app_indicator.set_games_shortcuts(games_adapter);
+			});
+
 			filter.mode_changed.connect(update_view);
 			search.search_changed.connect(() => {
 				games_adapter.filter_search_query = search.text;

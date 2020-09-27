@@ -18,64 +18,112 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 /* Based on Granite.Widgets.AlertView */
 
+using Gee;
 using Gtk;
 using AppIndicator;
+using GameHub.Data;
+using GameHub.Utils;
 
 namespace GameHub.UI.Widgets
 {
     public class AppIndicator : Object
     {
-        private Indicator appIndicator;
+        private Indicator app_indicator;
         private const string APP_INDICATOR_ID = "gamehub.indicator";
-        List<unowned Window> visibleWindows;
+        private GLib.List<unowned Window> visible_windows;
+        private Gtk.Menu menu;
 
         construct
         {
-            appIndicator = new Indicator(APP_INDICATOR_ID, "gamehub-symbolic", IndicatorCategory.APPLICATION_STATUS);
-			appIndicator.set_status(IndicatorStatus.ACTIVE);
-			appIndicator.set_title("GameHub");
+            app_indicator = new Indicator(APP_INDICATOR_ID, "com.github.tkashkin.gamehub", IndicatorCategory.APPLICATION_STATUS);
+			app_indicator.set_status(IndicatorStatus.ACTIVE);
+			app_indicator.set_title("GameHub");
 
-            Gtk.Menu menu = new Gtk.Menu();
-            
-			Gtk.ImageMenuItem show_item = new Gtk.ImageMenuItem();
-			show_item.set_label("Show/Hide");
+            setup_menu();
+        }
+
+        private void setup_menu(Gee.List<Game>? games = null)
+        {
+            menu = new Gtk.Menu();
+
+			Gtk.ImageMenuItem show_item = new Gtk.ImageMenuItem.with_label("Show/Hide");
+            Gtk.Image show_icon = new Gtk.Image.from_icon_name("games-config-tiles", IconSize.MENU);
+            show_item.set_image(show_icon);
             show_item.activate.connect(show_hide);
-            Gtk.ImageMenuItem quit_item = new Gtk.ImageMenuItem();
-            quit_item.set_label("Quit");
-            quit_item.activate.connect(quit);
-            
             menu.append(show_item);
-            menu.append(quit_item);
-			menu.show_all();
 
-            appIndicator.set_menu(menu);
+            if (games != null)
+            {
+                Gtk.SeparatorMenuItem separator_pre = new Gtk.SeparatorMenuItem();
+                menu.append(separator_pre);
+                foreach (Game game in games)
+                {
+                    Gtk.ImageMenuItem game_item = new Gtk.ImageMenuItem.with_label(game.name);
+
+                    ImageCache.load(game.icon, @"games/$(game.source.id)/$(game.id)/icons/", (obj, res) =>
+                    {
+                        Gtk.Image game_icon = new Gtk.Image.from_pixbuf(ImageCache.load.end(res));
+                        game_item.set_image(game_icon);
+                    });
+
+                    game_item.activate.connect(() => {
+                        if (game.can_be_launched()) {
+                            if(game.use_compat) {
+                                game.run_with_compat.begin(true);
+                            } else {
+                                game.run.begin();
+                            }
+                        }
+                    });
+                    menu.append(game_item);
+                }
+                Gtk.SeparatorMenuItem separator_post = new Gtk.SeparatorMenuItem();
+                menu.append(separator_post);
+            }
+
+            Gtk.ImageMenuItem quit_item = new Gtk.ImageMenuItem.with_label("Quit");
+            Gtk.Image quit_icon = new Gtk.Image.from_icon_name("application-exit", IconSize.MENU);
+            quit_item.set_image(quit_icon);
+            quit_item.activate.connect(quit);
+            menu.append(quit_item);
+            
+            menu.show_all();
+            app_indicator.set_menu(menu);
+        }
+
+        public static void set_games_shortcuts(GameHub.Data.Adapters.GamesAdapter games_adapter)
+        {
+            if (GameHub.Application.app_indicator != null)
+            {
+                GameHub.Application.app_indicator.setup_menu(games_adapter.get_last_launched_games(10));
+            }
         }
 
 		private void show_hide()
 		{
-            List<unowned Window> activeWindows = Gtk.Window.list_toplevels();
-            bool isMainWindowVisible = UI.Windows.MainWindow.instance.visible;
+            GLib.List<unowned Window> active_windows = Gtk.Window.list_toplevels();
+            bool is_main_window_visible = UI.Windows.MainWindow.instance.visible;
 
-            if (isMainWindowVisible)
+            if (is_main_window_visible)
             {
-                visibleWindows = new List<unowned Window>();
-                activeWindows.foreach ((window) =>
+                visible_windows = new GLib.List<unowned Window>();
+                active_windows.foreach ((window) =>
                 {
                     if (window.visible && window.transient_for == UI.Windows.MainWindow.instance)
                     {
-                        visibleWindows.append(window);
+                        visible_windows.append(window);
                         window.visible = false;
                     }
                 });
             }
             else
             {
-                visibleWindows.foreach((window) =>
+                visible_windows.foreach((window) =>
                 {
                     window.visible = true;
                 });
             }
-            UI.Windows.MainWindow.instance.visible = !isMainWindowVisible;
+            UI.Windows.MainWindow.instance.visible = !is_main_window_visible;
 		}
 
         private void quit()

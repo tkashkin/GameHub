@@ -35,7 +35,7 @@ namespace GameHub
 	public class Application: Gtk.Application
 	{
 		public static Application instance;
-		public static UI.Widgets.AppIndicator app_indicator;
+		public static UI.Widgets.AppIndicator? app_indicator = null;
 
 		public static bool log_auth = false;
 		public static bool log_downloader = false;

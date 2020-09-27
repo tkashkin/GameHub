@@ -133,6 +133,14 @@ namespace GameHub.Data.Adapters
 			}
 		}
 
+		public Gee.List<Game> get_last_launched_games(int count = 10)
+		{
+			ArrayList<Game> sorted_games = new ArrayList<Game>();
+			sorted_games.add_all(games);
+			sorted_games.sort((g1,g2) => {return (g2.last_launch - g1.last_launch) > 0 ? 1 : -1;});
+			return sorted_games.slice(0, int.min(count, sorted_games.size));
+		}
+
 		public void load_games(Utils.FutureResult<GameSource> loaded_callback)
 		{
 			Utils.thread("GamesAdapterLoad", () => {
