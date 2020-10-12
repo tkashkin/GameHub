@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-09-24 22:40+0000\n"
+"PO-Revision-Date: 2020-10-13 16:26+0000\n"
 "Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gamehub/"
 "translations/ar/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr "عرض التعليمات"
+msgstr "اظهر المساعدة"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
