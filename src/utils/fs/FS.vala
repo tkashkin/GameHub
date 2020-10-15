@@ -47,6 +47,7 @@ namespace GameHub.Utils.FS
 			public const string Database = Paths.Cache.Home + "/gamehub.db";
 
 			public const string Compat = Paths.Cache.Home + "/compat";
+			public const string SharedCompat = Paths.Cache.Compat + "/shared";
 			public const string WineWrap = Paths.Cache.Compat + "/winewrap";
 
 			public const string Sources = Paths.Cache.Home + "/sources";

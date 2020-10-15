@@ -24,6 +24,7 @@ using GameHub.UI.Widgets;
 using GameHub.UI.Widgets.Settings;
 
 using GameHub.Data;
+using GameHub.Data.Compat;
 using GameHub.Data.Tweaks;
 using GameHub.Data.Runnables;
 
@@ -32,12 +33,15 @@ namespace GameHub.UI.Widgets.Compat
 	public class CompatToolsList: Notebook
 	{
 		public Traits.SupportsCompatTools? runnable { get; construct; default = null; }
+		public Mode mode { get; construct; default = Mode.RUN; }
+
+		public signal void compat_tool_selected(CompatTool tool);
 
 		private Button add_tool_button;
 
-		public CompatToolsList(Traits.SupportsCompatTools? runnable = null)
+		public CompatToolsList(Traits.SupportsCompatTools? runnable = null, Mode mode = Mode.RUN)
 		{
-			Object(runnable: runnable, show_border: false, expand: true, scrollable: true);
+			Object(runnable: runnable, mode: mode, show_border: false, expand: true, scrollable: true);
 		}
 
 		construct
@@ -56,7 +60,7 @@ namespace GameHub.UI.Widgets.Compat
 		{
 			this.foreach(w => w.destroy());
 
-			add_tab(new Tabs.Wine());
+			add_tab(new Tabs.Wine(runnable, mode));
 		}
 
 		private void add_tool()
@@ -67,7 +71,10 @@ namespace GameHub.UI.Widgets.Compat
 		private void add_tab(CompatToolsGroupTab tab)
 		{
 			append_page(tab, new Label(tab.title));
+			tab.compat_tool_selected.connect(tool => compat_tool_selected(tool));
 		}
+
+		public enum Mode { RUN, INSTALL }
 	}
 
 	public abstract class CompatToolsGroupTab: Box
@@ -76,6 +83,8 @@ namespace GameHub.UI.Widgets.Compat
 
 		protected ListBox tools_list;
 		private Box tool_options;
+
+		public signal void compat_tool_selected(CompatTool tool);
 
 		construct
 		{

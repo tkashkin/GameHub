@@ -30,13 +30,11 @@ namespace GameHub.Data.Runnables.Tasks.Run
 		public Runnable runnable { get; construct; }
 		public RunTask.Mode run_mode { get; construct; default = RunTask.Mode.AUTO; }
 
-		public ArrayList<CompatTool>? compat_tools { get; set; default = null; }
-		public CompatTool? selected_compat_tool { get; set; default = null; }
+		public CompatToolTraits.Run? selected_compat_tool { get; set; default = null; }
 
 		private bool requires_compat = false;
-		private bool is_compat_configured = false;
 
-		public RunTask(Runnable runnable, RunTask.Mode run_mode=RunTask.Mode.AUTO)
+		public RunTask(Runnable runnable, RunTask.Mode run_mode = RunTask.Mode.AUTO)
 		{
 			Object(runnable: runnable, run_mode: run_mode);
 		}
@@ -47,33 +45,12 @@ namespace GameHub.Data.Runnables.Tasks.Run
 			if(compat_runnable != null && compat_runnable.use_compat)
 			{
 				requires_compat = true;
-				is_compat_configured = compat_runnable.compat_options_saved;
-				compat_tools = compat_runnable.get_supported_compat_tools();
-				if(compat_tools.size > 0)
+				var tool = Compat.get_tool(compat_runnable.compat_tool);
+				if(tool != null)
 				{
-					selected_compat_tool = compat_tools.first();
+					selected_compat_tool = tool.cast<CompatToolTraits.Run>();
 				}
 			}
-		}
-
-		public async void start()
-		{
-			if(requires_compat && (run_mode == RunTask.Mode.INTERACTIVE || !is_compat_configured))
-			{
-				yield compat_configure();
-			}
-			else
-			{
-				yield run();
-			}
-		}
-
-		public async void compat_configure()
-		{
-			if(!requires_compat) return;
-			/*var dlg = new GameHub.UI.Dialogs.CompatRunDialog(this, compat_configure.callback);
-			dlg.show();
-			yield;*/
 		}
 
 		public async void run()
@@ -84,7 +61,7 @@ namespace GameHub.Data.Runnables.Tasks.Run
 			}
 			else if(selected_compat_tool != null)
 			{
-				//yield selected_compat_tool.run(runnable.cast<Traits.SupportsCompatTools>());
+				yield selected_compat_tool.run(runnable.cast<Traits.SupportsCompatTools>());
 			}
 		}
 

@@ -27,6 +27,7 @@ using GameHub.Data;
 using GameHub.Data.Compat;
 using GameHub.Data.Compat.Tools;
 using GameHub.Data.Compat.Tools.Wine;
+using GameHub.Data.Runnables;
 
 using GameHub.Utils;
 
@@ -34,11 +35,14 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 {
 	public class Wine: CompatToolsGroupTab
 	{
+		public Traits.SupportsCompatTools? runnable { get; construct; default = null; }
+		public CompatToolsList.Mode mode { get; construct; default = CompatToolsList.Mode.RUN; }
+
 		private ArrayList<VariableEntry.Variable> wineprefix_variables = new ArrayList<VariableEntry.Variable>();
 
-		public Wine()
+		public Wine(Traits.SupportsCompatTools? runnable = null, CompatToolsList.Mode mode = CompatToolsList.Mode.RUN)
 		{
-			Object(title: "Wine");
+			Object(title: "Wine", runnable: runnable, mode: mode);
 		}
 
 		construct
@@ -46,6 +50,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			wineprefix_variables.add(new VariableEntry.Variable("${compat_shared}", _("Shared compatibility data directory")));
 			wineprefix_variables.add(new VariableEntry.Variable("${tool_type}", _("Type of compatibility layer (\"wine\" for Wine)")));
 			wineprefix_variables.add(new VariableEntry.Variable("${tool_id}", _("Identifier of compatibility layer")));
+			wineprefix_variables.add(new VariableEntry.Variable("${tool_version}", _("Version of compatibility layer")));
 			wineprefix_variables.add(new VariableEntry.Variable("${install_dir}", _("Installation directory of the game")));
 			wineprefix_variables.add(new VariableEntry.Variable("${id}", _("Identifier of the game")));
 			wineprefix_variables.add(new VariableEntry.Variable("${compat}", _("Compatibility data subdirectory")));
@@ -60,9 +65,18 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			var wine_versions = Tools.Wine.Wine.detect();
 			foreach(var wine in wine_versions)
 			{
+				var is_selected_tool = false;
+				if(runnable != null)
+				{
+					if(mode == CompatToolsList.Mode.RUN && !wine.can_run(runnable))
+						continue;
+					if(mode == CompatToolsList.Mode.INSTALL && !wine.can_install(runnable))
+						continue;
+					is_selected_tool = runnable.compat_tool == wine.full_id;
+				}
 				var row = new WineRow(wine);
 				add_tool(row);
-				if(tools_list.get_selected_row() == null)
+				if(tools_list.get_selected_row() == null || is_selected_tool)
 				{
 					tools_list.select_row(row);
 				}
@@ -73,7 +87,13 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 		{
 			var wine_row = (WineRow) row;
 			var wine = wine_row.wine;
-			var wine_options = new WineOptions.from_json(Parser.parse_json(wine.options));
+
+			Json.Node? options_node = null;
+			if(runnable != null)
+			{
+				options_node = runnable.get_compat_settings(wine);
+			}
+			var wine_options = new WineOptions.from_json(options_node ?? Parser.parse_json(wine.options));
 
 			var sgrp_info = new SettingsGroup();
 
@@ -166,9 +186,19 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			wine_options.desktop.bind_property("height", vdesktop_resolution_height_spinbutton, "value", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
 			sgrp_info.destroy.connect(() => {
-				wine.options = Json.to_string(wine_options.to_json(), false);
-				wine.save();
+				var node = wine_options.to_json();
+				if(runnable != null)
+				{
+					runnable.set_compat_settings(wine, node);
+				}
+				else
+				{
+					wine.options = Json.to_string(node, false);
+					wine.save();
+				}
 			});
+
+			compat_tool_selected(wine);
 		}
 
 		private class WineRow: BaseSetting

@@ -45,7 +45,14 @@ namespace GameHub.Data.Compat
 
 	public static void init()
 	{
+		if(compat_tools == null)
+		{
+			compat_tools = new ArrayList<CompatTool>();
+		}
+
 		var wine_versions = Compat.Tools.Wine.Wine.detect();
+
+		compat_tools.add_all(wine_versions);
 
 		foreach(var wine in wine_versions)
 		{
@@ -81,11 +88,23 @@ namespace GameHub.Data.Compat
 		proton_latest.init();*/
 	}
 
+	public static CompatTool? get_tool(string? id)
+	{
+		if(id == null) return null;
+		foreach(var tool in compat_tools)
+		{
+			if(tool.full_id == id) return tool;
+		}
+		return null;
+	}
+
+	private static ArrayList<CompatTool>? compat_tools = null;
+
 	namespace CompatToolTraits
 	{
 		public interface Install: CompatTool
 		{
-			public abstract bool can_install(Traits.SupportsCompatTools runnable, InstallTask task);
+			public abstract bool can_install(Traits.SupportsCompatTools runnable, InstallTask? task = null);
 			public abstract async void install(Traits.SupportsCompatTools runnable, InstallTask task, File installer);
 		}
 
