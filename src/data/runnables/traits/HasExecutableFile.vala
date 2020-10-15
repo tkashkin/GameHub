@@ -153,15 +153,15 @@ namespace GameHub.Data.Runnables.Traits
 			return variables;
 		}
 
-		protected virtual ExecTask prepare_exec_task()
+		public virtual ExecTask prepare_exec_task(string[]? cmdline=null, string[]? args_override=null)
 		{
-			string[] cmd = _cmdline;
+			string[] cmd = cmdline ?? _cmdline;
 			string[] full_cmd = cmd;
 
 			if(arguments != null && arguments.length > 0)
 			{
 				var variables = get_variables();
-				var args = Utils.parse_args(arguments);
+				var args = args_override ?? Utils.parse_args(arguments);
 				if(args != null)
 				{
 					if("$command" in args || "${command}" in args)

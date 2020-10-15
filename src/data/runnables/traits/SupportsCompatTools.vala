@@ -84,27 +84,24 @@ namespace GameHub.Data.Runnables.Traits
 			compat_tool_settings = DB.Tables.Games.COMPAT_TOOL_SETTINGS.get(s);
 		}
 
-		public bool compat_options_saved
-		{
-			get { return get_compat_option_bool("compat_options_saved") == true; }
-			set { set_compat_option_bool("compat_options_saved", value); }
-		}
-
-		public Json.Object get_compat_settings(CompatTool tool)
+		public Json.Node? get_compat_settings(CompatTool tool)
 		{
 			if(compat_tool_settings != null && compat_tool_settings.length > 0)
 			{
 				var root = Parser.parse_json(compat_tool_settings);
-				var settings = Parser.json_object(root, { tool.id });
-				if(settings != null)
+				if(root != null && root.get_node_type() == Json.NodeType.OBJECT)
 				{
-					return settings;
+					var obj = root.get_object();
+					if(obj.has_member(tool.full_id))
+					{
+						return obj.get_member(tool.full_id);
+					}
 				}
 			}
-			return new Json.Object();
+			return null;
 		}
 
-		public void set_compat_settings(CompatTool tool, Json.Object? settings)
+		public void set_compat_settings(CompatTool tool, Json.Node? settings)
 		{
 			var root_object = new Json.Object();
 			if(compat_tool_settings != null && compat_tool_settings.length > 0)
@@ -115,20 +112,17 @@ namespace GameHub.Data.Runnables.Traits
 					root_object = root.get_object();
 				}
 			}
-
-			if(settings == null)
+			if(settings == null && root_object.has_member(tool.full_id))
 			{
-				root_object.remove_member(tool.id);
+				root_object.remove_member(tool.full_id);
 			}
 			else
 			{
-				root_object.set_object_member(tool.id, settings);
+				root_object.set_member(tool.full_id, settings);
 			}
-
 			var root_node = new Json.Node(Json.NodeType.OBJECT);
 			root_node.set_object(root_object);
 			compat_tool_settings = Json.to_string(root_node, false);
-			compat_options_saved = true;
 			save();
 		}
 

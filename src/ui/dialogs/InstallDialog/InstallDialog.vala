@@ -49,7 +49,7 @@ namespace GameHub.UI.Dialogs.InstallDialog
 
 		construct
 		{
-			set_size_request(700, 500);
+			set_size_request(800, 600);
 
 			headerbar = (HeaderBar) get_header_bar();
 			headerbar.has_subtitle = true;

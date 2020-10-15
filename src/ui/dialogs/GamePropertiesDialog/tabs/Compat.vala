@@ -18,39 +18,61 @@ along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 
 using Gtk;
 
-using Gee;
-
 using GameHub.Data;
 using GameHub.Data.Compat;
 using GameHub.Data.Runnables;
-using GameHub.Data.Runnables.Tasks.Install;
 
 using GameHub.Utils;
+using GameHub.Utils.FS;
+
 using GameHub.UI.Widgets;
 using GameHub.UI.Widgets.Compat;
 using GameHub.UI.Widgets.Settings;
 
-namespace GameHub.UI.Dialogs.InstallDialog.Steps
+namespace GameHub.UI.Dialogs.GamePropertiesDialog.Tabs
 {
-	public class CompatToolStep: InstallDialogStep
+	private class Compat: GamePropertiesDialogTab
 	{
-		private CompatToolsList compat_tools_list;
+		public Traits.SupportsCompatTools game { get; construct; }
 
-		public CompatToolStep(InstallTask task)
+		public Compat(Traits.SupportsCompatTools game)
 		{
-			Object(task: task, title: _("Select compatibility layer"));
+			Object(
+				game: game,
+				title: _("Compatibility layers"),
+				orientation: Orientation.VERTICAL
+			);
 		}
 
 		construct
 		{
+			if(!game.needs_compat)
+			{
+				var sgrp_compat_force = new SettingsGroup();
+				sgrp_compat_force.add_setting(
+					new SwitchSetting.bind(
+						_("Force compatibility layers"),
+						_("Enable compatibility layers for this game even if it's native"),
+						game, "force-compat"
+					)
+				);
+				add(sgrp_compat_force);
+			}
+
 			var sgrp_compat = new SettingsGroupBox();
 			sgrp_compat.container.get_style_context().remove_class(Gtk.STYLE_CLASS_VIEW);
-			compat_tools_list = sgrp_compat.add_widget(new CompatToolsList(task.runnable as Traits.SupportsCompatTools, CompatToolsList.Mode.INSTALL));
+			var compat_tools_list = sgrp_compat.add_widget(new CompatToolsList(game));
 			add(sgrp_compat);
 
 			compat_tools_list.compat_tool_selected.connect(tool => {
-				tool.cast<CompatToolTraits.Install>(tool => task.selected_compat_tool = tool);
+				tool.cast<CompatToolTraits.Run>(tool => {
+					game.compat_tool = tool.full_id;
+					game.save();
+				});
 			});
+
+			sgrp_compat.sensitive = game.use_compat;
+			game.notify["use-compat"].connect(() => sgrp_compat.sensitive = game.use_compat);
 		}
 	}
 }

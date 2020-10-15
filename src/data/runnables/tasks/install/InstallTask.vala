@@ -38,8 +38,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 		public InstallTask.Mode install_mode { get; construct; default = InstallTask.Mode.INTERACTIVE; }
 		public Status status { get; set; default = new Status(); }
 
-		public ArrayList<CompatTool>? compat_tools { get; set; default = null; }
-		public CompatTool? selected_compat_tool { get; set; default = null; }
+		public CompatToolTraits.Install? selected_compat_tool { get; set; default = null; }
 
 		public bool can_import_install_dir { get; construct set; default = false; }
 		private bool install_dir_imported = false;
@@ -97,15 +96,8 @@ namespace GameHub.Data.Runnables.Tasks.Install
 				install_dir = install_dirs.first();
 			}
 
-			var compat_runnable = runnable.cast<Traits.SupportsCompatTools>();
-			if(compat_runnable != null)
-			{
-				compat_tools = compat_runnable.get_supported_compat_tools_for_installation(this);
-				if(compat_tools.size > 0)
-				{
-					selected_compat_tool = compat_tools.first();
-				}
-			}
+			notify["selected-compat-tool"].connect(() => update());
+			update();
 		}
 
 		public async void load_installers()
@@ -233,6 +225,14 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			}
 		}
 
+		private void update()
+		{
+			notify_property("config-step");
+			notify_property("config-next-step");
+			notify_property("config-prev-step-available");
+			notify_property("config-next-step-available");
+		}
+
 		private ArrayList<ConfigStep> config_prev_steps = new ArrayList<ConfigStep>();
 		public ConfigStepChangeDirection config_step_last_change_direction { get; set; default = ConfigStepChangeDirection.NEXT; }
 
@@ -246,9 +246,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			{
 				if(config_step == value) return;
 				config_prev_steps.add(value);
-				notify_property("config-next-step");
-				notify_property("config-prev-step-available");
-				notify_property("config-next-step-available");
+				update();
 			}
 		}
 
@@ -316,10 +314,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			{
 				config_step_last_change_direction = ConfigStepChangeDirection.PREVIOUS;
 				config_prev_steps.remove_at(config_prev_steps.size - 1);
-				notify_property("config-step");
-				notify_property("config-next-step");
-				notify_property("config-prev-step-available");
-				notify_property("config-next-step-available");
+				update();
 			}
 		}
 

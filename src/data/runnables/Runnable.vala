@@ -56,6 +56,16 @@ namespace GameHub.Data.Runnables
 		public bool is_running { get; set; default = false; }
 		public abstract async void run();
 
+		public Tasks.Run.RunTask prepare_run_task()
+		{
+			return new Tasks.Run.RunTask(this);
+		}
+
+		public async void run_as_task()
+		{
+			yield prepare_run_task().run();
+		}
+
 		public bool can_be_launched_base(bool is_launch_attempt=false)
 		{
 			if(Runnable.IsAnyRunnableRunning || Sources.Steam.Steam.IsAnyAppRunning || is_running) return false;

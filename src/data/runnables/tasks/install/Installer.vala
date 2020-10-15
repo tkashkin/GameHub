@@ -66,6 +66,18 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			var file_path = file.get_path();
 			var install_dir_path = task.install_dir.get_path();
 
+			if(!task.install_dir.query_exists())
+			{
+				try
+				{
+					task.install_dir.make_directory_with_parents();
+				}
+				catch(Error e)
+				{
+					warning("[FileInstaller.install_file] Failed to create installation directory: %s", e.message);
+				}
+			}
+
 			string[]? cmd = null;
 
 			switch(type)
@@ -76,7 +88,10 @@ namespace GameHub.Data.Runnables.Tasks.Install
 					break;
 
 				case InstallerType.WINDOWS_EXECUTABLE:
-					//return yield task.install_file_with_compat(file);
+					var compat_runnable = task.runnable != null ? task.runnable.cast<Traits.SupportsCompatTools>() : null;
+					if(compat_runnable == null || task.selected_compat_tool == null || !task.selected_compat_tool.can_install(compat_runnable, task)) return false;
+					yield task.selected_compat_tool.install(compat_runnable, task, file);
+					return true;
 					break;
 
 				case InstallerType.ARCHIVE:

@@ -53,7 +53,7 @@ namespace GameHub.UI.Views.GamesView
 				{*/
 					var run = new Gtk.MenuItem.with_label(_("Run"));
 					run.sensitive = game.can_be_launched();
-					run.activate.connect(() => game.run.begin());
+					run.activate.connect(() => game.run_as_task.begin());
 					add(run);
 				//}
 				add(new Gtk.SeparatorMenuItem());
