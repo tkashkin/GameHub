@@ -50,42 +50,13 @@ namespace GameHub.Data.Compat
 			compat_tools = new ArrayList<CompatTool>();
 		}
 
-		var wine_versions = Compat.Tools.Wine.Wine.detect();
+		Compat.Tools.Wine.Wine.detect();
+		Compat.Tools.Proton.Proton.detect();
 
-		compat_tools.add_all(wine_versions);
-
-		foreach(var wine in wine_versions)
+		foreach(var tool in compat_tools)
 		{
-			debug("[Compat.init] Detected Wine: '%s'; version: '%s'", wine.executable.get_path(), wine.version);
+			debug("[Compat.init] %s: '%s'; version: '%s'", tool.tool, tool.executable.get_path(), tool.version ?? "");
 		}
-
-		/*var proton_latest = new Compat.Proton(Compat.Proton.LATEST);
-
-		CompatTools = { new Compat.WineWrap(), new Compat.Innoextract(), new Compat.DOSBox(), new Compat.ScummVM(), proton_latest };
-
-		Compat.Proton.find_proton_versions();
-
-		CompatTool[] tools = CompatTools;
-
-		string[] wine_binaries = { "wine" };
-		string[] wine_arches = { "win64", "win32" };
-
-		foreach(var wine_binary in wine_binaries)
-		{
-			foreach(var wine_arch in wine_arches)
-			{
-				if(wine_binary == "wine32" && wine_arch == "win64") continue;
-				tools += new Compat.Wine(wine_binary, wine_arch);
-			}
-		}
-
-		//tools += new Compat.CustomEmulator();
-		tools += new Compat.RetroArch();
-		tools += new Compat.CustomScript();
-
-		CompatTools = tools;
-
-		proton_latest.init();*/
 	}
 
 	public static CompatTool? get_tool(string? id)
@@ -96,6 +67,14 @@ namespace GameHub.Data.Compat
 			if(tool.full_id == id) return tool;
 		}
 		return null;
+	}
+
+	public static void add_tool(CompatTool tool)
+	{
+		if(compat_tools != null)
+		{
+			compat_tools.add(tool);
+		}
 	}
 
 	private static ArrayList<CompatTool>? compat_tools = null;

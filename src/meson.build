@@ -95,10 +95,11 @@ sources = [
 	'data/compat/tools/wine/Wine.vala',
 	'data/compat/tools/wine/WineOptions.vala',
 
+	'data/compat/tools/proton/Proton.vala',
+
 	#'data/compat/tools/CustomScript.vala',
 	#'data/compat/tools/Innoextract.vala',
 	#'data/compat/tools/WineWrap.vala',
-	#'data/compat/tools/Proton.vala',
 	#'data/compat/tools/DOSBox.vala',
 	#'data/compat/tools/ScummVM.vala',
 	#'data/compat/tools/RetroArch.vala',
@@ -203,6 +204,7 @@ sources = [
 
 	'ui/widgets/compat/CompatToolsList.vala',
 	'ui/widgets/compat/tabs/Wine.vala',
+	'ui/widgets/compat/tabs/Proton.vala',
 
 	'ui/widgets/settings/SettingsSidebar.vala',
 	'ui/widgets/settings/SettingsGroup.vala',

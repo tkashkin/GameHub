@@ -133,6 +133,9 @@ namespace GameHub.Data.DB.Tables
 					case "wine":
 						tools.add(new Tools.Wine.Wine.from_db(s));
 						break;
+					case "proton":
+						tools.add(new Tools.Proton.Proton.from_db(s));
+						break;
 				}
 			}
 			return tools;

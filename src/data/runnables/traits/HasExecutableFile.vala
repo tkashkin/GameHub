@@ -67,7 +67,7 @@ namespace GameHub.Data.Runnables.Traits
 			{
 				if(install_dir == null) return null;
 				if(work_dir_path == null || work_dir_path.length == 0) return install_dir;
-				return get_file(work_dir_path);
+				return get_file(work_dir_path, false);
 			}
 			set
 			{
@@ -158,39 +158,35 @@ namespace GameHub.Data.Runnables.Traits
 			string[] cmd = cmdline ?? _cmdline;
 			string[] full_cmd = cmd;
 
-			if(arguments != null && arguments.length > 0)
+			var variables = get_variables();
+			var args = args_override ?? Utils.parse_args(arguments);
+			if(args != null)
 			{
-				var variables = get_variables();
-				var args = args_override ?? Utils.parse_args(arguments);
-				if(args != null)
+				if("$command" in args || "${command}" in args)
 				{
-					if("$command" in args || "${command}" in args)
+					full_cmd = {};
+				}
+				foreach(var arg in args)
+				{
+					if(arg == "$command" || arg == "${command}")
 					{
-						full_cmd = {};
+						foreach(var a in cmd)
+						{
+							full_cmd += a;
+						}
 					}
-					foreach(var arg in args)
+					else
 					{
-						if(arg == "$command" || arg == "${command}")
+						if("$" in arg)
 						{
-							foreach(var a in cmd)
-							{
-								full_cmd += a;
-							}
+							arg = FS.expand(arg, null, variables);
 						}
-						else
-						{
-							if("$" in arg)
-							{
-								arg = FS.expand(arg, null, variables);
-							}
-							full_cmd += arg;
-						}
+						full_cmd += arg;
 					}
 				}
 			}
 
-			var task = Utils.exec(full_cmd).override_runtime(true);
-			if(work_dir != null && work_dir.query_exists()) task.dir(work_dir.get_path());
+			var task = Utils.exec(full_cmd).override_runtime(true).dir(work_dir.get_path());
 
 			cast<Traits.Game.SupportsTweaks>(game => task.tweaks(game.tweaks, game));
 
