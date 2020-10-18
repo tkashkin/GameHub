@@ -185,7 +185,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			wine_options.desktop.bind_property("width", vdesktop_resolution_width_spinbutton, "value", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 			wine_options.desktop.bind_property("height", vdesktop_resolution_height_spinbutton, "value", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
-			sgrp_info.destroy.connect(() => {
+			sgrp_info.unrealize.connect(() => {
 				var node = wine_options.to_json();
 				if(runnable != null)
 				{
@@ -199,6 +199,23 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			});
 
 			compat_tool_selected(wine);
+		}
+
+		public override void add_new_tool()
+		{
+			#if GTK_3_22
+			var chooser = new FileChooserNative(_("Select Wine executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));
+			#else
+			var chooser = new FileChooserDialog(_("Select Wine executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
+			#endif
+			if(chooser.run() == ResponseType.ACCEPT)
+			{
+				var wine_executable = chooser.get_file();
+				var wineserver_executable = wine_executable.get_parent().get_child("wineserver");
+				var wine = new Tools.Wine.Wine(wine_executable, wineserver_executable);
+				wine.save();
+				add_tool(new WineRow(wine));
+			}
 		}
 
 		private class WineRow: BaseSetting

@@ -59,13 +59,16 @@ namespace GameHub.UI.Widgets.Compat
 		private void update()
 		{
 			this.foreach(w => w.destroy());
-
 			add_tab(new Tabs.Wine(runnable, mode));
 		}
 
 		private void add_tool()
 		{
-
+			var tab = get_nth_page(page) as CompatToolsGroupTab;
+			if(tab != null)
+			{
+				tab.add_new_tool();
+			}
 		}
 
 		private void add_tab(CompatToolsGroupTab tab)
@@ -137,5 +140,7 @@ namespace GameHub.UI.Widgets.Compat
 		}
 
 		protected virtual void create_options_widget(ListBoxRow row, Box container){}
+
+		public virtual void add_new_tool(){}
 	}
 }
