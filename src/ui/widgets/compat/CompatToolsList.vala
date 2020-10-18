@@ -60,6 +60,7 @@ namespace GameHub.UI.Widgets.Compat
 		{
 			this.foreach(w => w.destroy());
 			add_tab(new Tabs.Wine(runnable, mode));
+			add_tab(new Tabs.Proton(runnable, mode));
 		}
 
 		private void add_tool()
@@ -137,6 +138,18 @@ namespace GameHub.UI.Widgets.Compat
 		protected void add_tool(ListBoxRow row)
 		{
 			tools_list.add(row);
+		}
+
+		protected void select_tab()
+		{
+			Idle.add(() => {
+				var notebook = parent as Notebook;
+				if(notebook != null)
+				{
+					notebook.page = notebook.page_num(this);
+				}
+				return Source.REMOVE;
+			});
 		}
 
 		protected virtual void create_options_widget(ListBoxRow row, Box container){}

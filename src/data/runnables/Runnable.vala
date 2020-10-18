@@ -131,7 +131,11 @@ namespace GameHub.Data.Runnables
 		{
 			if(path == null || path.length == 0 || install_dir == null) return null;
 			var full_path = path;
-			if(!full_path.has_prefix("/") && !full_path.has_prefix("${install_dir}/") && !full_path.has_prefix("$install_dir/"))
+			if(full_path == "." || full_path.has_prefix("./"))
+			{
+				full_path = Utils.replace_prefix(full_path, ".", "${install_dir}");
+			}
+			if(!full_path.has_prefix("/") && !full_path.has_prefix("${install_dir}") && !full_path.has_prefix("$install_dir"))
 			{
 				full_path = "${install_dir}/%s".printf(full_path);
 			}

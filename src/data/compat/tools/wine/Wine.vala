@@ -152,14 +152,18 @@ namespace GameHub.Data.Compat.Tools.Wine
 			yield exec(emu, emu.executable, dir, emu.get_args(game));
 		}*/
 
-		protected virtual async void exec(Traits.SupportsCompatTools runnable, File file, File? dir = null, string[]? args = null, WineOptions? wine_options = null)
+		protected virtual string[] get_exec_cmdline_base()
 		{
-			var wine_options_local = wine_options ?? get_options(runnable);
-			string[] cmd = { executable.get_path() };
-			if(wine_options_local.desktop.enabled)
+			return { executable.get_path() };
+		}
+
+		protected virtual string[] prepare_exec_cmdline(Traits.SupportsCompatTools runnable, File file, WineOptions wine_options)
+		{
+			string[] cmd = get_exec_cmdline_base();
+			if(wine_options.desktop.enabled)
 			{
 				cmd += "explorer";
-				cmd += @"/desktop=$(runnable.name_escaped),$(wine_options_local.desktop.width)x$(wine_options_local.desktop.height)";
+				cmd += @"/desktop=$(runnable.name_escaped),$(wine_options.desktop.width)x$(wine_options.desktop.height)";
 			}
 			if(file.get_path().down().has_suffix(".msi"))
 			{
@@ -167,13 +171,19 @@ namespace GameHub.Data.Compat.Tools.Wine
 				cmd += "/i";
 			}
 			cmd += file.get_path();
-			var task = runnable.prepare_exec_task(cmd, args);
+			return cmd;
+		}
+
+		protected virtual async void exec(Traits.SupportsCompatTools runnable, File file, File? dir = null, string[]? args = null, WineOptions? wine_options = null)
+		{
+			var wine_options_local = wine_options ?? get_options(runnable);
+			var task = runnable.prepare_exec_task(prepare_exec_cmdline(runnable, file, wine_options), args);
 			if(dir != null) task.dir(dir.get_path());
 			apply_env(runnable, task, wine_options_local);
 			yield task.sync_thread();
 		}
 
-		public virtual File? get_wineprefix(Traits.SupportsCompatTools runnable, WineOptions? wine_options = null)
+		public virtual File? get_prefix(Traits.SupportsCompatTools runnable, WineOptions? wine_options = null)
 		{
 			var wine_options_local = wine_options ?? get_options(runnable);
 
@@ -197,7 +207,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 					}
 					catch(Error e)
 					{
-						warning("[Wine.get_wineprefix] Failed to create prefix `%s`: %s", prefix.get_path(), e.message);
+						warning("[Wine.get_prefix] Failed to create prefix `%s`: %s", prefix.get_path(), e.message);
 					}
 				}
 			}
@@ -231,7 +241,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 				}
 			}
 
-			var prefix = get_wineprefix(runnable, wine_options_local);
+			var prefix = get_prefix(runnable, wine_options_local);
 			if(prefix != null)
 			{
 				task.env_var("WINEPREFIX", prefix.get_path());
@@ -265,7 +275,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 			yield task.sync_thread();
 		}
 
-		public async string convert_path(Traits.SupportsCompatTools runnable, File path, WineOptions? wine_options = null)
+		protected virtual async string convert_path(Traits.SupportsCompatTools runnable, File path, WineOptions? wine_options = null)
 		{
 			var task = Utils.exec({executable.get_path(), "winepath", "-w", path.get_path()}).log(false);
 			apply_env(runnable, task, wine_options);
@@ -367,7 +377,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 			return wine_versions;
 		}
 
-		private static bool is_wine_version_added(File? wine)
+		public static bool is_wine_version_added(File wine)
 		{
 			foreach(var existing_version in wine_versions)
 			{
@@ -376,21 +386,23 @@ namespace GameHub.Data.Compat.Tools.Wine
 			return false;
 		}
 
-		private static void add_wine_version(Wine wine)
+		public static void add_wine_version(Wine wine)
 		{
 			if(!is_wine_version_added(wine.executable))
 			{
 				wine_versions.add(wine);
+				Compat.add_tool(wine);
 			}
 		}
 
-		private static void add_wine_version_from_file(File? wine, File? wineserver, string name)
+		public static void add_wine_version_from_file(File wine, File? wineserver, string? name = null)
 		{
 			if(!is_wine_version_added(wine))
 			{
 				var new_wine = new Wine(wine, wineserver, name);
-				wine_versions.add(new_wine);
 				new_wine.save();
+				wine_versions.add(new_wine);
+				Compat.add_tool(new_wine);
 			}
 		}
 	}
