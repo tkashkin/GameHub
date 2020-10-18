@@ -32,12 +32,21 @@ namespace GameHub.Data.Compat.Tools.Wine
 	{
 		public File? wineserver_executable { protected get; protected construct set; }
 
-		public Wine(File wine, File? wineserver, string? name)
+		public Wine(File wine, File? wineserver = null, string? name = null)
 		{
+			var _name = name;
+			if(_name == null)
+			{
+				_name = wine.get_basename();
+				if(wine.get_parent().get_basename() == "bin")
+				{
+					_name = wine.get_parent().get_parent().get_basename();
+				}
+			}
 			Object(
 				tool: "wine",
 				id: Utils.md5(wine.get_path()),
-				name: name ?? "Wine",
+				name: _name ?? "Wine",
 				icon: "tool-wine-symbolic",
 				executable: wine,
 				wineserver_executable: wineserver
@@ -150,7 +159,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 			if(wine_options_local.desktop.enabled)
 			{
 				cmd += "explorer";
-				cmd += @"/desktop=Desktop,$(wine_options_local.desktop.width)x$(wine_options_local.desktop.height)";
+				cmd += @"/desktop=$(runnable.name_escaped),$(wine_options_local.desktop.width)x$(wine_options_local.desktop.height)";
 			}
 			if(file.get_path().down().has_suffix(".msi"))
 			{
@@ -164,80 +173,36 @@ namespace GameHub.Data.Compat.Tools.Wine
 			yield task.sync_thread();
 		}
 
-		/*public virtual File get_default_wineprefix(Traits.SupportsCompatTools runnable)
+		public virtual File? get_wineprefix(Traits.SupportsCompatTools runnable, WineOptions? wine_options = null)
 		{
-			var install_dir = runnable.install_dir;
+			var wine_options_local = wine_options ?? get_options(runnable);
 
-			var prefix = FS.mkdir(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(binary)_$(arch)");
-			var dosdevices = prefix.get_child("dosdevices");
+			var variables = new HashMap<string, string>();
+			variables.set("compat_shared", FS.Paths.Cache.SharedCompat);
+			variables.set("tool_type", tool);
+			variables.set("tool_id", id);
+			variables.set("tool_version", version ?? "null");
+			variables.set("install_dir", runnable.install_dir.get_path());
+			variables.set("id", runnable.id);
+			variables.set("compat", @"$(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)");
 
-			if(FS.file(install_dir.get_path(), @"$(FS.GAMEHUB_DIR)/$(binary)_$(arch)").query_exists())
+			var prefix = FS.file(wine_options_local.prefix.path, null, variables);
+			if(prefix != null)
 			{
-				Utils.exec({"bash", "-c", @"mv -f $(FS.GAMEHUB_DIR)/$(binary)_$(arch) $(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)/$(binary)_$(arch)"}).dir(install_dir.get_path()).sync();
-				FS.rm(dosdevices.get_child("d:").get_path());
-			}
-
-			return prefix;
-		}*/
-
-		/*public virtual File get_wineprefix(Traits.SupportsCompatTools runnable)
-		{
-			var prefix = get_default_wineprefix(runnable);
-
-			if(opt_prefix.file != null && opt_prefix.file.query_exists())
-			{
-				prefix = opt_prefix.file;
-			}
-
-			var dosdevices = prefix.get_child("dosdevices");
-
-			if(dosdevices.get_child("c:").query_exists() && dosdevices.get_path().has_prefix(runnable.install_dir.get_path()))
-			{
-				var has_symlink = false;
-				for(var letter = 'd'; letter <= 'y'; letter++)
+				if(!prefix.query_exists())
 				{
-					if(is_symlink_and_correct(dosdevices.get_child(@"$(letter):")))
+					try
 					{
-						has_symlink = true;
-						break;
+						prefix.make_directory_with_parents();
 					}
-				}
-
-				for(var letter = 'd'; has_symlink == false && letter <= 'y'; letter++)
-				{
-					if(!dosdevices.get_child(@"$(letter):").query_exists() && !dosdevices.get_child(@"$(letter)::").query_exists())
+					catch(Error e)
 					{
-						Utils.exec({"ln", "-nsf", "../../../../", @"$(letter):"}).dir(dosdevices.get_path()).sync();
-						break;
+						warning("[Wine.get_wineprefix] Failed to create prefix `%s`: %s", prefix.get_path(), e.message);
 					}
 				}
 			}
-
 			return prefix;
-		}*/
-
-		/*private bool is_symlink_and_correct(File symlink)
-		{
-			if(!symlink.query_exists())
-			{
-				return false;
-			}
-
-			try
-			{
-				var symlink_info = symlink.query_info("*", NONE);
-				if(symlink_info == null || !symlink_info.get_is_symlink() || symlink_info.get_symlink_target() != "../../../../")
-				{
-					return false;
-				}
-			}
-			catch (Error e)
-			{
-				return false;
-			}
-
-			return true;
-		}*/
+		}
 
 		public WineOptions get_options(Traits.SupportsCompatTools runnable)
 		{
@@ -266,30 +231,10 @@ namespace GameHub.Data.Compat.Tools.Wine
 				}
 			}
 
-			var variables = new HashMap<string, string>();
-			variables.set("compat_shared", FS.Paths.Cache.SharedCompat);
-			variables.set("tool_type", tool);
-			variables.set("tool_id", id);
-			variables.set("tool_version", version ?? "null");
-			variables.set("install_dir", runnable.install_dir.get_path());
-			variables.set("id", runnable.id);
-			variables.set("compat", @"$(FS.GAMEHUB_DIR)/$(FS.COMPAT_DATA_DIR)");
-
-			var prefix = FS.file(wine_options_local.prefix.path, null, variables);
+			var prefix = get_wineprefix(runnable, wine_options_local);
 			if(prefix != null)
 			{
 				task.env_var("WINEPREFIX", prefix.get_path());
-				if(!prefix.query_exists())
-				{
-					try
-					{
-						prefix.make_directory_with_parents();
-					}
-					catch(Error e)
-					{
-						warning("[Wine.apply_env] Failed to create prefix `%s`: %s", prefix.get_path(), e.message);
-					}
-				}
 			}
 		}
 
@@ -350,6 +295,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 		private const string[] WINE_VERSION_SUFFIXES = {"", "-development", "-devel", "-stable", "-staging"};
 		private const string[] WINE_BINARIES = {"wine"};
 		private const string[] WINE_OPT_PATHS = {"/opt/wine%s/bin/wine"};
+		private const string[] WINE_EXTRA_PATHS = {"~/.local/share/lutris/runners/wine"};
 
 		private static ArrayList<Wine>? wine_versions = null;
 
@@ -376,7 +322,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 					if(wine != null)
 					{
 						var wineserver = wine.get_parent().get_child("wineserver%s".printf(suffix));
-						add_wine_version_from_file(wine, wineserver, suffix);
+						add_wine_version_from_file(wine, wineserver, @"Wine$(suffix)");
 					}
 				}
 
@@ -386,7 +332,34 @@ namespace GameHub.Data.Compat.Tools.Wine
 					if(wine != null)
 					{
 						var wineserver = wine.get_parent().get_child("wineserver");
-						add_wine_version_from_file(wine, wineserver, suffix);
+						add_wine_version_from_file(wine, wineserver, @"Wine$(suffix)");
+					}
+				}
+			}
+
+			foreach(var extra_path in WINE_EXTRA_PATHS)
+			{
+				var extra_dir = FS.file(extra_path);
+				if(extra_dir != null && extra_dir.query_exists())
+				{
+					try
+					{
+						FileInfo? finfo = null;
+						var enumerator = extra_dir.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+						while((finfo = enumerator.next_file()) != null)
+						{
+							var dir = extra_dir.get_child(finfo.get_name());
+							var wine = dir.get_child("bin").get_child("wine");
+							if(wine != null && wine.query_exists())
+							{
+								var wineserver = wine.get_parent().get_child("wineserver");
+								add_wine_version_from_file(wine, wineserver, finfo.get_name());
+							}
+						}
+					}
+					catch(Error e)
+					{
+						warning("[Wine.detect] %s", e.message);
 					}
 				}
 			}
@@ -411,11 +384,11 @@ namespace GameHub.Data.Compat.Tools.Wine
 			}
 		}
 
-		private static void add_wine_version_from_file(File? wine, File? wineserver, string name_suffix)
+		private static void add_wine_version_from_file(File? wine, File? wineserver, string name)
 		{
 			if(!is_wine_version_added(wine))
 			{
-				var new_wine = new Wine(wine, wineserver, "Wine%s".printf(name_suffix));
+				var new_wine = new Wine(wine, wineserver, name);
 				wine_versions.add(new_wine);
 				new_wine.save();
 			}
