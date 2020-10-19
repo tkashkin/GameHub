@@ -54,10 +54,10 @@ namespace GameHub.Data.Runnables.Traits
 		{
 			get
 			{
-				/*foreach(var tool in CompatTools)
+				foreach(var tool in Compat.compat_tools)
 				{
-					if(supports_compat_tool(tool)) return true;
-				}*/
+					if(tool is CompatToolTraits.Run && supports_compat_tool((CompatToolTraits.Run) tool)) return true;
+				}
 				return false;
 			}
 		}

@@ -57,7 +57,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 						continue;
 					is_selected_tool = runnable.compat_tool == proton.full_id;
 				}
-				var row = new ProtonRow(proton);
+				var row = new CompatToolRow(proton);
 				add_tool(row);
 				if(tools_list.get_selected_row() == null || is_selected_tool)
 				{
@@ -70,10 +70,9 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			}
 		}
 
-		protected override void create_options_widget(ListBoxRow row, Box container)
+		protected override void create_options_widget(CompatToolRow row, Box container)
 		{
-			var proton_row = (ProtonRow) row;
-			var proton = proton_row.proton;
+			var proton = (Tools.Proton.Proton) row.tool;
 
 			Json.Node? options_node = null;
 			if(runnable != null)
@@ -84,7 +83,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 
 			var sgrp_info = new SettingsGroup();
 
-			var setting_info = sgrp_info.add_setting(new BaseSetting(proton_row.title, proton.executable.get_path()));
+			var setting_info = sgrp_info.add_setting(new BaseSetting(row.title, proton.executable.get_path()));
 			setting_info.icon_name = proton.icon;
 
 			container.add(sgrp_info);
@@ -118,27 +117,6 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			{
 				Tools.Proton.Proton.add_proton_version_from_file(chooser.get_file());
 				update();
-			}
-		}
-
-		private class ProtonRow: BaseSetting
-		{
-			public Tools.Proton.Proton proton { get; construct; }
-
-			public ProtonRow(Tools.Proton.Proton proton)
-			{
-				Object(title: proton.name, description: proton.executable.get_path(), proton: proton, activatable: false, selectable: true);
-			}
-
-			construct
-			{
-				ellipsize_title = Pango.EllipsizeMode.END;
-				ellipsize_description = Pango.EllipsizeMode.END;
-
-				if(proton.version != null)
-				{
-					title = """%s<span alpha="75%"> • %s</span>""".printf(proton.name, proton.version);
-				}
 			}
 		}
 	}

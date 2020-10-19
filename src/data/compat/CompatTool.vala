@@ -77,7 +77,7 @@ namespace GameHub.Data.Compat
 		}
 	}
 
-	private static ArrayList<CompatTool>? compat_tools = null;
+	public static ArrayList<CompatTool>? compat_tools = null;
 
 	namespace CompatToolTraits
 	{

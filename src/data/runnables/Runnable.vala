@@ -103,28 +103,24 @@ namespace GameHub.Data.Runnables
 
 		// General methods
 
-		public HashMap<string, string> get_variables_base()
+		public HashMap<string, string> get_variables()
 		{
 			var variables = new HashMap<string, string>();
 			variables.set("name_escaped", name_escaped);
 			variables.set("name", name);
-			if(install_dir != null && install_dir.query_exists()) variables.set("install_dir", install_dir.get_path());
+			if(install_dir != null)
+			{
+				variables.set("install_dir", install_dir.get_path());
+			}
 			return variables;
 		}
 
-		public virtual HashMap<string, string> get_variables()
+		public ArrayList<File?> get_file_search_paths()
 		{
-			return get_variables_base();
-		}
-
-		public File?[] get_file_search_paths_base()
-		{
-			return { install_dir };
-		}
-
-		public virtual File?[] get_file_search_paths()
-		{
-			return get_file_search_paths_base();
+			var paths = new ArrayList<File?>();
+			paths.add(install_dir);
+			cast<Traits.Game.SupportsOverlays>(runnable => runnable.get_file_search_paths_overlays(paths));
+			return paths;
 		}
 
 		public File? get_file(string? path, bool should_exist=true)

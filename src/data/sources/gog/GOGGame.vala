@@ -45,6 +45,15 @@ namespace GameHub.Data.Sources.GOG
 		public override string? compat_tool { get; set; }
 		public override string? compat_tool_settings { get; set; }
 
+		public bool supports_compat_tools { get { return cast<Traits.SupportsCompatTools>().supports_compat_tools; } }
+		public bool needs_compat { get { return cast<Traits.SupportsCompatTools>().needs_compat; } }
+		public bool force_compat
+		{
+			get { return cast<Traits.SupportsCompatTools>().force_compat; }
+			set { cast<Traits.SupportsCompatTools>().force_compat = value; }
+		}
+		public bool use_compat { get { return cast<Traits.SupportsCompatTools>().use_compat; } }
+
 		// Traits.Game.HasAchievements
 		public override ArrayList<Traits.Game.HasAchievements.Achievement>? achievements { get; protected set; default = new ArrayList<Traits.Game.HasAchievements.Achievement>(); }
 
@@ -346,7 +355,7 @@ namespace GameHub.Data.Sources.GOG
 
 			var state = Game.State.UNINSTALLED;
 
-			var gameinfo = get_file("gameinfo", false);
+			var gameinfo = get_file("gameinfo");
 			var goggame = get_file(@"goggame-$(id).info");
 			var gh_marker = get_file(@".gamehub_$(id)");
 
