@@ -88,6 +88,7 @@ namespace GameHub.Data.Runnables.Traits.Game
 			overlays.add(base_overlay);
 			save_overlays();
 			save();
+			update_status();
 		}
 
 		public void save_overlays()
@@ -215,20 +216,18 @@ namespace GameHub.Data.Runnables.Traits.Game
 			yield fs_overlay.remount();
 		}
 
-		public File?[] get_file_search_paths()
+		public void get_file_search_paths_overlays(ArrayList<File?> paths)
 		{
-			File?[] dirs = get_file_search_paths_base();
 			if(overlays_enabled)
 			{
-				dirs += merged_overlays_directory;
-				dirs += install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).get_child(Overlay.BASE);
+				paths.add(merged_overlays_directory);
+				paths.add(install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).get_child(Overlay.BASE));
 				foreach(var overlay in overlays)
 				{
 					if(overlay.id == Overlay.BASE) continue;
-					dirs += install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).get_child(overlay.id);
+					paths.add(install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).get_child(overlay.id));
 				}
 			}
-			return dirs;
 		}
 
 		public class Overlay: Object
@@ -295,6 +294,7 @@ namespace GameHub.Data.Runnables.Traits.Game
 							game.install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).get_child(FS.OVERLAYS_LIST).delete();
 							game.install_dir.get_child(FS.GAMEHUB_DIR).get_child(FS.OVERLAYS_DIR).delete();
 							game.overlays_changed();
+							game.update_status();
 						}
 						catch(Error e)
 						{

@@ -74,7 +74,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 						continue;
 					is_selected_tool = runnable.compat_tool == wine.full_id;
 				}
-				var row = new WineRow(wine);
+				var row = new CompatToolRow(wine);
 				add_tool(row);
 				if(tools_list.get_selected_row() == null || is_selected_tool)
 				{
@@ -87,10 +87,9 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			}
 		}
 
-		protected override void create_options_widget(ListBoxRow row, Box container)
+		protected override void create_options_widget(CompatToolRow row, Box container)
 		{
-			var wine_row = (WineRow) row;
-			var wine = wine_row.wine;
+			var wine = (Tools.Wine.Wine) row.tool;
 
 			Json.Node? options_node = null;
 			if(runnable != null)
@@ -101,7 +100,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 
 			var sgrp_info = new SettingsGroup();
 
-			var setting_info = sgrp_info.add_setting(new BaseSetting(wine_row.title, wine.executable.get_path()));
+			var setting_info = sgrp_info.add_setting(new BaseSetting(row.title, wine.executable.get_path()));
 			setting_info.icon_name = wine.icon;
 
 			container.add(sgrp_info);
@@ -222,27 +221,6 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 				var wine_executable = chooser.get_file();
 				Tools.Wine.Wine.add_wine_version_from_file(wine_executable, wine_executable.get_parent().get_child("wineserver"));
 				update();
-			}
-		}
-
-		private class WineRow: BaseSetting
-		{
-			public Tools.Wine.Wine wine { get; construct; }
-
-			public WineRow(Tools.Wine.Wine wine)
-			{
-				Object(title: wine.name, description: wine.executable.get_path(), wine: wine, activatable: false, selectable: true);
-			}
-
-			construct
-			{
-				ellipsize_title = Pango.EllipsizeMode.END;
-				ellipsize_description = Pango.EllipsizeMode.END;
-
-				if(wine.version != null)
-				{
-					title = """%s<span alpha="75%"> • %s</span>""".printf(wine.name, wine.version);
-				}
 			}
 		}
 	}

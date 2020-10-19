@@ -67,7 +67,7 @@ namespace GameHub.Data.Runnables.Traits
 			{
 				if(install_dir == null) return null;
 				if(work_dir_path == null || work_dir_path.length == 0) return install_dir;
-				return get_file(work_dir_path, false);
+				return get_file(work_dir_path);
 			}
 			set
 			{
@@ -141,21 +141,14 @@ namespace GameHub.Data.Runnables.Traits
 		protected virtual async void pre_run(){}
 		protected virtual async void post_run(){}
 
-		protected virtual string[] _cmdline
+		protected virtual string[] cmdline
 		{
 			owned get { return { executable.get_path() }; }
 		}
 
-		public HashMap<string, string> get_variables()
+		public virtual ExecTask prepare_exec_task(string[]? cmdline_override = null, string[]? args_override = null)
 		{
-			var variables = get_variables_base();
-			if(work_dir != null && work_dir.query_exists()) variables.set("work_dir", work_dir.get_path());
-			return variables;
-		}
-
-		public virtual ExecTask prepare_exec_task(string[]? cmdline=null, string[]? args_override=null)
-		{
-			string[] cmd = cmdline ?? _cmdline;
+			string[] cmd = cmdline_override ?? cmdline;
 			string[] full_cmd = cmd;
 
 			var variables = get_variables();

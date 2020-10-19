@@ -117,11 +117,18 @@ namespace GameHub.UI.Widgets.Compat
 			add(tools_list_scrolled);
 			add(tool_options_scrolled);
 
+			tools_list.set_sort_func((first_row, second_row) => {
+				var first = ((CompatToolRow) first_row).tool;
+				var second = ((CompatToolRow) second_row).tool;
+				if(first.version != null && second.version != null) return second.version.collate(first.version);
+				return second.name.collate(first.name);
+			});
+
 			tools_list.row_selected.connect((row) => {
 				tool_options.foreach(w => w.destroy());
 				if(row != null)
 				{
-					create_options_widget(row, tool_options);
+					create_options_widget((CompatToolRow) row, tool_options);
 					tool_options.show_all();
 				}
 			});
@@ -135,7 +142,7 @@ namespace GameHub.UI.Widgets.Compat
 			tool_options.foreach(w => w.destroy());
 		}
 
-		protected void add_tool(ListBoxRow row)
+		protected void add_tool(CompatToolRow row)
 		{
 			tools_list.add(row);
 		}
@@ -152,8 +159,35 @@ namespace GameHub.UI.Widgets.Compat
 			});
 		}
 
-		protected virtual void create_options_widget(ListBoxRow row, Box container){}
+		protected virtual void create_options_widget(CompatToolRow row, Box container){}
 
 		public virtual void add_new_tool(){}
+	}
+
+	public class CompatToolRow: BaseSetting
+	{
+		public CompatTool tool { get; construct; }
+
+		public CompatToolRow(CompatTool tool)
+		{
+			Object(tool: tool, activatable: false, selectable: true);
+		}
+
+		construct
+		{
+			ellipsize_title = Pango.EllipsizeMode.END;
+			ellipsize_description = Pango.EllipsizeMode.END;
+			activatable = false;
+			selectable = false;
+			if(tool.version != null)
+			{
+				title = """%s<span alpha="75%"> • %s</span>""".printf(tool.name, tool.version);
+			}
+			else
+			{
+				title = tool.name;
+			}
+			description = tool.executable.get_path();
+		}
 	}
 }
