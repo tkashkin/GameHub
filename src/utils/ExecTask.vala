@@ -196,7 +196,7 @@ namespace GameHub.Utils
 				}
 				else
 				{
-					Process.spawn_sync(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH | SpawnFlags.CHILD_INHERITS_STDIN | SpawnFlags.STDERR_TO_DEV_NULL, null, null, null, out status);
+					Process.spawn_sync(_dir, _cmd, _env, SpawnFlags.SEARCH_PATH | SpawnFlags.CHILD_INHERITS_STDIN, null, null, null, out status);
 					return new Result(status);
 				}
 			}

@@ -73,21 +73,35 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.General
 			);
 			add_widget(sgrp_collection);
 
+			var vars_common = new ArrayList<VariableEntry.Variable>();
+			vars_common.add(new VariableEntry.Variable("${root}", _("Collection directory")));
+			vars_common.add(new VariableEntry.Variable("${game}", _("Game name")));
+
+			var vars_platform = new ArrayList<VariableEntry.Variable>();
+			vars_platform.add(new VariableEntry.Variable("${platform}", _("Platform identifier")));
+			vars_platform.add(new VariableEntry.Variable("${platform_name}", _("Platform name")));
+
+			var vars_subdir_game_dir = new ArrayList<VariableEntry.Variable>();
+			vars_subdir_game_dir.add(new VariableEntry.Variable("${game_dir}", _("Game directory")));
+
 			var vars_game_dir = new ArrayList<VariableEntry.Variable>();
-			vars_game_dir.add(new VariableEntry.Variable("${root}", _("Collection directory")));
-			vars_game_dir.add(new VariableEntry.Variable("${game}", _("Game name")));
-			vars_game_dir.add(new VariableEntry.Variable("${platform}", _("Platform identifier")));
-			vars_game_dir.add(new VariableEntry.Variable("${platform_name}", _("Platform name")));
+			vars_game_dir.add_all(vars_common);
+			vars_game_dir.add_all(vars_platform);
 
 			var vars_subdir = new ArrayList<VariableEntry.Variable>();
-			vars_subdir.add(new VariableEntry.Variable("${game_dir}", _("Game directory")));
-			vars_subdir.add_all(vars_game_dir);
+			vars_subdir.add_all(vars_subdir_game_dir);
+			vars_subdir.add_all(vars_common);
+			vars_subdir.add_all(vars_platform);
+
+			var vars_subdir_gog_bonus = new ArrayList<VariableEntry.Variable>();
+			vars_subdir_gog_bonus.add_all(vars_subdir_game_dir);
+			vars_subdir_gog_bonus.add_all(vars_common);
 
 			var sgrp_gog = new SettingsGroup("GOG");
 			gog_game_dir = sgrp_gog.add_setting(new EntrySetting.bind(_("Game directory") + """<span alpha="75%"> • ${game_dir}</span>""", null, InlineWidgets.variable_entry(vars_game_dir, "source-gog-symbolic"), gog, "game-dir"));
 			gog_installers = sgrp_gog.add_setting(new EntrySetting.bind(_("Installers directory"), null, InlineWidgets.variable_entry(vars_subdir, "source-gog-symbolic"), gog, "installers"));
 			gog_dlc = sgrp_gog.add_setting(new EntrySetting.bind(_("DLC directory"), null, InlineWidgets.variable_entry(vars_subdir, "folder-download-symbolic"), gog, "dlc"));
-			gog_bonus = sgrp_gog.add_setting(new EntrySetting.bind(_("Bonus content directory"), null, InlineWidgets.variable_entry(vars_subdir, "folder-music-symbolic"), gog, "bonus"));
+			gog_bonus = sgrp_gog.add_setting(new EntrySetting.bind(_("Bonus content directory"), null, InlineWidgets.variable_entry(vars_subdir_gog_bonus, "folder-music-symbolic"), gog, "bonus"));
 			add_widget(sgrp_gog);
 
 			var sgrp_humble = new SettingsGroup("Humble Bundle");

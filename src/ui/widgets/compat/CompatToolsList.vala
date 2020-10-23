@@ -68,7 +68,7 @@ namespace GameHub.UI.Widgets.Compat
 			var tab = get_nth_page(page) as CompatToolsGroupTab;
 			if(tab != null)
 			{
-				tab.add_new_tool();
+				tab.add_new_tool(add_tool_button);
 			}
 		}
 
@@ -161,7 +161,7 @@ namespace GameHub.UI.Widgets.Compat
 
 		protected virtual void create_options_widget(CompatToolRow row, Box container){}
 
-		public virtual void add_new_tool(){}
+		public virtual void add_new_tool(Button button){}
 	}
 
 	public class CompatToolRow: BaseSetting

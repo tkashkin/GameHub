@@ -122,6 +122,14 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 				download_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 				download_button.valign = Align.CENTER;
 				download_button.tooltip_text = _("Download");
+				download_button.sensitive = false;
+
+				download_button.clicked.connect(() => {
+					installer.cast<DownloadableInstaller>(dl => {
+						dl.download.begin(task);
+						task.cancel();
+					});
+				});
 
 				notify["installer"].connect(() => update());
 				update();
@@ -136,10 +144,17 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 
 				string[] detail_info_parts = {};
 
+				download_button.sensitive = false;
+
 				installer.cast<DownloadableInstaller>(dl => {
+					dl.update_download_state();
 					if(dl.download_state != null && dl.download_state.state == DownloadableInstaller.DownloadState.State.DOWNLOADED)
 					{
 						detail_info_parts += _("Downloaded");
+					}
+					else
+					{
+						download_button.sensitive = true;
 					}
 				});
 

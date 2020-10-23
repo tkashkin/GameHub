@@ -69,7 +69,7 @@ namespace GameHub.Data.Compat.Tools.Proton
 				string? _version = null;
 				if(FileUtils.get_contents(executable.get_parent().get_child("version").get_path(), out _version))
 				{
-					version = _version;
+					version = _version.strip();
 					if(" " in version)
 					{
 						version = Utils.replace_prefix(version.split(" ", 2)[1], "proton-", "").strip();
@@ -147,12 +147,14 @@ namespace GameHub.Data.Compat.Tools.Proton
 		}
 
 		private static ArrayList<Proton>? proton_versions = null;
+		private static HashMap<string, string>? proton_appids = null;
 
 		public static new ArrayList<Proton> detect()
 		{
 			if(proton_versions != null) return proton_versions;
 
 			proton_versions = new ArrayList<Proton>();
+			proton_appids = new HashMap<string, string>();
 
 			var db_versions = (ArrayList<Proton>) DB.Tables.CompatTools.get_all("proton");
 			if(db_versions != null)
@@ -201,6 +203,11 @@ namespace GameHub.Data.Compat.Tools.Proton
 			return proton_versions;
 		}
 
+		public static HashMap<string, string>? get_appids()
+		{
+			return proton_appids;
+		}
+
 		public static bool is_proton_version_added(File proton)
 		{
 			foreach(var existing_version in proton_versions)
@@ -235,10 +242,11 @@ namespace GameHub.Data.Compat.Tools.Proton
 			File? proton_dir = null;
 			if(Steam.find_app_install_dir(appid, out proton_dir))
 			{
-				if(proton_dir != null)
-				{
-					add_proton_version_from_file(proton_dir.get_child("proton"), name);
-				}
+				add_proton_version_from_file(proton_dir.get_child("proton"), name);
+			}
+			else
+			{
+				proton_appids.set(appid, name ?? @"Proton (app $(appid))");
 			}
 		}
 	}
