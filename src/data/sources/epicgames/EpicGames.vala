@@ -33,11 +33,10 @@ namespace GameHub.Data.Sources.EpicGames
 
 		private Settings.Auth.EpicGames settings;
 
-		private bool enable = true;
 		public override bool enabled
 		{
-			get { return enable; }
-			set { enable = value; }
+			get { return settings.enabled; }
+			set { settings.enabled = value; }
 		}
 
 
@@ -61,7 +60,6 @@ namespace GameHub.Data.Sources.EpicGames
 
 		public override async bool install()
 		{
-			debug("[EpicGames] install: NOT IMPLEMENTED");
 			return true;
 		}
 
@@ -82,7 +80,9 @@ namespace GameHub.Data.Sources.EpicGames
 			settings.authenticated = result;
 			
 			if (result) {
-				user_name = legendary_wrapper.get_username();
+				legendary_wrapper.get_username.begin ((obj, res) => {
+					user_name = legendary_wrapper.get_username.end (res);
+				});
 			}
 			
 			return result;
@@ -139,6 +139,15 @@ namespace GameHub.Data.Sources.EpicGames
 				{
 					var g = new EpicGamesGame(this, game.name,  game.id);
 					bool is_new_game =  !_games.contains(g);
+					if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(g)))
+					{
+						_games.add(g);
+						if(game_loaded != null)
+						{
+							game_loaded(g, false);
+						}
+					}
+
 					if(is_new_game) {
 						g.save();
 						if(game_loaded != null)

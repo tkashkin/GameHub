@@ -52,10 +52,9 @@ namespace GameHub.Data.Sources.EpicGames
 			var state = Game.State.UNINSTALLED;
 			if (((EpicGames)source).legendary_wrapper.is_installed(id)) {
 				state = Game.State.INSTALLED;
-				debug ("New installed game: \tname = %s\t", name);
+				//debug ("New installed game: \tname = %s\t", name);
 			} else {
-
-				debug ("New not installed game: \tname = %s\t", name);
+				//debug ("New not installed game: \tname = %s\t", name);
 			}
 			
 			if(state == Game.State.INSTALLED)
@@ -129,39 +128,60 @@ namespace GameHub.Data.Sources.EpicGames
 		public class EpicGamesInstaller: Runnable.Installer
 		{
 			public EpicGamesGame game;
-			public override string name { owned get { return "TEST"; } }
+			private EpicGames epic;
+			public override string name { owned get { return game.name; } }
+
+			private int64 _full_size = 0;
+			public override int64 full_size { 
+				get { 
+					if(_full_size != 0) return _full_size;
+					else {
+						var size = epic.legendary_wrapper.get_install_size (game.id);
+						_full_size = size;
+						return _full_size;
+					}
+					
+				}
+				set {}
+			}
 	
 			public EpicGamesInstaller(EpicGamesGame game, string id)
 			{
 				this.game = game;
 				id = id;
 				platform = Platform.CURRENT;
+				epic = (EpicGames)(game.source);
 			}
 
 			public override async void install(Runnable runnable, CompatTool? tool=null)
 			{
+				
 				EpicGamesGame? game = null;
 				if(runnable is EpicGamesGame)
 				{
 					game = runnable as EpicGamesGame;
 				}
 
-				EpicGames epic = (EpicGames)(game.source);
-
 				Utils.thread("EpicGamesGame.Installer", () => {
-					game.status = new Game.Status(Game.State.DOWNLOADING, game, null);
 
+					EpicDownload ed = new EpicDownload(game.id);
+					game.status = new Game.Status(Game.State.DOWNLOADING, game, ed);
+				
+					ed.cancelled.connect(() => {
+						epic.legendary_wrapper.cancel_installation();
+					});
 
-					epic.legendary_wrapper.install(game.id);
+					epic.legendary_wrapper.install(game.id, null, progress => {
+						ed.status = new EpicDownload.EpicStatus(progress / 100);
+						game.status = new Game.Status(Game.State.DOWNLOADING, game, ed);
+					});
+
 					Idle.add(install.callback);
 				});
 				yield;
 
 				if(game != null) game.status = new Game.Status(Game.State.INSTALLED, game, null);
-
-				runnable.update_status();
-
-				debug("install");
+				game.update_status();
 			}
 		}
 	}

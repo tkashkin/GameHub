@@ -341,10 +341,10 @@ namespace GameHub.Data
 
 		public abstract class Installer
 		{
-			public string   id         { get; protected set; }
-			public Platform platform   { get; protected set; default = Platform.CURRENT; }
-			public int64    full_size  { get; protected set; default = 0; }
-			public string?  version    { get; protected set; }
+			public string   id         			{ get; protected set; }
+			public Platform platform   			{ get; protected set; default = Platform.CURRENT; }
+			public virtual int64    full_size	{ get; protected set; default = 0; }
+			public string?  version   			{ get; protected set; }
 
 			public virtual string name { owned get { return id; } }
 

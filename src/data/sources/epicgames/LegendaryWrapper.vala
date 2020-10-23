@@ -16,9 +16,13 @@ namespace GameHub.Data.Sources.EpicGames
 		private Regex authSuccessRegex = /Successfully logged in as "([^"]+)/;
 		private Regex sidExtractionRegex = /sid":"([^"]+)/;
 		private Regex fileUserRegex = /displayName":\s"([^"]+)/;
+		private Regex progressRegex = /Progress:\s([0-9\.]+)/;
+		private Regex installSizeRegex = /Install size:\s([0-9\.]+)/;
 
 		private FSUtils.Paths.Settings paths = FSUtils.Paths.Settings.instance;
 		private Settings.Auth.EpicGames settings = Settings.Auth.EpicGames.instance;
+
+		private Subprocess? downloadProcess = null;
 
 		public LegendaryWrapper()
 		{
@@ -64,24 +68,62 @@ namespace GameHub.Data.Sources.EpicGames
 			return "";
 		}
 
-		public void install(string id)
+		public void cancel_installation() {
+			if(downloadProcess != null) {
+				downloadProcess.send_signal (2);
+			}
+		}
+
+		public int64 get_install_size(string id) {
+			var process = new Subprocess.newv (
+				{paths.legendary_command, "download", id}, STDOUT_PIPE | STDERR_PIPE);
+			var output = new DataInputStream(process.get_stdout_pipe ());
+			var errOutput = new DataInputStream(process.get_stderr_pipe ());
+
+			string line;
+			MatchInfo info;
+			while ((line = errOutput.read_line ()) != null) {
+				if(installSizeRegex.match (line, 0, out info)) {
+					int64 size = ((int64) double.parse (info.fetch (1))) * 1000000;
+					process.send_signal (2);
+					return size;
+				}
+			}
+
+			process.send_signal (2);
+			return 0;
+		} 
+
+		public void install(string id, string? game_folder = null, Utils.FutureResult<double?>? progress=null)
 		{
 			// FIXME: It can be done much better
-			var process = new Subprocess.newv ({paths.legendary_command, "download", id}, STDOUT_PIPE | STDIN_PIPE);
-			var input = new DataOutputStream(process.get_stdin_pipe ());
-			var output = new DataInputStream(process.get_stdout_pipe ());
+			string[] command = {paths.legendary_command, "install", id};
+			if (game_folder != null) {
+				command = {paths.legendary_command, "install", id, "--game-folder", "game_folder"};
+			}
+
+			downloadProcess = new Subprocess.newv (command, STDOUT_PIPE | STDIN_PIPE | STDERR_PIPE);
+
+			var input = new DataOutputStream(downloadProcess.get_stdin_pipe ());
+			var output = new DataInputStream(downloadProcess.get_stdout_pipe ());
+			var outputError = new DataInputStream(downloadProcess.get_stderr_pipe ());
+
 			string? line = null;
 			input.put_string("y\n");
-			while ((line = output.read_line()) != null) {
-				debug("[EpicGames] %s", line);
+
+			MatchInfo info;
+			while ((line = outputError.read_line()) != null) {
+				if(progressRegex.match (line, 0, out info)) {
+					progress(double.parse (info.fetch(1)));
+				}
 			}
+
 			refresh_installed = true;
 		}
 
 		public bool is_authenticated() {
 			var savedSid = settings.sid;
 			if (savedSid == "") savedSid = "test";
-			debug("[LegendaryWrapper] Saved sid: %s", savedSid);
 
 			string? output = null;
 			string? error = null;
@@ -95,10 +137,9 @@ namespace GameHub.Data.Sources.EpicGames
 			return false;
 		}
 
-		public string? get_username() {
+		public async string? get_username() {
 			File userfile = File.new_for_path(GLib.Environment.get_home_dir () + "/.config/legendary/user.json");
 			if (userfile.query_exists ()) {
-				debug("[LegendaryWrapper] File user.json exists");
 				var dis = new DataInputStream (userfile.read ());
 				string line;
 	
@@ -112,17 +153,14 @@ namespace GameHub.Data.Sources.EpicGames
 
 		public async string? auth()
 		{
-			
 			if(is_authenticated()) {
-				var username = get_username();
+				var username = yield get_username();
 				if (username != null) return username;
-				
 			}
 
 			//Do auth process
 			string url = "https://www.epicgames.com/id/login?redirectUrl=https://www.epicgames.com/id/api/redirect";
 			var wnd = new GameHub.UI.Windows.WebAuthWindow(EpicGames.instance.name, url, "https://www.epicgames.com/id/api/redirect");
-
 			
 			string? username = null;
 			wnd.pageLoaded.connect(page => {
