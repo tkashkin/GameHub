@@ -43,6 +43,8 @@ namespace GameHub.Data.Runnables.Tasks.Install
 		public bool can_import_install_dir { get; construct set; default = false; }
 		private bool install_dir_imported = false;
 
+		public bool cancelled { get; private set; default = false; }
+
 		public InstallTask(Runnable? runnable, ArrayList<Installer>? installers, ArrayList<File>? install_dirs, InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE, bool allow_install_dir_import=true)
 		{
 			Object(runnable: runnable, installers: installers, install_dirs: install_dirs, install_mode: install_mode, can_import_install_dir: allow_install_dir_import);
@@ -113,6 +115,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 
 		public async void start()
 		{
+			if(cancelled) return;
 			init();
 			if(install_mode == InstallTask.Mode.INTERACTIVE)
 			{
@@ -134,6 +137,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 
 		public async void install()
 		{
+			if(cancelled) return;
 			if(install_dir_imported)
 			{
 				warning("[InstallTask.install] Installation directory was imported, skipping installation");
@@ -223,6 +227,11 @@ namespace GameHub.Data.Runnables.Tasks.Install
 					runnable.cast<Game>(game => game.version = selected_installer.version);
 				}
 			}
+		}
+
+		public void cancel()
+		{
+			cancelled = true;
 		}
 
 		private void update()

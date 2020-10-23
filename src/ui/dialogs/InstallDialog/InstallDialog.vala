@@ -130,6 +130,8 @@ namespace GameHub.UI.Dialogs.InstallDialog
 			back_button.clicked.connect(() => task.step_prev());
 			next_button.clicked.connect(() => task.step_next());
 
+			task.notify["cancelled"].connect(() => destroy());
+
 			task.load_installers.begin();
 		}
 

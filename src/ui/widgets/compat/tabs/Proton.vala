@@ -28,6 +28,9 @@ using GameHub.Data.Compat;
 using GameHub.Data.Compat.Tools;
 using GameHub.Data.Compat.Tools.Wine;
 using GameHub.Data.Compat.Tools.Proton;
+
+using GameHub.Data.Sources.Steam;
+
 using GameHub.Data.Runnables;
 
 using GameHub.Utils;
@@ -106,7 +109,46 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			compat_tool_selected(proton);
 		}
 
-		public override void add_new_tool()
+		public override void add_new_tool(Button button)
+		{
+			var appids = Tools.Proton.Proton.get_appids();
+			if(appids != null && appids.size > 0)
+			{
+				var menu = new Gtk.Menu();
+				menu.halign = Align.END;
+
+				var steam_menu = new Gtk.Menu();
+				foreach(var app in appids.entries)
+				{
+					var menu_item = new Gtk.MenuItem.with_label(app.value);
+					menu_item.activate.connect(() => {
+						Steam.install_app(app.key);
+					});
+					steam_menu.add(menu_item);
+				}
+
+				var steam_menu_item = new Gtk.MenuItem.with_label(_("Install Proton from Steam"));
+				steam_menu_item.submenu = steam_menu;
+				menu.add(steam_menu_item);
+
+				var custom_menu_item = new Gtk.MenuItem.with_label(_("Add custom Proton version"));
+				custom_menu_item.activate.connect(add_custom_proton_version);
+				menu.add(custom_menu_item);
+
+				menu.show_all();
+				#if GTK_3_22
+				menu.popup_at_widget(button, Gravity.SOUTH_EAST, Gravity.NORTH_EAST, null);
+				#else
+				menu.popup(null, null, null, 0, Gdk.CURRENT_TIME);
+				#endif
+			}
+			else
+			{
+				add_custom_proton_version();
+			}
+		}
+
+		private void add_custom_proton_version()
 		{
 			#if GTK_3_22
 			var chooser = new FileChooserNative(_("Select Proton executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));

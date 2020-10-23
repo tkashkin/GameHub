@@ -209,7 +209,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 			wine_options.desktop.bind_property("height", vdesktop_resolution_height_spinbutton, "value", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 		}
 
-		public override void add_new_tool()
+		public override void add_new_tool(Button button)
 		{
 			#if GTK_3_22
 			var chooser = new FileChooserNative(_("Select Wine executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));

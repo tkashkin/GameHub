@@ -162,7 +162,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 			string[] cmd = get_exec_cmdline_base();
 			if(wine_options.desktop.enabled)
 			{
-				cmd += "explorer";
+				cmd += "c:\\windows\\system32\\explorer.exe";
 				cmd += @"/desktop=$(runnable.name_escaped),$(wine_options.desktop.width)x$(wine_options.desktop.height)";
 			}
 			if(file.get_path().down().has_suffix(".msi"))

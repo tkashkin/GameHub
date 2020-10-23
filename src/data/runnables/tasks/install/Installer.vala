@@ -162,10 +162,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 
 		construct
 		{
-			if(installers_dir != null && installers_dir.get_child(@".installer_$(id)").query_exists())
-			{
-				download_state = new DownloadState(DownloadState.State.DOWNLOADED);
-			}
+			update_download_state();
 		}
 
 		public File? installers_dir { get; protected set; }
@@ -173,6 +170,14 @@ namespace GameHub.Data.Runnables.Tasks.Install
 		public ArrayList<Part> parts { get; protected set; default = new ArrayList<Part>(); }
 
 		public virtual async void fetch_parts(){}
+
+		public void update_download_state()
+		{
+			if(installers_dir != null && installers_dir.get_child(@".installer_$(id)").query_exists())
+			{
+				download_state = new DownloadState(DownloadState.State.DOWNLOADED);
+			}
+		}
 
 		public override async bool install(InstallTask task)
 		{
