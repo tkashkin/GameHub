@@ -56,6 +56,31 @@ namespace GameHub.Settings.Auth
 		}
 	}
 
+	public class EpicGames: SettingsSchema
+	{
+		public bool enabled { get; set; }
+		public bool authenticated { get; set; }
+		public string sid { get; set; }
+
+		public EpicGames()
+		{
+			base(ProjectConfig.PROJECT_NAME + ".auth.epicgames");
+		}
+
+		private static EpicGames? _instance;
+		public static unowned EpicGames instance
+		{
+			get
+			{
+				if(_instance == null)
+				{
+					_instance = new EpicGames();
+				}
+				return _instance;
+			}
+		}
+	}
+
 	public class GOG: SettingsSchema
 	{
 		public bool enabled { get; set; }

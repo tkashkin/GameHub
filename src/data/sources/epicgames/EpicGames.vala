@@ -31,7 +31,7 @@ namespace GameHub.Data.Sources.EpicGames
 		public override string name { get { return "EpicGames"; } }
 		public override string icon { get { return "source-epicgames-symbolic"; } }
 
-		private Regex regex = /\*\s*([^(]*)\s\(App\sname:\s([a-zA-Z0-9]+),\sversion:\s([^)]*)\)/;
+		private Settings.Auth.EpicGames settings;
 
 		private bool enable = true;
 		public override bool enabled
@@ -50,6 +50,7 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			instance = this;
 			legendary_wrapper = new LegendaryWrapper();
+			settings = Settings.Auth.EpicGames.instance;
 		}
 
 		public override bool is_installed(bool refresh)
@@ -66,26 +67,31 @@ namespace GameHub.Data.Sources.EpicGames
 
 		public override async bool authenticate()
 		{
-			debug("[EpicGames] authenticate: NOT IMPLEMENTED");
-			return true;
+			debug("[EpicGames] Performing auth");
+			var username = yield legendary_wrapper.auth();
+			settings.authenticated = username != null;
+			if(username != null) {
+				user_name = username;
+				return true;
+			}else return false;
 		}
 
 		public override bool is_authenticated()
 		{
-			debug("[EpicGames] is_authenticated: NOT IMPLEMENTED");
-			return true;
+			var result = legendary_wrapper.is_authenticated();
+			settings.authenticated = result;
+			
+			if (result) {
+				user_name = legendary_wrapper.get_username();
+			}
+			
+			return result;
 		}
 
 		public override bool can_authenticate_automatically()
 		{
 			debug("[EpicGames] can_authenticate_automatically: NOT IMPLEMENTED");
-			return true;
-		}
-
-		public async bool refresh_token()
-		{
-			debug("[EpicGames] refresh_token: NOT IMPLEMENTED");
-			return true;
+			return false;
 		}
 
 		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);

@@ -20,11 +20,18 @@ using Gtk;
 
 using GameHub.Utils;
 using GameHub.UI.Widgets;
+using GameHub.Data.Sources.EpicGames;
 
 namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
 	public class EpicGames: SettingsDialogPage
 	{
+
+		private LegendaryWrapper? legendary_wrapper { get; private set; }
+		private Settings.Auth.EpicGames epicgames_auth;
+
+		private Button logout_btn;
+
 		public EpicGames(SettingsDialog dlg)
 		{
 			Object(
@@ -40,12 +47,50 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 		construct
 		{
 			var paths = FSUtils.Paths.Settings.instance;
+			epicgames_auth = Settings.Auth.EpicGames.instance;
+
+			status_switch.active = epicgames_auth.enabled;
+			status_switch.notify["active"].connect(() => {
+				epicgames_auth.enabled = status_switch.active;
+				request_restart();
+				update();
+			});
+
+			logout_btn = new Button.with_label(_("Logout"));
+			action_area.add(logout_btn);
+
+			logout_btn.clicked.connect(() => {
+				epicgames_auth.authenticated = false;
+				epicgames_auth.sid = "";
+				request_restart();
+				update();
+			});
+
+			add_entry("Legendary client command", paths.legendary_command, (command) => {
+				paths.legendary_command = command;
+			});
 
 			update();
 		}
 
 		private void update()
 		{
+			content_area.sensitive = epicgames_auth.enabled;
+			logout_btn.sensitive = epicgames_auth.authenticated;
+
+			if(!epicgames_auth.enabled)
+			{
+				status = description = _("Disabled");
+			}
+			else if(!epicgames_auth.authenticated)
+			{
+				status = description = _("Not authenticated");
+			}
+			else
+			{
+				var user_name = GameHub.Data.Sources.EpicGames.EpicGames.instance.user_name;
+				status = description = user_name != null ? _("Authenticated as <b>%s</b>").printf(user_name) : _("Authenticated");
+			}
 		}
 
 	}
