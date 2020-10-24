@@ -136,6 +136,9 @@ namespace GameHub.Data.DB.Tables
 					case "proton":
 						tools.add(new Tools.Proton.Proton.from_db(s));
 						break;
+					case "steamct":
+						tools.add(new Tools.SteamCompatTool.from_db(s));
+						break;
 				}
 			}
 			return tools;

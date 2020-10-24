@@ -55,7 +55,6 @@ namespace GameHub.Data.Compat.Tools.Wine
 
 		public Wine.from_db(Sqlite.Statement s)
 		{
-			var executable = FS.file(DB.Tables.CompatTools.EXECUTABLE.get(s));
 			File? wineserver_executable = null;
 
 			var info = DB.Tables.CompatTools.INFO.get(s);
@@ -74,7 +73,7 @@ namespace GameHub.Data.Compat.Tools.Wine
 				id: DB.Tables.CompatTools.ID.get(s),
 				name: DB.Tables.CompatTools.NAME.get(s),
 				icon: "tool-wine-symbolic",
-				executable: executable,
+				executable: FS.file(DB.Tables.CompatTools.EXECUTABLE.get(s)),
 				wineserver_executable: wineserver_executable,
 				info: info,
 				options: DB.Tables.CompatTools.OPTIONS.get(s)

@@ -61,6 +61,11 @@ namespace GameHub.UI.Widgets.Compat
 			this.foreach(w => w.destroy());
 			add_tab(new Tabs.Wine(runnable, mode));
 			add_tab(new Tabs.Proton(runnable, mode));
+
+			if(mode == CompatToolsList.Mode.RUN)
+			{
+				add_tab(new Tabs.SteamCompatTools(runnable, mode));
+			}
 		}
 
 		private void add_tool()
@@ -84,6 +89,9 @@ namespace GameHub.UI.Widgets.Compat
 	public abstract class CompatToolsGroupTab: Box
 	{
 		public string title { get; construct set; }
+
+		public Traits.SupportsCompatTools? runnable { get; construct; default = null; }
+		public CompatToolsList.Mode mode { get; construct; default = CompatToolsList.Mode.RUN; }
 
 		protected ListBox tools_list;
 		private Box tool_options;

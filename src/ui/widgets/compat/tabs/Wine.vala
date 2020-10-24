@@ -35,9 +35,6 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 {
 	public class Wine: CompatToolsGroupTab
 	{
-		public Traits.SupportsCompatTools? runnable { get; construct; default = null; }
-		public CompatToolsList.Mode mode { get; construct; default = CompatToolsList.Mode.RUN; }
-
 		protected ArrayList<VariableEntry.Variable> prefix_variables = new ArrayList<VariableEntry.Variable>();
 
 		public Wine(Traits.SupportsCompatTools? runnable = null, CompatToolsList.Mode mode = CompatToolsList.Mode.RUN)

@@ -97,6 +97,8 @@ sources = [
 
 	'data/compat/tools/proton/Proton.vala',
 
+	'data/compat/tools/SteamCompatTool.vala',
+
 	#'data/compat/tools/CustomScript.vala',
 	#'data/compat/tools/Innoextract.vala',
 	#'data/compat/tools/WineWrap.vala',
@@ -205,6 +207,7 @@ sources = [
 	'ui/widgets/compat/CompatToolsList.vala',
 	'ui/widgets/compat/tabs/Wine.vala',
 	'ui/widgets/compat/tabs/Proton.vala',
+	'ui/widgets/compat/tabs/SteamCompatTools.vala',
 
 	'ui/widgets/settings/SettingsSidebar.vala',
 	'ui/widgets/settings/SettingsGroup.vala',
