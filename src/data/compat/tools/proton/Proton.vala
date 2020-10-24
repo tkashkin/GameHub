@@ -50,13 +50,12 @@ namespace GameHub.Data.Compat.Tools.Proton
 
 		public Proton.from_db(Sqlite.Statement s)
 		{
-			var executable = FS.file(DB.Tables.CompatTools.EXECUTABLE.get(s));
 			Object(
 				tool: "proton",
 				id: DB.Tables.CompatTools.ID.get(s),
 				name: DB.Tables.CompatTools.NAME.get(s),
 				icon: "source-steam-symbolic",
-				executable: executable,
+				executable: FS.file(DB.Tables.CompatTools.EXECUTABLE.get(s)),
 				info: DB.Tables.CompatTools.INFO.get(s),
 				options: DB.Tables.CompatTools.OPTIONS.get(s)
 			);

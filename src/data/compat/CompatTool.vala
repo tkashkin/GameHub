@@ -52,6 +52,7 @@ namespace GameHub.Data.Compat
 
 		Compat.Tools.Wine.Wine.detect();
 		Compat.Tools.Proton.Proton.detect();
+		Compat.Tools.SteamCompatTool.detect();
 
 		foreach(var tool in compat_tools)
 		{
