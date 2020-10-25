@@ -96,10 +96,9 @@ namespace GameHub.Data.Sources.EpicGames
 
 		public void install(string id, string? game_folder = null, Utils.FutureResult<double?>? progress=null)
 		{
-			// FIXME: It can be done much better
 			string[] command = {paths.legendary_command, "install", id};
 			if (game_folder != null) {
-				command = {paths.legendary_command, "install", id, "--game-folder", "game_folder"};
+				command = {paths.legendary_command, "install", id, "--base-path", game_folder};
 			}
 
 			downloadProcess = new Subprocess.newv (command, STDOUT_PIPE | STDIN_PIPE | STDERR_PIPE);
@@ -205,6 +204,10 @@ namespace GameHub.Data.Sources.EpicGames
 				debug("[EpicGames] %s", line);
 			}
 			refresh_installed = true;
+		}
+
+		public void import_game(string id, string path) {
+			var process = new Subprocess.newv ({paths.legendary_command, "import-game", id, path}, STDOUT_PIPE);
 		}
 
 		public void run(string id) {
