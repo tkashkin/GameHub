@@ -143,11 +143,11 @@ list:not(:backdrop) row:selected:focus label.category-label
 	opacity: 0.6;
 }
 
-.gameinfo-background :not(.igdb-data-container-scrollable-value) > undershoot.left
+.gameinfo-background :not(.data-container-scrollable-value) > undershoot.left
 {
 	background: linear-gradient(to left, alpha(@theme_bg_color, 0) 50%, @theme_bg_color);
 }
-.gameinfo-background :not(.igdb-data-container-scrollable-value) > undershoot.right
+.gameinfo-background :not(.data-container-scrollable-value) > undershoot.right
 {
 	background: linear-gradient(to right, alpha(@theme_bg_color, 0) 50%, @theme_bg_color);
 }

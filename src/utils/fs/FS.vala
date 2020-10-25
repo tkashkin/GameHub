@@ -70,16 +70,18 @@ namespace GameHub.Utils.FS
 
 		public class Steam
 		{
-			public const string Config = "steam/config";
+			public const string[] InstallDirs = {"~/.local/share/Steam", "~/.var/app/com.valvesoftware.Steam/.local/share/Steam"};
+
+			public const string Config = "config";
 			public const string LoginUsersVDF = Paths.Steam.Config + "/loginusers.vdf";
 
-			public const string SteamApps = "steam/steamapps";
+			public const string SteamApps = "steamapps";
 			public const string LibraryFoldersVDF = "libraryfolders.vdf";
 
-			public const string RegistryVDF = "registry.vdf";
+			public const string RegistryVDF = "../../../.steam/registry.vdf";
 
-			public const string AppInfoVDF = "steam/appcache/appinfo.vdf";
-			public const string PackageInfoVDF = "steam/appcache/packageinfo.vdf";
+			public const string AppInfoVDF = "appcache/appinfo.vdf";
+			public const string PackageInfoVDF = "appcache/packageinfo.vdf";
 		}
 
 		public class Humble
@@ -134,9 +136,9 @@ namespace GameHub.Utils.FS
 		return f != null ? File.new_for_path(f) : null;
 	}
 
-	public static File? find_case_insensitive(File root, string? path=null, string[]? parts=null)
+	public static File? find_case_insensitive(File? root, string? path=null, string[]? parts=null)
 	{
-		if(path == null && parts == null) return null;
+		if(root == null || (path == null && parts == null)) return null;
 
 		string[]? _parts = parts;
 
