@@ -233,17 +233,15 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			if(merged)
 			{
-				/*foreach(var m in merges)
+				foreach(var m in merges)
 				{
-					if(Game.is_equal(g, m)
-						|| !m.is_supported(null)
-						|| (g is Sources.GOG.GOGGame.DLC && Game.is_equal((g as Sources.GOG.GOGGame.DLC).game, m)))
+					if(Game.is_equal(g, m) || (g is Sources.GOG.GOGGame.DLC && Game.is_equal(((Sources.GOG.GOGGame.DLC) g).game, m)))
 					{
 						continue;
 					}
 
 					add_page(m);
-				}*/
+				}
 			}
 
 			stack_tabs.visible = stack.get_children().length() > 1;

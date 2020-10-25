@@ -75,7 +75,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				new DirectoriesMenuSetting.paths(
 					_("Steam library directories"),
 					_("Steam library directories that are configured in the Steam client"),
-					GameHub.Data.Sources.Steam.Steam.LibraryFolders
+					GameHub.Data.Sources.Steam.Steam.library_folders
 				)
 			);
 			add_widget(sgrp_dirs);
@@ -84,52 +84,6 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			sgrp_api_key.add_setting(new EntrySetting(_("API key"), null, get_steam_apikey_entry()));
 			sgrp_api_key.add_setting(new LinkLabelSetting(_("Provide your API key to access private Steam profile or if default key does not work"), _("Generate key"), "steam://openurl/https://steamcommunity.com/dev/apikey"));
 			add_widget(sgrp_api_key);
-
-			/*sgrp_proton = new SettingsGroup("Proton");
-			add_widget(sgrp_proton);*/
-
-			notify["active"].connect(() => {
-				update();
-				//request_restart();
-			});
-
-			update();
-		}
-
-		private void update()
-		{
-			/*sgrp_proton.settings.foreach(r => {
-				if(r != null) r.destroy();
-			});
-
-			foreach(var tool in CompatTools)
-			{
-				if(tool is Proton)
-				{
-					var proton = tool as Proton;
-					if(proton != null && !proton.is_latest)
-					{
-						Button? install = null;
-						var description = _("Not installed");
-						if(proton.installed && proton.executable != null)
-						{
-							description = proton.executable.get_path();
-						}
-						else
-						{
-							install = new Button.with_label(_("Install"));
-							install.clicked.connect(() => {
-								install.sensitive = false;
-								request_restart();
-								proton.install_app();
-							});
-						}
-						sgrp_proton.add_setting(new BaseSetting("""%s<span alpha="75%"> • %s</span>""".printf(proton.name, proton.appid), description, install)).icon_name = proton.icon;
-					}
-				}
-			}
-
-			sgrp_proton.show_all();*/
 		}
 
 		private Entry get_steam_apikey_entry()

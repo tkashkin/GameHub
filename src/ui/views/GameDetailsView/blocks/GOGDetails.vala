@@ -76,8 +76,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				if(langs_string.contains(","))
 				{
 					langs_label = _("Languages");
+					add_scrollable_label(langs_label, langs_string, true);
 				}
-				add_info_label(langs_label, langs_string, langs_string.contains(","), true);
+				else
+				{
+					add_info_label(langs_label, langs_string, false, true);
+				}
 			}
 
 			if(gog_game.dlc != null && gog_game.dlc.size > 0)

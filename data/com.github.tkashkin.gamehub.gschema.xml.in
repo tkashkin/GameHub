@@ -210,7 +210,7 @@
 	<!-- Paths / Steam -->
 		<schema path="@SCHEMA_PATH@/paths/steam/" id="@SCHEMA_ID@.paths.steam">
 			<key name="home" type="s">
-				<default>'~/.steam'</default>
+				<default>'~/.local/share/Steam'</default>
 				<summary>Steam installation directory</summary>
 			</key>
 		</schema>

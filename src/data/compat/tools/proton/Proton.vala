@@ -103,7 +103,7 @@ namespace GameHub.Data.Compat.Tools.Proton
 				task.env_var("WINEPREFIX", prefix.get_child("pfx").get_path());
 			}
 
-			task.env_var("STEAM_COMPAT_CLIENT_INSTALL_PATH", FS.expand(GameHub.Settings.Paths.Steam.instance.home));
+			task.env_var("STEAM_COMPAT_CLIENT_INSTALL_PATH", Steam.instance.steam_client_install_dir.get_path());
 			task.env_var("PROTON_LOG", "1");
 		}
 

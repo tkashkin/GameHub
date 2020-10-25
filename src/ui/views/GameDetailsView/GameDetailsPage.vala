@@ -66,7 +66,6 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private ActionButton action_install;
 		private ActionButton action_run;
-		private ActionButton action_run_with_compat;
 		private ActionButton action_properties;
 		private ActionButton action_open_directory;
 		private ActionButton action_open_installer_collection_directory;
@@ -233,11 +232,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			action_install = add_action("go-down", null, _("Install"), install_game, true);
 			action_run = add_action("media-playback-start", null, _("Run"), run_game, true);
-			action_run_with_compat = add_action("media-playback-start", "platform-windows-symbolic", _("Run with compatibility layer"), run_game_with_compat, true);
 			action_open_directory = add_action("folder", null, _("Open installation directory"), open_game_directory);
-			action_open_installer_collection_directory = add_action("folder-download", null, _("Open installers collection directory"), open_installer_collection_directory);
-			action_open_bonus_collection_directory = add_action("folder-documents", null, _("Open bonus collection directory"), open_bonus_collection_directory);
-			action_open_screenshots_directory = add_action("folder-pictures", null, _("Open screenshots directory"), open_screenshots_directory);
 			action_open_store_page = add_action("web-browser", null, _("Open store page"), open_game_store_page);
 			action_uninstall = add_action("edit-delete", null, (game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"), uninstall_game);
 			action_properties = add_action("system-run", null, _("Game properties"), game_properties);
@@ -274,7 +269,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void set_visible_widgets(Game.Status s)
 		{
-			/*status.label = s.description;
+			status.label = s.description;
 			download_progress.hide();
 			if(s.state == Game.State.DOWNLOADING && s.download != null && s.download.status != null)
 			{
@@ -297,29 +292,12 @@ namespace GameHub.UI.Views.GameDetailsView
 			}
 			action_install.visible = s.state != Game.State.INSTALLED;
 			action_install.sensitive = s.state == Game.State.UNINSTALLED && game.is_installable;
-			action_run_with_compat.visible = s.state == Game.State.INSTALLED && game.use_compat;
-			action_run_with_compat.sensitive = game.can_be_launched();
-			action_run.visible = s.state == Game.State.INSTALLED && !action_run_with_compat.visible;
+			action_run.visible = s.state == Game.State.INSTALLED;
 			action_run.sensitive = game.can_be_launched();
 			action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
-			action_open_installer_collection_directory.visible = game.installers_dir != null && game.installers_dir.query_exists();
-			action_open_bonus_collection_directory.visible = game is GameHub.Data.Sources.GOG.GOGGame && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir != null && (game as GameHub.Data.Sources.GOG.GOGGame).bonus_content_dir.query_exists();
-			action_open_screenshots_directory.visible = game is GameHub.Data.Sources.Steam.SteamGame && (game as GameHub.Data.Sources.Steam.SteamGame).screenshots_dir != null && (game as GameHub.Data.Sources.Steam.SteamGame).screenshots_dir.query_exists();
 			action_open_store_page.visible = game.store_page != null;
 			action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
 			action_properties.visible = !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
-
-			if(action_run_with_compat.visible && game.compat_tool != null)
-			{
-				foreach(var tool in CompatTools)
-				{
-					if(tool.id == game.compat_tool)
-					{
-						action_run_with_compat.icon_overlay = tool.icon;
-						break;
-					}
-				}
-			}*/
 		}
 
 		public void update()
@@ -419,98 +397,58 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private void install_game()
 		{
-			/*if(_game != null && game.status.state == Game.State.UNINSTALLED)
+			if(game != null && game.status.state == Game.State.UNINSTALLED)
 			{
 				game.install.begin();
-			}*/
+			}
 		}
 
 		private void game_properties()
 		{
-			/*if(_game != null)
+			if(game != null)
 			{
-				new Dialogs.GamePropertiesDialog(game).show_all();
-			}*/
+				new Dialogs.GamePropertiesDialog.GamePropertiesDialog(game).show_all();
+			}
 		}
 
 		private void open_game_directory()
 		{
-			/*if(_game != null && game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
+			if(game != null && game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
 			{
 				Utils.open_uri(game.install_dir.get_uri());
-			}*/
-		}
-
-		private void open_installer_collection_directory()
-		{
-			/*if(_game != null && game.installers_dir != null && game.installers_dir.query_exists())
-			{
-				Utils.open_uri(game.installers_dir.get_uri());
-			}*/
-		}
-
-		private void open_bonus_collection_directory()
-		{
-			/*if(_game != null && game is GameHub.Data.Sources.GOG.GOGGame)
-			{
-				var gog_game = game as GameHub.Data.Sources.GOG.GOGGame;
-				if(gog_game != null && gog_game.bonus_content_dir != null && gog_game.bonus_content_dir.query_exists())
-				{
-					Utils.open_uri(gog_game.bonus_content_dir.get_uri());
-				}
-			}*/
-		}
-
-		private void open_screenshots_directory()
-		{
-			/*if(_game != null && game is GameHub.Data.Sources.Steam.SteamGame)
-			{
-				var steam_game = game as GameHub.Data.Sources.Steam.SteamGame;
-				if(steam_game != null && steam_game.screenshots_dir != null && steam_game.screenshots_dir.query_exists())
-				{
-					Utils.open_uri(steam_game.screenshots_dir.get_uri());
-				}
-			}*/
+			}
 		}
 
 		private void open_game_store_page()
 		{
-			/*if(_game != null && game.store_page != null)
+			if(game != null && game.store_page != null)
 			{
 				Utils.open_uri(game.store_page);
-			}*/
+			}
 		}
 
 		private void run_game()
 		{
-			/*if(_game != null && game.status.state == Game.State.INSTALLED)
+			if(game != null && game.status.state == Game.State.INSTALLED)
 			{
-				game.run.begin();
-			}*/
-		}
-
-		private void run_game_with_compat()
-		{
-			/*if(_game != null && game.status.state == Game.State.INSTALLED)
-			{
-				game.run_with_compat.begin(false);
-			}*/
+				game.run_as_task.begin();
+			}
 		}
 
 		private void uninstall_game()
 		{
-			/*if(_game != null && game.status.state == Game.State.INSTALLED)
+			if(game != null && game.status.state == Game.State.INSTALLED)
 			{
 				game.uninstall.begin();
-			}*/
+			}
 		}
 
 		private void open_context_menu(Event e, bool at_pointer=true)
 		{
-			/*if(_game != null)
+			if(game != null)
 			{
 				new GameContextMenu(game, this).open(e, at_pointer);
-			}*/
+			}
 		}
 
 		private delegate void Action();

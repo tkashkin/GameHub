@@ -75,7 +75,14 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					categories_label = _("Categories");
 				}
 				add(new Separator(Orientation.HORIZONTAL));
-				add_info_label(categories_label, categories_string, categories_string.contains(","), true);
+				if(categories_string.contains(","))
+				{
+					add_scrollable_label(categories_label, categories_string, true);
+				}
+				else
+				{
+					add_info_label(categories_label, categories_string, false, true);
+				}
 			}
 
 			var genres = data.has_member("genres") ? data.get_array_member("genres") : null;
@@ -94,7 +101,14 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					genres_label = _("Genres");
 				}
 				add(new Separator(Orientation.HORIZONTAL));
-				add_info_label(genres_label, genres_string, genres_string.contains(","), true);
+				if(genres_string.contains(","))
+				{
+					add_scrollable_label(genres_label, genres_string, true);
+				}
+				else
+				{
+					add_info_label(genres_label, genres_string, false, true);
+				}
 			}
 
 			var langs = data.has_member("supported_languages") ? data.get_string_member("supported_languages") : null;
@@ -107,7 +121,14 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					langs_label = _("Languages");
 				}
 				add(new Separator(Orientation.HORIZONTAL));
-				add_info_label(langs_label, langs, langs.contains(","), true);
+				if(langs.contains(","))
+				{
+					add_scrollable_label(langs_label, langs, true);
+				}
+				else
+				{
+					add_info_label(langs_label, langs, false, true);
+				}
 			}
 
 			show_all();

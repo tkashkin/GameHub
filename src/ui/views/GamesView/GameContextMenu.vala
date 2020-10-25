@@ -42,20 +42,11 @@ namespace GameHub.UI.Views.GamesView
 		{
 			if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
 			{
-				/*if(game.use_compat)
-				{
-					var run_with_compat = new Gtk.MenuItem.with_label(_("Run with compatibility layer"));
-					run_with_compat.sensitive = game.can_be_launched();
-					run_with_compat.activate.connect(() => game.run_with_compat.begin(true));
-					add(run_with_compat);
-				}
-				else
-				{*/
-					var run = new Gtk.MenuItem.with_label(_("Run"));
-					run.sensitive = game.can_be_launched();
-					run.activate.connect(() => game.run_as_task.begin());
-					add(run);
-				//}
+				var run = new Gtk.MenuItem.with_label(_("Run"));
+				run.sensitive = game.can_be_launched();
+				run.activate.connect(() => game.run_as_task.begin());
+				add(run);
+
 				add(new Gtk.SeparatorMenuItem());
 
 				/*if(game.actions != null && game.actions.size > 0)
@@ -125,18 +116,18 @@ namespace GameHub.UI.Views.GamesView
 				add(hidden);
 			}
 
-			/*bool add_dirs_separator = true;
+			bool add_dirs_separator = true;
 
 			if(game.status.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists())
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;
 				var open_dir = new Gtk.MenuItem.with_label(_("Open installation directory"));
-				open_dir.activate.connect(open_game_directory);
+				open_dir.activate.connect(() => Utils.open_uri(game.install_dir.get_uri()));
 				add(open_dir);
 			}
 
-			if(game.installers_dir != null && game.installers_dir.query_exists())
+			/*if(game.installers_dir != null && game.installers_dir.query_exists())
 			{
 				if(add_dirs_separator) add(new Gtk.SeparatorMenuItem());
 				add_dirs_separator = false;

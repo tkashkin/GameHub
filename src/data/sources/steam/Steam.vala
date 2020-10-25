@@ -32,6 +32,8 @@ namespace GameHub.Data.Sources.Steam
 		public Steam()
 		{
 			instance = this;
+			GameHub.Settings.Paths.Steam.instance.notify["home"].connect(update_install_dir);
+			update_install_dir();
 		}
 
 		public string api_key;
@@ -62,6 +64,7 @@ namespace GameHub.Data.Sources.Steam
 		public string? user_name { get; protected set; }
 
 		private bool? installed = null;
+		public File? steam_client_install_dir;
 
 		public BinaryVDF.ListNode? appinfo;
 		public BinaryVDF.ListNode? packageinfo;
@@ -70,9 +73,31 @@ namespace GameHub.Data.Sources.Steam
 		{
 			get
 			{
-				var loginusers = FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.LoginUsersVDF);
+				var loginusers = FS.find_case_insensitive(steam_client_install_dir, FS.Paths.Steam.LoginUsersVDF);
 				return loginusers != null && loginusers.query_exists();
 			}
+		}
+
+		private void update_install_dir()
+		{
+			var install_dir_path = GameHub.Settings.Paths.Steam.instance.home;
+			if(install_dir_path.length == 0)
+			{
+				foreach(var path in FS.Paths.Steam.InstallDirs)
+				{
+					steam_client_install_dir = FS.file(path);
+					if(steam_client_install_dir != null && steam_client_install_dir.query_exists())
+					{
+						GameHub.Settings.Paths.Steam.instance.home = path;
+						break;
+					}
+				}
+			}
+			else
+			{
+				steam_client_install_dir = FS.file(install_dir_path);
+			}
+			_library_folders = null;
 		}
 
 		public override bool is_installed(bool refresh)
@@ -82,6 +107,8 @@ namespace GameHub.Data.Sources.Steam
 				return (!) installed;
 			}
 
+			update_install_dir();
+
 			#if OS_LINUX
 			var distro = OS.get_distro().down();
 			if("ubuntu" in distro || "elementary" in distro || "pop!_os" in distro)
@@ -90,11 +117,11 @@ namespace GameHub.Data.Sources.Steam
 				         || OS.is_package_installed("steam64")
 				         || OS.is_package_installed("steam-launcher")
 				         || OS.is_package_installed("steam-installer")
-				         || FS.file(GameHub.Settings.Paths.Steam.instance.home).query_exists();
+				         || (steam_client_install_dir != null && steam_client_install_dir.query_exists());
 			}
 			else
 			{
-				installed = FS.file(GameHub.Settings.Paths.Steam.instance.home).query_exists();
+				installed = steam_client_install_dir != null && steam_client_install_dir.query_exists();
 			}
 			#endif
 
@@ -104,7 +131,7 @@ namespace GameHub.Data.Sources.Steam
 		public static bool find_app_install_dir(string app, out File? install_dir)
 		{
 			install_dir = null;
-			foreach(var dir in Steam.LibraryFolders)
+			foreach(var dir in Steam.library_folders)
 			{
 				var acf = FS.find_case_insensitive(FS.file(dir), @"appmanifest_$(app).acf");
 				if(acf != null && acf.query_exists())
@@ -150,7 +177,7 @@ namespace GameHub.Data.Sources.Steam
 			}
 
 			Utils.thread("Steam-loginusers", () => {
-				var loginusers = FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.LoginUsersVDF);
+				var loginusers = FS.find_case_insensitive(steam_client_install_dir, FS.Paths.Steam.LoginUsersVDF);
 
 				if(loginusers == null || !loginusers.query_exists())
 				{
@@ -211,11 +238,11 @@ namespace GameHub.Data.Sources.Steam
 		{
 			if(appinfo == null)
 			{
-				appinfo = new AppInfoVDF(FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.AppInfoVDF)).read();
+				appinfo = new AppInfoVDF(FS.find_case_insensitive(steam_client_install_dir, FS.Paths.Steam.AppInfoVDF)).read();
 			}
 			if(packageinfo == null)
 			{
-				packageinfo = new PackageInfoVDF(FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.PackageInfoVDF)).read();
+				packageinfo = new PackageInfoVDF(FS.find_case_insensitive(steam_client_install_dir, FS.Paths.Steam.PackageInfoVDF)).read();
 			}
 		}
 
@@ -393,7 +420,7 @@ namespace GameHub.Data.Sources.Steam
 
 		private void watch_client_registry()
 		{
-			var regfile = FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.RegistryVDF);
+			var regfile = steam_client_install_dir.get_child(FS.Paths.Steam.RegistryVDF);
 			if(regfile == null || !regfile.query_exists()) return;
 
 			Timeout.add_seconds(5, () => {
@@ -435,23 +462,23 @@ namespace GameHub.Data.Sources.Steam
 			}
 		}
 
-		public static ArrayList<string>? folders = null;
-		public static ArrayList<string> LibraryFolders
+		private static ArrayList<string>? _library_folders = null;
+		public static ArrayList<string> library_folders
 		{
 			get
 			{
-				if(folders != null) return folders;
-				folders = new ArrayList<string>();
+				if(_library_folders != null || instance == null || instance.steam_client_install_dir == null) return _library_folders;
+				_library_folders = new ArrayList<string>();
 
-				var steamapps = FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), FS.Paths.Steam.SteamApps);
+				var steamapps = FS.find_case_insensitive(instance.steam_client_install_dir, FS.Paths.Steam.SteamApps);
 
-				if(steamapps == null || !steamapps.query_exists()) return folders;
+				if(steamapps == null || !steamapps.query_exists()) return _library_folders;
 
-				folders.add(steamapps.get_path());
+				_library_folders.add(steamapps.get_path());
 
 				var libraryfolders = FS.find_case_insensitive(steamapps, FS.Paths.Steam.LibraryFoldersVDF);
 
-				if(libraryfolders == null || !libraryfolders.query_exists()) return folders;
+				if(libraryfolders == null || !libraryfolders.query_exists()) return _library_folders;
 
 				var root = Parser.parse_vdf_file(libraryfolders.get_path());
 				var lf = Parser.json_object(root, {"LibraryFolders"});
@@ -464,12 +491,12 @@ namespace GameHub.Data.Sources.Steam
 						if(libdir != null && libdir.query_exists())
 						{
 							var dir = FS.find_case_insensitive(libdir, "steamapps");
-							if(dir != null && dir.query_exists()) folders.add(dir.get_path());
+							if(dir != null && dir.query_exists()) _library_folders.add(dir.get_path());
 						}
 					}
 				}
 
-				return folders;
+				return _library_folders;
 			}
 		}
 
@@ -480,10 +507,10 @@ namespace GameHub.Data.Sources.Steam
 
 		public static File? get_userdata_dir()
 		{
-			if(instance == null || instance.user_id == null) return null;
+			if(instance == null || instance.user_id == null || instance.steam_client_install_dir == null) return null;
 			uint64 communityid = uint64.parse(instance.user_id);
 			uint64 steamid3 = communityid_to_steamid3(communityid);
-			return FS.find_case_insensitive(FS.file(GameHub.Settings.Paths.Steam.instance.home), @"steam/userdata/$(steamid3)");
+			return FS.find_case_insensitive(instance.steam_client_install_dir, @"userdata/$(steamid3)");
 		}
 
 		public static void add_game_shortcut(Game game)

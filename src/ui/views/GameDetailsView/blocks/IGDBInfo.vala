@@ -152,12 +152,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 
 				var links_label = Styled.H4Label(C_("igdb", "Links"));
 				links_label.margin_start = links_label.margin_end = 7;
-				links_label.get_style_context().add_class("igdb-data-container-scrollable-header");
+				links_label.get_style_context().add_class("data-container-scrollable-header");
 				links_label.valign = Align.START;
 				add(links_label);
 
 				var links_scroll = new ScrolledWindow(null, null);
-				links_scroll.get_style_context().add_class("igdb-data-container-scrollable-value");
+				links_scroll.get_style_context().add_class("data-container-scrollable-value");
 				links_scroll.vscrollbar_policy = PolicyType.NEVER;
 				links_scroll.hexpand = true;
 
@@ -224,12 +224,12 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 		{
 			var title_label = Styled.H4Label(title);
 			title_label.margin_start = title_label.margin_end = 7;
-			title_label.get_style_context().add_class("igdb-data-container-scrollable-header");
+			title_label.get_style_context().add_class("data-container-scrollable-header");
 			title_label.set_size_request(128, -1);
 			title_label.valign = Align.CENTER;
 
 			var links_scroll = new ScrolledWindow(null, null);
-			links_scroll.get_style_context().add_class("igdb-data-container-scrollable-value");
+			links_scroll.get_style_context().add_class("data-container-scrollable-value");
 			links_scroll.vscrollbar_policy = PolicyType.NEVER;
 			links_scroll.hexpand = true;
 

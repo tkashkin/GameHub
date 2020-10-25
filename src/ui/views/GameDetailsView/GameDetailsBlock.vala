@@ -60,5 +60,35 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			return box;
 		}
+
+		protected Box? add_scrollable_label(string title, string? text, bool markup=false, Container? parent=null)
+		{
+			var title_label = Styled.H4Label(title);
+			title_label.margin_start = title_label.margin_end = 7;
+			title_label.get_style_context().add_class("data-container-scrollable-header");
+			title_label.set_size_request(128, -1);
+			title_label.valign = Align.CENTER;
+
+			var text_scroll = new ScrolledWindow(null, null);
+			text_scroll.get_style_context().add_class("data-container-scrollable-value");
+			text_scroll.vscrollbar_policy = PolicyType.NEVER;
+			text_scroll.hexpand = true;
+
+			var text_label = new Label(text);
+			text_label.margin_start = text_label.margin_end = 7;
+			text_label.get_style_context().add_class("gameinfo-multiline-value");
+			text_label.hexpand = false;
+			text_label.xalign = 0;
+			text_label.use_markup = markup;
+
+			text_scroll.add(text_label);
+
+			var box = new Box(Orientation.VERTICAL, 0);
+			box.add(title_label);
+			box.add(text_scroll);
+			(parent ?? this).add(box);
+
+			return box;
+		}
 	}
 }
