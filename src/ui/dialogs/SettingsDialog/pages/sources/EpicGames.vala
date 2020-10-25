@@ -29,6 +29,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 		private LegendaryWrapper? legendary_wrapper { get; private set; }
 		private Settings.Auth.EpicGames epicgames_auth;
+		private GameHub.Data.Sources.EpicGames.EpicGames epic = GameHub.Data.Sources.EpicGames.EpicGames.instance;
 
 		private Button logout_btn;
 
@@ -83,6 +84,10 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 			if(!epicgames_auth.enabled)
 			{
 				status = description = _("Disabled");
+			}
+			else if(!epic.is_installed())
+			{
+				status = description = _("Missing Legendary");
 			}
 			else if(!epicgames_auth.authenticated)
 			{
