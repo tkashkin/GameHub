@@ -240,6 +240,10 @@
 				<default>'legendary'</default>
 				<summary>Legendary client command</summary>
 			</key>
+			<key name="epic-games" type="s">
+				<default>'~/legendary'</default>
+				<summary>EpicGames games directory</summary>
+			</key>
 		</schema>
 
 	<!-- Paths / Collection -->

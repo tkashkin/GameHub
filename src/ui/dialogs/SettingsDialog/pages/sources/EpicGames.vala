@@ -70,6 +70,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				paths.legendary_command = command;
 			});
 
+			var game_default_folder = (paths.epic_games == null || paths.epic_games == "") ? _("Default") : paths.epic_games;
+			add_file_chooser(_("Games directory"), FileChooserAction.SELECT_FOLDER, game_default_folder, v => { paths.epic_games = v; request_restart(); }, false);
 			update();
 		}
 
