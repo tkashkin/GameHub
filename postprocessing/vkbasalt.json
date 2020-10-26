@@ -1,0 +1,85 @@
+[
+	{
+		"id": "vkbasalt",
+		"name": "vkBasalt",
+		"description": "Vulkan post processing layer to enhance the visual graphics of games",
+		"url": "https://github.com/DadSchoorse/vkBasalt",
+		"group": "Post-processing",
+		"env": {
+			"ENABLE_VKBASALT": "1",
+			"VKBASALT_CONFIG_FILE": "${option:config}"
+		}
+	},
+	{
+		"id": "vkbasalt_config",
+		"name": "vkBasalt: Configuration file",
+		"description": "Settings like the CAS sharpening strength can be changed in the config file.",
+		"url": "https://github.com/DadSchoorse/vkBasalt#configure",
+		"group": "Post-processing",
+		"env": {
+			"VKBASALT_CONFIG_FILE": "${option:config}"
+		},
+		"options": {
+			"config": {
+				"name": "Path to the configuration file",
+				"description": "/path/to/vkBasalt.conf",
+				"type": "string"
+			}
+		}
+	},
+	{
+		"id": "vkbasalt_debug",
+		"name": "vkBasalt: Debug output",
+		"description": "Set the amount and location of debug output",
+		"url": "https://github.com/DadSchoorse/vkBasalt#debug-output",
+		"group": "Post-processing",
+		"env": {
+			"VKBASALT_LOG_LEVEL": "${option:level}",
+			"VKBASALT_LOG_FILE": "${option:location}"
+		},
+		"options": {
+			"level": {
+				"name": "Debug level",
+				"description": "Amount of debug output",
+				"type": "string",
+				"presets": {
+					"none": {
+						"name": "None",
+						"value": "none"
+					},
+					"error": {
+						"name": "Error",
+						"value": "error"
+					},
+					"warn": {
+						"name": "Warning",
+						"value": "warn"
+					},
+					"info": {
+						"name": "Information",
+						"value": "info"
+					},
+					"debug": {
+						"name": "Debugging",
+						"value": "debug"
+					},
+					"trace": {
+						"name": "Trace",
+						"value": "trace"
+					}
+				}
+			},
+			"location": {
+				"name": "Output location",
+				"description": "Filename",
+				"type": "string",
+				"presets": {
+					"default": {
+						"name": "vkBasalt.log",
+						"value": "vkBasalt.log"
+					}
+				}
+			}
+		}
+	}
+]

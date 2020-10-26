@@ -1,0 +1,209 @@
+[
+	{
+		"id": "dxvk_hud",
+		"name": "Show HUD",
+		"description": "Enable DXVK HUD",
+		"url": "https://github.com/doitsujin/dxvk#hud",
+		"group": "DXVK",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["wine", "proton"]
+		},
+		"env": {
+			"DXVK_HUD": "${option:hud}"
+		},
+		"options": {
+			"hud": {
+				"name": "HUD elements",
+				"description": "Select HUD elements to show",
+				"type": "list",
+				"values": {
+					"devinfo": "Show name of GPU and driver version",
+					"fps": "Show frame rate",
+					"frametimes": "Show a frame time graph",
+					"submissions": "Show number of command buffers submitted per frame",
+					"drawcalls": "Show number of draw calls and render passes per frame",
+					"pipelines": "Show total number of graphics and compute pipelines",
+					"memory": "Show amount of device memory allocated and used",
+					"gpuload": "Show estimated GPU load. May be inaccurate",
+					"version": "Show DXVK version",
+					"api": "Show D3D feature level used by the application",
+					"compiler": "Show shader compiler activity",
+					"samplers": "Show current number of sampler pairs used (D3D9 only)"
+				},
+				"presets": {
+					"default": {
+						"name": "Default",
+						"description": "Show name of GPU, driver version and frame rate",
+						"value": "1"
+					},
+					"full": {
+						"name": "Full",
+						"description": "Show all available HUD elements",
+						"value": "full"
+					}
+				}
+			}
+		}
+	},
+	{
+		"id": "dxvk_device_filter",
+		"name": "Device filter",
+		"description": "Selects devices with a matching Vulkan device name, which can be retrieved with tools such as vulkaninfo.",
+		"url": "https://github.com/doitsujin/dxvk#device-filter",
+		"group": "DXVK",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["wine", "proton"]
+		},
+		"env": {
+			"DXVK_FILTER_DEVICE_NAME": "${option:name}"
+		},
+		"options": {
+			"name": {
+				"name": "Device Name",
+				"description": "Matches on substrings, so \"VEGA\" or \"AMD RADV VEGA10\" is supported if the full device name is \"AMD RADV VEGA10 (LLVM 9.0.0)\", for example. If the substring matches more than one device, the first device matched will be used.",
+				"type": "string"
+			}
+		}
+	},
+	{
+		"id": "dxvk_cache",
+		"name": "Disable state cache",
+		"description": "",
+		"url": "https://github.com/doitsujin/dxvk#state-cache",
+		"group": "DXVK",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["wine", "proton"]
+		},
+		"env": {
+			"DXVK_STATE_CACHE": "0"
+		}
+	},
+	{
+		"id": "dxvk_cache_path",
+		"name": "Cache files path",
+		"description": "Defaults to the current working directory of the application.",
+		"url": "https://github.com/doitsujin/dxvk#state-cache",
+		"group": "DXVK",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["wine", "proton"]
+		},
+		"env": {
+			"DXVK_STATE_CACHE_PATH": "${option:path}"
+		},
+		"options": {
+			"path": {
+				"name": "Directory where to put the cache files",
+				"description": "Defaults to the current working directory of the application.",
+				"type": "string",
+				"presets": {
+					"default": {
+						"name": "Default",
+						"value": ""
+					}
+				}
+			}
+		}
+	},
+	{
+		"id": "dxvk_debugging",
+		"name": "Debugging: Enable Vulkan debug layers",
+		"description": "Highly recommended for troubleshooting rendering issues and driver crashes. Requires the Vulkan SDK to be installed on the host system.",
+		"url": "https://github.com/doitsujin/dxvk#debugging",
+		"group": "DXVK",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["wine", "proton"]
+		},
+		"env": {
+			"VK_INSTANCE_LAYERS": "VK_LAYER_KHRONOS_validation"
+		}
+	},
+	{
+		"id": "dxvk_logging",
+		"name": "Message logging level",
+		"description": "Controls message logging",
+		"url": "https://github.com/doitsujin/dxvk#debugging",
+		"group": "DXVK",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["wine", "proton"]
+		},
+		"env": {
+			"DXVK_LOG_LEVEL": "${option:level}",
+			"DXVK_LOG_PATH": "${option:path}"
+		},
+		"options": {
+			"level": {
+				"name": "Logging level",
+				"presets": {
+					"none": {
+						"name": "None",
+						"value": "none"
+					},
+					"error": {
+						"name": "Error",
+						"value": "error"
+					},
+					"warn": {
+						"name": "Warning",
+						"value": "warn"
+					},
+					"info": {
+						"name": "Information",
+						"value": "info"
+					},
+					"debug": {
+						"name": "Debugging",
+						"value": "debug"
+					}
+				}
+			},
+			"path": {
+				"name": "Log file path",
+				"description": "Changes path where log files are stored.",
+				"type": "string",
+				"presets": {
+					"default": {
+						"name": "Default",
+						"value": ""
+					},
+					"none": {
+						"name": "None",
+						"value": "none"
+					}
+				}
+			}
+		}
+	},
+	{
+		"id": "dxvk_config_path",
+		"name": "Config file path",
+		"description": "Sets path to the configuration file.",
+		"url": "https://github.com/doitsujin/dxvk#debugging",
+		"group": "DXVK",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["wine", "proton"]
+		},
+		"env": {
+			"DXVK_CONFIG_FILE": "${option:path}"
+		},
+		"options": {
+			"path": {
+				"name": "Directory where to put the cache files",
+				"description": "Defaults to the current working directory of the application.",
+				"type": "string",
+				"presets": {
+					"default": {
+						"name": "Default",
+						"value": ""
+					}
+				}
+			}
+		}
+	}
+]

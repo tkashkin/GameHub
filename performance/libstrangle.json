@@ -1,0 +1,424 @@
+[
+	{
+		"id": "libstrangle",
+		"name": "libstrangle",
+		"description": "Frame rate limiter for Linux",
+		"url": "https://gitlab.com/torkel104/libstrangle",
+		"group": "Performance",
+		"requires": {
+			"executables": ["strangle"]
+		},
+		"command": "strangle ${command}",
+		"env": {
+			"STRANGLE_FPS": "${option:fps}",
+			"STRANGLE_FPS_BATTERY": "${option:fps_battery}",
+			"STRANGLE_VSYNC": "${option:vsync}",
+			"STRANGLE_GLFINISH": "${option:glfinish}",
+			"STRANGLE_PICMIP": "${option:picmip}",
+			"STRANGLE_AF": "${option:af}",
+			"STRANGLE_TRILINEAR": "${option:trilinear}",
+			"STRANGLE_RETRO": "${option:retro}",
+			"STRANGLE_NODLSYM": "${option:nodlsym}",
+			"STRANGLE_VKONLY": "${option:vkonly}"
+		},
+		"options": {
+			"fps": {
+				"name": "Frame rate limit",
+				"description": "Maximum frame rate",
+				"type": "string",
+				"presets": {
+					"default": {
+						"name": "Unlimited",
+						"value": "0"
+					},
+					"240": {
+						"name": "240 FPS",
+						"value": "240"
+					},
+					"144": {
+						"name": "144 FPS",
+						"value": "144"
+					},
+					"120": {
+						"name": "120 FPS",
+						"value": "120"
+					},
+					"100": {
+						"name": "100 FPS",
+						"value": "100"
+					},
+					"60": {
+						"name": "60 FPS",
+						"value": "60"
+					},
+					"30": {
+						"name": "30 FPS",
+						"value": "30"
+					}
+				}
+			},
+			"fps_battery": {
+				"name": "Frame rate limit (battery)",
+				"description": "Maximum frame rate when running on battery power",
+				"type": "string",
+				"presets": {
+					"default": {
+						"name": "Unlimited",
+						"value": "0"
+					},
+					"240": {
+						"name": "240 FPS",
+						"value": "240"
+					},
+					"144": {
+						"name": "144 FPS",
+						"value": "144"
+					},
+					"120": {
+						"name": "120 FPS",
+						"value": "120"
+					},
+					"100": {
+						"name": "100 FPS",
+						"value": "100"
+					},
+					"60": {
+						"name": "60 FPS",
+						"value": "60"
+					},
+					"30": {
+						"name": "30 FPS",
+						"value": "30"
+					}
+				}
+			},
+			"vsync": {
+				"name": "VSync",
+				"description": "Set VSync for Vulkan and OpenGL",
+				"type": "string",
+				"presets": {
+					"default": {
+						"name": "Default",
+						"value": ""
+					},
+					"-1": {
+						"name": "OpenGL: Adaptive sync",
+						"value": "-1"
+					},
+					"0": {
+						"name": "OpenGL/Vulkan: Force off",
+						"value": "0"
+					},
+					"1": {
+						"name": "Vulkan: Mailbox mode - VSync with uncapped framerate",
+						"description": "OpenGL: Force on",
+						"value": "1"
+					},
+					"2": {
+						"name": "Vulkan: Traditional VSync with framerate capped to refresh rate",
+						"description": "OpenGL: Half of the display refresh rate",
+						"value": "2"
+					},
+					"3": {
+						"name": "Vulkan: Adaptive VSync with tearing at low framerates",
+						"description": "OpenGL: Third of the display refresh rate",
+						"value": "3"
+					},
+					"4": {
+						"name": "OpenGL: Quarter of the display refresh rate",
+						"value": "4"
+					}
+				}
+			},
+			"glfinish": {
+				"name": "glFinish()",
+				"description": "OpenGL only",
+				"presets": {
+					"0": {
+						"name": "Default",
+						"value": "0"
+					},
+					"1": {
+						"name": "Force glFinish() to run after every frame",
+						"value": "1"
+					}
+				}
+			},
+			"picmip": {
+				"name": "LOD bias",
+				"description": "Adjust Level of Detail for mip-maps",
+				"presets": {
+					"default": {
+						"name": "Default",
+						"value": ""
+					},
+					"-16": {
+						"name": "-16",
+						"description": "Most texture sharpness (and aliasing)",
+						"value": "-16"
+					},
+					"-15": {
+						"name": "-15",
+						"value": "-15"
+					},
+					"-14": {
+						"name": "-14",
+						"value": "-14"
+					},
+					"-13": {
+						"name": "-13",
+						"value": "-13"
+					},
+					"-12": {
+						"name": "-12",
+						"value": "-12"
+					},
+					"-11": {
+						"name": "-11",
+						"value": "-11"
+					},
+					"-10": {
+						"name": "-10",
+						"value": "-10"
+					},
+					"-9": {
+						"name": "-9",
+						"value": "-9"
+					},
+					"-8": {
+						"name": "-8",
+						"value": "-8"
+					},
+					"-7": {
+						"name": "-7",
+						"value": "-7"
+					},
+					"-6": {
+						"name": "-6",
+						"value": "-6"
+					},
+					"-5": {
+						"name": "-5",
+						"value": "-5"
+					},
+					"-4": {
+						"name": "-4",
+						"value": "-4"
+					},
+					"-3": {
+						"name": "-3",
+						"value": "-3"
+					},
+					"-2": {
+						"name": "-2",
+						"value": "-2"
+					},
+					"-1": {
+						"name": "-1",
+						"value": "-1"
+					},
+					"0": {
+						"name": "0",
+						"value": "0"
+					},
+					"1": {
+						"name": "1",
+						"value": "1"
+					},
+					"2": {
+						"name": "2",
+						"value": "2"
+					},
+					"3": {
+						"name": "3",
+						"value": "3"
+					},
+					"4": {
+						"name": "4",
+						"value": "4"
+					},
+					"5": {
+						"name": "5",
+						"value": "5"
+					},
+					"6": {
+						"name": "6",
+						"value": "6"
+					},
+					"7": {
+						"name": "7",
+						"value": "7"
+					},
+					"8": {
+						"name": "8",
+						"value": "8"
+					},
+					"9": {
+						"name": "9",
+						"value": "9"
+					},
+					"10": {
+						"name": "10",
+						"value": "10"
+					},
+					"11": {
+						"name": "11",
+						"value": "11"
+					},
+					"12": {
+						"name": "12",
+						"value": "12"
+					},
+					"13": {
+						"name": "13",
+						"value": "13"
+					},
+					"14": {
+						"name": "14",
+						"value": "14"
+					},
+					"15": {
+						"name": "15",
+						"value": "15"
+					},
+					"16": {
+						"name": "16",
+						"description": "Most texture blurriness",
+						"value": "16"
+					}
+				}
+			},
+			"af": {
+				"name": "Anisotropic filtering",
+				"description": "Improves sharpness of textures viewed at an angle (Vulkan only)",
+				"presets": {
+					"default": {
+						"name": "Default",
+						"value": ""
+					},
+					"1": {
+						"name": "1",
+						"value": "1"
+					},
+					"2": {
+						"name": "2",
+						"value": "2"
+					},
+					"3": {
+						"name": "3",
+						"value": "3"
+					},
+					"4": {
+						"name": "4",
+						"value": "4"
+					},
+					"5": {
+						"name": "5",
+						"value": "5"
+					},
+					"6": {
+						"name": "6",
+						"value": "6"
+					},
+					"7": {
+						"name": "7",
+						"value": "7"
+					},
+					"8": {
+						"name": "8",
+						"value": "8"
+					},
+					"9": {
+						"name": "9",
+						"value": "9"
+					},
+					"10": {
+						"name": "10",
+						"value": "10"
+					},
+					"11": {
+						"name": "11",
+						"value": "11"
+					},
+					"12": {
+						"name": "12",
+						"value": "12"
+					},
+					"13": {
+						"name": "13",
+						"value": "13"
+					},
+					"14": {
+						"name": "14",
+						"value": "14"
+					},
+					"15": {
+						"name": "15",
+						"value": "15"
+					},
+					"16": {
+						"name": "16",
+						"value": "16"
+					}
+				}
+			},
+			"trilinear": {
+				"name": "Trilinear filtering",
+				"description": "Vulkan only",
+				"presets": {
+					"0": {
+						"name": "Default",
+						"value": "0"
+					},
+					"1": {
+						"name": "Force trilinear filtering",
+						"value": "1"
+					}
+				}
+			},
+			"retro": {
+				"name": "Retro",
+				"description": "Disables linear texture filtering (Vulkan only)",
+				"presets": {
+					"0": {
+						"name": "Default",
+						"value": "0"
+					},
+					"1": {
+						"name": "Disable linear texture filtering",
+						"description": "Makes textures look blocky",
+						"value": "1"
+					}
+				}
+			},
+			"nodlsym": {
+				"name": "Disable dlsym",
+				"description": "Some programs will crash, freeze or behave unexpectedly when dlsym is hijacked",
+				"presets": {
+					"0": {
+						"name": "Default",
+						"value": "0"
+					},
+					"1": {
+						"name": "Disable the hooking of dlsym",
+						"value": "1"
+					}
+				}
+			},
+			"vkonly": {
+				"name": "Disable for OpenGL",
+				"presets": {
+					"0": {
+						"name": "Default",
+						"value": "0"
+					},
+					"1": {
+						"name": "Disable for OpenGL",
+						"description": "Stop strangle's OpenGL libs from loading",
+						"value": "1"
+					}
+				}
+			}
+		}
+	}
+]

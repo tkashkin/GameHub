@@ -1,0 +1,30 @@
+[
+	{
+		"id": "gpu_nvidia_glthread",
+		"name": "NVIDIA: Threaded Optimizations",
+		"description": "Offload CPU computations to a worker thread",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/410.104/README/openglenvvariables.html",
+		"icon": "hardware-gpu-nvidia-symbolic",
+		"group": "GPU",
+		"requires": {
+			"kernel_modules": ["nvidia"]
+		},
+		"env": {
+			"__GL_THREADED_OPTIMIZATIONS": "1"
+		}
+	},
+	{
+		"id": "gpu_nvidia_osd",
+		"name": "NVIDIA: Graphics API Visual Indicator",
+		"description": "Control whether the graphics API visual indicator is rendered on top of OpenGL and Vulkan applications",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/410.104/README/openglenvvariables.html",
+		"icon": "hardware-gpu-nvidia-symbolic",
+		"group": "Overlays",
+		"requires": {
+			"kernel_modules": ["nvidia"]
+		},
+		"env": {
+			"__GL_SHOW_GRAPHICS_OSD": "1"
+		}
+	}
+]

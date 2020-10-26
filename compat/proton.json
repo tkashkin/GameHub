@@ -1,0 +1,171 @@
+[
+	{
+		"id": "proton_dbg_cmds",
+		"name": "Dump debug commands",
+		"description": "When running a game, Proton will write some useful debug scripts for that game into $PROTON_DEBUG_DIR/proton_$USER/.",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_DUMP_DEBUG_COMMANDS": "1",
+			"PROTON_DEBUG_DIR": "${option:dir}"
+		},
+		"options": {
+			"dir": {
+				"name": "Directory for debug scripts",
+				"description": "Root directory for the Proton debug scripts.",
+				"type": "string",
+				"presets": {
+					"default": {
+						"name": "Default",
+						"description": "/tmp",
+						"value": "/tmp"
+					}
+				}
+			}
+		}
+	},
+	{
+		"id": "proton_dx_wined3d",
+		"name": "Use WineD3D",
+		"description": "Use OpenGL-based WineD3D for D3D11, D3D10 and D3D9 instead of Vulkan-based DXVK",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_USE_WINED3D": "1"
+		}
+	},
+	{
+		"id": "proton_dx_disable_d3d11",
+		"name": "Disable D3D11",
+		"description": "Disable d3d11.dll, for D3D11 games which can fall back to and run better with D3D9",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_NO_D3D11": "1"
+		}
+	},
+	{
+		"id": "proton_dx_disable_d3d10",
+		"name": "Disable D3D10",
+		"description": "Disable d3d10.dll and dxgi.dll, for D3D10 games which can fall back to and run better with D3D9",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_NO_D3D10": "1"
+		}
+	},
+	{
+		"id": "proton_no_esync",
+		"name": "Disable esync",
+		"description": "Disable eventfd-based in-process synchronization primitives",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_NO_ESYNC": "1"
+		}
+	},
+	{
+		"id": "proton_no_fsync",
+		"name": "Disable fsync",
+		"description": "Disable futex-based in-process synchronization primitives",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_NO_FSYNC": "1"
+		}
+	},
+	{
+		"id": "proton_no_laa",
+		"name": "Disable LARGE_ADDRESS_AWARE",
+		"description": "Disable Wines LARGE_ADDRESS_AWARE flag for all executables",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_FORCE_LARGE_ADDRESS_AWARE": "0"
+		}
+	},
+	{
+		"id": "proton_old_gl",
+		"name": "Use old GL strings",
+		"description": "Set some driver overrides to limit the length of the GL extension string, for old games that crash on very long extension strings",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_OLD_GL_STRING": "1"
+		}
+	},
+	{
+		"id": "proton_int_scale",
+		"name": "Use integer scaling",
+		"description": "Enable integer scaling mode, to give sharp pixels when upscaling",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"WINE_FULLSCREEN_INTEGER_SCALING": "1"
+		}
+	},
+	{
+		"id": "proton_seccomp",
+		"name": "Enable seccomp-bpf",
+		"description": "Enable seccomp-bpf filter to emulate native syscalls, required for some DRM protections to work",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_USE_SECCOMP": "1"
+		}
+	},
+	{
+		"id": "proton_nww",
+		"name": "Disable support for memory write watches in ntdll.",
+		"description": "This is a very dangerous hack and should only be applied if you have verified that the game can operate without write watches. This improves performance for some very specific games (e.g. CoreRT-based games).",
+		"url": "https://github.com/ValveSoftware/Proton#runtime-config-options",
+		"group": "Proton",
+		"applicable_to": {
+			"platforms": ["windows"],
+			"compat": ["proton"]
+		},
+		"env": {
+			"PROTON_NO_WRITE_WATCH": "1"
+		}
+	}
+]

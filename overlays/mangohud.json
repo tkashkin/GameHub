@@ -1,0 +1,203 @@
+{
+	"id": "mangohud",
+	"name": "MangoHud",
+	"description": "A modification of the Mesa Vulkan overlay. Including GUI improvements, temperature reporting, and logging capabilities",
+	"url": "https://github.com/flightlessmango/MangoHud",
+	"group": "Overlays",
+	"requires": {
+		"executables": ["mangohud"]
+	},
+	"command": "mangohud ${command}",
+	"env": {
+		"MANGOHUD_CONFIG": "${option:read_cfg},${option:hud},${option:media_player},${option:vsync},${option:gl_vsync},${option:position},${option:fps_limit}"
+	},
+	"options": {
+		"hud": {
+			"name": "HUD elements",
+			"description": "Select HUD elements to show",
+			"type": "list",
+			"values": {
+				"arch": "Show if the application is 32 or 64 bit",
+				"core_load": "Display CPU load and frequency per core",
+				"cpu_stats=0": "Hide CPU information",
+				"cpu_temp": "Display current CPU temperature",
+				"engine_version": "Display OpenGL or Vulkan and Vulkan-based render engine's version",
+				"frame_timing=0": "Hide the frame timing graph",
+				"gpu_stats=0": "Hide GPU information",
+				"gpu_temp": "Display current GPU temperature",
+				"gpu_core_clock": "Display GPU core frequency",
+				"gpu_mem_clock": "Display GPU memory frequency",
+				"histogram": "Change FPS graph to histogram",
+				"io_read": "IO read for the app (not system)",
+				"io_write": "IO write for the app (not system)",
+				"no_display": "Disable / hide the HUD by default",
+				"ram": "Display system RAM usage",
+				"time": "Display the current system time",
+				"vram": "Display system VRAM usage",
+				"version": "Display MangoHud version",
+				"vulkan_driver": "Display current Vulkan driver"
+			},
+			"presets": {
+				"default": {
+					"name": "Default",
+					"value": ""
+				},
+				"full": {
+					"name": "Full",
+					"description": "Enables most of the toggleable parameters",
+					"value": "full"
+				}
+			}
+		},
+		"media_player": {
+			"name": "Media player",
+			"description": "Display a media player",
+			"type": "string",
+			"value": "media_player,media_player_name=${value}",
+			"presets": {
+				"default": {
+					"name": "Default",
+					"value": ""
+				},
+				"spotify": {
+					"name": "Spotify",
+					"value": "media_player,media_player_name=spotify"
+				},
+				"audacious": {
+					"name": "Audacious",
+					"value": "media_player,media_player_name=audacious"
+				},
+				"cantata": {
+					"name": "Cantata",
+					"value": "media_player,media_player_name=cantata"
+				},
+				"vlc": {
+					"name": "VLC",
+					"value": "media_player,media_player_name=vlc"
+				}
+			}
+		},
+		"vsync": {
+			"name": "VSync (Vulkan)",
+			"presets": {
+				"default": {
+					"name": "Default",
+					"value": ""
+				},
+				"0": {
+					"name": "Adaptive VSync",
+					"description": "Tearing at low framerates",
+					"value": "vsync=0"
+				},
+				"1": {
+					"name": "Force off",
+					"value": "vsync=1"
+				},
+				"2": {
+					"name": "Mailbox mode",
+					"description": "VSync with uncapped framerate",
+					"value": "vsync=2"
+				},
+				"3": {
+					"name": "Traditional VSync",
+					"description": "Frame rate capped to refresh rate",
+					"value": "vsync=3"
+				}
+			}
+		},
+		"gl_vsync": {
+			"name": "VSync (OpenGL)",
+			"presets": {
+				"off": {
+					"name": "Off",
+					"value": "gl_vsync=off"
+				},
+				"1": {
+					"name": "Display refresh rate",
+					"value": "gl_vsync=1"
+				},
+				"2": {
+					"name": "Half of display refresh rate",
+					"value": "gl_vsync=2"
+				},
+				"4": {
+					"name": "Quarter of display refresh rate",
+					"value": "gl_vsync=4"
+				}
+			}
+		},
+		"position": {
+			"name": "HUD position",
+			"presets": {
+				"top-left": {
+					"name": "top-left",
+					"value": "position=top-left"
+				},
+				"top-right": {
+					"name": "top-right",
+					"value": "position=top-right"
+				},
+				"bottom-left": {
+					"name": "bottom-left",
+					"value": "position=bottom-left"
+				},
+				"bottom-right": {
+					"name": "bottom-right",
+					"value": "position=bottom-right"
+				},
+				"top-center": {
+					"name": "top-center",
+					"value": "position=top-center"
+				}
+			}
+		},
+		"fps_limit": {
+			"name": "Frame rate limit",
+			"type": "string",
+			"value": "fps_limit=${value}",
+			"presets": {
+				"default": {
+					"name": "Unlimited",
+					"value": ""
+				},
+				"240": {
+					"name": "240 FPS",
+					"value": "fps_limit=240"
+				},
+				"144": {
+					"name": "144 FPS",
+					"value": "fps_limit=144"
+				},
+				"120": {
+					"name": "120 FPS",
+					"value": "fps_limit=120"
+				},
+				"100": {
+					"name": "100 FPS",
+					"value": "fps_limit=100"
+				},
+				"60": {
+					"name": "60 FPS",
+					"value": "fps_limit=60"
+				},
+				"30": {
+					"name": "30 FPS",
+					"value": "fps_limit=30"
+				}
+			}
+		},
+		"read_cfg": {
+			"name": "Config files",
+			"presets": {
+				"default": {
+					"name": "Default",
+					"value": ""
+				},
+				"read_cfg": {
+					"name": "Load config files in addition to options",
+					"value": "read_cfg"
+				}
+			}
+		}
+	}
+}

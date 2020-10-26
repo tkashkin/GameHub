@@ -1,0 +1,30 @@
+[
+	{
+		"id": "gpu_amd_vulkan_aco",
+		"name": "AMD: Radeon ACO Vulkan Compiler",
+		"description": "Enable ACO based Vulkan shader compiler for RADV instead of LLVM",
+		"url": "https://github.com/mesa3d/mesa",
+		"icon": "hardware-gpu-amd-symbolic",
+		"group": "GPU",
+		"requires": {
+			"kernel_modules": ["amdgpu"]
+		},
+		"env": {
+			"RADV_PERFTEST": "aco"
+		}
+	},
+	{
+		"id": "gpu_amd_glthread",
+		"name": "AMD: Threaded Optimizations",
+		"description": "Offload CPU computations to a worker thread",
+		"url": "https://github.com/mesa3d/mesa",
+		"icon": "hardware-gpu-amd-symbolic",
+		"group": "GPU",
+		"requires": {
+			"kernel_modules": ["amdgpu"]
+		},
+		"env": {
+			"mesa_glthread": "true"
+		}
+	}
+]
