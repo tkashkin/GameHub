@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Amaro Martínez <xoas@airmail.cc>, 2020.
+# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
 "PO-Revision-Date: 2020-11-03 19:26+0000\n"
-"Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gamehub/"
 "translations/es/>\n"
 "Language: es\n"
@@ -60,15 +61,15 @@ msgstr "Ejecutar juego"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "Mostrar diálogo de opciones de compatibilidad"
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr ""
+msgstr "Abrir detalles del juego"
 
 #: src/app.vala:109
 msgid "Open game properties"
-msgstr ""
+msgstr "Abrir propiedades del juego"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
@@ -100,15 +101,15 @@ msgstr "Registro detallado"
 
 #: src/app.vala:247
 msgid "Game Options:"
-msgstr ""
+msgstr "Opciones del juego:"
 
 #: src/app.vala:247
 msgid "Show game options help"
-msgstr ""
+msgstr "Mostrar ayuda de las opciones del juego"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr ""
+msgstr "Opciones de registro:"
 
 #: src/app.vala:255
 msgid "Show logging options help"
@@ -125,7 +126,7 @@ msgstr ""
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "Seleccionar"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
@@ -240,7 +241,7 @@ msgstr "Juegos de %s"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr "Su SteamID será leído desde el archivo de configuración de Steam"
+msgstr "Su SteamID se leerá del archivo de configuración de Steam"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
@@ -253,18 +254,20 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr "DLC: %s"
+msgstr "Contenido descargable: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr ""
+msgstr "%s: no hay ningún instalador disponible"
 
 #: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
+"No se puede obtener el URL de descarga de Trove.\n"
+"Cerciórese de que su suscripción a Humble Monthly esté activa."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
@@ -276,7 +279,7 @@ msgstr "%s restante(s);"
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr "%d%%"
+msgstr "%d %%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
@@ -1281,11 +1284,11 @@ msgstr "Instalar %s"
 
 #: src/ui/views/WelcomeView.vala:164
 msgid "Return to GameHub after installing"
-msgstr ""
+msgstr "Volver a GameHub después de la instalación"
 
 #: src/ui/views/GamesView/GamesView.vala:136
 msgid "No games"
-msgstr ""
+msgstr "No hay ningún juego"
 
 #: src/ui/views/GamesView/GamesView.vala:136
 msgid "Get some games or enable some game sources in settings"
@@ -1334,7 +1337,7 @@ msgstr "Atrás"
 #, c-format
 msgid "%u game"
 msgid_plural "%u games"
-msgstr[0] "un juego"
+msgstr[0] "%u juego"
 msgstr[1] "%u juegos"
 
 #: src/ui/views/GamesView/GamesView.vala:553
@@ -1369,7 +1372,7 @@ msgstr ""
 #: src/ui/views/GamesView/GamesView.vala:584
 #, c-format
 msgid "No games matching “%s”"
-msgstr ""
+msgstr "Ningún juego coincide con «%s»"
 
 #: src/ui/views/GamesView/GamesView.vala:589
 #, c-format
@@ -1437,7 +1440,7 @@ msgstr "Seleccione el directorio del juego"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
 msgid "Download game images"
-msgstr ""
+msgstr "Descargar imágenes de juego"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
@@ -1487,35 +1490,35 @@ msgstr "Propiedades"
 #, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] "Un juego seleccionado"
+msgstr[0] "%d juego seleccionado"
 msgstr[1] "%d juegos seleccionados"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
 #, c-format
 msgid "%d game will be installed"
 msgid_plural "%d games will be installed"
-msgstr[0] "Se instalará un juego"
+msgstr[0] "Se instalará %d juego"
 msgstr[1] "Se instalarán %d juegos"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:154
 #, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Se descargará %d juego"
+msgstr[1] "Se descargarán %d juegos"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 #, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Se buscará una imagen para %d juego"
+msgstr[1] "Se buscarán imágenes para %d juegos"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
 #, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] "Se desinstalará un juego"
+msgstr[0] "Se desinstalará %d juego"
 msgstr[1] "Se desinstalarán %d juegos"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
@@ -1559,12 +1562,12 @@ msgstr "Logros"
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:85
 #, c-format
 msgid "Unlocked: %s"
-msgstr ""
+msgstr "Desbloqueados: %s"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:90
 #, c-format
 msgid "Global percentage: %g%%"
-msgstr ""
+msgstr "Procentaje global: %g %%"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
@@ -1579,7 +1582,7 @@ msgstr "Idiomas"
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
 #, c-format
 msgid "%u DLCs cannot be installed"
-msgstr ""
+msgstr "No se pueden instalar %u contenidos descargables"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1605,17 +1608,17 @@ msgstr "Popularidad"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:115
 msgctxt "igdb"
 msgid "Aggregated rating"
-msgstr ""
+msgstr "Puntuación acumulada"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr ""
+msgstr "Puntuación de usuario de IGDB"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:117
 msgctxt "igdb"
 msgid "Total rating"
-msgstr ""
+msgstr "Puntuación total"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
@@ -1646,18 +1649,18 @@ msgstr "Enlaces"
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Con base en <b>%d</b> puntuación"
+msgstr[1] "Con base en <b>%d</b> puntuaciones"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:290
 msgctxt "igdb"
 msgid "Summary"
-msgstr ""
+msgstr "Resumen"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:301
 msgctxt "igdb"
 msgid "Storyline"
-msgstr ""
+msgstr "Hilo argumental"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
@@ -1667,25 +1670,27 @@ msgstr "Seleccionar archivo"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid "No images"
-msgstr ""
+msgstr "Ninguna imagen"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
+"No se encontró ninguna imagen para este juego\n"
+"Cerciórese de que el nombre sea correcto"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:94
 msgid "Search images:"
-msgstr ""
+msgstr "Buscar imágenes:"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
-msgstr ""
+msgstr "Capa de compatibilidad:"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
-msgstr ""
+msgstr "Configurar"
 
 #: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
@@ -1804,4 +1809,4 @@ msgstr "Descarga cancelada"
 #, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "%1$d%% (%2$s de %3$s) [%4$s/s]"
+msgstr "%1$d %% (%2$s de %3$s) [%4$s/s]"
