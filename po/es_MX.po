@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-10-31 17:26+0000\n"
+"PO-Revision-Date: 2020-11-04 19:27+0000\n"
 "Last-Translator: Eldhrimer <vico.220895@gmail.com>\n"
 "Language-Team: Spanish (Mexico) <https://hosted.weblate.org/projects/gamehub/"
 "translations/es_MX/>\n"
@@ -34,7 +34,7 @@ msgstr "Reiniciar con el debugger GDB incluido"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr "Muestra el trazado completo de GDB"
+msgstr "Mostrar el trazado completo de GDB"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
@@ -390,9 +390,8 @@ msgid "InnoSetup default options"
 msgstr "Opciones predeterminadas de InnoSetup"
 
 #: src/data/compat/RetroArch.vala:53
-#, fuzzy
 msgid "Libretro core file"
-msgstr "Archivo núcleo de Libretro"
+msgstr "Archivo del núcleo de Libretro"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
@@ -660,7 +659,6 @@ msgid "Show status"
 msgstr "Mostrar estatus"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
-#, fuzzy
 msgctxt "list_style"
 msgid "Dim"
 msgstr "Oscurecer"
@@ -754,7 +752,6 @@ msgid "Enabled"
 msgstr "Habilitado"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
-#, fuzzy
 msgid "Focus GameHub window with Guide button"
 msgstr "Enfocar ventana de GameHub con el botón de Guía"
 
@@ -786,36 +783,32 @@ msgstr "Deshabilitado"
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:47
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
-#, fuzzy
 msgid "Tweaks"
-msgstr "Retoques"
+msgstr "Ajustes"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
-#, fuzzy
 msgid "Tweak launch options and apply them to games automatically"
 msgstr ""
-"Retocar opciones de lanzamiento y aplicarlas a los juegos automáticamente"
+"Ajustar opciones de lanzamiento y aplicarlas a los juegos automáticamente"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
-#, fuzzy
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
-"Los retoques son cargados desde los siguientes directorios en orden\n"
-"Los últimos retoques sobrescriben los anteriores con los mismos "
+"Los ajustes son cargados desde los siguientes directorios en orden\n"
+"Los últimos ajustes sobrescriben los anteriores con los mismos "
 "identificadores"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
-#, fuzzy
 msgid "Click to open"
 msgstr "Hacer clic para abrir"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
-#, c-format, fuzzy
+#, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
 msgstr ""
-"Los retoques son cargados desde <b>%1$s</b> y %2$d directorios más<b>(?)</b>"
+"Los ajustes son cargados desde <b>%1$s</b> y %2$d directorios más<b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -894,15 +887,15 @@ msgstr "Emuladores"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 msgid "Libretro core directory"
-msgstr ""
+msgstr "Directorio del núcleo de Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
 msgid "Libretro core info directory"
-msgstr ""
+msgstr "Directorio de información del núcleo de Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
-msgstr ""
+msgstr "Núcleos de Libretro ignorados"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
@@ -1015,6 +1008,13 @@ msgid ""
 "<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
 "name (without extension)"
 msgstr ""
+"Patrones glob compatibles con <b>findutils</b>\n"
+"\n"
+"<b>•</b> Múltiples patrones pueden separarse con <b>|</b>\n"
+"<b>•</b> Comenzar patrón con <b>./</b> para coincidir con la ruta relativa. "
+"\n"
+"<b>•</b> La variable $<b>basename</b> será reemplazada con el nombre del "
+"ejecutable del juego (sin la extensión)"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
@@ -1145,12 +1145,10 @@ msgid "Icon URL"
 msgstr "Icono URL"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Select working directory"
 msgstr "Seleccionar directorio de trabajo"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Working directory"
 msgstr "Directorio de trabajo"
 
@@ -1180,68 +1178,61 @@ msgid "%s: Overlays"
 msgstr "%s: Capas"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
-#, fuzzy
 msgid "Overlays are disabled"
-msgstr "Las capas de sobreposición están desactivadas"
+msgstr "Las capas están desactivadas"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
-#, fuzzy
 msgid ""
 "Enable overlays to manage DLCs and mods\n"
 "\n"
 "Enabling will move game to the “base“ overlay"
 msgstr ""
-"Activa las capas de sobreposición para administrar contenidos descargables y "
-"mods. \n"
+"Activa las capas para administrar contenidos descargables y mods. \n"
 "\n"
 "Activar esta opción moverá el juego a la capa \"base\""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:175
-#, fuzzy
 msgid "Overlays"
-msgstr "Capas de sobreposición"
+msgstr "Capas"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:105
-#, fuzzy
 msgid "Overlay ID (directory name)"
-msgstr "Identificador de capas sobrepuestas (nombre del directorio)"
+msgstr "Identificador de capas (nombre del directorio)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:110
-#, fuzzy
 msgid "Overlay name (optional)"
-msgstr "Nombre de la capa sobrepuesta (opcional)"
+msgstr "Nombre de la capa (opcional)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
 msgstr "Añadir"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
-#, fuzzy
 msgid "Enable overlays"
-msgstr "Activar capas de sobreposición"
+msgstr "Activar capas"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:182
-#, c-format, fuzzy
+#, c-format
 msgid ""
 "Overlay usage at this path may be unsafe\n"
 "Proceed at your own risk\n"
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
-"Utilizar capas de sobreposición en esta ruta puede ser poco seguro\n"
+"Utilizar capas en esta ruta puede ser poco seguro\n"
 "Proceda si acepta el riesgo\n"
 "\n"
 "Ruta: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
-#, c-format, fuzzy
+#, c-format
 msgid ""
 "Overlay usage at this path is not supported\n"
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
-"Uso de capas de sobreposición en esta ruta no está permitido\n"
+"El uso de capas en esta ruta no está permitido\n"
 "\n"
 "Ruta: <b>%s</b>"
 
@@ -1250,9 +1241,8 @@ msgid "Open directory"
 msgstr "Abrir directorio"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
-#, fuzzy
 msgid "Remove overlay"
-msgstr "Capa de sobreposición remota"
+msgstr "Capa remota"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
@@ -1261,9 +1251,8 @@ msgid "Run with compatibility layer"
 msgstr "Iniciar con la capa de compatibilidad"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
-#, fuzzy
 msgid "Corrupted installer: checksum mismatch in"
-msgstr "Instalador corrompido: la suma de comprobación no concuerda en"
+msgstr "Instalador dañado: la suma de comprobación no concuerda en"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
@@ -1287,9 +1276,9 @@ msgid "Select directory to import"
 msgstr "Seleccionar directorio a importar"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, c-format, fuzzy
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s: Retoques"
+msgstr "%s: Ajustes"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1384,13 +1373,13 @@ msgstr[0] "%u juego"
 msgstr[1] "%u juegos"
 
 #: src/ui/views/GamesView/GamesView.vala:553
-#, c-format, fuzzy
+#, c-format
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
 msgstr "%1$u / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
-#, c-format, fuzzy
+#, c-format
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -1750,7 +1739,6 @@ msgid "No description"
 msgstr "Sin descripción"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
 msgstr "Editar archivo"
 
@@ -1767,7 +1755,7 @@ msgid "%dm"
 msgstr "%dm"
 
 #: src/utils/Utils.vala:464
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
 msgstr "%ds"
@@ -1828,7 +1816,7 @@ msgid "Download failed"
 msgstr "Descarga fallida"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
 msgstr "Descargando: %s"
@@ -1856,7 +1844,7 @@ msgstr "Descarga cancelada"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
 msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
