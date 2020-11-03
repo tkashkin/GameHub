@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-10-05 12:12+0000\n"
+"PO-Revision-Date: 2020-11-03 19:26+0000\n"
 "Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gamehub/"
 "translations/es/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -52,7 +52,7 @@ msgstr "Mostrar diálogo acerca de"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "Número máximo de subprocesos de trabajo en segundo plano"
 
 #: src/app.vala:106
 msgid "Run game"
@@ -79,18 +79,20 @@ msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Registrar proceso de autenticación e información sensible como tokens de "
+"autenticación"
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr ""
+msgstr "Registrar gestor de descargas"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "Registrar inicio y parada de trabajadores en segundo plano"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Desactivar el filtrado de mensajes de registro"
 
 #: src/app.vala:118
 msgid "Verbose logging"
