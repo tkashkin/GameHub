@@ -25,8 +25,8 @@ export CFLAGS="$CFLAGS -O0"
 export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
 
 if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu2004" ]]; then
-	_DEB_TARGET_DISTRO_NAMES=("bionic" "focal" "groovy" "hirsute")
-	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "20.04" "20.10" "21.04")
+	_DEB_TARGET_DISTRO_NAMES=("focal" "bionic" "groovy" "hirsute")
+	_DEB_TARGET_DISTRO_VERSIONS=("20.04" "18.04" "20.10" "21.04")
 	_BUILD_IMAGE="focal"
 else
 	source "/etc/os-release"
@@ -94,7 +94,7 @@ deps()
 	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:vala-team/next -y
 	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:savoury1/build-tools -y
 	sudo DEBIAN_FRONTEND="noninteractive" apt update -qq
-	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev libmanette-0.2-dev libxtst-dev libx11-dev
+	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential debhelper dput fakeroot moreutils git-buildpackage libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev libmanette-0.2-dev libxtst-dev libx11-dev
 }
 
 gen_changelogs()
