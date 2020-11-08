@@ -6,7 +6,7 @@ pull_requests:
 skip_tags: true
 
 image:
-  - Ubuntu2004
+  - Ubuntu1804
 
 clone_folder: ~/build/GameHub
 
