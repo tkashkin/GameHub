@@ -6,8 +6,7 @@ pull_requests:
 skip_tags: true
 
 image:
-  - Ubuntu1804
-#  - Ubuntu1604     # skip xenial builds because dependencies are broken
+  - Ubuntu2004
 
 clone_folder: ~/build/GameHub
 
