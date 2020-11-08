@@ -2,9 +2,9 @@ Source: com.github.tkashkin.gamehub
 Section: x11
 Priority: optional
 Maintainer: tkashkin <tkashkin@gmail.com>
-Build-Depends: meson (>= 0.40),
-               valac (>= 0.16),
-               debhelper (>= 9),
+Build-Depends: meson,
+               valac,
+               debhelper,
                libgtk-3-dev,
                libglib2.0-dev,
                libwebkit2gtk-4.0-dev,
@@ -14,7 +14,9 @@ Build-Depends: meson (>= 0.40),
                libsqlite3-dev,
                libxml2-dev,
                libpolkit-gobject-1-dev,
-               libx11-dev, libmanette-0.2-dev, libxtst-dev
+               libx11-dev,
+               libmanette-0.2-dev,
+               libxtst-dev
 Standards-Version: 4.1.4
 
 Package: com.github.tkashkin.gamehub
