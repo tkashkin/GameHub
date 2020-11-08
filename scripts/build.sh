@@ -24,10 +24,10 @@ _GPG_PACKAGE="gnupg1"
 export CFLAGS="$CFLAGS -O0"
 export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
 
-if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu2004" ]]; then
-	_DEB_TARGET_DISTRO_NAMES=("focal" "bionic" "groovy" "hirsute")
-	_DEB_TARGET_DISTRO_VERSIONS=("20.04" "18.04" "20.10" "21.04")
-	_BUILD_IMAGE="focal"
+if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
+	_DEB_TARGET_DISTRO_NAMES=("bionic" "focal" "groovy" "hirsute")
+	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "20.04" "20.10" "21.04")
+	_BUILD_IMAGE="bionic"
 else
 	source "/etc/os-release"
 	_DEB_TARGET_DISTRO_ID="$ID"
