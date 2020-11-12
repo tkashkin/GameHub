@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-11-08 13:08+0000\n"
+"PO-Revision-Date: 2020-11-13 18:28+0000\n"
 "Last-Translator: kimteak <xorrjs2331@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gamehub/"
 "translations/ko/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -187,67 +187,69 @@ msgstr "에뮬레이션"
 #: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "실행"
 
 #: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "설치됨"
 
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "설치중"
 
 #: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr ""
+msgstr "설치 프로그램 무결성 확인"
 
 #: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
-msgstr ""
+msgstr "다운로드 시작"
 
 #: src/data/Game.vala:633
 msgctxt "status"
 msgid "Not installed"
-msgstr ""
+msgstr "설치되지 않음"
 
 #: src/data/Game.vala:643
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "설치완료"
 
 #: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "설치중"
 
 #: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "다운로드 중"
 
 #: src/data/Game.vala:648
 msgctxt "status_header"
 msgid "Not installed"
-msgstr ""
+msgstr "설치되지 않음"
 
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr ""
+msgstr "% s 게임"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr ""
+msgstr "SteamID는 Steam 구성 파일에서 읽습니다"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
+"Steam 구성 파일을 찾을 수 없습니다.\n"
+"Steam 클라이언트에서 계정에 로그인하고 GameHub로 돌아갑니다"
 
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
