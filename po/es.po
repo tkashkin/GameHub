@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-11-12 17:32+0000\n"
+"PO-Revision-Date: 2020-11-13 18:28+0000\n"
 "Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gamehub/"
 "translations/es/>\n"
@@ -141,7 +141,7 @@ msgstr "Seleccionar directorio"
 #: src/data/Runnable.vala:619
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
-msgstr ""
+msgstr "Parte %1$u de %2$u: %3$s"
 
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
@@ -266,7 +266,7 @@ msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
-"No se puede obtener la URL de descarga de Trove.\n"
+"No se puede obtener el URL de descarga de Trove.\n"
 "Asegúrese de que su suscripción a Humble Choice esté activa."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
@@ -332,6 +332,9 @@ msgid ""
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
+"Innoextract <b>%1$s</b> no está soportado y puede no ser capaz de extraer "
+"algunos juegos correctamente.\n"
+"Instale Innoextract <b>%2$s</b> o una versión más reciente."
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
@@ -551,7 +554,7 @@ msgstr "del juego"
 #: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr "de la IGDB"
+msgstr "de IGDB"
 
 #: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
@@ -560,11 +563,13 @@ msgstr "ambas"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
-msgstr ""
+msgstr "Algunas configuraciones se aplicarán después de reiniciar la aplicación"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:71
 msgid "Games directory contains space. It may cause problems for some games"
 msgstr ""
+"El directorio de juegos contiene espacios. Puede causar problemas para "
+"algunos juegos"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
@@ -1368,7 +1373,7 @@ msgstr ""
 
 #: src/ui/views/GamesView/GamesView.vala:574
 msgid "Get some Linux-compatible games"
-msgstr ""
+msgstr "Obtenga algunos juegos compatibles con Linux"
 
 #: src/ui/views/GamesView/GamesView.vala:584
 #, c-format
@@ -1614,12 +1619,12 @@ msgstr "Puntuación acumulada"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr "Puntuación de usuario de IGDB"
+msgstr "Clasificación de usuario de IGDB"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:117
 msgctxt "igdb"
 msgid "Total rating"
-msgstr "Puntuación total"
+msgstr "Clasificación total"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
@@ -1650,8 +1655,8 @@ msgstr "Enlaces"
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
-msgstr[0] "Con base en <b>%d</b> puntuación"
-msgstr[1] "Con base en <b>%d</b> puntuaciones"
+msgstr[0] "Basada en <b>una</b> clasificación"
+msgstr[1] "Basada en <b>%d</b> clasificaciones"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:290
 msgctxt "igdb"
@@ -1661,7 +1666,7 @@ msgstr "Resumen"
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:301
 msgctxt "igdb"
 msgid "Storyline"
-msgstr "Hilo argumental"
+msgstr "Historia"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
