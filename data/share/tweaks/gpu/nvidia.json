@@ -3,7 +3,7 @@
 		"id": "gpu_nvidia_glthread",
 		"name": "NVIDIA: Threaded Optimizations",
 		"description": "Offload CPU computations to a worker thread",
-		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/410.104/README/openglenvvariables.html",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/455.38/README/openglenvvariables.html",
 		"icon": "hardware-gpu-nvidia-symbolic",
 		"group": "GPU",
 		"requires": {
@@ -14,10 +14,26 @@
 		}
 	},
 	{
+		"id": "gpu_nvidia_prime",
+		"name": "NVIDIA: PRIME Render Offload",
+		"description": "Use discrete NVIDIA GPU",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/455.38/README/primerenderoffload.html",
+		"icon": "hardware-gpu-nvidia-symbolic",
+		"group": "GPU",
+		"requires": {
+			"kernel_modules": ["nvidia"]
+		},
+		"env": {
+			"__NV_PRIME_RENDER_OFFLOAD": "1",
+			"__GLX_VENDOR_LIBRARY_NAME": "nvidia",
+			"__VK_LAYER_NV_optimus": "NVIDIA_only"
+		}
+	},
+	{
 		"id": "gpu_nvidia_osd",
 		"name": "NVIDIA: Graphics API Visual Indicator",
 		"description": "Control whether the graphics API visual indicator is rendered on top of OpenGL and Vulkan applications",
-		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/410.104/README/openglenvvariables.html",
+		"url": "https://download.nvidia.com/XFree86/Linux-x86_64/455.38/README/openglenvvariables.html",
 		"icon": "hardware-gpu-nvidia-symbolic",
 		"group": "Overlays",
 		"requires": {
