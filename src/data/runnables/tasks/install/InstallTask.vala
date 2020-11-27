@@ -45,7 +45,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 
 		public bool cancelled { get; private set; default = false; }
 
-		public InstallTask(Runnable? runnable, ArrayList<Installer>? installers, ArrayList<File>? install_dirs, InstallTask.Mode install_mode=InstallTask.Mode.INTERACTIVE, bool allow_install_dir_import=true)
+		public InstallTask(Runnable? runnable, ArrayList<Installer>? installers, ArrayList<File>? install_dirs, InstallTask.Mode install_mode = InstallTask.Mode.INTERACTIVE, bool allow_install_dir_import = true)
 		{
 			Object(runnable: runnable, installers: installers, install_dirs: install_dirs, install_mode: install_mode, can_import_install_dir: allow_install_dir_import);
 		}

@@ -435,16 +435,6 @@ namespace GameHub.Data.Sources.GOG
 					}
 				}
 			}
-
-			string g = name;
-			string? d = null;
-			if(this is DLC)
-			{
-				g = ((DLC) this).game.name;
-				d = name;
-			}
-			/*installers_dir = FS.file(FS.Paths.Collection.GOG.expand_installers(g, d));
-			bonus_content_dir = FS.file(FS.Paths.Collection.GOG.expand_bonus(g, d));*/
 		}
 
 		private bool loading_achievements = false;
