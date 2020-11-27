@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # ParkSeongSoo <syvf64@naver.com>, 2019.
 # kimteak <xorrjs2331@gmail.com>, 2020.
+# kimtaek <xorrjs2331@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-11-13 18:28+0000\n"
-"Last-Translator: kimteak <xorrjs2331@gmail.com>\n"
+"PO-Revision-Date: 2020-11-29 07:29+0000\n"
+"Last-Translator: kimtaek <xorrjs2331@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gamehub/"
 "translations/ko/>\n"
 "Language: ko\n"
@@ -254,74 +255,76 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC : % s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr ""
+msgstr "%s : 사용 가능한 설치 프로그램이 없습니다"
 
 #: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
+"Trove 다운로드 URL을 가져올 수 없습니다.\n"
+"Humble Monthly 구독이 활성화되어 있는지 확인하십시오."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s남았습니다;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "%1$s%2$s"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "%s/초"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr ""
+msgstr "사용자 게임"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "즐겨 찾기"
 
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
 msgid "Not installed"
-msgstr ""
+msgstr "설치되지 않음"
 
 #: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
-msgstr ""
+msgstr "설치됨"
 
 #: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "숨겨진"
 
 #: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
-msgstr ""
+msgstr "스크립트 수정"
 
 #: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
-msgstr ""
+msgstr "사용자 정의 스크립트 편집"
 
 #: src/data/compat/Innoextract.vala:55
 #, c-format
