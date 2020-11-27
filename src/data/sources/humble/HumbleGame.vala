@@ -54,7 +54,6 @@ namespace GameHub.Data.Sources.Humble
 
 		private bool game_info_updating = false;
 		private bool game_info_updated = false;
-		private bool game_info_refreshed = false;
 
 		public HumbleGame(Humble src, string order, Json.Node json_node)
 		{
@@ -144,7 +143,21 @@ namespace GameHub.Data.Sources.Humble
 		{
 			if(status.state == Game.State.DOWNLOADING && status.download.status.state != Downloader.Download.State.CANCELLED) return;
 
-			status = new Game.Status(executable != null && executable.query_exists() ? Game.State.INSTALLED : Game.State.UNINSTALLED, this);
+			var state = Game.State.UNINSTALLED;
+			var files = new ArrayList<File>();
+			files.add(get_file(@".gamehub_$(id)"));
+			files.add(executable);
+
+			foreach(var file in files)
+			{
+				if(file != null && file.query_exists())
+				{
+					state = Game.State.INSTALLED;
+					break;
+				}
+			}
+
+			status = new Game.Status(state, this);
 			if(status.state == Game.State.INSTALLED)
 			{
 				remove_tag(Tables.Tags.BUILTIN_UNINSTALLED);
@@ -155,8 +168,6 @@ namespace GameHub.Data.Sources.Humble
 				add_tag(Tables.Tags.BUILTIN_UNINSTALLED);
 				remove_tag(Tables.Tags.BUILTIN_INSTALLED);
 			}
-
-			//installers_dir = FS.file(FS.Paths.Collection.Humble.expand_installers(name));
 
 			load_version();
 		}
@@ -193,7 +204,7 @@ namespace GameHub.Data.Sources.Humble
 				var headers = new HashMap<string, string>();
 				headers["Cookie"] = @"$(Humble.AUTH_COOKIE)=\"$(token)\";";
 
-				var root_node = yield Parser.parse_remote_json_file_async(@"https://www.humblebundle.com/api/v1/order/$(order_id)?ajax=true", "GET", null, headers);
+				var root_node = yield Parser.parse_remote_json_file_async(@"https://humblebundle.com/api/v1/order/$(order_id)?ajax=true", "GET", null, headers);
 				if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT)
 				{
 					game_info_updating = false;
@@ -250,22 +261,20 @@ namespace GameHub.Data.Sources.Humble
 			game_info_updating = false;
 		}
 
-		private async void update_installers()
+		public override async ArrayList<Tasks.Install.Installer>? load_installers()
 		{
-			if(installers != null && installers.size > 0) return;
+			if(installers != null && installers.size > 0) return installers;
 
 			installers = new ArrayList<Runnables.Tasks.Install.Installer>();
 
 			var product_node = Parser.parse_json(info);
-			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return;
+			if(product_node == null || product_node.get_node_type() != Json.NodeType.OBJECT) return installers;
 
 			var product = product_node.get_object();
-			if(product == null) return;
+			if(product == null) return installers;
 
 			if(product.has_member("downloads"))
 			{
-				bool refresh = false;
-
 				var downloads_node = product.get_member("downloads");
 				switch(downloads_node.get_node_type())
 				{
@@ -280,7 +289,7 @@ namespace GameHub.Data.Sources.Humble
 							{
 								foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
 								{
-									refresh = process_download(id, dl_id, os, dls_node.get_object());
+									add_installer(id, dl_id, os, dls_node.get_object());
 								}
 							}
 						}
@@ -292,44 +301,18 @@ namespace GameHub.Data.Sources.Humble
 							var dl = downloads_node.get_object().get_object_member(os);
 							var id = dl.get_string_member("machine_name");
 							var dl_id = dl.has_member("download_identifier") ? dl.get_string_member("download_identifier") : null;
-							refresh = process_download(id, dl_id, os, dl);
+							add_installer(id, dl_id, os, dl);
 						}
 						break;
-				}
-
-				if(refresh && !game_info_refreshed)
-				{
-					game_info_refreshed = true;
-					game_info_updated = false;
-					installers.clear();
-					yield update_game_info();
-					yield update_installers();
-					return;
 				}
 			}
 
 			is_installable = installers.size > 0;
 
-			if(installers.size == 0 && source is Trove)
-			{
-				Utils.notify(
-					_("%s: no available installers").printf(name),
-					_("Cannot get Trove download URL.\nMake sure your Humble Monthly subscription is active."),
-					NotificationPriority.HIGH,
-					n => {
-						n.set_icon(new ThemedIcon("dialog-warning"));
-						var cached_icon = ImageCache.local_file(icon, @"$(source.id)/$(id)/icons/");
-						if(cached_icon != null && cached_icon.query_exists())
-						{
-							n.set_icon(new FileIcon(cached_icon));
-						}
-						return n;
-					}
-				);
-			}
+			return installers;
 		}
 
-		private bool process_download(string id, string? dl_id, string os, Json.Object dl_struct)
+		private void add_installer(string id, string? dl_id, string os, Json.Object dl_struct)
 		{
 			var platform = Platform.CURRENT;
 			foreach(var p in Platform.PLATFORMS)
@@ -340,32 +323,14 @@ namespace GameHub.Data.Sources.Humble
 					break;
 				}
 			}
+			installers.add(new Installer(this, id, dl_id, platform, dl_struct));
+		}
 
-			bool refresh = false;
-
-			var installer = new Installer(this, id, dl_id, platform, dl_struct);
-			if(installer.is_url_update_required())
-			{
-				if(source is Trove)
-				{
-					var old_url = installer.part.url;
-					var new_url = installer.update_url(this);
-					if(new_url != null)
-					{
-						var url_field = "\"%s\"";
-						info = info.replace(url_field.printf(old_url), url_field.printf(new_url));
-					}
-					refresh = true;
-				}
-				else
-				{
-					info = null;
-					refresh = true;
-				}
-			}
-			if(!refresh) installers.add(installer);
-
-			return refresh;
+		private void update_installer_url(string old_url, string new_url)
+		{
+			var url_field = "\"%s\"";
+			info = info.replace(url_field.printf(old_url), url_field.printf(new_url));
+			save();
 		}
 
 		public override async void run(){ yield run_executable(); }
@@ -387,79 +352,162 @@ namespace GameHub.Data.Sources.Humble
 			}
 		}
 
-		public class Installer: DownloadableInstaller
+		public class Installer: Runnables.Tasks.Install.DownloadableInstaller
 		{
-			private File? installers_dir;
+			public HumbleGame game { get; construct set; }
+			public Json.Object json { get; construct set; }
+			public string? download_identifier { private get; construct set; }
+			public DownloadableInstaller.Part? part { private get; construct set; }
 
-			public string? dl_id;
-			public DownloadableInstaller.Part part;
-
-			public Installer(HumbleGame game, string machine_name, string? download_identifier, Platform platform, Json.Object download)
+			public Installer(HumbleGame game, string machine_name, string? download_identifier, Platform platform, Json.Object json)
 			{
-				id = machine_name;
-				this.platform = platform;
-				dl_id = download_identifier;
-				name = download.has_member("name") ? download.get_string_member("name") : game.name;
-				var url_obj = download.has_member("url") ? download.get_object_member("url") : null;
+				Object(
+					game: game,
+					json: json,
+					id: machine_name,
+					download_identifier: download_identifier,
+					name: json.has_member("name") ? json.get_string_member("name") : game.name,
+					platform: platform,
+					full_size: json.has_member("file_size") ? json.get_int_member("file_size") : 0,
+					installers_dir: FS.file(Settings.Paths.Collection.Humble.expand_installers(game.name, platform))
+				);
+			}
+
+			public override async void fetch_parts()
+			{
+				if(part != null || installers_dir == null) return;
+
+				var url_obj = json.has_member("url") ? json.get_object_member("url") : null;
 				var url = url_obj != null && url_obj.has_member("web") ? url_obj.get_string_member("web") : "";
-				full_size = download.has_member("file_size") ? download.get_int_member("file_size") : 0;
-
-				//installers_dir = FS.file(FS.Paths.Collection.Humble.expand_installers(game.name, platform)) ?? game.installers_dir;
-
-				if(installers_dir == null) return;
-
-				var remote = File.new_for_uri(url);
-				var local = installers_dir.get_child("humble_" + game.id + "_" + id);
 
 				string? hash = null;
 				ChecksumType hash_type = ChecksumType.MD5;
 
-				if(download.has_member("md5"))
+				if(json.has_member("md5"))
 				{
-					hash = download.get_string_member("md5");
+					hash = json.get_string_member("md5");
 					hash_type = ChecksumType.MD5;
 				}
-				else if(download.has_member("sha1"))
+				else if(json.has_member("sha1"))
 				{
-					hash = download.get_string_member("sha1");
+					hash = json.get_string_member("sha1");
 					hash_type = ChecksumType.SHA1;
 				}
-				else if(download.has_member("sha256"))
+				else if(json.has_member("sha256"))
 				{
-					hash = download.get_string_member("sha256");
+					hash = json.get_string_member("sha256");
 					hash_type = ChecksumType.SHA256;
 				}
 
-				part = new DownloadableInstaller.Part(id, url, full_size, remote, local, hash, hash_type);
+				var updated_url = yield update_url(url);
+
+				var remote = File.new_for_uri(updated_url);
+				var local = installers_dir.get_child(download_identifier ?? "humble_" + game.id + "_" + id);
+
+				part = new Part(id, updated_url, full_size, remote, local, hash, hash_type);
 				parts.add(part);
 			}
 
-			public bool is_url_update_required()
+			private bool is_url_update_required(string url)
 			{
-				if(part.url == null || part.url.length == 0 || part.url.has_prefix("humble-trove-unsigned://")) return true;
-				if(!part.url.contains("&ttl=")) return false;
-				var ttl_string = part.url.split("&ttl=")[1].split("&")[0];
+				if(url == null || url.length == 0 || url.has_prefix("humble-trove-unsigned://")) return true;
+				if(!url.contains("&ttl=")) return false;
+				var ttl_string = url.split("&ttl=")[1].split("&")[0];
 				var ttl = new DateTime.from_unix_utc(int64.parse(ttl_string));
 				var now = new DateTime.now_utc();
 				var res = ttl.compare(now);
 				return res != 1;
 			}
 
-			public string? update_url(HumbleGame game)
+			private async string? update_url(string? url)
 			{
-				if(!(game.source is Trove) || !is_url_update_required()) return null;
+				if(!is_url_update_required(url)) return url;
 
-				var new_url = Trove.sign_url(id, dl_id, ((Humble) game.source).user_token);
-
-				if(GameHub.Application.log_verbose)
+				if(game.source is Trove)
 				{
-					debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s)", part.url, game.full_id);
-					debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s)", new_url, game.full_id);
+					var new_url = yield Trove.sign_url(id, download_identifier, ((Humble) game.source).user_token);
+
+					if(GameHub.Application.log_verbose)
+					{
+						debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s)", url, game.full_id);
+						debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s)", new_url, game.full_id);
+					}
+
+					if(new_url != null)
+					{
+						game.update_installer_url(url, new_url);
+						return new_url;
+					}
+					else
+					{
+						Utils.notify(
+							_("%s: no available installers").printf(game.name),
+							_("Cannot get Trove download URL.\nMake sure your subscription is active."),
+							NotificationPriority.HIGH,
+							n => {
+								n.set_icon(new ThemedIcon("dialog-warning"));
+								var cached_icon = ImageCache.local_file(game.icon, @"$(game.source.id)/$(game.id)/icons/");
+								if(cached_icon != null && cached_icon.query_exists())
+								{
+									n.set_icon(new FileIcon(cached_icon));
+								}
+								return n;
+							}
+						);
+					}
 				}
+				else
+				{
+					var token = ((Humble) game.source).user_token;
+					var headers = new HashMap<string, string>();
+					headers["Cookie"] = @"$(Humble.AUTH_COOKIE)=\"$(token)\";";
+					var root_node = yield Parser.parse_remote_json_file_async(@"https://humblebundle.com/api/v1/order/$(game.order_id)?ajax=true", "GET", null, headers);
+					if(root_node == null || root_node.get_node_type() != Json.NodeType.OBJECT) return url;
+					var root = root_node.get_object();
+					if(root == null) return url;
+					var products = root.get_array_member("subproducts");
+					if(products == null) return url;
+					foreach(var product_node in products.get_elements())
+					{
+						var product = product_node.get_object();
+						if(product == null) continue;
 
-				if(new_url != null) part.url = new_url;
+						if(product.get_string_member("machine_name") != game.id) continue;
+						game.info = Json.to_string(product_node, false);
+						game.save();
 
-				return new_url;
+						if(product.has_member("downloads"))
+						{
+							var downloads_node = product.get_member("downloads");
+							if(downloads_node.get_node_type() == Json.NodeType.ARRAY)
+							{
+								foreach(var dl_node in downloads_node.get_array().get_elements())
+								{
+									var dl = dl_node.get_object();
+									var id = dl.get_string_member("machine_name");
+									if(id == this.id)
+									{
+										if(dl.has_member("download_struct") && dl.get_member("download_struct").get_node_type() == Json.NodeType.ARRAY)
+										{
+											foreach(var dls_node in dl.get_array_member("download_struct").get_elements())
+											{
+												var new_url = dls_node.get_object().get_object_member("url").get_string_member("web");
+												if(GameHub.Application.log_verbose)
+												{
+													debug("[HumbleGame.Installer.update_url] Old URL: '%s'; (%s)", url, game.full_id);
+													debug("[HumbleGame.Installer.update_url] New URL: '%s'; (%s)", new_url, game.full_id);
+												}
+												return new_url;
+											}
+										}
+									}
+								}
+							}
+						}
+						break;
+					}
+				}
+				return url;
 			}
 		}
 	}

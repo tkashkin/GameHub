@@ -238,5 +238,54 @@ namespace GameHub.Data.Sources.Humble
 
 			return _games;
 		}
+
+		public override ArrayList<File>? game_dirs
+		{
+			owned get
+			{
+				ArrayList<File>? dirs = null;
+
+				var paths = GameHub.Settings.Paths.Humble.instance.game_directories;
+				if(paths != null && paths.length > 0)
+				{
+					foreach(var path in paths)
+					{
+						if(path != null && path.length > 0)
+						{
+							var dir = FS.file(path);
+							if(dir != null)
+							{
+								if(dirs == null) dirs = new ArrayList<File>();
+								dirs.add(dir);
+							}
+						}
+					}
+				}
+
+				return dirs;
+			}
+		}
+
+		public override File? default_game_dir
+		{
+			owned get
+			{
+				var path = GameHub.Settings.Paths.Humble.instance.default_game_directory;
+				if(path != null && path.length > 0)
+				{
+					var dir = FS.file(path);
+					if(dir != null && dir.query_exists())
+					{
+						return dir;
+					}
+				}
+				var dirs = game_dirs;
+				if(dirs != null && dirs.size > 0)
+				{
+					return dirs.first();
+				}
+				return null;
+			}
+		}
 	}
 }

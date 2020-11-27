@@ -92,7 +92,6 @@ namespace GameHub.Data.Runnables.Tasks.Install
 					if(compat_runnable == null || task.selected_compat_tool == null || !task.selected_compat_tool.can_install(compat_runnable, task)) return false;
 					yield task.selected_compat_tool.install(compat_runnable, task, file);
 					return true;
-					break;
 
 				case InstallerType.ARCHIVE:
 				case InstallerType.WINDOWS_NSIS_INSTALLER:
@@ -253,6 +252,8 @@ namespace GameHub.Data.Runnables.Tasks.Install
 				uint current_part = 1;
 				foreach(var part in parts)
 				{
+					debug("[DownloadableInstaller.download] Part %u: `%s`", current_part, part.remote.get_uri());
+
 					FS.mkdir(part.local.get_parent().get_path());
 
 					var ds_id = Downloader.download_manager().file_download_started.connect(dl => {
@@ -330,7 +331,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			catch(IOError.CANCELLED e){}
 			catch(Error e)
 			{
-				warning("[DownloadableInstaller.download] %s", e.message);
+				warning("[DownloadableInstaller.download] Error: %s", e.message);
 			}
 			task.status = new InstallTask.Status();
 			return files;
