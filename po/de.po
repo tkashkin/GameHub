@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-04-18 05:11+0000\n"
+"PO-Revision-Date: 2020-12-27 11:02+0000\n"
 "Last-Translator: Sascha Bohrmann <github@dakunier.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.2-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -633,12 +633,12 @@ msgstr "Plattformsymbole anzeigen"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
 msgid "Card size"
-msgstr ""
+msgstr "Kartengröße"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
 msgctxt "grid_size_preset"
 msgid "Presets"
-msgstr ""
+msgstr "Voreinstellungen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 msgid "Games list: installed"
@@ -797,7 +797,7 @@ msgstr "Tweaks"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr ""
+msgstr "Tweak Optionen und Automatische Anwendung für Spiele"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
