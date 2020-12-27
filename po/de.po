@@ -12,13 +12,14 @@
 # Sascha Bohrmann <weblate@saschabohrmann.de>, 2020.
 # Sascha Bohrmann <github@dakunier.de>, 2020.
 # Jeannette L <j.lavoie@net-c.ca>, 2020.
+# J. Lavoie <j.lavoie@net-c.ca>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
 "PO-Revision-Date: 2020-12-27 11:02+0000\n"
-"Last-Translator: Sascha Bohrmann <github@dakunier.de>\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -511,7 +512,7 @@ msgstr "Autor"
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "Alternativ"
 
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
@@ -622,9 +623,8 @@ msgid "Icon style"
 msgstr "Symbol-Stil"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
-#, fuzzy
 msgid "Game card"
-msgstr "Spielname"
+msgstr "Spielkarte"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
 msgid "Show platform icons"
@@ -708,7 +708,6 @@ msgid "Collection"
 msgstr "Sammlung"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
-#, fuzzy
 msgid "Empty"
 msgstr "Leer"
 
