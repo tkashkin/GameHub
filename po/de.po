@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-12-27 11:02+0000\n"
+"PO-Revision-Date: 2020-12-28 11:29+0000\n"
 "Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
@@ -210,7 +210,7 @@ msgstr "Installiert"
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr "Installation"
+msgstr "Installation …"
 
 #: src/data/Game.vala:630
 msgctxt "status"
@@ -462,7 +462,7 @@ msgstr "Nicht gruppieren"
 #: src/data/adapters/GamesAdapter.vala:706
 msgctxt "group_mode"
 msgid "By status"
-msgstr "nach Status"
+msgstr "Nach Status"
 
 #: src/data/adapters/GamesAdapter.vala:707
 msgctxt "group_mode"
@@ -497,7 +497,7 @@ msgstr "Schlüssel generieren"
 #: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr "Design"
+msgstr "Stil"
 
 #: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
@@ -554,12 +554,12 @@ msgstr "Einstellungen"
 #: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr "Offizielle Webseite"
+msgstr "Offizielle Website"
 
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr "Zeige die Beschreibung, sollte das Spiel eine besitzen"
+msgstr "Hat das Spiel eine Beschreibung, zeige"
 
 #: src/data/providers/data/IGDB.vala:476
 msgctxt "igdb_preferred_description"
@@ -796,7 +796,8 @@ msgstr "Tweaks"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr "Tweak Optionen und Automatische Anwendung für Spiele"
+msgstr ""
+"Optimieren Sie die Startoptionen und wenden Sie sie automatisch auf Spiele an"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
