@@ -378,7 +378,7 @@ msgstr "Ejecutar taskmgr"
 
 #: src/data/compat/Wine.vala:53
 msgid "Wine prefix"
-msgstr "Prefijo de Wine"
+msgstr "Prefijo Wine"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
