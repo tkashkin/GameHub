@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
-# Amaro Martínez <xoas@airmail.cc>, 2020.
+# Amaro Martínez <xoas@airmail.cc>, 2020, 2021.
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
 # Adrián López Galera <adrlopgal@disroot.org>, 2021.
 msgid ""
@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
 "PO-Revision-Date: 2021-01-08 11:20+0000\n"
-"Last-Translator: Adrián López Galera <adrlopgal@disroot.org>\n"
+"Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gamehub/"
 "translations/es/>\n"
 "Language: es\n"
@@ -26,7 +26,7 @@ msgstr "Mostrar ayuda"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr "Mostrar versión de la aplicación y salir"
+msgstr "Mostrar versión de aplicación y salir"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
