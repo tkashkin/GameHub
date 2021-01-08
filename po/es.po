@@ -884,7 +884,7 @@ msgstr "Emuladores"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 msgid "Libretro core directory"
-msgstr "Directorio de núcleos de Libretro"
+msgstr "Directorio de núcleos de libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
 msgid "Libretro core info directory"
