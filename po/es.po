@@ -888,7 +888,7 @@ msgstr "Directorio de núcleos de libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
 msgid "Libretro core info directory"
-msgstr "Directorio de información de núcleos de Libretro"
+msgstr "Directorio de información de núcleos de libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
