@@ -390,7 +390,7 @@ msgstr "Opciones predeterminadas de InnoSetup"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
-msgstr "Archivo del núcleo de Libretro"
+msgstr "Archivo de núcleo de libretro"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
