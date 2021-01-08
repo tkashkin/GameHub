@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Amaro Martínez <xoas@airmail.cc>, 2020.
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
+# Adrián López Galera <adrlopgal@disroot.org>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-11-29 07:29+0000\n"
-"Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
+"PO-Revision-Date: 2021-01-08 11:20+0000\n"
+"Last-Translator: Adrián López Galera <adrlopgal@disroot.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gamehub/"
 "translations/es/>\n"
 "Language: es\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -25,7 +26,7 @@ msgstr "Mostrar ayuda"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr "Mostrar versión de aplicación y salir"
+msgstr "Mostrar versión de la aplicación y salir"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
@@ -151,7 +152,7 @@ msgstr "%s: instalador dañado"
 #: src/data/Runnable.vala:643
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr ""
+msgstr "La comprobación de integridad no coincide en %s"
 
 #: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
@@ -162,22 +163,24 @@ msgstr "Mostrar archivo"
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
-msgstr ""
+msgstr "Eliminar"
 
 #: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
-msgstr ""
+msgstr "Respaldar"
 
 #: src/data/Runnable.vala:778
 #, c-format
 msgid "%s: cannot detect main executable"
-msgstr ""
+msgstr "%s: no puede detectar el ejecutable principal"
 
 #: src/data/Runnable.vala:779
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"El ejecutable principal de este juego no puede detectarse automáticamente.\n"
+"Por favor, establezca el ejecutable principal en las propiedades del juego."
 
 #: src/data/Runnable.vala:908
 msgctxt "platform"
@@ -375,7 +378,7 @@ msgstr "Ejecutar taskmgr"
 
 #: src/data/compat/Wine.vala:53
 msgid "Wine prefix"
-msgstr "Prefijo Wine"
+msgstr "Prefijo de Wine"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
@@ -387,7 +390,7 @@ msgstr "Opciones predeterminadas de InnoSetup"
 
 #: src/data/compat/RetroArch.vala:53
 msgid "Libretro core file"
-msgstr "Archivo de núcleo de libretro"
+msgstr "Archivo del núcleo de Libretro"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
@@ -499,12 +502,12 @@ msgstr "Autor"
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "Alternar"
 
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "Borroso"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:228
@@ -515,18 +518,20 @@ msgstr "Material"
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "Sin logo"
 
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr ""
+msgstr "Logo blanco"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
 "Monthly IGDB request quota has been reached. Set your own API key to use "
 "IGDB data or disable IGDB."
 msgstr ""
+"Ha alcanzado la cuota mensual de IGDB. Establezca su propia clave API para "
+"usar los datos de IGDB o deshabilite IGDB."
 
 #: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
@@ -590,7 +595,7 @@ msgstr "Tema oscuro"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr "Basado en tema"
+msgstr "Basado en el tema"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
@@ -649,12 +654,12 @@ msgstr "Título en negrita"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:148
 msgctxt "list_style"
 msgid "Show status"
-msgstr ""
+msgstr "Mostrar estado"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
-msgstr ""
+msgstr "Turbio"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
 msgid "Grid options"
@@ -794,7 +799,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "Haga clic para abrir"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
@@ -879,11 +884,11 @@ msgstr "Emuladores"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 msgid "Libretro core directory"
-msgstr "Directorio de núcleos de libretro"
+msgstr "Directorio de núcleos de Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
 msgid "Libretro core info directory"
-msgstr "Directorio de información de núcleos de libretro"
+msgstr "Directorio de información de núcleos de Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
@@ -972,16 +977,16 @@ msgstr "Directorio"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 msgid "Select emulator directory"
-msgstr ""
+msgstr "Seleccione el directorio del emulador"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
 #: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Force compatibility mode"
-msgstr ""
+msgstr "Forzar modo de compatibilidad"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:307
 msgid "Game file patterns"
-msgstr ""
+msgstr "Patrones de archivos de juego"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:315
 msgid "Image"
@@ -1000,6 +1005,13 @@ msgid ""
 "<b>•</b> $<b>basename</b> variable will be replaced with game's executable "
 "name (without extension)"
 msgstr ""
+"Patrones glob compatibles con <b>findutils</b>\n"
+"\n"
+"<b>•</b> Múltiples patrones pueden separarse con <b>|</b>\n"
+"<b>•</b> Comenzar patrón con <b>./</b> para coincidir con la ruta relativa. "
+"\n"
+"<b>•</b> La variable $<b>basename</b> será reemplazada con el nombre del "
+"ejecutable del juego (sin la extensión)"
 
 #: src/ui/dialogs/SettingsDialog/pages/providers/Providers.vala:38
 msgid "Data"
@@ -1031,7 +1043,7 @@ msgstr "Acerca de"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:71
 msgid "Copy application version and environment info"
-msgstr "Copiar versión de aplicación e información de entorno"
+msgstr "Copiar versión de la aplicación e información de entorno"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:78
 #: src/ui/views/WelcomeView.vala:57
@@ -1082,7 +1094,7 @@ msgstr "Bifurcaciones"
 #: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 #: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
@@ -1091,16 +1103,16 @@ msgstr "Descargar"
 
 #: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
-msgstr ""
+msgstr "Seleccionar instalador"
 
 #: src/ui/dialogs/InstallDialog.vala:216
 #, c-format
 msgid "Installer size: %s"
-msgstr ""
+msgstr "Tamaño del instalador: %s"
 
 #: src/ui/dialogs/InstallDialog.vala:348
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocido"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:49
 #, c-format
@@ -1131,11 +1143,11 @@ msgstr "URL de icono"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
 msgid "Select working directory"
-msgstr ""
+msgstr "Seleccionar directorio de trabajo"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
 msgid "Working directory"
-msgstr ""
+msgstr "Directorio de trabajo"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
@@ -1143,11 +1155,11 @@ msgstr "Compatibilidad"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:236
 msgid "Launch from terminal"
-msgstr ""
+msgstr "Ejecutar desde la terminal"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:252
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Copiar al portapapeles"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:254
 msgid "Add to Steam"
@@ -1172,6 +1184,9 @@ msgid ""
 "\n"
 "Enabling will move game to the “base“ overlay"
 msgstr ""
+"Habilitar superposiciones para gestionar DLCs y mods.\n"
+"\n"
+"Habilitarlas moverá el juego a la capa incrustada \"base\""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:175
@@ -1202,6 +1217,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"El uso de superposiciones puede ser inseguro en este directorio\n"
+"Proceda bajo su propio riesgo\n"
+"\n"
+"Directorio: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1210,6 +1229,9 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"El uso de superposiciones no está soportado en este directorio\n"
+"\n"
+"Directorio: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
@@ -1227,12 +1249,12 @@ msgstr "Ejecutar con capa de compatibilidad"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
-msgstr ""
+msgstr "Instalador dañado: la comprobación de integridad no coincide en"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
 msgid "Import emulated games"
-msgstr ""
+msgstr "Importar juegos emulados"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
 msgid "Select directory with emulated games"
@@ -1248,7 +1270,7 @@ msgstr "Seleccionar todo"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
 msgid "Select directory to import"
-msgstr ""
+msgstr "Seleccione el directorio que importar"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
 #, c-format
@@ -1383,13 +1405,15 @@ msgstr "Ningún juego coincide con «%s»"
 #: src/ui/views/GamesView/GamesView.vala:589
 #, c-format
 msgid "No %1$s games matching “%2$s”"
-msgstr ""
+msgstr "Ningún %1$s juego coincide con “%2$s”"
 
 #: src/ui/views/GamesView/GamesView.vala:627
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
+"No se ha cargado ningún juego desde Steam. Establezca su lista de juegos a "
+"pública o use su propia API de Steam en Ajustes."
 
 #: src/ui/views/GamesView/GamesView.vala:628
 msgid "Privacy"
@@ -1538,7 +1562,11 @@ msgid ""
 msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
 msgstr[0] ""
+"%d juego se eliminará de la base de datos. Reinicie GameHub para extraer los "
+"nuevos datos"
 msgstr[1] ""
+"%d juegos se eliminarán de la base de datos. Reinicie GameHub para extraer "
+"los nuevos datos"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 msgid "Open store page"
