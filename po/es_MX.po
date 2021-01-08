@@ -4,13 +4,14 @@
 # juliomorales98 <juliocesar.mr@protonmail.com>, 2019.
 # Anderson Guzman Abreu <chicobello1111@gmail.com>, 2020.
 # Eldhrimer <vico.220895@gmail.com>, 2020.
+# Adrián López Galera <adrlopgal@disroot.org>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-11-04 19:27+0000\n"
-"Last-Translator: Eldhrimer <vico.220895@gmail.com>\n"
+"PO-Revision-Date: 2021-01-09 20:32+0000\n"
+"Last-Translator: Adrián López Galera <adrlopgal@disroot.org>\n"
 "Language-Team: Spanish (Mexico) <https://hosted.weblate.org/projects/gamehub/"
 "translations/es_MX/>\n"
 "Language: es_MX\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -271,7 +272,7 @@ msgid ""
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
 "No se pudo obtener URL de descarga de Trove. \n"
-"Asegúrate que tu suscripción Humble Monthly está activa."
+"Asegúrate de que tu suscripción Humble Monthly está activa."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
