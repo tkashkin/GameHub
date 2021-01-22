@@ -7,131 +7,135 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-01-22 23:49+0000\n"
+"Last-Translator: WALKTHROUGH RAYMAND LEGENDS <mestermc594@gmail.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gamehub/"
+"translations/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr ""
+msgstr "Segítség mutatása"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Az alkalmazás verziójának megjelenítése és kilépés"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Indítsa újra a csatolt GDB hibakeresővel"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "A teljes GDB visszajelzés megjelenítése"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "A végzetes hibákat kritikusként és összeomlási alkalmazásként kezelje"
 
 #: src/app.vala:99
 msgid "Show main window"
-msgstr ""
+msgstr "Főablak megjelenítése"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "Az alkalmazásbeállítások párbeszédpanel megjelenítése"
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr ""
+msgstr "Show about párbeszédpanel"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "A háttérben dolgozó szálak maximális száma"
 
 #: src/app.vala:106
 msgid "Run game"
-msgstr ""
+msgstr "Játék futtatása"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "Kompatibilitási beállítások párbeszédpanel megjelenítése"
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr ""
+msgstr "Játék részletei"
 
 #: src/app.vala:109
 msgid "Open game properties"
-msgstr ""
+msgstr "Játék tulajdonsági"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Engedélyezze a hibakeresési naplózást"
 
 #: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Napló hitelesítési folyamat és bizalmas információk, például hitelesítési "
+"tokenek"
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr ""
+msgstr "Napló letöltési kezelő"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "A hátterében dolgozók indulnak / leállnak"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Tiltsa le a naplóüzenetek szűrését"
 
 #: src/app.vala:118
 msgid "Verbose logging"
-msgstr ""
+msgstr "Részletes naplózás"
 
 #: src/app.vala:247
 msgid "Game Options:"
-msgstr ""
+msgstr "Játék opciók:"
 
 #: src/app.vala:247
 msgid "Show game options help"
-msgstr ""
+msgstr "A játékopciók segítsége"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr ""
+msgstr "Naplózási lehetőségek:"
 
 #: src/app.vala:255
 msgid "Show logging options help"
-msgstr ""
+msgstr "A naplózási opciók megjelenítése"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
-msgstr ""
+msgstr "Válassza ki a végrehajtható fájlt"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "Kiválaszt"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr ""
+msgstr "Mappa kiválasztása"
 
 #: src/data/Runnable.vala:619
 #, c-format
@@ -150,84 +154,86 @@ msgstr ""
 
 #: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
-msgstr ""
+msgstr "Fájl megjelenítése"
 
 #: src/data/Runnable.vala:658 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
-msgstr ""
+msgstr "Eltávolítás"
 
 #: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
-msgstr ""
+msgstr "Biztonsági mentés"
 
 #: src/data/Runnable.vala:778
 #, c-format
 msgid "%s: cannot detect main executable"
-msgstr ""
+msgstr "%s: nem ismeri fel a futtatható fájlt"
 
 #: src/data/Runnable.vala:779
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"A játék fő futtatható fájlja nem ismerhető fel automatikusan.\n"
+" Kérjük, a fő tulajdonságot állítsa be a játék tulajdonságai között."
 
 #: src/data/Runnable.vala:908
 msgctxt "platform"
 msgid "Emulated"
-msgstr ""
+msgstr "Emulált"
 
 #: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "Éppen fut"
 
 #: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "Telepítve"
 
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "Telepítés"
 
 #: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr ""
+msgstr "A telepítő integritásának ellenőrzése"
 
 #: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
-msgstr ""
+msgstr "A letöltés megkezdődött"
 
 #: src/data/Game.vala:633
 msgctxt "status"
 msgid "Not installed"
-msgstr ""
+msgstr "Nincs telepítve"
 
 #: src/data/Game.vala:643
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "Telepítve"
 
 #: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "Telepítés"
 
 #: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "Letöltés"
 
 #: src/data/Game.vala:648
 msgctxt "status_header"
 msgid "Not installed"
-msgstr ""
+msgstr "Nincs telepítve"
 
 #: src/data/GameSource.vala:31
 #, c-format
@@ -236,13 +242,15 @@ msgstr ""
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr ""
+msgstr "A SteamID-t a Steam konfigurációs fájlból olvassa le"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
+"A Steam konfigurációs fájl nem található. Jelentkezzen be fiókjába a Steam "
+"kliensben, és térjen vissza a GameHub-ba"
 
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
@@ -286,27 +294,27 @@ msgstr ""
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr ""
+msgstr "Felhasználó játékai"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "Kedvencek"
 
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
 msgid "Not installed"
-msgstr ""
+msgstr "Nincs telepítve"
 
 #: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
-msgstr ""
+msgstr "Telepítve"
 
 #: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "Rejtett"
 
 #: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
@@ -330,11 +338,11 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
-msgstr ""
+msgstr "Fut"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
-msgstr ""
+msgstr "A WineWrap menü megjelenítése"
 
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
 #: src/data/compat/Wine.vala:83
