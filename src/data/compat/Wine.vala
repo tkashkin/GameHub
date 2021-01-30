@@ -318,7 +318,12 @@ namespace GameHub.Data.Compat
 				}
 			}
 
-			yield Utils.run(cmd).dir(runnable.install_dir.get_path()).env(prepare_env(runnable)).run_sync_thread();
+			var task = Utils.run(cmd).dir(runnable.install_dir.get_path()).env(prepare_env(runnable));
+			if(runnable is TweakableGame)
+			{
+				task.tweaks(((TweakableGame) runnable).get_enabled_tweaks(this));
+			}
+			yield task.run_sync_thread();
 		}
 
 		protected async void winetricks(Runnable runnable)
