@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
-# Oymate <dhruboadittya96@gmail.com>, 2020.
+# Oymate <dhruboadittya96@gmail.com>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-05-04 12:11+0000\n"
+"PO-Revision-Date: 2021-02-01 06:42+0000\n"
 "Last-Translator: Oymate <dhruboadittya96@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) <https://hosted.weblate.org/projects/"
 "gamehub/translations/bn_BD/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -124,13 +124,13 @@ msgstr ""
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "নির্বাচন করো"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "বাতিল"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
@@ -160,11 +160,11 @@ msgstr ""
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
-msgstr ""
+msgstr "সরাও"
 
 #: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
-msgstr ""
+msgstr "ব্যাকআপ"
 
 #: src/data/Runnable.vala:778
 #, c-format
@@ -180,22 +180,22 @@ msgstr ""
 #: src/data/Runnable.vala:908
 msgctxt "platform"
 msgid "Emulated"
-msgstr ""
+msgstr "এমুলেটেড"
 
 #: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "চলমান"
 
 #: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "ইনস্টলকৃত"
 
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "ইনস্টল করা হচ্ছে"
 
 #: src/data/Game.vala:630
 msgctxt "status"
@@ -215,17 +215,17 @@ msgstr ""
 #: src/data/Game.vala:643
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "ইনস্টলকৃত"
 
 #: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "ইনস্টল করা হচ্ছে"
 
 #: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "ডাউনলোড করা হচ্ছে"
 
 #: src/data/Game.vala:648
 msgctxt "status_header"
@@ -282,10 +282,10 @@ msgid "(%1$s / %2$s)"
 msgstr ""
 
 #: src/data/sources/itch/ItchDownloader.vala:201
-#, c-format
+#, c-format, fuzzy
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -294,7 +294,7 @@ msgstr ""
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "পছন্দ"
 
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
@@ -304,12 +304,12 @@ msgstr ""
 #: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
-msgstr ""
+msgstr "ইনস্টলকৃত"
 
 #: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "লুকায়িত"
 
 #: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
@@ -333,7 +333,7 @@ msgstr ""
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
 msgid "Run"
-msgstr ""
+msgstr "চালাও"
 
 #: src/data/compat/WineWrap.vala:64
 msgid "Show WineWrap menu"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: src/data/compat/CustomEmulator.vala:48
 msgid "Emulator"
-msgstr ""
+msgstr "এমুলেটর"
 
 #: src/data/compat/CustomEmulator.vala:49
 msgid "Launch in game directory"
@@ -395,7 +395,7 @@ msgstr ""
 #: src/data/adapters/GamesAdapter.vala:440
 msgctxt "status_header"
 msgid "Favorites"
-msgstr ""
+msgstr "পছন্দ"
 
 #: src/data/adapters/GamesAdapter.vala:445
 #, c-format
@@ -451,7 +451,7 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
-msgstr ""
+msgstr "ডিফল্ট"
 
 #: src/data/providers/images/SteamGridDB.vala:158
 #: src/data/providers/data/IGDB.vala:438
@@ -475,33 +475,33 @@ msgstr ""
 #: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "শৈলী"
 
 #: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "স্কোর"
 
 #: src/data/providers/images/SteamGridDB.vala:213
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "লেখক"
 
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "বিকল্প"
 
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "ঝাপসাকৃত"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:228
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "উপাদান"
 
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
@@ -525,7 +525,7 @@ msgstr ""
 #: src/ui/views/GamesView/GamesView.vala:230
 #: src/ui/views/GamesView/GamesView.vala:629
 msgid "Settings"
-msgstr ""
+msgstr "সেটিংস"
 
 #: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
@@ -550,7 +550,7 @@ msgstr ""
 #: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "উভয়"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
@@ -579,17 +579,17 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr ""
+msgstr "থিম ভিত্তিক"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
-msgstr ""
+msgstr "প্রতীকী"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
-msgstr ""
+msgstr "রঙিন"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
@@ -612,7 +612,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
 msgctxt "grid_size_preset"
 msgid "Presets"
-msgstr ""
+msgstr "প্রিসেট"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 msgid "Games list: installed"
@@ -643,7 +643,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:149
 msgctxt "list_style"
 msgid "Dim"
-msgstr ""
+msgstr "ম্লান"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
 msgid "Grid options"
@@ -655,7 +655,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
-msgstr ""
+msgstr "আচরণ"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:32
 msgid "Behavior settings"
@@ -675,15 +675,15 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:51
 msgid "General"
-msgstr ""
+msgstr "সাধারণ"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:52
 msgid "Collection"
-msgstr ""
+msgstr "সংগ্রহ"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
 msgid "Empty"
-msgstr ""
+msgstr "খালি"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:65
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:85
@@ -699,12 +699,12 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
 msgid "Installers"
-msgstr ""
+msgstr "ইনস্টলার"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:98
 msgid "DLC"
-msgstr ""
+msgstr "ডিএলসি"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:197
@@ -722,16 +722,16 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:88
 #: src/ui/views/GamesView/FiltersPopover.vala:127
 msgid "Platform"
-msgstr ""
+msgstr "প্ল্যাটফর্ম"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:36
 msgid "Controller"
-msgstr ""
+msgstr "কন্ট্রোলার"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:37
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
 msgid "Enabled"
-msgstr ""
+msgstr "সক্রিয়"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:53
 msgid "Focus GameHub window with Guide button"
@@ -739,7 +739,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
-msgstr ""
+msgstr "কন্ট্রোলার"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
@@ -747,7 +747,7 @@ msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 msgid "Exit"
-msgstr ""
+msgstr "প্রস্থান"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:106
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:40
@@ -759,7 +759,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:36
 #: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:77
 msgid "Disabled"
-msgstr ""
+msgstr "নিষ্ক্রিয়"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:33
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:47
