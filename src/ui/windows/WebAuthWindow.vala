@@ -36,6 +36,7 @@ namespace GameHub.UI.Windows
 		private bool is_finished = false;
 
 		public signal void finished(string url);
+		public signal void pageLoaded(string page);
 		public signal void canceled();
 
 		private const string GOG_CSS = "body { background-color: #d2d2d2 !important; } ._modal__box { box-shadow: none !important; vertical-align: top !important; margin-top: 0 !important; } ._modal__control, .form__buttons-container, .form__separator { display: none !important; }";
@@ -129,16 +130,30 @@ namespace GameHub.UI.Windows
 						debug("[WebAuth/%s] Finished with result `%s`", source, token);
 					}
 					finished(token);
-					destroy();
+
+					//Execute javascript to extract page source
+					runJavascript.begin ("document.body.childNodes[0].textContent", (obj, res) => {
+						pageLoaded(runJavascript.end (res).get_js_value().to_string());
+						destroy();
+					});
 				}
+
+
 			});
 
 			webview.load_uri(url);
 
 			add(webview);
+			
 			#endif
 
 			destroy.connect(() => { if(!is_finished) canceled(); });
 		}
+
+		private async WebKit.JavascriptResult runJavascript(string script) {
+			return yield webview.run_javascript(script);
+		}
+		
+
 	}
 }

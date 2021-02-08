@@ -41,6 +41,8 @@ namespace GameHub.Utils
 				public string humble_games { get; set; }
 				public string itch_home { get; set; }
 				public string itch_games { get; set; }
+				public string legendary_command { get; set; }
+				public string epic_games { get; set; }
 
 				public Settings()
 				{

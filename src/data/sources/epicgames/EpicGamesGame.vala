@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with GameHub.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Gtk;
 
 using Gee;
 using GameHub.Data.DB;
@@ -50,11 +51,10 @@ namespace GameHub.Data.Sources.EpicGames
 		public override void update_status()
 		{
 			var state = Game.State.UNINSTALLED;
-			if (((EpicGames)source).legendary_wrapper.is_installed(id)) {
+			if (((EpicGames) source).legendary_wrapper.is_installed(id)) {
 				state = Game.State.INSTALLED;
 				debug ("New installed game: \tname = %s\t", name);
 			} else {
-
 				debug ("New not installed game: \tname = %s\t", name);
 			}
 			
@@ -116,52 +116,99 @@ namespace GameHub.Data.Sources.EpicGames
 		}
 		public override async void uninstall()
 		{
-			((EpicGames)source).legendary_wrapper.uninstall(id);
+			((EpicGames) source).legendary_wrapper.uninstall(id);
 			update_status();
 		}
 
 		public override async void run()
 		{
-			((EpicGames)source).legendary_wrapper.run(id);
+			((EpicGames) source).legendary_wrapper.run(id);
 		
+		}
+
+		public override void import(bool update=true)
+		{
+			var chooser = new FileChooserDialog(_("Select directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER);
+
+			chooser.add_button(_("Cancel"), ResponseType.CANCEL);
+			var select_btn = chooser.add_button(_("Select"), ResponseType.ACCEPT);
+
+			select_btn.get_style_context().add_class(Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+			select_btn.grab_default();
+
+			if(chooser.run() == ResponseType.ACCEPT)
+			{
+				install_dir = chooser.get_file();
+				((EpicGames) source).legendary_wrapper.import_game(id, install_dir.get_path());
+
+				if(update) {
+					update_status();
+					save();
+				}
+			}
+
+			chooser.destroy();
 		}
 
 		public class EpicGamesInstaller: Runnable.Installer
 		{
+			private FSUtils.Paths.Settings paths = FSUtils.Paths.Settings.instance;
 			public EpicGamesGame game;
-			public override string name { owned get { return "TEST"; } }
+			private EpicGames epic;
+			public override string name { owned get { return game.name; } }
+
+			private int64 _full_size = 0;
+			public override int64 full_size { 
+				get { 
+					if(_full_size != 0) return _full_size;
+					else {
+						var size = epic.legendary_wrapper.get_install_size (game.id);
+						_full_size = size;
+						return _full_size;
+					}
+					
+				}
+				set {}
+			}
 	
 			public EpicGamesInstaller(EpicGamesGame game, string id)
 			{
 				this.game = game;
 				id = id;
 				platform = Platform.CURRENT;
+				epic = (EpicGames)(game.source);
 			}
 
 			public override async void install(Runnable runnable, CompatTool? tool=null)
 			{
+				
 				EpicGamesGame? game = null;
 				if(runnable is EpicGamesGame)
 				{
 					game = runnable as EpicGamesGame;
 				}
 
-				EpicGames epic = (EpicGames)(game.source);
-
 				Utils.thread("EpicGamesGame.Installer", () => {
-					game.status = new Game.Status(Game.State.DOWNLOADING, game, null);
 
+					EpicDownload ed = new EpicDownload(game.id);
+					game.status = new Game.Status(Game.State.DOWNLOADING, game, ed);
+				
+					ed.cancelled.connect(() => {
+						epic.legendary_wrapper.cancel_installation();
+					});
+					
+					var game_folder = (paths.epic_games == null || paths.epic_games == "") ? null : paths.epic_games;
+					epic.legendary_wrapper.install(game.id, game_folder, progress => {
+						ed.status = new EpicDownload.EpicStatus(progress / 100);
+						game.status = new Game.Status(Game.State.DOWNLOADING, game, ed);
+					});
 
-					epic.legendary_wrapper.install(game.id);
 					Idle.add(install.callback);
 				});
 				yield;
 
 				if(game != null) game.status = new Game.Status(Game.State.INSTALLED, game, null);
-
-				runnable.update_status();
-
-				debug("install");
+				game.update_status();
 			}
 		}
 	}

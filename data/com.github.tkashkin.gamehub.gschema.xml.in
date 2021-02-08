@@ -146,6 +146,21 @@
 			</key>
 		</schema>
 
+		<schema path="@SCHEMA_PATH@/auth/epicgames/" id="@SCHEMA_ID@.auth.epicgames">
+			<key name="enabled" type="b">
+				<default>true</default>
+				<summary>Is EpicGames enabled</summary>
+			</key>
+			<key name="authenticated" type="b">
+				<default>false</default>
+				<summary>Is user authenticated</summary>
+			</key>
+			<key name="sid" type="s">
+				<default>''</default>
+				<summary>EpicGames access sid</summary>
+			</key>
+		</schema>
+
 		<schema path="@SCHEMA_PATH@/auth/gog/" id="@SCHEMA_ID@.auth.gog">
 			<key name="enabled" type="b">
 				<default>true</default>
@@ -220,6 +235,14 @@
 			<key name="itch-games" type="s">
 				<default>'~/Games/itch'</default>
 				<summary>itch.io games directory</summary>
+			</key>
+			<key name="legendary-command" type="s">
+				<default>'legendary'</default>
+				<summary>Legendary client command</summary>
+			</key>
+			<key name="epic-games" type="s">
+				<default>'~/legendary'</default>
+				<summary>EpicGames games directory</summary>
 			</key>
 		</schema>
 

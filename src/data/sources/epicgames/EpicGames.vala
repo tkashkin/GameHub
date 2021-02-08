@@ -26,18 +26,21 @@ namespace GameHub.Data.Sources.EpicGames
 	public class EpicGames: GameSource
 	{
 		public static EpicGames instance;
+
+		private bool? installed = null;
+		public File? legendary_executable = null;
 		
 		public override string id { get { return "epicgames"; } }
 		public override string name { get { return "EpicGames"; } }
 		public override string icon { get { return "source-epicgames-symbolic"; } }
 
-		private Regex regex = /\*\s*([^(]*)\s\(App\sname:\s([a-zA-Z0-9]+),\sversion:\s([^)]*)\)/;
+		private Settings.Auth.EpicGames settings;
+		private FSUtils.Paths.Settings paths = FSUtils.Paths.Settings.instance;
 
-		private bool enable = true;
 		public override bool enabled
 		{
-			get { return enable; }
-			set { enable = value; }
+			get { return settings.enabled; }
+			set { settings.enabled = value; }
 		}
 
 
@@ -50,42 +53,72 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			instance = this;
 			legendary_wrapper = new LegendaryWrapper();
+			settings = Settings.Auth.EpicGames.instance;
 		}
 
 		public override bool is_installed(bool refresh)
 		{
-			debug("[EpicGames] is_installed: NOT IMPLEMENTED");
-			return true;
+			/*
+			Epic games depends on
+			*/
+			if(installed != null && !refresh)
+			{
+				return (!) installed;
+			}
+
+			//check if legendary exists
+			var legendary = Utils.find_executable(paths.legendary_command);
+
+			if(legendary == null || !legendary.query_exists())
+			{
+				debug("[EpicGames] is_installed: Legendary not found");
+
+			}
+			else
+			{
+				debug("[EpicGames] is_installed: LegendaryYES");
+			}
+
+			legendary_executable = legendary;
+			installed = legendary_executable != null && legendary_executable.query_exists();
+
+			return (!) installed;
 		}
 
 		public override async bool install()
 		{
-			debug("[EpicGames] install: NOT IMPLEMENTED");
 			return true;
 		}
 
 		public override async bool authenticate()
 		{
-			debug("[EpicGames] authenticate: NOT IMPLEMENTED");
-			return true;
+			debug("[EpicGames] Performing auth");
+			var username = yield legendary_wrapper.auth();
+			settings.authenticated = username != null;
+			if(username != null) {
+				user_name = username;
+				return true;
+			}else return false;
 		}
 
 		public override bool is_authenticated()
 		{
-			debug("[EpicGames] is_authenticated: NOT IMPLEMENTED");
-			return true;
+			var result = legendary_wrapper.is_authenticated();
+			settings.authenticated = result;
+			
+			if (result) {
+				legendary_wrapper.get_username.begin ((obj, res) => {
+					user_name = legendary_wrapper.get_username.end (res);
+				});
+			}
+			
+			return result;
 		}
 
 		public override bool can_authenticate_automatically()
 		{
 			debug("[EpicGames] can_authenticate_automatically: NOT IMPLEMENTED");
-			return true;
-		}
-
-		public async bool refresh_token()
-		{
-			debug("[EpicGames] refresh_token: NOT IMPLEMENTED");
-			return true;
+			return false;
 		}
 
 		private ArrayList<Game> _games = new ArrayList<Game>(Game.is_equal);
@@ -133,6 +166,15 @@ namespace GameHub.Data.Sources.EpicGames
 				{
 					var g = new EpicGamesGame(this, game.name,  game.id);
 					bool is_new_game =  !_games.contains(g);
+					if(is_new_game && (!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(g)))
+					{
+						_games.add(g);
+						if(game_loaded != null)
+						{
+							game_loaded(g, false);
+						}
+					}
+
 					if(is_new_game) {
 						g.save();
 						if(game_loaded != null)

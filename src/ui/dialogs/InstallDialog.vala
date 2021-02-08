@@ -213,7 +213,11 @@ namespace GameHub.UI.Dialogs
 			}
 			else
 			{
-				subtitle_label.label = _("Installer size: %s").printf(fsize(installers[0].full_size));
+				subtitle_label.label = _("Installer size: calculating...");
+				Utils.thread("CalculatingFileSize", () => {
+					subtitle_label.label = _("Installer size: %s").printf(fsize(installers[0].full_size));
+				});
+				
 			}
 
 			Revealer? compat_tool_revealer = new Revealer();
@@ -374,7 +378,11 @@ namespace GameHub.UI.Dialogs
 				name.hexpand = true;
 				name.halign = Align.START;
 
-				var size = new Label(fsize(installer.full_size));
+				var size = new Label("calculating...");
+				Utils.thread("CalculatingFileSize", () => {
+					size.label = fsize(installer.full_size);
+				});
+
 				size.halign = Align.END;
 
 				box.add(icon);

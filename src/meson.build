@@ -108,7 +108,7 @@ sources = [
 	'ui/dialogs/SettingsDialog/pages/general/Collection.vala',
 	'ui/dialogs/SettingsDialog/pages/general/Tweaks.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Steam.vala',
-		'ui/dialogs/SettingsDialog/pages/sources/EpicGames.vala',
+	'ui/dialogs/SettingsDialog/pages/sources/EpicGames.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/GOG.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Humble.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Itch.vala',
@@ -191,7 +191,8 @@ sources = [
 	'settings/Tweaks.vala',
 
 	'utils/downloader/Downloader.vala',
-	'utils/downloader/SoupDownloader.vala'
+	'utils/downloader/SoupDownloader.vala',
+	'utils/downloader/EpicDownloader.vala'
 ]
 
 if get_option('os') == 'linux'
