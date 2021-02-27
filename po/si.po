@@ -7,14 +7,16 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-02-28 17:50+0000\n"
+"Last-Translator: HelaBasa <R45XvezA@protonmail.ch>\n"
+"Language-Team: Sinhala <https://hosted.weblate.org/projects/gamehub/"
+"translations/si/>\n"
 "Language: si\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.5\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -1720,7 +1722,7 @@ msgstr ""
 #: src/settings/UI.vala:155
 msgctxt "grid_size_preset"
 msgid "GOG"
-msgstr ""
+msgstr "GOG"
 
 #: src/settings/UI.vala:156
 msgctxt "grid_size_preset"
@@ -1771,23 +1773,23 @@ msgstr ""
 #: src/utils/downloader/Downloader.vala:210
 msgctxt "dl_status"
 msgid "Downloading"
-msgstr ""
+msgstr "බාගත වෙමින්"
 
 #: src/utils/downloader/Downloader.vala:214
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr ""
+msgstr "විරාමය: %s"
 
 #: src/utils/downloader/Downloader.vala:216
 msgctxt "dl_status"
 msgid "Paused"
-msgstr ""
+msgstr "විරාමයක්"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
 msgid "Download cancelled"
-msgstr ""
+msgstr "බාගත කිරීම අවලංගු කරන ලදි"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
