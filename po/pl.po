@@ -5,13 +5,14 @@
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 # Antek Karaś <antos.karas@gmail.com>, 2019, 2020.
 # Garreciq <adamzygiel@gmail.com>, 2020.
+# gnu-ewm <gnu.ewm@protonmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-04-29 07:11+0000\n"
-"Last-Translator: Antek Karaś <antos.karas@gmail.com>\n"
+"PO-Revision-Date: 2021-03-12 20:02+0000\n"
+"Last-Translator: gnu-ewm <gnu.ewm@protonmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
 "translations/pl/>\n"
 "Language: pl\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.0.2\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -669,14 +670,12 @@ msgid "Dim"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
-#, fuzzy
 msgid "Grid options"
-msgstr "Opcje gry:"
+msgstr "Opcje siatki"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
-#, fuzzy
 msgid "List options"
-msgstr "Opcje rejestrowania:"
+msgstr "Opcje listy"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -851,9 +850,9 @@ msgstr "Uwierzytelnienie wymagane"
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
 #: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:89
-#, fuzzy, c-format
+#, c-format
 msgid "Authenticated as <b>%s</b>"
-msgstr "Uwierzytelnianie..."
+msgstr "Uwierzytelniony jako <b>%s</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:120
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:101
@@ -1475,9 +1474,8 @@ msgid "Group"
 msgstr ""
 
 #: src/ui/views/GamesView/FiltersPopover.vala:102
-#, fuzzy
 msgid "Sort"
-msgstr "Sortuj:"
+msgstr "Sortuj"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
 #: src/ui/widgets/GameTagsList.vala:58
