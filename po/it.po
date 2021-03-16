@@ -4,13 +4,14 @@
 # Mirko Brombin <send@mirko.pm>, 2019.
 # Francesco Bisignani <tassobaramba2@gmail.com>, 2020.
 # Jeannette L <j.lavoie@net-c.ca>, 2020.
+# Alessandro Mandelli <mandelli.alessandro@ngi.it>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-04-25 13:11+0000\n"
-"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2021-03-17 20:18+0000\n"
+"Last-Translator: Alessandro Mandelli <mandelli.alessandro@ngi.it>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gamehub/"
 "translations/it/>\n"
 "Language: it\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0.2-dev\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -1613,9 +1614,9 @@ msgid "Languages"
 msgstr "Lingue"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
-#, fuzzy, c-format
+#, c-format
 msgid "%u DLCs cannot be installed"
-msgstr "%s : Installer corrotto"
+msgstr "%u DLCs non possono essere installati"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1812,10 +1813,10 @@ msgid "Download failed"
 msgstr "Download fallito"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "Scaricando"
+msgstr "Sto scaricando: %s"
 
 #: src/utils/downloader/Downloader.vala:210
 #, fuzzy
@@ -1824,10 +1825,10 @@ msgid "Downloading"
 msgstr "Scaricando"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "In pausa: %d%% (%s / %s)"
+msgstr "In pausa: %s"
 
 #: src/utils/downloader/Downloader.vala:216
 #, fuzzy
@@ -1842,10 +1843,10 @@ msgstr "Download cancellato"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "Scaricando: %d%% (%s / %s) [%s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "Disabilita esync"
