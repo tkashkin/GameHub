@@ -84,6 +84,13 @@ namespace GameHub.Utils.FS
 			public const string PackageInfoVDF = "appcache/packageinfo.vdf";
 		}
 
+		public class EpicGames
+		{
+			public const string Cache = Paths.Cache.Sources + "/epicgames";
+			public const string Manifests = Paths.EpicGames.Cache + "/manifests";
+			public const string Metadata = Paths.EpicGames.Cache + "/metadata";
+		}
+
 		public class Humble
 		{
 			public const string Cache = Paths.Cache.Sources + "/humble";

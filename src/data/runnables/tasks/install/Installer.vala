@@ -26,13 +26,16 @@ namespace GameHub.Data.Runnables.Tasks.Install
 {
 	public abstract class Installer: BaseObject
 	{
-		public string   id            { get; protected set; }
-		public string   name          { get; protected set; }
-		public Platform platform      { get; protected set; default = Platform.CURRENT; }
-		public int64    full_size     { get; protected set; default = 0; }
-		public string?  version       { get; protected set; }
-		public string?  language      { get; protected set; }
-		public string?  language_name { get; protected set; }
+		public string   id                   { get; protected set; }
+		public string   name                 { get; protected set; }
+		public Platform platform             { get; protected set; default = Platform.CURRENT; }
+		public int64    full_size            { get; protected set; default = 0; }
+		public string?  version              { get; protected set; }
+		public string?  language             { get; protected set; }
+		public string?  language_name        { get; protected set; }
+
+		// allow doing something on import
+		public bool     can_import           { get; protected set; default = false; }
 
 		public bool is_installable
 		{
@@ -43,6 +46,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 		}
 
 		public abstract async bool install(InstallTask task);
+		public virtual async bool import (InstallTask task) { return false; } // allow doing something on import
 	}
 
 	public abstract class FileInstaller: Installer

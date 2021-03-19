@@ -154,6 +154,21 @@
 			</key>
 		</schema>
 
+		<schema path="@SCHEMA_PATH@/auth/epicgames/" id="@SCHEMA_ID@.auth.epicgames">
+			<key name="enabled" type="b">
+				<default>true</default>
+				<summary>Is EpicGames enabled</summary>
+			</key>
+			<key name="authenticated" type="b">
+				<default>false</default>
+				<summary>Is user authenticated</summary>
+			</key>
+			<key name="userdata" type="s">
+				<default>''</default>
+				<summary>EpicGames userdata</summary>
+			</key>
+		</schema>
+
 		<schema path="@SCHEMA_PATH@/auth/gog/" id="@SCHEMA_ID@.auth.gog">
 			<key name="enabled" type="b">
 				<default>true</default>
@@ -212,6 +227,18 @@
 			<key name="home" type="s">
 				<default>'~/.local/share/Steam'</default>
 				<summary>Steam installation directory</summary>
+			</key>
+		</schema>
+
+	<!-- Paths / EpicGames -->
+		<schema path="@SCHEMA_PATH@/paths/epicgames/" id="@SCHEMA_ID@.paths.epicgames">
+			<key name="game-directories" type="as">
+				<default>['~/Games/EpicGames', '~/EpicGames Games']</default>
+				<summary>EpicGames game directories</summary>
+			</key>
+			<key name="default-game-directory" type="s">
+				<default>'~/Games/EpicGames'</default>
+				<summary>Default EpicGames games directory</summary>
 			</key>
 		</schema>
 

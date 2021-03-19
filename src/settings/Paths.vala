@@ -46,6 +46,30 @@ namespace GameHub.Settings.Paths
 		}
 	}
 
+	public class EpicGames: GameHub.Settings.SettingsSchema
+	{
+		public string[] game_directories { get; set; }
+		public string default_game_directory { get; set; }
+
+		public EpicGames()
+		{
+			base(ProjectConfig.PROJECT_NAME + ".paths.epicgames");
+		}
+
+		private static EpicGames _instance;
+		public static EpicGames instance
+		{
+			get
+			{
+				if(_instance == null)
+				{
+					_instance = new EpicGames();
+				}
+				return _instance;
+			}
+		}
+	}
+
 	public class GOG: GameHub.Settings.SettingsSchema
 	{
 		public string[] game_directories { get; set; }

@@ -140,6 +140,12 @@ namespace GameHub.Data.Runnables.Tasks.Install
 			if(cancelled) return;
 			if(install_dir_imported)
 			{
+				//  FIXME: hack to be able to do stuff on import
+				if(selected_installer.can_import)
+				{
+					yield selected_installer.import(this);
+				}
+				
 				warning("[InstallTask.install] Installation directory was imported, skipping installation");
 				return;
 			}

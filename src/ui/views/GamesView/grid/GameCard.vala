@@ -464,6 +464,11 @@ namespace GameHub.UI.Views.GamesView.Grid
 				updated_icon.visible = game is GameHub.Data.Sources.GOG.GOGGame && ((GameHub.Data.Sources.GOG.GOGGame) game).has_updates;
 				return Source.REMOVE;
 			}, Priority.LOW);
+
+			Idle.add(() => {
+				updated_icon.visible = game is GameHub.Data.Sources.EpicGames.EpicGame && ((GameHub.Data.Sources.EpicGames.EpicGame)game).has_updates;
+				return Source.REMOVE;
+			}, Priority.LOW);
 		}
 
 		private void update_appearance()

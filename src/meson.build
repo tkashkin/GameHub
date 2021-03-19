@@ -45,6 +45,16 @@ gh_sources = files(
 	'data/sources/steam/Steam.vala',
 	'data/sources/steam/SteamGame.vala',
 
+	'data/sources/epicgames/EpicAnalysis.vala',
+	'data/sources/epicgames/EpicChunk.vala',
+	'data/sources/epicgames/EpicDownloader.vala',
+	'data/sources/epicgames/EpicGame.vala',
+	'data/sources/epicgames/EpicGames.vala',
+	'data/sources/epicgames/EpicGamesServices.vala',
+	'data/sources/epicgames/EpicInstaller.vala',
+	'data/sources/epicgames/EpicManifest.vala',
+	'data/sources/epicgames/EpicUtils.vala',
+
 	'data/sources/gog/GOG.vala',
 	'data/sources/gog/GOGGame.vala',
 
@@ -117,6 +127,7 @@ gh_sources = files(
 	'ui/dialogs/SettingsDialog/pages/general/CompatTools.vala',
 	'ui/dialogs/SettingsDialog/pages/general/Tweaks.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Steam.vala',
+	'ui/dialogs/SettingsDialog/pages/sources/EpicGames.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/GOG.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Humble.vala',
 	'ui/dialogs/SettingsDialog/pages/sources/Itch.vala',
