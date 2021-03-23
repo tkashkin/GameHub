@@ -13,25 +13,22 @@ namespace GameHub.Data.Sources.EpicGames
 	//  the download manager
 	private class EpicDownloader: GameHub.Utils.Downloader.SoupDownloader.SoupDownloader
 	{
-		private ArrayQueue<string> dl_queue;
+		private ArrayQueue<string>              dl_queue;
 		private HashTable<string, DownloadInfo> dl_info;
 		private HashTable<string, EpicDownload> downloads;
-		private Session session;
+		private Session                         session = new Session();
 
-		private static string[] URL_SCHEMES = { "http", "https" };
+		private static string[] URL_SCHEMES        = { "http", "https" };
 		private static string[] FILENAME_BLACKLIST = { "download" };
 
 		internal EpicDownloader()
 		{
-			downloads = new HashTable<string, EpicDownload>(str_hash,
-			                                                str_equal);
-			dl_info = new HashTable<string, DownloadInfo>(str_hash,
-			                                              str_equal);
-			dl_queue = new ArrayQueue<string>();
-			session = new Session();
-			session.max_conns = 32;
+			downloads                  = new HashTable<string, EpicDownload>(str_hash, str_equal);
+			dl_info                    = new HashTable<string, DownloadInfo>(str_hash, str_equal);
+			dl_queue                   = new ArrayQueue<string>();
+			session.max_conns          = 32;
 			session.max_conns_per_host = 16;
-			session.user_agent = "EpicGamesLauncher/11.0.1-14907503+++Portal+Release-Live Windows/10.0.19041.1.256.64bit";
+			session.user_agent         = "EpicGamesLauncher/11.0.1-14907503+++Portal+Release-Live Windows/10.0.19041.1.256.64bit";
 			download_manager().add_downloader(this);
 		}
 
@@ -73,38 +70,34 @@ namespace GameHub.Data.Sources.EpicGames
 
 			foreach(var chunk_guid in installer.analysis.chunks_to_dl)
 			{
-				var chunk = installer.analysis.chunk_data_list.get_chunk_by_number(chunk_guid);
+				var chunk  = installer.analysis.chunk_data_list.get_chunk_by_number(chunk_guid);
 				var remote = File.new_for_uri(installer.analysis.base_url + "/" + chunk.path);
-				var local = FS.file(FS.Paths.EpicGames.Cache + "/chunks/" + installer.game.id + "/" + chunk.guid_num.to_string());
+				var local  = FS.file(FS.Paths.EpicGames.Cache + "/chunks/" + installer.game.id + "/" + chunk.guid_num.to_string());
 				//  debug("local path: %s", local.get_path());
 				FS.mkdir(local.get_parent().get_path());
-				parts.add(new SoupDownload(remote,
-				                           local,
-				                           File.new_for_path(local.get_path() + "~")));
+				parts.add(new SoupDownload(remote, local, File.new_for_path(local.get_path() + "~")));
 			}
 
 			return parts;
 		}
 
-		//  TODO: a lot of small files, we should probably handle this in parralel
+		//  TODO: a lot of small files, we should probably handle this in parallel
 		internal new async ArrayList<File> download(Installer installer) throws Error
 		{
-			var files = new ArrayList<File>();
-			var game = installer.game;
+			var files    = new ArrayList<File>();
+			var game     = installer.game;
 			var download = get_game_download(game);
-			var parts = yield fetch_parts(installer);
+			var parts    = yield fetch_parts(installer);
 
 			//  installer.task.status = new InstallTask.Status(InstallTask.State.DOWNLOADING);
 			if(game == null || download != null) return yield await_download(download);
 
-			download = new EpicDownload(game.full_id,
-			                            parts);
+			download = new EpicDownload(game.full_id, parts);
 
 			lock (downloads) downloads.set(game.full_id, download);
 			download_started(download);
 
-			var info = new DownloadInfo.for_runnable(game,
-			                                         "Downloading…");
+			var info = new DownloadInfo.for_runnable(game, "Downloading…");
 			info.download = download;
 
 			lock (dl_info) dl_info.set(game.full_id, info);
@@ -112,26 +105,21 @@ namespace GameHub.Data.Sources.EpicGames
 
 			if(GameHub.Application.log_downloader)
 			{
-				debug("[EpicDownloader] Installing '%s'...",
-				      game.full_id);
+				debug("[EpicDownloader] Installing '%s'...", game.full_id);
 			}
 
-			game.status = new Game.Status(Game.State.DOWNLOADING,
-			                              game,
-			                              download);
+			game.status = new Game.Status(Game.State.DOWNLOADING, game, download);
 
-			debug("[DownloadableInstaller.download] Starting (%d parts)",
-			      parts.size);
+			debug("[DownloadableInstaller.download] Starting (%d parts)", parts.size);
 
-			var ds_id = download_manager().file_download_started.connect(
-				dl => {
+			var ds_id = download_manager().file_download_started.connect(dl => {
 				if(dl.id != game.full_id) return;
 
-				installer.task.status = new Tasks.Install.InstallTask.Status(Tasks.Install.InstallTask.State.DOWNLOADING,
-				                                                             dl);
+				installer.task.status = new Tasks.Install.InstallTask.Status(
+					Tasks.Install.InstallTask.State.DOWNLOADING,
+					dl);
 				//  installer.download_state = new DownloadState(DownloadState.State.DOWNLOADING, dl);
-				dl.status_change.connect(
-					s => {
+				dl.status_change.connect(s => {
 					installer.task.notify_property("status");
 				});
 			});
@@ -141,9 +129,7 @@ namespace GameHub.Data.Sources.EpicGames
 				uint32 current_part = 1;
 				foreach(var part in ((EpicDownload) download).parts)
 				{
-					debug("[DownloadableInstaller.download] Part %u: `%s`",
-					      current_part,
-					      part.remote.get_uri());
+					debug("[DownloadableInstaller.download] Part %u: `%s`", current_part, part.remote.get_uri());
 
 					FS.mkdir(part.local.get_parent().get_path());
 
@@ -151,10 +137,8 @@ namespace GameHub.Data.Sources.EpicGames
 
 					if(parts.size > 1)
 					{
-						download_description = _("Part %1$u of %2$u: %3$s").printf(current_part,
-						                                                           parts.size,
-						                                                           part.id);
-						download.status = new EpicDownload.Status(
+						download_description = _("Part %1$u of %2$u: %3$s").printf(current_part, parts.size, part.id);
+						download.status      = new EpicDownload.Status(
 							Download.State.DOWNLOADING,
 							installer.full_size,
 							//  FIXME: total size is wrong for partial updates
@@ -178,8 +162,7 @@ namespace GameHub.Data.Sources.EpicGames
 						//  TODO: compare hash
 						if(GameHub.Application.log_downloader)
 						{
-							debug("[SoupDownloader] '%s' is already downloaded",
-							      uri);
+							debug("[SoupDownloader] '%s' is already downloaded", uri);
 						}
 
 						files.add(part.local);
@@ -190,16 +173,13 @@ namespace GameHub.Data.Sources.EpicGames
 					//  var tmp = File.new_for_path(part.local.get_path() + "~");
 
 					if(part.remote.get_uri_scheme() in URL_SCHEMES)
-						yield download_from_http(part,
-						                         false,
-						                         false);
+						yield download_from_http(part, false, false);
 					else
 						yield download_from_filesystem(part);
 
 					if(part.local_tmp.query_exists())
 					{
-						part.local_tmp.move(part.local,
-						                    FileCopyFlags.OVERWRITE);
+						part.local_tmp.move(part.local, FileCopyFlags.OVERWRITE);
 					}
 
 					//  var file = yield download(part.remote, part.local, new Downloader.DownloadInfo.for_runnable(task.runnable, partDesc), false);
@@ -266,8 +246,7 @@ namespace GameHub.Data.Sources.EpicGames
 			catch (IOError.CANCELLED error)
 			{
 				download.status = new FileDownload.Status(Download.State.CANCELLED);
-				download_cancelled(download,
-				                   error);
+				download_cancelled(download, error);
 
 				if(info != null) dl_ended(info);
 
@@ -276,8 +255,7 @@ namespace GameHub.Data.Sources.EpicGames
 			catch (Error error)
 			{
 				download.status = new FileDownload.Status(Download.State.FAILED);
-				download_failed(download,
-				                error);
+				download_failed(download, error);
 
 				if(info != null) dl_ended(info);
 
@@ -396,12 +374,11 @@ namespace GameHub.Data.Sources.EpicGames
 
 		private async ArrayList<File>? await_download(EpicDownload download) throws Error
 		{
-			ArrayList<File> files = null;
-			Error download_error = null;
+			ArrayList<File> files          = null;
+			Error           download_error = null;
 
 			SourceFunc callback = await_download.callback;
-			var download_finished_id = download_finished.connect(
-				(downloader, downloaded) => {
+			var download_finished_id = download_finished.connect((downloader, downloaded) => {
 				if(((SoupDownload) downloaded).id != download.id) return;
 
 				files = new ArrayList<File>();
@@ -413,15 +390,13 @@ namespace GameHub.Data.Sources.EpicGames
 
 				callback ();
 			});
-			var download_cancelled_id = download_cancelled.connect(
-				(downloader, cancelled_download, error) => {
+			var download_cancelled_id = download_cancelled.connect((downloader, cancelled_download, error) => {
 				if(((SoupDownload) cancelled_download).id != download.id) return;
 
 				download_error = error;
 				callback ();
 			});
-			var download_failed_id = download_failed.connect(
-				(downloader, failed_download, error) => {
+			var download_failed_id = download_failed.connect((downloader, failed_download, error) => {
 				if(((SoupDownload) failed_download).id != download.id) return;
 
 				download_error = error;
@@ -472,10 +447,9 @@ namespace GameHub.Data.Sources.EpicGames
 
 		private async void download_from_http(SoupDownload download,
 		                                      bool         preserve_filename = true,
-		                                      bool         queue = true) throws Error
+		                                      bool         queue             = true) throws Error
 		{
-			var msg = new Message("GET",
-			                      download.remote.get_uri());
+			var msg = new Message("GET", download.remote.get_uri());
 			msg.response_body.set_accumulate(false);
 
 			download.session = session;
@@ -493,9 +467,8 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 
 			#if !PKG_FLATPAK
-			var address = msg.get_address();
-			var connectable = new NetworkAddress(address.name,
-			                                     (uint16) address.port);
+			var address         = msg.get_address();
+			var connectable     = new NetworkAddress(address.name, (uint16) address.port);
 			var network_monitor = NetworkMonitor.get_default();
 
 			if(!(yield network_monitor.can_reach_async(connectable)))
@@ -506,7 +479,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 			FileOutputStream? local_stream = null;
 
-			int64 dl_bytes = 0;
+			int64 dl_bytes       = 0;
 			int64 dl_bytes_total = 0;
 
 			//  #if SOUP_2_60
@@ -529,8 +502,7 @@ namespace GameHub.Data.Sources.EpicGames
 			//  }
 			//  #endif
 
-			msg.got_headers.connect(
-				() => {
+			msg.got_headers.connect(() => {
 				dl_bytes_total = msg.response_headers.get_content_length();
 
 				if(GameHub.Application.log_downloader)
@@ -542,12 +514,11 @@ namespace GameHub.Data.Sources.EpicGames
 				{
 					if(preserve_filename)
 					{
-						string filename = null;
-						string disposition = null;
+						string filename                   = null;
+						string disposition                = null;
 						HashTable<string, string> dparams = null;
 
-						if(msg.response_headers.get_content_disposition(out disposition,
-						                                                out dparams))
+						if(msg.response_headers.get_content_disposition(out disposition, out dparams))
 						{
 							if(disposition == "attachment" && dparams != null)
 							{
@@ -555,8 +526,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 								if(filename != null && GameHub.Application.log_downloader)
 								{
-									debug(@"[SoupDownloader] Content-Disposition: filename=%s",
-									      filename);
+									debug(@"[SoupDownloader] Content-Disposition: filename=%s", filename);
 								}
 							}
 						}
@@ -580,13 +550,11 @@ namespace GameHub.Data.Sources.EpicGames
 							      download.local.get_path());
 						}
 
-						var info = download.local.query_info(FileAttribute.STANDARD_SIZE,
-						                                     FileQueryInfoFlags.NONE);
+						var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
 
 						if(info.get_size() == dl_bytes_total)
 						{
-							session.cancel_message(msg,
-							                       Status.OK);
+							session.cancel_message(msg, Status.OK);
 
 							return;
 						}
@@ -594,8 +562,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 					if(GameHub.Application.log_downloader)
 					{
-						debug(@"[SoupDownloader] Downloading to '%s'",
-						      download.local.get_path());
+						debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
 					}
 
 					//  #if SOUP_2_60
@@ -613,9 +580,7 @@ namespace GameHub.Data.Sources.EpicGames
 					//  else
 					//  #endif
 					{
-						local_stream = download.local_tmp.replace(null,
-						                                          false,
-						                                          FileCreateFlags.REPLACE_DESTINATION);
+						local_stream = download.local_tmp.replace(null, false, FileCreateFlags.REPLACE_DESTINATION);
 					}
 				}
 				catch (Error e)
@@ -624,45 +589,42 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 			});
 
-			int64 last_update = 0;
+			int64 last_update               = 0;
 			int64 dl_bytes_from_last_update = 0;
 
-			msg.got_chunk.connect(
-				(msg, chunk) => {
+			msg.got_chunk.connect((msg, chunk) => {
 				if(session.would_redirect(msg) || local_stream == null) return;
 
-				dl_bytes += chunk.length;
+				dl_bytes                  += chunk.length;
 				dl_bytes_from_last_update += chunk.length;
 				try
 				{
 					local_stream.write(chunk.data);
 					chunk.free();
 
-					int64 now = get_real_time();
+					int64 now  = get_real_time();
 					int64 diff = now - last_update;
 
 					if(diff > 1000000)
 					{
-						int64 dl_speed = (int64) (((double) dl_bytes_from_last_update) / ((double) diff) * ((double) 1000000));
+						int64 dl_speed  = (int64) (((double) dl_bytes_from_last_update) / ((double) diff) * ((double) 1000000));
 						download.status = new FileDownload.Status(Download.State.DOWNLOADING,
 						                                          dl_bytes,
 						                                          dl_bytes_total,
 						                                          dl_speed);
-						last_update = now;
+						last_update               = now;
 						dl_bytes_from_last_update = 0;
 					}
 				}
 				catch (Error e)
 				{
 					err = e;
-					session.cancel_message(msg,
-					                       Status.CANCELLED);
+					session.cancel_message(msg, Status.CANCELLED);
 				}
 			});
 
-			session.queue_message(
-				msg,
-				(session, msg) => {
+			session.queue_message(msg,
+			                      (session, msg) => {
 				download_from_http.callback ();
 			});
 
@@ -683,9 +645,7 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 
 				if(err == null)
-					err = new GLib.Error(http_error_quark(),
-					                     (int) msg.status_code,
-					                     msg.reason_phrase);
+					err = new GLib.Error(http_error_quark(), (int) msg.status_code, msg.reason_phrase);
 
 				throw err;
 			}
@@ -716,13 +676,12 @@ namespace GameHub.Data.Sources.EpicGames
 
 	public class EpicDownload: Download, PausableDownload
 	{
-		public weak Session? session;
-		public weak Message? message;
-		public bool is_cancelled = false;
+		public weak                    Session? session;
+		public weak                    Message? message;
+		public bool                    is_cancelled = false;
 		public ArrayList<SoupDownload> parts { get; }
 
-		public EpicDownload(string                  id,
-		                    ArrayList<SoupDownload> parts)
+		public EpicDownload(string id, ArrayList<SoupDownload> parts)
 		{
 			base(id);
 			_parts = parts;
@@ -752,29 +711,28 @@ namespace GameHub.Data.Sources.EpicGames
 
 			if(session != null && message != null)
 			{
-				session.cancel_message(message,
-				                       Soup.Status.CANCELLED);
+				session.cancel_message(message, Soup.Status.CANCELLED);
 			}
 		}
 
 		public class Status: Download.Status
 		{
-			public int64 bytes_total = -1;
+			public int64  bytes_total = -1;
 			public double dl_progress = -1;
-			public int64 dl_speed = -1;
-			public int64 eta = -1;
+			public int64  dl_speed    = -1;
+			public int64  eta         = -1;
 
-			public Status(Download.State                        state = Download.State.STARTING,
-			              int64                                 total = -1,
-			              double                                progress = -1,
-			              int64                                 speed = -1,
-			              int64                                 eta = -1)
+			public Status(Download.State                           state    = Download.State.STARTING,
+			              int64                                    total    = -1,
+			              double                                   progress = -1,
+			              int64                                    speed    = -1,
+			              int64                                    eta      = -1)
 			{
 				base(state);
 				this.bytes_total = total;
 				this.dl_progress = progress;
-				this.dl_speed = speed;
-				this.eta = eta;
+				this.dl_speed    = speed;
+				this.eta         = eta;
 			}
 
 			public override double progress
@@ -789,24 +747,19 @@ namespace GameHub.Data.Sources.EpicGames
 					string[] result = {};
 
 					if(eta >= 0)
-						result += C_("epic_dl_status",
-						             "%s left;").printf(GameHub.Utils.seconds_to_string(eta));
+						result += C_("epic_dl_status", "%s left;").printf(GameHub.Utils.seconds_to_string(eta));
 
 					if(dl_progress >= 0)
-						result += C_("epic_dl_status",
-						             "%d%%").printf((int) (dl_progress * 100));
+						result += C_("epic_dl_status", "%d%%").printf((int) (dl_progress * 100));
 
 					if(bytes_total >= 0)
-						result += C_("epic_dl_status",
-						             "(%1$s / %2$s)").printf(format_size((int) (dl_progress * bytes_total)),
-						                                     format_size(bytes_total));
+						result += C_("epic_dl_status", "(%1$s / %2$s)").printf(format_size((int) (dl_progress * bytes_total)),
+						                                                       format_size(bytes_total));
 
 					if(dl_speed >= 0)
-						result += C_("epic_dl_status",
-						             "[%s/s]").printf(format_size(dl_speed));
+						result += C_("epic_dl_status", "[%s/s]").printf(format_size(dl_speed));
 
-					return string.joinv(" ",
-					                    result);
+					return string.joinv(" ", result);
 				}
 			}
 		}

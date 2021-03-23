@@ -14,8 +14,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 		foreach(var byte in bytes)
 		{
-			builder.append_printf("%02x",
-			                      byte);
+			builder.append_printf("%02x", byte);
 		}
 
 		return builder.str;
@@ -37,9 +36,7 @@ namespace GameHub.Data.Sources.EpicGames
 		for(var i = 0; i < str.length; i += 3)
 		{
 			int segment = 0;
-			str.substring(i,
-			              3).scanf("%03hu",
-			                       out segment);
+			str.substring(i, 3).scanf("%03hu", out segment);
 			bytes.append({ (uint8) segment });
 		}
 
@@ -60,9 +57,7 @@ namespace GameHub.Data.Sources.EpicGames
 		for(var i = 0; i < str.length; i += 2)
 		{
 			int segment = 0;
-			str.substring(i,
-			              2).scanf("%02X",
-			                       out segment);
+			str.substring(i, 2).scanf("%02X", out segment);
 			bytes.append({ (uint8) segment });
 		}
 
@@ -78,7 +73,7 @@ namespace GameHub.Data.Sources.EpicGames
 	requires(str.length == 32)
 	{
 		uint32[] result = new uint32[4];
-		var stream = hex_string_to_byte_stream(str);
+		var      stream = hex_string_to_byte_stream(str);
 		stream.set_byte_order(DataStreamByteOrder.BIG_ENDIAN);
 
 		for(var i = 0; i < 4; i++)
@@ -89,8 +84,7 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 			catch (Error e)
 			{
-				debug("error: %s",
-				      e.message);
+				debug("error: %s", e.message);
 			}
 		}
 
@@ -106,8 +100,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 		foreach(var id in guid)
 		{
-			builder.append_printf("%08X",
-			                      id);
+			builder.append_printf("%08X", id);
 		}
 
 		return builder.str;
@@ -121,13 +114,11 @@ namespace GameHub.Data.Sources.EpicGames
 
 		foreach(var id in guid)
 		{
-			builder.append_printf("%08x-",
-			                      id);
+			builder.append_printf("%08x-", id);
 		}
 
 		//  strip last "-"
-		return builder.str.substring(0,
-		                             builder.str.length - 1);
+		return builder.str.substring(0, builder.str.length - 1);
 	}
 
 	private static uint32 guid_to_number(uint32[] guid) { return guid[3] + (guid[2] << 32) + (guid[1] << 64) + (guid[0] << 96); }
@@ -135,37 +126,30 @@ namespace GameHub.Data.Sources.EpicGames
 	private static string uppercase_first_character(string str)
 	{
 		//  Uppercase first character
-		var builder = new StringBuilder(str);
-		var i = 0;
+		var     builder = new StringBuilder(str);
+		var     i       = 0;
 		unichar c;
-		str.get_next_char(ref i,
-		                  out c);
-		builder.overwrite(0,
-		                  c.to_string().up());
+
+		str.get_next_char(ref i, out c);
+		builder.overwrite(0, c.to_string().up());
 
 		//  debug("[Sources.EpicGames.Utils.uppercase] %s → %s", str, builder.str);
 		return builder.str;
 	}
 
 	//  TODO: replace with FileUtils.set_data() ?
-	private static void write(string  path,
-	                          string  name,
-	                          uint8[] bytes)
+	private static void write(string path, string name, uint8[] bytes)
 	{
-		var file = FS.file(path,
-		                   name);
+		var file = FS.file(path, name);
 
 		try
 		{
 			FS.mkdir(path);
-			FileUtils.set_data(file.get_path(),
-			                   bytes);
+			FileUtils.set_data(file.get_path(), bytes);
 		}
 		catch (Error e)
 		{
-			warning("[Sources.EpicGames.write] Error writing `%s`: %s",
-			        file.get_path(),
-			        e.message);
+			warning("[Sources.EpicGames.write] Error writing `%s`: %s", file.get_path(), e.message);
 		}
 	}
 }

@@ -19,31 +19,30 @@ namespace GameHub.Data.Sources.EpicGames
 
 		// Traits.HasExecutableFile
 		public override string? executable_path { owned get; set; }
-		public override string? work_dir_path { owned get; set; }
-		public override string? arguments { owned get; set; }
-		public override string? environment { owned get; set; }
+		public override string? work_dir_path   { owned get; set; }
+		public override string? arguments       { owned get; set; }
+		public override string? environment     { owned get; set; }
 
 		// Traits.SupportsCompatTools
-		public override string? compat_tool { get; set; }
+		public override string? compat_tool          { get; set; }
 		public override string? compat_tool_settings { get; set; }
 
 		// Traits.Game.SupportsTweaks
 		public override TweakSet? tweaks { get; set; default = null; }
 
 		private bool game_info_updating = false;
-		private bool game_info_updated = false;
+		private bool game_info_updated  = false;
 
 		//  Legendary mapping
-		internal string app_name { get { return id; } }
-		internal string app_title { get { return name; } }
-		internal string? app_version { get { return version; } }
+		internal string            app_name    { get { return id; } }
+		internal string            app_title   { get { return name; } }
+		internal string?           app_version { get { return version; } }
 		internal ArrayList<string> base_urls //  base urls for download, only really used when cached manifest is current
 		{
 			owned get
 			{
 				var urls = new ArrayList<string>();
-				return_val_if_fail(metadata.get_object().has_member("base_urls"),
-				                   urls);
+				return_val_if_fail(metadata.get_object().has_member("base_urls"), urls);
 
 				metadata.get_object().get_array_member("base_urls").foreach_element((array, index, node) => {
 					urls.add(node.get_string());
@@ -60,18 +59,16 @@ namespace GameHub.Data.Sources.EpicGames
 					return true;
 				});
 
-				metadata.get_object().set_array_member("base_urls",
-				                                       urls);
+				metadata.get_object().set_array_member("base_urls", urls);
 				write(FS.Paths.EpicGames.Metadata,
 				      get_metadata_filename(),
-				      Json.to_string(metadata,
-				                     true).data);
+				      Json.to_string(metadata, true).data);
 			}
 		}
 		internal Asset? asset_info { get; default = null; }
 		//  public Json.Object? asset_info;
 		//  public Json.Object? metadata;
-		private Json.Node _metadata = new Json.Node(Json.NodeType.NULL);
+		private Json.Node  _metadata = new Json.Node(Json.NodeType.NULL);
 		internal Json.Node metadata // FIXME: make a class for easier access?
 		{
 			owned get
@@ -79,8 +76,7 @@ namespace GameHub.Data.Sources.EpicGames
 				if(_metadata.get_node_type() == Json.NodeType.NULL)
 				{
 					//  FIXME: this will never update this way
-					_metadata = Parser.parse_json_file(FS.Paths.EpicGames.Metadata,
-					                                   get_metadata_filename());
+					_metadata = Parser.parse_json_file(FS.Paths.EpicGames.Metadata, get_metadata_filename());
 
 					if(_metadata.get_node_type() != Json.NodeType.NULL) return _metadata;
 
@@ -101,13 +97,12 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			owned get
 			{
-				return FS.file(Environment.get_tmp_dir(),
-				               id + ".repair");
+				return FS.file(Environment.get_tmp_dir(), id + ".repair");
 			}
 		}
 
 		internal string latest_version { get { return asset_info.build_version; } }
-		internal bool has_updates
+		internal bool   has_updates
 		{
 			get
 			{
@@ -117,9 +112,9 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 		}
 
-		internal bool needs_verification { get; set; default = false; }
-		internal bool needs_repair { get; default = false; }
-		internal bool requires_ownership_token { get; default = false; }
+		internal bool   needs_verification       { get; set; default = false; }
+		internal bool   needs_repair             { get; default = false; }
+		internal bool   requires_ownership_token { get; default = false; }
 		internal string launch_command
 		{
 			get
@@ -131,21 +126,16 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			get
 			{
-				return_val_if_fail(metadata.get_object().has_member("customAttributes"),
-				                   false);
-				return_val_if_fail(metadata.get_object().get_member("customAttributes").get_node_type() != Json.NodeType.OBJECT,
-				                   false);
-				return_val_if_fail(metadata.get_object().get_object_member("customAttributes").has_member("CanRunOffline"),
-				                   false);
-				return_val_if_fail(metadata.get_object().get_object_member("customAttributes").get_member("CanRunOffline").get_node_type() != Json.NodeType.OBJECT,
-				                   false);
-				return_val_if_fail(metadata.get_object().get_object_member("customAttributes").get_object_member("CanRunOffline").has_member("value"),
-				                   false);
+				return_val_if_fail(metadata.get_object().has_member("customAttributes"), false);
+				return_val_if_fail(metadata.get_object().get_member("customAttributes").get_node_type() != Json.NodeType.OBJECT, false);
+				return_val_if_fail(metadata.get_object().get_object_member("customAttributes").has_member("CanRunOffline"), false);
+				return_val_if_fail(metadata.get_object().get_object_member("customAttributes").get_member("CanRunOffline").get_node_type() != Json.NodeType.OBJECT, false);
+				return_val_if_fail(metadata.get_object().get_object_member("customAttributes").get_object_member("CanRunOffline").has_member("value"), false);
 
 				return metadata.get_object().get_object_member("customAttributes").get_object_member("CanRunOffline").get_string_member("value") == "true"; // why no boolean?!
 			}
 		}
-		private int64 _install_size = 0;
+		private int64  _install_size = 0;
 		internal int64 install_size
 		{
 			get
@@ -163,7 +153,7 @@ namespace GameHub.Data.Sources.EpicGames
 		}
 		//  internal string egl_guid;
 		//  internal Json.Node prereq_info;
-		private Manifest? _manifest = null;
+		private           Manifest? _manifest = null;
 		internal Manifest manifest
 		{
 			owned get
@@ -199,8 +189,7 @@ namespace GameHub.Data.Sources.EpicGames
 				if(info_detailed == null) return false;
 
 				var json = Parser.parse_json(info_detailed);
-				return_val_if_fail(json.get_node_type() == Json.NodeType.OBJECT,
-				                   false);
+				return_val_if_fail(json.get_node_type() == Json.NodeType.OBJECT, false);
 
 				return json.get_object().has_member("mainGameItem");
 			}
@@ -215,12 +204,10 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 		}
 
-		public EpicGame(EpicGames  source,
-		                Asset      asset,
-		                Json.Node? meta = null)
+		public EpicGame(EpicGames source, Asset asset, Json.Node? meta = null)
 		{
 			this.source = source;
-			id = asset.asset_id;
+			id          = asset.asset_id;
 
 			//  this.version = asset.build_version; // Only gets permanently saved for installed games
 			//  this.info = asset.to_string(false);
@@ -228,20 +215,17 @@ namespace GameHub.Data.Sources.EpicGames
 
 			_asset_info = asset;
 			load_version();
-			name = metadata.get_object().get_string_member_with_default("title",
-			                                                            "");
+			name = metadata.get_object().get_string_member_with_default("title", "");
 
-			install_dir = null;
-			this.status = new Game.Status(Game.State.UNINSTALLED,
-			                              this);
+			install_dir        = null;
+			this.status        = new Game.Status(Game.State.UNINSTALLED, this);
 			this.work_dir_path = "";
 
 			update_game_info.begin();
 			init_tweaks();
 		}
 
-		public EpicGame.from_db(EpicGames src,
-		                        Sqlite.Statement s)
+		public EpicGame.from_db(EpicGames src, Sqlite.Statement s)
 		{
 			source = src;
 
@@ -268,8 +252,7 @@ namespace GameHub.Data.Sources.EpicGames
 			if(meta_object_node.has_member("keyImages")
 			   && meta_object_node.get_member("keyImages").get_node_type() == Json.NodeType.ARRAY)
 			{
-				meta_object_node.get_array_member("keyImages").foreach_element(
-					(array, index, node) =>
+				meta_object_node.get_array_member("keyImages").foreach_element((array, index, node) =>
 				{
 					if(node.get_node_type() != Json.NodeType.OBJECT)
 					{
@@ -352,7 +335,7 @@ namespace GameHub.Data.Sources.EpicGames
 			save();
 			update_status();
 
-			game_info_updated = true;
+			game_info_updated  = true;
 			game_info_updating = false;
 		}
 
@@ -387,8 +370,7 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 			}
 
-			status = new Game.Status(state,
-			                         this);
+			status = new Game.Status(state, this);
 
 			if(state == Game.State.INSTALLED)
 			{
@@ -441,13 +423,13 @@ namespace GameHub.Data.Sources.EpicGames
 		}
 
 		public override ExecTask prepare_exec_task(string[]? cmdline_override = null,
-		                                           string[]? args_override = null)
+		                                           string[]? args_override    = null)
 		{
-			string[] cmd = cmdline_override ?? cmdline;
+			string[] cmd      = cmdline_override ?? cmdline;
 			string[] full_cmd = cmd;
 
 			var variables = get_variables();
-			var args = args_override ?? Utils.parse_args(arguments);
+			var args      = args_override ?? Utils.parse_args(arguments);
 
 			if(args != null)
 			{
@@ -469,9 +451,7 @@ namespace GameHub.Data.Sources.EpicGames
 					{
 						if("$" in arg)
 						{
-							arg = FS.expand(arg,
-							                null,
-							                variables);
+							arg = FS.expand(arg, null, variables);
 						}
 
 						full_cmd += arg;
@@ -486,19 +466,16 @@ namespace GameHub.Data.Sources.EpicGames
 
 			var task = Utils.exec(full_cmd).override_runtime(true).dir(work_dir.get_path());
 
-			cast<Traits.Game.SupportsTweaks>(game => task.tweaks(game.tweaks,
-			                                                     game));
+			cast<Traits.Game.SupportsTweaks>(game => task.tweaks(game.tweaks, game));
 
 			if(environment != null && environment.length > 0)
 			{
-				var env = Parser.json_object(Parser.parse_json(environment),
-				                             {});
+				var env = Parser.json_object(Parser.parse_json(environment), {});
 
 				if(env != null)
 				{
 					env.foreach_member((obj, name, node) => {
-						task.env_var(name,
-						             node.get_string());
+						task.env_var(name, node.get_string());
 					});
 				}
 			}
@@ -522,16 +499,14 @@ namespace GameHub.Data.Sources.EpicGames
 			{
 				//  yield umount_overlays();
 
-				FS.rm(install_dir.get_path(),
-				      "",
-				      "-rf");
+				FS.rm(install_dir.get_path(), "", "-rf");
 				update_status();
 			}
 
 			if((install_dir == null || !install_dir.query_exists()) && (executable == null || !executable.query_exists()))
 			{
 				install_dir = null;
-				executable = null;
+				executable  = null;
 				save();
 				update_status();
 			}
@@ -545,8 +520,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 			foreach(var platform in platforms)
 			{
-				installers.add(new Installer(this,
-				                             platform));
+				installers.add(new Installer(this, platform));
 			}
 
 			is_installable = installers.size > 0;
@@ -554,17 +528,14 @@ namespace GameHub.Data.Sources.EpicGames
 			return installers;
 		}
 
-		public void add_dlc(Asset      asset,
-		                    Json.Node? metadata = null)
+		public void add_dlc(Asset asset, Json.Node? metadata = null)
 		{
 			if(dlc == null)
 			{
 				dlc = new ArrayList<DLC>();
 			}
 
-			dlc.add(new DLC(this,
-			                asset,
-			                metadata));
+			dlc.add(new DLC(this, asset, metadata));
 		}
 
 		public Json.Node to_json()
@@ -577,24 +548,17 @@ namespace GameHub.Data.Sources.EpicGames
 				return true;
 			});
 
-			json.get_object().set_string_member("app_name",
-			                                    id);
-			json.get_object().set_string_member("app_title",
-			                                    name);
-			json.get_object().set_string_member("app_version",
-			                                    version);
-			json.get_object().set_object_member("asset_info",
-			                                    asset_info.to_json().get_object());
-			json.get_object().set_array_member("base_urls",
-			                                   urls.get_array());
-			json.get_object().set_object_member("metadata",
-			                                    metadata.get_object());
+			json.get_object().set_string_member("app_name", id);
+			json.get_object().set_string_member("app_title", name);
+			json.get_object().set_string_member("app_version", version);
+			json.get_object().set_object_member("asset_info", asset_info.to_json().get_object());
+			json.get_object().set_array_member("base_urls", urls.get_array());
+			json.get_object().set_object_member("metadata", metadata.get_object());
 
 			return json;
 		}
 
-		public async bool import(File   import_dir,
-		                         string egl_guid = "")
+		public async bool import(File import_dir, string egl_guid = "")
 		{
 			//  if(!yield authenticate()) return false;
 
@@ -605,12 +569,11 @@ namespace GameHub.Data.Sources.EpicGames
 			//  }
 
 			Manifest manifest;
-			_needs_verification = true;
+			_needs_verification  = true;
 			Bytes? manifest_data = null;
 
 			//  check if the game is from an EGL installation, load manifest if possible
-			var egstore_path = Path.build_filename(import_dir.get_path(),
-			                                       ".egstore");
+			var egstore_path = Path.build_filename(import_dir.get_path(), ".egstore");
 
 			if(File.new_for_path(egstore_path).query_exists())
 			{
@@ -632,29 +595,25 @@ namespace GameHub.Data.Sources.EpicGames
 
 							debug("[Source.EpicGames.import_game] Checking mancpn file: %s",
 							      file_name);
-							var mancpn = Parser.parse_json_file(egstore_path,
-							                                    file_name);
+							var mancpn = Parser.parse_json_file(egstore_path, file_name);
 
 							if(mancpn.get_node_type() == Json.NodeType.OBJECT
 							   || mancpn.get_object().has_member("AppName"))
 							{
 								debug("[Source.EpicGames.import_game] Found EGL install metadata, verifying…");
-								manifest_file = FS.file(egstore_path,
-								                        file_name);
+								manifest_file = FS.file(egstore_path, file_name);
 								break;
 							}
 						}
 					}
 					catch (Error e)
 					{
-						debug("[Source.EpicGames.import_game] No EGL data found: %s",
-						      e.message);
+						debug("[Source.EpicGames.import_game] No EGL data found: %s", e.message);
 					}
 				}
 				else
 				{
-					manifest_file = File.new_build_filename(egstore_path,
-					                                        egl_guid + ".manifest");
+					manifest_file = File.new_build_filename(egstore_path, egl_guid + ".manifest");
 				}
 
 				if(manifest_file != null && manifest_file.query_exists())
@@ -665,8 +624,7 @@ namespace GameHub.Data.Sources.EpicGames
 					}
 					catch (Error e)
 					{
-						debug("[Source.EpicGames.import_game] Error reading manifest file: %s",
-						      e.message);
+						debug("[Source.EpicGames.import_game] Error reading manifest file: %s", e.message);
 					}
 				}
 				else
@@ -675,10 +633,8 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 
 				//  If there's no in-progress installation assume the game doesn't need to be verified
-				var bps_path = Path.build_filename(egstore_path,
-				                                   "bps");
-				var pending_path = Path.build_filename(egstore_path,
-				                                       "Pending");
+				var bps_path     = Path.build_filename(egstore_path, "bps");
+				var pending_path = Path.build_filename(egstore_path, "Pending");
 
 				if(manifest_file != null && File.new_for_path(bps_path).query_exists())
 				{
@@ -705,10 +661,8 @@ namespace GameHub.Data.Sources.EpicGames
 
 			if(manifest_data == null)
 			{
-				debug("[Source.EpicGames.import_game] Downloading latest manifest for: %s",
-				      id);
-				get_cdn_manifest(out manifest_data,
-				                 out tmp_urls);
+				debug("[Source.EpicGames.import_game] Downloading latest manifest for: %s", id);
+				get_cdn_manifest(out manifest_data, out tmp_urls);
 
 				if(base_urls.is_empty)
 				{
@@ -723,8 +677,7 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 
 			manifest = EpicGames.load_manifest(manifest_data);
-			save_manifest(manifest_data,
-			              manifest.meta.build_version);
+			save_manifest(manifest_data, manifest.meta.build_version);
 			//  uint install_size = 0;
 			//  manifest.file_manifest_list.elements.foreach(file_manifest => {
 			//  	install_size += file_manifest.file_size;
@@ -754,16 +707,14 @@ namespace GameHub.Data.Sources.EpicGames
 			//  var ot = metadata.get_object_member("customAttributes").get_boolean_member_with_default("OwnershipToken", false);
 
 			//  TODO: legendary strips all leading '/' here
-			executable_path = FS.file(import_dir.get_path(),
-			                          manifest.meta.launch_exe).get_path();
+			executable_path = FS.file(import_dir.get_path(), manifest.meta.launch_exe).get_path();
 
 			//  check if most files at least exist or if user might have specified the wrong directory
 			var total_files = manifest.file_manifest_list.elements.size;
 			int found_files = 0;
 			manifest.file_manifest_list.elements.foreach(file_manifest =>
 			{
-				var file = FS.file(import_dir.get_path(),
-				                   file_manifest.filename);
+				var file = FS.file(import_dir.get_path(), file_manifest.filename);
 
 				if(file.query_exists())
 				{
@@ -771,8 +722,7 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 				else
 				{
-					warning("[Source.EpicGames.import] File could not be found at: %s",
-					        file.get_path());
+					warning("[Source.EpicGames.import] File could not be found at: %s", file.get_path());
 				}
 
 				return true;
@@ -782,8 +732,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 			if(!exe.query_exists())
 			{
-				warning("[Source.EpicGames.import] Game executable could not be found at: %s",
-				        exe.get_path());
+				warning("[Source.EpicGames.import] Game executable could not be found at: %s", exe.get_path());
 
 				//  executable_path = null;
 				return false;
@@ -814,8 +763,7 @@ namespace GameHub.Data.Sources.EpicGames
 					"verification will not be required.");
 			}
 
-			GLib.info("[Source.EpicGames.import] Game has been imported: %s",
-			          id);
+			GLib.info("[Source.EpicGames.import] Game has been imported: %s", id);
 
 			return true;
 
@@ -838,29 +786,24 @@ namespace GameHub.Data.Sources.EpicGames
 		internal async void verify()
 		{
 			var manifest_data = get_installed_manifest(); // FIXME: cdn_manifest?
-			var manifest = EpicGames.load_manifest(manifest_data);
+			var manifest      = EpicGames.load_manifest(manifest_data);
 
 			var files = manifest.file_manifest_list.elements;
-			files.sort(
-				(a, b) => {
-				return strcmp(a.filename,
-				              b.filename);
+			files.sort((a, b) => {
+				return strcmp(a.filename, b.filename);
 			});
 
 			//  build list of hashes
 			var file_list = new HashMap<string, Bytes>();
 			files.foreach(file => {
-				file_list.set(file.filename,
-				              file.sha_hash);
+				file_list.set(file.filename, file.sha_hash);
 
 				return true;
 			});
 
 			debug(@"[Sources.EpicGames.verify_game] Verifying \"$(id)\" version \"$(latest_version)\"");
 			var repair_file = new ArrayList<string>();
-
-			var result = yield validate_files(install_dir.get_path(),
-			                                  file_list);
+			var result      = yield validate_files(install_dir.get_path(), file_list);
 
 			result.matching.foreach(match => {
 				repair_file.add(match);
@@ -877,9 +820,8 @@ namespace GameHub.Data.Sources.EpicGames
 			//  always write repair file
 			try
 			{
-				var file = FS.file(Environment.get_tmp_dir(),
-				                   id + ".repair");
-				var io_stream = file.create_readwrite(FileCreateFlags.REPLACE_DESTINATION);
+				var file          = FS.file(Environment.get_tmp_dir(), id + ".repair");
+				var io_stream     = file.create_readwrite(FileCreateFlags.REPLACE_DESTINATION);
 				var output_stream = new DataOutputStream(io_stream.output_stream);
 				foreach(var match in repair_file)
 				{
@@ -928,15 +870,11 @@ namespace GameHub.Data.Sources.EpicGames
 			if(requires_ownership_token)
 			{
 				debug("[Sources.EpicGames.get_launch_parameters] getting ownership token…");
-				var ownership_token = EpicGamesServices.instance.get_ownership_token(
-					asset_info.ns,
-					asset_info.catalog_item_id);
+				var ownership_token = EpicGamesServices.instance.get_ownership_token(asset_info.ns,
+				                                                                     asset_info.catalog_item_id);
 				//  TODO: write to tmp path?
-				write(FS.Paths.EpicGames.Cache,
-				      @"$(asset_info.ns)$(asset_info.catalog_item_id).ovt",
-				      ownership_token.get_data());
-				parameters += "-epicovt=%s".printf(FS.file(FS.Paths.EpicGames.Cache,
-				                                           @"$(asset_info.ns)$(asset_info.catalog_item_id).ovt").get_path());
+				write(FS.Paths.EpicGames.Cache, @"$(asset_info.ns)$(asset_info.catalog_item_id).ovt", ownership_token.get_data());
+				parameters += "-epicovt=%s".printf(FS.file(FS.Paths.EpicGames.Cache, @"$(asset_info.ns)$(asset_info.catalog_item_id).ovt").get_path());
 			}
 
 			//  TODO: language
@@ -955,9 +893,7 @@ namespace GameHub.Data.Sources.EpicGames
 			if(platform != Platform.WINDOWS)
 			{
 				Bytes data;
-				get_cdn_manifest(out data,
-				                 null,
-				                 uppercase_first_character(platform.id()));
+				get_cdn_manifest(out data, null, uppercase_first_character(platform.id()));
 				var manifest = EpicGames.load_manifest(data);
 
 				int64 size = 0;
@@ -976,8 +912,8 @@ namespace GameHub.Data.Sources.EpicGames
 		private class ValidationResult
 		{
 			public ArrayList<string> matching { get; set; default = new ArrayList<string>(); }
-			public ArrayList<string> missing { get; set; default = new ArrayList<string>(); }
-			public ArrayList<string> failed { get; set; default = new ArrayList<string>(); }
+			public ArrayList<string> missing  { get; set; default = new ArrayList<string>(); }
+			public ArrayList<string> failed   { get; set; default = new ArrayList<string>(); }
 		}
 
 		private static async ValidationResult validate_files(string                                path,
@@ -993,8 +929,7 @@ namespace GameHub.Data.Sources.EpicGames
 				var file_path = entry.key;
 				var file_hash = entry.value;
 
-				var full_path = FS.file(path,
-				                        file_path);
+				var full_path = FS.file(path, file_path);
 
 				if(!full_path.query_exists())
 				{
@@ -1003,24 +938,16 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 
 				//  debug("[Sources.EpicGames.validate_game_files] " + full_path.get_path());
-				var real_hash = yield compute_file_checksum(full_path,
-				                                            hash_type);
+				var real_hash = yield compute_file_checksum(full_path, hash_type);
 
 				if(real_hash != null && real_hash != bytes_to_hex(file_hash))
 				{
-					debug("failed hash check: %s, %s != %s",
-					      file_path,
-					      bytes_to_hex(file_hash),
-					      real_hash);
-					result.failed.add(string.join(":",
-					                              real_hash,
-					                              file_path));
+					debug("failed hash check: %s, %s != %s", file_path, bytes_to_hex(file_hash), real_hash);
+					result.failed.add(string.join(":", real_hash, file_path));
 				}
 				else if(real_hash != null)
 				{
-					result.matching.add(string.join(":",
-					                                real_hash,
-					                                file_path));
+					result.matching.add(string.join(":", real_hash, file_path));
 				}
 				else
 				{
@@ -1036,26 +963,24 @@ namespace GameHub.Data.Sources.EpicGames
 		                          out ArrayList<string>? base_urls,
 		                          string                 platform_override = "")
 		{
-			var platform = platform_override == "" ? "Windows" : platform_override;
-			var manifest_api_result = EpicGamesServices.instance.get_game_manifest(
-				asset_info.ns,
-				asset_info.catalog_item_id,
-				id,
-				platform);
+			var platform            = platform_override == "" ? "Windows" : platform_override;
+			var manifest_api_result = EpicGamesServices.instance.get_game_manifest(asset_info.ns,
+			                                                                       asset_info.catalog_item_id,
+			                                                                       id,
+			                                                                       platform);
 
 			//  never seen this outside the launcher itself, but if it happens: PANIC!
 			assert(manifest_api_result.get_object().has_member("elements"));
 			var elements_array = manifest_api_result.get_object().get_array_member("elements");
 			assert(elements_array.get_length() <= 1);
 
-			base_urls = new ArrayList<string>();
+			base_urls     = new ArrayList<string>();
 			manifest_urls = new ArrayList<string>();
 			var tmp1 = new ArrayList<string>();
 			var tmp2 = new ArrayList<string>();
 			elements_array.get_object_element(0).get_array_member("manifests").foreach_element((array, index, node) => {
-				var uri = node.get_object().get_string_member("uri");
-				var base_url = uri.substring(0,
-				                             uri.last_index_of("/"));
+				var uri      = node.get_object().get_string_member("uri");
+				var base_url = uri.substring(0, uri.last_index_of("/"));
 
 				if(!tmp1.contains(base_url))
 				{
@@ -1065,9 +990,9 @@ namespace GameHub.Data.Sources.EpicGames
 				if(node.get_object().has_member("queryParams"))
 				{
 					var parameters_array = node.get_object().get_array_member("queryParams");
-					string parameter = "";
+					string parameter     = "";
 					parameters_array.foreach_element((a, i, n) => {
-						var name = n.get_object().get_string_member("name");
+						var name  = n.get_object().get_string_member("name");
 						var value = n.get_object().get_string_member("value");
 
 						if(i == 0)
@@ -1093,25 +1018,18 @@ namespace GameHub.Data.Sources.EpicGames
 		}
 
 		private void get_cdn_manifest(out Bytes              data,
-		                              out ArrayList<string>? base_urls = null,
+		                              out ArrayList<string>? base_urls         = null,
 		                              string                 platform_override = "")
 		{
 			ArrayList<string> manifest_urls;
-			get_cdn_urls(out manifest_urls,
-			             out base_urls,
-			             platform_override);
-
-			EpicGamesServices.instance.get_cdn_manifest(manifest_urls[0],
-			                                            out data);
+			get_cdn_urls(out manifest_urls, out base_urls, platform_override);
+			EpicGamesServices.instance.get_cdn_manifest(manifest_urls[0], out data);
 		}
 
-		private void save_manifest(Bytes  bytes,
-		                           string version = this.version)
+		private void save_manifest(Bytes bytes, string version = this.version)
 		{
 			var name = get_manifest_filename(version);
-			write(FS.Paths.EpicGames.Manifests,
-			      name,
-			      bytes.get_data());
+			write(FS.Paths.EpicGames.Manifests, name, bytes.get_data());
 		}
 
 		private Bytes get_installed_manifest() { return load_manifest_from_disk(); }
@@ -1121,17 +1039,12 @@ namespace GameHub.Data.Sources.EpicGames
 			uint8[] data;
 			try
 			{
-				debug("Loading cached manifest: %s",
-				      FS.file(FS.Paths.EpicGames.Manifests,
-				              get_manifest_filename()).get_path());
-				FileUtils.get_data(FS.file(FS.Paths.EpicGames.Manifests,
-				                           get_manifest_filename()).get_path(),
-				                   out data);
+				debug("Loading cached manifest: %s", FS.file(FS.Paths.EpicGames.Manifests, get_manifest_filename()).get_path());
+				FileUtils.get_data(FS.file(FS.Paths.EpicGames.Manifests, get_manifest_filename()).get_path(), out data);
 			}
 			catch (FileError e)
 			{
-				debug("error: %s",
-				      e.message);
+				debug("error: %s", e.message);
 
 				return null;
 			}
@@ -1171,7 +1084,7 @@ namespace GameHub.Data.Sources.EpicGames
 		internal Analysis prepare_download(Runnables.Tasks.Install.InstallTask task)
 		{
 			ArrayList<string> tmp_urls;
-			Bytes new_bytes;
+			Bytes             new_bytes;
 			Manifest? old_manifest = null;
 
 			var tmp2_urls = base_urls; //  copy list for manipulation
@@ -1186,8 +1099,7 @@ namespace GameHub.Data.Sources.EpicGames
 				old_manifest = EpicGames.load_manifest(old_bytes);
 			}
 
-			get_cdn_manifest(out new_bytes,
-			                 out tmp_urls);
+			get_cdn_manifest(out new_bytes, out tmp_urls);
 
 			tmp_urls.foreach(url => {
 				if(!tmp2_urls.contains(url))
@@ -1202,8 +1114,7 @@ namespace GameHub.Data.Sources.EpicGames
 			//  save_metadata(); //  save base urls to game metadata
 
 			var new_manifest = EpicGames.load_manifest(new_bytes);
-			save_manifest(new_bytes,
-			              new_manifest.meta.build_version);
+			save_manifest(new_bytes, new_manifest.meta.build_version);
 
 			//  check if we should use a delta manifest or not
 			Manifest delta_manifest;
@@ -1211,8 +1122,7 @@ namespace GameHub.Data.Sources.EpicGames
 			if(old_manifest != null && new_manifest != null)
 			{
 				var delta_manifest_data = EpicGamesServices.instance.get_delta_manifest(
-					base_urls[Random.int_range(0,
-					                           base_urls.size - 1)],
+					base_urls[Random.int_range(0, base_urls.size - 1)],
 					old_manifest.meta.build_id,
 					new_manifest.meta.build_id);
 
@@ -1242,18 +1152,15 @@ namespace GameHub.Data.Sources.EpicGames
 				//  new_manifest = old_manifest;
 				//  old_manifest = null;
 
-				resume_file = FS.file(Environment.get_tmp_dir(),
-				                      id + ".repair");
-				force = false;
+				resume_file = FS.file(Environment.get_tmp_dir(), id + ".repair");
+				force       = false;
 			}
 			else if(!force)
 			{
-				resume_file = FS.file(Environment.get_tmp_dir(),
-				                      id + ".resume");
+				resume_file = FS.file(Environment.get_tmp_dir(), id + ".resume");
 			}
 
-			var base_url = base_urls[Random.int_range(0,
-			                                          base_urls.size - 1)];
+			var base_url = base_urls[Random.int_range(0, base_urls.size - 1)];
 			debug("[Sources.EpicGames.prepare_download] Using base_url: %s",
 			      base_url);
 
@@ -1278,14 +1185,12 @@ namespace GameHub.Data.Sources.EpicGames
 		internal void update_metadata()
 		{
 			var tmp_urls = base_urls; //  save temporarily from old metadata
-			_metadata = EpicGamesServices.instance.get_game_info(asset_info.ns,
-			                                                     asset_info.catalog_item_id);
+			_metadata = EpicGamesServices.instance.get_game_info(asset_info.ns, asset_info.catalog_item_id);
 			base_urls = tmp_urls; //  paste them back into new metadata
 			//  FIXME: Setting base_urls also saves
 			write(FS.Paths.EpicGames.Metadata,
 			      get_metadata_filename(),
-			      Json.to_string(metadata,
-			                     true).data);
+			      Json.to_string(metadata, true).data);
 		}
 
 		//  public new async void install(InstallTask.Mode install_mode = InstallTask.Mode.INTERACTIVE, bool update = false)
@@ -1422,21 +1327,16 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			public EpicGame game;
 
-			public DLC(EpicGame   game,
-			           Asset      asset,
-			           Json.Node? metadata = null)
+			public DLC(EpicGame game, Asset asset, Json.Node? metadata = null)
 			{
-				base(
-					game.source as EpicGames,
-					asset,
-					metadata);
+				base(game.source as EpicGames, asset, metadata);
 
-				icon = game.icon;
+				icon  = game.icon;
 				image = game.image;
 
 				install_dir = game.install_dir;
-				work_dir = game.work_dir;
-				executable = game.executable;
+				work_dir    = game.work_dir;
+				executable  = game.executable;
 
 				platforms = game.platforms;
 
@@ -1461,18 +1361,13 @@ namespace GameHub.Data.Sources.EpicGames
 			public Asset.from_egs_json(Json.Node json)
 			{
 				assert(json.get_node_type() == Json.NodeType.OBJECT);
-				app_name = json.get_object().get_string_member_with_default("appName",
-				                                                            "");
-				asset_id = json.get_object().get_string_member_with_default("assetId",
-				                                                            "");
-				build_version = json.get_object().get_string_member_with_default("buildVersion",
-				                                                                 "");
-				catalog_item_id = json.get_object().get_string_member_with_default("catalogItemId",
-				                                                                   "");
-				label_name = json.get_object().get_string_member_with_default("labelName",
-				                                                              "");
-				ns = json.get_object().get_string_member_with_default("namespace",
-				                                                      "");
+
+				app_name        = json.get_object().get_string_member_with_default("appName", "");
+				asset_id        = json.get_object().get_string_member_with_default("assetId", "");
+				build_version   = json.get_object().get_string_member_with_default("buildVersion", "");
+				catalog_item_id = json.get_object().get_string_member_with_default("catalogItemId", "");
+				label_name      = json.get_object().get_string_member_with_default("labelName", "");
+				ns              = json.get_object().get_string_member_with_default("namespace", "");
 
 				//  asset = json;
 				if(json.get_object().has_member("metadata"))
@@ -1491,18 +1386,13 @@ namespace GameHub.Data.Sources.EpicGames
 			public Asset.from_json(Json.Node json)
 			{
 				assert(json.get_node_type() == Json.NodeType.OBJECT);
-				app_name = json.get_object().get_string_member_with_default("app_name",
-				                                                            "");
-				asset_id = json.get_object().get_string_member_with_default("asset_id",
-				                                                            "");
-				build_version = json.get_object().get_string_member_with_default("build_version",
-				                                                                 "");
-				catalog_item_id = json.get_object().get_string_member_with_default("catalog_item_id",
-				                                                                   "");
-				label_name = json.get_object().get_string_member_with_default("label_name",
-				                                                              "");
-				ns = json.get_object().get_string_member_with_default("namespace",
-				                                                      "");
+
+				app_name        = json.get_object().get_string_member_with_default("app_name", "");
+				asset_id        = json.get_object().get_string_member_with_default("asset_id", "");
+				build_version   = json.get_object().get_string_member_with_default("build_version", "");
+				catalog_item_id = json.get_object().get_string_member_with_default("catalog_item_id", "");
+				label_name      = json.get_object().get_string_member_with_default("label_name", "");
+				ns              = json.get_object().get_string_member_with_default("namespace", "");
 
 				if(json.get_object().has_member("metadata"))
 				{
@@ -1519,29 +1409,20 @@ namespace GameHub.Data.Sources.EpicGames
 			{
 				var json = new Json.Node(Json.NodeType.OBJECT);
 				json.set_object(new Json.Object());
-				json.get_object().set_string_member("app_name",
-				                                    app_name);
-				json.get_object().set_string_member("asset_id",
-				                                    asset_id);
-				json.get_object().set_string_member("build_version",
-				                                    build_version);
-				json.get_object().set_string_member("catalog_item_id",
-				                                    catalog_item_id);
-				json.get_object().set_string_member("label_name",
-				                                    label_name);
-				json.get_object().set_object_member("metadata",
-				                                    metadata.get_object());
-				json.get_object().set_string_member("namespace",
-				                                    ns);
+				json.get_object().set_string_member("app_name", app_name);
+				json.get_object().set_string_member("asset_id", asset_id);
+				json.get_object().set_string_member("build_version", build_version);
+				json.get_object().set_string_member("catalog_item_id", catalog_item_id);
+				json.get_object().set_string_member("label_name", label_name);
+				json.get_object().set_object_member("metadata", metadata.get_object());
+				json.get_object().set_string_member("namespace", ns);
 
 				return json;
 			}
 
-			public string to_string(bool pretty) { return Json.to_string(to_json(),
-				                                                     pretty); }
+			public string to_string(bool pretty) { return Json.to_string(to_json(), pretty); }
 
-			public static new bool is_equal(Asset a,
-			                                Asset b)
+			public static new bool is_equal(Asset a, Asset b)
 			{
 				if(a.asset_id == b.asset_id)
 				{

@@ -8,18 +8,18 @@ namespace GameHub.Data.Sources.EpicGames
 	{
 		private const uint32 header_magic = 0x44BEC00C;
 
-		private Bytes sha_hash { get; default = new Bytes(null); }
-		private uint8 stored_as { get; default = 0; }
-		private uint32 header_size { get; default = 41; }
-		private uint32 size_compressed { get; default = 0; }
+		private Bytes  sha_hash          { get; default = new Bytes(null); }
+		private uint8  stored_as         { get; default = 0; }
+		private uint32 header_size       { get; default = 41; }
+		private uint32 size_compressed   { get; default = 0; }
 		private uint32 size_uncompressed { get; default = 0; }
-		private uint32 version { get; default = 18; }
+		private uint32 version           { get; default = 18; }
 
 		internal ChunkDataList? chunk_data_list { get; default = null; }
 		//  TODO: CustomFields custom_fields;
 		//  private Json.Node? custom_fields { get; default = null; }
 		internal FileManifestList? file_manifest_list { get; default = null; }
-		internal Meta? meta { get; default = null; }
+		internal Meta?           meta                 { get; default = null; }
 
 		internal bool compressed { get { return (stored_as & 0x1) != 0; } }
 
@@ -27,36 +27,31 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			read_byte_header(bytes);
 
-			var body = bytes.slice(header_size,
-			                       bytes.length);
+			var body = bytes.slice(header_size, bytes.length);
 
 			if(compressed)
 			{
 				if(log_manifest) debug("[Sources.EpicGames.Manifest.read_bytes] Data is compressed, uncompressing…");
 
-				var zlib = new ZlibDecompressor(ZlibCompressorFormat.ZLIB);
-				var compressed_stream = new MemoryInputStream.from_bytes(body);
+				var zlib                = new ZlibDecompressor(ZlibCompressorFormat.ZLIB);
+				var compressed_stream   = new MemoryInputStream.from_bytes(body);
 				var uncompressed_stream = new MemoryOutputStream.resizable();
-				var converter_stream = new ConverterOutputStream(uncompressed_stream,
-				                                                 zlib);
+				var converter_stream    = new ConverterOutputStream(uncompressed_stream, zlib);
 
 				try
 				{
-					converter_stream.splice(compressed_stream,
-					                        OutputStreamSpliceFlags.NONE);
+					converter_stream.splice(compressed_stream, OutputStreamSpliceFlags.NONE);
 					uncompressed_stream.close();
 				}
 				catch (Error e)
 				{
-					debug("[Manifest.from_bytes]error: %s",
-					      e.message);
+					debug("[Manifest.from_bytes]error: %s", e.message);
 				}
 
 				var data_uncompressed = uncompressed_stream.steal_as_bytes();
 				assert(data_uncompressed.length == size_uncompressed);
 
-				var decompressed_hash = Checksum.compute_for_bytes(ChecksumType.SHA1,
-				                                                   data_uncompressed);
+				var decompressed_hash = Checksum.compute_for_bytes(ChecksumType.SHA1, data_uncompressed);
 
 				if(log_manifest) debug("[Sources.EpicGames.Manifest.read_bytes] our hash: %s", decompressed_hash);
 
@@ -67,15 +62,12 @@ namespace GameHub.Data.Sources.EpicGames
 			var stream = new DataInputStream(new MemoryInputStream.from_bytes(body));
 			stream.set_byte_order(DataStreamByteOrder.LITTLE_ENDIAN);
 
-			_meta = new Meta.from_byte_stream(stream);
-			_chunk_data_list = new ChunkDataList.from_byte_stream(stream,
-			                                                      meta.feature_level);
+			_meta               = new Meta.from_byte_stream(stream);
+			_chunk_data_list    = new ChunkDataList.from_byte_stream(stream, meta.feature_level);
 			_file_manifest_list = new FileManifestList.from_byte_stream(stream);
 			//  TODO: custom_fields = new CustomFields(stream);
 
-			var unhandled_data = new Bytes.from_bytes(body,
-			                                          (size_t) stream.tell(),
-			                                          bytes.length - (size_t) stream.tell());
+			var unhandled_data = new Bytes.from_bytes(body, (size_t) stream.tell(), bytes.length - (size_t) stream.tell());
 
 			if(unhandled_data.length > 0)
 			{
@@ -91,16 +83,14 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			try
 			{
-				_version = number_string_to_byte_stream(json.get_object().get_string_member_with_default("ManifestFileVersion",
-				                                                                                         "013000000000")).read_uint32();
+				_version = number_string_to_byte_stream(json.get_object().get_string_member_with_default("ManifestFileVersion", "013000000000")).read_uint32();
 			}
 			catch (Error e) { debug("error: %s", e.message); }
 
-			_meta = new Meta.from_json(json);
-			_chunk_data_list = new ChunkDataList.from_json(json,
-			                                               version);
+			_meta               = new Meta.from_json(json);
+			_chunk_data_list    = new ChunkDataList.from_json(json, version);
 			_file_manifest_list = new FileManifestList.from_json(json);
-			_stored_as = 0;         //  never compress
+			_stored_as          = 0; //  never compress
 			//  custom_fields = new CustomFields();
 			//  if(json.get_object().has_member("CustomFields"))
 			//  {
@@ -124,19 +114,18 @@ namespace GameHub.Data.Sources.EpicGames
 				var magic = stream.read_uint32();
 				assert(magic == header_magic);
 
-				_header_size = stream.read_uint32();
+				_header_size       = stream.read_uint32();
 				_size_uncompressed = stream.read_uint32();
-				_size_compressed = stream.read_uint32();
-				_sha_hash = stream.read_bytes(20);
-				_stored_as = stream.read_byte();
-				_version = stream.read_uint32();
+				_size_compressed   = stream.read_uint32();
+				_sha_hash          = stream.read_bytes(20);
+				_stored_as         = stream.read_byte();
+				_version           = stream.read_uint32();
 
 				assert(stream.tell() == header_size);
 			}
 			catch (Error e)
 			{
-				debug("[Manifest.read_byte_header] error: %s",
-				      e.message);
+				debug("[Manifest.read_byte_header] error: %s", e.message);
 			}
 		}
 
@@ -162,23 +151,23 @@ namespace GameHub.Data.Sources.EpicGames
 		 */
 		internal class Meta
 		{
-			internal ArrayList<string> prereq_ids { get; default = new ArrayList<string>(); }
-			internal bool is_file_data { get; default = false; }
-			internal string app_name { get; default = ""; }
-			internal string build_version { get; default = ""; }
-			internal string launch_exe { get; default = ""; }
-			internal string launch_command { get; default = ""; }
-			internal string prereq_name { get; default = ""; }
-			internal string prereq_path { get; default = ""; }
-			internal string prereq_args { get; default = ""; }
-			internal uint8 data_version { get; default = 0; }
-			internal uint32 app_id { get; default = 0; }
-			internal uint32 feature_level { get; default = 18; }
-			internal uint32 meta_size { get; default = 0; }
+			internal ArrayList<string> prereq_ids     { get; default = new ArrayList<string>(); }
+			internal bool              is_file_data   { get; default = false; }
+			internal string            app_name       { get; default = ""; }
+			internal string            build_version  { get; default = ""; }
+			internal string            launch_exe     { get; default = ""; }
+			internal string            launch_command { get; default = ""; }
+			internal string            prereq_name    { get; default = ""; }
+			internal string            prereq_path    { get; default = ""; }
+			internal string            prereq_args    { get; default = ""; }
+			internal uint8             data_version   { get; default = 0; }
+			internal uint32            app_id         { get; default = 0; }
+			internal uint32            feature_level  { get; default = 18; }
+			internal uint32            meta_size      { get; default = 0; }
 
 			//  this build id is used for something called "delta file"
 			internal string? _build_id = null;
-			internal string build_id
+			internal string  build_id
 			{
 				get
 				{
@@ -191,26 +180,18 @@ namespace GameHub.Data.Sources.EpicGames
 					variant.byteswap(); // FIXME: instead of hardcoded swapping try to set endian directly
 					checksum.update(variant.get_data_as_bytes().get_data(),
 					                variant.get_data_as_bytes().get_data().length);
-					checksum.update(app_name.data,
-					                -1);
-					checksum.update(build_version.data,
-					                -1);
-					checksum.update(launch_exe.data,
-					                -1);
-					checksum.update(launch_command.data,
-					                -1);
+					checksum.update(app_name.data, -1);
+					checksum.update(build_version.data, -1);
+					checksum.update(launch_exe.data, -1);
+					checksum.update(launch_command.data, -1);
 
 					uint8[] hash = new uint8[ChecksumType.SHA1.get_length()];
-					size_t size = ChecksumType.SHA1.get_length();
-					checksum.get_digest(hash,
-					                    ref size);
+					size_t  size = ChecksumType.SHA1.get_length();
+					checksum.get_digest(hash, ref size);
 
 					try
 					{
-						_build_id = convert(Base64.encode(hash).replace("+",
-						                                                "-").replace("/",
-						                                                             "_").replace("=",
-						                                                                          ""),
+						_build_id = convert(Base64.encode(hash).replace("+", "-").replace("/", "_").replace("=", ""),
 						                    -1,
 						                    "ASCII",
 						                    "UTF-8");
@@ -232,23 +213,15 @@ namespace GameHub.Data.Sources.EpicGames
 
 				try
 				{
-					_feature_level = number_string_to_byte_stream(json_obj.get_string_member_with_default("ManifestFileVersion",
-					                                                                                      "013000000000")).read_uint32();
-					_app_id = number_string_to_byte_stream(json_obj.get_string_member_with_default("AppID",
-					                                                                               "000000000000")).read_uint32();
+					_is_file_data   = json_obj.get_boolean_member_with_default("bIsFileData", false);
+					_app_name       = json_obj.get_string_member_with_default("AppNameString", "");
+					_build_version  = json_obj.get_string_member_with_default("BuildVersionString", "");
+					_launch_exe     = json_obj.get_string_member_with_default("LaunchExeString", "");
+					_launch_command = json_obj.get_string_member_with_default("LaunchCommand", "");
+					_feature_level  = number_string_to_byte_stream(json_obj.get_string_member_with_default("ManifestFileVersion", "013000000000")).read_uint32();
+					_app_id         = number_string_to_byte_stream(json_obj.get_string_member_with_default("AppID", "000000000000")).read_uint32();
 				}
 				catch (Error e) { debug("error: %s", e.message); }
-
-				_is_file_data = json_obj.get_boolean_member_with_default("bIsFileData",
-				                                                         false);
-				_app_name = json_obj.get_string_member_with_default("AppNameString",
-				                                                    "");
-				_build_version = json_obj.get_string_member_with_default("BuildVersionString",
-				                                                         "");
-				_launch_exe = json_obj.get_string_member_with_default("LaunchExeString",
-				                                                      "");
-				_launch_command = json_obj.get_string_member_with_default("LaunchCommand",
-				                                                          "");
 
 				//  TODO: we don't care about this yet
 				//  _prereq_name = json_obj.get_string_member_with_default("PrereqName", "");
@@ -269,7 +242,7 @@ namespace GameHub.Data.Sources.EpicGames
 			{
 				try
 				{
-					_meta_size = stream.read_uint32();
+					_meta_size    = stream.read_uint32();
 					_data_version = stream.read_byte();
 
 					//  Usually same as manifest version, but can be different
@@ -282,9 +255,9 @@ namespace GameHub.Data.Sources.EpicGames
 					//  0 for most apps, generally not used
 					_app_id = stream.read_uint32();
 
-					_app_name = read_fstring(stream);
-					_build_version = read_fstring(stream);
-					_launch_exe = read_fstring(stream);
+					_app_name       = read_fstring(stream);
+					_build_version  = read_fstring(stream);
+					_launch_exe     = read_fstring(stream);
 					_launch_command = read_fstring(stream);
 
 					//  This is a list though I've never seen more than one entry
@@ -338,9 +311,9 @@ namespace GameHub.Data.Sources.EpicGames
 			private HashMap<string, int>? path_map = null;
 
 			internal ArrayList<FileManifest> elements { get; default = new ArrayList<FileManifest>(); }
-			internal uint8 version { get; default = 0; }
-			internal uint32 count { get; default = 0; }
-			internal uint32 size { get; default = 0; }
+			internal uint8                   version  { get; default = 0; }
+			internal uint32                  count    { get; default = 0; }
+			internal uint32                  size     { get; default = 0; }
 
 			internal FileManifestList.from_byte_stream(DataInputStream stream)
 			{
@@ -348,9 +321,9 @@ namespace GameHub.Data.Sources.EpicGames
 
 				try
 				{
-					_size = stream.read_uint32();
+					_size    = stream.read_uint32();
 					_version = stream.read_byte();
-					_count = stream.read_uint32();
+					_count   = stream.read_uint32();
 				}
 				catch (Error e) {}
 
@@ -419,8 +392,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 						for(var i = 0; i < _count; i++)
 						{
-							var chunk_part = new FileManifest.ChunkPart.from_byte_stream(stream,
-							                                                             offset);
+							var chunk_part = new FileManifest.ChunkPart.from_byte_stream(stream, offset);
 							file_manifest.chunk_parts.add(chunk_part);
 							offset += chunk_part.size;
 						}
@@ -459,22 +431,18 @@ namespace GameHub.Data.Sources.EpicGames
 
 					var file_manifest_json = node.get_object();
 
-					file_manifest.filename = file_manifest_json.get_string_member_with_default("Filename",
-					                                                                           "");
+					file_manifest.filename = file_manifest_json.get_string_member_with_default("Filename", "");
 
 					try
 					{
-						var hash = file_manifest_json.get_string_member("FileHash"); // 20 bytes as %03d number string
+						var hash           = file_manifest_json.get_string_member("FileHash"); // 20 bytes as %03d number string
 						file_manifest.hash = number_string_to_byte_stream(hash).read_bytes(20);
 					}
 					catch (Error e) { debug("error: %s", e.message); }
 
-					file_manifest.flags |= (int) file_manifest_json.get_boolean_member_with_default("bIsReadOnly",
-					                                                                                false);
-					file_manifest.flags |= (int) file_manifest_json.get_boolean_member_with_default("bIsCompressed",
-					                                                                                false) << 1;
-					file_manifest.flags |= (int) file_manifest_json.get_boolean_member_with_default("bIsUnixExecutable",
-					                                                                                false) << 2;
+					file_manifest.flags |= (int) file_manifest_json.get_boolean_member_with_default("bIsReadOnly", false);
+					file_manifest.flags |= (int) file_manifest_json.get_boolean_member_with_default("bIsCompressed", false) << 1;
+					file_manifest.flags |= (int) file_manifest_json.get_boolean_member_with_default("bIsUnixExecutable", false) << 2;
 
 					if(file_manifest_json.has_member("InstallTags"))
 					{
@@ -486,8 +454,7 @@ namespace GameHub.Data.Sources.EpicGames
 					var offset = 0;
 					file_manifest_json.get_array_member("FileChunkParts").foreach_element((a, i, n) =>
 					{
-						var chunk_part = new FileManifest.ChunkPart.from_json(n,
-						                                                      offset);
+						var chunk_part           = new FileManifest.ChunkPart.from_json(n, offset);
 						file_manifest.file_size += chunk_part.size;
 
 						//  TODO: not read keys
@@ -511,8 +478,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 					for(var i = 0; i < elements.size; i++)
 					{
-						path_map.set(elements.get(i).filename,
-						             i);
+						path_map.set(elements.get(i).filename, i);
 					}
 				}
 
@@ -550,13 +516,13 @@ namespace GameHub.Data.Sources.EpicGames
 			 */
 			internal class FileManifest
 			{
-				internal ArrayList<ChunkPart> chunk_parts { get; default = new ArrayList<ChunkPart>(); }
-				internal ArrayList<string> install_tags { get; default = new ArrayList<string>(); }
-				internal bool compressed { get { return (flags & 0x2) == 0x2; } }
-				internal bool executable { get { return (flags & 0x4) == 0x4; } }
-				internal bool read_only { get { return (flags & 0x1) == 0x1; } }
-				internal Bytes hash { get; set; default = new Bytes(null); }
-				internal Bytes sha_hash { get { return hash; } }
+				internal ArrayList<ChunkPart> chunk_parts  { get; default = new ArrayList<ChunkPart>(); }
+				internal ArrayList<string>    install_tags { get; default = new ArrayList<string>(); }
+				internal bool                 compressed   { get { return (flags & 0x2) == 0x2; } }
+				internal bool                 executable   { get { return (flags & 0x4) == 0x4; } }
+				internal bool                 read_only    { get { return (flags & 0x1) == 0x1; } }
+				internal Bytes                hash         { get; set; default = new Bytes(null); }
+				internal Bytes                sha_hash     { get { return hash; } }
 				internal uchar flags { get; set; default = 0; }
 				internal uint32 file_size { get; set; default = 0; }
 				internal string filename { get; set; default = ""; }
@@ -567,7 +533,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 				internal string to_string()
 				{
-					var tag_string = "";
+					var tag_string   = "";
 					var chunk_string = "";
 
 					foreach(var tag in install_tags)
@@ -604,13 +570,13 @@ namespace GameHub.Data.Sources.EpicGames
 				internal class ChunkPart
 				{
 					internal uint32 file_offset { get; default = 0; }
-					internal uint32 offset { get; default = 0; }
-					internal uint32 size { get; default = 0; }
-					internal uint32[] guid { get; default = new uint32[4]; }
+					internal uint32 offset      { get; default = 0; }
+					internal uint32 size        { get; default = 0; }
+					internal        uint32[] guid { get; default = new uint32[4]; }
 
 					//  caches for things that are "expensive" to compute
 					private string? _guid_str = null;
-					private uint32? _guid_num = null;
+					private         uint32? _guid_num = null;
 
 					internal string guid_str
 					{
@@ -638,19 +604,18 @@ namespace GameHub.Data.Sources.EpicGames
 						}
 					}
 
-					private ChunkPart(uint32[] guid = new uint32[4],
-					                  uint32   offset = 0,
-					                  uint32   size = 0,
+					private ChunkPart(uint32[] guid        = new uint32[4],
+					                  uint32   offset      = 0,
+					                  uint32   size        = 0,
 					                  uint32   file_offset = 0)
 					{
-						_guid = guid;
-						_offset = offset;
-						_size = size;
+						_guid        = guid;
+						_offset      = offset;
+						_size        = size;
 						_file_offset = file_offset;
 					}
 
-					internal ChunkPart.from_byte_stream(DataInputStream stream,
-					                                    uint32          offset)
+					internal ChunkPart.from_byte_stream(DataInputStream stream, uint32 offset)
 					{
 						var start = stream.tell();
 
@@ -663,8 +628,8 @@ namespace GameHub.Data.Sources.EpicGames
 								_guid[j] = stream.read_uint32();
 							}
 
-							_offset = stream.read_uint32();
-							_size = stream.read_uint32();
+							_offset      = stream.read_uint32();
+							_size        = stream.read_uint32();
 							_file_offset = offset;
 
 							var diff = stream.tell() - start - size;
@@ -672,30 +637,27 @@ namespace GameHub.Data.Sources.EpicGames
 							if(diff > 0)
 							{
 								warning(@"[Sources.EpicGames.Manifest.ChunkPart.from_byte_stream] Did not read $diff bytes from chunk part!");
-								stream.seek(diff,
-								            SeekType.SET);
+								stream.seek(diff, SeekType.SET);
 							}
 						}
 						catch (Error e)
 						{
-							debug("[ChunkPart.from_byte_stream] error: %s",
-							      e.message);
+							debug("[ChunkPart.from_byte_stream] error: %s", e.message);
 						}
 
 						if(log_chunk_part) debug(to_string());
 					}
 
-					internal ChunkPart.from_json(Json.Node json,
-					                             uint32    offset)
+					internal ChunkPart.from_json(Json.Node json, uint32 offset)
 					{
 						assert(json.get_node_type() == Json.NodeType.OBJECT);
 
 						uint32 chunk_offset = 0;
-						uint32 chunk_size = 0;
+						uint32 chunk_size   = 0;
 						try
 						{
 							chunk_offset = number_string_to_byte_stream(json.get_object().get_string_member("Offset")).read_uint32();
-							chunk_size = number_string_to_byte_stream(json.get_object().get_string_member("Size")).read_uint32();
+							chunk_size   = number_string_to_byte_stream(json.get_object().get_string_member("Size")).read_uint32();
 						}
 						catch (Error e) { debug("error: %s", e.message); }
 
@@ -723,29 +685,28 @@ namespace GameHub.Data.Sources.EpicGames
 		internal class ChunkDataList
 		{
 			private uint8 version { get; }
-			private uint32 manifest_version { get; }
-			private uint32 size { get; }
-			private uint32 count { get; }
-			Json.Object chunk_filesize_list; // FIXME:
-			Json.Object chunk_hash_list; // FIXME:
-			Json.Object chunk_sha_list; // FIXME:
-			Json.Object data_group_list; // FIXME:
+			private uint32               manifest_version { get; }
+			private uint32               size             { get; }
+			private uint32               count            { get; }
+			Json.Object                  chunk_filesize_list; // FIXME:
+			Json.Object                  chunk_hash_list; // FIXME:
+			Json.Object                  chunk_sha_list; // FIXME:
+			Json.Object                  data_group_list; // FIXME:
 			private HashMap<uint32, int> guid_int_map { get; default = new HashMap<uint32, int>(); }
 			private HashMap<string, int> guid_str_map { get; default = new HashMap<string, int>(); }
 
 			internal ArrayList<ChunkInfo> elements { get; default = new ArrayList<ChunkInfo>(); }
 
-			internal ChunkDataList.from_byte_stream(DataInputStream stream,
-			                                        uint32          manifest_version = 18)
+			internal ChunkDataList.from_byte_stream(DataInputStream stream, uint32 manifest_version = 18)
 			{
 				var start = stream.tell();
 				_manifest_version = manifest_version;
 
 				try
 				{
-					_size = stream.read_uint32();
+					_size    = stream.read_uint32();
 					_version = stream.read_byte();
-					_count = stream.read_uint32();
+					_count   = stream.read_uint32();
 
 					//  the way this data is stored is rather odd, maybe there's a nicer way to write this…
 					for(var i = 0; i < count; i++)
@@ -828,17 +789,16 @@ namespace GameHub.Data.Sources.EpicGames
 				if(log_chunk_data_list) debug(to_string());
 			}
 
-			internal ChunkDataList.from_json(Json.Node json_data,
-			                                 uint32    manifest_version = 13)
+			internal ChunkDataList.from_json(Json.Node json_data, uint32 manifest_version = 13)
 			{
 				var json_obj = json_data.get_object();
 
-				_manifest_version = manifest_version;
-				_count = json_obj.get_object_member("ChunkFilesizeList").get_size();
+				_manifest_version   = manifest_version;
+				_count              = json_obj.get_object_member("ChunkFilesizeList").get_size();
 				chunk_filesize_list = json_obj.get_object_member("ChunkFilesizeList");
-				chunk_hash_list = json_obj.get_object_member("ChunkHashList");
-				chunk_sha_list = json_obj.get_object_member("ChunkShaList");
-				data_group_list = json_obj.get_object_member("DataGroupList");
+				chunk_hash_list     = json_obj.get_object_member("ChunkHashList");
+				chunk_sha_list      = json_obj.get_object_member("ChunkShaList");
+				data_group_list     = json_obj.get_object_member("DataGroupList");
 
 				chunk_filesize_list.get_members().foreach(guid =>
 				{
@@ -865,18 +825,17 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 
 			/**
-				* Get chunk by GUID number, creates index of chunks on first call
-				*
-				* Integer GUIDs are usually faster and require less memory, use those when possible.
-				*/
+			* Get chunk by GUID number, creates index of chunks on first call
+			*
+			* Integer GUIDs are usually faster and require less memory, use those when possible.
+			*/
 			internal ChunkInfo? get_chunk_by_number(uint32 guid)
 			{
 				if(_guid_int_map.is_empty)
 				{
 					for(var i = 0; i < _elements.size; i++)
 					{
-						_guid_int_map.set(_elements.get(i).guid_num,
-						                  i);
+						_guid_int_map.set(_elements.get(i).guid_num, i);
 					}
 				}
 
@@ -900,8 +859,7 @@ namespace GameHub.Data.Sources.EpicGames
 				{
 					for(var i = 0; i < _elements.size; i++)
 					{
-						_guid_str_map.set(_elements.get(i).guid_str,
-						                  i);
+						_guid_str_map.set(_elements.get(i).guid_str, i);
 					}
 				}
 
@@ -943,17 +901,17 @@ namespace GameHub.Data.Sources.EpicGames
 			 */
 			internal class ChunkInfo
 			{
-				internal Bytes sha_hash { get; set; default = new Bytes(null); }
-				internal int64 file_size { get; set; default = 0; }
-				internal uint32[] guid { get; set; default = new uint32[4]; }
+				internal Bytes  sha_hash         { get; set; default = new Bytes(null); }
+				internal int64  file_size        { get; set; default = 0; }
+				internal        uint32[] guid    { get; set; default = new uint32[4]; }
 				internal uint32 manifest_version { get; set; }
-				internal uint32 window_size { get; set; default = 0; }
-				internal uint64 hash { get; set; default = 0; }
+				internal uint32 window_size      { get; set; default = 0; }
+				internal uint64 hash             { get; set; default = 0; }
 
 				//  caches for things that are "expensive" to compute
-				private ulong? _group_num = null;
+				private ulong?  _group_num = null;
 				private string? _guid_str = null;
-				private uint32? _guid_num = null;
+				private         uint32? _guid_num = null;
 
 				internal string guid_str
 				{
@@ -996,8 +954,7 @@ namespace GameHub.Data.Sources.EpicGames
 								bytes.append(variant.get_data_as_bytes().get_data());
 							}
 
-							_group_num = (ZLib.Utility.crc32(0,
-							                                 bytes.data) & 0xffffffff) % 100;
+							_group_num = (ZLib.Utility.crc32(0, bytes.data) & 0xffffffff) % 100;
 						}
 
 						return _group_num;
@@ -1012,11 +969,10 @@ namespace GameHub.Data.Sources.EpicGames
 				{
 					owned get
 					{
-						return "%s/%02lu/%016llX_%s.chunk".printf(
-							get_chunk_dir(),
-							group_num,
-							hash,
-							guid_to_string(guid));
+						return "%s/%02lu/%016llX_%s.chunk".printf(get_chunk_dir(),
+						                                          group_num,
+						                                          hash,
+						                                          guid_to_string(guid));
 					}
 				}
 
@@ -1082,10 +1038,7 @@ namespace GameHub.Data.Sources.EpicGames
 					//  TODO: CharsetConverter oconverter = new CharsetConverter ("utf-16", "utf-8");
 					//  variant = new Variant.from_bytes(VariantType.STRING, stream.read_bytes(length), false);
 					//  debug("[Sources.EpicGames.Manifest.read_fstring] string utf-16: %s", variant.get_string());
-					result = convert((string) stream.read_bytes(length),
-					                 -1,
-					                 "UTF-8",
-					                 "UTF-16"); //  convert to utf8
+					result = convert((string) stream.read_bytes(length), -1, "UTF-8", "UTF-16");                                                                                                                                                                //  convert to utf8
 					//  debug("[Sources.EpicGames.Manifest.read_fstring] string utf-8: %s", result);
 					//  stream.seek(2, GLib.SeekType.CUR); //  utf-16 strings have two byte null terminators
 					//  TODO: seek +1 for second null char?
@@ -1117,13 +1070,12 @@ namespace GameHub.Data.Sources.EpicGames
 	 */
 	internal class ManifestComparison
 	{
-		internal ArrayList<string> added { get; default = new ArrayList<string>(); }
-		internal ArrayList<string> removed { get; default = new ArrayList<string>(); }
-		internal ArrayList<string> changed { get; default = new ArrayList<string>(); }
+		internal ArrayList<string> added     { get; default = new ArrayList<string>(); }
+		internal ArrayList<string> removed   { get; default = new ArrayList<string>(); }
+		internal ArrayList<string> changed   { get; default = new ArrayList<string>(); }
 		internal ArrayList<string> unchanged { get; default = new ArrayList<string>(); }
 
-		internal ManifestComparison(Manifest  new_manifest,
-		                            Manifest? old_manifest = null)
+		internal ManifestComparison(Manifest new_manifest, Manifest? old_manifest = null)
 		{
 			if(old_manifest == null)
 			{
@@ -1139,8 +1091,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 			foreach(var file_manifest in old_manifest.file_manifest_list.elements)
 			{
-				old_files.set(file_manifest.filename,
-				              file_manifest.hash);
+				old_files.set(file_manifest.filename, file_manifest.hash);
 			}
 
 			foreach(var file_manifest in new_manifest.file_manifest_list.elements)
@@ -1149,8 +1100,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 				if(old_files.has_key(file_manifest.filename))
 				{
-					old_files.unset(file_manifest.filename,
-					                out old_file_hash);
+					old_files.unset(file_manifest.filename, out old_file_hash);
 				}
 
 				if(old_file_hash != null)

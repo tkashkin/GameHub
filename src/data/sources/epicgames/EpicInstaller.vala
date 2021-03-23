@@ -8,24 +8,22 @@ namespace GameHub.Data.Sources.EpicGames
 {
 	internal class Installer: Runnables.Tasks.Install.Installer
 	{
-		internal Analysis? analysis = null;
-		internal EpicGame game { get; private set; }
-		internal InstallTask? task { get; default = null; }
+		internal          Analysis? analysis { get; set; default = null; }
+		internal EpicGame game               { get; private set; }
+		internal          InstallTask? task  { get; default = null; }
 
-		internal Installer(EpicGame game,
-		                   Platform platform)
+		internal Installer(EpicGame game, Platform platform)
 		{
-			_game = game;
+			_game         = game;
 			this.platform = platform;
-			id = game.id;
-			name = game.name;
-			full_size = game.get_installation_size(platform); // FIXME: This fetches and scans the manifest, try to get this from somewhere else e.g. the store page
-			can_import = true;
+			id            = game.id;
+			name          = game.name;
+			full_size     = game.get_installation_size(platform); // FIXME: This fetches and scans the manifest, try to get this from somewhere else e.g. the store page
+			can_import    = true;
 
 			if(platform != Platform.WINDOWS)
 			{
-				var list = EpicGames.instance.get_game_assets(true,
-				                                              uppercase_first_character(platform.id()));
+				var list = EpicGames.instance.get_game_assets(true, uppercase_first_character(platform.id()));
 				foreach(var asset in list)
 				{
 					if(asset.asset_id == id)
@@ -156,8 +154,7 @@ namespace GameHub.Data.Sources.EpicGames
 						                               ((Analysis.ChunkTask)file_task).chunk_file).query_exists());
 						old_stream = File.new_build_filename(task.install_dir.get_path(),
 						                                     ((Analysis.ChunkTask)file_task).chunk_file).read();
-						old_stream.seek(((Analysis.ChunkTask)file_task).chunk_offset,
-						                SeekType.SET);
+						old_stream.seek(((Analysis.ChunkTask)file_task).chunk_offset, SeekType.SET);
 						var bytes = yield old_stream.read_bytes_async(((Analysis.ChunkTask)file_task).chunk_size);
 						//  debug("chunk hash: " + Checksum.compute_for_bytes(ChecksumType.SHA1, bytes));
 						yield iostream.write_bytes_async(bytes);
@@ -184,8 +181,7 @@ namespace GameHub.Data.Sources.EpicGames
 			update_game_info();
 
 			task.status = new InstallTask.Status(InstallTask.State.NONE);
-			game.status = new Game.Status(Game.State.INSTALLED,
-			                              this.game);
+			game.status = new Game.Status(Game.State.INSTALLED, this.game);
 
 			return true;
 		}
@@ -196,23 +192,20 @@ namespace GameHub.Data.Sources.EpicGames
 			_task = task;
 
 			task.status = new InstallTask.Status(InstallTask.State.INSTALLING);
-			game.status = new Game.Status(Game.State.INSTALLING,
-			                              this.game);
+			game.status = new Game.Status(Game.State.INSTALLING, this.game);
 
 			if(!yield game.import(task.install_dir))
 			{
 				debug("import failed");
 				task.status = new InstallTask.Status(InstallTask.State.NONE);
-				game.status = new Game.Status(Game.State.UNINSTALLED,
-				                              this.game);
+				game.status = new Game.Status(Game.State.UNINSTALLED, this.game);
 
 				return false;
 			}
 
 			game.executable_path = game.executable.get_path();
-			task.status = new InstallTask.Status(InstallTask.State.VERIFYING_INSTALLER_INTEGRITY);
-			game.status = new Game.Status(Game.State.VERIFYING_INSTALLER_INTEGRITY,
-			                              this.game);
+			task.status          = new InstallTask.Status(InstallTask.State.VERIFYING_INSTALLER_INTEGRITY);
+			game.status          = new Game.Status(Game.State.VERIFYING_INSTALLER_INTEGRITY, this.game);
 
 			if(game.needs_verification) yield game.verify();
 
@@ -220,8 +213,7 @@ namespace GameHub.Data.Sources.EpicGames
 			else update_game_info();
 
 			task.status = new InstallTask.Status(InstallTask.State.NONE);
-			game.status = new Game.Status(Game.State.INSTALLED,
-			                              this.game);
+			game.status = new Game.Status(Game.State.INSTALLED, this.game);
 
 			task.finish();
 
@@ -236,9 +228,8 @@ namespace GameHub.Data.Sources.EpicGames
 			game.manifest = EpicGames.load_manifest(game.load_manifest_from_disk());
 
 			game.update_metadata();
-			game.install_dir = task.install_dir;
-			game.executable_path = FS.file(task.install_dir.get_path(),
-			                               game.manifest.meta.launch_exe).get_path();
+			game.install_dir     = task.install_dir;
+			game.executable_path = FS.file(task.install_dir.get_path(), game.manifest.meta.launch_exe).get_path();
 			game.save();
 			game.update_status();
 		}

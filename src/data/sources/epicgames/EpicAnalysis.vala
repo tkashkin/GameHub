@@ -13,65 +13,62 @@ namespace GameHub.Data.Sources.EpicGames
 	//  FIXME: There are a lot of things related to Legendarys memory management we probably don't even need
 	private class Analysis
 	{
-		internal AnalysisResult? result { get; default = null; }
-		internal ArrayList<Task> tasks { get; default = new ArrayList<Task>(); }
-		internal LinkedList<uint32> chunks_to_dl { get; default = new LinkedList<uint32>(); }
-		internal Manifest.ChunkDataList chunk_data_list { get; default = null; }
-		internal string? base_url { get; default = null; }
+		internal                        AnalysisResult? result { get; default = null; }
+		internal ArrayList<Task>        tasks                  { get; default = new ArrayList<Task>(); }
+		internal LinkedList<uint32>     chunks_to_dl           { get; default = new LinkedList<uint32>(); }
+		internal Manifest.ChunkDataList chunk_data_list        { get; default = null; }
+		internal string?                base_url               { get; default = null; }
 
-		private File? resume_file { get; default = null; }
-		private HashMap<string, string> hash_map { get; default = new HashMap<string, string>(); }
-		private string? download_dir { get; default = null; }
+		private                         File? resume_file { get; default = null; }
+		private HashMap<string, string> hash_map          { get; default = new HashMap<string, string>(); }
+		private string?                 download_dir      { get; default = null; }
 
-		private Analysis(File   install_dir,
-		                 string base_url,
-		                 File?  resume_file)
+		private Analysis(File install_dir, string base_url, File? resume_file)
 		{
 			_download_dir = install_dir.get_path();
-			_base_url = base_url;
-			_resume_file = resume_file;
+			_base_url     = base_url;
+			_resume_file  = resume_file;
 		}
 
 		internal Analysis.from_analysis(Runnables.Tasks.Install.InstallTask task,
 		                                string                              base_url,
 		                                Manifest                            new_manifest,
-		                                Manifest?                           old_manifest = null,
-		                                File?                               resume_file = null,
+		                                Manifest?                           old_manifest      = null,
+		                                File?                               resume_file       = null,
 		                                string[]?                           file_install_tags = null)
 		{
 			this(task.install_dir, base_url, resume_file);
 
-			_result = new AnalysisResult(
-				new_manifest,
-				download_dir,
-				ref _hash_map,
-				ref _chunks_to_dl,
-				ref _tasks,
-				out _chunk_data_list,
-				old_manifest,
-				resume_file,
-				file_install_tags);
+			_result = new AnalysisResult(new_manifest,
+			                             download_dir,
+			                             ref _hash_map,
+			                             ref _chunks_to_dl,
+			                             ref _tasks,
+			                             out _chunk_data_list,
+			                             old_manifest,
+			                             resume_file,
+			                             file_install_tags);
 		}
 
 		internal class AnalysisResult
 		{
 			internal uint32 install_size { get; default = 0; }
-			internal uint32 reuse_size { get; default = 0; }
-			internal uint32 unchanged { get; default = 0; }
+			internal uint32 reuse_size   { get; default = 0; }
+			internal uint32 unchanged    { get; default = 0; }
 			//  internal uint32 unchanged_size { get; default = 0; }
-			internal uint64 dl_size { get; default = 0; }
+			internal uint64 dl_size      { get; default = 0; }
 
-			private ManifestComparison manifest_comparison { get; }
-			private uint32 added { get; default = 0; }
-			private uint32 biggest_file_size { get; default = 0; }
-			private uint32 biggest_chunk { get; default = 0; }
-			private uint32 changed { get; default = 0; }
-			private uint32 min_memory { get; default = 0; }
-			private uint32 num_chunks { get; default = 0; }
-			private uint32 num_chunks_cache { get; default = 0; }
-			private uint32 num_files { get; default = 0; }
-			private uint32 removed { get; default = 0; }
-			private uint32 uncompressed_dl_size { get; default = 0; }
+			private ManifestComparison manifest_comparison  { get; }
+			private uint32             added                { get; default = 0; }
+			private uint32             biggest_file_size    { get; default = 0; }
+			private uint32             biggest_chunk        { get; default = 0; }
+			private uint32             changed              { get; default = 0; }
+			private uint32             min_memory           { get; default = 0; }
+			private uint32             num_chunks           { get; default = 0; }
+			private uint32             num_chunks_cache     { get; default = 0; }
+			private uint32             num_files            { get; default = 0; }
+			private uint32             removed              { get; default = 0; }
+			private uint32             uncompressed_dl_size { get; default = 0; }
 
 			internal AnalysisResult(Manifest                    new_manifest,
 			                        string                      download_dir,
@@ -79,8 +76,8 @@ namespace GameHub.Data.Sources.EpicGames
 			                        ref LinkedList<uint32>      chunks_to_dl,
 			                        ref ArrayList<Task>         tasks,
 			                        out Manifest.ChunkDataList  chunk_data_list,
-			                        Manifest?                   old_manifest = null,
-			                        File?                       resume_file = null,
+			                        Manifest?                   old_manifest      = null,
+			                        File?                       resume_file       = null,
 			                        string[]?                   file_install_tags = null)
 			{
 				foreach(var element in new_manifest.file_manifest_list.elements)
@@ -88,8 +85,7 @@ namespace GameHub.Data.Sources.EpicGames
 					_install_size += element.file_size;
 				}
 
-				_biggest_chunk = new_manifest.chunk_data_list.elements.max(
-					(a, b) => {
+				_biggest_chunk = new_manifest.chunk_data_list.elements.max((a, b) => {
 					if(a.window_size < b.window_size) return -1;
 
 					if(a.window_size == b.window_size) return 0;
@@ -98,8 +94,7 @@ namespace GameHub.Data.Sources.EpicGames
 					return 1;
 				}).window_size;
 
-				_biggest_file_size = new_manifest.file_manifest_list.elements.max(
-					(a, b) => {
+				_biggest_file_size = new_manifest.file_manifest_list.elements.max((a, b) => {
 					if(a.file_size < b.file_size) return -1;
 
 					if(a.file_size == b.file_size) return 0;
@@ -112,30 +107,26 @@ namespace GameHub.Data.Sources.EpicGames
 				debug(@"[Sources.EpicGames.AnalysisResult] Biggest chunk size: $biggest_chunk bytes (==1 MiB? $is_1mib)");
 
 				debug("[Sources.EpicGames.AnalysisResult] Creating manifest comparison…");
-				_manifest_comparison = new ManifestComparison(new_manifest,
-				                                              old_manifest);
+				_manifest_comparison = new ManifestComparison(new_manifest, old_manifest);
 
 				if(resume_file != null && resume_file.query_exists())
 				{
 					info("[Sources.EpicGames.AnalysisResult] Found previously interrupted download. Download will be resumed if possible.");
 					try
 					{
-						var missing = 0;
-						var mismatch = 0;
+						var missing         = 0;
+						var mismatch        = 0;
 						var completed_files = new ArrayList<string>();
-
-						var stream = new DataInputStream(resume_file.read());
+						var stream          = new DataInputStream(resume_file.read());
 
 						string? line = null;
 
 						while((line = stream.read_line_utf8()) != null)
 						{
-							var data = line.split(":");
+							var data      = line.split(":");
 							var file_hash = data[0];
-							var filename = data[1];
-
-							var file = FS.file(download_dir,
-							                   filename);
+							var filename  = data[1];
+							var file      = FS.file(download_dir, filename);
 
 							if(!file.query_exists())
 							{
@@ -255,10 +246,10 @@ namespace GameHub.Data.Sources.EpicGames
 
 				//  count references to chunks for determining runtime cache size later
 				//  TODO: do we care about this?
-				var references = new HashMultiSet<uint32>(); // FIXME: correct type to count?
+				var references         = new HashMultiSet<uint32>(); // FIXME: correct type to count?
 				var file_manifest_list = new_manifest.file_manifest_list.elements;
-				file_manifest_list.sort(
-					(a, b) => {
+
+				file_manifest_list.sort((a, b) => {
 					if(a.filename.down() < b.filename.down()) return -1;
 
 					if(a.filename.down() == b.filename.down()) return 0;
@@ -269,8 +260,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 				foreach(var file_manifest in file_manifest_list)
 				{
-					hash_map.set(file_manifest.filename,
-					             bytes_to_hex(file_manifest.sha_hash));
+					hash_map.set(file_manifest.filename, bytes_to_hex(file_manifest.sha_hash));
 
 					//  chunks of unchanged files are not downloaded so we can skip them
 					if(file_manifest.filename in manifest_comparison.unchanged)
@@ -291,7 +281,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 				//  determine reusable chunks and prepare lookup table for reusable ones
 				var re_usable = new HashMap<string, HashMap<uint32[], uint32> >();
-				var patch = true; // FIXME: hardcoded always update
+				var patch     = true; // FIXME: hardcoded always update
 
 				if(old_manifest != null && !manifest_comparison.changed.is_empty && patch)
 				{
@@ -301,8 +291,8 @@ namespace GameHub.Data.Sources.EpicGames
 						var old_file = old_manifest.file_manifest_list.get_file_by_path(changed_file);
 						var new_file = new_manifest.file_manifest_list.get_file_by_path(changed_file);
 
-						var existing_chunks = new HashMap<uint32, ArrayList<ArrayList> >();
-						uint32 offset = 0;
+						var    existing_chunks = new HashMap<uint32, ArrayList<ArrayList> >();
+						uint32 offset          = 0;
 
 						foreach(var chunk_part in old_file.chunk_parts)
 						{
@@ -310,17 +300,15 @@ namespace GameHub.Data.Sources.EpicGames
 							if(!existing_chunks.has_key(chunk_part.guid_num))
 							{
 								var list = new ArrayList<ArrayList<uint32> >();
-								existing_chunks.set(chunk_part.guid_num,
-								                    list);
+								existing_chunks.set(chunk_part.guid_num, list);
 							}
 
 							//  TODO: possible to do this better?
-							var tmp = existing_chunks.get(chunk_part.guid_num);
+							var tmp  = existing_chunks.get(chunk_part.guid_num);
 							var tmp2 = new ArrayList<uint32>();
 							tmp2.add_all_array({ offset, chunk_part.offset, chunk_part.offset + chunk_part.size });
 							tmp.add(tmp2);
-							existing_chunks.set(chunk_part.guid_num,
-							                    tmp);
+							existing_chunks.set(chunk_part.guid_num, tmp);
 							offset += chunk_part.size;
 						}
 
@@ -344,16 +332,13 @@ namespace GameHub.Data.Sources.EpicGames
 
 									if(!re_usable.has_key(changed_file))
 									{
-										re_usable.set(changed_file,
-										              new HashMap<uint32[], uint32>());
+										re_usable.set(changed_file, new HashMap<uint32[], uint32>());
 									}
 
 									//  TODO: possible to do this better?
 									var tmp = re_usable.get(changed_file);
-									tmp.set(key,
-									        thing.get(0) + (chunk_part.offset - thing.get(1)));
-									re_usable.set(changed_file,
-									              tmp);
+									tmp.set(key, thing.get(0) + (chunk_part.offset - thing.get(1)));
+									re_usable.set(changed_file, tmp);
 									_reuse_size += chunk_part.size;
 								}
 							}
@@ -361,7 +346,7 @@ namespace GameHub.Data.Sources.EpicGames
 					}
 				}
 
-				uint32 last_cache_size = 0;
+				uint32 last_cache_size    = 0;
 				uint32 current_cache_size = 0;
 
 				//  set to determine whether a file is currently cached or not
@@ -397,13 +382,11 @@ namespace GameHub.Data.Sources.EpicGames
 					//  	existing_chunks = re_usable.get(current_file.filename);
 					//  }
 					var chunk_tasks = new ArrayList<ChunkTask>();
-					var reused = 0;
+					var reused      = 0;
 
 					foreach(var chunk_part in current_file.chunk_parts)
 					{
-						var chunk_task = new ChunkTask(chunk_part.guid_num,
-						                               chunk_part.offset,
-						                               chunk_part.size);
+						var chunk_task = new ChunkTask(chunk_part.guid_num, chunk_part.offset, chunk_part.size);
 
 						//  re-use the chunk from the existing file if we can
 						uint32[] key = { chunk_part.guid_num, chunk_part.offset, chunk_part.size };
@@ -413,7 +396,7 @@ namespace GameHub.Data.Sources.EpicGames
 						{
 							//  debug("reusing chunk, hash should be: " + new_manifest.chunk_data_list.get_chunk_by_number(chunk_part.guid_num).to_string());
 							reused++;
-							chunk_task.chunk_file = current_file.filename;
+							chunk_task.chunk_file   = current_file.filename;
 							chunk_task.chunk_offset = existing_chunks.get(key);
 						}
 						else
@@ -494,7 +477,7 @@ namespace GameHub.Data.Sources.EpicGames
 				//  https://github.com/derrod/legendary/blob/a2280edea8f7f8da9a080fd3fb2bafcabf9ee33d/legendary/downloader/manager.py#L363
 
 				//  calculate actual dl and patch write size.
-				_dl_size = 0;
+				_dl_size              = 0;
 				_uncompressed_dl_size = 0;
 				new_manifest.chunk_data_list.elements.foreach(chunk => {
 					if(chunk.guid_num in chunks_in_dl_list)
@@ -515,7 +498,7 @@ namespace GameHub.Data.Sources.EpicGames
 				tasks.add_all(additional_deletion_tasks);
 
 				_num_chunks_cache = dl_cache_guids.size;
-				chunk_data_list = new_manifest.chunk_data_list;
+				chunk_data_list   = new_manifest.chunk_data_list;
 			}
 		}
 
@@ -533,14 +516,14 @@ namespace GameHub.Data.Sources.EpicGames
 		*/
 		internal class FileTask: Task
 		{
-			internal string filename { get; }
-			internal bool del { get; default = false; }
-			internal bool empty { get; default = false; }
-			internal bool fopen { get; default = false; }
-			internal bool fclose { get; default = false; }
-			internal bool frename { get; default = false; }
+			internal string  filename           { get; }
+			internal bool    del                { get; default = false; }
+			internal bool    empty              { get; default = false; }
+			internal bool    fopen              { get; default = false; }
+			internal bool    fclose             { get; default = false; }
+			internal bool    frename            { get; default = false; }
 			internal string? temporary_filename { get; default = null; }
-			internal bool silent { get; default = false; }
+			internal bool    silent             { get; default = false; }
 
 			internal bool is_reusing
 			{
@@ -558,7 +541,7 @@ namespace GameHub.Data.Sources.EpicGames
 			internal FileTask.delete(string filename, bool silent = false)
 			{
 				this(filename);
-				_del = true;
+				_del    = true;
 				_silent = silent;
 			}
 
@@ -580,14 +563,12 @@ namespace GameHub.Data.Sources.EpicGames
 				_fclose = true;
 			}
 
-			internal FileTask.rename(string new_filename,
-			                         string old_filename,
-			                         bool   @delete = false)
+			internal FileTask.rename(string new_filename, string old_filename, bool @delete = false)
 			{
 				this(filename);
-				_frename = true;
+				_frename            = true;
 				_temporary_filename = old_filename;
-				_del = @delete;
+				_del                = @delete;
 			}
 		}
 
@@ -602,19 +583,17 @@ namespace GameHub.Data.Sources.EpicGames
 		*/
 		internal class ChunkTask: Task
 		{
-			internal uint32 chunk_guid { get; }
-			internal bool cleanup { get; set; default = false; }
-			internal uint32 chunk_offset { get; set; default = 0; }
-			internal uint32 chunk_size { get; default = 0; }
-			internal string? chunk_file { get; set; default = null; }
+			internal uint32  chunk_guid   { get; }
+			internal bool    cleanup      { get; set; default = false; }
+			internal uint32  chunk_offset { get; set; default = 0; }
+			internal uint32  chunk_size   { get; default = 0; }
+			internal string? chunk_file   { get; set; default = null; }
 
-			internal ChunkTask(uint32 chunk_guid,
-			                   uint32 chunk_offset,
-			                   uint32 chunk_size)
+			internal ChunkTask(uint32 chunk_guid, uint32 chunk_offset, uint32 chunk_size)
 			{
-				_chunk_guid = chunk_guid;
+				_chunk_guid   = chunk_guid;
 				_chunk_offset = chunk_offset;
-				_chunk_size = chunk_size;
+				_chunk_size   = chunk_size;
 			}
 		}
 	}

@@ -10,19 +10,18 @@ namespace GameHub.Data.Sources.EpicGames
 	{
 		private const int64 header_magic = 0xB1FE3AA2;
 
-		private Bytes sha_hash { get; default = new Bytes(null); }
-		private uint8 stored_as { get; default = 0; }
-		private uint32 hash_type { get; default = 0; } //  0x1 = rolling hash, 0x2 = sha hash, 0x3 = both
-		private uint32 header_version { get; default = 3; }
-		private uint32 header_size { get; default = 0; }
-		private uint32 compressed_size { get; default = 0; }
+		private Bytes  sha_hash          { get; default = new Bytes(null); }
+		private uint8  stored_as         { get; default = 0; }
+		private uint32 hash_type         { get; default = 0; } //  0x1 = rolling hash, 0x2 = sha hash, 0x3 = both
+		private uint32 header_version    { get; default = 3; }
+		private uint32 header_size       { get; default = 0; }
+		private uint32 compressed_size   { get; default = 0; }
 		private uint32 uncompressed_size { get; default = 1024 * 1024; }
-		private uint64 hash { get; default = 0; }
+		private uint64 hash              { get; default = 0; }
 
-
-		private uint32[] guid { get; default = new uint32[4]; }
+		private         uint32[] guid { get; default = new uint32[4]; }
 		private string? _guid_str = null;
-		private uint32? _guid_num = null;
+		private         uint32? _guid_num = null;
 
 		private Bytes? raw_bytes = null;
 		private Bytes? _data = null;
@@ -42,21 +41,18 @@ namespace GameHub.Data.Sources.EpicGames
 						try
 						{
 							var uncompressed_stream = new MemoryOutputStream.resizable();
-							var zlib = new ZlibDecompressor(ZlibCompressorFormat.ZLIB);
-							var byte_stream = new MemoryInputStream.from_bytes(raw_bytes);
+							var zlib                = new ZlibDecompressor(ZlibCompressorFormat.ZLIB);
+							var byte_stream         = new MemoryInputStream.from_bytes(raw_bytes);
+							var converter_stream    = new ConverterOutputStream(uncompressed_stream, zlib);
 
-							var converter_stream = new ConverterOutputStream(uncompressed_stream,
-							                                                 zlib);
-							converter_stream.splice(byte_stream,
-							                        OutputStreamSpliceFlags.NONE);
+							converter_stream.splice(byte_stream, OutputStreamSpliceFlags.NONE);
 
 							uncompressed_stream.close();
 							_data = uncompressed_stream.steal_as_bytes();
 						}
 						catch (Error e)
 						{
-							debug("[EpicChunk.data] error: %s",
-							      e.message);
+							debug("[EpicChunk.data] error: %s", e.message);
 						}
 					}
 					else
@@ -136,8 +132,8 @@ namespace GameHub.Data.Sources.EpicGames
 				var magic = stream.read_uint32();
 				assert(magic == header_magic);
 
-				_header_version = stream.read_uint32();
-				_header_size = stream.read_uint32();
+				_header_version  = stream.read_uint32();
+				_header_size     = stream.read_uint32();
 				_compressed_size = stream.read_uint32();
 
 				for(var j = 0; j < 4; j++)
@@ -145,12 +141,12 @@ namespace GameHub.Data.Sources.EpicGames
 					guid[j] = stream.read_uint32();
 				}
 
-				_hash = stream.read_uint64();
+				_hash      = stream.read_uint64();
 				_stored_as = stream.read_byte();
 
 				if(header_version >= 2)
 				{
-					_sha_hash = stream.read_bytes(20);
+					_sha_hash  = stream.read_bytes(20);
 					_hash_type = stream.read_byte();
 				}
 
@@ -165,8 +161,7 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 			catch (Error e)
 			{
-				debug("error: %s",
-				      e.message);
+				debug("error: %s", e.message);
 			}
 
 			if(log_chunk) debug(to_string());
