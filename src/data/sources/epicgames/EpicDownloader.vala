@@ -140,9 +140,8 @@ namespace GameHub.Data.Sources.EpicGames
 						download_description = _("Part %1$u of %2$u: %3$s").printf(current_part, parts.size, part.id);
 						download.status      = new EpicDownload.Status(
 							Download.State.DOWNLOADING,
-							installer.full_size,
-							//  FIXME: total size is wrong for partial updates
-							current_part / parts.size, // Chunks are mostly 1 MiB
+							(int64) installer.analysis.result.dl_size,
+							current_part / parts.size,
 							-1,
 							-1);
 					}

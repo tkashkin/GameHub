@@ -111,6 +111,7 @@ namespace GameHub.Data.Sources.EpicGames
 		//  https://dev.epicgames.com/docs/services/en-US/API/Members/Functions/Auth/EOS_Auth_VerifyUserAuth/index.html
 		internal Json.Node resume_session(Json.Node userdata)
 		requires(userdata.get_node_type() == Json.NodeType.OBJECT)
+		requires(EpicGames.instance.access_token != null && EpicGames.instance.access_token.length > 0)
 		{
 			var refreshed_json = Parser.parse_remote_json_file(
 				@"https://$oauth_host/account/api/oauth/verify",
@@ -172,6 +173,7 @@ namespace GameHub.Data.Sources.EpicGames
 		}
 
 		internal Json.Node get_game_token()
+		requires(EpicGames.instance.access_token != null && EpicGames.instance.access_token.length > 0)
 		{
 			uint status;
 			var  json = Parser.parse_remote_json_file(
@@ -219,6 +221,7 @@ namespace GameHub.Data.Sources.EpicGames
 		}
 
 		internal Json.Node get_game_assets(string platform = "Windows", string label = "Live")
+		requires(EpicGames.instance.access_token != null && EpicGames.instance.access_token.length > 0)
 		{
 			uint status;
 			var  json = Parser.parse_remote_json_file(
@@ -241,6 +244,7 @@ namespace GameHub.Data.Sources.EpicGames
 		                                     string app_name,
 		                                     string platform = "Windows",
 		                                     string label    = "Live")
+		requires(EpicGames.instance.access_token != null && EpicGames.instance.access_token.length > 0)
 		{
 			uint status;
 			var  json = Parser.parse_remote_json_file(
@@ -263,6 +267,7 @@ namespace GameHub.Data.Sources.EpicGames
 		internal void get_user_entitlements() {}
 
 		internal Json.Node get_game_info(string _namespace, string catalog_item_id)
+		requires(EpicGames.instance.access_token != null && EpicGames.instance.access_token.length > 0)
 		{
 			Gee.HashMap<string, string> data = new Gee.HashMap<string, string>();
 
@@ -294,6 +299,7 @@ namespace GameHub.Data.Sources.EpicGames
 		}
 
 		internal ArrayList<Json.Node> get_library_items(bool include_metadata = true)
+		requires(EpicGames.instance.access_token != null && EpicGames.instance.access_token.length > 0)
 		{
 			ArrayList<Json.Node> records = new ArrayList<Json.Node>();
 
@@ -351,6 +357,7 @@ namespace GameHub.Data.Sources.EpicGames
 		}
 
 		internal Json.Node get_user_cloud_saves(string game_id = "", bool manifests = false, string? filenames = null)
+		requires(EpicGames.instance.access_token != null && EpicGames.instance.access_token.length > 0)
 		{
 			var app_name = game_id;
 

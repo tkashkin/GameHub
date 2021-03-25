@@ -87,7 +87,7 @@ namespace GameHub.Data.Sources.EpicGames
 			//  		_data = new Bytes(tmp);
 			//  	}
 
-			//  	//  FIXME: recalculate hashes
+			//  	//  TODO: recalculate hashes
 			//  	//  _hash = get_hash(_data);
 			//  	//  _sha_hash = sha(_data);
 			//  	_hash_type = 0x3;

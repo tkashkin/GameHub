@@ -46,12 +46,13 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 		}
 
-		internal string access_token
+		internal string? access_token
 		{
 			get
 			{
-				assert(userdata.get_node_type() == Json.NodeType.OBJECT);
-				assert(userdata.get_object().has_member("access_token"));
+				return_val_if_fail(userdata.get_node_type() == Json.NodeType.OBJECT, null);
+				return_val_if_fail(userdata.get_object().has_member("access_token"), null);
+				return_val_if_fail(userdata.get_object().get_member("access_token").get_node_type() == Json.NodeType.VALUE, null);
 
 				return userdata.get_object().get_string_member("access_token");
 			}
@@ -149,12 +150,12 @@ namespace GameHub.Data.Sources.EpicGames
 
 			if(access_expires.difference(now) < TimeSpan.MINUTE * 10)
 			{
-				debug("[Sources.EpicGames.is_authenticated] Access token is less than 10 minutes valid.");
+				if(Application.log_auth) debug("[Sources.EpicGames.is_authenticated] Access token is less than 10 minutes valid.");
 
 				return false;
 			}
 
-			return access_token != "";
+			return access_token != null && access_token.length > 0;
 		}
 
 		public override bool can_authenticate_automatically()
@@ -535,7 +536,7 @@ namespace GameHub.Data.Sources.EpicGames
 		public ArrayList<EpicGame.Asset> get_game_assets(bool    update_assets     = false,
 		                                                 string? platform_override = null)
 		{
-			if(platform_override != null)
+			if(platform_override != null && access_token != null && access_token.length > 0)
 			{
 				var list       = new ArrayList<EpicGame.Asset>();
 				var games_json = EpicGamesServices.instance.get_game_assets(access_token, platform_override);
@@ -550,9 +551,8 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 
 
-			if(update_assets || assets.is_empty)
+			if(update_assets || assets.is_empty && access_token != null && access_token.length > 0)
 			{
-				//  TODO: not logged in
 				var games_json = EpicGamesServices.instance.get_game_assets(access_token);
 
 				games_json.get_array().foreach_element((array, index, node) => {

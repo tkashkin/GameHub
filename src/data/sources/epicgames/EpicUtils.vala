@@ -137,7 +137,6 @@ namespace GameHub.Data.Sources.EpicGames
 		return builder.str;
 	}
 
-	//  TODO: replace with FileUtils.set_data() ?
 	private static void write(string path, string name, uint8[] bytes)
 	{
 		var file = FS.file(path, name);

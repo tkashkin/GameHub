@@ -8,7 +8,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 {
 	public class EpicGames: SettingsDialogPage
 	{
-		private Settings.Auth.EpicGames epicgames_auth = Settings.Auth.EpicGames.instance;
+		private Settings.Auth.EpicGames  epicgames_auth  = Settings.Auth.EpicGames.instance;
 		private Settings.Paths.EpicGames epicgames_paths = Settings.Paths.EpicGames.instance;
 
 		private Widgets.Settings.BaseSetting? account_setting;
@@ -22,8 +22,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				title: "EpicGames",
 				description: _("Disabled"),
 				icon_name: "source-epicgames-symbolic",
-				has_active_switch: true
-			);
+				has_active_switch: true);
 		}
 
 		construct
@@ -43,7 +42,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				logout_btn.clicked.connect(
 					() => {
 					epicgames.logout.begin(() => update());
-					request_restart();  //  TODO: Requires restart until we're able to reload games from an source
+					request_restart();  //  TODO: Requires restart until we're able to reload games from a source
 				});
 				account_link = new LinkButton.with_label("https://epicgames.com/account/personal", _("View account"));
 				account_actions_box.add(logout_btn);
@@ -53,9 +52,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 					new BaseSetting(
 						epicgames.user_name != null ? _("Authenticated as <b>%s</b>").printf(epicgames.user_name) : _("Authenticated"),
 						_("Legendary"),
-						account_actions_box
-				));
-				account_setting.icon_name = "avatar-default-symbolic";
+						account_actions_box));
+				account_setting.icon_name   = "avatar-default-symbolic";
 				account_setting.activatable = true;
 				account_setting.setting_activated.connect(() => epicgames.authenticate.begin(() => update()));
 				account_link.can_focus = false;
@@ -105,6 +103,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				{
 					account_setting.title = _("Disabled");
 				}
+
 				description = _("Disabled");
 			}
 			else if(!epicgames.is_installed(true))
@@ -113,6 +112,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				{
 					account_setting.title = _("Not installed");
 				}
+
 				description = _("Not installed");
 			}
 			else if(!epicgames.is_authenticated())
@@ -121,6 +121,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				{
 					account_setting.title = _("Not authenticated");
 				}
+
 				description = _("Not authenticated");
 			}
 			else
@@ -133,6 +134,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 				{
 					_("Authenticated");
 				}
+
 				description = _("Authenticated");
 			}
 		}

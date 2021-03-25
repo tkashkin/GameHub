@@ -684,14 +684,10 @@ namespace GameHub.Data.Sources.EpicGames
 		 */
 		internal class ChunkDataList
 		{
-			private uint8 version { get; }
+			private uint8 version                         { get; }
 			private uint32               manifest_version { get; }
 			private uint32               size             { get; }
 			private uint32               count            { get; }
-			Json.Object                  chunk_filesize_list; // FIXME:
-			Json.Object                  chunk_hash_list; // FIXME:
-			Json.Object                  chunk_sha_list; // FIXME:
-			Json.Object                  data_group_list; // FIXME:
 			private HashMap<uint32, int> guid_int_map { get; default = new HashMap<uint32, int>(); }
 			private HashMap<string, int> guid_str_map { get; default = new HashMap<string, int>(); }
 
@@ -793,12 +789,12 @@ namespace GameHub.Data.Sources.EpicGames
 			{
 				var json_obj = json_data.get_object();
 
-				_manifest_version   = manifest_version;
-				_count              = json_obj.get_object_member("ChunkFilesizeList").get_size();
-				chunk_filesize_list = json_obj.get_object_member("ChunkFilesizeList");
-				chunk_hash_list     = json_obj.get_object_member("ChunkHashList");
-				chunk_sha_list      = json_obj.get_object_member("ChunkShaList");
-				data_group_list     = json_obj.get_object_member("DataGroupList");
+				_manifest_version = manifest_version;
+				_count            = json_obj.get_object_member("ChunkFilesizeList").get_size();
+				var chunk_filesize_list = json_obj.get_object_member("ChunkFilesizeList");
+				var chunk_hash_list     = json_obj.get_object_member("ChunkHashList");
+				var chunk_sha_list      = json_obj.get_object_member("ChunkShaList");
+				var data_group_list     = json_obj.get_object_member("DataGroupList");
 
 				chunk_filesize_list.get_members().foreach(guid =>
 				{
@@ -945,16 +941,29 @@ namespace GameHub.Data.Sources.EpicGames
 					{
 						if(_group_num == null)
 						{
-							var bytes = new ByteArray();
+							//  var bytes  = new ByteArray();
+							var memory = new MemoryOutputStream.resizable();
 
-							foreach(var id in guid)
+							try
 							{
-								var variant = new Variant.uint32(id);
-								variant.byteswap(); // FIXME: instead of hardcoded swapping try to set endian directly
-								bytes.append(variant.get_data_as_bytes().get_data());
+								var stream = new DataOutputStream(memory);
+								stream.set_byte_order(DataStreamByteOrder.LITTLE_ENDIAN);
+
+								foreach(var id in guid)
+								{
+									stream.put_uint32(id);
+								}
+
+								stream.close();
+								memory.close();
+							}
+							catch (Error e)
+							{
+								debug("error: %s", e.message);
+								assert_not_reached();
 							}
 
-							_group_num = (ZLib.Utility.crc32(0, bytes.data) & 0xffffffff) % 100;
+							_group_num = (ZLib.Utility.crc32(0, memory.steal_data()) & 0xffffffff) % 100;
 						}
 
 						return _group_num;
@@ -1019,7 +1028,7 @@ namespace GameHub.Data.Sources.EpicGames
 		* When the length is negative the following string is UTF-16 - otherwise it's ASCII?
 		* In either case the {@link string} is returned as unescaped UTF-8 (uint8[])
 		 */
-		//   TODO: clean up and verify this mess with UTF-16 and ASCII
+		//   TODO: verify this with UTF-16 and ASCII
 		private static string read_fstring(DataInputStream stream)
 		{
 			string result = "";
@@ -1032,30 +1041,16 @@ namespace GameHub.Data.Sources.EpicGames
 				if(length < 0)
 				{
 					//  utf-16 chars are 2 bytes wide but the length is # of characters, not bytes
-					//  TODO: actually make sure utf-16 characters can't be longer than 2 bytes
 					length *= -2;
-					//  var tmp = stream.read_bytes(length - 2).get_data();
-					//  TODO: CharsetConverter oconverter = new CharsetConverter ("utf-16", "utf-8");
-					//  variant = new Variant.from_bytes(VariantType.STRING, stream.read_bytes(length), false);
-					//  debug("[Sources.EpicGames.Manifest.read_fstring] string utf-16: %s", variant.get_string());
-					result = convert((string) stream.read_bytes(length), -1, "UTF-8", "UTF-16");                                                                                                                                                                //  convert to utf8
-					//  debug("[Sources.EpicGames.Manifest.read_fstring] string utf-8: %s", result);
-					//  stream.seek(2, GLib.SeekType.CUR); //  utf-16 strings have two byte null terminators
-					//  TODO: seek +1 for second null char?
+					result  = convert((string) stream.read_bytes(length), -1, "UTF-8", "UTF-16"); //  convert to utf8
 				}
 				else if(length > 0)
 				{
-					//  variant = new Variant.from_bytes(VariantType.STRING, stream.read_bytes(length), false);
 					result = (string) stream.read_bytes(length).get_data();
-					//  debug("[Sources.EpicGames.Manifest.read_fstring] string utf-8: %s", variant.get_string());
-					//  var tmp = (string) stream.read_bytes(length - 1).get_data();
-					//  result = convert((string) tmp, -1, "UTF-8", "ASCII");
-					//  result = variant.get_string();
-					//  stream.seek(1, GLib.SeekType.CUR); //  skip string null terminator
 				}
 				else
 				{
-					result = "";         //  empty string, no terminators or anything
+					result = ""; //  empty string
 				}
 			}
 			catch (Error e) {}

@@ -323,8 +323,6 @@ namespace GameHub.Data.Sources.EpicGames
 				image_vertical = icon;
 			}
 
-			//  TODO: get installed status
-
 			if(game_info_updated)
 			{
 				game_info_updating = false;
@@ -407,10 +405,6 @@ namespace GameHub.Data.Sources.EpicGames
 
 			//  TODO: offline?
 			assert(can_run_offline || yield EpicGames.instance.authenticate());
-
-			//  TODO: Do we need this?
-			//  debug("[Source.EpicGame.pre_run] refreshing login…");
-			//  ((EpicGames) source).login();
 
 			//  TODO: check for updates
 			if(latest_version != version)
@@ -766,21 +760,6 @@ namespace GameHub.Data.Sources.EpicGames
 			GLib.info("[Source.EpicGames.import] Game has been imported: %s", id);
 
 			return true;
-
-			//  Don't do this here, we're calling install afterwards anyway
-			//  //  FIXME: what even is this mess?
-			//  game.prereq_info = prereq;
-			//  //  game.base_urls = base_urls; FIXME:
-			//  game.install_dir = import_dir;
-			//  game.version = manifest.meta.build_version;
-			//  game.executable = File.new_build_filename("${install_dir}", manifest.meta.launch_exe);
-			//  game.can_run_offline = offline;
-			//  //  game.launch_parameters = manifest.meta.launch_command;
-			//  game.needs_verification = needs_verification;
-			//  //  game.install_size = install_size;
-			//  game.egl_guid = egl_guid;
-			//  //  TODO: all above into meta? check what's needed
-			//  //  game.meta = manifest.meta;
 		}
 
 		internal async void verify()
@@ -874,6 +853,7 @@ namespace GameHub.Data.Sources.EpicGames
 				                                                                     asset_info.catalog_item_id);
 				//  TODO: write to tmp path?
 				write(FS.Paths.EpicGames.Cache, @"$(asset_info.ns)$(asset_info.catalog_item_id).ovt", ownership_token.get_data());
+				//  FIXME: needs wine path format?
 				parameters += "-epicovt=%s".printf(FS.file(FS.Paths.EpicGames.Cache, @"$(asset_info.ns)$(asset_info.catalog_item_id).ovt").get_path());
 			}
 
@@ -1278,7 +1258,7 @@ namespace GameHub.Data.Sources.EpicGames
 		//  	return result;
 		//  }
 
-		//  //  TODO: make SaveGameFile an property of EpicGame
+		//  //  TODO: make SaveGameFile a property of EpicGame
 		//  private SaveGameFile.Status check_savegame_state(File path, SaveGameFile? save, out DateTime local, out DateTime remote)
 		//  {
 		//  	//  legendary does a os.walk here
