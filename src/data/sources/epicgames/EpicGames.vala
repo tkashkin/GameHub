@@ -29,7 +29,6 @@ namespace GameHub.Data.Sources.EpicGames
 		public override string          name        { get { return "EpicGames"; } }
 		public override string          icon        { get { return "source-epicgames-symbolic"; } }
 		public override ArrayList<Game> games       { get; default = new ArrayList<Game>(Game.is_equal); }
-		public HashMap<string, Game>    owned_games { get; default = new HashMap<string, Game>(null, null, Game.is_equal); }
 
 		public override bool enabled
 		{
@@ -298,7 +297,6 @@ namespace GameHub.Data.Sources.EpicGames
 						if(!Settings.UI.Behavior.instance.merge_games || !Tables.Merges.is_game_merged(g))
 						{
 							_games.add(g);
-							owned_games.set(g.id, g);
 
 							if(game_loaded != null)
 							{
@@ -315,7 +313,7 @@ namespace GameHub.Data.Sources.EpicGames
 					cache_loaded();
 				}
 
-				get_game_and_dlc_list();
+				var owned_games = get_game_and_dlc_list(true);
 
 				owned_games.foreach(tuple =>
 				{
@@ -326,7 +324,6 @@ namespace GameHub.Data.Sources.EpicGames
 					{
 						_games.add(game);
 
-						//  owned_games.set(game.id, game);
 						if(game_loaded != null)
 						{
 							game_loaded(game, false);
@@ -596,20 +593,42 @@ namespace GameHub.Data.Sources.EpicGames
 
 		public void asset_valid() {}
 
-		public EpicGame? get_game(EpicGame game, bool update_meta = false)
+		public EpicGame? get_game(string id, bool update_meta = false)
 		{
-			if(update_meta) get_game_and_dlc_list(true);
+			if(update_meta)
+			{
+				var owned_games = get_game_and_dlc_list(true);
 
-			return (EpicGame) owned_games.get(game.id);
+				_games.foreach(game => {
+					if(owned_games.has_key(game.id))
+					{
+						game = owned_games.get(game.id);
+						owned_games.unset(game.id);
+					}
+
+					return true;
+				});
+
+				if(!owned_games.is_empty)
+				{
+					_games.add_all(owned_games.values);
+				}
+			}
+
+			return (EpicGame) _games.first_match(game => {
+				return game.id == id;
+			});
 		}
 
 		//  Not needed, dlcs are always bound to games
 		//  public void get_game_list() {}
 
-		public void get_game_and_dlc_list(bool    update_assets      = true,
-		                                  string? platform_override  = null,
-		                                  bool    skip_unreal_engine = true)
+		public HashMap<string, EpicGame> get_game_and_dlc_list(bool    update_assets      = true,
+		                                                       string? platform_override  = null,
+		                                                       bool    skip_unreal_engine = true)
 		{
+			HashMap<string, EpicGame> owned_games = new HashMap<string, EpicGame>();
+
 			//  I don't really need the inner HashMap - a list of tuples would be enough.
 			//  Vala should be able to handle tuples but I couldn't figure it out
 			var dlcs = new HashMap<string, HashMap<EpicGame.Asset, Json.Node?> >();
@@ -617,16 +636,15 @@ namespace GameHub.Data.Sources.EpicGames
 			var tmp_assets = get_game_assets(update_assets, platform_override);
 			foreach(var asset in tmp_assets)
 			{
-				if(asset.ns == "ue" && skip_unreal_engine) continue;
-
-				var game = (EpicGame) owned_games.get(asset.app_name);
 				Json.Node? metadata = null;
 
-				if(update_assets &&
-				   (game == null
-				    || (game != null
-				        && game.version != asset.build_version
-				        && platform_override != null)))
+				if(asset.ns == "ue" && skip_unreal_engine) continue;
+
+				var game = get_game(asset.app_name);
+
+				if(update_assets && (game == null || (game != null
+				                                      && game.version != asset.build_version
+				                                      && platform_override != null)))
 				{
 					if(game != null
 					   && game.version != asset.build_version
@@ -673,7 +691,7 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 				else
 				{
-					owned_games.set(asset.app_name, game);
+					owned_games.set(game.id, game);
 				}
 
 				//  TODO: mods?
@@ -682,14 +700,16 @@ namespace GameHub.Data.Sources.EpicGames
 			//  we got all games, add the dlcs to it
 			foreach(var game_name in dlcs)
 			{
-				if(game_name.value == null) return;
+				if(game_name.value == null) continue;
 
 				foreach(var tuple in game_name.value)
 				{
-					var game = (EpicGame) owned_games.get(game_name.key);
+					var game = owned_games.get(game_name.key);
 					game.add_dlc(tuple.key, tuple.value);
 				}
 			}
+
+			return owned_games;
 		}
 
 		public void get_dlc_for_game() {}

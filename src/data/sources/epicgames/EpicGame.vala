@@ -1343,6 +1343,13 @@ namespace GameHub.Data.Sources.EpicGames
 				this.game = game;
 				update_status();
 			}
+
+			public override void update_status()
+			{
+				if(game == null) return;
+
+				base.update_status();
+			}
 		}
 
 		public class Asset

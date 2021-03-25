@@ -46,7 +46,7 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			var parts = new ArrayList<SoupDownload>();
 			debug("preparing download");
-			installer.analysis = installer.game.prepare_download(installer.task);
+			installer.analysis = installer.game.prepare_download(installer.install_task);
 
 			//  game is either up to date or hasn't changed, so we have nothing to do
 			if(installer.analysis.result.dl_size < 1)
@@ -115,12 +115,12 @@ namespace GameHub.Data.Sources.EpicGames
 			var ds_id = download_manager().file_download_started.connect(dl => {
 				if(dl.id != game.full_id) return;
 
-				installer.task.status = new Tasks.Install.InstallTask.Status(
+				installer.install_task.status = new Tasks.Install.InstallTask.Status(
 					Tasks.Install.InstallTask.State.DOWNLOADING,
 					dl);
 				//  installer.download_state = new DownloadState(DownloadState.State.DOWNLOADING, dl);
 				dl.status_change.connect(s => {
-					installer.task.notify_property("status");
+					installer.install_task.notify_property("status");
 				});
 			});
 
@@ -142,7 +142,7 @@ namespace GameHub.Data.Sources.EpicGames
 							Download.State.DOWNLOADING,
 							installer.full_size,
 							//  FIXME: total size is wrong for partial updates
-							(current_part * 1048576) / installer.full_size, // Chunks are mostly 1 MiB
+							current_part / parts.size, // Chunks are mostly 1 MiB
 							-1,
 							-1);
 					}

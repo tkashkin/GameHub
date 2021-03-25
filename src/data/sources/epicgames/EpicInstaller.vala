@@ -8,9 +8,9 @@ namespace GameHub.Data.Sources.EpicGames
 {
 	internal class Installer: Runnables.Tasks.Install.Installer
 	{
-		internal          Analysis? analysis { get; set; default = null; }
-		internal EpicGame game               { get; private set; }
-		internal          InstallTask? task  { get; default = null; }
+		internal          Analysis? analysis         { get; set; default = null; }
+		internal EpicGame game                       { get; private set; }
+		internal          InstallTask? install_task  { get; default = null; }
 
 		internal Installer(EpicGame game, Platform platform)
 		{
@@ -41,7 +41,14 @@ namespace GameHub.Data.Sources.EpicGames
 
 		internal override async bool install(InstallTask task)
 		{
-			_task = task;
+			_install_task = task;
+
+			if(game is EpicGame.DLC)
+			{
+				if(((EpicGame.DLC)game).game.install_dir == null) return false;
+
+				_install_task.install_dir = ((EpicGame.DLC)game).game.install_dir;
+			}
 
 			debug("starting installation");
 			var downloader = new EpicDownloader();
@@ -52,7 +59,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 				//  download_task should be available here with all required information
 				//  tasks should be in the correct order open -> write chunk -> close
-				var full_path = task.install_dir;
+				var full_path = install_task.install_dir;
 				FileOutputStream? iostream = null;
 
 				foreach(var file_task in analysis.tasks)
@@ -60,7 +67,7 @@ namespace GameHub.Data.Sources.EpicGames
 					if(file_task is Analysis.FileTask)
 					{
 						//  make directories
-						full_path = File.new_build_filename(task.install_dir.get_path(),
+						full_path = File.new_build_filename(install_task.install_dir.get_path(),
 						                                    ((Analysis.FileTask)file_task).filename);
 						FS.mkdir(full_path.get_parent().get_path());
 
@@ -150,9 +157,9 @@ namespace GameHub.Data.Sources.EpicGames
 					if(((Analysis.ChunkTask)file_task).chunk_file != null)
 					{
 						//  reuse chunk from existing file
-						assert(File.new_build_filename(task.install_dir.get_path(),
+						assert(File.new_build_filename(install_task.install_dir.get_path(),
 						                               ((Analysis.ChunkTask)file_task).chunk_file).query_exists());
-						old_stream = File.new_build_filename(task.install_dir.get_path(),
+						old_stream = File.new_build_filename(install_task.install_dir.get_path(),
 						                                     ((Analysis.ChunkTask)file_task).chunk_file).read();
 						old_stream.seek(((Analysis.ChunkTask)file_task).chunk_offset, SeekType.SET);
 						var bytes = yield old_stream.read_bytes_async(((Analysis.ChunkTask)file_task).chunk_size);
@@ -167,8 +174,7 @@ namespace GameHub.Data.Sources.EpicGames
 						//  debug(@"chunk data length $(chunk.data.length)");
 						//  debug("chunk %s hash: %s",
 						//        ((Analysis.ChunkTask)file_task).chunk_guid.to_string(),
-						//        Checksum.compute_for_bytes(ChecksumType.SHA1,
-						//                                   chunk.data));
+						//        Checksum.compute_for_bytes(ChecksumType.SHA1, chunk.data));
 						var size = yield iostream.write_bytes_async(chunk.data[((Analysis.ChunkTask)file_task).chunk_offset : ((Analysis.ChunkTask)file_task).chunk_offset + ((Analysis.ChunkTask)file_task).chunk_size]);
 						//  debug(@"written $size bytes");
 					}
@@ -189,7 +195,7 @@ namespace GameHub.Data.Sources.EpicGames
 		//  This should do three steps: Import -> verify -> repair/update
 		internal override async bool import(InstallTask task)
 		{
-			_task = task;
+			_install_task = task;
 
 			task.status = new InstallTask.Status(InstallTask.State.INSTALLING);
 			game.status = new Game.Status(Game.State.INSTALLING, this.game);
@@ -228,8 +234,8 @@ namespace GameHub.Data.Sources.EpicGames
 			game.manifest = EpicGames.load_manifest(game.load_manifest_from_disk());
 
 			game.update_metadata();
-			game.install_dir     = task.install_dir;
-			game.executable_path = FS.file(task.install_dir.get_path(), game.manifest.meta.launch_exe).get_path();
+			game.install_dir     = install_task.install_dir;
+			game.executable_path = FS.file(install_task.install_dir.get_path(), game.manifest.meta.launch_exe).get_path();
 			game.save();
 			game.update_status();
 		}
