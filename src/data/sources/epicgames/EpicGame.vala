@@ -65,7 +65,7 @@ namespace GameHub.Data.Sources.EpicGames
 				      Json.to_string(metadata, true).data);
 			}
 		}
-		internal Asset? asset_info { get; default = null; }
+		internal Asset? asset_info { get; set; default = null; }
 		//  public Json.Object? asset_info;
 		//  public Json.Object? metadata;
 		private Json.Node  _metadata = new Json.Node(Json.NodeType.NULL);

@@ -539,7 +539,7 @@ namespace GameHub.Data.Sources.EpicGames
 			if(platform_override != null && access_token != null && access_token.length > 0)
 			{
 				var list       = new ArrayList<EpicGame.Asset>();
-				var games_json = EpicGamesServices.instance.get_game_assets(access_token, platform_override);
+				var games_json = EpicGamesServices.instance.get_game_assets(platform_override);
 
 				games_json.get_array().foreach_element((array, index, node) => {
 					assert(node.get_node_type() == Json.NodeType.OBJECT);
@@ -550,10 +550,9 @@ namespace GameHub.Data.Sources.EpicGames
 				return list;
 			}
 
-
-			if(update_assets || assets.is_empty && access_token != null && access_token.length > 0)
+			if((update_assets || assets.is_empty) && access_token != null && access_token.length > 0)
 			{
-				var games_json = EpicGamesServices.instance.get_game_assets(access_token);
+				var games_json = EpicGamesServices.instance.get_game_assets();
 
 				games_json.get_array().foreach_element((array, index, node) => {
 					assert(node.get_node_type() == Json.NodeType.OBJECT);
@@ -567,6 +566,9 @@ namespace GameHub.Data.Sources.EpicGames
 					{
 						assets.set(assets.index_of(asset), asset);
 					}
+
+					//  Also update asset info in EpicGame because we rely on this being up-to-date
+					get_game(asset.asset_id).asset_info = asset;
 				});
 			}
 
