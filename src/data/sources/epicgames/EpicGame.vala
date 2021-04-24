@@ -42,6 +42,7 @@ namespace GameHub.Data.Sources.EpicGames
 			owned get
 			{
 				var urls = new ArrayList<string>();
+				return_val_if_fail(_metadata.get_node_type() == Json.NodeType.OBJECT, urls); // prevent loop
 				return_val_if_fail(metadata.get_object().has_member("base_urls"), urls);
 
 				metadata.get_object().get_array_member("base_urls").foreach_element((array, index, node) => {
@@ -52,22 +53,22 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 			set
 			{
-				var urls = new Json.Array();
+				var urls = new Json.Node(Json.NodeType.ARRAY);
+				urls.set_array(new Json.Array());
 				value.foreach(url => {
-					urls.add_string_element(url);
+					urls.get_array().add_string_element(url);
 
 					return true;
 				});
 
-				metadata.get_object().set_array_member("base_urls", urls);
+				metadata.get_object().set_array_member("base_urls", urls.get_array());
 				write(FS.Paths.EpicGames.Metadata,
 				      get_metadata_filename(),
 				      Json.to_string(metadata, true).data);
 			}
 		}
 		internal Asset? asset_info { get; set; default = null; }
-		//  public Json.Object? asset_info;
-		//  public Json.Object? metadata;
+
 		private Json.Node  _metadata = new Json.Node(Json.NodeType.NULL);
 		internal Json.Node metadata // FIXME: make a class for easier access?
 		{
@@ -76,6 +77,7 @@ namespace GameHub.Data.Sources.EpicGames
 				if(_metadata.get_node_type() == Json.NodeType.NULL)
 				{
 					//  FIXME: this will never update this way
+					var f = FS.file(FS.Paths.EpicGames.Metadata, get_metadata_filename());
 					_metadata = Parser.parse_json_file(FS.Paths.EpicGames.Metadata, get_metadata_filename());
 
 					if(_metadata.get_node_type() != Json.NodeType.NULL) return _metadata;
@@ -90,6 +92,16 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 
 				return _metadata;
+			}
+			set
+			{
+				return_if_fail(value.get_node_type() == Json.NodeType.OBJECT);
+
+				//  TODO: save and rejoin base_urls?
+				_metadata = value;
+				write(FS.Paths.EpicGames.Metadata,
+				      get_metadata_filename(),
+				      Json.to_string(_metadata, true).data);
 			}
 		}
 
@@ -186,12 +198,9 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			get
 			{
-				if(info_detailed == null) return false;
+				return_val_if_fail(metadata.get_node_type() == Json.NodeType.OBJECT, false);
 
-				var json = Parser.parse_json(info_detailed);
-				return_val_if_fail(json.get_node_type() == Json.NodeType.OBJECT, false);
-
-				return json.get_object().has_member("mainGameItem");
+				return metadata.get_object().has_member("mainGameItem");
 			}
 		}
 
@@ -204,18 +213,18 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 		}
 
-		public EpicGame(EpicGames source, Asset asset, Json.Node? meta = null)
+		public EpicGame(EpicGames source, Asset asset, Json.Node? metadata = null)
 		{
 			this.source = source;
 			id          = asset.asset_id;
 
 			//  this.version = asset.build_version; // Only gets permanently saved for installed games
 			//  this.info = asset.to_string(false);
-			if(meta != null) _metadata = meta;
+			if(metadata != null) this.metadata = metadata;
 
 			_asset_info = asset;
 			load_version();
-			name = metadata.get_object().get_string_member_with_default("title", "");
+			name = this.metadata.get_object().get_string_member_with_default("title", "");
 
 			install_dir        = null;
 			this.status        = new Game.Status(Game.State.UNINSTALLED, this);
@@ -524,7 +533,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 		public void add_dlc(Asset asset, Json.Node? metadata = null)
 		{
-			if(dlc == null)
+			if(dlc == null || dlc.size == 0)
 			{
 				dlc = new ArrayList<DLC>();
 			}
@@ -1166,8 +1175,16 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			var tmp_urls = base_urls; //  save temporarily from old metadata
 			_metadata = EpicGamesServices.instance.get_game_info(asset_info.ns, asset_info.catalog_item_id);
-			base_urls = tmp_urls; //  paste them back into new metadata
+
+			//  prevent loop by accessing metadata again in set_base_urls
+			if(_metadata.get_node_type() == Json.NodeType.NULL)
+			{
+				_metadata = new Json.Node(Json.NodeType.OBJECT);
+				_metadata.set_object(new Json.Object());
+			}
+
 			//  FIXME: Setting base_urls also saves
+			base_urls = tmp_urls;         //  paste them back into new metadata
 			write(FS.Paths.EpicGames.Metadata,
 			      get_metadata_filename(),
 			      Json.to_string(metadata, true).data);

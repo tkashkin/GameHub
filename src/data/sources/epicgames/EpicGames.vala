@@ -12,7 +12,7 @@ namespace GameHub.Data.Sources.EpicGames
 	internal bool log_chunk               = false;
 	internal bool log_chunk_part          = false;
 	internal bool log_chunk_data_list     = false;
-	internal bool log_epic_games_services = false;
+	internal bool log_epic_games_services = true;
 	internal bool log_file_manifest_list  = false;
 	internal bool log_manifest            = false;
 	internal bool log_meta                = false;
@@ -25,10 +25,10 @@ namespace GameHub.Data.Sources.EpicGames
 
 		private Json.Node? userdata { get; default = new Json.Node(Json.NodeType.NULL); }
 
-		public override string          id          { get { return "epicgames"; } }
-		public override string          name        { get { return "EpicGames"; } }
-		public override string          icon        { get { return "source-epicgames-symbolic"; } }
-		public override ArrayList<Game> games       { get; default = new ArrayList<Game>(Game.is_equal); }
+		public override string          id    { get { return "epicgames"; } }
+		public override string          name  { get { return "EpicGames"; } }
+		public override string          icon  { get { return "source-epicgames-symbolic"; } }
+		public override ArrayList<Game> games { get; default = new ArrayList<Game>(Game.is_equal); }
 
 		public override bool enabled
 		{
@@ -568,8 +568,13 @@ namespace GameHub.Data.Sources.EpicGames
 					}
 
 					//  Also update asset info in EpicGame because we rely on this being up-to-date
-					get_game(asset.asset_id).asset_info = asset;
+					var game = get_game(asset.asset_id);
+
+					if(game != null) game.asset_info = asset;
 				});
+
+				//  trigger disk save
+				assets = assets;
 			}
 
 			return assets;
@@ -635,13 +640,15 @@ namespace GameHub.Data.Sources.EpicGames
 			//  Vala should be able to handle tuples but I couldn't figure it out
 			var dlcs = new HashMap<string, HashMap<EpicGame.Asset, Json.Node?> >();
 
-			var tmp_assets = get_game_assets(update_assets, platform_override);
-			foreach(var asset in tmp_assets)
+			var owned_assets = get_game_assets(update_assets, platform_override);
+			foreach(var asset in owned_assets)
 			{
 				Json.Node? metadata = null;
 
 				if(asset.ns == "ue" && skip_unreal_engine) continue;
 
+				//  FIXME: We're only loading games from the DB so we're never finding DLCs here
+				//  This results into game == null so we're fetching metadata every time for DLCs
 				var game = get_game(asset.app_name);
 
 				if(update_assets && (game == null || (game != null
@@ -659,8 +666,11 @@ namespace GameHub.Data.Sources.EpicGames
 					metadata = EpicGamesServices.instance.get_game_info(asset.ns, asset.catalog_item_id);
 					assert(metadata.get_node_type() == Json.NodeType.OBJECT);
 
-					//  var title = metadata.get_object().get_string_member_with_default("title", "");
-					game = new EpicGame(EpicGames.instance, asset, metadata);
+					//  Don't add DLCs
+					if(!metadata.get_object().has_member("mainGameItem"))
+					{
+						game = new EpicGame(EpicGames.instance, asset, metadata);
+					}
 
 					//  if(platform_override == null) game.save_metadata();
 				}
@@ -673,15 +683,18 @@ namespace GameHub.Data.Sources.EpicGames
 				//  	game.asset_info = asset;
 				//  }
 
-				if(game.is_dlc)
+				//  temporay save DLCs to list and assign later to main games
+				//  so were surely have all main games loaded
+				if(game == null)
 				{
-					var json = Parser.parse_json(game.info_detailed);
-					return_val_if_fail(json.get_node_type() == Json.NodeType.OBJECT, false);
+					assert(metadata.get_node_type() == Json.NodeType.OBJECT);
+					assert(metadata.get_object().has_member("mainGameItem"));
+					assert(metadata.get_object().get_member("mainGameItem").get_node_type() == Json.NodeType.OBJECT);
+					assert(metadata.get_object().get_object_member("mainGameItem").has_member("id"));
+					assert(metadata.get_object().get_object_member("mainGameItem").get_member("id").get_node_type() == Json.NodeType.VALUE);
 
-					var main_id = json.get_object().get_object_member("mainGameItem").get_string_member("id");
-
-					//  add later when we got all games
-					var tmp = dlcs.get(main_id);
+					var main_id = metadata.get_object().get_object_member("mainGameItem").get_string_member("id");
+					var tmp     = dlcs.get(main_id);
 
 					if(tmp == null)
 					{
@@ -699,7 +712,7 @@ namespace GameHub.Data.Sources.EpicGames
 				//  TODO: mods?
 			}
 
-			//  we got all games, add the dlcs to it
+			//  we got all games, add the DLCs to it
 			foreach(var game_name in dlcs)
 			{
 				if(game_name.value == null) continue;
@@ -707,6 +720,19 @@ namespace GameHub.Data.Sources.EpicGames
 				foreach(var tuple in game_name.value)
 				{
 					var game = owned_games.get(game_name.key);
+
+					if(game == null)
+					{
+						//  try harder by matching against catalog id
+						game = owned_games.first_match(entry => {
+							return entry.value.asset_info.catalog_item_id == game_name.key;
+						}).value;
+					}
+
+					//  FIXME: If it's possible to own a DLC without the main game we shouldn't fail here
+					assert_nonnull(game);
+					assert_nonnull(tuple.key);
+
 					game.add_dlc(tuple.key, tuple.value);
 				}
 			}

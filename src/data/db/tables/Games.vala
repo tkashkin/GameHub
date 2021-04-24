@@ -155,6 +155,7 @@ namespace GameHub.Data.DB.Tables
 			}
 
 			if(game is Sources.GOG.GOGGame.DLC) return false;
+			if(game is Sources.EpicGames.EpicGame.DLC) return false;
 
 			unowned Sqlite.Database? db = Database.instance.db;
 			if(db == null) return false;
