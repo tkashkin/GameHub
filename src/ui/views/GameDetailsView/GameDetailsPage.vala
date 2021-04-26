@@ -66,6 +66,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 		private ActionButton action_install;
 		private ActionButton action_run;
+		private ActionButton action_update;
 		private ActionButton action_properties;
 		private ActionButton action_open_directory;
 		private ActionButton action_open_installer_collection_directory;
@@ -230,6 +231,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			action_install = add_action("go-down", null, _("Install"), install_game, true);
 			action_run = add_action("media-playback-start", null, _("Run"), run_game, true);
+			action_update = add_action("go-down", null, _("Update"), game_update);
 			action_open_directory = add_action("folder", null, _("Open installation directory"), open_game_directory);
 			action_open_store_page = add_action("web-browser", null, _("Open store page"), open_game_store_page);
 			action_uninstall = add_action("edit-delete", null, (game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"), uninstall_game);
@@ -290,12 +292,14 @@ namespace GameHub.UI.Views.GameDetailsView
 			}
 			action_install.visible = s.state != Game.State.INSTALLED;
 			action_install.sensitive = s.state == Game.State.UNINSTALLED && game.is_installable;
+			action_update.visible = s.state == Game.State.INSTALLED && game is GameHub.Data.Sources.EpicGames.EpicGame;
+			action_update.sensitive = s.state == Game.State.INSTALLED && game is GameHub.Data.Sources.EpicGames.EpicGame && ((GameHub.Data.Sources.EpicGames.EpicGame) game).has_updates;
 			action_run.visible = s.state == Game.State.INSTALLED;
 			action_run.sensitive = game.can_be_launched();
 			action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
 			action_open_store_page.visible = game.store_page != null;
-			action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
-			action_properties.visible = !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
+			action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC) && !(game is GameHub.Data.Sources.EpicGames.EpicGame.DLC);
+			action_properties.visible = !(game is GameHub.Data.Sources.GOG.GOGGame.DLC) && !(game is GameHub.Data.Sources.EpicGames.EpicGame.DLC);
 		}
 
 		public void update()
@@ -394,6 +398,14 @@ namespace GameHub.UI.Views.GameDetailsView
 		private void install_game()
 		{
 			if(game != null && game.status.state == Game.State.UNINSTALLED)
+			{
+				game.install.begin();
+			}
+		}
+
+		private void game_update()
+		{
+			if(game != null && game.status.state == Game.State.INSTALLED)
 			{
 				game.install.begin();
 			}

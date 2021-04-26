@@ -112,6 +112,37 @@ namespace GameHub.Data.Sources.EpicGames
 								        full_path.get_path());
 							}
 
+							//  write last completed file to simple resume file
+							if(game.resume_file != null)
+							{
+								var path = full_path.get_path();
+
+								if(path[path.length - 4:path.length] == ".tmp")
+								{
+									path = path[0 : path.length - 4];
+								}
+
+								var file_hash = yield Utils.compute_file_checksum(full_path, ChecksumType.SHA1);
+								//  var tmp       = "";
+
+								//  if(((Analysis.FileTask)file_task).filename[((Analysis.FileTask)file_task).filename.length - 4 : ((Analysis.FileTask)file_task).filename.length] == ".tmp")
+								//  {
+								//  	tmp = ((Analysis.FileTask)file_task).filename[0 : ((Analysis.FileTask)file_task).filename.length - 4];
+								//  }
+								//  else
+								//  {
+								//  	tmp = ((Analysis.FileTask)file_task).filename;
+								//  }
+
+								//  debug(tmp);
+								//  assert(file_hash == bytes_to_hex(analysis.result.manifest.file_manifest_list.get_file_by_path(tmp).sha_hash));
+
+								var output_stream = game.resume_file.append_to(FileCreateFlags.NONE);
+								output_stream.write((string.join(":", file_hash, path) + "\n").data);
+
+								output_stream.close();
+							}
+
 							continue;
 						}
 						else if(((Analysis.FileTask)file_task).frename)
@@ -128,8 +159,8 @@ namespace GameHub.Data.Sources.EpicGames
 								FS.rm(full_path.get_path());
 							}
 
-							File.new_for_path(((Analysis.FileTask)file_task).temporary_filename).move(full_path,
-							                                                                          FileCopyFlags.NONE);
+							File.new_build_filename(install_task.install_dir.get_path(),
+							                        ((Analysis.FileTask)file_task).temporary_filename).move(full_path, FileCopyFlags.NONE);
 							continue;
 						}
 						else if(((Analysis.FileTask)file_task).del)
@@ -149,21 +180,19 @@ namespace GameHub.Data.Sources.EpicGames
 					assert(file_task is Analysis.ChunkTask);
 					assert_nonnull(iostream);
 
-					FileInputStream? old_stream = null;
-
 					//  FIXME: this blocks the UI, do in an own thread/async
 					var downloaded_chunk = FS.file(FS.Paths.EpicGames.Cache + "/chunks/" + game.id + "/" + ((Analysis.ChunkTask)file_task).chunk_guid.to_string());
 
 					if(((Analysis.ChunkTask)file_task).chunk_file != null)
 					{
 						//  reuse chunk from existing file
+						FileInputStream? old_stream = null;
 						assert(File.new_build_filename(install_task.install_dir.get_path(),
 						                               ((Analysis.ChunkTask)file_task).chunk_file).query_exists());
 						old_stream = File.new_build_filename(install_task.install_dir.get_path(),
 						                                     ((Analysis.ChunkTask)file_task).chunk_file).read();
 						old_stream.seek(((Analysis.ChunkTask)file_task).chunk_offset, SeekType.SET);
 						var bytes = yield old_stream.read_bytes_async(((Analysis.ChunkTask)file_task).chunk_size);
-						//  debug("chunk hash: " + Checksum.compute_for_bytes(ChecksumType.SHA1, bytes));
 						yield iostream.write_bytes_async(bytes);
 						old_stream.close();
 						old_stream = null;
@@ -178,9 +207,17 @@ namespace GameHub.Data.Sources.EpicGames
 						var size = yield iostream.write_bytes_async(chunk.data[((Analysis.ChunkTask)file_task).chunk_offset : ((Analysis.ChunkTask)file_task).chunk_offset + ((Analysis.ChunkTask)file_task).chunk_size]);
 						//  debug(@"written $size bytes");
 					}
+					else
+					{
+						assert_not_reached();
+					}
 				}
 			}
-			catch (Error e) { debug("chunk building failed: %s", e.message); }
+			catch (Error e)
+			{
+				debug("chunk building failed: %s", e.message);
+				assert_not_reached();
+			}
 
 			//  TODO: clean cache path
 

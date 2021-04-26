@@ -104,7 +104,8 @@ namespace GameHub.Data.Sources.EpicGames
 				}).file_size;
 
 				var is_1mib = (biggest_chunk == 1024 * 1024);
-				debug(@"[Sources.EpicGames.AnalysisResult] Biggest chunk size: $biggest_chunk bytes (==1 MiB? $is_1mib)");
+
+				if(log_analysis) debug(@"[Sources.EpicGames.AnalysisResult] Biggest chunk size: $biggest_chunk bytes (==1 MiB? $is_1mib)");
 
 				debug("[Sources.EpicGames.AnalysisResult] Creating manifest comparison…");
 				_manifest_comparison = new ManifestComparison(new_manifest, old_manifest);
@@ -280,18 +281,19 @@ namespace GameHub.Data.Sources.EpicGames
 				//  var processing_optimizations = false;
 
 				//  determine reusable chunks and prepare lookup table for reusable ones
-				var re_usable = new HashMap<string, HashMap<uint32[], uint32> >();
+				var re_usable = new HashMap<string, HashMap<ChunkKey, uint32> >();
 				var patch     = true; // FIXME: hardcoded always update
 
 				if(old_manifest != null && !manifest_comparison.changed.is_empty && patch)
 				{
-					debug("[Sources.EpicGames.AnalysisResult] Analyzing manifests for re-usable chunks…");
+					if(log_analysis) debug("[Sources.EpicGames.AnalysisResult] Analyzing manifests for re-usable chunks…");
+
 					foreach(var changed_file in manifest_comparison.changed)
 					{
 						var old_file = old_manifest.file_manifest_list.get_file_by_path(changed_file);
 						var new_file = new_manifest.file_manifest_list.get_file_by_path(changed_file);
 
-						var    existing_chunks = new HashMap<uint32, ArrayList<ArrayList> >();
+						var    existing_chunks = new HashMap<uint32, ArrayList<OldChunkKey>>();
 						uint32 offset          = 0;
 
 						foreach(var chunk_part in old_file.chunk_parts)
@@ -299,52 +301,49 @@ namespace GameHub.Data.Sources.EpicGames
 							//  debug(@"Old chunk: $chunk_part");
 							if(!existing_chunks.has_key(chunk_part.guid_num))
 							{
-								var list = new ArrayList<ArrayList<uint32> >();
+								var list = new ArrayList<OldChunkKey>();
 								existing_chunks.set(chunk_part.guid_num, list);
 							}
 
-							//  TODO: possible to do this better?
-							var tmp  = existing_chunks.get(chunk_part.guid_num);
-							var tmp2 = new ArrayList<uint32>();
-							tmp2.add_all_array({ offset, chunk_part.offset, chunk_part.offset + chunk_part.size });
-							tmp.add(tmp2);
-							existing_chunks.set(chunk_part.guid_num, tmp);
+							existing_chunks.get(chunk_part.guid_num).add(new OldChunkKey(offset, chunk_part.offset, chunk_part.offset + chunk_part.size));
 							offset += chunk_part.size;
 						}
 
 						foreach(var chunk_part in new_file.chunk_parts)
 						{
 							//  debug(@"New chunk: $chunk_part");
-							uint32[] key = { chunk_part.guid_num, chunk_part.offset, chunk_part.size };
+							var key = new ChunkKey(chunk_part.guid_num, chunk_part.offset, chunk_part.size);
 
 							if(!existing_chunks.has_key(chunk_part.guid_num)) continue;
 
-							foreach(ArrayList<uint32> thing in existing_chunks.get(chunk_part.guid_num))
+							foreach(var thing in existing_chunks.get(chunk_part.guid_num))
 							{
-								assert_nonnull(thing);
-								assert(thing.size == 3);
-
 								//  check if new chunk part is wholly contained in the old chunk part
-								if(thing.get(1) <= chunk_part.offset
-								   && (chunk_part.offset + chunk_part.size) <= thing.get(2))
+								if(thing.chunk_part_offset <= chunk_part.offset
+								   && (chunk_part.offset + chunk_part.size) <= thing.chunk_part_end)
 								{
 									references.remove(chunk_part.guid_num);
 
 									if(!re_usable.has_key(changed_file))
 									{
-										re_usable.set(changed_file, new HashMap<uint32[], uint32>());
+										re_usable.set(changed_file,
+										              new HashMap<ChunkKey, uint32>(
+												      key => { return key.hash(); },
+												      (a, b) => { return a.equal_to(b); }));
 									}
 
-									//  TODO: possible to do this better?
-									var tmp = re_usable.get(changed_file);
-									tmp.set(key, thing.get(0) + (chunk_part.offset - thing.get(1)));
-									re_usable.set(changed_file, tmp);
+									re_usable.get(changed_file).set(key, thing.file_offset + (chunk_part.offset - thing.chunk_part_offset));
 									_reuse_size += chunk_part.size;
+									break;
 								}
 							}
 						}
 					}
 				}
+
+				if(log_analysis) debug("re-usable size: " + reuse_size.to_string());
+
+				if(log_analysis) debug("files with re-usable parts: " + re_usable.size.to_string());
 
 				uint32 last_cache_size    = 0;
 				uint32 current_cache_size = 0;
@@ -374,27 +373,21 @@ namespace GameHub.Data.Sources.EpicGames
 						continue;
 					}
 
-					//  TODO: does this return null if nonexisting?
 					var existing_chunks = re_usable.get(current_file.filename);
-					//  Gee.HashMap<uint32[], uint32> existing_chunks = null;
-					//  if(re_usable.has_key(current_file.filename))
-					//  {
-					//  	existing_chunks = re_usable.get(current_file.filename);
-					//  }
-					var chunk_tasks = new ArrayList<ChunkTask>();
-					var reused      = 0;
+					var chunk_tasks     = new ArrayList<ChunkTask>();
+					var reused          = 0;
 
 					foreach(var chunk_part in current_file.chunk_parts)
 					{
 						var chunk_task = new ChunkTask(chunk_part.guid_num, chunk_part.offset, chunk_part.size);
 
 						//  re-use the chunk from the existing file if we can
-						uint32[] key = { chunk_part.guid_num, chunk_part.offset, chunk_part.size };
+						var key = new ChunkKey(chunk_part.guid_num, chunk_part.offset, chunk_part.size);
 
-						if(existing_chunks != null
-						   && existing_chunks.has_key(key))
+						if(existing_chunks != null && existing_chunks.has_key(key))
 						{
-							//  debug("reusing chunk, hash should be: " + new_manifest.chunk_data_list.get_chunk_by_number(chunk_part.guid_num).to_string());
+							if(log_analysis) debug("reusing chunk: " + new_manifest.chunk_data_list.get_chunk_by_number(chunk_part.guid_num).to_string());
+
 							reused++;
 							chunk_task.chunk_file   = current_file.filename;
 							chunk_task.chunk_offset = existing_chunks.get(key);
@@ -443,7 +436,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 					if(reused > 0)
 					{
-						debug(@"[Sources.EpicGames.AnalysisResult] Reusing $reused chunks from: $(current_file.filename)");
+						if(log_analysis) debug(@"[Sources.EpicGames.AnalysisResult] Reusing $reused chunks from: $(current_file.filename)");
 
 						//  open temporary file that will contain download + old file contents
 						tasks.add(new FileTask.open(current_file.filename + ".tmp"));
@@ -465,12 +458,14 @@ namespace GameHub.Data.Sources.EpicGames
 					//  check if runtime cache size has changed
 					if(current_cache_size > last_cache_size)
 					{
-						debug(@"[Sources.EpicGames.AnalysisResult] New maximum cache size: $(current_cache_size / 1024 / 1024) MiB");
+						if(log_analysis) debug(@"[Sources.EpicGames.AnalysisResult] New maximum cache size: $(current_cache_size / 1024 / 1024) MiB");
+
 						last_cache_size = current_cache_size;
 					}
 				}
 
-				debug(@"[Sources.EpicGames.AnalysisResult] Final cache size requirement: $(last_cache_size / 1024 / 1024) MiB");
+				if(log_analysis) debug(@"[Sources.EpicGames.AnalysisResult] Final cache size requirement: $(last_cache_size / 1024 / 1024) MiB");
+
 				_min_memory = last_cache_size + (1024 * 1024 * 32); //  add some padding just to be safe
 
 				//  TODO: Legendary does same caching stuff here
@@ -500,6 +495,38 @@ namespace GameHub.Data.Sources.EpicGames
 				_num_chunks_cache = dl_cache_guids.size;
 				chunk_data_list   = new_manifest.chunk_data_list;
 			}
+
+			class ChunkKey
+			{
+				public uint32 guid_num;
+				public uint32 offset;
+				public uint32 size;
+
+				public ChunkKey(uint32 guid_num, uint32 offset, uint32 size)
+				{
+					this.guid_num = guid_num;
+					this.offset   = offset;
+					this.size     = size;
+				}
+
+				public uint hash() { var hash = (guid_num.to_string() + offset.to_string() + size.to_string()).hash(); return hash; }
+
+				public bool equal_to(ChunkKey chunk_key) { return chunk_key.hash() == hash(); }
+			}
+
+			class OldChunkKey
+			{
+				public uint32 file_offset;
+				public uint32 chunk_part_offset;
+				public uint32 chunk_part_end;
+
+				public OldChunkKey(uint32 file_offset, uint32 chunk_part_offset, uint32 chunk_part_end)
+				{
+					this.file_offset       = file_offset;
+					this.chunk_part_offset = chunk_part_offset;
+					this.chunk_part_end    = chunk_part_end;
+				}
+			}
 		}
 
 		//  This only exists so I can put both subclasses in one list
@@ -516,7 +543,7 @@ namespace GameHub.Data.Sources.EpicGames
 		*/
 		internal class FileTask: Task
 		{
-			internal string  filename           { get; }
+			internal string filename           { get; }
 			internal bool    del                { get; default = false; }
 			internal bool    empty              { get; default = false; }
 			internal bool    fopen              { get; default = false; }
@@ -563,12 +590,12 @@ namespace GameHub.Data.Sources.EpicGames
 				_fclose = true;
 			}
 
-			internal FileTask.rename(string new_filename, string old_filename, bool @delete = false)
+			internal FileTask.rename(string new_filename, string old_filename, bool dele = false)
 			{
-				this(filename);
+				this(new_filename);
 				_frename            = true;
 				_temporary_filename = old_filename;
-				_del                = @delete;
+				_del                = dele;
 			}
 		}
 

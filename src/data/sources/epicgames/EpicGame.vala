@@ -14,7 +14,7 @@ namespace GameHub.Data.Sources.EpicGames
 		Traits.HasExecutableFile, Traits.SupportsCompatTools,
 		       Traits.Game.SupportsTweaks
 	{
-		//  // Traits.HasActions
+		// Traits.HasActions
 		//  public override ArrayList<Traits.HasActions.Action>? actions { get; protected set; default = new ArrayList<Traits.HasActions.Action>(); }
 
 		// Traits.HasExecutableFile
@@ -105,6 +105,7 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 		}
 
+		internal File? resume_file { get; default = null; }
 		internal File? repair_file
 		{
 			owned get
@@ -393,10 +394,12 @@ namespace GameHub.Data.Sources.EpicGames
 			load_version();
 
 			//  actions.clear();
-			//  if(version != asset_info.build_version)
-			//  {
-			//  	actions.add(new RunnableAction(this));
-			//  }
+			//  var action = new RunnableAction(this);
+
+			//  //  if(!action.is_hidden)
+			//  //  {
+			//  actions.add(action);
+			//  //  }
 		}
 
 		public override async void run()
@@ -1131,9 +1134,9 @@ namespace GameHub.Data.Sources.EpicGames
 
 			//  TODO: DLC
 
-			var force = false; //  hardcoded for now
+			var force_update = true; //  hardcoded for now
 			//  var install_path = task.install_dir;
-			File? resume_file = null;
+			_resume_file = null;
 
 			if(needs_repair)
 			{
@@ -1141,12 +1144,12 @@ namespace GameHub.Data.Sources.EpicGames
 				//  new_manifest = old_manifest;
 				//  old_manifest = null;
 
-				resume_file = FS.file(Environment.get_tmp_dir(), id + ".repair");
-				force       = false;
+				_resume_file = FS.file(Environment.get_tmp_dir(), id + ".repair");
+				force_update = false;
 			}
-			else if(!force)
+			else if(force_update)
 			{
-				resume_file = FS.file(Environment.get_tmp_dir(), id + ".resume");
+				_resume_file = FS.file(Environment.get_tmp_dir(), id + ".resume");
 			}
 
 			var base_url = base_urls[Random.int_range(0, base_urls.size - 1)];
@@ -1190,22 +1193,24 @@ namespace GameHub.Data.Sources.EpicGames
 			      Json.to_string(metadata, true).data);
 		}
 
-		//  public new async void install(InstallTask.Mode install_mode = InstallTask.Mode.INTERACTIVE, bool update = false)
-		//  {
-		//  	if(update)
-		//  	{
-		//  		ArrayList<File>? dirs = new ArrayList<File>();
-		//  		dirs.add(install_dir);
-		//  		var task = new InstallTask(this, installers, dirs, install_mode, false);
-		//  		yield task.start();
-		//  	}
-		//  	else
-		//  	{
-		//  		if(status.state != Game.State.UNINSTALLED || !is_installable) return;
-		//  		var task = new InstallTask(this, installers, source.game_dirs, install_mode, true);
-		//  		yield task.start();
-		//  	}
-		//  }
+		public override async void install(InstallTask.Mode                                 install_mode = InstallTask.Mode.INTERACTIVE)
+		{
+			if(status.state == Game.State.INSTALLED)
+			{
+				ArrayList<File>? dirs = new ArrayList<File>();
+				dirs.add(install_dir);
+				var task = new InstallTask(this, installers, dirs, InstallTask.Mode.AUTO_INSTALL, false);
+				yield task.start();
+			}
+			else
+			{
+				//  Uninstalled, fresh install
+				if(status.state != Game.State.UNINSTALLED || !is_installable) return;
+
+				var task = new InstallTask(this, installers, source.game_dirs, install_mode, true);
+				yield task.start();
+			}
+		}
 
 		//  private ArrayList<SaveGameFile> get_save_games()
 		//  {
@@ -1441,20 +1446,15 @@ namespace GameHub.Data.Sources.EpicGames
 		//  {
 		//  	public RunnableAction(EpicGame game)
 		//  	{
-		//  		runnable = game;
+		//  		runnable   = game;
 		//  		is_primary = true;
-		//  		name = "Update";
+		//  		name       = "Update";
+		//  		is_hidden  = !game.has_updates;
 		//  	}
 
-		//  	public new bool is_available(GameHub.Data.Compat.CompatTool? tool = null)
-		//  	{
-		//  		return true;
-		//  	}
+		//  	public new bool is_available(GameHub.Data.Compat.CompatTool? tool = null) { return ((EpicGame) runnable).has_updates; }
 
-		//  	public new async void invoke(GameHub.Data.Compat.CompatTool? tool = null)
-		//  	{
-		//  		yield((EpicGame)runnable).install(InstallTask.Mode.AUTO_INSTALL, true);
-		//  	}
+		//  	public new async void invoke(GameHub.Data.Compat.CompatTool? tool = null) { yield((EpicGame) runnable).install(InstallTask.Mode.AUTO_INSTALL); }
 		//  }
 	}
 }

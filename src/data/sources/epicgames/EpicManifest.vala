@@ -1100,7 +1100,8 @@ namespace GameHub.Data.Sources.EpicGames
 
 				if(old_file_hash != null)
 				{
-					if(file_manifest.hash == old_file_hash)
+					//  Comparing Bytes doesn't work, using their string representation
+					if(bytes_to_hex(file_manifest.hash) == bytes_to_hex(old_file_hash))
 					{
 						unchanged.add(file_manifest.filename);
 					}

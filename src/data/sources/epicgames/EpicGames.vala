@@ -9,6 +9,7 @@ using GameHub.Utils;
 
 namespace GameHub.Data.Sources.EpicGames
 {
+	internal bool log_analysis            = false;
 	internal bool log_chunk               = false;
 	internal bool log_chunk_part          = false;
 	internal bool log_chunk_data_list     = false;
