@@ -24,9 +24,12 @@ namespace GameHub.Data.Sources.EpicGames
 		private const string datastorage_host  = "datastorage-public-service-liveegs.live.use1a.on.epicgames.com";
 		private const string library_host      = "library-service.live.use1a.on.epicgames.com";
 
+		private const string store_host = "store-content.ak.epicgames.com";
+
 		//  TODO: hardcoded for now
 		private string language_code = "en";
 		private string country_code  = "US";
+		//  var language_code = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
 
 		//  used with session, does not include user-agent as that's already set for the session
 		private HashMap<string, string> auth_headers = new HashMap<string, string>();
@@ -35,6 +38,17 @@ namespace GameHub.Data.Sources.EpicGames
 
 		private Session session    = new Session();
 		private string  user_agent = "UELauncher/11.0.1-14907503+++Portal+Release-Live Windows/10.0.19041.1.256.64bit";
+
+		Json.Node? _productmapping = null;
+		Json.Node productmapping
+		{
+			get
+			{
+				if(_productmapping == null) update_store_productmapping();
+
+				return _productmapping;
+			}
+		}
 
 		internal EpicGamesServices()
 		{
@@ -107,7 +121,7 @@ namespace GameHub.Data.Sources.EpicGames
 			//  }
 		}
 
-		//  This function is intended for server - side use only.
+		//  This function is intended for server-side use only.
 		//  https://dev.epicgames.com/docs/services/en-US/API/Members/Functions/Auth/EOS_Auth_VerifyUserAuth/index.html
 		internal Json.Node resume_session(Json.Node userdata)
 		requires(userdata.get_node_type() == Json.NodeType.OBJECT)
@@ -442,5 +456,63 @@ namespace GameHub.Data.Sources.EpicGames
 		//  https://github.com/SD4RK/epicstore_api/blob/master/epicstore_api/api.py#L72
 		//  https://store-content.ak.epicgames.com/api/de/content/products/rocket-league
 		//  https://store-content.ak.epicgames.com/api/content/productmapping
+
+		/**
+		 * Retrieve store information.
+		 *
+		 * Tries to match against https://store-content.ak.epicgames.com/api/content/productmapping
+		 * which mostly has the namespace as identifier. However, some only have the appid to match
+		 * against.
+		 *
+		 * Also it's possible the store page doesn't exist (anymore).
+		 *
+		 * @param ns Namespace of an asset
+		 * @param appid Fallback in case the other ID is used
+		 */
+		internal Json.Node get_store_details(string ns, string appid)
+		{
+			var slug = appid;
+
+			if(productmapping.get_object().has_member(ns))
+			{
+				assert(productmapping.get_object().get_member(ns).get_node_type() == Json.NodeType.VALUE);
+				slug = productmapping.get_object().get_string_member(ns);
+			}
+
+			//  debug("getting store info for %s - %s - %s", ns, appid, slug);
+
+			uint status;
+			var  json = Parser.parse_remote_json_file(
+				@"https://$store_host/api/$language_code/content/products/$slug",
+				"GET",
+				null,
+				unauth_headers,
+				null,
+				out status);
+			return_val_if_fail(status < 400, new Json.Node(Json.NodeType.NULL)); // Removed games will fail
+			assert(json.get_node_type() != Json.NodeType.NULL);
+
+			if(log_epic_games_services) debug("[Source.EpicGames.EpicGamesServices.get_store_details] json dump: \n%s", Json.to_string(json, true));
+
+			return json;
+		}
+
+		private void update_store_productmapping()
+		{
+			uint status;
+			var  json = Parser.parse_remote_json_file(
+				@"https://$store_host/api/content/productmapping",
+				"GET",
+				null,
+				unauth_headers,
+				null,
+				out status);
+			assert(status < 400);
+			assert(json.get_node_type() == Json.NodeType.OBJECT);
+
+			if(log_epic_games_services) debug("[Source.EpicGames.EpicGamesServices.update_store_productmapping] json dump: \n%s", Json.to_string(json, true));
+
+			_productmapping = json;
+		}
 	}
 }

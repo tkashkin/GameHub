@@ -340,6 +340,49 @@ namespace GameHub.Data.Sources.EpicGames
 				return;
 			}
 
+			Json.Node json;
+
+			if(info_detailed == null || info_detailed.length == 0)
+			{
+				json = EpicGamesServices.instance.get_store_details(asset_info.ns, asset_info.asset_id);
+
+				if(json.get_node_type() != Json.NodeType.NULL)
+				{
+					info_detailed = Json.to_string(json, false);
+				}
+			}
+
+			json = Parser.parse_json(info_detailed);
+
+			if(json != null && json.get_node_type() != Json.NodeType.NULL)
+			{
+				var slug  = json.get_object().get_string_member_with_default("_slug", "");
+				var page  = json.get_object().get_array_member("pages").get_object_element(0);
+				var about = page.get_object_member("data").get_object_member("about");
+				//  var social = page.get_object_member("data").get_object_member("socialLinks");
+
+				if(slug != "")
+				{
+					//  FIXME: Globify language and merge with …Services
+					var language_code = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
+					store_page = @"https://www.epicgames.com/store/$language_code/p/$slug";
+				}
+
+				if(about != null)
+				{
+					description = about.get_string_member_with_default("shortDescription", "");
+					var long_description = about.get_string_member("description");
+
+					if(long_description != null && long_description.length > 0)
+					{
+						if(description.length > 0) description += "<br><br>";
+
+						long_description.replace("\n", "<br>");
+						description += long_description;
+					}
+				}
+			}
+
 			save();
 			update_status();
 
@@ -776,7 +819,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 		internal async void verify()
 		{
-			var manifest_data = get_installed_manifest(); // FIXME: cdn_manifest?
+			var manifest_data = get_installed_manifest();         // FIXME: cdn_manifest?
 			var manifest      = EpicGames.load_manifest(manifest_data);
 
 			var files = manifest.file_manifest_list.elements;
@@ -875,7 +918,7 @@ namespace GameHub.Data.Sources.EpicGames
 			parameters += "-EpicPortal";
 			parameters += @"-epicusername=$(EpicGames.instance.user_name)";
 			parameters += @"-epicuserid=$(EpicGames.instance.user_id)";
-			parameters += @"-epiclocale=en"; //  FIXME: hardcoded for now
+			parameters += @"-epiclocale=en";         //  FIXME: hardcoded for now
 
 			return parameters;
 		}
@@ -1079,7 +1122,7 @@ namespace GameHub.Data.Sources.EpicGames
 			Bytes             new_bytes;
 			Manifest? old_manifest = null;
 
-			var tmp2_urls = base_urls; //  copy list for manipulation
+			var tmp2_urls = base_urls;         //  copy list for manipulation
 			var old_bytes = version != null ? get_installed_manifest() : null;
 
 			if(old_bytes == null)
@@ -1134,7 +1177,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 			//  TODO: DLC
 
-			var force_update = true; //  hardcoded for now
+			var force_update = true;         //  hardcoded for now
 			//  var install_path = task.install_dir;
 			_resume_file = null;
 
@@ -1176,7 +1219,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 		internal void update_metadata()
 		{
-			var tmp_urls = base_urls; //  save temporarily from old metadata
+			var tmp_urls = base_urls;         //  save temporarily from old metadata
 			_metadata = EpicGamesServices.instance.get_game_info(asset_info.ns, asset_info.catalog_item_id);
 
 			//  prevent loop by accessing metadata again in set_base_urls
