@@ -438,18 +438,23 @@ namespace GameHub.Data.Sources.EpicGames
 		/**
 		 * Get optimized delta manifest (doesn't seem to exist for most games)
 		 */
-		internal Bytes? get_delta_manifest(string url, string old_build_id, string new_build_id)
+		internal bool get_delta_manifest(string url, string old_build_id, string new_build_id, out Bytes data)
 		{
-			if(old_build_id == new_build_id) return null;
+			if(old_build_id == new_build_id) return false;
 
-			var message = new Message("GET", @"$url/Deltas/$new_build_id/$old_build_id.delta");
+			var delta_url = @"$url/Deltas/$new_build_id/$old_build_id.delta";
+
+			if(log_epic_games_services) debug("Delta url: " + delta_url);
+
+			var message = new Message("GET", delta_url);
 
 			//  unauth on purpose
 			var status = session.send_message(message);
+			return_val_if_fail(status < 400, false);
 
-			return_val_if_fail(status == 200, null);
+			data = new Bytes(message.response_body.data);
 
-			return new Bytes(message.request_body.data);
+			return true;
 		}
 
 		//  TODO: fetch descriptions etc

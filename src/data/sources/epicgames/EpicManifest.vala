@@ -308,11 +308,10 @@ namespace GameHub.Data.Sources.EpicGames
 		 */
 		internal class FileManifestList
 		{
-			private HashMap<string, int>? path_map = null;
-
 			internal ArrayList<FileManifest> elements { get; default = new ArrayList<FileManifest>(); }
+			internal                         HashMap<string, int>? path_map { get; set; default = null; }
 			internal uint8                   version  { get; default = 0; }
-			internal uint32                  count    { get; default = 0; }
+			internal uint32                  count    { get; set; default = 0; }
 			internal uint32                  size     { get; default = 0; }
 
 			internal FileManifestList.from_byte_stream(DataInputStream stream)
@@ -687,11 +686,11 @@ namespace GameHub.Data.Sources.EpicGames
 			private uint8 version                         { get; }
 			private uint32               manifest_version { get; }
 			private uint32               size             { get; }
-			private uint32               count            { get; }
 			private HashMap<uint32, int> guid_int_map { get; default = new HashMap<uint32, int>(); }
 			private HashMap<string, int> guid_str_map { get; default = new HashMap<string, int>(); }
 
 			internal ArrayList<ChunkInfo> elements { get; default = new ArrayList<ChunkInfo>(); }
+			internal uint32               count    { get; set; }
 
 			internal ChunkDataList.from_byte_stream(DataInputStream stream, uint32 manifest_version = 18)
 			{
@@ -884,6 +883,12 @@ namespace GameHub.Data.Sources.EpicGames
 				return result + ")>";
 			}
 
+			internal void clear_matching_maps()
+			{
+				_guid_int_map.clear();
+				_guid_str_map.clear();
+			}
+
 			/**
 			* Contains information about one {@link Chunk}.
 			*
@@ -1057,6 +1062,42 @@ namespace GameHub.Data.Sources.EpicGames
 
 			//  FIXME: escape?
 			return result;
+		}
+
+		internal void combine_manifest(Manifest delta_manifest)
+		{
+			var added = new ArrayList<string>();
+
+			//  overwrite file elements with the ones from the delta manifest
+			foreach(var base_file in file_manifest_list.elements)
+			{
+				var delta_file = delta_manifest.file_manifest_list.get_file_by_path(base_file.filename);
+
+				if(delta_file == null) continue;
+
+				var idx = file_manifest_list.elements.index_of(base_file);
+				file_manifest_list.elements.set(idx, delta_file);
+				added.add(delta_file.filename);
+			}
+
+			//  add other files that may be missing
+			foreach(var delta_file in delta_manifest.file_manifest_list.elements)
+			{
+				if(!(delta_file.filename in added))
+				{
+					file_manifest_list.elements.add(delta_file);
+				}
+			}
+
+			//  update count and clear map
+			file_manifest_list.count    = file_manifest_list.elements.size;
+			file_manifest_list.path_map = null;
+
+			//  add chunks from delta manifest to main manifest and again clear path caches
+			chunk_data_list.elements.add_all(delta_manifest.chunk_data_list.elements);
+			chunk_data_list.count = chunk_data_list.elements.size;
+			chunk_data_list.clear_matching_maps();
+			//  chunk_data_list._path_map = null; ??
 		}
 	}
 

@@ -1156,18 +1156,19 @@ namespace GameHub.Data.Sources.EpicGames
 
 			if(old_manifest != null && new_manifest != null)
 			{
-				var delta_manifest_data = EpicGamesServices.instance.get_delta_manifest(
+				Bytes delta_manifest_data = null;
+				var   delta_available     = EpicGamesServices.instance.get_delta_manifest(
 					base_urls[Random.int_range(0, base_urls.size - 1)],
 					old_manifest.meta.build_id,
-					new_manifest.meta.build_id);
+					new_manifest.meta.build_id,
+					out delta_manifest_data);
 
-				if(delta_manifest_data != null)
+				if(delta_available && delta_manifest_data != null)
 				{
 					delta_manifest = EpicGames.load_manifest(delta_manifest_data);
-					debug(
-						"[Sources.EpicGames.prepare_download] Using optimized delta manifest to upgrade form build" +
-						@"$(old_manifest.meta.build_id) to $(new_manifest.meta.build_id)");
-					//  TODO: combine_manifests(new_manifest, delta_manifest);
+					debug("[Sources.EpicGames.prepare_download] Using optimized delta manifest to upgrade from build " +
+					      @"$(old_manifest.meta.build_id) to $(new_manifest.meta.build_id)");
+					new_manifest.combine_manifest(delta_manifest);
 				}
 				else
 				{
