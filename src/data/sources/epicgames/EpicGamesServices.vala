@@ -457,23 +457,40 @@ namespace GameHub.Data.Sources.EpicGames
 			return true;
 		}
 
-		//  TODO: fetch descriptions etc
-		//  https://github.com/SD4RK/epicstore_api/blob/master/epicstore_api/api.py#L72
-		//  https://store-content.ak.epicgames.com/api/de/content/products/rocket-league
+		//  https://github.com/SD4RK/epicstore_api/blob/master/epicstore_api/api.py#L66
 		//  https://store-content.ak.epicgames.com/api/content/productmapping
+		private void update_store_productmapping()
+		{
+			uint status;
+			var  json = Parser.parse_remote_json_file(
+				@"https://$store_host/api/content/productmapping",
+				"GET",
+				null,
+				unauth_headers,
+				null,
+				out status);
+			assert(status < 400);
+			assert(json.get_node_type() == Json.NodeType.OBJECT);
+
+			if(log_epic_games_services) debug("[Source.EpicGames.EpicGamesServices.update_store_productmapping] json dump: \n%s", Json.to_string(json, true));
+
+			_productmapping = json;
+		}
 
 		/**
-		 * Retrieve store information.
-		 *
-		 * Tries to match against https://store-content.ak.epicgames.com/api/content/productmapping
-		 * which mostly has the namespace as identifier. However, some only have the appid to match
-		 * against.
-		 *
-		 * Also it's possible the store page doesn't exist (anymore).
-		 *
-		 * @param ns Namespace of an asset
-		 * @param appid Fallback in case the other ID is used
-		 */
+		* Retrieve store information.
+		*
+		* Tries to match against https://store-content.ak.epicgames.com/api/content/productmapping
+		* which mostly has the namespace as identifier. However, some only have the appid to match
+		* against.
+		*
+		* Also it's possible the store page doesn't exist (anymore).
+		*
+		* @param ns Namespace of an asset
+		* @param appid Fallback in case the other ID is used
+		*/
+		//  https://github.com/SD4RK/epicstore_api/blob/master/epicstore_api/api.py#L72
+		//  https://store-content.ak.epicgames.com/api/de/content/products/darkest-dungeon
 		internal Json.Node get_store_details(string ns, string appid)
 		{
 			var slug = appid;
@@ -494,7 +511,8 @@ namespace GameHub.Data.Sources.EpicGames
 				unauth_headers,
 				null,
 				out status);
-			return_val_if_fail(status < 400, new Json.Node(Json.NodeType.NULL)); // Removed games will fail
+			//  Removed games will fail
+			return_val_if_fail(status < 400, new Json.Node(Json.NodeType.NULL));
 			assert(json.get_node_type() != Json.NodeType.NULL);
 
 			if(log_epic_games_services) debug("[Source.EpicGames.EpicGamesServices.get_store_details] json dump: \n%s", Json.to_string(json, true));
@@ -502,22 +520,42 @@ namespace GameHub.Data.Sources.EpicGames
 			return json;
 		}
 
-		private void update_store_productmapping()
+		//  https://github.com/SD4RK/epicstore_api/blob/master/epicstore_api/api.py#L160
+		//  https://github.com/SD4RK/epicstore_api/blob/master/epicstore_api/api.py#L403
+		internal Json.Node get_dlc_details(string ns, string categories = "addons|digitalextras")
 		{
-			uint status;
-			var  json = Parser.parse_remote_json_file(
-				@"https://$store_host/api/content/productmapping",
-				"GET",
-				null,
-				unauth_headers,
-				null,
-				out status);
+			const string ADDONS_QUERY = "query getAddonsByNamespace($categories: String!, $count: Int!, $country: String!, $locale: String!, $namespace: String!, $sortBy: String!, $sortDir: String!) {\n  Catalog {\n    catalogOffers(namespace: $namespace, locale: $locale, params: {category: $categories, count: $count, country: $country, sortBy: $sortBy, sortDir: $sortDir}) {\n      elements {\n        countriesBlacklist\n        customAttributes {\n          key\n          value\n        }\n        description\n        developer\n        effectiveDate\n        id\n        isFeatured\n        keyImages {\n          type\n          url\n        }\n        lastModifiedDate\n        longDescription\n        namespace\n        offerType\n        productSlug\n        releaseDate\n        status\n        technicalDetails\n        title\n        urlSlug\n      }\n    }\n  }\n}\n";
+
+			var request_body_json = new Json.Node(Json.NodeType.OBJECT);
+			request_body_json.set_object(new Json.Object());
+			request_body_json.get_object().set_string_member("query", ADDONS_QUERY);
+			request_body_json.get_object().set_object_member("variables", new Json.Object());
+			request_body_json.get_object().get_object_member("variables").set_string_member("locale", language_code);
+			request_body_json.get_object().get_object_member("variables").set_string_member("country", country_code);
+			request_body_json.get_object().get_object_member("variables").set_string_member("namespace", ns);
+			request_body_json.get_object().get_object_member("variables").set_int_member("count", 250);
+			request_body_json.get_object().get_object_member("variables").set_string_member("categories", categories);
+			request_body_json.get_object().get_object_member("variables").set_string_member("sortBy", "releaseDate");
+			request_body_json.get_object().get_object_member("variables").set_string_member("sortDir", "ASC");
+
+			var message = new Message("POST", "https://graphql.epicgames.com/graphql");
+			message.request_body.append_take(Json.to_string(request_body_json, false).data);
+
+			//  unauth on purpose
+			var status = session.send_message(message);
 			assert(status < 400);
-			assert(json.get_node_type() == Json.NodeType.OBJECT);
 
-			if(log_epic_games_services) debug("[Source.EpicGames.EpicGamesServices.update_store_productmapping] json dump: \n%s", Json.to_string(json, true));
+			var json = Parser.parse_json((string) message.response_body.data);
+			assert(json.get_node_type() != Json.NodeType.NULL);
 
-			_productmapping = json;
+			if(log_epic_games_services) debug("[Source.EpicGames.EpicGamesServices.get_store_details] json dump: \n%s", Json.to_string(json, true));
+
+			assert(!json.get_object().has_member("errors"));
+
+			var j = new Json.Node(Json.NodeType.ARRAY);
+			j.set_array(json.get_object().get_object_member("data").get_object_member("Catalog").get_object_member("catalogOffers").get_array_member("elements"));
+
+			return j;
 		}
 	}
 }

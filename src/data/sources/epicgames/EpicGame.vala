@@ -77,7 +77,7 @@ namespace GameHub.Data.Sources.EpicGames
 				if(_metadata.get_node_type() == Json.NodeType.NULL)
 				{
 					//  FIXME: this will never update this way
-					var f = FS.file(FS.Paths.EpicGames.Metadata, get_metadata_filename());
+					//  var f = FS.file(FS.Paths.EpicGames.Metadata, get_metadata_filename());
 					_metadata = Parser.parse_json_file(FS.Paths.EpicGames.Metadata, get_metadata_filename());
 
 					if(_metadata.get_node_type() != Json.NodeType.NULL) return _metadata;
@@ -340,11 +340,32 @@ namespace GameHub.Data.Sources.EpicGames
 				return;
 			}
 
-			Json.Node json;
+			var json = new Json.Node(Json.NodeType.NULL);
 
+			//  This gets only saved for games which results into fetching for DLCs every time
 			if(info_detailed == null || info_detailed.length == 0)
 			{
-				json = EpicGamesServices.instance.get_store_details(asset_info.ns, asset_info.asset_id);
+				if(this is DLC)
+				{
+					//  //  FIXME: this will never update
+					//  json = Parser.parse_json_file(FS.Paths.EpicGames.Metadata, id + ".dlc.json");
+
+					//  if(json.get_node_type() == Json.NodeType.NULL)
+					//  {
+					//  	var j = EpicGamesServices.instance.get_dlc_details(asset_info.ns);
+					//  	j.get_array().foreach_element((array, index, node) => {
+					//  		//  FIXME: wrong id
+					//  		if(node.get_object().get_string_member("id") == asset_info.asset_id)
+					//  		{
+					//  			json = node;
+					//  		}
+					//  	});
+					//  }
+				}
+				else
+				{
+					json = EpicGamesServices.instance.get_store_details(asset_info.ns, asset_info.asset_id);
+				}
 
 				if(json.get_node_type() != Json.NodeType.NULL)
 				{

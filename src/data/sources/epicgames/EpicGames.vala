@@ -648,23 +648,28 @@ namespace GameHub.Data.Sources.EpicGames
 
 				if(asset.ns == "ue" && skip_unreal_engine) continue;
 
-				//  FIXME: We're only loading games from the DB so we're never finding DLCs here
-				//  This results into game == null so we're fetching metadata every time for DLCs
 				var game = get_game(asset.app_name);
 
+				//  We're only loading games from the DB so we're never finding DLCs here
+				//  This results into game == null so we're fetching metadata every time for DLCs
 				if(update_assets && (game == null || (game != null
 				                                      && game.version != asset.build_version
 				                                      && platform_override != null)))
 				{
-					if(game != null
-					   && game.version != asset.build_version
-					   && platform_override != null)
+					//  Try reading from disk cache first, this is solely for DLCs which we aren't getting information from the database
+					metadata = Parser.parse_json_file(FS.Paths.EpicGames.Metadata, asset.asset_id + ".json");
+
+					//  Also make it null again if above wasn't successfull
+					if(metadata.get_node_type() == Json.NodeType.NULL) metadata = null;
+
+					if((game != null
+					    && game.version != asset.build_version)
+					   || metadata == null)
 					{
-						debug("[LegendaryCore] Updating meta information for %s due to build version mismatch",
-						      asset.app_name);
+						debug("[Sources.EpicGames.get_game_and_dlc_list] Updating meta information for %s", asset.app_name);
+						metadata = EpicGamesServices.instance.get_game_info(asset.ns, asset.catalog_item_id);
 					}
 
-					metadata = EpicGamesServices.instance.get_game_info(asset.ns, asset.catalog_item_id);
 					assert(metadata.get_node_type() == Json.NodeType.OBJECT);
 
 					//  Don't add DLCs

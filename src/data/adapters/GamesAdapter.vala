@@ -512,7 +512,7 @@ namespace GameHub.Data.Adapters
 
 		private void merge_game(Game game)
 		{
-			if(!filter_settings_merge || game is Sources.GOG.GOGGame.DLC) return;
+			if(!filter_settings_merge || game is Sources.GOG.GOGGame.DLC || game is Sources.EpicGames.EpicGame.DLC) return;
 			foreach(var src in sources)
 			{
 				foreach(var game2 in src.games)
@@ -524,7 +524,7 @@ namespace GameHub.Data.Adapters
 
 		private void merge_game_with_game(GameSource src, Game game, Game game2)
 		{
-			if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC) return;
+			if(Game.is_equal(game, game2) || game2 is Sources.GOG.GOGGame.DLC || game2 is Sources.EpicGames.EpicGame.DLC) return;
 
 			if(Tables.Merges.is_game_merged(game) || Tables.Merges.is_game_merged(game2) || Tables.Merges.is_game_merged_as_primary(game2)) return;
 

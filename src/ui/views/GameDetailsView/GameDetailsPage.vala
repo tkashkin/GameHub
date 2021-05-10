@@ -360,7 +360,8 @@ namespace GameHub.UI.Views.GameDetailsView
 				new Blocks.Playtime(game),
 				igdb,
 				new Blocks.SteamDetails(game),
-				new Blocks.GOGDetails(game, this)
+				new Blocks.GOGDetails(game, this),
+				new Blocks.EpicDetails(game, this)
 			};
 
 			foreach(var b in blk)

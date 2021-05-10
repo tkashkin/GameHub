@@ -227,7 +227,7 @@ namespace GameHub.Data.Runnables.Tasks.Install
 					}
 				}
 
-				if(dirname != null && !(task.runnable is GameHub.Data.Sources.GOG.GOGGame.DLC))
+				if(dirname != null && !(task.runnable is GameHub.Data.Sources.GOG.GOGGame.DLC) && !(task.runnable is GameHub.Data.Sources.EpicGames.EpicGame.DLC))
 				{
 					FS.mv_up(task.install_dir, dirname.replace(" ", "\\ "));
 				}

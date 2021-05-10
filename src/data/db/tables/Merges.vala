@@ -55,7 +55,7 @@ namespace GameHub.Data.DB.Tables
 
 		public static bool add(Game first, Game second)
 		{
-			if(first is Sources.GOG.GOGGame.DLC || second is Sources.GOG.GOGGame.DLC) return false;
+			if(first is Sources.GOG.GOGGame.DLC || second is Sources.GOG.GOGGame.DLC || first is Sources.EpicGames.EpicGame.DLC || second is Sources.EpicGames.EpicGame.DLC) return false;
 
 			unowned Sqlite.Database? db = Database.instance.db;
 			if(db == null) return false;
