@@ -9,6 +9,7 @@
 	- [OpenMandriva](#openmandriva)
 	- [openSUSE](#opensuse)
 	- [Pop!\_OS](#pop_os)
+	- [Solus](#Solus)
 	- [Ubuntu-based distributions](#ubuntu-based-distributions)
 * [Portable packages](#portable-packages)
 	- [AppImage](#appimage)
@@ -53,6 +54,13 @@ Package is available in Pop!\_OS repository:
 ```bash
 sudo apt install com.github.tkashkin.gamehub
 ```
+
+### Solus
+Package is available in Solus repository:
+```bash
+sudo eopkg install gamehub
+```
+
 
 ### Ubuntu-based distributions
 Install Debian package from the [releases page](https://github.com/tkashkin/GameHub/releases) or import the [PPA](https://launchpad.net/~tkashkin/+archive/ubuntu/gamehub):
