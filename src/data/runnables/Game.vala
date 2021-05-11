@@ -103,7 +103,7 @@ namespace GameHub.Data.Runnables
 		// Version
 
 		private string? _version = null;
-		public string? version
+		public virtual string? version
 		{
 			get { return _version; }
 			set
@@ -123,7 +123,7 @@ namespace GameHub.Data.Runnables
 			}
 		}
 
-		protected void load_version()
+		protected virtual void load_version()
 		{
 			if(install_dir == null || !install_dir.query_exists()) return;
 			var file = get_file(@"$(FS.GAMEHUB_DIR)/version");

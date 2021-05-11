@@ -18,7 +18,7 @@ namespace GameHub.Data.Sources.EpicGames
 			this.platform = platform;
 			id            = game.id;
 			name          = game.name;
-			full_size     = game.get_installation_size(platform); // FIXME: This fetches and scans the manifest, try to get this from somewhere else e.g. the store page
+			full_size     = game.get_installation_size(platform);
 			can_import    = true;
 
 			if(platform != Platform.WINDOWS)

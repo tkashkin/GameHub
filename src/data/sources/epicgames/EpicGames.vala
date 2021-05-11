@@ -763,10 +763,29 @@ namespace GameHub.Data.Sources.EpicGames
 
 		internal static Manifest? load_manifest(Bytes data)
 		{
-			//  FIXME: ugly json detection?
+			if(data == null) return null;
+
+			//  TODO: ugly json detection?
 			if(data[0] == '{')
 			{
-				return new Manifest.from_json(Parser.parse_json((string) data.get_data()));
+				//  Try to fix that utf-8 failing below
+				uint8[] n    = { '\0' };
+				var     json = (string) data.get_data() + (string) n;
+
+				try
+				{
+					//  Convert to UTF-8 if it's ASCII
+					//  FIXME: This fails pretty often dunno why
+					if(!json.validate(-1)) json = convert(json, -1, "UTF-8", "ASCII");
+				}
+				catch (Error e)
+				{
+					debug("ASCII to UTF-8 failed!");
+
+					return null;
+				}
+
+				return new Manifest.from_json(Parser.parse_json(json));
 			}
 
 			return new Manifest.from_bytes(data);

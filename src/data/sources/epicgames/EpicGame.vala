@@ -173,6 +173,8 @@ namespace GameHub.Data.Sources.EpicGames
 			{
 				if(_manifest == null)
 				{
+					//  We need a version to load the proper manifest
+					//  load_version() has already been called on game init
 					if(version != null)
 					{
 						_manifest = EpicGames.load_manifest(load_manifest_from_disk());
@@ -420,7 +422,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 			//  var gameinfo = get_file("gameinfo");
 			//  var goggame = get_file(@"goggame-$(id).info");
-			var gh_marker = get_file(@".gamehub_$(id)");
+			var gh_marker = (this is DLC) ? get_file(@"$(FS.GAMEHUB_DIR)/$id.version") : get_file(@"$(FS.GAMEHUB_DIR)/version");
 
 			var files = new ArrayList<File>();
 
@@ -1144,7 +1146,7 @@ namespace GameHub.Data.Sources.EpicGames
 			Manifest? old_manifest = null;
 
 			var tmp2_urls = base_urls;         //  copy list for manipulation
-			var old_bytes = version != null ? get_installed_manifest() : null;
+			var old_bytes = (version != null) ? get_installed_manifest() : null;
 
 			if(old_bytes == null)
 			{
@@ -1196,8 +1198,6 @@ namespace GameHub.Data.Sources.EpicGames
 					debug("[Sources.EpicGames.prepare_download] No Delta manifest received from CDN");
 				}
 			}
-
-			//  TODO: DLC
 
 			var force_update = true;         //  hardcoded for now
 			//  var install_path = task.install_dir;
@@ -1262,6 +1262,7 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			if(status.state == Game.State.INSTALLED)
 			{
+				//  Update existing files
 				ArrayList<File>? dirs = new ArrayList<File>();
 				dirs.add(install_dir);
 				var task = new InstallTask(this, installers, dirs, InstallTask.Mode.AUTO_INSTALL, false);
@@ -1411,11 +1412,69 @@ namespace GameHub.Data.Sources.EpicGames
 				update_status();
 			}
 
+			//  Allow saving installed DLC version seperate from main game
+			private string?         _version = null;
+			public override string? version
+			{
+				get { return _version; }
+				set
+				{
+					_version = value;
+
+					if(install_dir == null || !install_dir.query_exists()) return;
+
+					var file = get_file(@"$(FS.GAMEHUB_DIR)/$id.version", false);
+					try
+					{
+						FS.mkdir(file.get_parent().get_path());
+						FileUtils.set_contents(file.get_path(), _version);
+					}
+					catch (Error e)
+					{
+						warning("[Game.version.set] Error while writing game version: %s", e.message);
+					}
+				}
+			}
+
+			protected override void load_version()
+			{
+				if(install_dir == null || !install_dir.query_exists()) return;
+
+				var file = get_file(@"$(FS.GAMEHUB_DIR)/$id.version");
+
+				if(file != null)
+				{
+					try
+					{
+						string ver;
+						FileUtils.get_contents(file.get_path(), out ver);
+						version = ver;
+					}
+					catch (Error e)
+					{
+						warning("[Game.load_version] Error while reading game version: %s", e.message);
+					}
+				}
+			}
+
 			public override void update_status()
 			{
 				if(game == null) return;
 
 				base.update_status();
+			}
+
+			public override async void install(InstallTask.Mode                                 install_mode = InstallTask.Mode.INTERACTIVE)
+			{
+				ArrayList<File>? dirs = new ArrayList<File>();
+				dirs.add(install_dir);
+				var task = new InstallTask(this, installers, dirs, InstallTask.Mode.AUTO_INSTALL, false);
+				yield task.start();
+			}
+
+			public override async void uninstall()
+			{
+				//  TODO: Only remove DLC files
 			}
 		}
 
