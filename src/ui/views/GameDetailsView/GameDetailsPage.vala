@@ -291,7 +291,9 @@ namespace GameHub.UI.Views.GameDetailsView
 				action_resume.visible = false;
 			}
 			action_install.visible = s.state != Game.State.INSTALLED;
-			action_install.sensitive = s.state == Game.State.UNINSTALLED && game.is_installable;
+			action_install.sensitive = s.state == Game.State.UNINSTALLED 
+			                           && game.is_installable
+			                           && ((game is GameHub.Data.Sources.EpicGames.EpicGame.DLC) ? ((GameHub.Data.Sources.EpicGames.EpicGame.DLC)game).game.status.state == Game.State.INSTALLED : true);
 			action_update.visible = s.state == Game.State.INSTALLED && game is GameHub.Data.Sources.EpicGames.EpicGame;
 			action_update.sensitive = s.state == Game.State.INSTALLED && game is GameHub.Data.Sources.EpicGames.EpicGame && ((GameHub.Data.Sources.EpicGames.EpicGame) game).has_updates;
 			action_run.visible = s.state == Game.State.INSTALLED;

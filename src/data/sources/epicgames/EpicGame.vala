@@ -1466,6 +1466,13 @@ namespace GameHub.Data.Sources.EpicGames
 
 			public override async void install(InstallTask.Mode                                 install_mode = InstallTask.Mode.INTERACTIVE)
 			{
+				if(game.status.state != Game.State.INSTALLED)
+				{
+					warning("Base game not installed, aborting");
+
+					return;
+				}
+
 				ArrayList<File>? dirs = new ArrayList<File>();
 				dirs.add(install_dir);
 				var task = new InstallTask(this, installers, dirs, InstallTask.Mode.AUTO_INSTALL, false);
