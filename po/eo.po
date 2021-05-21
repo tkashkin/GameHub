@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-04-18 01:27+0000\n"
-"Last-Translator: phlostically <phlostically@mailinator.com>\n"
+"PO-Revision-Date: 2021-05-22 17:33+0000\n"
+"Last-Translator: Jakub Fabijan <animatorzPolski@gmail.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/gamehub/"
 "translations/eo/>\n"
 "Language: eo\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -1825,12 +1825,12 @@ msgstr "Elŝutas"
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "Paŭzinta: %s"
+msgstr "Paŭzita: %s"
 
 #: src/utils/downloader/Downloader.vala:216
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "Paŭzinta"
+msgstr "Paŭzita"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
