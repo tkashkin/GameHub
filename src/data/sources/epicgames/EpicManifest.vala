@@ -85,7 +85,10 @@ namespace GameHub.Data.Sources.EpicGames
 			{
 				_version = number_string_to_byte_stream(json.get_object().get_string_member_with_default("ManifestFileVersion", "013000000000")).read_uint32();
 			}
-			catch (Error e) { debug("error: %s", e.message); }
+			catch (Error e)
+			{
+				debug("error: %s", e.message);
+			}
 
 			_meta               = new Meta.from_json(json);
 			_chunk_data_list    = new ChunkDataList.from_json(json, version);
@@ -683,11 +686,11 @@ namespace GameHub.Data.Sources.EpicGames
 		 */
 		internal class ChunkDataList
 		{
-			private uint8 version                         { get; }
-			private uint32               manifest_version { get; }
-			private uint32               size             { get; }
-			private HashMap<uint32, int> guid_int_map { get; default = new HashMap<uint32, int>(); }
-			private HashMap<string, int> guid_str_map { get; default = new HashMap<string, int>(); }
+			private uint8                 version                         { get; }
+			private uint32                manifest_version { get; }
+			private uint32                size             { get; }
+			internal HashMap<uint32, int> guid_int_map { get; default = new HashMap<uint32, int>(); }
+			private HashMap<string, int>  guid_str_map { get; default = new HashMap<string, int>(); }
 
 			internal ArrayList<ChunkInfo> elements { get; default = new ArrayList<ChunkInfo>(); }
 			internal uint32               count    { get; set; }
@@ -717,7 +720,10 @@ namespace GameHub.Data.Sources.EpicGames
 							{
 								chunk.guid[i] = stream.read_uint32();
 							}
-							catch (Error e) { debug("error: %s", e.message); }
+							catch (Error e)
+							{
+								debug("error: %s", e.message);
+							}
 						}
 
 						return true;
@@ -729,7 +735,10 @@ namespace GameHub.Data.Sources.EpicGames
 						{
 							chunk.hash = stream.read_uint64();
 						}
-						catch (Error e) { debug("error: %s", e.message); }
+						catch (Error e)
+						{
+							debug("error: %s", e.message);
+						}
 
 						return true;
 					});
@@ -739,7 +748,10 @@ namespace GameHub.Data.Sources.EpicGames
 						{
 							chunk.sha_hash = stream.read_bytes(20);
 						}
-						catch (Error e) { debug("error: %s", e.message); }
+						catch (Error e)
+						{
+							debug("error: %s", e.message);
+						}
 
 						return true;
 					});
@@ -750,7 +762,10 @@ namespace GameHub.Data.Sources.EpicGames
 						{
 							chunk.group_num = stream.read_byte();
 						}
-						catch (Error e) { debug("error: %s", e.message); }
+						catch (Error e)
+						{
+							debug("error: %s", e.message);
+						}
 
 						return true;
 					});
@@ -761,7 +776,10 @@ namespace GameHub.Data.Sources.EpicGames
 						{
 							chunk.window_size = stream.read_uint32();
 						}
-						catch (Error e) { debug("error: %s", e.message); }
+						catch (Error e)
+						{
+							debug("error: %s", e.message);
+						}
 
 						return true;
 					});
@@ -772,14 +790,18 @@ namespace GameHub.Data.Sources.EpicGames
 						{
 							chunk.file_size = stream.read_int64();
 						}
-						catch (Error e) { debug("error: %s", e.message); }
+						catch (Error e)
+						{
+							debug("error: %s", e.message);
+						}
 
 						return true;
 					});
 
 					assert(stream.tell() - start == size);
 				}
-				catch (Error e) {}
+				catch (Error e)
+				{}
 
 				if(log_chunk_data_list) debug(to_string());
 			}
@@ -811,7 +833,10 @@ namespace GameHub.Data.Sources.EpicGames
 						stream.set_byte_order(DataStreamByteOrder.BIG_ENDIAN);
 						chunk_info.sha_hash = stream.read_bytes(20);
 					}
-					catch (Error e) { debug("error: %s", e.message); }
+					catch (Error e)
+					{
+						debug("error: %s", e.message);
+					}
 
 					elements.add(chunk_info);
 				});
@@ -840,7 +865,9 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 
 				debug("[Sources.EpicManifest.ChunkDataList.get_chunk_by_number] Invalid guid!");
-				assert_not_reached();
+
+				//  assert_not_reached();
+				return null;
 			}
 
 			/**
@@ -1058,7 +1085,8 @@ namespace GameHub.Data.Sources.EpicGames
 					result = ""; //  empty string
 				}
 			}
-			catch (Error e) {}
+			catch (Error e)
+			{}
 
 			//  FIXME: escape?
 			return result;
@@ -1093,8 +1121,20 @@ namespace GameHub.Data.Sources.EpicGames
 			file_manifest_list.count    = file_manifest_list.elements.size;
 			file_manifest_list.path_map = null;
 
-			//  add chunks from delta manifest to main manifest and again clear path caches
-			chunk_data_list.elements.add_all(delta_manifest.chunk_data_list.elements);
+			//  ensure guid map exists
+			chunk_data_list.get_chunk_by_number(0);
+
+			//  add new chunks from delta manifest to main manifest and again clear maps and update count
+			var existing_chunks_guids = chunk_data_list.guid_int_map.keys;
+
+			foreach(var chunk in delta_manifest.chunk_data_list.elements)
+			{
+				if(!(chunk.guid_num in existing_chunks_guids))
+				{
+					chunk_data_list.elements.add(chunk);
+				}
+			}
+
 			chunk_data_list.count = chunk_data_list.elements.size;
 			chunk_data_list.clear_matching_maps();
 			//  chunk_data_list._path_map = null; ??
