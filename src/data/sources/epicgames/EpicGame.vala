@@ -12,7 +12,7 @@ namespace GameHub.Data.Sources.EpicGames
 	//  These three contain sub information for a game.
 	public class EpicGame: Game,
 		Traits.HasExecutableFile, Traits.SupportsCompatTools,
-		       Traits.Game.SupportsTweaks
+		Traits.Game.SupportsTweaks
 	{
 		// Traits.HasActions
 		//  public override ArrayList<Traits.HasActions.Action>? actions { get; protected set; default = new ArrayList<Traits.HasActions.Action>(); }
@@ -935,13 +935,10 @@ namespace GameHub.Data.Sources.EpicGames
 				parameters += "-epicovt=%s".printf(FS.file(FS.Paths.EpicGames.Cache, @"$(asset_info.ns)$(asset_info.catalog_item_id).ovt").get_path());
 			}
 
-			//  TODO: language
-			//  var language_code = language_code;
-
 			parameters += "-EpicPortal";
 			parameters += @"-epicusername=$(EpicGames.instance.user_name)";
 			parameters += @"-epicuserid=$(EpicGames.instance.user_id)";
-			parameters += @"-epiclocale=en";         //  FIXME: hardcoded for now
+			parameters += @"-epiclocale=$(EpicGames.instance.language_code)";
 
 			return parameters;
 		}

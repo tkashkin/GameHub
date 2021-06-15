@@ -116,6 +116,56 @@ namespace GameHub.Data.Sources.EpicGames
 			}
 		}
 
+		/**
+		 * The language code used for EGS API requests
+		 *
+		 * Lowercase two char string representing the language code.
+		 *
+		 * Defaults to system language code if available - otherwise to "en".
+		 */
+		private string? _language_code = null;
+		public string   language_code
+		{
+			owned get
+			{
+				if(_language_code != null)
+				{
+					return _language_code;
+				}
+
+				return Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2) ?? "en";
+			}
+			set
+			{
+				_language_code = value;
+			}
+		}
+
+		/**
+		 * The country code used for EGS API requests
+		 *
+		 * Uppercase two char string representing the country code.
+		 *
+		 * Defaults to system country code if available - otherwise to "US".
+		 */
+		private string? _country_code = null;
+		public string   country_code
+		{
+			owned get
+			{
+				if(_country_code != null)
+				{
+					return _country_code;
+				}
+
+				return Intl.setlocale(LocaleCategory.ALL, null).up().substring(3, 2) ?? "US";
+			}
+			set
+			{
+				_country_code = value;
+			}
+		}
+
 		public EpicGames()
 		{
 			instance  = this;

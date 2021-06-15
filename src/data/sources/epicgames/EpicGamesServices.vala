@@ -26,11 +26,6 @@ namespace GameHub.Data.Sources.EpicGames
 
 		private const string store_host = "store-content.ak.epicgames.com";
 
-		//  TODO: hardcoded for now
-		private string language_code = "en";
-		private string country_code  = "US";
-		//  var language_code = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
-
 		//  used with session, does not include user-agent as that's already set for the session
 		private HashMap<string, string> auth_headers = new HashMap<string, string>();
 		//  does not include auth header so it can be used with access token for e.g. Utils.Parser
@@ -288,8 +283,8 @@ namespace GameHub.Data.Sources.EpicGames
 			data.set("id", catalog_item_id);
 			data.set("includeDLCDetails", "True");
 			data.set("includeMainGameDetails", "True");
-			data.set("country", country_code);
-			data.set("locale", language_code);
+			data.set("country", EpicGames.instance.country_code);
+			data.set("locale", EpicGames.instance.language_code);
 
 			uint status;
 			var  json = Parser.parse_remote_json_file(
@@ -297,8 +292,8 @@ namespace GameHub.Data.Sources.EpicGames
 				?id=$catalog_item_id
 				&includeDLCDetails=True
 				&includeMainGameDetails=True
-				&country=$country_code
-				&locale=$language_code",
+				&country=$(EpicGames.instance.country_code)
+				&locale=$(EpicGames.instance.language_code)",
 				"GET",
 				EpicGames.instance.access_token,
 				unauth_headers,
@@ -505,7 +500,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 			uint status;
 			var  json = Parser.parse_remote_json_file(
-				@"https://$store_host/api/$language_code/content/products/$slug",
+				@"https://$store_host/api/$(EpicGames.instance.language_code)/content/products/$slug",
 				"GET",
 				null,
 				unauth_headers,
@@ -530,8 +525,8 @@ namespace GameHub.Data.Sources.EpicGames
 			request_body_json.set_object(new Json.Object());
 			request_body_json.get_object().set_string_member("query", ADDONS_QUERY);
 			request_body_json.get_object().set_object_member("variables", new Json.Object());
-			request_body_json.get_object().get_object_member("variables").set_string_member("locale", language_code);
-			request_body_json.get_object().get_object_member("variables").set_string_member("country", country_code);
+			request_body_json.get_object().get_object_member("variables").set_string_member("locale", EpicGames.instance.language_code);
+			request_body_json.get_object().get_object_member("variables").set_string_member("country", EpicGames.instance.country_code);
 			request_body_json.get_object().get_object_member("variables").set_string_member("namespace", ns);
 			request_body_json.get_object().get_object_member("variables").set_int_member("count", 250);
 			request_body_json.get_object().get_object_member("variables").set_string_member("categories", categories);
