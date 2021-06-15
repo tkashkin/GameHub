@@ -300,7 +300,7 @@ namespace GameHub.UI.Views.GameDetailsView
 			action_run.sensitive = game.can_be_launched();
 			action_open_directory.visible = s.state == Game.State.INSTALLED && game.install_dir != null && game.install_dir.query_exists();
 			action_open_store_page.visible = game.store_page != null;
-			action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC) && !(game is GameHub.Data.Sources.EpicGames.EpicGame.DLC);
+			action_uninstall.visible = s.state == Game.State.INSTALLED && !(game is GameHub.Data.Sources.GOG.GOGGame.DLC);
 			action_properties.visible = !(game is GameHub.Data.Sources.GOG.GOGGame.DLC) && !(game is GameHub.Data.Sources.EpicGames.EpicGame.DLC);
 		}
 

@@ -567,11 +567,79 @@ namespace GameHub.Data.Sources.EpicGames
 
 		public override async void uninstall()
 		{
-			if(install_dir != null && install_dir.query_exists())
+			if(install_dir != null && install_dir.query_exists() && status.state == Game.State.INSTALLED)
 			{
 				//  yield umount_overlays();
 
-				FS.rm(install_dir.get_path(), "", "-rf");
+				//  Remove DLC first so directory is empty when game uninstall runs
+				if(dlc != null)
+				{
+					foreach(var d in dlc)
+					{
+						yield d.uninstall();
+					}
+				}
+
+				//  delete all files that were installed
+				ArrayList<string> filelist = new ArrayList<string>();
+				foreach(var file_manifest in manifest.file_manifest_list.elements)
+				{
+					filelist.add(file_manifest.filename);
+				}
+
+				ArrayList<File> dirs = new ArrayList<File>((a, b) => {
+					if(a.get_path() == b.get_path()) return true;
+
+					return false;
+				});
+				foreach(var file in filelist)
+				{
+					var folders = file.split("/");
+
+					//  add intermediate directories that would have been missed otherwise
+					if(folders.length > 1)
+					{
+						for(int i = 1; i < folders.length; i++)
+						{
+							var folder = FS.file(install_dir.get_path(), string.joinv("/", folders[0 : i]));
+
+							if(!dirs.contains(folder))
+							{
+								dirs.add(folder);
+							}
+						}
+					}
+
+					//  FIXME: This takes forever
+					FS.rm(install_dir.get_path(), file);
+				}
+
+
+				//  remove all directories
+				dirs.sort((a, b) => {
+					if(a.get_path().length > b.get_path().length) return -1;
+
+					if(a.get_path().length < b.get_path().length) return 1;
+
+					return 0;
+				});
+				foreach(var dir in dirs)
+				{
+					FS.rm(dir.get_path(), null, "-d");
+				}
+
+				//  delete root directory
+				//  FS.rm(install_dir.get_path(), null, "-rf");
+
+				//  Only deleting tracked files result in the gh_marker still present thinking gamehub the game is still installed
+				//  we have to delete it manually
+				try
+				{
+					var gh_marker = (this is DLC) ? get_file(@"$(FS.GAMEHUB_DIR)/$id.version") : get_file(@"$(FS.GAMEHUB_DIR)/version");
+					gh_marker.delete();
+				}
+				catch (Error e) {}
+
 				update_status();
 			}
 
@@ -1474,11 +1542,6 @@ namespace GameHub.Data.Sources.EpicGames
 				dirs.add(install_dir);
 				var task = new InstallTask(this, installers, dirs, InstallTask.Mode.AUTO_INSTALL, false);
 				yield task.start();
-			}
-
-			public override async void uninstall()
-			{
-				//  TODO: Only remove DLC files
 			}
 		}
 
