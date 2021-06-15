@@ -386,9 +386,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 				if(slug != "")
 				{
-					//  FIXME: Globify language and merge with …Services
-					var language_code = Intl.setlocale(LocaleCategory.ALL, null).down().substring(0, 2);
-					store_page = @"https://www.epicgames.com/store/$language_code/p/$slug";
+					store_page = @"https://www.epicgames.com/store/$(EpicGames.instance.language_code)/p/$slug";
 				}
 
 				if(about != null)
