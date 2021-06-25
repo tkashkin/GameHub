@@ -53,7 +53,7 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 			add(sgrp_install_dirs);
 
 			install_dirs_list.directory_selected.connect(dir => {
-				task.install_dir = FS.file(install_dirs_list.selected_directory);
+				task.install_dir = FS.file(dir, subdir);
 			});
 
 			install_dirs_list.directory_activated.connect(dir => {
@@ -63,6 +63,8 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 					return Source.REMOVE;
 				});
 			});
+
+			task.install_dir = FS.file(install_dirs_list.selected_directory, subdir);
 
 			var sgrp_selected_installer = new SettingsGroup();
 			sgrp_selected_installer.settings.selection_mode = SelectionMode.NONE;
