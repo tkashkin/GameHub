@@ -262,7 +262,8 @@ namespace GameHub.Data.Compat.Tools.Wine
 					cmd += arg;
 				}
 			}
-			var task = Utils.exec(cmd).dir(runnable.install_dir.get_path());
+			var task = runnable.prepare_exec_task(cmd, args);
+			task.dir(runnable.install_dir.get_path());
 			apply_env(runnable, task, wine_options);
 			yield task.sync_thread();
 		}
