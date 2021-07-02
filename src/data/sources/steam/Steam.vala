@@ -481,23 +481,32 @@ namespace GameHub.Data.Sources.Steam
 				if(libraryfolders == null || !libraryfolders.query_exists()) return _library_folders;
 
 				var root = Parser.parse_vdf_file(libraryfolders.get_path());
-				var lf = Parser.json_object(root, {"LibraryFolders"});
 
-				if(lf != null)
-				{
-					foreach(var key in lf.get_members())
-					{
-						var libdir = FS.file(lf.get_string_member(key));
-						if(libdir != null && libdir.query_exists())
-						{
-							var dir = FS.find_case_insensitive(libdir, "steamapps");
-							if(dir != null && dir.query_exists()) _library_folders.add(dir.get_path());
-						}
-					}
-				}
+				_library_folders.add_all(find_paths(root, ""));
 
 				return _library_folders;
 			}
+		}
+
+		public static ArrayList<string> find_paths(Json.Node node, string key) {
+			var found_paths = new ArrayList<string>();
+			if(node.get_node_type() == Json.NodeType.OBJECT) {
+				var obj = node.get_object();
+				foreach(var k in obj.get_members()) {
+					var deep_paths = find_paths(obj.get_member(k), k);
+					found_paths.add_all(deep_paths);
+				}
+			} else if (key == "path") {
+				var libdir = FS.file(node.get_string());
+				if(libdir != null && libdir.query_exists())
+				{
+					var dir = FS.find_case_insensitive(libdir, "steamapps");
+					if(dir != null && dir.query_exists()) {
+						found_paths.add(dir.get_path());
+					}
+				}
+			}
+			return found_paths;
 		}
 
 		public static uint64 communityid_to_steamid3(uint64 id)
