@@ -179,7 +179,9 @@ namespace GameHub.Data.Compat.Tools.Wine
 			var task = runnable.prepare_exec_task(prepare_exec_cmdline(runnable, file, wine_options), args);
 			if(dir != null) task.dir(dir.get_path());
 			apply_env(runnable, task, wine_options_local);
+			if(runnable is Traits.HasExecutableFile) yield runnable.pre_run();
 			yield task.sync_thread();
+			if(runnable is Traits.HasExecutableFile) yield runnable.post_run();
 		}
 
 		public virtual File? get_prefix(Traits.SupportsCompatTools runnable, WineOptions? wine_options = null)

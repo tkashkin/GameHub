@@ -44,8 +44,15 @@ namespace GameHub.Data.Runnables
 
 		public string? store_page { get; protected set; default = null; }
 
+		/**
+		 * Last launch date in unix time
+		 */
 		public int64 last_launch { get; set; default = 0; }
 		public int64 playtime_source { get; set; default = 0; }
+
+		/**
+		 * Tracked playtime in minutes
+		 */
 		public int64 playtime_tracked { get; set; default = 0; }
 		public int64 playtime { get { return playtime_source + playtime_tracked; } }
 

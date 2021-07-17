@@ -490,6 +490,8 @@ namespace GameHub.Data.Sources.EpicGames
 
 			//  TODO: sync save files? E.g. Rocket League fails if no save was found
 			//  the prefix has to exist already for this
+
+			last_launch = (new DateTime.now_utc()).to_unix();
 		}
 
 		public override ExecTask prepare_exec_task(string[]? cmdline_override = null,
@@ -556,6 +558,10 @@ namespace GameHub.Data.Sources.EpicGames
 		public override async void post_run()
 		{
 			//  TODO: sync save files?
+
+			//  minutes = TimeSpan / 6e7
+			playtime_tracked += (new DateTime.now_utc()).difference(new DateTime.from_unix_utc(last_launch)) / 6000000;
+			save();
 		}
 
 		//  public void update_info(Json.Node json)

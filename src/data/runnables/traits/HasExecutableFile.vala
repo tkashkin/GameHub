@@ -138,8 +138,8 @@ namespace GameHub.Data.Runnables.Traits
 			});
 		}
 
-		protected virtual async void pre_run(){}
-		protected virtual async void post_run(){}
+		public virtual async void pre_run(){}
+		public virtual async void post_run(){}
 
 		protected virtual string[] cmdline
 		{
