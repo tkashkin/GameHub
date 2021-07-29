@@ -151,7 +151,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 						if(mismatch > 0)
 						{
-							warning(@"[Sources.EpicGames.AnalysisResult] $mismatch previously completed file(s) are missing, they will be redownloaded.");
+							warning(@"[Sources.EpicGames.AnalysisResult] $mismatch previously completed file(s) are corrupted, they will be redownloaded.");
 						}
 
 						//  remove completed files from changed/added and move them to unchanged for the analysis.
@@ -531,7 +531,10 @@ namespace GameHub.Data.Sources.EpicGames
 
 		//  This only exists so I can put both subclasses in one list
 		//  so that the tasks order stays in the correct position
-		internal abstract class Task {}
+		internal abstract class Task
+		{
+			internal async abstract bool process(FileOutputStream? iostream, File install_dir, EpicGame game);
+		}
 
 		/**
 		* Download manager task for a file
@@ -543,7 +546,7 @@ namespace GameHub.Data.Sources.EpicGames
 		*/
 		internal class FileTask: Task
 		{
-			internal string filename           { get; }
+			internal string  filename           { get; }
 			internal bool    del                { get; default = false; }
 			internal bool    empty              { get; default = false; }
 			internal bool    fopen              { get; default = false; }
@@ -560,10 +563,7 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 			}
 
-			internal FileTask(string filename)
-			{
-				_filename = filename;
-			}
+			internal FileTask(string filename) { _filename = filename; }
 
 			internal FileTask.delete(string filename, bool silent = false)
 			{
@@ -597,17 +597,132 @@ namespace GameHub.Data.Sources.EpicGames
 				_temporary_filename = old_filename;
 				_del                = dele;
 			}
+
+			internal async override bool process(FileOutputStream? iostream, File install_dir, EpicGame game)
+			{
+				//  make directories
+				var full_path = File.new_build_filename(install_dir.get_path(), filename);
+				Utils.FS.mkdir(full_path.get_parent().get_path());
+
+				try
+				{
+					if(empty)
+					{
+						full_path.create_readwrite(FileCreateFlags.REPLACE_DESTINATION);
+					}
+					else if(fopen)
+					{
+						if(iostream != null)
+						{
+							warning("[Sources.EpicGames.Installer.install] Opening new file %s without closing previous!",
+							        full_path.get_path());
+							iostream.close();
+							iostream = null;
+						}
+
+						if(full_path.query_exists())
+						{
+							iostream = yield full_path.replace_async(null,
+							                                         false,
+							                                         FileCreateFlags.REPLACE_DESTINATION);
+						}
+						else
+						{
+							iostream = yield full_path.create_async(FileCreateFlags.NONE);
+						}
+					}
+					else if(fclose)
+					{
+						if(iostream != null)
+						{
+							iostream.close();
+							iostream = null;
+						}
+						else
+						{
+							warning("[Sources.EpicGames.Installer.install] Asking to close file that is not open: %s",
+							        full_path.get_path());
+						}
+
+						//  write last completed file to simple resume file
+						if(game.resume_file != null)
+						{
+							var path = full_path.get_path();
+
+							if(path[path.length - 4 : path.length] == ".tmp")
+							{
+								path = path[0 : path.length - 4];
+							}
+
+							var file_hash = yield Utils.compute_file_checksum(full_path, ChecksumType.SHA1);
+							//  var tmp       = "";
+
+							//  if(((Analysis.FileTask)file_task).filename[((Analysis.FileTask)file_task).filename.length - 4 : ((Analysis.FileTask)file_task).filename.length] == ".tmp")
+							//  {
+							//  	tmp = ((Analysis.FileTask)file_task).filename[0 : ((Analysis.FileTask)file_task).filename.length - 4];
+							//  }
+							//  else
+							//  {
+							//  	tmp = ((Analysis.FileTask)file_task).filename;
+							//  }
+
+							//  debug(tmp);
+							//  assert(file_hash == bytes_to_hex(analysis.result.manifest.file_manifest_list.get_file_by_path(tmp).sha_hash));
+
+							var output_stream = game.resume_file.append_to(FileCreateFlags.NONE);
+							output_stream.write((string.join(":", file_hash, path) + "\n").data);
+
+							output_stream.close();
+						}
+					}
+					else if(frename)
+					{
+						if(iostream != null)
+						{
+							warning("[Sources.EpicGames.Installer.install] Trying to rename file without closing first!");
+							iostream.close();
+							iostream = null;
+						}
+
+						if(del)
+						{
+							Utils.FS.rm(full_path.get_path());
+						}
+
+						File.new_build_filename(install_dir.get_path(), temporary_filename).move(full_path, FileCopyFlags.NONE);
+					}
+					else if(del)
+					{
+						if(iostream != null)
+						{
+							warning("[Sources.EpicGames.Installer.install] Trying to delete file without closing first!");
+							iostream.close();
+							iostream = null;
+						}
+
+						Utils.FS.rm(full_path.get_path());
+					}
+				}
+				catch (Error e)
+				{
+					debug("file task failed: %s", e.message);
+
+					return false;
+				}
+
+				return true;
+			}
 		}
 
 		/**
-		* Download manager chunk task
-		*
-		* @param chunk_guid GUID of chunk
-		* @param cleanup whether or not this chunk can be removed from disk/memory after it has been written
-		* @param chunk_offset Offset into file or shared memory
-		* @param chunk_size Size to read from file or shared memory
-		* @param chunk_file Either cache or existing game file this chunk is read from if not using shared memory
-		*/
+		 * Download manager chunk task
+		 *
+		 * @param chunk_guid GUID of chunk
+		 * @param cleanup whether or not this chunk can be removed from disk/memory after it has been written
+		 * @param chunk_offset Offset into file or shared memory
+		 * @param chunk_size Size to read from file or shared memory
+		 * @param chunk_file Either cache or existing game file this chunk is read from if not using shared memory
+		 */
 		internal class ChunkTask: Task
 		{
 			internal uint32  chunk_guid   { get; }
@@ -621,6 +736,50 @@ namespace GameHub.Data.Sources.EpicGames
 				_chunk_guid   = chunk_guid;
 				_chunk_offset = chunk_offset;
 				_chunk_size   = chunk_size;
+			}
+
+			internal async override bool process(FileOutputStream? iostream, File install_dir, EpicGame game)
+			{
+				var downloaded_chunk = Utils.FS.file(Utils.FS.Paths.EpicGames.Cache + "/chunks/" + game.id + "/" + chunk_guid.to_string());
+
+				try
+				{
+					if(chunk_file != null)
+					{
+						//  reuse chunk from existing file
+						FileInputStream? old_stream = null;
+						assert(File.new_build_filename(install_dir.get_path(), chunk_file).query_exists());
+						old_stream = File.new_build_filename(install_dir.get_path(), chunk_file).read();
+						old_stream.seek(chunk_offset, SeekType.SET);
+						var bytes = yield old_stream.read_bytes_async(chunk_size);
+						yield iostream.write_bytes_async(bytes);
+						old_stream.close();
+						old_stream = null;
+					}
+					else if(downloaded_chunk.query_exists())
+					{
+						var chunk = new Chunk.from_byte_stream(new DataInputStream(yield downloaded_chunk.read_async()));
+						//  debug(@"chunk data length $(chunk.data.length)");
+						//  debug("chunk %s hash: %s",
+						//        hunk_guid.to_string(),
+						//        Checksum.compute_for_bytes(ChecksumType.SHA1, chunk.data));
+						yield iostream.write_bytes_async(chunk.data[chunk_offset : chunk_offset + chunk_size]);
+						//  debug(@"written $size bytes");
+
+						if(cleanup)
+						{
+							Utils.FS.rm(downloaded_chunk.get_path());
+						}
+					}
+				}
+				catch (Error e)
+				{
+					debug("chunk task failed: %s", e.message);
+
+					return false;
+				}
+
+				return true;
 			}
 		}
 	}

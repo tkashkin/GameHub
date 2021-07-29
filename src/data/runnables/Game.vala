@@ -52,6 +52,8 @@ namespace GameHub.Data.Runnables
 
 		/**
 		 * Tracked playtime in minutes
+		 * 
+		 * minutes = {@link GLib.TimeSpan} / 6e7
 		 */
 		public int64 playtime_tracked { get; set; default = 0; }
 		public int64 playtime { get { return playtime_source + playtime_tracked; } }

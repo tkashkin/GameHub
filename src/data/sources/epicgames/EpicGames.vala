@@ -174,6 +174,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 			//  Session we're using to access the api
 			new EpicGamesServices();
+			new EpicDownloader();
 		}
 
 		public override bool is_installed(bool refresh = false)
@@ -267,7 +268,8 @@ namespace GameHub.Data.Sources.EpicGames
 
 						authenticate_with_exchange_code(authenticate_with_sid(cookies));
 					}
-					catch (Error e) {}
+					catch (Error e)
+					{}
 
 					Idle.add(authenticate.callback);
 				});
@@ -318,7 +320,8 @@ namespace GameHub.Data.Sources.EpicGames
 					}
 				}
 			}
-			catch (Error e) {}
+			catch (Error e)
+			{}
 			#endif
 
 			return true;
@@ -819,14 +822,22 @@ namespace GameHub.Data.Sources.EpicGames
 			if(data[0] == '{')
 			{
 				//  Try to fix that utf-8 failing below
-				uint8[] n    = { '\0' };
-				var     json = (string) data.get_data() + (string) n;
+				//  uint8[] n    = { '\0' };
+				//  var     json = (string) data.get_data() + (string) n;
+
+				string json;
 
 				try
 				{
 					//  Convert to UTF-8 if it's ASCII
 					//  FIXME: This fails pretty often dunno why
-					if(!json.validate(-1)) json = convert(json, -1, "UTF-8", "ASCII");
+					//  if(!json.validate(-1))
+					//  {
+					//  https://gist.github.com/hakre/4188459
+					var converter = IConv.open("UTF-8//TRANSLIT", "US-ASCII");
+					json = convert_with_iconv((string) data.get_data(), -1, converter);
+					converter.close();
+					//  }
 				}
 				catch (Error e)
 				{

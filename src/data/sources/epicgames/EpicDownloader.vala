@@ -2,23 +2,25 @@ using Gee;
 using Soup;
 
 using GameHub.Data.Runnables;
-using GameHub.Utils;
+//  using GameHub.Utils;
 using GameHub.Utils.Downloader;
-using GameHub.Utils.Downloader.SoupDownloader;
+//  using GameHub.Utils.Downloader.SoupDownloader;
 
 namespace GameHub.Data.Sources.EpicGames
 {
 	//  FIXME: This whole thing is a mess because I had to come up with my own stuff here
 	//  We need to download a number of x chunks per game and this should be properly represented in
 	//  the download manager
-	private class EpicDownloader: GameHub.Utils.Downloader.SoupDownloader.SoupDownloader
+	private class EpicDownloader: Downloader
 	{
 		private ArrayQueue<string>              dl_queue;
 		private HashTable<string, DownloadInfo> dl_info;
 		private HashTable<string, EpicDownload> downloads;
 		private Session                         session = new Session();
 
-		private static string[] URL_SCHEMES        = { "http", "https" };
+		internal static EpicDownloader instance;
+
+		//  private static string[] URL_SCHEMES        = { "http", "https" };
 		private static string[] FILENAME_BLACKLIST = { "download" };
 
 		internal EpicDownloader()
@@ -30,121 +32,95 @@ namespace GameHub.Data.Sources.EpicGames
 			session.max_conns_per_host = 16;
 			session.user_agent         = "EpicGamesLauncher/11.0.1-14907503+++Portal+Release-Live Windows/10.0.19041.1.256.64bit";
 			download_manager().add_downloader(this);
+			instance = this;
 		}
 
-		private EpicDownload? get_game_download(EpicGame? game)
+		public override Download? get_download(string id)
 		{
-			if(game == null) return null;
-
 			lock (downloads)
 			{
-				return (EpicDownload?) downloads.get(game.full_id);
+				return downloads.get(id);
 			}
 		}
 
-		private async ArrayList<SoupDownload> fetch_parts(Installer installer)
+		private EpicDownload? get_game_download(EpicGame game)
 		{
-			var parts = new ArrayList<SoupDownload>();
-			debug("preparing download");
-			installer.analysis = installer.game.prepare_download(installer.install_task);
-
-			//  game is either up to date or hasn't changed, so we have nothing to do
-			if(installer.analysis.result.dl_size < 1)
+			lock (downloads)
 			{
-				debug("[Sources.EpicGames.EpicGame.download] Download size is 0, the game is either already up to date or has not changed.");
-
-				if(installer.game.needs_repair && installer.game.repair_file.query_exists())
-				{
-					installer.game.needs_verification = false;
-					//  remove repair file
-					FS.rm(installer.game.repair_file.get_path());
-
-					//  check if install tags have changed, if they did; try deleting files that are no longer required.
-					//  TODO: update install tags
-				}
+				return (EpicDownload?) downloads.get(game.id);
 			}
-
-			//  debug("[Sources.EpicGames.EpicGame.download] Install size: %.02d MiB", installer.analysis.result.install_size / 1024 / 1024);
-			//  debug("[Sources.EpicGames.EpicGame.download] Download size: %.02d MiB", installer.analysis.result.dl_size / 1024 / 1024);
-			//  debug(@"[Sources.EpicGames.EpicGame.download] Reusable size: %.02d MiB (chunks) / $(installer.analysis.result.unchanged) (skipped)", installer.analysis.result.reuse_size / 1024 / 1024);
-
-			foreach(var chunk_guid in installer.analysis.chunks_to_dl)
-			{
-				var chunk  = installer.analysis.chunk_data_list.get_chunk_by_number(chunk_guid);
-				var remote = File.new_for_uri(installer.analysis.base_url + "/" + chunk.path);
-				var local  = FS.file(FS.Paths.EpicGames.Cache + "/chunks/" + installer.game.id + "/" + chunk.guid_num.to_string());
-				//  debug("local path: %s", local.get_path());
-				FS.mkdir(local.get_parent().get_path());
-				parts.add(new SoupDownload(remote, local, File.new_for_path(local.get_path() + "~")));
-			}
-
-			return parts;
 		}
 
 		//  TODO: a lot of small files, we should probably handle this in parallel
-		internal new async ArrayList<File> download(Installer installer) throws Error
+		internal async bool download(Installer installer)
 		{
 			var files    = new ArrayList<File>();
 			var game     = installer.game;
 			var download = get_game_download(game);
-			var parts    = yield fetch_parts(installer);
 
 			//  installer.task.status = new InstallTask.Status(InstallTask.State.DOWNLOADING);
-			if(game == null || download != null) return yield await_download(download);
+			try
+			{
+				if(game == null || download != null) return yield await_download(download);
+			}
+			catch (Error e)
+			{
+				return false;
+			}
 
-			download = new EpicDownload(game.full_id, parts);
+			download    = new EpicDownload(game.id, installer.analysis);
+			game.status = new Game.Status(Game.State.DOWNLOADING, game, download);
 
-			lock (downloads) downloads.set(game.full_id, download);
+			lock (downloads) downloads.set(game.id, download);
 			download_started(download);
 
 			var info = new DownloadInfo.for_runnable(game, "Downloading…");
 			info.download = download;
 
-			lock (dl_info) dl_info.set(game.full_id, info);
+			lock (dl_info) dl_info.set(game.id, info);
 			dl_started(info);
 
 			if(GameHub.Application.log_downloader)
 			{
-				debug("[EpicDownloader] Installing '%s'...", game.full_id);
+				debug("[EpicDownloader] Installing '%s'...", game.id);
 			}
 
-			game.status = new Game.Status(Game.State.DOWNLOADING, game, download);
+			//  var ds_id = download_manager().file_download_started.connect(dl => {
+			//  	if(dl.id != game.id) return;
 
-			debug("[DownloadableInstaller.download] Starting (%d parts)", parts.size);
-
-			var ds_id = download_manager().file_download_started.connect(dl => {
-				if(dl.id != game.full_id) return;
-
-				installer.install_task.status = new Tasks.Install.InstallTask.Status(
-					Tasks.Install.InstallTask.State.DOWNLOADING,
-					dl);
-				//  installer.download_state = new DownloadState(DownloadState.State.DOWNLOADING, dl);
-				dl.status_change.connect(s => {
-					installer.install_task.notify_property("status");
-				});
-			});
+			//  	installer.install_task.status = new Tasks.Install.InstallTask.Status(
+			//  		Tasks.Install.InstallTask.State.DOWNLOADING,
+			//  		dl);
+			//  	//  installer.download_state = new DownloadState(DownloadState.State.DOWNLOADING, dl);
+			//  	dl.status_change.connect(s => {
+			//  		installer.install_task.notify_property("status");
+			//  	});
+			//  });
 
 			try
 			{
+				yield await_queue(download);
+				download.status = new EpicDownload.Status(Download.State.STARTING);
+				debug("[DownloadableInstaller.download] Starting (%d parts)", download.parts.size);
+
 				uint32 current_part = 1;
-				foreach(var part in ((EpicDownload) download).parts)
+				var    total_parts  = download.parts.size;
+
+				EpicPart part;
+				download.session = session;
+
+				while((part = download.parts.poll()) != null)
 				{
-					debug("[DownloadableInstaller.download] Part %u: `%s`", current_part, part.remote.get_uri());
+					part.session = download.session;
+					debug("[DownloadableInstaller.download] Part %u of %u: `%s`", current_part, total_parts, part.remote.get_uri());
+					lock (dl_info) dl_info.set(game.id, new Utils.Downloader.DownloadInfo.for_runnable(installer.game, _("Downloading part %1$u of %2$u.").printf(current_part, total_parts)));
 
-					FS.mkdir(part.local.get_parent().get_path());
+					download.status = new EpicDownload.Status(
+						Download.State.DOWNLOADING,
+						(int64) installer.analysis.result.dl_size,
+						current_part / total_parts);
 
-					var download_description = download.id;
-
-					if(parts.size > 1)
-					{
-						download_description = _("Part %1$u of %2$u: %3$s").printf(current_part, parts.size, part.id);
-						download.status      = new EpicDownload.Status(
-							Download.State.DOWNLOADING,
-							(int64) installer.analysis.result.dl_size,
-							current_part / parts.size,
-							-1,
-							-1);
-					}
+					Utils.FS.mkdir(part.local.get_parent().get_path());
 
 					debug("Downloading " + part.remote.get_uri());
 
@@ -154,27 +130,26 @@ namespace GameHub.Data.Sources.EpicGames
 						continue;
 					}
 
-					var uri = part.remote.get_uri();
-
 					if(part.local.query_exists())
 					{
 						//  TODO: compare hash
 						if(GameHub.Application.log_downloader)
 						{
-							debug("[SoupDownloader] '%s' is already downloaded", uri);
+							debug("[SoupDownloader] '%s' is already downloaded", part.remote.get_uri());
 						}
 
 						files.add(part.local);
+						download.downloaded_parts.offer(part);
 						current_part++;
 						continue;
 					}
 
-					//  var tmp = File.new_for_path(part.local.get_path() + "~");
+					if(download.is_cancelled)
+					{
+						throw new IOError.CANCELLED("Download cancelled by user");
+					}
 
-					if(part.remote.get_uri_scheme() in URL_SCHEMES)
-						yield download_from_http(part, false, false);
-					else
-						yield download_from_filesystem(part);
+					yield download_from_http(part, false, false);
 
 					if(part.local_tmp.query_exists())
 					{
@@ -185,6 +160,7 @@ namespace GameHub.Data.Sources.EpicGames
 					if(part.local != null && part.local.query_exists())
 					{
 						files.add(part.local);
+						download.downloaded_parts.offer(part);
 						//  TODO: uncompress, compare hash
 						//  https://github.com/derrod/legendary/blob/a2280edea8f7f8da9a080fd3fb2bafcabf9ee33d/legendary/downloader/workers.py#L99
 						//  var chunk = new Chunk.from_file(new DataInputStream(file.read()));
@@ -214,7 +190,7 @@ namespace GameHub.Data.Sources.EpicGames
 						//  		n.set_icon(new ThemedIcon("dialog-warning"));
 						//  		task.runnable.cast<Game>(
 						//  			game => {
-						//  			runnable_id = game.full_id;
+						//  			runnable_id = game.id;
 						//  			var icon = ImageCache.local_file(game.icon, @"games/$(game.source.id)/$(game.id)/icons/");
 						//  			if(icon != null && icon.query_exists())
 						//  			{
@@ -249,7 +225,7 @@ namespace GameHub.Data.Sources.EpicGames
 
 				if(info != null) dl_ended(info);
 
-				throw error;
+				return false;
 			}
 			catch (Error error)
 			{
@@ -258,145 +234,45 @@ namespace GameHub.Data.Sources.EpicGames
 
 				if(info != null) dl_ended(info);
 
-				throw error;
+				return false;
 			}
 			finally
 			{
 				//  download_state = new DownloadState(DownloadState.State.DOWNLOADED);
 				download.status = new FileDownload.Status(Download.State.FINISHED);
-				lock (downloads) downloads.remove(game.full_id);
-				lock (dl_info) dl_info.remove(game.full_id);
-				//  lock (dl_queue) dl_queue.remove(game.full_id);
+				lock (downloads) downloads.remove(game.id);
+				lock (dl_info) dl_info.remove(game.id);
+				//  lock (dl_queue) dl_queue.remove(game.id);
 			}
 
-			download_manager().disconnect(ds_id);
+			//  download_manager().disconnect(ds_id);
 
 			download_finished(download);
 			dl_ended(info);
 
 			//  game.update_status();
 
-			return files;
+			return true;
 		}
 
-		//  public async File? download_part(File remote, File local, DownloadInfo? info = null, bool preserve_filename = true, bool queue = true) throws Error
-		//  {
-		//  	if(remote == null || remote.get_uri() == null || remote.get_uri().length == 0) return null;
-
-		//  	var uri = remote.get_uri();
-		//  	var download = get_file_download(remote);
-
-		//  	if(download != null) return yield await_download(download);
-
-		//  	if(local.query_exists())
-		//  	{
-		//  		if(GameHub.Application.log_downloader)
-		//  		{
-		//  			debug("[SoupDownloader] '%s' is already downloaded", uri);
-		//  		}
-		//  		return local;
-		//  	}
-
-		//  	var tmp = File.new_for_path(local.get_path() + "~");
-
-		//  	download = new SoupDownload(remote, local, tmp);
-		//  	download.session = session;
-
-		//  	lock (downloads)
-		//  	{
-		//  		downloads.set(uri, download);
-		//  	}
-
-		//  	download_started(download);
-
-		//  	if(info != null)
-		//  	{
-		//  		info.download = download;
-
-		//  		lock (dl_info)
-		//  		{
-		//  			dl_info.set(uri, info);
-		//  		}
-
-		//  		dl_started(info);
-		//  	}
-
-		//  	if(GameHub.Application.log_downloader)
-		//  	{
-		//  		debug("[SoupDownloader] Downloading '%s'...", uri);
-		//  	}
-
-		//  	download.status = new FileDownload.Status(Download.State.STARTING);
-
-		//  	try{
-		//  		if(remote.get_uri_scheme() in URL_SCHEMES)
-		//  			yield download_from_http(download, preserve_filename, queue);
-		//  		else
-		//  			yield download_from_filesystem(download);
-		//  	}
-		//  	catch (IOError.CANCELLED error)
-		//  	{
-		//  		download.status = new FileDownload.Status(Download.State.CANCELLED);
-		//  		download_cancelled(download, error);
-		//  		if(info != null) dl_ended(info);
-		//  		throw error;
-		//  	}
-		//  	catch (Error error)
-		//  	{
-		//  		download.status = new FileDownload.Status(Download.State.FAILED);
-		//  		download_failed(download, error);
-		//  		if(info != null) dl_ended(info);
-		//  		throw error;
-		//  	}
-		//  	finally
-		//  	{
-		//  		lock (downloads) downloads.remove(uri);
-		//  		lock (dl_info) dl_info.remove(uri);
-		//  		lock (dl_queue) dl_queue.remove(uri);
-		//  	}
-
-		//  	if(download.local_tmp.query_exists())
-		//  	{
-		//  		download.local_tmp.move(download.local, FileCopyFlags.OVERWRITE);
-		//  	}
-
-		//  	if(GameHub.Application.log_downloader)
-		//  	{
-		//  		debug("[SoupDownloader] Downloaded '%s'", uri);
-		//  	}
-
-		//  	download_finished(download);
-		//  	if(info != null) dl_ended(info);
-
-		//  	return download.local;
-		//  }
-
-		private async ArrayList<File>? await_download(EpicDownload download) throws Error
+		private async bool await_download(EpicDownload download) throws Error
 		{
-			ArrayList<File> files          = null;
-			Error           download_error = null;
+			Error download_error = null;
 
 			SourceFunc callback = await_download.callback;
 			var download_finished_id = download_finished.connect((downloader, downloaded) => {
-				if(((SoupDownload) downloaded).id != download.id) return;
-
-				files = new ArrayList<File>();
-				((EpicDownload) downloaded).parts.foreach(part => {
-					files.add(part.local_tmp); // FIXME: local_tmp?
-
-					return true;
-				});
+				if(((EpicDownload) downloaded).id != download.id) return;
 
 				callback ();
 			});
 			var download_cancelled_id = download_cancelled.connect((downloader, cancelled_download, error) => {
-				if(((SoupDownload) cancelled_download).id != download.id) return;
+				if(((EpicDownload) cancelled_download).id != download.id) return;
 
 				download_error = error;
 				callback ();
 			});
 			var download_failed_id = download_failed.connect((downloader, failed_download, error) => {
-				if(((SoupDownload) failed_download).id != download.id) return;
+				if(((EpicDownload) failed_download).id != download.id) return;
 
 				download_error = error;
 				callback ();
@@ -410,60 +286,63 @@ namespace GameHub.Data.Sources.EpicGames
 
 			if(download_error != null) throw download_error;
 
-			return files;
+			return true;
 		}
 
-		//  private async void await_queue(EpicDownload download)
-		//  {
-		//  	lock (dl_queue)
-		//  	{
-		//  		if(download.remote.get_uri() in dl_queue) return;
-		//  		dl_queue.add(download.remote.get_uri());
-		//  	}
-
-		//  	var download_finished_id = download_finished.connect(
-		//  		(downloader, downloaded) => {
-		//  		lock (dl_queue) dl_queue.remove(((SoupDownload) downloaded).remote.get_uri());
-		//  	});
-		//  	var download_cancelled_id = download_cancelled.connect(
-		//  		(downloader, cancelled_download, error) => {
-		//  		lock (dl_queue) dl_queue.remove(((SoupDownload) cancelled_download).remote.get_uri());
-		//  	});
-		//  	var download_failed_id = download_failed.connect(
-		//  		(downloader, failed_download, error) => {
-		//  		lock (dl_queue) dl_queue.remove(((SoupDownload) failed_download).remote.get_uri());
-		//  	});
-
-		//  	while(dl_queue.peek() != null && dl_queue.peek() != download.remote.get_uri() && !download.is_cancelled) {
-		//  		download.status = new FileDownload.Status(Download.State.QUEUED);
-		//  		yield Utils.sleep_async(2000);
-		//  	}
-
-		//  	disconnect(download_finished_id);
-		//  	disconnect(download_cancelled_id);
-		//  	disconnect(download_failed_id);
-		//  }
-
-		private async void download_from_http(SoupDownload download,
-		                                      bool         preserve_filename = true,
-		                                      bool         queue             = true) throws Error
+		private async void await_queue(EpicDownload download)
 		{
-			var msg = new Message("GET", download.remote.get_uri());
+			lock (dl_queue)
+			{
+				if(download.id in dl_queue) return;
+
+				dl_queue.add(download.id);
+			}
+
+			var download_finished_id = download_finished.connect(
+				(downloader, downloaded) => {
+				lock (dl_queue) dl_queue.remove(((EpicDownload) downloaded).id);
+			});
+			var download_cancelled_id = download_cancelled.connect(
+				(downloader, cancelled_download, error) => {
+				lock (dl_queue) dl_queue.remove(((EpicDownload) cancelled_download).id);
+			});
+			var download_failed_id = download_failed.connect(
+				(downloader, failed_download, error) => {
+				lock (dl_queue) dl_queue.remove(((EpicDownload) failed_download).id);
+			});
+
+			while(dl_queue.peek() != null && dl_queue.peek() != download.id && !download.is_cancelled)
+			{
+				download.status = new FileDownload.Status(Download.State.QUEUED);
+				yield Utils.sleep_async(2000);
+			}
+
+			disconnect(download_finished_id);
+			disconnect(download_cancelled_id);
+			disconnect(download_failed_id);
+		}
+
+		private async void download_from_http(EpicPart part,
+		                                      bool     preserve_filename = true,
+		                                      bool     queue             = true) throws Error
+		{
+			var msg = new Message("GET", part.remote.get_uri());
 			msg.response_body.set_accumulate(false);
 
-			download.session = session;
-			download.message = msg;
+			//  download.session = session;
+			//  download.message = msg;
+			part.message = msg;
 
 			//  if(queue)
 			//  {
 			//  	yield await_queue(download);
-			//  	//  download.status = new FileDownload.Status(Download.State.STARTING);
+			//  	download.status = new EpicDownload.Status(Download.State.STARTING);
 			//  }
 
-			if(download.is_cancelled)
-			{
-				throw new IOError.CANCELLED("Download cancelled by user");
-			}
+			//  if(download.is_cancelled)
+			//  {
+			//  	throw new IOError.CANCELLED("Download cancelled by user");
+			//  }
 
 			#if !PKG_FLATPAK
 			var address         = msg.get_address();
@@ -481,25 +360,27 @@ namespace GameHub.Data.Sources.EpicGames
 			int64 dl_bytes       = 0;
 			int64 dl_bytes_total = 0;
 
-			//  #if SOUP_2_60
-			//  int64 resume_from = 0;
-			//  var resume_dl = false;
+			#if SOUP_2_60
+			int64 resume_from = 0;
+			var   resume_dl   = false;
 
-			//  if(download.local_tmp.get_basename().has_suffix("~") && download.local_tmp.query_exists())
-			//  {
-			//  	var info = yield download.local_tmp.query_info_async(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
-			//  	resume_from = info.get_size();
-			//  	if(resume_from > 0)
-			//  	{
-			//  		resume_dl = true;
-			//  		msg.request_headers.set_range(resume_from, -1);
-			//  		if(GameHub.Application.log_downloader)
-			//  		{
-			//  			debug(@"[SoupDownloader] Download part found, size: $(resume_from)");
-			//  		}
-			//  	}
-			//  }
-			//  #endif
+			if(part.local_tmp.get_basename().has_suffix("~") && part.local_tmp.query_exists())
+			{
+				var info = yield part.local_tmp.query_info_async(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
+				resume_from = info.get_size();
+
+				if(resume_from > 0)
+				{
+					resume_dl = true;
+					msg.request_headers.set_range(resume_from, -1);
+
+					if(GameHub.Application.log_downloader)
+					{
+						debug(@"[SoupDownloader] Download part found, size: $(resume_from)");
+					}
+				}
+			}
+			#endif
 
 			msg.got_headers.connect(() => {
 				dl_bytes_total = msg.response_headers.get_content_length();
@@ -532,24 +413,24 @@ namespace GameHub.Data.Sources.EpicGames
 
 						if(filename == null)
 						{
-							filename = download.remote.get_basename();
+							filename = part.remote.get_basename();
 						}
 
 						if(filename != null && !(filename in FILENAME_BLACKLIST))
 						{
-							download.local = download.local.get_parent().get_child(filename);
+							part.local = part.local.get_parent().get_child(filename);
 						}
 					}
 
-					if(download.local.query_exists())
+					if(part.local.query_exists())
 					{
 						if(GameHub.Application.log_downloader)
 						{
 							debug(@"[SoupDownloader] '%s' exists",
-							      download.local.get_path());
+							      part.local.get_path());
 						}
 
-						var info = download.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
+						var info = part.local.query_info(FileAttribute.STANDARD_SIZE, FileQueryInfoFlags.NONE);
 
 						if(info.get_size() == dl_bytes_total)
 						{
@@ -561,25 +442,27 @@ namespace GameHub.Data.Sources.EpicGames
 
 					if(GameHub.Application.log_downloader)
 					{
-						debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
+						debug(@"[SoupDownloader] Downloading to '%s'", part.local.get_path());
 					}
 
-					//  #if SOUP_2_60
-					//  int64 rstart = -1, rend = -1;
-					//  if(resume_dl && msg.response_headers.get_content_range(out rstart, out rend, out dl_bytes_total))
-					//  {
-					//  	if(GameHub.Application.log_downloader)
-					//  	{
-					//  		debug(@"[SoupDownloader] Content-Range is supported($(rstart)-$(rend)), resuming from $(resume_from)");
-					//  		debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
-					//  	}
-					//  	dl_bytes = resume_from;
-					//  	local_stream = download.local_tmp.append_to(FileCreateFlags.NONE);
-					//  }
-					//  else
-					//  #endif
+					#if SOUP_2_60
+					int64 rstart = -1, rend = -1;
+
+					if(resume_dl && msg.response_headers.get_content_range(out rstart, out rend, out dl_bytes_total))
 					{
-						local_stream = download.local_tmp.replace(null, false, FileCreateFlags.REPLACE_DESTINATION);
+						if(GameHub.Application.log_downloader)
+						{
+							debug(@"[SoupDownloader] Content-Range is supported($(rstart)-$(rend)), resuming from $(resume_from)");
+							debug(@"[SoupDownloader] Content-Length: $(dl_bytes_total)");
+						}
+
+						dl_bytes     = resume_from;
+						local_stream = part.local_tmp.append_to(FileCreateFlags.NONE);
+					}
+					else
+					#endif
+					{
+						local_stream = part.local_tmp.replace(null, false, FileCreateFlags.REPLACE_DESTINATION);
 					}
 				}
 				catch (Error e)
@@ -588,7 +471,7 @@ namespace GameHub.Data.Sources.EpicGames
 				}
 			});
 
-			int64 last_update               = 0;
+			//  int64 last_update               = 0;
 			int64 dl_bytes_from_last_update = 0;
 
 			msg.got_chunk.connect((msg, chunk) => {
@@ -601,19 +484,19 @@ namespace GameHub.Data.Sources.EpicGames
 					local_stream.write(chunk.data);
 					chunk.free();
 
-					int64 now  = get_real_time();
-					int64 diff = now - last_update;
+					//  int64 now  = get_real_time();
+					//  int64 diff = now - last_update;
 
-					if(diff > 1000000)
-					{
-						int64 dl_speed  = (int64) (((double) dl_bytes_from_last_update) / ((double) diff) * ((double) 1000000));
-						download.status = new FileDownload.Status(Download.State.DOWNLOADING,
-						                                          dl_bytes,
-						                                          dl_bytes_total,
-						                                          dl_speed);
-						last_update               = now;
-						dl_bytes_from_last_update = 0;
-					}
+					//  if(diff > 1000000)
+					//  {
+					//  	int64 dl_speed  = (int64) (((double) dl_bytes_from_last_update) / ((double) diff) * ((double) 1000000));
+					//  	download.status = new FileDownload.Status(Download.State.DOWNLOADING,
+					//  	                                          dl_bytes,
+					//  	                                          dl_bytes_total,
+					//  	                                          dl_speed);
+					//  	last_update               = now;
+					//  	dl_bytes_from_last_update = 0;
+					//  }
 				}
 				catch (Error e)
 				{
@@ -649,41 +532,50 @@ namespace GameHub.Data.Sources.EpicGames
 				throw err;
 			}
 		}
+	}
 
-		private async void download_from_filesystem(SoupDownload download) throws GLib.Error
+	private class EpicPart
+	{
+		public weak                             Session? session;
+		public weak                             Message? message;
+		public File                             remote;
+		public File                             local;
+		public File                             local_tmp;
+		public Manifest.ChunkDataList.ChunkInfo chunk_info;
+
+		public EpicPart(string id, Analysis analysis)
 		{
-			if(download.remote == null || !download.remote.query_exists()) return;
+			//  base(id, analysis);
+		}
 
-			try
-			{
-				if(GameHub.Application.log_downloader)
-				{
-					debug("[SoupDownloader] Copying '%s' to '%s'",
-					      download.remote.get_path(),
-					      download.local_tmp.get_path());
-				}
-
-				yield download.remote.copy_async(download.local_tmp,
-				                                 FileCopyFlags.OVERWRITE,
-				                                 Priority.DEFAULT,
-				                                 null,
-				                                 (current, total) => { download.status = new FileDownload.Status(Download.State.DOWNLOADING, current, total); });
-			}
-			catch (IOError.EXISTS error) {}
+		public EpicPart.from_chunk_guid(string id, Analysis analysis, uint32 chunk_guid)
+		{
+			//  base(id, analysis);
+			chunk_info = analysis.chunk_data_list.get_chunk_by_number(chunk_guid);
+			remote     = File.new_for_uri(analysis.base_url + "/" + chunk_info.path);
+			local      = Utils.FS.file(Utils.FS.Paths.EpicGames.Cache + "/chunks/" + id + "/" + chunk_info.guid_num.to_string());
+			local_tmp  = File.new_for_path(local.get_path() + "~");
+			Utils.FS.mkdir(local.get_parent().get_path());
 		}
 	}
 
-	public class EpicDownload: Download, PausableDownload
+	private class EpicDownload: Download, PausableDownload
 	{
-		public weak                    Session? session;
-		public weak                    Message? message;
-		public bool                    is_cancelled = false;
-		public ArrayList<SoupDownload> parts { get; }
+		public weak                 Session? session;
+		public weak                 Message? message;
+		public bool                 is_cancelled = false;
+		public ArrayQueue<EpicPart> parts { get; default = new ArrayQueue<EpicPart>(); }
+		public ArrayQueue<EpicPart> downloaded_parts { get; default = new ArrayQueue<EpicPart>(); }
 
-		public EpicDownload(string id, ArrayList<SoupDownload> parts)
+		public EpicDownload(string id, Analysis analysis)
 		{
 			base(id);
-			_parts = parts;
+
+			foreach(var chunk_guid in analysis.chunks_to_dl)
+			{
+				parts.offer(new EpicPart.from_chunk_guid(id, analysis, chunk_guid));
+				//  debug("local path: %s", local.get_path());
+			}
 		}
 
 		public void pause()

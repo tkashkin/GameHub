@@ -559,7 +559,6 @@ namespace GameHub.Data.Sources.EpicGames
 		{
 			//  TODO: sync save files?
 
-			//  minutes = TimeSpan / 6e7
 			playtime_tracked += (new DateTime.now_utc()).difference(new DateTime.from_unix_utc(last_launch)) / 6000000;
 			save();
 		}
