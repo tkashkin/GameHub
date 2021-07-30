@@ -54,7 +54,6 @@ namespace GameHub.Data.Sources.EpicGames
 		//  TODO: a lot of small files, we should probably handle this in parallel
 		internal async bool download(Installer installer)
 		{
-			var files    = new ArrayList<File>();
 			var game     = installer.game;
 			var download = get_game_download(game);
 
@@ -138,8 +137,11 @@ namespace GameHub.Data.Sources.EpicGames
 							debug("[SoupDownloader] '%s' is already downloaded", part.remote.get_uri());
 						}
 
-						files.add(part.local);
-						download.downloaded_parts.offer(part);
+						if(!yield installer.write_file(part.chunk_info.guid_num))
+						{
+							throw new Error(0, 0, "Error");
+						}
+
 						current_part++;
 						continue;
 					}
@@ -159,8 +161,6 @@ namespace GameHub.Data.Sources.EpicGames
 					//  var file = yield download(part.remote, part.local, new Downloader.DownloadInfo.for_runnable(task.runnable, partDesc), false);
 					if(part.local != null && part.local.query_exists())
 					{
-						files.add(part.local);
-						download.downloaded_parts.offer(part);
 						//  TODO: uncompress, compare hash
 						//  https://github.com/derrod/legendary/blob/a2280edea8f7f8da9a080fd3fb2bafcabf9ee33d/legendary/downloader/workers.py#L99
 						//  var chunk = new Chunk.from_file(new DataInputStream(file.read()));
@@ -210,6 +210,11 @@ namespace GameHub.Data.Sources.EpicGames
 						//  }
 					}
 
+					if(!yield installer.write_file(part.chunk_info.guid_num))
+					{
+						throw new Error(0, 0, "Error");
+					}
+
 					current_part++;
 				}
 
@@ -242,7 +247,7 @@ namespace GameHub.Data.Sources.EpicGames
 				download.status = new FileDownload.Status(Download.State.FINISHED);
 				lock (downloads) downloads.remove(game.id);
 				lock (dl_info) dl_info.remove(game.id);
-				//  lock (dl_queue) dl_queue.remove(game.id);
+				lock (dl_queue) dl_queue.remove(game.id);
 			}
 
 			//  download_manager().disconnect(ds_id);
@@ -543,14 +548,10 @@ namespace GameHub.Data.Sources.EpicGames
 		public File                             local_tmp;
 		public Manifest.ChunkDataList.ChunkInfo chunk_info;
 
-		public EpicPart(string id, Analysis analysis)
-		{
-			//  base(id, analysis);
-		}
+		//  public EpicPart(string id, Analysis analysis) {}
 
 		public EpicPart.from_chunk_guid(string id, Analysis analysis, uint32 chunk_guid)
 		{
-			//  base(id, analysis);
 			chunk_info = analysis.chunk_data_list.get_chunk_by_number(chunk_guid);
 			remote     = File.new_for_uri(analysis.base_url + "/" + chunk_info.path);
 			local      = Utils.FS.file(Utils.FS.Paths.EpicGames.Cache + "/chunks/" + id + "/" + chunk_info.guid_num.to_string());
@@ -565,7 +566,6 @@ namespace GameHub.Data.Sources.EpicGames
 		public weak                 Message? message;
 		public bool                 is_cancelled = false;
 		public ArrayQueue<EpicPart> parts { get; default = new ArrayQueue<EpicPart>(); }
-		public ArrayQueue<EpicPart> downloaded_parts { get; default = new ArrayQueue<EpicPart>(); }
 
 		public EpicDownload(string id, Analysis analysis)
 		{

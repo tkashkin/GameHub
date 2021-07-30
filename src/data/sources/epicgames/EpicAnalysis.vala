@@ -13,11 +13,11 @@ namespace GameHub.Data.Sources.EpicGames
 	//  FIXME: There are a lot of things related to Legendarys memory management we probably don't even need
 	private class Analysis
 	{
-		internal                        AnalysisResult? result { get; default = null; }
-		internal ArrayList<Task>        tasks                  { get; default = new ArrayList<Task>(); }
-		internal LinkedList<uint32>     chunks_to_dl           { get; default = new LinkedList<uint32>(); }
-		internal Manifest.ChunkDataList chunk_data_list        { get; default = null; }
-		internal string?                base_url               { get; default = null; }
+		internal                            AnalysisResult? result { get; default = null; }
+		internal ArrayList<ArrayList<Task>> tasks                  { get; default = new ArrayList<ArrayList<Task>>(); }
+		internal LinkedList<uint32>         chunks_to_dl           { get; default = new LinkedList<uint32>(); }
+		internal Manifest.ChunkDataList     chunk_data_list        { get; default = null; }
+		internal string?                    base_url               { get; default = null; }
 
 		private                         File? resume_file { get; default = null; }
 		private HashMap<string, string> hash_map          { get; default = new HashMap<string, string>(); }
@@ -70,15 +70,15 @@ namespace GameHub.Data.Sources.EpicGames
 			private uint32             removed              { get; default = 0; }
 			private uint32             uncompressed_dl_size { get; default = 0; }
 
-			internal AnalysisResult(Manifest                    new_manifest,
-			                        string                      download_dir,
-			                        ref HashMap<string, string> hash_map,
-			                        ref LinkedList<uint32>      chunks_to_dl,
-			                        ref ArrayList<Task>         tasks,
-			                        out Manifest.ChunkDataList  chunk_data_list,
-			                        Manifest?                   old_manifest      = null,
-			                        File?                       resume_file       = null,
-			                        string[]?                   file_install_tags = null)
+			internal AnalysisResult(Manifest                       new_manifest,
+			                        string                         download_dir,
+			                        ref HashMap<string, string>    hash_map,
+			                        ref LinkedList<uint32>         chunks_to_dl,
+			                        ref ArrayList<ArrayList<Task>> tasks,
+			                        out Manifest.ChunkDataList     chunk_data_list,
+			                        Manifest?                      old_manifest      = null,
+			                        File?                          resume_file       = null,
+			                        string[]?                      file_install_tags = null)
 			{
 				foreach(var element in new_manifest.file_manifest_list.elements)
 				{
@@ -369,7 +369,9 @@ namespace GameHub.Data.Sources.EpicGames
 					}
 					else if(current_file.chunk_parts.size == 0)
 					{
-						tasks.add(new FileTask.empty_file(current_file.filename));
+						var task_list = new ArrayList<Task>();
+						task_list.add(new FileTask.empty_file(current_file.filename));
+						tasks.add(task_list);
 						continue;
 					}
 
@@ -438,21 +440,26 @@ namespace GameHub.Data.Sources.EpicGames
 					{
 						if(log_analysis) debug(@"[Sources.EpicGames.AnalysisResult] Reusing $reused chunks from: $(current_file.filename)");
 
+						var task_list = new ArrayList<Task>();
 						//  open temporary file that will contain download + old file contents
-						tasks.add(new FileTask.open(current_file.filename + ".tmp"));
-						tasks.add_all(chunk_tasks);
-						tasks.add(new FileTask.close(current_file.filename + ".tmp"));
+						task_list.add(new FileTask.open(current_file.filename + ".tmp"));
+						task_list.add_all(chunk_tasks);
+						task_list.add(new FileTask.close(current_file.filename + ".tmp"));
 
 						//  delete old file and rename temporary
-						tasks.add(new FileTask.rename(current_file.filename,
-						                              current_file.filename + ".tmp",
-						                              true));
+						task_list.add(new FileTask.rename(current_file.filename,
+						                                  current_file.filename + ".tmp",
+						                                  true));
+
+						tasks.add(task_list);
 					}
 					else
 					{
-						tasks.add(new FileTask.open(current_file.filename));
-						tasks.add_all(chunk_tasks);
-						tasks.add(new FileTask.close(current_file.filename));
+						var task_list = new ArrayList<Task>();
+						task_list.add(new FileTask.open(current_file.filename));
+						task_list.add_all(chunk_tasks);
+						task_list.add(new FileTask.close(current_file.filename));
+						tasks.add(task_list);
 					}
 
 					//  check if runtime cache size has changed
@@ -487,10 +494,12 @@ namespace GameHub.Data.Sources.EpicGames
 				//  add jobs to remove files
 				foreach(var filename in manifest_comparison.removed)
 				{
-					tasks.add(new FileTask.delete(filename));
+					var task_list = new ArrayList<Task>();
+					task_list.add(new FileTask.delete(filename));
+					tasks.add(task_list);
 				}
 
-				tasks.add_all(additional_deletion_tasks);
+				tasks.add(additional_deletion_tasks);
 
 				_num_chunks_cache = dl_cache_guids.size;
 				chunk_data_list   = new_manifest.chunk_data_list;
@@ -533,7 +542,7 @@ namespace GameHub.Data.Sources.EpicGames
 		//  so that the tasks order stays in the correct position
 		internal abstract class Task
 		{
-			internal async abstract bool process(FileOutputStream? iostream, File install_dir, EpicGame game);
+			internal abstract bool process(ref FileOutputStream? iostream, File install_dir, EpicGame game);
 		}
 
 		/**
@@ -598,10 +607,11 @@ namespace GameHub.Data.Sources.EpicGames
 				_del                = dele;
 			}
 
-			internal async override bool process(FileOutputStream? iostream, File install_dir, EpicGame game)
+			internal override bool process(ref FileOutputStream? iostream, File install_dir, EpicGame game)
 			{
 				//  make directories
 				var full_path = File.new_build_filename(install_dir.get_path(), filename);
+				debug("Path: " + full_path.get_path());
 				Utils.FS.mkdir(full_path.get_parent().get_path());
 
 				try
@@ -622,13 +632,13 @@ namespace GameHub.Data.Sources.EpicGames
 
 						if(full_path.query_exists())
 						{
-							iostream = yield full_path.replace_async(null,
-							                                         false,
-							                                         FileCreateFlags.REPLACE_DESTINATION);
+							iostream = full_path.replace(null,
+							                             false,
+							                             FileCreateFlags.REPLACE_DESTINATION);
 						}
 						else
 						{
-							iostream = yield full_path.create_async(FileCreateFlags.NONE);
+							iostream = full_path.create(FileCreateFlags.NONE);
 						}
 					}
 					else if(fclose)
@@ -654,7 +664,20 @@ namespace GameHub.Data.Sources.EpicGames
 								path = path[0 : path.length - 4];
 							}
 
-							var file_hash = yield Utils.compute_file_checksum(full_path, ChecksumType.SHA1);
+							//  var        file_hash = yield Utils.compute_file_checksum(full_path, ChecksumType.SHA1);
+							//  This is basically Utils.compute_file_checksum() but I need this in sync to be able to use ref iostream
+							Checksum   checksum = new Checksum(ChecksumType.SHA1);
+							FileStream stream   = FileStream.open(full_path.get_path(), "rb");
+							uint8      buf[4096];
+							size_t     size;
+
+							while((size = stream.read(buf)) > 0)
+							{
+								checksum.update(buf, size);
+							}
+
+							var file_hash = checksum.get_string();
+
 							//  var tmp       = "";
 
 							//  if(((Analysis.FileTask)file_task).filename[((Analysis.FileTask)file_task).filename.length - 4 : ((Analysis.FileTask)file_task).filename.length] == ".tmp")
@@ -738,7 +761,7 @@ namespace GameHub.Data.Sources.EpicGames
 				_chunk_size   = chunk_size;
 			}
 
-			internal async override bool process(FileOutputStream? iostream, File install_dir, EpicGame game)
+			internal override bool process(ref FileOutputStream? iostream, File install_dir, EpicGame game)
 			{
 				var downloaded_chunk = Utils.FS.file(Utils.FS.Paths.EpicGames.Cache + "/chunks/" + game.id + "/" + chunk_guid.to_string());
 
@@ -751,25 +774,29 @@ namespace GameHub.Data.Sources.EpicGames
 						assert(File.new_build_filename(install_dir.get_path(), chunk_file).query_exists());
 						old_stream = File.new_build_filename(install_dir.get_path(), chunk_file).read();
 						old_stream.seek(chunk_offset, SeekType.SET);
-						var bytes = yield old_stream.read_bytes_async(chunk_size);
-						yield iostream.write_bytes_async(bytes);
+						var bytes = old_stream.read_bytes(chunk_size);
+						iostream.write_bytes(bytes);
 						old_stream.close();
 						old_stream = null;
 					}
 					else if(downloaded_chunk.query_exists())
 					{
-						var chunk = new Chunk.from_byte_stream(new DataInputStream(yield downloaded_chunk.read_async()));
+						var chunk = new Chunk.from_byte_stream(new DataInputStream(downloaded_chunk.read()));
 						//  debug(@"chunk data length $(chunk.data.length)");
 						//  debug("chunk %s hash: %s",
 						//        hunk_guid.to_string(),
 						//        Checksum.compute_for_bytes(ChecksumType.SHA1, chunk.data));
-						yield iostream.write_bytes_async(chunk.data[chunk_offset : chunk_offset + chunk_size]);
+						iostream.write_bytes(chunk.data[chunk_offset: chunk_offset + chunk_size]);
 						//  debug(@"written $size bytes");
 
 						if(cleanup)
 						{
 							Utils.FS.rm(downloaded_chunk.get_path());
 						}
+					}
+					else
+					{
+						assert_not_reached();
 					}
 				}
 				catch (Error e)

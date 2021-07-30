@@ -641,8 +641,10 @@ namespace GameHub.Data.Sources.EpicGames
 					var gh_marker = (this is DLC) ? get_file(@"$(FS.GAMEHUB_DIR)/$id.version") : get_file(@"$(FS.GAMEHUB_DIR)/version");
 					gh_marker.delete();
 				}
-				catch (Error e) {}
+				catch (Error e)
+				{}
 
+				_manifest = null; // Forget cached manifest
 				update_status();
 			}
 
