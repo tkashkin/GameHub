@@ -6,13 +6,14 @@
 # Antek Karaś <antos.karas@gmail.com>, 2019, 2020.
 # Garreciq <adamzygiel@gmail.com>, 2020.
 # gnu-ewm <gnu.ewm@protonmail.com>, 2021.
+# A M <augim3@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-03-12 20:02+0000\n"
-"Last-Translator: gnu-ewm <gnu.ewm@protonmail.com>\n"
+"PO-Revision-Date: 2021-08-26 20:34+0000\n"
+"Last-Translator: A M <augim3@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
 "translations/pl/>\n"
 "Language: pl\n"
@@ -21,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -187,10 +188,9 @@ msgstr ""
 "Proszę ustawić główny plik wykonywalny we właściwościach gry."
 
 #: src/data/Runnable.vala:908
-#, fuzzy
 msgctxt "platform"
 msgid "Emulated"
-msgstr "Emulator"
+msgstr "Emulowane"
 
 #: src/data/Game.vala:625
 msgctxt "status"
@@ -263,7 +263,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -280,25 +280,25 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s pozostało;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "(%1$s / %2$s)"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -339,6 +339,9 @@ msgid ""
 "games correctly.\n"
 "Install innoextract <b>%2$s</b> or newer."
 msgstr ""
+"Innoextract <b>%1$s</b> nie jest wspierane i może nie być w stanie pobrać "
+"niektórych gier poprawnie.\n"
+"Zainstaluj innoextract <b>%2$s</b> lub nowsze."
 
 #: src/data/compat/WineWrap.vala:61
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:242
@@ -411,10 +414,10 @@ msgid "Favorites"
 msgstr "Ulubione"
 
 #: src/data/adapters/GamesAdapter.vala:445
-#, fuzzy, c-format
+#, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr "Ulubione"
+msgstr "%s: Ulubione"
 
 #: src/data/adapters/GamesAdapter.vala:491
 msgid "Merging games"
@@ -448,18 +451,17 @@ msgstr "Wg czasu gry"
 #: src/data/adapters/GamesAdapter.vala:705
 msgctxt "group_mode"
 msgid "Do not group"
-msgstr ""
+msgstr "Nie grupuj"
 
 #: src/data/adapters/GamesAdapter.vala:706
 msgctxt "group_mode"
 msgid "By status"
-msgstr ""
+msgstr "Po statusie"
 
 #: src/data/adapters/GamesAdapter.vala:707
-#, fuzzy
 msgctxt "group_mode"
 msgid "By source"
-msgstr "Właściwości gry"
+msgstr "Po źródle"
 
 #: src/data/providers/images/SteamGridDB.vala:151
 #: src/data/providers/data/IGDB.vala:431
@@ -490,17 +492,17 @@ msgstr "Wygeneruj klucz"
 #: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "Styl"
 
 #: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "Wynik"
 
 #: src/data/providers/images/SteamGridDB.vala:213
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
@@ -510,23 +512,23 @@ msgstr ""
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "Rozmyty"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:228
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "Bez logo"
 
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr ""
+msgstr "Białe logo"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
@@ -545,12 +547,12 @@ msgstr "Ustawienia"
 #: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr ""
+msgstr "Oficjalna strona"
 
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr ""
+msgstr "Jeśli gra ma opis, pokaż go"
 
 #: src/data/providers/data/IGDB.vala:476
 #, fuzzy
