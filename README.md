@@ -39,5 +39,8 @@ See [INSTALL.md](INSTALL.md).
 ## Building
 See [INSTALL.md#Source](INSTALL.md#build-from-source).
 
+## Configuration
+Create the SteamAPI key [here.](https://steamcommunity.com/dev/apikey)
+
 ## [Screenshots](https://tkashkin.tk/projects/gamehub/#/screenshots)
 <p align="center"><img src="data/screenshots/light/welcome.png?raw=true" width="49%" /> <img src="data/screenshots/dark/grid.png?raw=true" width="49%" /><img src="data/screenshots/dark/list.png?raw=true" width="49%" /> <img src="data/screenshots/light/grid_controller.png?raw=true" width="49%" /><img src="data/screenshots/light/details.png?raw=true" width="49%" /> <img src="data/screenshots/dark/settings_collection.png?raw=true" width="49%" /><img src="data/screenshots/dark/overlays.png?raw=true" width="49%" /> <img src="data/screenshots/light/install.png?raw=true" width="49%" /><img src="data/screenshots/light/properties.png?raw=true" width="49%" /> <img src="data/screenshots/dark/install_compat.png?raw=true" width="49%" /></p>
