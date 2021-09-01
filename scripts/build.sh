@@ -12,7 +12,7 @@ _SCRIPTROOT="$(dirname "$(readlink -f "$0")")"
 _LINUXDEPLOYQT="linuxdeployqt-5-x86_64.AppImage"
 
 _SOURCE="${APPVEYOR_BUILD_VERSION:-$_GH_VERSION-$_GH_BRANCH-local}"
-_VERSION="$_SOURCE-$_GH_COMMIT_SHORT"
+_VERSION="${_SOURCE}-${_GH_COMMIT_SHORT}"
 _BUILD_VERSION="${APPVEYOR_BUILD_VERSION:-$_VERSION}"
 _DEB_TARGET_DISTRO_ID="ubuntu"
 _DEB_TARGET_DISTRO_NAMES=()
@@ -24,15 +24,9 @@ _GPG_PACKAGE="gnupg1"
 export CFLAGS="$CFLAGS -O0"
 export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
 
-if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
-	_DEB_TARGET_DISTRO_NAMES=("xenial")
-	_DEB_TARGET_DISTRO_VERSIONS=("16.04")
-	_BUILD_IMAGE="xenial"
-	_GPG_BINARY="gpg"
-	_GPG_PACKAGE="gnupg"
-elif [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
-	_DEB_TARGET_DISTRO_NAMES=("bionic" "disco" "eoan" "focal")
-	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "19.04" "19.10" "20.04")
+if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
+	_DEB_TARGET_DISTRO_NAMES=("bionic" "focal" "groovy" "hirsute")
+	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "20.04" "20.10" "21.04")
 	_BUILD_IMAGE="bionic"
 else
 	source "/etc/os-release"
@@ -100,13 +94,7 @@ deps()
 	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:vala-team/next -y
 	sudo DEBIAN_FRONTEND="noninteractive" add-apt-repository ppa:savoury1/build-tools -y
 	sudo DEBIAN_FRONTEND="noninteractive" apt update -qq
-	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential dput fakeroot moreutils git-buildpackage libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev
-	#sudo apt full-upgrade -y
-	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
-		sudo DEBIAN_FRONTEND="noninteractive" dpkg -i "$_SCRIPTROOT/deps/xenial/"*.deb
-	else
-		sudo DEBIAN_FRONTEND="noninteractive" apt install -y libmanette-0.2-dev libxtst-dev libx11-dev
-	fi
+	sudo DEBIAN_FRONTEND="noninteractive" apt install -y meson valac checkinstall build-essential debhelper dput fakeroot moreutils git-buildpackage libgtk-3-dev libglib2.0-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgee-0.8-dev libsoup2.4-dev libsqlite3-dev libxml2-dev libpolkit-gobject-1-dev libmanette-0.2-dev libxtst-dev libx11-dev
 }
 
 gen_changelogs()
@@ -172,12 +160,7 @@ build_deb()
 {
 	set -e
 	cd "$_ROOT"
-	sed "s/\$_GH_BRANCH/$_GH_BRANCH/g; s/\$_GH_COMMIT_SHORT/$_GH_COMMIT_SHORT/g; s/\$_GH_COMMIT/$_GH_COMMIT/g" "debian/rules.in" > "debian/rules"
-	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1604" ]]; then
-		sed "s/libmanette-0.2-dev,//g" "debian/control.in" > "debian/control"
-	else
-		cp -f "debian/control.in" "debian/control"
-	fi
+	sed "s/\$_GH_BRANCH/${_GH_BRANCH}/g; s/\$_GH_COMMIT_SHORT/${_GH_COMMIT_SHORT}/g; s/\$_GH_COMMIT/${_GH_COMMIT}/g" "debian/rules.in" > "debian/rules"
 
 	for i in "${!_DEB_TARGET_DISTRO_NAMES[@]}"; do
 		_DEB_TARGET_DISTRO_NAME="${_DEB_TARGET_DISTRO_NAMES[$i]}"
@@ -187,9 +170,9 @@ build_deb()
 		sed "s/\$DISTRO/${_DEB_TARGET_DISTRO_NAME}/g; s/\$VERSION_SUFFIX/${_DEB_VERSION_SUFFIX}/g" "debian/changelog.in" > "debian/changelog"
 
 		if [[ $i = 0 ]]; then
-			echo "[scripts/build.sh] Building binary package for $_DEB_TARGET_DISTRO_ID $_DEB_TARGET_DISTRO_VERSION ($_DEB_TARGET_DISTRO_NAME)"
+			echo "[scripts/build.sh] Building binary package for ${_DEB_TARGET_DISTRO_ID} ${_DEB_TARGET_DISTRO_VERSION} (${_DEB_TARGET_DISTRO_NAME})"
 			dpkg-buildpackage -F -sa -us -uc
-			mkdir -p "build/$_BUILD_IMAGE"
+			mkdir -p "build/${_BUILD_IMAGE}"
 			mv ../$_GH_RDNN*.deb "build/${_BUILD_IMAGE}/GameHub-${_BUILD_VERSION}-${_DEB_TARGET_DISTRO_NAME}-amd64.deb"
 		fi
 
@@ -281,10 +264,8 @@ appimage_checkrt()
 		_mv_deps "$(basename $dep)" "$APPDIR/usr/optlib/libgtk-3.so.0" "$APPDIR/usr/lib/" "false"
 	done
 
-	if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
-		echo "[scripts/build.sh] Removing GTK and its dependencies"
-		rm -rf "$APPDIR/usr/optlib/libgtk-3.so.0"
-	fi
+	echo "[scripts/build.sh] Removing GTK and its dependencies"
+	rm -rf "$APPDIR/usr/optlib/libgtk-3.so.0"
 
 	for lib in 'libstdc++.so.6' 'libgcc_s.so.1'; do
 		echo "[scripts/build.sh] Bundling $lib"
@@ -363,4 +344,4 @@ if [[ "$ACTION" = "build_appimage" ]]; then
 	appimage_pack
 fi
 
-if [[ "$ACTION" = "build_flatpak" && ! "$_BUILD_IMAGE" = "xenial" ]]; then build_flatpak; fi
+if [[ "$ACTION" = "build_flatpak" ]]; then build_flatpak; fi

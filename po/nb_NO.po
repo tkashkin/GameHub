@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-02-01 07:50+0000\n"
+"PO-Revision-Date: 2020-11-16 02:29+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -38,7 +38,7 @@ msgstr "Vis full GDB-tilbakesporing"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
-msgstr "Behandle fatale feil som kritiske og kræsj programmet"
+msgstr "Behandle fatale feil som kritiske og krasj programmet"
 
 #: src/app.vala:99
 msgid "Show main window"
@@ -255,9 +255,9 @@ msgstr ""
 "Logg inn på din konto i Steamklienten og kom tilbake til GameHub"
 
 #: src/data/sources/gog/GOGGame.vala:983
-#, c-format, fuzzy
+#, c-format
 msgid "DLC: %s"
-msgstr "DLC: %s"
+msgstr "Nedlastbart innhold: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -612,14 +612,12 @@ msgid "Icon style"
 msgstr "Ikonstil"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
-#, fuzzy
 msgid "Game card"
-msgstr "Spillnavn"
+msgstr "Spillkort"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
-#, fuzzy
 msgid "Show platform icons"
-msgstr "Vis plattformsikoner i rutenettvisning"
+msgstr "Vis plattformsikoner"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
@@ -632,14 +630,12 @@ msgid "Presets"
 msgstr "Forhåndsinnstillinger"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
-#, fuzzy
 msgid "Games list: installed"
-msgstr "Spilliste: Installert"
+msgstr "Spill-liste: Installert"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:140
-#, fuzzy
 msgid "Games list: not installed"
-msgstr "Spilliste: Ikke installert"
+msgstr "Spill-liste: Ikke installert"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:142
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:146
@@ -665,14 +661,13 @@ msgid "Dim"
 msgstr "Demp"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
-#, fuzzy
 msgid "Grid options"
-msgstr "Spillegenskaper:"
+msgstr "Rutenettsegenskaper"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
 #, fuzzy
 msgid "List options"
-msgstr "Loggføringsvalg:"
+msgstr "Listevalg"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -794,7 +789,6 @@ msgid "Tweak launch options and apply them to games automatically"
 msgstr "Tilpass oppstartsvalg og utfør dem for spill automatisk"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
-#, fuzzy
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
@@ -1146,14 +1140,12 @@ msgid "Icon URL"
 msgstr "Ikonnettadresse"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Select working directory"
-msgstr "Velg mappe"
+msgstr "Velg arbeidsmappe"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Working directory"
-msgstr "Åpne mappe"
+msgstr "Arbeidsmappe"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
@@ -1279,9 +1271,9 @@ msgid "Select directory to import"
 msgstr "Velg mappe å importere"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s: Overlag"
+msgstr "%s: Tilpasninger"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1308,7 +1300,6 @@ msgid "Authentication required"
 msgstr "Identitetsbekreftelse kreves"
 
 #: src/ui/views/WelcomeView.vala:152
-#, fuzzy
 msgid "Authenticating…"
 msgstr "Identitetsbekrefter…"
 
@@ -1375,16 +1366,16 @@ msgstr[0] "%u spill"
 msgstr[1] "%u spill"
 
 #: src/ui/views/GamesView/GamesView.vala:553
-#, fuzzy, c-format
+#, c-format
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
-msgstr "(%1$s / %2$s)"
+msgstr "%1$u / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
-#, fuzzy, c-format
+#, c-format
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
-msgstr "(%1$s / %2$s)"
+msgstr "%1$s: %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
@@ -1620,9 +1611,9 @@ msgid "Languages"
 msgstr "Språk"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
-#, fuzzy, c-format
+#, c-format
 msgid "%u DLCs cannot be installed"
-msgstr "%s: Skadet installasjonskandidat"
+msgstr "%u: Nedlastbart innhold kan ikke installeres"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1737,14 +1728,12 @@ msgid "Add tag"
 msgstr "Legg til etikett"
 
 #: src/ui/widgets/TweaksList.vala:86
-#, fuzzy
 msgid "No description"
-msgstr "Beskrivelse"
+msgstr "Ingen beskrivelse"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
-msgstr "Velg fil"
+msgstr "Rediger fil"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
@@ -1759,10 +1748,10 @@ msgid "%dm"
 msgstr "%dm"
 
 #: src/utils/Utils.vala:464
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr "%dt"
+msgstr "%ds"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1820,28 +1809,26 @@ msgid "Download failed"
 msgstr "Nedlasting mislyktes"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "Laster ned"
+msgstr "Laster ned: %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
 msgstr "Laster ned"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "Pauset: %d%% (%s / %s)"
+msgstr "Pauset: %s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "Pause nedlasting"
+msgstr "Pauset"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1850,10 +1837,10 @@ msgstr "Nedlasting avbrutt"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "Laster ned: %d%% (%s / %s) [%s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "Skru av esync"

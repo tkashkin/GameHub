@@ -4,15 +4,15 @@
 # Automatically generated, 2018.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018.
 # ditokp <ditokpl@gmail.com>, 2018.
-# ekickx <mujahidmasadepan@gmail.com>, 2019.
+# ekickx <mujahidmasadepan@gmail.com>, 2019, 2021.
 # frottle <catatan.kungkong@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-03-09 16:33+0000\n"
-"Last-Translator: frottle <catatan.kungkong@gmail.com>\n"
+"PO-Revision-Date: 2021-02-22 02:50+0000\n"
+"Last-Translator: ekickx <mujahidmasadepan@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gamehub/"
 "translations/id/>\n"
 "Language: id\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.5\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -48,7 +48,7 @@ msgstr "Tampilkan jendela utama"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr "Tampilkan dialog setelan aplikasi"
+msgstr "Tampilkan setelan aplikasi"
 
 #: src/app.vala:101
 msgid "Show about dialog"

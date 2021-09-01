@@ -444,19 +444,32 @@ namespace GameHub.Data.Sources.Steam
 				if(libraryfolders == null || !libraryfolders.query_exists()) return folders;
 
 				var root = Parser.parse_vdf_file(libraryfolders.get_path());
-				var lf = Parser.json_object(root, {"LibraryFolders"});
+				var lf = Parser.json_object(root, {"libraryfolders"}) ?? Parser.json_object(root, {"LibraryFolders"});
 
 				if(lf != null)
 				{
-					foreach(var key in lf.get_members())
-					{
-						var libdir = FSUtils.file(lf.get_string_member(key));
+					lf.foreach_member((obj, key, node) => {
+						File? libdir = null;
+
+						if(node.get_node_type() == Json.NodeType.VALUE)
+						{
+							libdir = FSUtils.file(node.get_string());
+						}
+						else if(node.get_node_type() == Json.NodeType.OBJECT)
+						{
+							var libobj = node.get_object();
+							if(libobj.has_member("path"))
+							{
+								libdir = FSUtils.file(libobj.get_string_member("path"));
+							}
+						}
+
 						if(libdir != null && libdir.query_exists())
 						{
 							var dir = FSUtils.find_case_insensitive(libdir, "steamapps");
 							if(dir != null && dir.query_exists()) folders.add(dir.get_path());
 						}
-					}
+					});
 				}
 
 				return folders;

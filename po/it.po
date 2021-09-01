@@ -1,15 +1,17 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
-# Mirko Brombin <send@mirko.pm>, 2019.
+# Mirko Brombin <send@mirko.pm>, 2019, 2021.
 # Francesco Bisignani <tassobaramba2@gmail.com>, 2020.
+# Jeannette L <j.lavoie@net-c.ca>, 2020.
+# Alessandro Mandelli <mandelli.alessandro@ngi.it>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-01-14 18:21+0000\n"
-"Last-Translator: Francesco Bisignani <tassobaramba2@gmail.com>\n"
+"PO-Revision-Date: 2021-07-05 18:34+0000\n"
+"Last-Translator: Mirko Brombin <send@mirko.pm>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gamehub/"
 "translations/it/>\n"
 "Language: it\n"
@@ -17,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -85,7 +87,7 @@ msgstr ""
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr "Log del download manager"
+msgstr "Rigestra il gestore di scaricamento"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
@@ -109,11 +111,11 @@ msgstr "Mostra aiuto opzioni gioco"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr "Opzioni Log:"
+msgstr "Opzioni di registro:"
 
 #: src/app.vala:255
 msgid "Show logging options help"
-msgstr "Mostra aiuto nelle opzioni log"
+msgstr "Mostra aiuto nelle opzioni di registro"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
@@ -146,7 +148,7 @@ msgstr "Parte %1$u di %2$u : %3$s"
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr "%s : Installer corrotto"
+msgstr "%s: programma di installazione corrotto"
 
 #: src/data/Runnable.vala:643
 #, c-format
@@ -210,7 +212,7 @@ msgstr "Verificando l'integrità dell'installer"
 #: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
-msgstr "Download iniziato"
+msgstr "Scaricamento iniziato"
 
 #: src/data/Game.vala:633
 msgctxt "status"
@@ -257,7 +259,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -269,7 +271,7 @@ msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
-"Impossibile ottenere l'URL di download di Trove.\n"
+"Impossibile ottenere l'URL di scaricamento di Trove.\n"
 "Assicurati che l'abbonamento mensile Humble sia attivo."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
@@ -288,13 +290,13 @@ msgstr "%d%%"
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "(%1$s / %2$s)"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "[%s/s]"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -427,7 +429,7 @@ msgstr "Unendo giochi da %s"
 #: src/data/adapters/GamesAdapter.vala:551
 #, c-format
 msgid "Loading games from %s"
-msgstr "Loggando giochi da %s"
+msgstr "Caricamento di giochi da %s"
 
 #: src/data/adapters/GamesAdapter.vala:678
 msgctxt "sort_mode"
@@ -615,7 +617,7 @@ msgstr "Stile delle icone"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 msgid "Game card"
-msgstr "Card gioco"
+msgstr "Carta da gioco"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
 msgid "Show platform icons"
@@ -680,7 +682,7 @@ msgstr "Parametri comportamento"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:42
 msgid "Run games with double click"
-msgstr "Avvia gioco col doppio click"
+msgstr "Avvia gioco col doppio clic"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:46
 msgid "Merge games from different sources"
@@ -756,7 +758,7 @@ msgstr "Attiva focus sulla finestra GameHub dal pulsante Guida"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:57
 msgid "Controllers"
-msgstr "Controllers"
+msgstr "Controller"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
@@ -783,26 +785,30 @@ msgstr "Disattivato"
 #: src/ui/dialogs/GameTweaksDialog.vala:53
 #: src/ui/views/GamesView/GameContextMenu.vala:183
 msgid "Tweaks"
-msgstr ""
+msgstr "Tweaks"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr ""
+msgstr "Ottimizza le opzioni di lancio e applicale automaticamente ai giochi"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
+"Le modifiche vengono caricate dalle seguenti directory in ordine\n"
+"L'ultima modifica sovrascrive le precedente con gli stessi identificatori"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
 msgid "Click to open"
-msgstr ""
+msgstr "Clicca per aprire"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
 msgstr ""
+"Le modifiche vengono caricate da <b>%1$s</b> e %2$d altre directory <b>(?) "
+"</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -1138,14 +1144,12 @@ msgid "Icon URL"
 msgstr "URL icona"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Select working directory"
-msgstr "Seleziona posizione"
+msgstr "Seleziona la directory di lavoro"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Working directory"
-msgstr "Apri posizione"
+msgstr "Directory di lavoro"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
@@ -1271,9 +1275,9 @@ msgid "Select directory to import"
 msgstr "Selezione posizione da importare"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s : Sovrapposizioni"
+msgstr "%s: Tweaks"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1370,13 +1374,13 @@ msgstr[1] "%u giochi"
 #, c-format
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
-msgstr ""
+msgstr "%1$u / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
 #, c-format
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
-msgstr ""
+msgstr "%1$s: %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
@@ -1612,9 +1616,9 @@ msgid "Languages"
 msgstr "Lingue"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
-#, fuzzy, c-format
+#, c-format
 msgid "%u DLCs cannot be installed"
-msgstr "%s : Installer corrotto"
+msgstr "%u DLCs non possono essere installati"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1730,12 +1734,11 @@ msgstr "Aggiungi tag"
 
 #: src/ui/widgets/TweaksList.vala:86
 msgid "No description"
-msgstr ""
+msgstr "Nessuna descrizione"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
-msgstr "Seleziona file"
+msgstr "Modifica file"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
@@ -1750,7 +1753,7 @@ msgid "%dm"
 msgstr "%dm"
 
 #: src/utils/Utils.vala:464
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
 msgstr "%dh"
@@ -1811,28 +1814,26 @@ msgid "Download failed"
 msgstr "Download fallito"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "Scaricando"
+msgstr "Sto scaricando: %s"
 
 #: src/utils/downloader/Downloader.vala:210
-#, fuzzy
 msgctxt "dl_status"
 msgid "Downloading"
 msgstr "Scaricando"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "In pausa: %d%% (%s / %s)"
+msgstr "In pausa: %s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "Metti in pausa download"
+msgstr "In pausa"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1841,10 +1842,10 @@ msgstr "Download cancellato"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "Scaricando: %d%% (%s / %s) [%s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "Disabilita esync"
