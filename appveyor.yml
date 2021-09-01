@@ -1,4 +1,4 @@
-version: 0.16.0-{build}-{branch}
+version: 0.16.1-{build}-{branch}
 
 pull_requests:
   do_not_increment_build_number: true
@@ -7,7 +7,6 @@ skip_tags: true
 
 image:
   - Ubuntu1804
-#  - Ubuntu1604     # skip xenial builds because dependencies are broken
 
 clone_folder: ~/build/GameHub
 

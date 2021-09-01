@@ -3,13 +3,15 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Marc Riera <marc.riera.irigoyen@gmail.com>, 2019.
 # Marc Riera <marcriera@softcatala.org>, 2019, 2020.
+# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
+# ian Vatega <admin@sendenai.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-01-14 18:21+0000\n"
-"Last-Translator: Marc Riera <marcriera@softcatala.org>\n"
+"PO-Revision-Date: 2021-03-15 01:02+0000\n"
+"Last-Translator: ian Vatega <admin@sendenai.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/gamehub/"
 "translations/ca/>\n"
 "Language: ca\n"
@@ -17,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -256,7 +258,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "Contingut baixable: %s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -757,7 +759,7 @@ msgstr "Comandaments"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:89
 msgid "Move focus"
-msgstr "Canvia el focus"
+msgstr "Mou el focus"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Controller.vala:91
 msgid "Exit"
@@ -783,9 +785,9 @@ msgid "Tweaks"
 msgstr "Ajustaments"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
-#, fuzzy
 msgid "Tweak launch options and apply them to games automatically"
-msgstr "Ajusteu les opcions d'execució i apliqueu-les als jocs automàticament"
+msgstr ""
+"Modifiqueu les opcions de llançament i apliqueu-les als jocs automàticament"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""

@@ -2,319 +2,329 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # ParkSeongSoo <syvf64@naver.com>, 2019.
+# kimteak <xorrjs2331@gmail.com>, 2020.
+# kimtaek <xorrjs2331@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-11-29 07:29+0000\n"
+"Last-Translator: kimtaek <xorrjs2331@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/gamehub/"
+"translations/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr ""
+msgstr "도움말 보기"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr ""
+msgstr "애플리케이션 버전 표시 및 종료"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "연결된 GDB 디버거로 다시 시작"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "전체 GDB 역 추적 표시"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
-msgstr ""
+msgstr "치명적인(심각한) 오류를 애플리케이션 충돌로 처리"
 
 #: src/app.vala:99
 msgid "Show main window"
-msgstr ""
+msgstr "메인 화면 표시"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "애플리케이션 설정 상자 표시"
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr ""
+msgstr "대화 표시"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
-msgstr ""
+msgstr "백그라운드 작업자 스레드의 최대 수"
 
 #: src/app.vala:106
 msgid "Run game"
-msgstr ""
+msgstr "게임 실행"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "호환성 옵션 대화 상자 표시"
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr ""
+msgstr "게임 세부 정보 열기"
 
 #: src/app.vala:109
 msgid "Open game properties"
-msgstr ""
+msgstr "게임 속성 열기"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
-msgstr ""
+msgstr "디버그 로깅 활성화"
 
 #: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
-msgstr ""
+msgstr "인증 프로세스 및 인증 토큰 및 민감한 정보 기록"
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr ""
+msgstr "다운로드 관리자"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "백그라운드 작업자 시작 / 중지"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "메시지 필터링 비활성화"
 
 #: src/app.vala:118
 msgid "Verbose logging"
-msgstr ""
+msgstr "자세한 로깅"
 
 #: src/app.vala:247
 msgid "Game Options:"
-msgstr ""
+msgstr "게임 옵션 :"
 
 #: src/app.vala:247
 msgid "Show game options help"
-msgstr ""
+msgstr "게임 옵션 도움말 표시"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr ""
+msgstr "로깅 옵션 :"
 
 #: src/app.vala:255
 msgid "Show logging options help"
-msgstr ""
+msgstr "로깅 옵션 도움말 표시"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
-msgstr ""
+msgstr "실행 파일 선택"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "선택"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr ""
+msgstr "파일 선택"
 
 #: src/data/Runnable.vala:619
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
-msgstr ""
+msgstr "부분 %1$u of %2$u: %3$s"
 
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
 msgid "%s: corrupted installer"
-msgstr ""
+msgstr "%s : 손상된 설치 프로그램"
 
 #: src/data/Runnable.vala:643
 #, c-format
 msgid "Checksum mismatch in %s"
-msgstr ""
+msgstr "%s의 체크섬 불일치"
 
 #: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
-msgstr ""
+msgstr "파일 표시"
 
 #: src/data/Runnable.vala:658 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
-msgstr ""
+msgstr "제거"
 
 #: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
-msgstr ""
+msgstr "복원"
 
 #: src/data/Runnable.vala:778
 #, c-format
 msgid "%s: cannot detect main executable"
-msgstr ""
+msgstr "%s : 주 실행 파일을 감지 할 수 없습니다"
 
 #: src/data/Runnable.vala:779
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
+"이 게임의 실행 파일이 감지되지 않습니다.\n"
+"게임 속성에서 메인 실행 파일을 설정하십시오."
 
 #: src/data/Runnable.vala:908
 msgctxt "platform"
 msgid "Emulated"
-msgstr ""
+msgstr "에뮬레이션"
 
 #: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "실행"
 
 #: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "설치됨"
 
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "설치중"
 
 #: src/data/Game.vala:630
 msgctxt "status"
 msgid "Verifying installer integrity"
-msgstr ""
+msgstr "설치 프로그램 무결성 확인"
 
 #: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
-msgstr ""
+msgstr "다운로드 시작"
 
 #: src/data/Game.vala:633
 msgctxt "status"
 msgid "Not installed"
-msgstr ""
+msgstr "설치되지 않음"
 
 #: src/data/Game.vala:643
 msgctxt "status_header"
 msgid "Installed"
-msgstr ""
+msgstr "설치완료"
 
 #: src/data/Game.vala:644
 msgctxt "status_header"
 msgid "Installing"
-msgstr ""
+msgstr "설치중"
 
 #: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
-msgstr ""
+msgstr "다운로드 중"
 
 #: src/data/Game.vala:648
 msgctxt "status_header"
 msgid "Not installed"
-msgstr ""
+msgstr "설치되지 않음"
 
 #: src/data/GameSource.vala:31
 #, c-format
 msgid "%s games"
-msgstr ""
+msgstr "% s 게임"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr ""
+msgstr "SteamID는 Steam 구성 파일에서 읽습니다"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
+"Steam 구성 파일을 찾을 수 없습니다.\n"
+"Steam 클라이언트에서 계정에 로그인하고 GameHub로 돌아갑니다"
 
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "DLC : % s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr ""
+msgstr "%s : 사용 가능한 설치 프로그램이 없습니다"
 
 #: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
+"Trove 다운로드 URL을 가져올 수 없습니다.\n"
+"Humble Monthly 구독이 활성화되어 있는지 확인하십시오."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s남았습니다;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "%1$s%2$s"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "%s/초"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
-msgstr ""
+msgstr "사용자 게임"
 
 #: src/data/db/tables/Tags.vala:225
 msgctxt "tag"
 msgid "Favorites"
-msgstr ""
+msgstr "즐겨 찾기"
 
 #: src/data/db/tables/Tags.vala:226
 msgctxt "tag"
 msgid "Not installed"
-msgstr ""
+msgstr "설치되지 않음"
 
 #: src/data/db/tables/Tags.vala:227
 msgctxt "tag"
 msgid "Installed"
-msgstr ""
+msgstr "설치됨"
 
 #: src/data/db/tables/Tags.vala:228
 msgctxt "tag"
 msgid "Hidden"
-msgstr ""
+msgstr "숨겨진"
 
 #: src/data/compat/CustomScript.vala:60
 msgid "Edit script"
-msgstr ""
+msgstr "스크립트 수정"
 
 #: src/data/compat/CustomScript.vala:60
 msgid "Edit custom script"
-msgstr ""
+msgstr "사용자 정의 스크립트 편집"
 
 #: src/data/compat/Innoextract.vala:55
 #, c-format

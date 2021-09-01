@@ -11,13 +11,15 @@
 # anonymous <noreply@weblate.org>, 2020.
 # Sascha Bohrmann <weblate@saschabohrmann.de>, 2020.
 # Sascha Bohrmann <github@dakunier.de>, 2020.
+# Jeannette L <j.lavoie@net-c.ca>, 2020.
+# J. Lavoie <j.lavoie@net-c.ca>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-03-20 10:36+0000\n"
-"Last-Translator: anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2020-12-28 11:29+0000\n"
+"Last-Translator: Sascha Bohrmann <github@dakunier.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -25,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -208,7 +210,7 @@ msgstr "Installiert"
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr "Installation"
+msgstr "Installation …"
 
 #: src/data/Game.vala:630
 msgctxt "status"
@@ -284,7 +286,7 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "%s übrig;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
@@ -460,7 +462,7 @@ msgstr "Nicht gruppieren"
 #: src/data/adapters/GamesAdapter.vala:706
 msgctxt "group_mode"
 msgid "By status"
-msgstr "nach Status"
+msgstr "Nach Status"
 
 #: src/data/adapters/GamesAdapter.vala:707
 msgctxt "group_mode"
@@ -495,7 +497,7 @@ msgstr "Schlüssel generieren"
 #: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr "Design"
+msgstr "Stil"
 
 #: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
@@ -510,7 +512,7 @@ msgstr "Autor"
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "Alternativ"
 
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
@@ -521,7 +523,7 @@ msgstr "Verwischt"
 #: src/data/providers/images/SteamGridDB.vala:228
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
@@ -552,12 +554,12 @@ msgstr "Einstellungen"
 #: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr "Offizielle Webseite"
+msgstr "Offizielle Website"
 
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr "Zeige die Beschreibung, sollte das Spiel eine besitzen"
+msgstr "Hat das Spiel eine Beschreibung, zeige"
 
 #: src/data/providers/data/IGDB.vala:476
 msgctxt "igdb_preferred_description"
@@ -603,7 +605,7 @@ msgstr "Dunkles Thema"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr ""
+msgstr "Thema-basiert"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
@@ -613,17 +615,16 @@ msgstr "Symbolisch"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
-msgstr ""
+msgstr "Farbig"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "Symbol-Stil"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
-#, fuzzy
 msgid "Game card"
-msgstr "Spielname"
+msgstr "Spielkarte"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
 msgid "Show platform icons"
@@ -632,12 +633,12 @@ msgstr "Plattformsymbole anzeigen"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
 msgid "Card size"
-msgstr ""
+msgstr "Kartengröße"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
 msgctxt "grid_size_preset"
 msgid "Presets"
-msgstr ""
+msgstr "Voreinstellungen"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:139
 msgid "Games list: installed"
@@ -707,7 +708,6 @@ msgid "Collection"
 msgstr "Sammlung"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:53
-#, fuzzy
 msgid "Empty"
 msgstr "Leer"
 
@@ -797,6 +797,7 @@ msgstr "Tweaks"
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
 msgstr ""
+"Optimieren Sie die Startoptionen und wenden Sie sie automatisch auf Spiele an"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
@@ -1447,7 +1448,7 @@ msgstr "Download abbrechen"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:77
 msgid "Group"
-msgstr ""
+msgstr "Gruppieren"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:102
 msgid "Sort"
@@ -1558,7 +1559,7 @@ msgstr[1] "%s: keine Installationsprogramme verfügbare"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
 msgid "Refresh"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:175
 #, c-format

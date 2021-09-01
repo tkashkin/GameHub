@@ -6,13 +6,14 @@
 # Swann Martinet <swann.ranskassa@laposte.net>, 2019.
 # Nathan <bonnemainsnathan@gmail.com>, 2019, 2020.
 # Éfrit <Efrit@posteo.net>, 2019, 2020.
+# syl <syl@gresille.org>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-03-18 01:36+0000\n"
-"Last-Translator: Éfrit <Efrit@posteo.net>\n"
+"PO-Revision-Date: 2020-04-25 13:11+0000\n"
+"Last-Translator: syl <syl@gresille.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gamehub/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -587,7 +588,7 @@ msgstr "Interface"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
-msgstr "Apparance"
+msgstr "Apparence"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
