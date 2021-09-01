@@ -55,6 +55,7 @@ namespace GameHub.Data.DB.Tables
 		public static Table.Field IMAGE_VERTICAL;
 		public static Table.Field TWEAKS;
 		public static Table.Field WORK_DIR;
+		public static Table.Field GAMERZILLA;
 
 		public Games()
 		{
@@ -82,6 +83,7 @@ namespace GameHub.Data.DB.Tables
 			IMAGE_VERTICAL       = f(17);
 			TWEAKS               = f(18);
 			WORK_DIR             = f(19);
+			GAMERZILLA           = f(20);
 		}
 
 		public override void migrate(Sqlite.Database db, int version)
@@ -132,6 +134,10 @@ namespace GameHub.Data.DB.Tables
 					case 10:
 						db.exec("ALTER TABLE `games` ADD `work_dir` string");
 						break;
+
+					case 12:
+						db.exec("ALTER TABLE `games` ADD `gamerzilla` string");
+						break;
 				}
 			}
 		}
@@ -172,8 +178,9 @@ namespace GameHub.Data.DB.Tables
 					`playtime_tracked`,
 					`image_vertical`,
 					`tweaks`,
-					`work_dir`)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
+					`work_dir`,
+					`gamerzilla`)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", -1, out s);
 
 			if(res != Sqlite.OK)
 			{
@@ -226,6 +233,7 @@ namespace GameHub.Data.DB.Tables
 			IMAGE_VERTICAL.bind(s, game.image_vertical);
 			TWEAKS.bind(s, tweaks);
 			WORK_DIR.bind(s, game.work_dir == null ? null : game.work_dir_path);
+			GAMERZILLA.bind(s, game.gamerzilla_name == null ? null : game.gamerzilla_name);
 
 			res = s.step();
 
@@ -272,6 +280,35 @@ namespace GameHub.Data.DB.Tables
 			}
 
 			return true;
+		}
+
+
+		public static new Game? getByName(string name)
+		{
+			if(name == null) return null;
+
+			unowned Sqlite.Database? db = Database.instance.db;
+			if(db == null) return null;
+
+			Statement st;
+			int res;
+
+			res = db.prepare_v2("SELECT source, id FROM `games` WHERE `name` = ?", -1, out st);
+			res = st.bind_text(1, name);
+
+			if(res != Sqlite.OK)
+			{
+				warning("[Database.Games.get] Can't prepare SELECT query (%d): %s", db.errcode(), db.errmsg());
+				return null;
+			}
+
+			if((res = st.step()) == Sqlite.ROW)
+			{
+				string src = SOURCE.get(st);
+				string id = ID.get(st);
+				return get(src, id);
+			}
+			return null;
 		}
 
 		public static new Game? get(string src, string id)

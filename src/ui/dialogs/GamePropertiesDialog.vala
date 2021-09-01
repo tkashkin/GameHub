@@ -233,6 +233,25 @@ namespace GameHub.UI.Dialogs
 				game.notify_property("use-compat");
 			}
 
+			var gamerzilla_header = Styled.H4Label(_("Gamerzilla"));
+			gamerzilla_header.xpad = 8;
+			properties_box.add(gamerzilla_header);
+
+			var gamerzilla_entry = new Entry();
+			gamerzilla_entry.text = game.gamerzilla_name ?? "";
+			gamerzilla_entry.placeholder_text = gamerzilla_entry.primary_icon_tooltip_text = _("Gamerzilla");
+			gamerzilla_entry.primary_icon_name = "utilities-terminal-symbolic";
+			gamerzilla_entry.primary_icon_activatable = false;
+			gamerzilla_entry.margin = 4;
+
+			gamerzilla_entry.changed.connect(() => {
+				game.gamerzilla_name = gamerzilla_entry.text.strip();
+				game.update_status();
+				game.save();
+			});
+
+			properties_box.add(gamerzilla_entry);
+
 			var gh_run_args_header = Styled.H4Label(_("Launch from terminal"));
 			gh_run_args_header.xpad = 8;
 			properties_box.add(gh_run_args_header);

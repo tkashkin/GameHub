@@ -23,6 +23,7 @@ using Gee;
 using GameHub.Data;
 using GameHub.Data.Sources.Steam;
 using GameHub.Data.Sources.GOG;
+using GameHub.Data.Sources.User;
 
 using GameHub.Utils;
 
@@ -105,6 +106,6 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 			});
 		}
 
-		public override bool supports_game { get { return game is SteamGame || game is GOGGame; } }
+		public override bool supports_game { get { return game is SteamGame || game is GOGGame || (game is UserGame && game.gamerzilla_name != null && game.gamerzilla_name != ""); } }
 	}
 }

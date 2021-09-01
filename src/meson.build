@@ -263,6 +263,13 @@ if manette.found()
 	sources += 'ui/dialogs/SettingsDialog/pages/general/Controller.vala'
 endif
 
+gamerzilla = dependency('gamerzilla', required: false)
+if gamerzilla.found()
+	add_global_arguments('-D', 'GAMERZILLA', language: 'vala')
+	deps += gamerzilla
+endif
+
+
 executable(
 	meson.project_name(),
 	project_config,
