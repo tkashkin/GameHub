@@ -7,13 +7,14 @@
 # Garreciq <adamzygiel@gmail.com>, 2020.
 # gnu-ewm <gnu.ewm@protonmail.com>, 2021.
 # A M <augim3@gmail.com>, 2021.
+# Jakub Tabor <taborjakub2@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-08-26 20:34+0000\n"
-"Last-Translator: A M <augim3@gmail.com>\n"
+"PO-Revision-Date: 2021-09-19 16:37+0000\n"
+"Last-Translator: Jakub Tabor <taborjakub2@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gamehub/"
 "translations/pl/>\n"
 "Language: pl\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -53,7 +54,6 @@ msgid "Show application settings dialog"
 msgstr "Pokaż okno z ustawieniami aplikacji"
 
 #: src/app.vala:101
-#, fuzzy
 msgid "Show about dialog"
 msgstr "Pokaż okno opcji kompatybilności"
 
@@ -99,7 +99,7 @@ msgstr "Rejestruj w tle zadania start/stop"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Wyłącz filtrowanie dziennika wiadomości"
 
 #: src/app.vala:118
 msgid "Verbose logging"
@@ -563,12 +563,12 @@ msgstr "Brak gier"
 #: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
 msgid "from IGDB"
-msgstr ""
+msgstr "z IGDB"
 
 #: src/data/providers/data/IGDB.vala:478
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr ""
+msgstr "oba"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
@@ -586,11 +586,11 @@ msgstr "Interfejs"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
-msgstr ""
+msgstr "Wygląd"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
-msgstr ""
+msgstr "Ogólne ustawienia interfejsu"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 #, fuzzy
@@ -615,7 +615,7 @@ msgstr ""
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "Styl ikon"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 #, fuzzy
@@ -630,7 +630,7 @@ msgstr "Pokaż ikonę platformy w widoku siatki"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
 msgid "Card size"
-msgstr ""
+msgstr "Rozmiar karty"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
 msgctxt "grid_size_preset"
