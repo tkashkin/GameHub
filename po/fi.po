@@ -1747,7 +1747,7 @@ msgstr "%dt"
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr "%dkk"
+msgstr "%dm"
 
 #: src/utils/Utils.vala:464
 #, c-format
