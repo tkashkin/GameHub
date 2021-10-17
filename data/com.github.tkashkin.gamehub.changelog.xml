@@ -1,0 +1,7 @@
+<release type="stable" version="0.16.1" date="2021-09-01" timestamp="1630521639">
+	<description>
+		<ul>
+			<li>0.16.1: New Steam libraryfolders format (#558)</li>
+		</ul>
+	</description>
+</release>
