@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@ namespace GameHub.Utils.FS
 {
 	public class FSOverlay: Object
 	{
-		private const string POLKIT_ACTION = ProjectConfig.PROJECT_NAME + ".polkit.overlayfs-helper";
-		private const string POLKIT_HELPER = ProjectConfig.BINDIR + "/" + ProjectConfig.PROJECT_NAME + "-overlayfs-helper";
+		private const string POLKIT_ACTION = Config.RDNN + ".polkit.overlayfs-helper";
+		private const string POLKIT_HELPER = Config.BINDIR + "/" + Config.RDNN + "-overlayfs-helper";
 		private const string[] MOUNT_OPTIONS_TO_COMPARE = {"lowerdir", "upperdir", "workdir"};
 		private static Permission? permission;
 
@@ -33,7 +33,7 @@ namespace GameHub.Utils.FS
 		public File?           persist  { get; construct set; }
 		public File?           workdir  { get; construct set; }
 
-		public string full_id { owned get { return "%s_overlay_%s".printf(ProjectConfig.PROJECT_NAME, id); } }
+		public string full_id { owned get { return "%s_overlay_%s".printf(Config.RDNN, id); } }
 
 		public FSOverlay(File target, ArrayList<File> overlays, File? persist=null, File? workdir=null)
 		{

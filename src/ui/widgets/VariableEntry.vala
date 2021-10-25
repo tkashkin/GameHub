@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,11 +44,7 @@ namespace GameHub.UI.Widgets
 				if(icon_pos == EntryIconPosition.SECONDARY && menu != null)
 				{
 					grab_focus_without_selecting();
-					#if GTK_3_22
 					menu.popup_at_widget(this, Gravity.SOUTH_EAST, Gravity.NORTH_EAST, e);
-					#else
-					menu.popup(null, null, null, 0, ((EventButton) e).time);
-					#endif
 				}
 			});
 

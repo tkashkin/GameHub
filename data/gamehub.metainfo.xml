@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>@RDNN@</id>
+
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0+</project_license>
+
+	<name>GameHub</name>
+	<summary>All your games in one place</summary>
+
+	<description>
+		<p>Manage your Steam, GOG and Humble Bundle games in one place.</p>
+	</description>
+
+	<developer_name>Anatoliy Kashkin</developer_name>
+	​<update_contact>tkashkin@gmail.com</update_contact>
+	<url type="homepage">https://tkashkin.github.io/projects/gamehub</url>
+	<url type="bugtracker">https://github.com/tkashkin/GameHub/issues</url>
+	<url type="translate">https://hosted.weblate.org/engage/gamehub</url>
+
+	<provides>
+		<binary>@RDNN@</binary>
+	</provides>
+	<launchable type="desktop-id">@RDNN@.desktop</launchable>
+	<translation type="gettext">@GETTEXT_DOMAIN@</translation>
+
+	<icon type="remote" width="128" height="128">https://raw.githubusercontent.com/tkashkin/GameHub/e380a848b89498904e96e73fa72a07aa823151ce/data/icon/128.svg?sanitize=true</icon>
+
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/light/welcome.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/dark/grid.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/light/list.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/dark/details.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/tkashkin/GameHub/ff8ed17491681757f2e08618d6d052cdfcec9357/data/screenshots/light/properties.png</image>
+		</screenshot>
+	</screenshots>
+
+	<recommends>
+		<control>pointing</control>
+		<control>keyboard</control>
+		<control>touch</control>
+		<control>gamepad</control>
+	</recommends>
+
+	<suggests>
+		<id>com.valvesoftware.Steam</id>
+	</suggests>
+
+	<custom>
+		<value key="x-appcenter-color-primary">#7239b3</value>
+		<value key="x-appcenter-color-primary-text">#ffffff</value>
+	</custom>
+
+	<releases>
+		@CHANGELOG@
+	</releases>
+
+	<content_rating type="oars-1.1" />
+</component>

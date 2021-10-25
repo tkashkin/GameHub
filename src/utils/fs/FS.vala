@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ namespace GameHub.Utils.FS
 	{
 		public class Cache
 		{
-			public const string Home = "~/.cache/" + ProjectConfig.PROJECT_NAME;
+			public const string Home = "~/.cache/" + GameHub.Config.RDNN;
 
 			public const string Cookies = Paths.Cache.Home + "/cookies";
 
@@ -56,14 +56,14 @@ namespace GameHub.Utils.FS
 
 		public class LocalData
 		{
-			public const string Home = "~/.local/share/" + ProjectConfig.PROJECT_NAME;
+			public const string Home = "~/.local/share/" + GameHub.Config.RDNN;
 			public const string Tweaks = Paths.LocalData.Home + "/tweaks";
 			public const string DOSBoxConfigs = Paths.LocalData.Home + "/compat/dosbox";
 		}
 
 		public class Config
 		{
-			public const string Home = "~/.config/" + ProjectConfig.PROJECT_NAME;
+			public const string Home = "~/.config/" + GameHub.Config.RDNN;
 			public const string Tweaks = Paths.Config.Home + "/tweaks";
 			public const string DOSBoxConfigs = Paths.Config.Home + "/compat/dosbox";
 		}
@@ -185,7 +185,7 @@ namespace GameHub.Utils.FS
 
 	public static ArrayList<File> get_data_dirs(string? subdir=null, bool with_nonexistent=false)
 	{
-		var data_path = subdir != null ? @"$(ProjectConfig.PROJECT_NAME)/$(subdir)" : ProjectConfig.PROJECT_NAME;
+		var data_path = subdir != null ? @"$(Config.RDNN)/$(subdir)" : Config.RDNN;
 
 		string[] data_dirs = {};
 		var system_data_dirs = Environment.get_system_data_dirs();
@@ -201,7 +201,7 @@ namespace GameHub.Utils.FS
 			}
 		}
 
-		var project_data_dir = FS.file(ProjectConfig.DATADIR, data_path).get_path();
+		var project_data_dir = FS.file(Config.DATADIR, data_path).get_path();
 		if(!(project_data_dir in data_dirs)) data_dirs += project_data_dir;
 
 		if(user_data_dir != null && user_data_dir.length > 0)

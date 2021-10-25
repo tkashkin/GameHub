@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -452,9 +452,9 @@ namespace GameHub.UI.Views.GamesView.Grid
 			}
 			else
 			{
-				#if PERF_GAMECARD_UNLOAD_IMAGES
+				//#if PERF_GAMECARD_UNLOAD_IMAGES
 				image.unload();
-				#endif
+				//#endif
 			}
 		}
 

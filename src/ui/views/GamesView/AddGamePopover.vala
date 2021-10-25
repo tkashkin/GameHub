@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -154,11 +154,7 @@ namespace GameHub.UI.Views.GamesView
 			update();
 			game.save();
 			game_added(game);
-			#if GTK_3_22
 			popdown();
-			#else
-			hide();
-			#endif
 			executable.reset();
 			gamedir.reset();
 			if(mode.selected != 0)
@@ -169,22 +165,14 @@ namespace GameHub.UI.Views.GamesView
 
 		private void import_emulated_games()
 		{
-			#if GTK_3_22
 			popdown();
-			#else
-			hide();
-			#endif
 			/*var dlg = new UI.Dialogs.ImportEmulatedGamesDialog();
 			dlg.game_added.connect(g => game_added(g));*/
 		}
 
 		private void start_images_download()
 		{
-			#if GTK_3_22
 			popdown();
-			#else
-			hide();
-			#endif
 			download_images();
 		}
 

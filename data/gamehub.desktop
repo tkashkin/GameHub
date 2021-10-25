@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=GameHub
+GenericName=Game library manager
+Comment=Manage your Steam, GOG and Humble Bundle games in one place
+Categories=Game;Amusement;
+Exec=@RDNN@
+Icon=@RDNN@
+X-GNOME-Gettext-Domain=@GETTEXT_DOMAIN@
+Terminal=false
+Type=Application
+Keywords=Game;Hub;Steam;GOG;Humble;HumbleBundle;

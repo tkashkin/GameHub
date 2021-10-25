@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ namespace GameHub.Settings.Providers
 
 			public SteamGridDB()
 			{
-				base(ProjectConfig.PROJECT_NAME + ".providers.images.steamgriddb");
+				base(Config.RDNN + ".providers.images.steamgriddb");
 			}
 
 			protected override void verify(string key)
@@ -65,7 +65,7 @@ namespace GameHub.Settings.Providers
 
 			public JinxSGVI()
 			{
-				base(ProjectConfig.PROJECT_NAME + ".providers.images.jinx-sgvi");
+				base(Config.RDNN + ".providers.images.jinx-sgvi");
 			}
 
 			private static JinxSGVI? _instance;
@@ -88,7 +88,7 @@ namespace GameHub.Settings.Providers
 
 			public Steam()
 			{
-				base(ProjectConfig.PROJECT_NAME + ".providers.images.steam");
+				base(Config.RDNN + ".providers.images.steam");
 			}
 
 			private static Steam? _instance;
@@ -116,7 +116,7 @@ namespace GameHub.Settings.Providers
 
 			public IGDB()
 			{
-				base(ProjectConfig.PROJECT_NAME + ".providers.data.igdb");
+				base(Config.RDNN + ".providers.data.igdb");
 			}
 
 			protected override void verify(string key)

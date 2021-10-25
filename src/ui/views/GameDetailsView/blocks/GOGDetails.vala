@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -128,12 +128,9 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					var dlclist_scrolled = new ScrolledWindow(null, null);
 					dlclist_scrolled.hscrollbar_policy = PolicyType.NEVER;
 					dlclist_scrolled.set_size_request(420, 64);
-
-					#if GTK_3_22
 					dlclist_scrolled.propagate_natural_width = true;
 					dlclist_scrolled.propagate_natural_height = true;
 					dlclist_scrolled.max_content_height = 720;
-					#endif
 
 					var dlclist = new ListBox();
 					dlclist.selection_mode = SelectionMode.NONE;
@@ -157,11 +154,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 					dlclist_scrolled.show_all();
 
 					dlc_popover_button.clicked.connect(() => {
-						#if GTK_3_22
 						dlc_popover.popup();
-						#else
-						dlc_popover.show();
-						#endif
 					});
 
 					dlcbox.add(new Separator(Orientation.HORIZONTAL));
@@ -178,12 +171,9 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				var bonuslist_scrolled = new ScrolledWindow(null, null);
 				bonuslist_scrolled.hscrollbar_policy = PolicyType.NEVER;
 				bonuslist_scrolled.set_size_request(420, 64);
-
-				#if GTK_3_22
 				bonuslist_scrolled.propagate_natural_width = true;
 				bonuslist_scrolled.propagate_natural_height = true;
 				bonuslist_scrolled.max_content_height = 720;
-				#endif
 
 				var bonuslist = new ListBox();
 				bonuslist.selection_mode = SelectionMode.NONE;
@@ -205,11 +195,7 @@ namespace GameHub.UI.Views.GameDetailsView.Blocks
 				bonuslist_scrolled.show_all();
 
 				bonus_popover_button.clicked.connect(() => {
-					#if GTK_3_22
 					bonus_popover.popup();
-					#else
-					bonus_popover.show();
-					#endif
 				});
 
 				add(bonus_popover_button);

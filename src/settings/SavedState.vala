@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ namespace GameHub.Settings.SavedState
 
 		public Window()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".saved-state.window");
+			base(Config.RDNN + ".saved-state.window");
 		}
 
 		private static Window? _instance;
@@ -62,7 +62,7 @@ namespace GameHub.Settings.SavedState
 
 		public GamesView()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".saved-state.games-view");
+			base(Config.RDNN + ".saved-state.games-view");
 		}
 
 		private static GamesView? _instance;

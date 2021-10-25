@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -43,11 +43,8 @@ namespace GameHub.UI.Dialogs.InstallDialog.Steps
 		{
 			var scroll = new ScrolledWindow(null, null);
 			scroll.hscrollbar_policy = PolicyType.NEVER;
-
-			#if GTK_3_22
 			scroll.propagate_natural_height = true;
 			scroll.max_content_height = 600;
-			#endif
 
 			sgrp_installers = new SettingsGroup();
 			sgrp_installers.settings.selection_mode = SelectionMode.SINGLE;

@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ namespace GameHub.Settings.Auth
 
 		public Steam()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".auth.steam");
+			base(Config.RDNN + ".auth.steam");
 		}
 
 		protected override void verify(string key)
@@ -65,7 +65,7 @@ namespace GameHub.Settings.Auth
 
 		public GOG()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".auth.gog");
+			base(Config.RDNN + ".auth.gog");
 		}
 
 		private static GOG? _instance;
@@ -92,7 +92,7 @@ namespace GameHub.Settings.Auth
 
 		public Humble()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".auth.humble");
+			base(Config.RDNN + ".auth.humble");
 		}
 
 		private static Humble? _instance;
@@ -117,7 +117,7 @@ namespace GameHub.Settings.Auth
 
 		public Itch()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".auth.itch");
+			base(Config.RDNN + ".auth.itch");
 		}
 
 		private static Itch? _instance;

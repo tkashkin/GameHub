@@ -1,23 +1,11 @@
-option('git_branch', type: 'string', value: '@GIT_BRANCH@')
-option('git_commit', type: 'string', value: '@GIT_COMMIT@')
-option('git_commit_short', type: 'string', value: '@GIT_COMMIT_SHORT@')
+option('git_branch', type: 'string', value: '')
+option('git_commit', type: 'string', value: '')
 
-option('os', type: 'combo', choices: ['linux', 'windows', 'macos'], value: 'linux')
-option('distro', type: 'combo', choices: ['generic', 'debian', 'arch'], value: 'generic')
-option('package', type: 'combo', choices: ['generic', 'appimage', 'flatpak'], value: 'generic')
+option('flatpak', type: 'boolean', value: false)
 
-option('feature_overlayfs', type: 'boolean', value: true)
-
-option('perf_images_memcache', type: 'boolean', value: false)
-option('perf_gamecard_unload_images', type: 'boolean', value: true)
-
-option('libretro_core_dir', type: 'string', value: '/usr/lib/libretro')
-option('libretro_core_info_dir', type: 'string', value: '/usr/share/libretro/info')
+option('overlayfs', type: 'feature', value: 'auto')
 
 option('api_key_steam', type: 'string', value: '8B10B604CAC6AC90F57AACE025DD904C')
 option('api_key_itch', type: 'string', value: '')
 option('api_key_igdb', type: 'string', value: 'e0a54818580e4085b596c5aa613b1c53')
 option('api_key_steamgriddb', type: 'string', value: '711485c5b6c9b8ca87f6052f6dda04e8')
-
-option('runtime', type: 'string', value: '')
-option('use_libunity', type: 'boolean', value: false)

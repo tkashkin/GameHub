@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 Copyright (C) 2019 Yaohan Chen
 
 GameHub is free software: you can redistribute it and/or modify

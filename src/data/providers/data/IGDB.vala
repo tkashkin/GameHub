@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -150,9 +150,7 @@ namespace GameHub.Data.Providers.Data
 					msg.add_button(_("Settings"), 1);
 
 					msg.close.connect(() => {
-						#if GTK_3_22
 						msg.revealed = false;
-						#endif
 						Timeout.add(250, () => { msg.destroy(); return Source.REMOVE; });
 					});
 

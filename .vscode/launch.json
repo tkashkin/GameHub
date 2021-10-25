@@ -1,0 +1,45 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceRoot}/build/src/com.github.tkashkin.gamehub",
+			"args": ["--debug", "--verbose"],
+			"stopAtEntry": false,
+			"cwd": "${workspaceRoot}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		},
+		{
+			"name": "Debug (fatal-criticals)",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceRoot}/build/src/com.github.tkashkin.gamehub",
+			"args": ["--debug", "--verbose"],
+			"stopAtEntry": false,
+			"cwd": "${workspaceRoot}",
+			"environment": [
+				{ "name": "G_DEBUG", "value": "fatal-criticals" }
+			],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		}
+	]
+}

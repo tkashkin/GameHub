@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ namespace GameHub.Data.Adapters
 			settings.notify["merge-games"].connect(() => invalidate());
 
 			#if UNITY
-			launcher_entry = Unity.LauncherEntry.get_for_desktop_id(ProjectConfig.PROJECT_NAME + ".desktop");
+			launcher_entry = Unity.LauncherEntry.get_for_desktop_id(Config.RDNN + ".desktop");
 			setup_launcher_menu();
 			#endif
 		}

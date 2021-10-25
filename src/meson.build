@@ -1,28 +1,9 @@
-project_config = vcs_tag(
-	input: vcs_tag(
-		input: vcs_tag(
-			input: configure_file(
-				input: 'ProjectConfig.vala.in',
-				output: 'ProjectConfig.vala.in.in.in',
-				configuration: conf_data
-			),
-			output: 'ProjectConfig.vala.in.in',
-			command: ['git', 'rev-parse', '--short', 'HEAD'],
-			replace_string: '@GIT_COMMIT_SHORT@',
-			fallback: ''
-		),
-		output: 'ProjectConfig.vala.in',
-		command: ['git', 'rev-parse', 'HEAD'],
-		replace_string: '@GIT_COMMIT@',
-		fallback: ''
-	),
-	output: 'ProjectConfig.vala',
-	command: ['git', 'symbolic-ref', '--short', '-q', 'HEAD'],
-	replace_string: '@GIT_BRANCH@',
-	fallback: ''
-)
+subdir('config')
 
-deps = [
+gh_deps = [
+	dependency('glib-2.0', version: '>=2.62'),
+	dependency('gtk+-3.0', version: '>=3.22'),
+	dependency('libsoup-2.4', version: '>=2.60'),
 	dependency('gdk-3.0'),
 	dependency('json-glib-1.0'),
 	dependency('gee-0.8'),
@@ -34,7 +15,7 @@ deps = [
 	meson.get_compiler('vala').find_library('linux')
 ]
 
-sources = [
+gh_sources = files(
 	'app.vala',
 
 	#'data/Runnable.vala',
@@ -244,92 +225,44 @@ sources = [
 
 	'utils/downloader/Downloader.vala',
 	'utils/downloader/SoupDownloader.vala'
-]
+)
 
-if get_option('os') == 'linux'
-	add_global_arguments('-D', 'OS_LINUX', language: 'vala')
-elif get_option('os') == 'windows'
-	add_global_arguments('-D', 'OS_WINDOWS', language: 'vala')
-	deps += meson.get_compiler('c').find_library('ntdll')
-elif get_option('os') == 'macos'
-	add_global_arguments('-D', 'OS_MACOS', language: 'vala')
+gh_dep_webkit2gtk = dependency('webkit2gtk-4.0', required: false)
+if gh_dep_webkit2gtk.found()
+	add_project_arguments('-D', 'WEBKIT2GTK', language: 'vala')
+	gh_deps += gh_dep_webkit2gtk
 endif
 
-glib262 = dependency('glib-2.0', version: '>=2.62', required: false)
-if glib262.found()
-	add_global_arguments('-D', 'GLIB_2_62', '-D', 'GLIB_2_56', language: 'vala')
-	deps += glib262
-else
-	glib256 = dependency('glib-2.0', version: '>=2.56', required: false)
-	if glib256.found()
-		add_global_arguments('-D', 'GLIB_2_56', language: 'vala')
-		deps += glib256
-	else
-		deps += dependency('glib-2.0')
+if gh_target == 'linux' and not get_option('overlayfs').disabled()
+	add_project_arguments('-D', 'OVERLAYFS', language: 'vala')
+	gh_dep_polkit = dependency('polkit-gobject-1', required: false)
+	if gh_dep_polkit.found()
+		add_project_arguments('-D', 'POLKIT', language: 'vala')
+		gh_deps += gh_dep_polkit
 	endif
 endif
 
-gtk322 = dependency('gtk+-3.0', version: '>=3.22', required: false)
-if gtk322.found()
-	add_global_arguments('-D', 'GTK_3_22', language: 'vala')
-	deps += gtk322
-else
-	deps += dependency('gtk+-3.0')
-endif
-
-# not sure which version fixed Message.response_headers.get_content_range(), 2.60+ should work
-soup260 = dependency('libsoup-2.4', version: '>=2.60', required: false)
-if soup260.found()
-	add_global_arguments('-D', 'SOUP_2_60', language: 'vala')
-	deps += soup260
-else
-	deps += dependency('libsoup-2.4')
-endif
-
-webkit2gtk = dependency('webkit2gtk-4.0', required: false)
-if webkit2gtk.found()
-	add_global_arguments('-D', 'WEBKIT2GTK', language: 'vala')
-	deps += webkit2gtk
-endif
-
-if get_option('os') == 'linux' and get_option('feature_overlayfs')
-	add_global_arguments('-D', 'OVERLAYFS', language: 'vala')
-	polkit = dependency('polkit-gobject-1', required: false)
-	if polkit.found()
-		add_global_arguments('-D', 'POLKIT', language: 'vala')
-		deps += polkit
-	endif
-endif
-
-if get_option('use_libunity')
-	unity = dependency('unity', required: false)
-	if unity.found()
-		add_global_arguments('-D', 'UNITY', language: 'vala')
-		deps += unity
-	endif
-endif
-
-manette = dependency('manette-0.2', required: false)
-if manette.found()
-	add_global_arguments('-D', 'MANETTE', language: 'vala')
-	deps += manette
-	deps += dependency('x11')
-	deps += dependency('gdk-x11-3.0')
-	deps += dependency('xtst')
-	sources += 'utils/Gamepad.vala'
-	sources += 'ui/dialogs/SettingsDialog/pages/general/Controller.vala'
+gh_dep_manette = dependency('manette-0.2', required: false)
+if gh_dep_manette.found()
+	add_project_arguments('-D', 'MANETTE', language: 'vala')
+	gh_deps += gh_dep_manette
+	gh_deps += dependency('x11')
+	gh_deps += dependency('gdk-x11-3.0')
+	gh_deps += dependency('xtst')
+	gh_sources += 'utils/Gamepad.vala'
+	gh_sources += 'ui/dialogs/SettingsDialog/pages/general/Controller.vala'
 endif
 
 executable(
-	meson.project_name(),
-	project_config,
+	gh_rdnn,
+	gh_config,
 
-	sources,
+	gh_sources,
 
-	res_icons,
-	res_styles,
+	gh_icons,
+	gh_styles,
 
-	dependencies: deps,
+	dependencies: gh_deps,
 	install: true,
-	gui_app: true
+	win_subsystem: 'windows'
 )

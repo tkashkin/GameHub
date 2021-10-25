@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -233,10 +233,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog
 			restart_msg.no_show_all = !restart_msg_shown;
 			games_dir_space_msg.visible = games_dir_space_msg_shown;
 			games_dir_space_msg.no_show_all = !games_dir_space_msg_shown;
-			#if GTK_3_22
 			restart_msg.revealed = restart_msg_shown;
 			games_dir_space_msg.revealed = games_dir_space_msg_shown;
-			#endif
 		}
 	}
 }

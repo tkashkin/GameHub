@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -240,12 +240,10 @@ namespace GameHub.Data.Sources.GOG
 					var playtime = stats != null && stats.has_member("playtime") ? stats.get_int_member("playtime") : 0;
 					int64 last_launch = 0;
 
-					#if GLIB_2_56
 					if(stats != null && stats.has_member("lastSession"))
 					{
 						last_launch = new DateTime.from_iso8601(stats.get_string_member("lastSession"), new TimeZone.utc()).to_unix();
 					}
-					#endif
 
 					player_stats.set(id, new PlayerStatItem(id, playtime, last_launch, image));
 				}

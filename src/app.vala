@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ namespace GameHub
 
 		construct
 		{
-			application_id = ProjectConfig.PROJECT_NAME;
+			application_id = Config.RDNN;
 			flags = ApplicationFlags.HANDLES_COMMAND_LINE;
 			instance = this;
 			add_action_entries(action_entries, this);
@@ -207,11 +207,10 @@ namespace GameHub
 
 			Utils.Logger.init();
 
-			var lang = Environment.get_variable("LC_ALL") ?? "";
-			Intl.setlocale(LocaleCategory.ALL, lang);
-			Intl.bindtextdomain(ProjectConfig.GETTEXT_PACKAGE, ProjectConfig.GETTEXT_DIR);
-			Intl.bind_textdomain_codeset(ProjectConfig.GETTEXT_PACKAGE, "UTF-8");
-			Intl.textdomain(ProjectConfig.GETTEXT_PACKAGE);
+			Intl.setlocale(LocaleCategory.ALL, "");
+			Intl.bindtextdomain(Config.GETTEXT_DOMAIN, Config.LOCALEDIR);
+			Intl.bind_textdomain_codeset(Config.GETTEXT_DOMAIN, "UTF-8");
+			Intl.textdomain(Config.GETTEXT_DOMAIN);
 
 			return app.run(args);
 		}
@@ -220,7 +219,7 @@ namespace GameHub
 		{
 			var group = new OptionGroup("game", _("Game Options:"), _("Show game options help"));
 			group.add_entries(options_game);
-			group.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+			group.set_translation_domain(Config.GETTEXT_DOMAIN);
 			return group;
 		}
 
@@ -228,7 +227,7 @@ namespace GameHub
 		{
 			var group = new OptionGroup("log", _("Logging Options:"), _("Show logging options help"));
 			group.add_entries(options_log);
-			group.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+			group.set_translation_domain(Config.GETTEXT_DOMAIN);
 			return group;
 		}
 
@@ -237,9 +236,9 @@ namespace GameHub
 			OptionContext local_option_context = new OptionContext();
 			local_option_context.set_ignore_unknown_options(true);
 			local_option_context.set_help_enabled(false);
-			local_option_context.add_main_entries(local_options, ProjectConfig.GETTEXT_PACKAGE);
+			local_option_context.add_main_entries(local_options, Config.GETTEXT_DOMAIN);
 			local_option_context.add_group(get_log_option_group());
-			local_option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+			local_option_context.set_translation_domain(Config.GETTEXT_DOMAIN);
 
 			try
 			{
@@ -262,12 +261,12 @@ namespace GameHub
 			{
 				OptionContext help_option_context = new OptionContext();
 				help_option_context.set_help_enabled(false);
-				help_option_context.add_main_entries(local_options, ProjectConfig.GETTEXT_PACKAGE);
-				help_option_context.add_main_entries(options, ProjectConfig.GETTEXT_PACKAGE);
+				help_option_context.add_main_entries(local_options, Config.GETTEXT_DOMAIN);
+				help_option_context.add_main_entries(options, Config.GETTEXT_DOMAIN);
 				help_option_context.add_group(get_game_option_group());
 				help_option_context.add_group(get_log_option_group());
 				help_option_context.add_group(Gtk.get_option_group(true));
-				help_option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+				help_option_context.set_translation_domain(Config.GETTEXT_DOMAIN);
 				print(help_option_context.get_help(false, null));
 				exit_status = 0;
 				return true;
@@ -327,11 +326,11 @@ namespace GameHub
 			unowned string[] args = oargs;
 
 			var option_context = new OptionContext();
-			option_context.add_main_entries(options, ProjectConfig.GETTEXT_PACKAGE);
+			option_context.add_main_entries(options, Config.GETTEXT_DOMAIN);
 			option_context.add_group(get_game_option_group());
 			option_context.add_group(get_log_option_group());
 			option_context.add_group(Gtk.get_option_group(true));
-			option_context.set_translation_domain(ProjectConfig.GETTEXT_PACKAGE);
+			option_context.set_translation_domain(Config.GETTEXT_DOMAIN);
 
 			try
 			{
@@ -405,11 +404,15 @@ namespace GameHub
 		private void print_version(bool plain)
 		{
 			println(plain, "- GameHub");
-			println(plain, "    Version: %s", ProjectConfig.VERSION);
-			println(plain, "    Branch:  %s", ProjectConfig.GIT_BRANCH);
-			if(ProjectConfig.GIT_COMMIT != null && ProjectConfig.GIT_COMMIT.length > 0)
+			println(plain, "    Version: %s", Config.VERSION);
+
+			if(Config.GIT_BRANCH != null && Config.GIT_BRANCH.length > 0)
 			{
-				println(plain, "    Commit:  %s", ProjectConfig.GIT_COMMIT);
+				println(plain, "    Branch:  %s", Config.GIT_BRANCH);
+			}
+			if(Config.GIT_COMMIT != null && Config.GIT_COMMIT.length > 0)
+			{
+				println(plain, "    Commit:  %s", Config.GIT_COMMIT);
 			}
 
 			println(plain, "- Environment");

@@ -1,20 +1,4 @@
 build/
-
-debian/*
-!debian/source/
-!debian/changelog
-!debian/changelog.in
-!debian/compat
-!debian/control.in
-!debian/copyright
-!debian/rules.in
-
-flatpak/com.github.tkashkin.gamehub.json
-flatpak/.flatpak-builder/
+builddir/
 
 *~
-
-.buildconfig
-
-snap/*
-!snap/snapcraft.yaml

@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -209,13 +209,9 @@ namespace GameHub.UI.Views.GamesView
 			});
 
 			var tags_scrolled = new ScrolledWindow(null, null);
-			#if GTK_3_22
 			tags_scrolled.propagate_natural_width = true;
 			tags_scrolled.propagate_natural_height = true;
 			tags_scrolled.max_content_height = 440;
-			#else
-			tags_scrolled.min_content_height = 320;
-			#endif
 			tags_scrolled.add(tags_list);
 			tags_scrolled.show_all();
 

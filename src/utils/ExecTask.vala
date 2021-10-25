@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -138,9 +138,9 @@ namespace GameHub.Utils
 			}
 
 			#if PKG_FLATPAK
-			if(_override_runtime && ProjectConfig.RUNTIME.length > 0)
+			if(_override_runtime && Config.RUNTIME.length > 0)
 			{
-				_env = Environ.set_variable(_env, "LD_LIBRARY_PATH", ProjectConfig.RUNTIME);
+				_env = Environ.set_variable(_env, "LD_LIBRARY_PATH", Config.RUNTIME);
 			}
 			string[] cmd = { "flatpak-spawn", "--host" };
 			foreach(var arg in _cmd)

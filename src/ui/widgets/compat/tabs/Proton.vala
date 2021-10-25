@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -136,11 +136,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 				menu.add(custom_menu_item);
 
 				menu.show_all();
-				#if GTK_3_22
 				menu.popup_at_widget(button, Gravity.SOUTH_EAST, Gravity.NORTH_EAST, null);
-				#else
-				menu.popup(null, null, null, 0, Gdk.CURRENT_TIME);
-				#endif
 			}
 			else
 			{
@@ -150,11 +146,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 
 		private void add_custom_proton_version()
 		{
-			#if GTK_3_22
 			var chooser = new FileChooserNative(_("Select Proton executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));
-			#else
-			var chooser = new FileChooserDialog(_("Select Proton executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
-			#endif
 			if(chooser.run() == ResponseType.ACCEPT)
 			{
 				Tools.Proton.Proton.add_proton_version_from_file(chooser.get_file());

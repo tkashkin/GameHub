@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			Object(
 				header: _("About"),
 				title: _("About GameHub"),
-				description: ProjectConfig.VERSION,
+				description: Config.VERSION,
 				icon_name: "gamehub-symbolic"
 			);
 		}
@@ -51,7 +51,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			var content_hbox = new Box(Orientation.HORIZONTAL, 0);
 			content_hbox.margin = 12;
 
-			var logo = new Image.from_icon_name(ProjectConfig.PROJECT_NAME, IconSize.DIALOG);
+			var logo = new Image.from_icon_name(Config.RDNN, IconSize.DIALOG);
 			logo.valign = Align.START;
 
 			var appinfo_grid = new Grid();
@@ -63,7 +63,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			app_title.hexpand = true;
 			app_title.xalign = 0;
 
-			var app_version = new Label(ProjectConfig.VERSION);
+			var app_version = new Label(Config.VERSION);
 			app_version.hexpand = true;
 			app_version.xalign = 0;
 			app_version.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL);
@@ -90,7 +90,7 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 			links_view.expand = true;
 			links_view.margin = 4;
 
-			add_link(C_("about_link", "Website"), "https://tkashkin.tk/projects/gamehub", "web-browser-symbolic");
+			add_link(C_("about_link", "Website"), "https://tkashkin.github.io/projects/gamehub", "web-browser-symbolic");
 
 			var source_mirrors = new Box(Orientation.HORIZONTAL, 0);
 
@@ -128,12 +128,12 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages
 		private void copy_app_info()
 		{
 			var info = "- GameHub\n" +
-				"    Version: %s\n".printf(ProjectConfig.VERSION) +
-				"    Branch:  %s\n".printf(ProjectConfig.GIT_BRANCH);
+				"    Version: %s\n".printf(Config.VERSION) +
+				"    Branch:  %s\n".printf(Config.GIT_BRANCH);
 
-			if(ProjectConfig.GIT_COMMIT != null && ProjectConfig.GIT_COMMIT.length > 0)
+			if(Config.GIT_COMMIT != null && Config.GIT_COMMIT.length > 0)
 			{
-				info += "    Commit:  %s\n".printf(ProjectConfig.GIT_COMMIT);
+				info += "    Commit:  %s\n".printf(Config.GIT_COMMIT);
 			}
 
 			info += "- Environment\n";

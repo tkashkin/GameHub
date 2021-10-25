@@ -1,11 +1,11 @@
-res_icons = gnome.compile_resources(
-	'res_icons',
+gh_icons = import('gnome').compile_resources(
+	'icons',
 	'icons/icons.gresource.xml',
 	source_dir: 'icons'
 )
 
-res_styles = gnome.compile_resources(
-	'res_styles',
+gh_styles = import('gnome').compile_resources(
+	'styles',
 	'styles/styles.gresource.xml',
 	source_dir: 'styles'
 )

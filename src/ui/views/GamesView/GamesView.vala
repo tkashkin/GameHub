@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -188,13 +188,9 @@ namespace GameHub.UI.Views.GamesView
 			downloads_list.get_style_context().add_class("downloads-list");
 
 			var downloads_scrolled = new ScrolledWindow(null, null);
-			#if GTK_3_22
 			downloads_scrolled.propagate_natural_width = true;
 			downloads_scrolled.propagate_natural_height = true;
 			downloads_scrolled.max_content_height = 440;
-			#else
-			downloads_scrolled.min_content_height = 440;
-			#endif
 			downloads_scrolled.add(downloads_list);
 			downloads_scrolled.show_all();
 
@@ -376,11 +372,7 @@ namespace GameHub.UI.Views.GamesView
 					downloads.sensitive = downloads_count > 0;
 					if(downloads_count == 0)
 					{
-						#if GTK_3_22
 						downloads_popover.popdown();
-						#else
-						downloads_popover.hide();
-						#endif
 					}
 					#if UNITY
 					update_downloads_progress();
@@ -630,9 +622,7 @@ namespace GameHub.UI.Views.GamesView
 					msg.add_button(_("Settings"), 2);
 
 					msg.close.connect(() => {
-						#if GTK_3_22
 						msg.revealed = false;
-						#endif
 						Timeout.add(250, () => { messages.remove(msg); return Source.REMOVE; });
 					});
 
@@ -676,13 +666,11 @@ namespace GameHub.UI.Views.GamesView
 
 			if(view.selected == 0)
 			{
-				#if GTK_3_22
 				var card = games_grid.get_child_at_pos(0, 0) as GameCard?;
 				if(card != null)
 				{
 					card.game.run_or_install.begin();
 				}
-				#endif
 			}
 			else
 			{
@@ -698,10 +686,7 @@ namespace GameHub.UI.Views.GamesView
 		{
 			var bar = new InfoBar();
 			bar.message_type = type;
-
-			#if GTK_3_22
 			bar.revealed = false;
-			#endif
 
 			bar.show_close_button = true;
 			bar.get_content_area().add(new Label(text));
@@ -709,10 +694,7 @@ namespace GameHub.UI.Views.GamesView
 			messages.add(bar);
 
 			bar.show_all();
-
-			#if GTK_3_22
 			bar.revealed = true;
-			#endif
 
 			return bar;
 		}

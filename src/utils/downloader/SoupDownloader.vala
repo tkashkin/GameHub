@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -189,7 +189,6 @@ namespace GameHub.Utils.Downloader.SoupDownloader
 			int64 dl_bytes = 0;
 			int64 dl_bytes_total = 0;
 
-			#if SOUP_2_60
 			int64 resume_from = 0;
 			var resume_dl = false;
 
@@ -207,7 +206,6 @@ namespace GameHub.Utils.Downloader.SoupDownloader
 					}
 				}
 			}
-			#endif
 
 			msg.got_headers.connect(() => {
 				dl_bytes_total = msg.response_headers.get_content_length();
@@ -264,7 +262,6 @@ namespace GameHub.Utils.Downloader.SoupDownloader
 						debug(@"[SoupDownloader] Downloading to '%s'", download.local.get_path());
 					}
 
-					#if SOUP_2_60
 					int64 rstart = -1, rend = -1;
 					if(resume_dl && msg.response_headers.get_content_range(out rstart, out rend, out dl_bytes_total))
 					{
@@ -277,7 +274,6 @@ namespace GameHub.Utils.Downloader.SoupDownloader
 						local_stream = download.local_tmp.append_to(FileCreateFlags.NONE);
 					}
 					else
-					#endif
 					{
 						local_stream = download.local_tmp.replace(null, false, FileCreateFlags.REPLACE_DESTINATION);
 					}

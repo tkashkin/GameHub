@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -537,13 +537,11 @@ namespace GameHub.Data.Sources.GOG
 				this.unlocked = unlocked;
 				this.global_percentage = global_percentage;
 
-				#if GLIB_2_56
 				if(unlock_date != null)
 				{
 					this.unlock_date = new DateTime.from_iso8601(unlock_date, new TimeZone.utc());
 					this.unlock_time = Utils.get_relative_datetime(this.unlock_date);
 				}
-				#endif
 			}
 		}
 

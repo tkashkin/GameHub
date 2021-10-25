@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -208,11 +208,7 @@ namespace GameHub.UI.Widgets.Compat.Tabs
 
 		public override void add_new_tool(Button button)
 		{
-			#if GTK_3_22
 			var chooser = new FileChooserNative(_("Select Wine executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), _("Cancel"));
-			#else
-			var chooser = new FileChooserDialog(_("Select Wine executable"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.OPEN, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
-			#endif
 			if(chooser.run() == ResponseType.ACCEPT)
 			{
 				var wine_executable = chooser.get_file();

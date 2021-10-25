@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -228,11 +228,7 @@ namespace GameHub.UI.Dialogs.InstallDialog
 			var import = sgrp_import.add_setting(new ButtonLabelSetting(_("Import installation directory if game is already installed"), _("Import")));
 			parent.add(sgrp_import);
 
-			#if GTK_3_22
 			var install_dir_chooser = new FileChooserNative(_("Select installation directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER, _("Import"), _("Cancel"));
-			#else
-			var install_dir_chooser = new FileChooserDialog(_("Select installation directory"), GameHub.UI.Windows.MainWindow.instance, FileChooserAction.SELECT_FOLDER, _("Import"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
-			#endif
 
 			import.button.clicked.connect(() => {
 				if(install_dir_chooser.run() == ResponseType.ACCEPT)

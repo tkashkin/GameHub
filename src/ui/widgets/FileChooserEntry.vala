@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ namespace GameHub.UI.Widgets
 		public bool              allow_executable { get; construct; }
 		public string?           root_dir_prefix  { get; set; }
 
-		public FileChooser       chooser          { get; protected set; }
+		public FileChooserNative chooser          { get; protected set; }
 
 		public string? file_path
 		{
@@ -58,11 +58,7 @@ namespace GameHub.UI.Widgets
 
 		construct
 		{
-			#if GTK_3_22
 			chooser = new FileChooserNative(title ?? _("Select file"), GameHub.UI.Windows.MainWindow.instance, action, _("Select"), _("Cancel"));
-			#else
-			chooser = new FileChooserDialog(title ?? _("Select file"), GameHub.UI.Windows.MainWindow.instance, action, _("Select"), ResponseType.ACCEPT, _("Cancel"), ResponseType.CANCEL);
-			#endif
 
 			activate.connect(() => {
 				select_file_path(text);
@@ -198,11 +194,7 @@ namespace GameHub.UI.Widgets
 
 		private int run_chooser()
 		{
-			#if GTK_3_22
-			return ((FileChooserNative) chooser).run();
-			#else
-			return ((FileChooserDialog) chooser).run();
-			#endif
+			return chooser.run();
 		}
 
 		private void scroll_to_end()

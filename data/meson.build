@@ -1,71 +1,78 @@
-icon_sizes = ['32', '48', '64', '128']
-
-foreach i : icon_sizes
+foreach size: ['32', '48', '64', '128']
 	install_data(
-		join_paths('icon', i + '.svg'),
-		install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'icons', 'hicolor', i + 'x' + i, 'apps'),
-		rename: meson.project_name() + '.svg'
+		'icon' / (size + '.svg'),
+		rename: gh_rdnn + '.svg',
+		install_dir: get_option('prefix') / get_option('datadir') / 'icons' / 'hicolor' / (size + 'x' + size) / 'apps'
 	)
 	install_data(
-		join_paths('icon', i + '.svg'),
-		install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'icons', 'hicolor', i + 'x' + i + '@2', 'apps'),
-		rename: meson.project_name() + '.svg'
+		'icon' / (size + '.svg'),
+		rename: gh_rdnn + '.svg',
+		install_dir: get_option('prefix') / get_option('datadir') / 'icons' / 'hicolor' / (size + 'x' + size + '@2') / 'apps'
 	)
 endforeach
 
-gschema_conf = configuration_data()
-gschema_conf.set('SCHEMA_ID', meson.project_name())
-gschema_conf.set('SCHEMA_PATH', '/' + ('/'.join(meson.project_name().split('.')))) # meson.project_name().replace('.', '/')
-gschema_conf.set('PREF_API_KEY_STEAM', get_option('api_key_steam'))
-gschema_conf.set('PREF_API_KEY_ITCH', get_option('api_key_itch'))
-gschema_conf.set('PREF_API_KEY_IGDB', get_option('api_key_igdb'))
-gschema_conf.set('PREF_API_KEY_STEAMGRIDDB', get_option('api_key_steamgriddb'))
-gschema_conf.set('PREF_LIBRETRO_CORE_DIR', get_option('libretro_core_dir'))
-gschema_conf.set('PREF_LIBRETRO_CORE_INFO_DIR', get_option('libretro_core_info_dir'))
+gh_data_config = {
+	'RDNN': gh_rdnn,
+	'SCHEMA_ID': gh_rdnn,
+	'SCHEMA_PATH': '/' + gh_rdnn.replace('.', '/'),
+	'PREF_API_KEY_STEAM': get_option('api_key_steam'),
+	'PREF_API_KEY_ITCH': get_option('api_key_itch'),
+	'PREF_API_KEY_IGDB': get_option('api_key_igdb'),
+	'PREF_API_KEY_STEAMGRIDDB': get_option('api_key_steamgriddb'),
+	'PREFIX': get_option('prefix'),
+	'BINDIR': get_option('prefix') / get_option('bindir'),
+	'DATADIR': get_option('prefix') / get_option('datadir'),
+	'LOCALEDIR': get_option('prefix') / get_option('localedir'),
+	'GETTEXT_DOMAIN': gh_gettext_domain
+}
 
 configure_file(
-	input: meson.project_name() + '.gschema.xml.in',
-	output: meson.project_name() + '.gschema.xml',
-	configuration: gschema_conf,
+	input: 'gamehub.gschema.xml.in',
+	output: gh_rdnn + '.gschema.xml',
+	configuration: gh_data_config,
 	install: true,
-	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'glib-2.0', 'schemas')
+	install_dir: get_option('prefix') / get_option('datadir') / 'glib-2.0' / 'schemas'
 )
 
-install_subdir('share/compat', install_dir: join_paths(get_option('prefix'), get_option('datadir'), meson.project_name()))
-install_subdir('share/tweaks', install_dir: join_paths(get_option('prefix'), get_option('datadir'), meson.project_name()))
+install_subdir('share/compat', install_dir: get_option('prefix') / get_option('datadir') / gh_rdnn)
+install_subdir('share/tweaks', install_dir: get_option('prefix') / get_option('datadir') / gh_rdnn)
 
-i18n.merge_file(
-	input: meson.project_name() + '.desktop.in',
-	output: meson.project_name() + '.desktop',
-	po_dir: join_paths(meson.source_root(), 'po'),
+import('i18n').merge_file(
+	input: configure_file(
+		input: 'gamehub.desktop',
+		output: gh_rdnn + '.desktop.in',
+		configuration: gh_data_config
+	),
+	output: gh_rdnn + '.desktop',
+	po_dir: meson.project_source_root() / 'po',
 	type: 'desktop',
 	install: true,
-	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'applications')
+	install_dir: get_option('prefix') / get_option('datadir') / 'applications'
 )
 
-appdata_changelog_conf = configuration_data()
-appdata_changelog_conf.set('CHANGELOG', run_command('cat', files(meson.project_name() + '.changelog.xml')).stdout().strip())
+import('i18n').merge_file(
+	input: configure_file(
+		input: 'gamehub.metainfo.xml',
+		output: gh_rdnn + '.metainfo.xml.in',
+		configuration: gh_data_config + {'CHANGELOG': run_command('cat', files('gamehub.changelog.xml')).stdout().strip()}
+	),
+	output: gh_rdnn + '.metainfo.xml',
+	po_dir: meson.project_source_root() / 'po',
+	type: 'xml',
+	install: true,
+	install_dir: get_option('prefix') / get_option('datadir') / 'metainfo'
+)
 
 configure_file(
-	input: meson.project_name() + '.appdata.xml.in',
-	output: meson.project_name() + '.appdata.xml',
-	configuration: appdata_changelog_conf,
+	input: 'gamehub.policy',
+	output: gh_rdnn + '.policy',
+	configuration: gh_data_config,
 	install: true,
-	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'metainfo')
-)
-
-polkit_policy = configure_file(
-	input: meson.project_name() + '.policy.in',
-	output: meson.project_name() + '.policy',
-	configuration: conf_data
+	install_dir: get_option('prefix') / get_option('datadir') / 'polkit-1' / 'actions'
 )
 
 install_data(
-	polkit_policy,
-	install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'polkit-1', 'actions')
-)
-
-install_data(
-	meson.project_name() + '-overlayfs-helper',
-	install_dir: join_paths(get_option('prefix'), get_option('bindir'))
+	'gamehub-overlayfs-helper',
+	rename: gh_rdnn + '-overlayfs-helper',
+	install_dir: get_option('prefix') / get_option('bindir')
 )

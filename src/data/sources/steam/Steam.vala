@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -481,19 +481,39 @@ namespace GameHub.Data.Sources.Steam
 				if(libraryfolders == null || !libraryfolders.query_exists()) return _library_folders;
 
 				var root = Parser.parse_vdf_file(libraryfolders.get_path());
-				var lf = Parser.json_object(root, {"LibraryFolders"});
+				var lf = Parser.json_object(root, {"libraryfolders"}) ?? Parser.json_object(root, {"LibraryFolders"});
 
 				if(lf != null)
 				{
-					foreach(var key in lf.get_members())
-					{
-						var libdir = FS.file(lf.get_string_member(key));
+					lf.foreach_member((obj, key, node) => {
+						File? libdir = null;
+
+						if(node.get_node_type() == Json.NodeType.VALUE)
+						{
+							libdir = FS.file(node.get_string());
+						}
+						else if(node.get_node_type() == Json.NodeType.OBJECT)
+						{
+							var libobj = node.get_object();
+							if(libobj.has_member("path"))
+							{
+								libdir = FS.file(libobj.get_string_member("path"));
+							}
+						}
+
 						if(libdir != null && libdir.query_exists())
 						{
 							var dir = FS.find_case_insensitive(libdir, "steamapps");
-							if(dir != null && dir.query_exists()) _library_folders.add(dir.get_path());
+							if(dir != null && dir.query_exists())
+							{
+								var dir_path = dir.get_path();
+								if(!(dir_path in _library_folders))
+								{
+									_library_folders.add(dir_path);
+								}
+							}
 						}
-					}
+					});
 				}
 
 				return _library_folders;
@@ -536,9 +556,9 @@ namespace GameHub.Data.Sources.Steam
 			var game_node = new BinaryVDF.ListNode.node(root_node.nodes.size.to_string());
 
 			game_node.add_node(new BinaryVDF.StringNode.node("AppName", game.name));
-			game_node.add_node(new BinaryVDF.StringNode.node("exe", ProjectConfig.PROJECT_NAME));
+			game_node.add_node(new BinaryVDF.StringNode.node("exe", Config.RDNN));
 			game_node.add_node(new BinaryVDF.StringNode.node("LaunchOptions", "--run " + game.full_id));
-			game_node.add_node(new BinaryVDF.StringNode.node("ShortcutPath", ProjectConfig.DATADIR + "/applications/" + ProjectConfig.PROJECT_NAME + ".desktop"));
+			game_node.add_node(new BinaryVDF.StringNode.node("ShortcutPath", Config.DATADIR + "/applications/" + Config.RDNN + ".desktop"));
 			game_node.add_node(new BinaryVDF.StringNode.node("StartDir", "."));
 			game_node.add_node(new BinaryVDF.IntNode.node("IsHidden", 0));
 			game_node.add_node(new BinaryVDF.IntNode.node("OpenVR", 0));
@@ -558,7 +578,7 @@ namespace GameHub.Data.Sources.Steam
 				{
 					var cached = ImageCache.local_file(game.image_vertical, @"games/$(game.source.id)/$(game.id)/images/");
 					// https://github.com/boppreh/steamgrid/blob/master/games.go#L120
-					uint64 id = crc32(0, (ProjectConfig.PROJECT_NAME + game.name).data) | 0x80000000;
+					uint64 id = crc32(0, (Config.RDNN + game.name).data) | 0x80000000;
 					var dest = FS.file(get_userdata_dir().get_child("config").get_child("grid").get_path(), id.to_string() + "p.png");
 					cached.copy(dest, NONE);
 				}

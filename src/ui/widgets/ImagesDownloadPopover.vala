@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -182,12 +182,7 @@ namespace GameHub.UI.Widgets
 					}
 					game.save();
 				}
-
-				#if GTK_3_22
 				popdown();
-				#else
-				hide();
-				#endif
 			});
 
 			var images_vbox = new Box(Orientation.VERTICAL, 8);

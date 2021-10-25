@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -97,11 +97,9 @@ namespace GameHub.UI.Widgets
 
 			scrolled = new ScrolledWindow(null, null);
 			scrolled.vexpand = true;
-			#if GTK_3_22
 			scrolled.propagate_natural_width = true;
 			scrolled.propagate_natural_height = true;
 			scrolled.max_content_height = 320;
-			#endif
 			scrolled.add(list);
 
 			add(scrolled);

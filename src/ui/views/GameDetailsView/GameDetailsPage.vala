@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -90,10 +90,8 @@ namespace GameHub.UI.Views.GameDetailsView
 			spinner.valign = Align.CENTER;
 
 			content_scrolled = new ScrolledWindow(null, null);
-			#if GTK_3_22
 			content_scrolled.propagate_natural_width = true;
 			content_scrolled.propagate_natural_height = true;
-			#endif
 
 			content = new Box(Orientation.VERTICAL, 0);
 			content.margin_start = content.margin_end = 8;
@@ -313,9 +311,7 @@ namespace GameHub.UI.Views.GameDetailsView
 
 			title.max_width_chars = is_dialog ? 36 : -1;
 
-			#if GTK_3_22
 			content_scrolled.max_content_height = is_dialog ? 640 : -1;
-			#endif
 
 			if(is_updated) return;
 

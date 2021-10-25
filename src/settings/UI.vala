@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ namespace GameHub.Settings.UI
 
 		public Appearance()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".ui.appearance");
+			base(Config.RDNN + ".ui.appearance");
 			list_style_cache = list_style;
 		}
 
@@ -206,7 +206,7 @@ namespace GameHub.Settings.UI
 
 		public Behavior()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".ui.behavior");
+			base(Config.RDNN + ".ui.behavior");
 		}
 
 		private static Behavior? _instance;

@@ -1,6 +1,6 @@
 /*
 This file is part of GameHub.
-Copyright (C) 2018-2019 Anatoliy Kashkin
+Copyright (C) Anatoliy Kashkin
 
 GameHub is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ namespace GameHub.Settings.Paths
 
 		public Steam()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".paths.steam");
+			base(Config.RDNN + ".paths.steam");
 		}
 
 		private static Steam _instance;
@@ -53,7 +53,7 @@ namespace GameHub.Settings.Paths
 
 		public GOG()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".paths.gog");
+			base(Config.RDNN + ".paths.gog");
 		}
 
 		private static GOG _instance;
@@ -77,7 +77,7 @@ namespace GameHub.Settings.Paths
 
 		public Humble()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".paths.humble");
+			base(Config.RDNN + ".paths.humble");
 		}
 
 		private static Humble _instance;
@@ -102,7 +102,7 @@ namespace GameHub.Settings.Paths
 
 		public Itch()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".paths.itch");
+			base(Config.RDNN + ".paths.itch");
 		}
 
 		private static Itch _instance;
@@ -130,7 +130,7 @@ namespace GameHub.Settings.Paths
 
 		public Collection()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".paths.collection");
+			base(Config.RDNN + ".paths.collection");
 		}
 
 		private static Collection? _instance;
@@ -210,7 +210,7 @@ namespace GameHub.Settings.Paths
 
 			public GOG()
 			{
-				base(ProjectConfig.PROJECT_NAME + ".paths.collection.gog");
+				base(Config.RDNN + ".paths.collection.gog");
 			}
 
 			private static GOG? _instance;
@@ -255,7 +255,7 @@ namespace GameHub.Settings.Paths
 
 			public Humble()
 			{
-				base(ProjectConfig.PROJECT_NAME + ".paths.collection.humble");
+				base(Config.RDNN + ".paths.collection.humble");
 			}
 
 			private static Humble? _instance;
