@@ -7,26 +7,28 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-10-29 22:36+0000\n"
+"Last-Translator: TassiloBalbo <contact@fsikora.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gamehub/"
+"translations/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr ""
+msgstr "Zobrazit nápovědu"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Ukázat verzi aplikace a ukončit"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Restartovat s připojeným GDB debuggerem"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
@@ -38,11 +40,11 @@ msgstr ""
 
 #: src/app.vala:99
 msgid "Show main window"
-msgstr ""
+msgstr "Zobrazit hlavní okno"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "Zobrazit nastavení aplikace"
 
 #: src/app.vala:101
 msgid "Show about dialog"
@@ -54,33 +56,34 @@ msgstr ""
 
 #: src/app.vala:106
 msgid "Run game"
-msgstr ""
+msgstr "Spustit hru"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "Zobrazit možnosti kompatibility"
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr ""
+msgstr "Otevřít detaily hry"
 
 #: src/app.vala:109
 msgid "Open game properties"
-msgstr ""
+msgstr "Otevřít možnosti hry"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Povolit debug logování"
 
 #: src/app.vala:114
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Logovat autentizační proces a citlivé informace jako autentizační tokeny"
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr ""
+msgstr "Logovat manažera stahování"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
@@ -88,7 +91,7 @@ msgstr ""
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Vypnout filtrování logových zpráv"
 
 #: src/app.vala:118
 msgid "Verbose logging"
@@ -96,7 +99,7 @@ msgstr ""
 
 #: src/app.vala:247
 msgid "Game Options:"
-msgstr ""
+msgstr "Herní možnosti"
 
 #: src/app.vala:247
 msgid "Show game options help"
