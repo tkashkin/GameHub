@@ -240,6 +240,11 @@ namespace GameHub.UI.Views.GameDetailsView
 						continue;
 					}
 
+					if(Game.is_equal(g, m) || (g is Sources.EpicGames.EpicGame.DLC && Game.is_equal(((Sources.EpicGames.EpicGame.DLC)g).game, m)))
+					{
+						continue;
+					}
+
 					add_page(m);
 				}
 			}

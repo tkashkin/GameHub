@@ -40,7 +40,7 @@ namespace GameHub.UI.Views.GamesView
 
 		construct
 		{
-			if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC))
+			if(game.status.state == Game.State.INSTALLED && !(game is Sources.GOG.GOGGame.DLC) && !(game is Sources.EpicGames.EpicGame.DLC))
 			{
 				var run = new Gtk.MenuItem.with_label(_("Run"));
 				run.sensitive = game.can_be_launched();
@@ -80,7 +80,7 @@ namespace GameHub.UI.Views.GamesView
 			details.activate.connect(() => new Dialogs.GameDetailsDialog(game).show_all());
 			add(details);
 
-			if(!(game is Sources.GOG.GOGGame.DLC))
+			if(!(game is Sources.GOG.GOGGame.DLC) && !(game is Sources.EpicGames.EpicGame.DLC))
 			{
 				if(Settings.UI.Behavior.instance.merge_games && !is_merge_submenu)
 				{
@@ -154,7 +154,7 @@ namespace GameHub.UI.Views.GamesView
 				add(open_screenshots_dir);
 			}*/
 
-			if((game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame) && !(game is Sources.GOG.GOGGame.DLC))
+			if((game.status.state == Game.State.INSTALLED || game is Sources.User.UserGame) && !(game is Sources.GOG.GOGGame.DLC) && !(game is Sources.EpicGames.EpicGame.DLC))
 			{
 				var uninstall = new Gtk.MenuItem.with_label((game is Sources.User.UserGame) ? _("Remove") : _("Uninstall"));
 				uninstall.activate.connect(() => game.uninstall.begin());
@@ -162,7 +162,7 @@ namespace GameHub.UI.Views.GamesView
 				add(uninstall);
 			}
 
-			if(!(game is Sources.GOG.GOGGame.DLC))
+			if(!(game is Sources.GOG.GOGGame.DLC) && !(game is Sources.EpicGames.EpicGame.DLC))
 			{
 				add(new Gtk.SeparatorMenuItem());
 				var properties = new Gtk.MenuItem.with_label(_("Properties"));

@@ -23,6 +23,7 @@ using GameHub.Utils;
 
 using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Steam;
+using GameHub.Data.Sources.EpicGames;
 using GameHub.Data.Sources.GOG;
 using GameHub.Data.Sources.Humble;
 using GameHub.Data.Sources.Itch;
@@ -154,6 +155,7 @@ namespace GameHub.Data.DB.Tables
 			}
 
 			if(game is Sources.GOG.GOGGame.DLC) return false;
+			if(game is Sources.EpicGames.EpicGame.DLC) return false;
 
 			unowned Sqlite.Database? db = Database.instance.db;
 			if(db == null) return false;
@@ -339,6 +341,10 @@ namespace GameHub.Data.DB.Tables
 				{
 					g = new SteamGame.from_db((Steam) s, st);
 				}
+				else if(s is EpicGames)
+				{
+					g = new EpicGame.from_db((EpicGames) s, st);
+				}
 				else if(s is GOG)
 				{
 					g = new GOGGame.from_db((GOG) s, st);
@@ -423,6 +429,10 @@ namespace GameHub.Data.DB.Tables
 					if(s is Steam)
 					{
 						g = new SteamGame.from_db((Steam) s, st);
+					}
+					else if(s is EpicGames)
+					{
+						g = new EpicGame.from_db((EpicGames) s, st);
 					}
 					else if(s is GOG)
 					{

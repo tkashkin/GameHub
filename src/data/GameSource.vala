@@ -21,6 +21,7 @@ using Gee;
 using GameHub.Utils;
 using GameHub.Data.Runnables;
 using GameHub.Data.Sources.Steam;
+using GameHub.Data.Sources.EpicGames;
 using GameHub.Data.Sources.GOG;
 
 namespace GameHub.Data

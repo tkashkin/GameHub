@@ -44,8 +44,17 @@ namespace GameHub.Data.Runnables
 
 		public string? store_page { get; protected set; default = null; }
 
+		/**
+		 * Last launch date in unix time
+		 */
 		public int64 last_launch { get; set; default = 0; }
 		public int64 playtime_source { get; set; default = 0; }
+
+		/**
+		 * Tracked playtime in minutes
+		 * 
+		 * minutes = {@link GLib.TimeSpan} / 6e7
+		 */
 		public int64 playtime_tracked { get; set; default = 0; }
 		public int64 playtime { get { return playtime_source + playtime_tracked; } }
 
@@ -103,7 +112,7 @@ namespace GameHub.Data.Runnables
 		// Version
 
 		private string? _version = null;
-		public string? version
+		public virtual string? version
 		{
 			get { return _version; }
 			set
@@ -123,7 +132,7 @@ namespace GameHub.Data.Runnables
 			}
 		}
 
-		protected void load_version()
+		protected virtual void load_version()
 		{
 			if(install_dir == null || !install_dir.query_exists()) return;
 			var file = get_file(@"$(FS.GAMEHUB_DIR)/version");
