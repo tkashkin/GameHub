@@ -1218,6 +1218,12 @@ namespace GameHub.Data.Sources.EpicGames
 			var tmp2_urls = base_urls;         //  copy list for manipulation
 			var old_bytes = (version != null) ? get_installed_manifest() : null;
 
+			//  FIXME: Hack for importing existing files
+			//  Somewhere in the import process gets the latest_version written to version which
+			//  screws later checks and results into downloading nothing because all files are already
+			//  present but they aren't.
+			if (version != null && version == latest_version) old_bytes = null;
+
 			if(old_bytes == null)
 			{
 				debug("[Sources.EpicGames.prepare_download] Could not load old manifest, patching will not work!");

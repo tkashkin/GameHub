@@ -249,6 +249,7 @@ namespace GameHub.Data.Sources.EpicGames
 				//  TODO: do we care about this?
 				var references         = new HashMultiSet<uint32>(); // FIXME: correct type to count?
 				var file_manifest_list = new_manifest.file_manifest_list.elements;
+				if (log_analysis) debug(@"[Sources.EpicGames.AnalysisResult] Total file count: $(file_manifest_list.size)");
 
 				file_manifest_list.sort((a, b) => {
 					if(a.filename.down() < b.filename.down()) return -1;
@@ -365,6 +366,7 @@ namespace GameHub.Data.Sources.EpicGames
 					//  skip unchanged and empty files
 					if(current_file.filename in manifest_comparison.unchanged)
 					{
+						if(log_analysis) debug(@"Skipping because it hasn't changed: $(current_file.filename)");
 						continue;
 					}
 					else if(current_file.chunk_parts.size == 0)
