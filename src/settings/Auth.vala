@@ -64,7 +64,7 @@ namespace GameHub.Settings.Auth
 
 		public EpicGames()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".auth.epicgames");
+			base(Config.RDNN + ".auth.epicgames");
 		}
 
 		private static EpicGames? _instance;

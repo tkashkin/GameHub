@@ -53,7 +53,7 @@ namespace GameHub.Settings.Paths
 
 		public EpicGames()
 		{
-			base(ProjectConfig.PROJECT_NAME + ".paths.epicgames");
+			base(Config.RDNN + ".paths.epicgames");
 		}
 
 		private static EpicGames _instance;
