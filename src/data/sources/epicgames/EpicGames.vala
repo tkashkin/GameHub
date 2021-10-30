@@ -481,6 +481,7 @@ namespace GameHub.Data.Sources.EpicGames
 			                               "EpicGamesLauncher/11.0.1-14907503+++Portal+Release-Live " +
 			                               "UnrealEngine/4.23.0-14907503+++Portal+Release-Live " +
 			                               "Chrome/84.0.4147.38 Safari/537.36");
+			cookies.append(new Soup.Cookie("EPIC_COUNTRY", EpicGames.instance.country_code.up(), "epicgames.com", "/", 0));
 			cookies_to_request(cookies, message);
 			var status = session.send_message(message);
 			debug("[Sources.EpicGames.LegendaryCore.with_sid] Status: %s", status.to_string());
