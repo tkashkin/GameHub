@@ -59,7 +59,7 @@ namespace GameHub.Data
 				save();
 			}
 		}
-		public File? get_file(string? p, bool from_all_overlays=true)
+		public File? get_file(string? p)
 		{
 			if(p == null || p.length == 0 || install_dir == null) return null;
 			var path = p;
