@@ -231,7 +231,10 @@ namespace GameHub.Data.Compat
 			}
 
 			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.expand(FSUtils.Paths.Steam.Home));
-			env = Environ.set_variable(env, "PROTON_LOG", "1");
+
+			//  Both have to be enabled for debugging purposes
+			//  env = Environ.set_variable(env, "PROTON_LOG", "1");
+			//  env = Environ.set_variable(env, "SteamGameId", "GameHub");
 
 			if(parse_opts)
 			{
