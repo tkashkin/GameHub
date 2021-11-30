@@ -236,6 +236,11 @@ namespace GameHub.Data.Compat
 			//  env = Environ.set_variable(env, "PROTON_LOG", "1");
 			//  env = Environ.set_variable(env, "SteamGameId", "GameHub");
 
+			//  FIXME: Check for and adjust to PROTON_NO_ESYNC and PROTON_NO_FSYNC
+			//  These ensure we can run wineboot beforehand without getting mismatch errors later on in Proton
+			env = Environ.set_variable(env, "WINEESYNC", "1");
+			env = Environ.set_variable(env, "WINEFSYNC", "1");
+
 			if(parse_opts)
 			{
 				foreach(var opt in options)
