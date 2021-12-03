@@ -5,13 +5,14 @@
 # Anderson Guzman Abreu <chicobello1111@gmail.com>, 2020.
 # Eldhrimer <vico.220895@gmail.com>, 2020.
 # Adrián López Galera <adrlopgal@disroot.org>, 2021.
+# Jose Humberto Oliveros Magaña <holiveros@protonmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-01-09 20:32+0000\n"
-"Last-Translator: Adrián López Galera <adrlopgal@disroot.org>\n"
+"PO-Revision-Date: 2021-12-05 00:54+0000\n"
+"Last-Translator: Jose Humberto Oliveros Magaña <holiveros@protonmail.com>\n"
 "Language-Team: Spanish (Mexico) <https://hosted.weblate.org/projects/gamehub/"
 "translations/es_MX/>\n"
 "Language: es_MX\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -39,7 +40,7 @@ msgstr "Mostrar el trazado completo de GDB"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
-msgstr "Tratar errores fatales como críticos y terminar aplicación"
+msgstr "Tratar errores fatales como críticos y terminar la aplicación"
 
 #: src/app.vala:99
 msgid "Show main window"
@@ -87,7 +88,7 @@ msgstr ""
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr "Registrar el administrador de descargas"
+msgstr "Registrar eventos del administrador de descargas"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
@@ -99,7 +100,7 @@ msgstr "Deshabilitar el filtro de los mensajes del registro"
 
 #: src/app.vala:118
 msgid "Verbose logging"
-msgstr "Registro verboso"
+msgstr "Registro detallado"
 
 #: src/app.vala:247
 msgid "Game Options:"
@@ -419,12 +420,12 @@ msgstr "%s: Favoritos"
 
 #: src/data/adapters/GamesAdapter.vala:491
 msgid "Merging games"
-msgstr "Uniendo juegos"
+msgstr "Combinando juegos"
 
 #: src/data/adapters/GamesAdapter.vala:504
 #, c-format
 msgid "Merging games from %s"
-msgstr "Uniendo juegos desde %s"
+msgstr "Combinando juegos desde %s"
 
 #: src/data/adapters/GamesAdapter.vala:551
 #, c-format
@@ -504,12 +505,12 @@ msgstr "Autor"
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr "Alternativo"
+msgstr "Alternate"
 
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr "Difuso"
+msgstr "Blurred"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:228
@@ -520,12 +521,12 @@ msgstr "Material"
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr "Sin logo"
+msgstr "No logo"
 
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr "Logo blanco"
+msgstr "White logo"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
@@ -888,11 +889,11 @@ msgstr "Emuladores"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 msgid "Libretro core directory"
-msgstr "Directorio del núcleo de Libretro"
+msgstr "Directorio de núcleos de Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
 msgid "Libretro core info directory"
-msgstr "Directorio de información del núcleo de Libretro"
+msgstr "Directorio de información de núcleos de Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
@@ -1093,7 +1094,7 @@ msgstr "Pulse"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:115
 msgctxt "about_link"
 msgid "Forks"
-msgstr "Bifurcaciones del proyecto"
+msgstr "Forks del proyecto"
 
 #: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
@@ -1135,15 +1136,15 @@ msgstr "Descargar imágenes"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:144
 msgid "Image URL"
-msgstr "Imagen URL"
+msgstr "URL de imagen"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:148
 msgid "Vertical image URL"
-msgstr "Imagen URL vertical"
+msgstr "URL de imagen vertical"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:157
 msgid "Icon URL"
-msgstr "Icono URL"
+msgstr "URL de ícono"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
 msgid "Select working directory"
@@ -1176,11 +1177,11 @@ msgstr "Añadir a la librería de Steam"
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:53
 #, c-format
 msgid "%s: Overlays"
-msgstr "%s: Capas"
+msgstr "%s: Overlays"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid "Overlays are disabled"
-msgstr "Las capas están desactivadas"
+msgstr "Los overlays están desactivados"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:71
 msgid ""
@@ -1188,22 +1189,22 @@ msgid ""
 "\n"
 "Enabling will move game to the “base“ overlay"
 msgstr ""
-"Activa las capas para administrar contenidos descargables y mods. \n"
+"Activa los overlays para administrar contenidos descargables y mods. \n"
 "\n"
-"Activar esta opción moverá el juego a la capa \"base\""
+"Activar esta opción moverá el juego al overlay \"base\""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:77
 #: src/ui/views/GamesView/GameContextMenu.vala:175
 msgid "Overlays"
-msgstr "Capas"
+msgstr "Overlays"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:105
 msgid "Overlay ID (directory name)"
-msgstr "Identificador de capas (nombre del directorio)"
+msgstr "Identificador de overlay (nombre del directorio)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:110
 msgid "Overlay name (optional)"
-msgstr "Nombre de la capa (opcional)"
+msgstr "Nombre del overlay (opcional)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:112
 msgid "Add"
@@ -1211,7 +1212,7 @@ msgstr "Añadir"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:127
 msgid "Enable overlays"
-msgstr "Activar capas"
+msgstr "Activar overlays"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:182
 #, c-format
@@ -1221,7 +1222,7 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
-"Utilizar capas en esta ruta puede ser poco seguro\n"
+"Utilizar overlays en esta ruta puede ser poco seguro\n"
 "Proceda si acepta el riesgo\n"
 "\n"
 "Ruta: <b>%s</b>"
@@ -1233,7 +1234,7 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
-"El uso de capas en esta ruta no está permitido\n"
+"El uso de overlays en esta ruta no está permitido\n"
 "\n"
 "Ruta: <b>%s</b>"
 
@@ -1243,7 +1244,7 @@ msgstr "Abrir directorio"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
 msgid "Remove overlay"
-msgstr "Capa remota"
+msgstr "Overlay remoto"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
