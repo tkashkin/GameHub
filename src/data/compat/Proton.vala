@@ -231,7 +231,10 @@ namespace GameHub.Data.Compat
 			}
 
 			env = Environ.set_variable(env, "STEAM_COMPAT_CLIENT_INSTALL_PATH", FSUtils.expand(FSUtils.Paths.Steam.Home));
-			env = Environ.set_variable(env, "PROTON_LOG", "1");
+
+			//  Both have to be enabled for debugging purposes
+			//  env = Environ.set_variable(env, "PROTON_LOG", "1");
+			//  env = Environ.set_variable(env, "SteamGameId", "GameHub");
 
 			if(parse_opts)
 			{
@@ -240,6 +243,39 @@ namespace GameHub.Data.Compat
 					if(opt is CompatTool.BoolOption && ((CompatTool.BoolOption) opt).enabled)
 					{
 						env = Environ.set_variable(env, opt.name, "1");
+					}
+				}
+			}
+
+			//  These ensure we can run wineboot beforehand without getting mismatch errors later on in Proton
+			env = Environ.set_variable(env, "WINEESYNC", "1");
+			env = Environ.set_variable(env, "WINEFSYNC", "1");
+
+			if(Environ.get_variable(env, "PROTON_NO_ESYNC") != null && Environ.get_variable(env, "PROTON_NO_ESYNC") != "0")
+			{
+				env = Environ.set_variable(env, "WINEESYNC", "0");
+			}
+
+			if(Environ.get_variable(env, "PROTON_NO_FSYNC") != null && Environ.get_variable(env, "PROTON_NO_FSYNC") != "0")
+			{
+				env = Environ.set_variable(env, "WINEFSYNC", "0");
+			}
+
+			//  Tweaks will apply later on so we have to check for them in advance
+			if(runnable is TweakableGame)
+			{
+				var tweaks = ((TweakableGame) runnable).get_enabled_tweaks(this);
+				foreach (var tweak in tweaks) {
+					if (tweak.env != null)
+					{
+						if (tweak.env.has_key("PROTON_NO_ESYNC") && tweak.env.get("PROTON_NO_ESYNC") != "0")
+						{
+							env = Environ.set_variable(env, "WINEESYNC", "0");
+						}
+						if (tweak.env.has_key("PROTON_NO_FSYNC") && tweak.env.get("PROTON_NO_FSYNC") != "0")
+						{
+							env = Environ.set_variable(env, "WINEFSYNC", "0");
+						}
 					}
 				}
 			}
