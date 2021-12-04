@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
-# juliomorales98 <juliocesar.mr@protonmail.com>, 2019.
+# juliomorales98 <juliocesar.mr@protonmail.com>, 2019, 2021.
 # Anderson Guzman Abreu <chicobello1111@gmail.com>, 2020.
 # Eldhrimer <vico.220895@gmail.com>, 2020.
 # Adrián López Galera <adrlopgal@disroot.org>, 2021.
@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
 "PO-Revision-Date: 2021-12-05 00:54+0000\n"
-"Last-Translator: Jose Humberto Oliveros Magaña <holiveros@protonmail.com>\n"
+"Last-Translator: juliomorales98 <juliocesar.mr@protonmail.com>\n"
 "Language-Team: Spanish (Mexico) <https://hosted.weblate.org/projects/gamehub/"
 "translations/es_MX/>\n"
 "Language: es_MX\n"
@@ -440,7 +440,7 @@ msgstr "Por nombre"
 #: src/data/adapters/GamesAdapter.vala:679
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr "Por último lanzamiento"
+msgstr "Por último lanzado"
 
 #: src/data/adapters/GamesAdapter.vala:680
 msgctxt "sort_mode"
