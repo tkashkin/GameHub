@@ -7,13 +7,14 @@
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2019.
 # Wilker Santana da Silva <wilker@tutamail.com>, 2019, 2020.
 # Wellington Terumi Uemura <wellingtonuemura@gmail.com>, 2020.
+# Phraqzy <fabricio.marques1000@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-04-03 12:21+0000\n"
-"Last-Translator: Wilker Santana da Silva <wilker@tutamail.com>\n"
+"PO-Revision-Date: 2021-12-15 15:52+0000\n"
+"Last-Translator: Phraqzy <fabricio.marques1000@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -21,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -53,7 +54,7 @@ msgstr "Mostrar diálogo de opções do aplicativo"
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr "Mostrar o dialogo de \"Sobre\""
+msgstr "Mostrar o dialogo \"Sobre\""
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
@@ -61,7 +62,7 @@ msgstr "Número máximo de threads em trabalho em segundo plano"
 
 #: src/app.vala:106
 msgid "Run game"
-msgstr "Executar o jogo"
+msgstr "Iniciar o jogo"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
@@ -194,7 +195,7 @@ msgstr "Emulado"
 #: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
-msgstr "Correndo"
+msgstr "Rodando"
 
 #: src/data/Game.vala:628
 msgctxt "status"
@@ -266,7 +267,7 @@ msgstr "DLC: %s"
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
 msgid "%s: no available installers"
-msgstr "%s: instaladores não disponíveis"
+msgstr "%s: nenhum instalador disponível"
 
 #: src/data/sources/humble/HumbleGame.vala:344
 msgid ""
@@ -280,7 +281,7 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr "%s esquerda;"
+msgstr "%s restando;"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
@@ -382,11 +383,11 @@ msgstr "Executar taskmgr"
 
 #: src/data/compat/Wine.vala:53
 msgid "Wine prefix"
-msgstr "Prefixo do wine"
+msgstr "Prefixo do Wine"
 
 #: src/data/compat/Wine.vala:55
 msgid "Environment variables"
-msgstr "Variáveis ambientais"
+msgstr "Variáveis de ambiente"
 
 #: src/data/compat/Wine.vala:60
 msgid "InnoSetup default options"
@@ -615,7 +616,7 @@ msgstr "Colorido"
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr "Estilo de ícone"
+msgstr "Estilo do ícone"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 msgid "Game card"
@@ -692,7 +693,7 @@ msgstr "Mesclar jogos de diferentes fontes"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:50
 msgid "Use imported tags"
-msgstr "Use tags importadas"
+msgstr "Usar tags importadas"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:51
 msgid "General"
@@ -734,7 +735,7 @@ msgstr "Conteúdo de bônus"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
-msgstr "Syntax de variável: <b>$var</b> ou <b>${var}</b>"
+msgstr "Sintaxe de variável: <b>$var</b> ou <b>${var}</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:86
 msgid "Game name"
@@ -791,7 +792,7 @@ msgstr "Ajustes"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:34
 msgid "Tweak launch options and apply them to games automatically"
-msgstr "Ajuste as opções de lançamento e aplique-as aos jogos automaticamente"
+msgstr "Ajustar as opções de lançamento e aplicá-las aos jogos automaticamente"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:79
 msgid ""
@@ -898,11 +899,11 @@ msgstr "Diretório de informações do núcleo do Libretro"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
-msgstr "Ignorados núcleos de Libretro"
+msgstr "Núcleos do Libretro ignorados"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:54
 msgid "Ignored game file extensions"
-msgstr "Extenções de arquivos de jogos ignoradas"
+msgstr "Extensões de arquivos de jogos ignoradas"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:66
 msgid "No cores found"
@@ -929,7 +930,7 @@ msgstr[1] "%u Emuladores personalizados"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 msgid "Save"
-msgstr "Salve"
+msgstr "Salvar"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:250
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
@@ -1074,7 +1075,7 @@ msgstr "Relatar um problema"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:104
 msgctxt "about_link"
 msgid "Suggest translations"
-msgstr "Surgerir traduções"
+msgstr "Sugerir traduções"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:110
 msgctxt "about_link"
@@ -1090,12 +1091,12 @@ msgstr "Contribuidores"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:114
 msgctxt "about_link"
 msgid "Pulse"
-msgstr "Pulso"
+msgstr "Pulse"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:115
 msgctxt "about_link"
 msgid "Forks"
-msgstr "Garfos"
+msgstr "Bifurcações"
 
 #: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
@@ -1149,7 +1150,7 @@ msgstr "URL do ícone"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
 msgid "Select working directory"
-msgstr "Selecione o diretório de trabalho"
+msgstr "Selecionar o diretório de trabalho"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
 msgid "Working directory"
@@ -1161,7 +1162,7 @@ msgstr "Compatibilidade"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:236
 msgid "Launch from terminal"
-msgstr "Lançamento do terminal"
+msgstr "Lançar do terminal"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:252
 msgid "Copy to clipboard"
@@ -1245,13 +1246,13 @@ msgstr "Diretório aberto"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
 msgid "Remove overlay"
-msgstr "Remover sobreposições"
+msgstr "Remover sobreposição"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:235
 msgid "Run with compatibility layer"
-msgstr "Jogar com camada de compatibilidade do Windows"
+msgstr "Jogar com camada de compatibilidade"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
@@ -1305,7 +1306,7 @@ msgstr "Pronto"
 
 #: src/ui/views/WelcomeView.vala:147
 msgid "Authentication required"
-msgstr "Autentificação requerida"
+msgstr "Autenticação necessária"
 
 #: src/ui/views/WelcomeView.vala:152
 msgid "Authenticating…"
@@ -1326,8 +1327,7 @@ msgstr "Sem jogos"
 
 #: src/ui/views/GamesView/GamesView.vala:136
 msgid "Get some games or enable some game sources in settings"
-msgstr ""
-"Obtenha alguns jogos ou ative algumas origens de jogos nas configurações"
+msgstr "Obtenha alguns jogos ou ative algumas fontes de jogos nas configurações"
 
 #: src/ui/views/GamesView/GamesView.vala:150
 msgid "Grid view"
@@ -1568,15 +1568,15 @@ msgid ""
 msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
 msgstr[0] ""
-"%d jogo será removido da base de dados. Reinicie o GameHub para buscar novos "
-"dados"
+"%d jogo será removido do banco de dados. Reinicie o GameHub para buscar "
+"novos dados"
 msgstr[1] ""
-"%d jogos serão removidos da base de dados. Reinicie o GameHub para buscar "
+"%d jogos serão removidos do banco de dados. Reinicie o GameHub para buscar "
 "novos dados"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 msgid "Open store page"
-msgstr "Abra a página da loja"
+msgstr "Abrir a página da loja"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:242
 msgid "Game properties"
@@ -1585,11 +1585,11 @@ msgstr "Propriedades do jogo"
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
 msgid "Playtime"
-msgstr "Tempo de reprodução"
+msgstr "Tempo de jogo"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
 msgid "Playtime (local)"
-msgstr "Tempo de reprodução (local)"
+msgstr "Tempo de jogo (local)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
 msgid "Last launch"
@@ -1612,12 +1612,12 @@ msgstr "Porcentagem global: %g%%"
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
-msgstr "Língua"
+msgstr "Idioma"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:80
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
-msgstr "Línguas"
+msgstr "Idiomas"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
 #, c-format
