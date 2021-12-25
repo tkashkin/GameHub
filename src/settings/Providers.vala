@@ -26,6 +26,8 @@ namespace GameHub.Settings.Providers
 		{
 			public bool enabled { get; set; }
 			public string api_key { get; set; }
+			public string filter_humor { get; set; }
+			public string filter_nsfw { get; set; }
 
 			public SteamGridDB()
 			{

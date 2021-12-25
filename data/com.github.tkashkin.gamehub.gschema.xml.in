@@ -311,6 +311,14 @@
 				<default>'@PREF_API_KEY_STEAMGRIDDB@'</default>
 				<summary>SteamGridDB API key</summary>
 			</key>
+			<key name="filter-humor" type="s">
+				<default>'false'</default>
+				<summary>SteamGridDB humor filter setting</summary>
+			</key>
+			<key name="filter-nsfw" type="s">
+				<default>'false'</default>
+				<summary>SteamGridDB NSFW filter setting</summary>
+			</key>
 		</schema>
 
 		<schema path="@SCHEMA_PATH@/providers/images/jinx-sgvi/" id="@SCHEMA_ID@.providers.images.jinx-sgvi">
