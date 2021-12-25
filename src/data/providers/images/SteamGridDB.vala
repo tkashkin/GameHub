@@ -29,7 +29,7 @@ namespace GameHub.Data.Providers.Images
 		private const string BASE_URL     = DOMAIN + "/api/v2";
 		private const string API_KEY_PAGE = DOMAIN + "/profile/preferences";
 
-		private ImagesProvider.ImageSize?[] SIZES = { null, ImageSize(460, 215), ImageSize(920, 430), ImageSize(600, 900), ImageSize(342, 482) };
+		private ImagesProvider.ImageSize?[] SIZES = { null, ImageSize(460, 215), ImageSize(920, 430), ImageSize(600, 900), ImageSize(342, 482), ImageSize(660, 930), ImageSize(512, 512), ImageSize(1024, 1024) };
 
 		public override string id   { get { return "steamgriddb"; } }
 		public override string name { get { return "SteamGridDB"; } }
@@ -40,6 +40,82 @@ namespace GameHub.Data.Providers.Images
 		{
 			get { return Settings.Providers.Images.SteamGridDB.instance.enabled; }
 			set { Settings.Providers.Images.SteamGridDB.instance.enabled = value; }
+		}
+
+		public enum FilterHumor
+		{
+			TRUE, FALSE, ANY;
+
+			public string value()
+			{
+				switch (this)
+				{
+					case FilterHumor.TRUE:  return "true";
+					case FilterHumor.FALSE: return "false";
+					case FilterHumor.ANY:   return "any";
+				}
+				assert_not_reached();
+			}
+
+			public static FilterHumor from_string(string setting)
+			{
+				switch (setting)
+				{
+					case "true":  return FilterHumor.TRUE;
+					case "false": return FilterHumor.FALSE;
+					case "any":   return FilterHumor.ANY;
+				}
+				assert_not_reached();
+			}
+
+			public string name()
+			{
+				switch(this)
+				{
+					case FilterHumor.TRUE:  return C_("imagesource_steamgriddb_image_filter", "True");
+					case FilterHumor.FALSE: return C_("imagesource_steamgriddb_image_filter", "False");
+					case FilterHumor.ANY:   return C_("imagesource_steamgriddb_image_filter", "Any");
+				}
+				assert_not_reached();
+			}
+		}
+
+		public enum FilterNsfw
+		{
+			TRUE, FALSE, ANY;
+
+			public string value()
+			{
+				switch (this)
+				{
+					case FilterNsfw.TRUE:  return "true";
+					case FilterNsfw.FALSE: return "false";
+					case FilterNsfw.ANY:   return "any";
+				}
+				assert_not_reached();
+			}
+
+			public static FilterNsfw from_string(string setting)
+			{
+				switch (setting)
+				{
+					case "true":  return FilterNsfw.TRUE;
+					case "false": return FilterNsfw.FALSE;
+					case "any":   return FilterNsfw.ANY;
+				}
+				assert_not_reached();
+			}
+
+			public string name()
+			{
+				switch(this)
+				{
+					case FilterNsfw.TRUE:  return C_("imagesource_steamgriddb_image_filter", "True");
+					case FilterNsfw.FALSE: return C_("imagesource_steamgriddb_image_filter", "False");
+					case FilterNsfw.ANY:   return C_("imagesource_steamgriddb_image_filter", "Any");
+				}
+				assert_not_reached();
+			}
 		}
 
 		public override async ArrayList<ImagesProvider.Result> images(Game game)
@@ -162,6 +238,42 @@ namespace GameHub.Data.Providers.Images
 				grid.attach(label, 0, 0);
 				grid.attach(entry_wrapper, 1, 0);
 
+				var label_filter_humor = new Gtk.Label(_("Humoristic images"));
+				label_filter_humor.halign = Gtk.Align.START;
+				label_filter_humor.valign = Gtk.Align.CENTER;
+				label_filter_humor.hexpand = true;
+
+				var combo_filter_humor = new Gtk.ComboBoxText();
+				combo_filter_humor.halign = Gtk.Align.END;
+				combo_filter_humor.valign = Gtk.Align.CENTER;
+				combo_filter_humor.hexpand = false;
+				combo_filter_humor.append(FilterHumor.TRUE.value(), FilterHumor.TRUE.name());
+				combo_filter_humor.append(FilterHumor.FALSE.value(), FilterHumor.FALSE.name());
+				combo_filter_humor.append(FilterHumor.ANY.value(), FilterHumor.ANY.name());
+				combo_filter_humor.set_active_id(FilterHumor.from_string(settings.filter_humor).value());
+				combo_filter_humor.changed.connect(() => { settings.filter_humor = combo_filter_humor.get_active_id(); });
+
+				grid.attach(label_filter_humor, 0, 1);
+				grid.attach(combo_filter_humor, 1, 1);
+
+				var label_filter_nsfw = new Gtk.Label(_("NSFW images"));
+				label_filter_nsfw.halign = Gtk.Align.START;
+				label_filter_nsfw.valign = Gtk.Align.CENTER;
+				label_filter_nsfw.hexpand = true;
+
+				var combo_filter_nsfw = new Gtk.ComboBoxText();
+				combo_filter_nsfw.halign = Gtk.Align.END;
+				combo_filter_nsfw.valign = Gtk.Align.CENTER;
+				combo_filter_nsfw.hexpand = false;
+				combo_filter_nsfw.append(FilterNsfw.TRUE.value(), FilterNsfw.TRUE.name());
+				combo_filter_nsfw.append(FilterNsfw.FALSE.value(), FilterNsfw.FALSE.name());
+				combo_filter_nsfw.append(FilterNsfw.ANY.value(), FilterNsfw.ANY.name());
+				combo_filter_nsfw.set_active_id(FilterNsfw.from_string(settings.filter_nsfw).value());
+				combo_filter_nsfw.changed.connect(() => { settings.filter_nsfw = combo_filter_nsfw.get_active_id(); });
+
+				grid.attach(label_filter_nsfw, 0, 2);
+				grid.attach(combo_filter_nsfw, 1, 2);
+
 				return grid;
 			}
 		}
@@ -170,6 +282,9 @@ namespace GameHub.Data.Providers.Images
 		{
 			private SGDBGame game;
 			private string dimensions;
+			private string filter_humor;
+			private string filter_nsfw;
+			private string types = "&types=static"; // GameHub can't display apng anyway.
 			private ArrayList<ImagesProvider.Image>? images = null;
 
 			public Result(SteamGridDB source, SGDBGame game, ImagesProvider.ImageSize? size)
@@ -181,14 +296,16 @@ namespace GameHub.Data.Providers.Images
 				title = "%s: %d × %d".printf(source.name, image_size.width, image_size.height);
 				subtitle = game.name;
 				url = "%s/game/%s".printf(SteamGridDB.DOMAIN, game.id);
-				dimensions = size != null ? "?dimensions=%dx%d".printf(size.width, size.height) : "";
+				dimensions = size != null ? "&dimensions=%dx%d".printf(size.width, size.height) : "";
+				filter_humor = "?humor=%s".printf(Settings.Providers.Images.SteamGridDB.instance.filter_humor);
+				filter_nsfw = "&nsfw=%s".printf(Settings.Providers.Images.SteamGridDB.instance.filter_nsfw);
 			}
 
 			public override async ArrayList<ImagesProvider.Image>? load_images()
 			{
 				if(images != null) return images;
 
-				var endpoint = "/grids/game/%s%s".printf(game.id, dimensions);
+				var endpoint = "/grids/game/%s%s%s%s%s".printf(game.id, filter_humor, filter_nsfw, types, dimensions);
 
 				var root = yield Parser.parse_remote_json_file_async(SteamGridDB.BASE_URL + endpoint, "GET", Settings.Providers.Images.SteamGridDB.instance.api_key);
 				if(root == null || root.get_node_type() != Json.NodeType.OBJECT) return images;
