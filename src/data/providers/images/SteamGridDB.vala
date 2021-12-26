@@ -40,82 +40,6 @@ namespace GameHub.Data.Providers.Images
 			set { Settings.Providers.Images.SteamGridDB.instance.enabled = value; }
 		}
 
-		public enum FilterHumor
-		{
-			TRUE, FALSE, ANY;
-
-			public string value()
-			{
-				switch (this)
-				{
-					case FilterHumor.TRUE:  return "true";
-					case FilterHumor.FALSE: return "false";
-					case FilterHumor.ANY:   return "any";
-				}
-				assert_not_reached();
-			}
-
-			public static FilterHumor from_string(string setting)
-			{
-				switch (setting)
-				{
-					case "true":  return FilterHumor.TRUE;
-					case "false": return FilterHumor.FALSE;
-					case "any":   return FilterHumor.ANY;
-				}
-				assert_not_reached();
-			}
-
-			public string name()
-			{
-				switch(this)
-				{
-					case FilterHumor.TRUE:  return C_("imagesource_steamgriddb_image_filter", "True");
-					case FilterHumor.FALSE: return C_("imagesource_steamgriddb_image_filter", "False");
-					case FilterHumor.ANY:   return C_("imagesource_steamgriddb_image_filter", "Any");
-				}
-				assert_not_reached();
-			}
-		}
-
-		public enum FilterNsfw
-		{
-			TRUE, FALSE, ANY;
-
-			public string value()
-			{
-				switch (this)
-				{
-					case FilterNsfw.TRUE:  return "true";
-					case FilterNsfw.FALSE: return "false";
-					case FilterNsfw.ANY:   return "any";
-				}
-				assert_not_reached();
-			}
-
-			public static FilterNsfw from_string(string setting)
-			{
-				switch (setting)
-				{
-					case "true":  return FilterNsfw.TRUE;
-					case "false": return FilterNsfw.FALSE;
-					case "any":   return FilterNsfw.ANY;
-				}
-				assert_not_reached();
-			}
-
-			public string name()
-			{
-				switch(this)
-				{
-					case FilterNsfw.TRUE:  return C_("imagesource_steamgriddb_image_filter", "True");
-					case FilterNsfw.FALSE: return C_("imagesource_steamgriddb_image_filter", "False");
-					case FilterNsfw.ANY:   return C_("imagesource_steamgriddb_image_filter", "Any");
-				}
-				assert_not_reached();
-			}
-		}
-
 		public override async ArrayList<ImagesProvider.Result> images(Game game)
 		{
 			var results = new ArrayList<ImagesProvider.Result>();
@@ -275,10 +199,10 @@ namespace GameHub.Data.Providers.Images
 				combo_filter_humor.halign = Gtk.Align.END;
 				combo_filter_humor.valign = Gtk.Align.CENTER;
 				combo_filter_humor.hexpand = false;
-				combo_filter_humor.append(FilterHumor.TRUE.value(), FilterHumor.TRUE.name());
-				combo_filter_humor.append(FilterHumor.FALSE.value(), FilterHumor.FALSE.name());
-				combo_filter_humor.append(FilterHumor.ANY.value(), FilterHumor.ANY.name());
-				combo_filter_humor.set_active_id(FilterHumor.from_string(settings.filter_humor).value());
+				combo_filter_humor.append("true", C_("imagesource_steamgriddb_image_filter", "True"));
+				combo_filter_humor.append("false", C_("imagesource_steamgriddb_image_filter", "False"));
+				combo_filter_humor.append("any", C_("imagesource_steamgriddb_image_filter", "Any"));
+				combo_filter_humor.set_active_id(settings.filter_humor);
 				combo_filter_humor.changed.connect(() => { settings.filter_humor = combo_filter_humor.get_active_id(); });
 
 				grid.attach(label_filter_humor, 0, 1);
@@ -293,10 +217,10 @@ namespace GameHub.Data.Providers.Images
 				combo_filter_nsfw.halign = Gtk.Align.END;
 				combo_filter_nsfw.valign = Gtk.Align.CENTER;
 				combo_filter_nsfw.hexpand = false;
-				combo_filter_nsfw.append(FilterNsfw.TRUE.value(), FilterNsfw.TRUE.name());
-				combo_filter_nsfw.append(FilterNsfw.FALSE.value(), FilterNsfw.FALSE.name());
-				combo_filter_nsfw.append(FilterNsfw.ANY.value(), FilterNsfw.ANY.name());
-				combo_filter_nsfw.set_active_id(FilterNsfw.from_string(settings.filter_nsfw).value());
+				combo_filter_nsfw.append("true", C_("imagesource_steamgriddb_image_filter", "True"));
+				combo_filter_nsfw.append("false", C_("imagesource_steamgriddb_image_filter", "False"));
+				combo_filter_nsfw.append("any", C_("imagesource_steamgriddb_image_filter", "Any"));
+				combo_filter_nsfw.set_active_id(settings.filter_nsfw);
 				combo_filter_nsfw.changed.connect(() => { settings.filter_nsfw = combo_filter_nsfw.get_active_id(); });
 
 				grid.attach(label_filter_nsfw, 0, 2);
