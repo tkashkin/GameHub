@@ -199,9 +199,9 @@ namespace GameHub.Data.Providers.Images
 				combo_filter_humor.halign = Gtk.Align.END;
 				combo_filter_humor.valign = Gtk.Align.CENTER;
 				combo_filter_humor.hexpand = false;
-				combo_filter_humor.append("true", C_("imagesource_steamgriddb_image_filter", "True"));
-				combo_filter_humor.append("false", C_("imagesource_steamgriddb_image_filter", "False"));
-				combo_filter_humor.append("any", C_("imagesource_steamgriddb_image_filter", "Any"));
+				combo_filter_humor.append("true", C_("imagesource_steamgriddb_image_filter", "Only"));
+				combo_filter_humor.append("false", C_("imagesource_steamgriddb_image_filter", "None"));
+				combo_filter_humor.append("any", C_("imagesource_steamgriddb_image_filter", "Doesn't matter"));
 				combo_filter_humor.set_active_id(settings.filter_humor);
 				combo_filter_humor.changed.connect(() => { settings.filter_humor = combo_filter_humor.get_active_id(); });
 
@@ -217,9 +217,9 @@ namespace GameHub.Data.Providers.Images
 				combo_filter_nsfw.halign = Gtk.Align.END;
 				combo_filter_nsfw.valign = Gtk.Align.CENTER;
 				combo_filter_nsfw.hexpand = false;
-				combo_filter_nsfw.append("true", C_("imagesource_steamgriddb_image_filter", "True"));
-				combo_filter_nsfw.append("false", C_("imagesource_steamgriddb_image_filter", "False"));
-				combo_filter_nsfw.append("any", C_("imagesource_steamgriddb_image_filter", "Any"));
+				combo_filter_nsfw.append("true", C_("imagesource_steamgriddb_image_filter", "Only"));
+				combo_filter_nsfw.append("false", C_("imagesource_steamgriddb_image_filter", "None"));
+				combo_filter_nsfw.append("any", C_("imagesource_steamgriddb_image_filter", "Doesn't matter"));
 				combo_filter_nsfw.set_active_id(settings.filter_nsfw);
 				combo_filter_nsfw.changed.connect(() => { settings.filter_nsfw = combo_filter_nsfw.get_active_id(); });
 
