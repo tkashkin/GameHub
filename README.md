@@ -22,11 +22,11 @@ GameHub supports:
 * multiple [compatibility layers](https://github.com/tkashkin/GameHub/wiki/Compatibility-layers):
 	- Wine
 	- Proton
-	- DOSBox
-	- RetroArch
-	- ScummVM
 	- [WineWrap](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post1) — a set of preconfigured wrappers for [supported games](https://www.gog.com/forum/general/adamhms_linux_wine_wrappers_news_faq_discussion/post3);
-	- custom emulators
+* custom emulators
+        - ScummVM
+        - RetroArch
+        - DOSBox
 * multiple game platforms:
 	- Steam
 	- GOG
