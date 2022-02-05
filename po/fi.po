@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Tuomas Lähteenmäki <lahtis@gmail.com>, 2019, 2020.
+# Elias Eskelinen <elias.eskelinen@pm.me>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-03-08 07:22+0000\n"
-"Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
+"PO-Revision-Date: 2021-10-02 21:37+0000\n"
+"Last-Translator: Elias Eskelinen <elias.eskelinen@pm.me>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
 "translations/fi/>\n"
 "Language: fi\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -1747,7 +1748,7 @@ msgstr "%dt"
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr "%dkk"
+msgstr "%dm"
 
 #: src/utils/Utils.vala:464
 #, c-format

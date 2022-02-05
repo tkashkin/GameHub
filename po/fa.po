@@ -5,13 +5,14 @@
 # Alireza Jabbari <rhrurhraj@gmail.com>, 2020.
 # Mitsuha Miamizu <mitsuha.miamizu4444@gmail.com>, 2020.
 # عبدالرئوف عابدی <abdolraoofabedi@gmail.com>, 2021.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-08-26 20:34+0000\n"
-"Last-Translator: عبدالرئوف عابدی <abdolraoofabedi@gmail.com>\n"
+"PO-Revision-Date: 2022-01-15 21:53+0000\n"
+"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/gamehub/"
 "translations/fa/>\n"
 "Language: fa\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -51,7 +52,7 @@ msgstr "چیدمان اپلیکیشن گفت و گو را نشان دهید."
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr "نمایش درباره گفت‌وگو"
+msgstr "نمایش گفت‌وگوی درباره"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"

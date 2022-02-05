@@ -108,8 +108,14 @@ GH_GAME_NAME_ESCAPED="${10}"
 			{
 				Utils.run({"chmod", "+x", script.get_path()}).run_sync();
 				var executable_path = emu.executable != null ? emu.executable.get_path() : "null";
+				var install_dir = emu.executable != null ? emu.install_dir.get_path() : "null";
 				var game_executable_path = game != null && game.executable != null ? game.executable.get_path() : "null";
-				string[] cmd = { script.get_path(), executable_path, emu.id, emu.name, game_executable_path, game.id, game.full_id, game.name, game.escaped_name };
+				var game_install_dir = game != null && game.executable != null ? game.install_dir.get_path() : "null";
+				var game_id = game != null ? game.id : "null";
+				var game_full_id = game != null ? game.full_id : "null";
+				var game_name = game != null ? game.name : "null";
+				var game_escaped_name = game != null ? game.escaped_name : "null";
+				string[] cmd = { script.get_path(), executable_path, install_dir, emu.id, emu.name, game_executable_path, game_install_dir, game_id, game_full_id, game_name, game_escaped_name };
 				var dir = game != null && launch_in_game_dir ? game.work_dir : emu.work_dir;
 
 				var task = Utils.run(cmd).dir(dir.get_path());

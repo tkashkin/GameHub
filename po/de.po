@@ -12,14 +12,14 @@
 # Sascha Bohrmann <weblate@saschabohrmann.de>, 2020.
 # Sascha Bohrmann <github@dakunier.de>, 2020.
 # Jeannette L <j.lavoie@net-c.ca>, 2020.
-# J. Lavoie <j.lavoie@net-c.ca>, 2020.
+# J. Lavoie <j.lavoie@net-c.ca>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-12-28 11:29+0000\n"
-"Last-Translator: Sascha Bohrmann <github@dakunier.de>\n"
+"PO-Revision-Date: 2021-09-25 02:34+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -1675,7 +1675,6 @@ msgid "Platforms"
 msgstr "Plattform"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:139
-#, fuzzy
 msgctxt "igdb"
 msgid "Genres"
 msgstr "Genres"

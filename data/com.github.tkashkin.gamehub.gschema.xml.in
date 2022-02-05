@@ -179,7 +179,7 @@
 				<summary>Humble access token</summary>
 			</key>
 			<key name="load-trove-games" type="b">
-				<default>true</default>
+				<default>false</default>
 				<summary>Is Trove enabled</summary>
 			</key>
 		</schema>
