@@ -35,7 +35,11 @@ namespace GameHub.Data.Sources.Humble
 
 		public override bool enabled
 		{
-			get { return Settings.Auth.Humble.instance.enabled && Settings.Auth.Humble.instance.load_trove_games; }
+			get {
+				// Disable Trove unconditionally: https://github.com/tkashkin/GameHub/issues/611
+				// return Settings.Auth.Humble.instance.enabled && Settings.Auth.Humble.instance.load_trove_games;
+				return false;
+			}
 			set { Settings.Auth.Humble.instance.load_trove_games = value; }
 		}
 
@@ -86,7 +90,9 @@ namespace GameHub.Data.Sources.Humble
 				{
 					var xpath = new Xml.XPath.Context(html);
 
-					var trove_json = xpath.eval("//script[@id='webpack-monthly-trove-data']/text()")->nodesetval->item(0)->content.strip();
+					var xpath_object = xpath.eval("//script[@id='webpack-monthly-trove-data']/text()");
+					var xpath_nodeset = xpath_object != null ? xpath_object->nodesetval : null;
+					var trove_json = xpath_nodeset != null && !xpath_nodeset->is_empty() ? xpath_nodeset->item(0)->content.strip() : null;
 
 					if(trove_json != null)
 					{
