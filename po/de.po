@@ -13,13 +13,14 @@
 # Sascha Bohrmann <github@dakunier.de>, 2020.
 # Jeannette L <j.lavoie@net-c.ca>, 2020.
 # J. Lavoie <j.lavoie@net-c.ca>, 2020, 2021.
+# 3ole <ole-s@mailbox.org>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-09-25 02:34+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2022-03-28 18:14+0000\n"
+"Last-Translator: 3ole <ole-s@mailbox.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -27,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -254,7 +255,7 @@ msgstr "%s Spiele"
 
 #: src/data/sources/steam/Steam.vala:43
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr "Ihre SteamID wird aus der Steam-Konfigurationsdatei gelesen"
+msgstr "Deine SteamID wird aus der Steam-Konfigurationsdatei gelesen"
 
 #: src/data/sources/steam/Steam.vala:46
 msgid ""
@@ -262,7 +263,7 @@ msgid ""
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
 "Steam-Konfigurationsdatei nicht gefunden.\n"
-"Bitte melden Sie sich in Steam an"
+"Bitte melde dich im Steam-Client an und kehre dann zu GameHub zurück"
 
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
@@ -280,7 +281,7 @@ msgid ""
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
 "Die Download-URL von Trove kann nicht abgerufen werden.\n"
-"Stellen Sie sicher, dass Ihr Humble Monthly Abonnement aktiv ist."
+"Stelle sicher, dass dein Humble Monthly Abonnement aktiv ist."
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
@@ -1050,7 +1051,7 @@ msgstr "Anwendungsversion und Umgebungsinformationen kopieren"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:78
 #: src/ui/views/WelcomeView.vala:57
 msgid "All your games in one place"
-msgstr "Alle Ihre Spiele an einem Ort"
+msgstr "Alle deine Spiele an einem Ort"
 
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:92
 msgctxt "about_link"
@@ -1219,6 +1220,10 @@ msgid ""
 "\n"
 "Path: <b>%s</b>"
 msgstr ""
+"Nutzung von Overlays in diesem Verzeichnis könnte gefährlich sein\n"
+"Ab hier bist du auf dich allein gestellt\n"
+"\n"
+"Verzeichnis: <b>%s</b>"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:187
 #, c-format
@@ -1249,34 +1254,29 @@ msgstr "Fehlerhafter Installer: Prüfsummenfehler in"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:57
 #: src/ui/views/GamesView/AddGamePopover.vala:105
-#, fuzzy
 msgid "Import emulated games"
-msgstr "Keine vom Benutzer hinzugefügten Spiele"
+msgstr "Emulierte Spiele importieren"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
-#, fuzzy
 msgid "Select directory with emulated games"
-msgstr "Ordner auswählen"
+msgstr "Ordner mit emulierten Spielen auswählen"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
-#, fuzzy
 msgid "Detected games"
-msgstr "Keine vom Benutzer hinzugefügten Spiele"
+msgstr "Entdeckte Spiele"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:107
-#, fuzzy
 msgid "Select all"
-msgstr "Installationsprogramm auswählen"
+msgstr "Alle auswählen"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
-#, fuzzy
 msgid "Select directory to import"
-msgstr "Ordner auswählen"
+msgstr "Zu importierenden Ordner auswählen"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Tweaks"
-msgstr "%s: Overlays"
+msgstr "%s: Tweaks"
 
 #: src/ui/views/WelcomeView.vala:52
 msgid "No enabled game sources"
@@ -1374,13 +1374,13 @@ msgstr[1] "%u Spiele"
 #, c-format
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
-msgstr ""
+msgstr "%1$u / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
 #, c-format
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
-msgstr ""
+msgstr "%1$s: / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
@@ -1414,22 +1414,21 @@ msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
 msgstr ""
-"Es wurden keine Spiele von Steam geladen. Stellen Sie Ihre Spieleliste auf "
-"öffentlich oder verwenden Sie Ihren eigenen Steam-API-Schlüssel."
+"Es wurden keine Spiele von Steam geladen. Stellen deine Spieleliste auf "
+"öffentlich oder lege deinen Steam API-Schlüssel in den Einstellungen fest."
 
 #: src/ui/views/GamesView/GamesView.vala:628
 msgid "Privacy"
 msgstr "Datenschutz"
 
 #: src/ui/views/GamesView/GamesView.vala:739
-#, fuzzy
 msgid "Downloading images"
-msgstr "Herunterladen"
+msgstr "Bilder werden heruntergeladen"
 
 #: src/ui/views/GamesView/GamesView.vala:753
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading image: %s"
-msgstr "Herunterladen"
+msgstr "Lade Bild: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
@@ -1460,9 +1459,8 @@ msgid "Tags"
 msgstr "Tags"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:353
-#, fuzzy
 msgid "All platforms"
-msgstr "Plattform"
+msgstr "Alle Plattformen"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Select game executable"
@@ -1473,9 +1471,8 @@ msgid "Select game directory"
 msgstr "Spielverzeichnis auswählen"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
-#, fuzzy
 msgid "Download game images"
-msgstr "Herunterladen"
+msgstr "Spielebilder herunterladen"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
@@ -1508,9 +1505,8 @@ msgstr "Bonus-Sammelverzeichnis öffnen"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:239
-#, fuzzy
 msgid "Open screenshots directory"
-msgstr "Präfixverzeichnis öffnen"
+msgstr "Screenshotordner öffnen"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:167
@@ -1523,39 +1519,39 @@ msgid "Properties"
 msgstr "Eigenschaften"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:100
-#, fuzzy, c-format
+#, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] "%s: keine Installationsprogramme verfügbare"
-msgstr[1] "%s: keine Installationsprogramme verfügbare"
+msgstr[0] "%d: Spiel ausgewählt"
+msgstr[1] "%d: Spiele ausgewählt"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be installed"
 msgid_plural "%d games will be installed"
-msgstr[0] "%s: keine Installationsprogramme verfügbare"
-msgstr[1] "%s: keine Installationsprogramme verfügbare"
+msgstr[0] "%d: Spiel wird installiert"
+msgstr[1] "%d: Spiele werden installiert"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:154
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] "%s: keine Installationsprogramme verfügbare"
-msgstr[1] "%s: keine Installationsprogramme verfügbare"
+msgstr[0] "%d Spiel wird heruntergeladen"
+msgstr[1] "%d Spiele werden heruntergeladen"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
-#, fuzzy, c-format
+#, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] "%s: keine Installationsprogramme verfügbare"
-msgstr[1] "%s: keine Installationsprogramme verfügbare"
+msgstr[0] "Suche nach Bildern für %d Spiele"
+msgstr[1] "Suche nach Bildern für %d Spielen"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] "%s: keine Installationsprogramme verfügbare"
-msgstr[1] "%s: keine Installationsprogramme verfügbare"
+msgstr[0] "%d Spiel wird deinstalliert"
+msgstr[1] "%d Spiele werden deinstalliert"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
 msgid "Refresh"
@@ -1620,9 +1616,9 @@ msgid "Languages"
 msgstr "Sprachen"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
-#, fuzzy, c-format
+#, c-format
 msgid "%u DLCs cannot be installed"
-msgstr "%s: fehlerhafter Installer"
+msgstr "%u DLCs können nicht installiert werden"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
@@ -1669,10 +1665,9 @@ msgid "Release date"
 msgstr "Veröffentlichungsdatum"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:133
-#, fuzzy
 msgctxt "igdb"
 msgid "Platforms"
-msgstr "Plattform"
+msgstr "Plattformen"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:139
 msgctxt "igdb"
@@ -1714,18 +1709,16 @@ msgid "Select file"
 msgstr "Datei auswählen"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:74
-#, fuzzy
 msgid "No images"
-msgstr "Bilder"
+msgstr "Keine Bilder"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:74
-#, fuzzy
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
 "Es wurden keine Bilder für dieses Spiel gefunden.\n"
-"Stellen Sie sicher, dass der Spielname korrekt ist"
+"Stelle sicher, dass der Spielname korrekt ist"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:94
 msgid "Search images:"
@@ -1744,14 +1737,12 @@ msgid "Add tag"
 msgstr "Tag hinzufügen"
 
 #: src/ui/widgets/TweaksList.vala:86
-#, fuzzy
 msgid "No description"
-msgstr "Beschreibung"
+msgstr "Keine Beschreibung"
 
 #: src/ui/widgets/TweaksList.vala:124
-#, fuzzy
 msgid "Edit file"
-msgstr "Datei auswählen"
+msgstr "Datei bearbeiten"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
@@ -1766,10 +1757,10 @@ msgid "%dm"
 msgstr "%d m"
 
 #: src/utils/Utils.vala:464
-#, fuzzy, c-format
+#, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr "%d h"
+msgstr "%ds"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
@@ -1794,7 +1785,7 @@ msgstr "GOG (Vertikal)"
 #: src/settings/UI.vala:157
 msgctxt "grid_size_preset"
 msgid "Square"
-msgstr ""
+msgstr "Quadrat"
 
 #: src/settings/UI.vala:158
 #, fuzzy
@@ -1828,10 +1819,10 @@ msgid "Download failed"
 msgstr "Download fehlgeschlagen"
 
 #: src/utils/downloader/Downloader.vala:208
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr "Herunterladen"
+msgstr "Lade herunter: %s"
 
 #: src/utils/downloader/Downloader.vala:210
 #, fuzzy
@@ -1840,16 +1831,15 @@ msgid "Downloading"
 msgstr "Herunterladen"
 
 #: src/utils/downloader/Downloader.vala:214
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr "Angehalten: %d %% (%s / %s)"
+msgstr "Angehalten:%s"
 
 #: src/utils/downloader/Downloader.vala:216
-#, fuzzy
 msgctxt "dl_status"
 msgid "Paused"
-msgstr "Download anhalten"
+msgstr "Angehalten"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
@@ -1858,10 +1848,10 @@ msgstr "Download abgebrochen"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "Herunterladen: %d %% (%s / %s) [%s/s]"
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "esync deaktivieren"
