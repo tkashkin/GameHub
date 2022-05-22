@@ -185,6 +185,7 @@ namespace GameHub.Utils
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.instance.root);
+                        variables.set("game", g);
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
 						variables.set("game_dir", expand_game_dir(g, platform));
@@ -196,6 +197,7 @@ namespace GameHub.Utils
 						var d = dlc == null ? null : dlc.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.instance.root);
+                        variables.set("game", g);
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
 						if(d == null)
@@ -214,6 +216,7 @@ namespace GameHub.Utils
 						var d = dlc == null ? null : dlc.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.instance.root);
+                        variables.set("game", g);
 						if(d == null)
 						{
 							variables.set("game_dir", expand_game_dir(g));
@@ -264,6 +267,7 @@ namespace GameHub.Utils
 						var g = game.replace(": ", " - ").replace(":", "");
 						var variables = new HashMap<string, string>();
 						variables.set("root", Collection.instance.root);
+                        variables.set("game", g);
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
 						variables.set("game_dir", expand_game_dir(g, platform));
