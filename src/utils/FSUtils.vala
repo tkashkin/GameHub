@@ -188,6 +188,7 @@ namespace GameHub.Utils
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
 						variables.set("game_dir", expand_game_dir(g, platform));
+						variables.set("game", g);
 						return FSUtils.expand(instance.dlc, null, variables);
 					}
 					public static string expand_installers(string game, string? dlc=null, Platform? platform=null)
@@ -206,6 +207,7 @@ namespace GameHub.Utils
 						{
 							variables.set("game_dir", expand_dlc(g, platform) + "/" + d);
 						}
+						variables.set("game", g);
 						return FSUtils.expand(instance.installers, null, variables);
 					}
 					public static string expand_bonus(string game, string? dlc=null)
@@ -222,6 +224,7 @@ namespace GameHub.Utils
 						{
 							variables.set("game_dir", expand_dlc(g) + "/" + d);
 						}
+						variables.set("game", g);
 						return FSUtils.expand(instance.bonus, null, variables);
 					}
 
@@ -267,6 +270,7 @@ namespace GameHub.Utils
 						variables.set("platform_name", platform == null ? "." : platform.name());
 						variables.set("platform", platform == null ? "." : platform.id());
 						variables.set("game_dir", expand_game_dir(g, platform));
+						variables.set("game", g);
 						return FSUtils.expand(instance.installers, null, variables);
 					}
 
