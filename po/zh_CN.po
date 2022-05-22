@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # wangling12 <hexinn12@gmail.com>, 2019, 2020.
 # Benjamin Zhao <benjaminzhao11@gmail.com>, 2020.
+# Zhou Nan <zhounan@nfschina.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-02-09 07:50+0000\n"
-"Last-Translator: Benjamin Zhao <benjaminzhao11@gmail.com>\n"
+"PO-Revision-Date: 2021-07-21 02:35+0000\n"
+"Last-Translator: Zhou Nan <zhounan@nfschina.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gamehub/translations/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -1353,16 +1354,16 @@ msgid_plural "%u games"
 msgstr[0] "%u 个游戏"
 
 #: src/ui/views/GamesView/GamesView.vala:553
-#, fuzzy, c-format
+#, c-format
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
-msgstr "(%1$s / %2$s)"
+msgstr "%1$s / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
-#, fuzzy, c-format
+#, c-format
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
-msgstr "(%1$s / %2$s)"
+msgstr "%1$s: %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:568
 msgid "No user-added games"
@@ -1813,10 +1814,10 @@ msgstr "下载已取消"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
-#, fuzzy, c-format
+#, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "正在下载： %1$d%% (%2$s / %3$s) [%4$s/s]"
+msgstr "正在下载：%1$d%% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "禁止esync"

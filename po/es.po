@@ -4,13 +4,14 @@
 # Amaro Martínez <xoas@airmail.cc>, 2020, 2021.
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
 # Adrián López Galera <adrlopgal@disroot.org>, 2021.
+# badlop <badlop@process-one.net>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-01-09 20:32+0000\n"
-"Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
+"PO-Revision-Date: 2021-12-29 12:50+0000\n"
+"Last-Translator: badlop <badlop@process-one.net>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gamehub/"
 "translations/es/>\n"
 "Language: es\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -875,7 +876,7 @@ msgstr "Cerrar sesión"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:50
 msgid "Load games from Humble Trove"
-msgstr "Cargar juegos de Tesoro Humble (Humble Trove)"
+msgstr "Cargar juegos de Humble Trove"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:45

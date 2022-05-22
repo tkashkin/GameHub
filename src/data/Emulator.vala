@@ -28,7 +28,58 @@ namespace GameHub.Data
 		public signal void removed();
 
 		public override File? executable { owned get; set; }
-		public override File? work_dir { owned get; set; }
+		//  public override File? work_dir { owned get; set; }
+		public string? work_dir_path;
+		public override File? work_dir
+		{
+			owned get
+			{
+				if(install_dir == null) return null;
+				if(work_dir_path == null || work_dir_path.length == 0) return install_dir;
+				return get_file(work_dir_path);
+			}
+			set
+			{
+				if(value != null && value.query_exists() && install_dir != null && install_dir.query_exists())
+				{
+					File[] dirs = { install_dir };
+					foreach(var dir in dirs)
+					{
+						if(value.get_path().has_prefix(dir.get_path()))
+						{
+							work_dir_path = value.get_path().replace(dir.get_path(), "$game_dir/");
+							break;
+						}
+					}
+				}
+				else
+				{
+					work_dir_path = null;
+				}
+				save();
+			}
+		}
+		public File? get_file(string? p)
+		{
+			if(p == null || p.length == 0 || install_dir == null) return null;
+			var path = p;
+			if(!path.has_prefix("$game_dir/") && !path.has_prefix("/"))
+			{
+				path = "$game_dir/" + path;
+			}
+			File[] dirs = { install_dir };
+			var variables = new HashMap<string, string>();
+			foreach(var dir in dirs)
+			{
+				variables.set("game_dir", dir.get_path());
+				var file = FSUtils.file(path, null, variables);
+				if(file != null && file.query_exists())
+				{
+					return file;
+				}
+			}
+			return null;
+		}
 		public Installer? installer;
 
 		public string? game_executable_pattern { get; set; }

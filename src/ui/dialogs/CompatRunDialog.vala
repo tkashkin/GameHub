@@ -129,13 +129,21 @@ namespace GameHub.UI.Dialogs
 
 			if(game is Emulator)
 			{
-				emulated_game.is_running = true;
-				emulated_game.update_status();
+				if(emulated_game != null)
+				{
+					emulated_game.is_running = true;
+					emulated_game.update_status();
+				}
+
 				compat_tool_picker.selected.run_emulator.begin(game as Emulator, emulated_game, launch_in_game_dir, (obj, res) => {
 					compat_tool_picker.selected.run_emulator.end(res);
 					Timeout.add_seconds(1, () => {
-						Runnable.IsLaunched = game.is_running = emulated_game.is_running = false;
-						emulated_game.update_status();
+						Runnable.IsLaunched = game.is_running = false;
+						if(emulated_game != null)
+						{
+							emulated_game.update_status();
+							emulated_game.is_running = false;
+						}
 						return Source.REMOVE;
 					});
 					destroy();
