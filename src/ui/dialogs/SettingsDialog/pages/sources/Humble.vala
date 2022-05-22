@@ -47,7 +47,8 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.Sources
 
 			humble_auth = Settings.Auth.Humble.instance;
 
-			add_switch(_("Load games from Humble Trove"), humble_auth.load_trove_games, v => { humble_auth.load_trove_games = v; update(); request_restart(); });
+			// Disable Trove unconditionally: https://github.com/tkashkin/GameHub/issues/611
+			// add_switch(_("Load games from Humble Trove"), humble_auth.load_trove_games, v => { humble_auth.load_trove_games = v; update(); request_restart(); });
 
 			add_separator();
 
