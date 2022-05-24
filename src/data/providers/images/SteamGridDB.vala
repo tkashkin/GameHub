@@ -194,7 +194,7 @@ namespace GameHub.Data.Providers.Images
 		public class Image: ImagesProvider.Image
 		{
 			public string  raw_style { get; protected construct set; }
-			public Style?  style     { get; protected construct set; default = null; }
+			public Style?  style     { get; protected set; default = null; }
 			public int     score     { get; protected construct set; default = 0; }
 			public string? author    { get; protected construct set; default = null; }
 
