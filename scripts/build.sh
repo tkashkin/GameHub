@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _GH_RDNN="com.github.tkashkin.gamehub"
-_GH_VERSION="0.16.0"
+_GH_VERSION="0.16.3"
 
 _GH_BRANCH="${APPVEYOR_REPO_BRANCH:-$(git symbolic-ref --short -q HEAD)}"
 _GH_COMMIT="$(git rev-parse HEAD)"
@@ -24,10 +24,10 @@ _GPG_PACKAGE="gnupg1"
 export CFLAGS="$CFLAGS -O0"
 export DEB_BUILD_OPTIONS="noopt nostrip nocheck"
 
-if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu1804" ]]; then
-	_DEB_TARGET_DISTRO_NAMES=("bionic" "focal" "groovy" "hirsute")
-	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "20.04" "20.10" "21.04")
-	_BUILD_IMAGE="bionic"
+if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" = "Ubuntu" ]]; then
+	_DEB_TARGET_DISTRO_NAMES=("bionic" "focal" "impish" "jammy" "kinetic")
+	_DEB_TARGET_DISTRO_VERSIONS=("18.04" "20.04" "21.10" "22.04" "22.10")
+	_BUILD_IMAGE="jammy"
 else
 	source "/etc/os-release"
 	_DEB_TARGET_DISTRO_ID="$ID"

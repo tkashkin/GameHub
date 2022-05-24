@@ -19,16 +19,23 @@ incoming = ~tkashkin/ubuntu/gamehub/focal
 login = anonymous
 allow_unsigned_uploads = 1
 
-[gamehub_groovy]
+[gamehub_impish]
 fqdn = ppa.launchpad.net
 method = ftp
-incoming = ~tkashkin/ubuntu/gamehub/groovy
+incoming = ~tkashkin/ubuntu/gamehub/impish
 login = anonymous
 allow_unsigned_uploads = 1
 
-[gamehub_hirsute]
+[gamehub_jammy]
 fqdn = ppa.launchpad.net
 method = ftp
-incoming = ~tkashkin/ubuntu/gamehub/hirsute
+incoming = ~tkashkin/ubuntu/gamehub/jammy
+login = anonymous
+allow_unsigned_uploads = 1
+
+[gamehub_kinetic]
+fqdn = ppa.launchpad.net
+method = ftp
+incoming = ~tkashkin/ubuntu/gamehub/kinetic
 login = anonymous
 allow_unsigned_uploads = 1

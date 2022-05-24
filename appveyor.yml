@@ -1,4 +1,4 @@
-version: 0.16.2-{build}-{branch}
+version: 0.16.3-{build}-{branch}
 
 pull_requests:
   do_not_increment_build_number: true
@@ -6,7 +6,7 @@ pull_requests:
 skip_tags: true
 
 image:
-  - Ubuntu1804
+  - Ubuntu
 
 clone_folder: ~/build/GameHub
 
