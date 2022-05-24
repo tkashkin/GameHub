@@ -1,7 +1,7 @@
-<release type="stable" version="0.16.1" date="2021-09-01" timestamp="1630521639">
+<release type="stable" version="0.16.3" date="2022-05-24">
 	<description>
 		<ul>
-			<li>0.16.1: New Steam libraryfolders format (#558)</li>
+			<li>0.16.3: Collection: Expand $game everywhere (#632, #635)</li>
 		</ul>
 	</description>
 </release>

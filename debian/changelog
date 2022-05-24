@@ -1,4 +1,4 @@
-com.github.tkashkin.gamehub (0.16.1) focal; urgency=low
-  * 0.16.1
+com.github.tkashkin.gamehub (0.16.3) focal; urgency=low
+  * 0.16.3: Collection: Expand $game everywhere (#632, #635)
 
- -- Anatoliy Kashkin <tkashkin@gmail.com>  Sun, 19 Sep 2021 22:18:30 +0300
+ -- Anatoliy Kashkin <tkashkin@gmail.com>  Tue, 24 May 2022 22:18:06 +0300

@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Omar Aglan <omar.aglan91@yahoo.com>, 2019.
-# abidin toumi <abidin24@disroot.org>, 2019, 2020.
+# abidin toumi <abidin24@disroot.org>, 2019, 2020, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-10-13 16:26+0000\n"
+"PO-Revision-Date: 2022-05-01 09:12+0000\n"
 "Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gamehub/"
 "translations/ar/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -720,9 +720,8 @@ msgstr "DLC"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:197
-#, fuzzy
 msgid "Bonus content"
-msgstr "المحتوى المكافأة"
+msgstr "المحتوى الإضافي"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:84
 msgid "Variable syntax: <b>$var</b> or <b>${var}</b>"
@@ -1368,13 +1367,13 @@ msgstr[4] "%u لعبة"
 msgstr[5] "%u ألعاب"
 
 #: src/ui/views/GamesView/GamesView.vala:553
-#, c-format, fuzzy
+#, c-format
 msgctxt "games_view_subtitle_filtered_games"
 msgid "%1$u / %2$s"
 msgstr "%1$u / %2$s"
 
 #: src/ui/views/GamesView/GamesView.vala:557
-#, c-format, fuzzy
+#, c-format
 msgctxt "games_view_subtitle"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
