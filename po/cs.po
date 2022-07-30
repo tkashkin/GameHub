@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # TassiloBalbo <contact@fsikora.com>, 2021.
+# Hry a zajímavostio nich <hryazajimavostionich@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-10-29 22:36+0000\n"
-"Last-Translator: TassiloBalbo <contact@fsikora.com>\n"
+"PO-Revision-Date: 2022-06-22 13:21+0000\n"
+"Last-Translator: Hry a zajímavostio nich <hryazajimavostionich@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gamehub/"
 "translations/cs/>\n"
 "Language: cs\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -99,11 +100,11 @@ msgstr ""
 
 #: src/app.vala:247
 msgid "Game Options:"
-msgstr "Herní možnosti"
+msgstr "Možnosti hry:"
 
 #: src/app.vala:247
 msgid "Show game options help"
-msgstr ""
+msgstr "Zobrazit herní nápoědu"
 
 #: src/app.vala:255
 msgid "Logging Options:"
@@ -124,13 +125,13 @@ msgstr ""
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "Vybrat"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
@@ -153,18 +154,18 @@ msgstr ""
 
 #: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
 msgid "Show file"
-msgstr ""
+msgstr "Ukázat soubor"
 
 #: src/data/Runnable.vala:658 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
 msgid "Remove"
-msgstr ""
+msgstr "Odstranit"
 
 #: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
 msgid "Backup"
-msgstr ""
+msgstr "Záloha"
 
 #: src/data/Runnable.vala:778
 #, c-format
@@ -185,17 +186,17 @@ msgstr ""
 #: src/data/Game.vala:625
 msgctxt "status"
 msgid "Running"
-msgstr ""
+msgstr "Běží"
 
 #: src/data/Game.vala:628
 msgctxt "status"
 msgid "Installed"
-msgstr ""
+msgstr "Nainstalováno"
 
 #: src/data/Game.vala:629
 msgctxt "status"
 msgid "Installing"
-msgstr ""
+msgstr "Instalování"
 
 #: src/data/Game.vala:630
 msgctxt "status"
@@ -1758,49 +1759,49 @@ msgstr ""
 #: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr ""
+msgstr "Stahování začalo"
 
 #: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
 msgid "Download started"
-msgstr ""
+msgstr "Stahování začalo"
 
 #: src/utils/downloader/Downloader.vala:203
 msgctxt "dl_status"
 msgid "Download finished"
-msgstr ""
+msgstr "Stahování dokončeno"
 
 #: src/utils/downloader/Downloader.vala:204
 msgctxt "dl_status"
 msgid "Download failed"
-msgstr ""
+msgstr "Stahování selhalo"
 
 #: src/utils/downloader/Downloader.vala:208
 #, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr ""
+msgstr "Stahování: %s"
 
 #: src/utils/downloader/Downloader.vala:210
 msgctxt "dl_status"
 msgid "Downloading"
-msgstr ""
+msgstr "Stahování"
 
 #: src/utils/downloader/Downloader.vala:214
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr ""
+msgstr "Zastaveno: %s"
 
 #: src/utils/downloader/Downloader.vala:216
 msgctxt "dl_status"
 msgid "Paused"
-msgstr ""
+msgstr "Zastaveno"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
 msgid "Download cancelled"
-msgstr ""
+msgstr "Stahování zrušeno"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
