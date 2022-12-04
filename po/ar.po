@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Omar Aglan <omar.aglan91@yahoo.com>, 2019.
 # abidin toumi <abidin24@disroot.org>, 2019, 2020, 2022.
+# Kreem “Smoker” abulsaud <abulsaud123@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2022-05-01 09:12+0000\n"
-"Last-Translator: abidin toumi <abidin24@disroot.org>\n"
+"PO-Revision-Date: 2022-12-05 15:47+0000\n"
+"Last-Translator: Kreem “Smoker” abulsaud <abulsaud123@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gamehub/"
 "translations/ar/>\n"
 "Language: ar\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -30,7 +31,7 @@ msgstr "اظهر إصدار التطبيق و اغلق"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
-msgstr "أعد التشغيل بإرفاق منقح GDB"
+msgstr "أعد التشغيل بإرفاق مكتشف الأخطاءGDB"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
