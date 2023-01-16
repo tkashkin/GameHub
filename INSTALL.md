@@ -52,7 +52,7 @@ sudo zypper install gamehub
 ### Pop!\_OS
 Package is available in Pop!\_OS repository:
 ```bash
-sudo apt install com.github.tkashkin.gamehub
+sudo apt install gamehub
 ```
 
 ### Solus
