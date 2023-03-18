@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Manuela Silva <mmsrs@sky.com>, 2019.
-# ssantos <ssantos@web.de>, 2020.
+# ssantos <ssantos@web.de>, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-09-23 13:41+0000\n"
+"PO-Revision-Date: 2023-03-19 10:41+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_PT/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -85,7 +85,7 @@ msgstr ""
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr "Gestor de transferências de registo"
+msgstr "Gestor de descargas de registo"
 
 #: src/app.vala:116
 msgid "Log background workers start/stop"
@@ -210,7 +210,7 @@ msgstr "A verificar a integridade do instalador"
 #: src/data/Game.vala:631
 msgctxt "status"
 msgid "Download started"
-msgstr "Transferência iniciada"
+msgstr "Descarga iniciada"
 
 #: src/data/Game.vala:633
 msgctxt "status"
@@ -230,7 +230,7 @@ msgstr "A instalar"
 #: src/data/Game.vala:646
 msgctxt "status_header"
 msgid "Downloading"
-msgstr "A transferir"
+msgstr "A descarregar"
 
 #: src/data/Game.vala:648
 msgctxt "status_header"
@@ -1090,7 +1090,7 @@ msgstr "Pulse"
 #: src/ui/dialogs/SettingsDialog/pages/About.vala:115
 msgctxt "about_link"
 msgid "Forks"
-msgstr "Garfos"
+msgstr "Bifurcações"
 
 #: src/ui/dialogs/InstallDialog.vala:109
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:129
@@ -1100,7 +1100,7 @@ msgstr "Importar"
 #: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 msgid "Download"
-msgstr "Transferir"
+msgstr "Descarregar"
 
 #: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
@@ -1128,7 +1128,7 @@ msgstr "Imagens"
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:160
 #: src/ui/views/GameDetailsView/blocks/Artwork.vala:62
 msgid "Download images"
-msgstr "Transferir imagens"
+msgstr "Descarregar imagens"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:144
 msgid "Image URL"
@@ -1338,7 +1338,7 @@ msgstr "Todos os jogos"
 
 #: src/ui/views/GamesView/GamesView.vala:182
 msgid "Downloads"
-msgstr "Transferências"
+msgstr "Descargas"
 
 #: src/ui/views/GamesView/GamesView.vala:208
 msgid "Filters"
@@ -1422,27 +1422,27 @@ msgstr "Privacidade"
 
 #: src/ui/views/GamesView/GamesView.vala:739
 msgid "Downloading images"
-msgstr "A transferir as imagens"
+msgstr "A descarregar imagens"
 
 #: src/ui/views/GamesView/GamesView.vala:753
 #, c-format
 msgid "Downloading image: %s"
-msgstr "A transferir imagem: %s"
+msgstr "A descarregar imagem: %s"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:131
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:162
 msgid "Pause download"
-msgstr "Pausar transferência"
+msgstr "Pausar descarga"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:137
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:168
 msgid "Resume download"
-msgstr "Retomar transferência"
+msgstr "Retomar descarga"
 
 #: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
-msgstr "Cancelar transferência"
+msgstr "Cancelar descarga"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:77
 msgid "Group"
@@ -1471,7 +1471,7 @@ msgstr "Selecionar diretoria do jogo"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
 msgid "Download game images"
-msgstr "Transferir imagens do jogo"
+msgstr "Descarregar imagens do jogo"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
@@ -1795,22 +1795,22 @@ msgstr "Em fila"
 #: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr "A iniciar a transferência"
+msgstr "A iniciar a descarga"
 
 #: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
 msgid "Download started"
-msgstr "Transferência iniciada"
+msgstr "Descarga iniciada"
 
 #: src/utils/downloader/Downloader.vala:203
 msgctxt "dl_status"
 msgid "Download finished"
-msgstr "Transferência terminada"
+msgstr "Descarga terminada"
 
 #: src/utils/downloader/Downloader.vala:204
 msgctxt "dl_status"
 msgid "Download failed"
-msgstr "Transferência falhou"
+msgstr "Descarga falhou"
 
 #: src/utils/downloader/Downloader.vala:208
 #, c-format
@@ -1837,7 +1837,7 @@ msgstr "Pausado"
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
 msgid "Download cancelled"
-msgstr "Transferência cancelada"
+msgstr "Descarga cancelada"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
