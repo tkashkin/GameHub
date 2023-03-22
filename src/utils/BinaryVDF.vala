@@ -301,7 +301,7 @@ namespace GameHub.Utils
 					var appid = stream.read_uint32();
 					if(appid == 0) break;
 
-					stream.seek(44, SeekType.CUR);
+					stream.seek(64, SeekType.CUR);
 
 					var app = BinaryVDF.Node.read(stream, appid.to_string());
 					if(app != null)

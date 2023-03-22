@@ -368,7 +368,6 @@ namespace GameHub.Data.Compat
 			//Scan for custom Proton
             var compattools_dir = File.new_for_path(Environment.get_home_dir ()).get_child (".steam").get_child ("steam").get_child ("compatibilitytools.d");
 			if (compattools_dir.query_file_type (0) == FileType.DIRECTORY) {
-                stdout.printf("%s\n", "found compatibilitytools.d directory");
                 var enumerator = compattools_dir.enumerate_children (FileAttribute.STANDARD_NAME, 0);
                 FileInfo file_info;
                 while ((file_info = enumerator.next_file ()) != null) {
