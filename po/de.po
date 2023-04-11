@@ -15,13 +15,14 @@
 # J. Lavoie <j.lavoie@net-c.ca>, 2020, 2021.
 # 3ole <ole-s@mailbox.org>, 2022.
 # Sematre <Sematre@gmx.de>, 2022.
+# Timo Dankert <timo.dankert@posteo.net>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2022-05-02 12:12+0000\n"
-"Last-Translator: Sematre <Sematre@gmx.de>\n"
+"PO-Revision-Date: 2023-04-12 10:47+0000\n"
+"Last-Translator: Timo Dankert <timo.dankert@posteo.net>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gamehub/"
 "translations/de/>\n"
 "Language: de\n"
@@ -29,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -1239,9 +1240,8 @@ msgid "Open directory"
 msgstr "Verzeichnis öffnen"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
-#, fuzzy
 msgid "Remove overlay"
-msgstr "Overlays aktivieren"
+msgstr "Overlay entfernen"
 
 #: src/ui/dialogs/CompatRunDialog.vala:48
 #: src/ui/views/GamesView/GameContextMenu.vala:46
