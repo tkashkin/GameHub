@@ -102,7 +102,7 @@ namespace GameHub.Data.Compat
 						name = appname ?? proton_dir.get_basename();
 						executable = proton_dir.get_child("proton");
 						installed = executable.query_exists();
-						wine_binary = proton_dir.get_child("dist/bin/wine");
+						wine_binary = proton_dir.get_child("dist").query_exists() ? proton_dir.get_child("dist/bin/wine") : proton_dir.get_child("files/bin/wine");
 					}
 				}
 				else
