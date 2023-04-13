@@ -88,14 +88,21 @@ namespace GameHub.Data.Compat
 			else
 			{
 				File? proton_dir = null;
-				if(Steam.find_app_install_dir(appid, out proton_dir))
+                if(appid.has_prefix("custom")) {
+                    proton_dir = File.new_for_path(Environment.get_home_dir ()).get_child (".steam").get_child ("steam").get_child ("compatibilitytools.d").get_child (appname);
+                    name = appname;
+                    executable = proton_dir.get_child("proton");
+					installed = executable.query_exists();
+					wine_binary = proton_dir.get_child("dist").query_exists() ? proton_dir.get_child("dist/bin/wine") : proton_dir.get_child("files/bin/wine");
+                }
+				else if(Steam.find_app_install_dir(appid, out proton_dir))
 				{
 					if(proton_dir != null)
 					{
 						name = appname ?? proton_dir.get_basename();
 						executable = proton_dir.get_child("proton");
 						installed = executable.query_exists();
-						wine_binary = proton_dir.get_child("dist/bin/wine");
+						wine_binary = proton_dir.get_child("dist").query_exists() ? proton_dir.get_child("dist/bin/wine") : proton_dir.get_child("files/bin/wine");
 					}
 				}
 				else
@@ -357,6 +364,19 @@ namespace GameHub.Data.Compat
 					}
 				}
 			}
+
+			//Scan for custom Proton
+            var compattools_dir = FSUtils.file(FSUtils.Paths.Steam.Home).get_child ("steam").get_child ("compatibilitytools.d");
+			if (compattools_dir.query_file_type (0) == FileType.DIRECTORY) {
+                var enumerator = compattools_dir.enumerate_children (FileAttribute.STANDARD_NAME, 0);
+                FileInfo file_info;
+                while ((file_info = enumerator.next_file ()) != null) {
+                    var name = file_info.get_name ();
+                    if (name.down().contains("proton")) {
+                        versions.add(new Proton("custom", name));
+                    }
+                }
+            }
 
 			if(versions.size > 0)
 			{
