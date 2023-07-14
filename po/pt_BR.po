@@ -8,13 +8,15 @@
 # Wilker Santana da Silva <wilker@tutamail.com>, 2019, 2020.
 # Wellington Terumi Uemura <wellingtonuemura@gmail.com>, 2020.
 # Phraqzy <fabricio.marques1000@gmail.com>, 2021.
+# Fernando Lopes <118869201+plasmus777@users.noreply.github.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-12-15 15:52+0000\n"
-"Last-Translator: Phraqzy <fabricio.marques1000@gmail.com>\n"
+"PO-Revision-Date: 2023-07-15 15:49+0000\n"
+"Last-Translator: Fernando Lopes <118869201+plasmus777@users.noreply.github."
+"com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gamehub/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -22,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -716,7 +718,7 @@ msgstr "Diretório de coleção"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:78
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:87
 msgid "Game directory"
-msgstr "Diretório de jogos"
+msgstr "Diretório do jogo"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:71
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:79
@@ -949,7 +951,7 @@ msgstr "Executável"
 #: src/ui/views/GamesView/AddGamePopover.vala:68
 #: src/ui/views/GamesView/AddGamePopover.vala:143
 msgid "Installer"
-msgstr "Instalar"
+msgstr "Instalador"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:256
 #: src/ui/dialogs/GamePropertiesDialog.vala:64
@@ -1106,7 +1108,7 @@ msgstr "Importar"
 #: src/ui/dialogs/InstallDialog.vala:110
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:153
 msgid "Download"
-msgstr "Transferências"
+msgstr "Transferência"
 
 #: src/ui/dialogs/InstallDialog.vala:207
 msgid "Select installer"
