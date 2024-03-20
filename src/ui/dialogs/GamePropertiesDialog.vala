@@ -46,7 +46,7 @@ namespace GameHub.UI.Dialogs
 
 		public GamePropertiesDialog(Game? game)
 		{
-			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: _("%s: Properties").printf(game.name), game: game);
+			Object(transient_for: Windows.MainWindow.instance, resizable: Settings.UI.Behavior.instance.dialogs_resize , title: _("%s: Properties").printf(game.name), game: game);
 		}
 
 		construct
