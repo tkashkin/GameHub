@@ -2,51 +2,59 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # THANOS SIOURDAKIS <siourdakisthanos@gmail.com>, 2019.
+# John Mavroforos <imavroforos@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-05-12 21:01+0000\n"
+"Last-Translator: John Mavroforos <imavroforos@gmail.com>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/gamehub/"
+"translations/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.4\n"
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr ""
+msgstr "προβολή βοήθειας"
 
 #: src/app.vala:92
+#, fuzzy
 msgid "Show application version and exit"
-msgstr ""
+msgstr "Εμφάνιση έκδοσης της εφαρμογής και έξοδος"
 
 #: src/app.vala:93
+#, fuzzy
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "Eπανεκκίνηση με συνδεδεμένο το πρόγραμμα εντοπισμού σφαλμάτων GDB"
 
 #: src/app.vala:94
+#, fuzzy
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "Εμφάνιση πλήρους backtrace του GDB"
 
 #: src/app.vala:95
+#, fuzzy
 msgid "Treat fatal errors as criticals and crash application"
 msgstr ""
+"Αντιμετωπίστε τα ανεπανόρθωτα σφάλματα ως κρίσιμα και τα σφάλματα εφαρμογής"
 
 #: src/app.vala:99
 msgid "Show main window"
-msgstr ""
+msgstr "Εμφάνιση του κύριου παραθύρου"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
-msgstr ""
+msgstr "Εμφάνιση διαλόγου ρυθμίσεων της εφαρμογής"
 
 #: src/app.vala:101
 msgid "Show about dialog"
-msgstr ""
+msgstr "Εμφάνιση διαλόγου"
 
 #: src/app.vala:102
 msgid "Maximum number of background worker threads"
@@ -54,84 +62,88 @@ msgstr ""
 
 #: src/app.vala:106
 msgid "Run game"
-msgstr ""
+msgstr "Εκτέλεση του παιχνιδιού"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr ""
+msgstr "Εμφάνιση διαλόγου ρυθμίσεων συμβατότητας"
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr ""
+msgstr "Λεπτομέρειες παιχνιδιού"
 
 #: src/app.vala:109
 msgid "Open game properties"
-msgstr ""
+msgstr "Ανοίξτε τις ιδιότητες παιχνιδιού"
 
 #: src/app.vala:113
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Ενεργοποίηση καταγραφής εντοπισμού σφαλμάτων"
 
 #: src/app.vala:114
+#, fuzzy
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
 msgstr ""
+"Καταγραφή της διαδικασίας ελέγχου ταυτότητας και των ευαίσθητων πληροφοριών, "
+"όπως τα διακριτικά ελέγχου ταυτότητας"
 
 #: src/app.vala:115
 msgid "Log download manager"
-msgstr ""
+msgstr "Διαχειριστής λήψης αρχείων καταγραφής"
 
 #: src/app.vala:116
+#, fuzzy
 msgid "Log background workers start/stop"
-msgstr ""
+msgstr "Εκκίνηση/διακοπή εργαζομένων στο παρασκήνιο"
 
 #: src/app.vala:117
 msgid "Disable log messages filtering"
-msgstr ""
+msgstr "Απενεργοποίηση φίλτρου μηνυμάτων καταγραφής"
 
 #: src/app.vala:118
 msgid "Verbose logging"
-msgstr ""
+msgstr "Εκτενή καταγραφή"
 
 #: src/app.vala:247
 msgid "Game Options:"
-msgstr ""
+msgstr "Επιλογές παιχνιδιού:"
 
 #: src/app.vala:247
 msgid "Show game options help"
-msgstr ""
+msgstr "Εμφάνιση της βοήθειας επιλογών παιχνιδιού"
 
 #: src/app.vala:255
 msgid "Logging Options:"
-msgstr ""
+msgstr "Επιλογές καταγραφής δεδομένων:"
 
 #: src/app.vala:255
 msgid "Show logging options help"
-msgstr ""
+msgstr "Εμφάνιση της βοήθειας επιλογών καταγραφής"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
 msgid "Select executable"
-msgstr ""
+msgstr "Επιλογή εκτελέσιμου αρχείου"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select"
-msgstr ""
+msgstr "Επιλογή"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
 msgid "Select directory"
-msgstr ""
+msgstr "Επιλογή καταλόγου"
 
 #: src/data/Runnable.vala:619
 #, c-format
