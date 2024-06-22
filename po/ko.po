@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2024-06-21 14:09+0000\n"
+"PO-Revision-Date: 2024-06-22 13:25+0000\n"
 "Last-Translator: asdzxcfv7735 <asdzxcfv7735@ajou.ac.kr>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gamehub/"
 "translations/ko/>\n"
@@ -1430,114 +1430,114 @@ msgstr "다운로드 재개"
 #: src/ui/views/GamesView/DownloadProgressView.vala:143
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:174
 msgid "Cancel download"
-msgstr ""
+msgstr "다운로드 취소됨"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:77
 msgid "Group"
-msgstr ""
+msgstr "그룹"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:102
 msgid "Sort"
-msgstr ""
+msgstr "정렬"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:234
 #: src/ui/widgets/GameTagsList.vala:58
 msgid "Tags"
-msgstr ""
+msgstr "태그"
 
 #: src/ui/views/GamesView/FiltersPopover.vala:353
 msgid "All platforms"
-msgstr ""
+msgstr "모든 플랫폼"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:77
 msgid "Select game executable"
-msgstr ""
+msgstr "게임 실행 파일 선택"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Select game directory"
-msgstr ""
+msgstr "게임 폴더 선택"
 
 #: src/ui/views/GamesView/AddGamePopover.vala:111
 msgid "Download game images"
-msgstr ""
+msgstr "게임 이미지 다운로드"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:87
 msgid "Details"
-msgstr ""
+msgstr "자세히"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:117
 msgctxt "game_context_menu"
 msgid "Favorite"
-msgstr ""
+msgstr "즐겨찾기"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:121
 msgctxt "game_context_menu"
 msgid "Hidden"
-msgstr ""
+msgstr "숨김"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:133
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:236
 msgid "Open installation directory"
-msgstr ""
+msgstr "설치 폴더 열기"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:142
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:237
 msgid "Open installers collection directory"
-msgstr ""
+msgstr "설치 프로그램 모음 폴더 열기"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:151
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:238
 msgid "Open bonus collection directory"
-msgstr ""
+msgstr "보너스 모음 폴더 열기"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:160
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:239
 msgid "Open screenshots directory"
-msgstr ""
+msgstr "스크린샷 폴더 열기"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 msgid "Uninstall"
-msgstr ""
+msgstr "제거"
 
 #: src/ui/views/GamesView/GameContextMenu.vala:192
 msgid "Properties"
-msgstr ""
+msgstr "속성"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:100
 #, c-format
 msgid "%d game selected"
 msgid_plural "%d games selected"
-msgstr[0] ""
+msgstr[0] "%d개의 게임 선택됨"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:144
 #, c-format
 msgid "%d game will be installed"
 msgid_plural "%d games will be installed"
-msgstr[0] ""
+msgstr[0] "%d개의 게임이 설치될 예정입니다"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:154
 #, c-format
 msgid "%d game will be downloaded"
 msgid_plural "%d games will be downloaded"
-msgstr[0] ""
+msgstr[0] "%d개의 게임이 다운로드될 예정입니다"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:161
 #, c-format
 msgid "Image for %d game will be searched"
 msgid_plural "Images for %d games will be searched"
-msgstr[0] ""
+msgstr[0] "%d개의 게임에 대한 이미지가 검색될 예정입니다"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
 #, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] ""
+msgstr[0] "%d개의 게임이 제거될 예정입니다"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
 msgid "Refresh"
-msgstr ""
+msgstr "새로 고침"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:175
 #, c-format
@@ -1545,278 +1545,281 @@ msgid ""
 "%d game will be removed from database. Restart GameHub to fetch new data"
 msgid_plural ""
 "%d games will be removed from database. Restart GameHub to fetch new data"
-msgstr[0] ""
+msgstr[0] "%d개의 게임이 데이터베이스에서 제거될 예정입니다. 새로운 데이터를 가져오려면 "
+"GameHub를 재시작하세요"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:240
 msgid "Open store page"
-msgstr ""
+msgstr "상점 페이지 열기"
 
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:242
 msgid "Game properties"
-msgstr ""
+msgstr "게임 속성"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:46
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:60
 msgid "Playtime"
-msgstr ""
+msgstr "플레이 시간"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:52
 msgid "Playtime (local)"
-msgstr ""
+msgstr "플레이 시간 (로컬)"
 
 #: src/ui/views/GameDetailsView/blocks/Playtime.vala:69
 msgid "Last launch"
-msgstr ""
+msgstr "마지막 실행"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:46
 msgid "Achievements"
-msgstr ""
+msgstr "도전 과제"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:85
 #, c-format
 msgid "Unlocked: %s"
-msgstr ""
+msgstr "잠금 해제됨: %s"
 
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:90
 #, c-format
 msgid "Global percentage: %g%%"
-msgstr ""
+msgstr "전 세계 비율: %g%%"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
 msgid "Language"
-msgstr ""
+msgstr "언어"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:80
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:106
 msgid "Languages"
-msgstr ""
+msgstr "언"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:147
 #, c-format
 msgid "%u DLCs cannot be installed"
-msgstr ""
+msgstr "%u개의 DLC를 설치할 수 없습니다"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:71
 msgid "Category"
-msgstr ""
+msgstr "카테고리"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:74
 msgid "Categories"
-msgstr ""
+msgstr "카테고리"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:90
 msgid "Genre"
-msgstr ""
+msgstr "장르"
 
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:93
 msgid "Genres"
-msgstr ""
+msgstr "장르"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:109
 msgctxt "igdb"
 msgid "Popularity"
-msgstr ""
+msgstr "인기도"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:115
 msgctxt "igdb"
 msgid "Aggregated rating"
-msgstr ""
+msgstr "종합 평점"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:116
 msgctxt "igdb"
 msgid "IGDB user rating"
-msgstr ""
+msgstr "IGDB 유저 평점"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:117
 msgctxt "igdb"
 msgid "Total rating"
-msgstr ""
+msgstr "총 평점"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:126
 msgctxt "igdb"
 msgid "Release date"
-msgstr ""
+msgstr "출시 날짜"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:133
 msgctxt "igdb"
 msgid "Platforms"
-msgstr ""
+msgstr "플랫폼"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:139
 msgctxt "igdb"
 msgid "Genres"
-msgstr ""
+msgstr "장르"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:145
 msgctxt "igdb"
 msgid "Keywords"
-msgstr ""
+msgstr "키워드"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:152
 msgctxt "igdb"
 msgid "Links"
-msgstr ""
+msgstr "링크"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:208
 #, c-format
 msgid "Based on <b>%d</b> rating"
 msgid_plural "Based on <b>%d</b> ratings"
-msgstr[0] ""
+msgstr[0] "<b>%d</b>개의 평점을 기반으로 함"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:290
 msgctxt "igdb"
 msgid "Summary"
-msgstr ""
+msgstr "요약"
 
 #: src/ui/views/GameDetailsView/blocks/IGDBInfo.vala:301
 msgctxt "igdb"
 msgid "Storyline"
-msgstr ""
+msgstr "줄거리"
 
 #: src/ui/widgets/FileChooserEntry.vala:49
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
 msgid "Select file"
-msgstr ""
+msgstr "파일 선택"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid "No images"
-msgstr ""
+msgstr "이미지 없음"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:74
 msgid ""
 "There are no images found for this game\n"
 "Make sure game name is correct"
 msgstr ""
+"이 게임에 대한 이미지가 없습니다\n"
+"게임 이름이 올바른지 확인하세요"
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:94
 msgid "Search images:"
-msgstr ""
+msgstr "이미지 검색:"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
-msgstr ""
+msgstr "호환성 레이어:"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
-msgstr ""
+msgstr "설정"
 
 #: src/ui/widgets/GameTagsList.vala:109
 msgid "Add tag"
-msgstr ""
+msgstr "태그 추가"
 
 #: src/ui/widgets/TweaksList.vala:86
 msgid "No description"
-msgstr ""
+msgstr "설명 없음"
 
 #: src/ui/widgets/TweaksList.vala:124
 msgid "Edit file"
-msgstr ""
+msgstr "파일 편집"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
 msgctxt "time"
 msgid "%dh"
-msgstr ""
+msgstr "%d시간"
 
 #: src/utils/Utils.vala:456 src/utils/Utils.vala:464
 #, c-format
 msgctxt "time"
 msgid "%dm"
-msgstr ""
+msgstr "%d"
 
 #: src/utils/Utils.vala:464
 #, c-format
 msgctxt "time"
 msgid "%ds"
-msgstr ""
+msgstr "%d초"
 
 #: src/settings/UI.vala:153
 msgctxt "grid_size_preset"
 msgid "Steam"
-msgstr ""
+msgstr "Steam"
 
 #: src/settings/UI.vala:154
 msgctxt "grid_size_preset"
 msgid "Steam (vertical)"
-msgstr ""
+msgstr "Steam (세로)"
 
 #: src/settings/UI.vala:155
 msgctxt "grid_size_preset"
 msgid "GOG"
-msgstr ""
+msgstr "GOG"
 
 #: src/settings/UI.vala:156
 msgctxt "grid_size_preset"
 msgid "GOG (vertical)"
-msgstr ""
+msgstr "GOG (세로)"
 
 #: src/settings/UI.vala:157
 msgctxt "grid_size_preset"
 msgid "Square"
-msgstr ""
+msgstr "정사각형"
 
 #: src/settings/UI.vala:158
 msgctxt "grid_size_preset"
 msgid "Custom"
-msgstr ""
+msgstr "사용자 정의"
 
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
 msgid "Queued"
-msgstr ""
+msgstr "대기 중"
 
 #: src/utils/downloader/Downloader.vala:201
 msgctxt "dl_status"
 msgid "Starting download"
-msgstr ""
+msgstr "다운로드 시작 중"
 
 #: src/utils/downloader/Downloader.vala:202
 msgctxt "dl_status"
 msgid "Download started"
-msgstr ""
+msgstr "다운로드 시작됨"
 
 #: src/utils/downloader/Downloader.vala:203
 msgctxt "dl_status"
 msgid "Download finished"
-msgstr ""
+msgstr "다운로드 완료됨"
 
 #: src/utils/downloader/Downloader.vala:204
 msgctxt "dl_status"
 msgid "Download failed"
-msgstr ""
+msgstr "다운로드 실패"
 
 #: src/utils/downloader/Downloader.vala:208
 #, c-format
 msgctxt "dl_status"
 msgid "Downloading: %s"
-msgstr ""
+msgstr "다운로드 중: %s"
 
 #: src/utils/downloader/Downloader.vala:210
 msgctxt "dl_status"
 msgid "Downloading"
-msgstr ""
+msgstr "다운로드 중"
 
 #: src/utils/downloader/Downloader.vala:214
 #, c-format
 msgctxt "dl_status"
 msgid "Paused: %s"
-msgstr ""
+msgstr "일시 정지: %s"
 
 #: src/utils/downloader/Downloader.vala:216
 msgctxt "dl_status"
 msgid "Paused"
-msgstr ""
+msgstr "일시 정지"
 
 #: src/utils/downloader/Downloader.vala:218
 msgctxt "dl_status"
 msgid "Download cancelled"
-msgstr ""
+msgstr "다운로드 취소됨"
 
 #. TRANSLATORS: Download progress template. %1$d - percentage, %2$s / %3$s - downloaded portion and total file size, %4$s - download speed
 #: src/utils/downloader/Downloader.vala:262
 #, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr ""
+msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
