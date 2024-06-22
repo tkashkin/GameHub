@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2024-06-22 13:25+0000\n"
+"PO-Revision-Date: 2024-06-23 14:09+0000\n"
 "Last-Translator: asdzxcfv7735 <asdzxcfv7735@ajou.ac.kr>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gamehub/"
 "translations/ko/>\n"
@@ -716,7 +716,7 @@ msgstr "설치 프로그램"
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:72
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:98
 msgid "DLC"
-msgstr "다운로드 콘텐츠"
+msgstr "DLC"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Collection.vala:73
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:197
@@ -789,7 +789,7 @@ msgid ""
 "Tweaks are loaded from following directories in order\n"
 "Last tweak overrides previous tweaks with same identifiers"
 msgstr ""
-"조정은 다음 디렉토리에서 순서대로 로드됩니다\n"
+"조정은 다음 폴더에서 순서대로 로드됩니다\n"
 "마지막 조정이 동일한 식별자를 가진 이전 조정을 덮어씁니다"
 
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:83
@@ -799,7 +799,7 @@ msgstr "클릭해서 열기"
 #: src/ui/dialogs/SettingsDialog/pages/general/Tweaks.vala:93
 #, c-format
 msgid "Tweaks are loaded from <b>%1$s</b> and %2$d more directories <b>(?)</b>"
-msgstr "조정은 <b>%1$s</b> 및 %2$d개의 추가 디렉토리에서 로드됩니다 <b>(?)</b>"
+msgstr "조정은 <b>%1$s</b> 및 %2$d개의 추가 폴더에서 로드됩니다 <b>(?)</b>"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:38
 msgid "Game sources"
@@ -878,11 +878,11 @@ msgstr "에뮬레이트"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 msgid "Libretro core directory"
-msgstr "Libretro 코어 디렉토리"
+msgstr "Libretro 코어 폴더"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:46
 msgid "Libretro core info directory"
-msgstr "Libretro 코어 정보 디렉토리"
+msgstr "Libretro 코어 정보 폴더"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:50
 msgid "Ignored libretro cores"
@@ -965,11 +965,11 @@ msgstr "게임 인수"
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:80
 #: src/ui/views/GamesView/AddGamePopover.vala:82
 msgid "Directory"
-msgstr "디렉토리"
+msgstr "폴더"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:288
 msgid "Select emulator directory"
-msgstr "에뮬레이터 디렉토리 선택"
+msgstr "에뮬레이터 폴더 선택"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
 #: src/ui/dialogs/GamePropertiesDialog.vala:219
@@ -1134,11 +1134,11 @@ msgstr "아이콘 URL"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
 msgid "Select working directory"
-msgstr "작업 디렉토리 선택"
+msgstr "작업 폴더 선택"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
 msgid "Working directory"
-msgstr "작업 디렉토리"
+msgstr "작업 폴더"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
@@ -1186,7 +1186,7 @@ msgstr "오버레이"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:105
 msgid "Overlay ID (directory name)"
-msgstr "오버레이 ID (디렉토리 이름)"
+msgstr "오버레이 ID (폴더 이름)"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:110
 msgid "Overlay name (optional)"
@@ -1226,7 +1226,7 @@ msgstr ""
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:266
 msgid "Open directory"
-msgstr "디렉토리 열기"
+msgstr "폴더 열기"
 
 #: src/ui/dialogs/GameFSOverlaysDialog.vala:271
 msgid "Remove overlay"
@@ -1249,7 +1249,7 @@ msgstr "에뮬레이트된 게임 가져오기"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:75
 msgid "Select directory with emulated games"
-msgstr "에뮬레이트된 게임이 있는 디렉토리 선택"
+msgstr "에뮬레이트된 게임이 있는 폴더 선택"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:83
 msgid "Detected games"
@@ -1261,7 +1261,7 @@ msgstr "모두 선택"
 
 #: src/ui/dialogs/ImportEmulatedGamesDialog.vala:115
 msgid "Select directory to import"
-msgstr "가져올 디렉토리 선택"
+msgstr "가져올 폴더 선택"
 
 #: src/ui/dialogs/GameTweaksDialog.vala:40
 #, c-format
