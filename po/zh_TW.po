@@ -6,13 +6,14 @@
 # Elizabeth Sherrock <lizzyd710@gmail.com>, 2019.
 # tofuHero <zhao1397172935@foxmail.com>, 2019.
 # Allan Nordhøy <epost@anotheragency.no>, 2020.
+# Ricky From Hong Kong <lamricky11@hotmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-04-04 07:44+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2024-07-24 08:09+0000\n"
+"Last-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "gamehub/translations/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -666,14 +667,12 @@ msgid "Dim"
 msgstr ""
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:151
-#, fuzzy
 msgid "Grid options"
-msgstr "游戏选项："
+msgstr "網格選項"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:152
-#, fuzzy
 msgid "List options"
-msgstr "记录选项："
+msgstr "列表選項"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Behavior.vala:31
 msgid "Behavior"
@@ -1751,14 +1750,12 @@ msgid ""
 msgstr ""
 
 #: src/ui/widgets/ImagesDownloadPopover.vala:94
-#, fuzzy
 msgid "Search images:"
-msgstr "下载图片"
+msgstr "搜尋圖片"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
-#, fuzzy
 msgid "Compatibility layer:"
-msgstr "禁用DirectX 11兼容层"
+msgstr "兼容層："
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
