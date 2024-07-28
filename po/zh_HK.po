@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2024-07-24 08:09+0000\n"
+"PO-Revision-Date: 2024-07-28 11:03+0000\n"
 "Last-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\n"
 "Language-Team: Chinese (Traditional, Hong Kong) <https://hosted.weblate.org/"
 "projects/gamehub/translations/zh_Hant_HK/>\n"
@@ -143,7 +143,7 @@ msgstr "选择目录"
 #: src/data/Runnable.vala:619
 #, c-format
 msgid "Part %1$u of %2$u: %3$s"
-msgstr ""
+msgstr "第%1$u／%2$u部份：%3$s"
 
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
 #, c-format
@@ -258,7 +258,7 @@ msgstr ""
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
 msgid "DLC: %s"
-msgstr ""
+msgstr "可下載內容（DLC）：%s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
 #, c-format
@@ -277,25 +277,25 @@ msgstr ""
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%s left;"
-msgstr ""
+msgstr "剩餘%s；"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
 msgctxt "itch_dl_status"
 msgid "(%1$s / %2$s)"
-msgstr ""
+msgstr "（%1$s／%2$s）"
 
 #: src/data/sources/itch/ItchDownloader.vala:201
 #, c-format
 msgctxt "itch_dl_status"
 msgid "[%s/s]"
-msgstr ""
+msgstr "（%s每秒）"
 
 #: src/data/sources/user/User.vala:30
 msgid "User games"
@@ -413,10 +413,10 @@ msgid "Favorites"
 msgstr "收藏夹"
 
 #: src/data/adapters/GamesAdapter.vala:445
-#, fuzzy, c-format
+#, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
-msgstr "收藏夹"
+msgstr "%s：我的最愛"
 
 #: src/data/adapters/GamesAdapter.vala:491
 msgid "Merging games"
