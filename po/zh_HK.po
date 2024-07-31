@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2024-07-29 12:09+0000\n"
+"PO-Revision-Date: 2024-07-31 08:09+0000\n"
 "Last-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\n"
 "Language-Team: Chinese (Traditional, Hong Kong) <https://hosted.weblate.org/"
 "projects/gamehub/translations/zh_Hant_HK/>\n"
@@ -81,78 +81,65 @@ msgid "Enable debug logging"
 msgstr "啟用除錯日誌記錄"
 
 #: src/app.vala:114
-#, fuzzy
 msgid ""
 "Log authentication process and sensitive information like authentication "
 "tokens"
-msgstr "記錄身份驗証過程和敏感信息，如身份驗証令牌"
+msgstr "記錄身份驗證過程和敏感信息，如身份驗證令牌"
 
 #: src/app.vala:115
-#, fuzzy
 msgid "Log download manager"
-msgstr "日志管理器"
+msgstr "日誌管理器"
 
 #: src/app.vala:116
-#, fuzzy
 msgid "Log background workers start/stop"
-msgstr "日志后台工作開始/停止"
+msgstr "開始／停止記錄後台工作"
 
 #: src/app.vala:117
-#, fuzzy
 msgid "Disable log messages filtering"
-msgstr "關閉日志信息過濾"
+msgstr "關閉日誌信息篩選"
 
 #: src/app.vala:118
-#, fuzzy
 msgid "Verbose logging"
 msgstr "詳細記錄"
 
 #: src/app.vala:247
-#, fuzzy
 msgid "Game Options:"
 msgstr "游戲選項："
 
 #: src/app.vala:247
-#, fuzzy
 msgid "Show game options help"
 msgstr "顯示游戲選項幫助"
 
 #: src/app.vala:255
-#, fuzzy
 msgid "Logging Options:"
-msgstr "記錄選項："
+msgstr "日誌記錄選項："
 
 #: src/app.vala:255
-#, fuzzy
 msgid "Show logging options help"
-msgstr "顯示日志選項幫助"
+msgstr "顯示日誌記錄選項幫助"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:270
 #: src/ui/dialogs/GamePropertiesDialog.vala:172
-#, fuzzy
 msgid "Select executable"
-msgstr "選擇可執行文件"
+msgstr "選擇可執行檔案"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:181 src/ui/views/GamesView/GamesView.vala:330
 #: src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
-#, fuzzy
 msgid "Select"
 msgstr "選擇"
 
 #: src/data/Runnable.vala:110 src/data/Runnable.vala:112
 #: src/data/Runnable.vala:180 src/ui/widgets/FileChooserEntry.vala:55
 #: src/ui/widgets/FileChooserEntry.vala:57
-#, fuzzy
 msgid "Cancel"
 msgstr "取消"
 
 #: src/data/Runnable.vala:166 src/ui/widgets/FileChooserEntry.vala:49
-#, fuzzy
 msgid "Select directory"
-msgstr "選擇目錄"
+msgstr "選擇資料夾"
 
 #: src/data/Runnable.vala:619
 #, c-format
@@ -160,131 +147,114 @@ msgid "Part %1$u of %2$u: %3$s"
 msgstr "第%1$u／%2$u部份：%3$s"
 
 #: src/data/Runnable.vala:642 src/ui/dialogs/CorruptedInstallerDialog.vala:48
-#, c-format, fuzzy
+#, c-format
 msgid "%s: corrupted installer"
-msgstr "%s: 安裝程序損壞"
+msgstr "%s：安裝程序損壞"
 
 #: src/data/Runnable.vala:643
-#, c-format, fuzzy
+#, c-format
 msgid "Checksum mismatch in %s"
-msgstr "校驗和不匹配 %s"
+msgstr "%s中校驗不匹配"
 
 #: src/data/Runnable.vala:657 src/ui/dialogs/CorruptedInstallerDialog.vala:126
-#, fuzzy
 msgid "Show file"
-msgstr "顯示文件"
+msgstr "顯示檔案"
 
 #: src/data/Runnable.vala:658 src/ui/dialogs/CorruptedInstallerDialog.vala:132
 #: src/ui/views/GamesView/GameContextMenu.vala:167
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:241
 #: src/ui/widgets/TagRow.vala:146
-#, fuzzy
 msgid "Remove"
 msgstr "刪除"
 
 #: src/data/Runnable.vala:659 src/ui/dialogs/CorruptedInstallerDialog.vala:128
-#, fuzzy
 msgid "Backup"
 msgstr "備份"
 
 #: src/data/Runnable.vala:778
-#, c-format, fuzzy
+#, c-format
 msgid "%s: cannot detect main executable"
-msgstr "%s: 無法檢測主可執行文件"
+msgstr "%s：無法檢測主要可執行檔案"
 
 #: src/data/Runnable.vala:779
-#, fuzzy
 msgid ""
 "Main executable file for this game cannot be detected automatically.\n"
 "Please set main executable in game's properties."
 msgstr ""
 "無法自動檢測此游戲的主要可執行文件。\n"
-"請在游戲屬性中設置主要可執行文件。"
+"請在游戲屬性中設定主要可執行文件。"
 
 #: src/data/Runnable.vala:908
-#, fuzzy
 msgctxt "platform"
 msgid "Emulated"
 msgstr "模擬器"
 
 #: src/data/Game.vala:625
-#, fuzzy
 msgctxt "status"
 msgid "Running"
 msgstr "正在運行"
 
 #: src/data/Game.vala:628
-#, fuzzy
 msgctxt "status"
 msgid "Installed"
-msgstr "安裝"
+msgstr "已安裝"
 
 #: src/data/Game.vala:629
-#, fuzzy
 msgctxt "status"
 msgid "Installing"
-msgstr "安裝"
+msgstr "正在安裝"
 
 #: src/data/Game.vala:630
-#, fuzzy
 msgctxt "status"
 msgid "Verifying installer integrity"
 msgstr "驗証安裝程序完整性"
 
 #: src/data/Game.vala:631
-#, fuzzy
 msgctxt "status"
 msgid "Download started"
 msgstr "下載已開始"
 
 #: src/data/Game.vala:633
-#, fuzzy
 msgctxt "status"
 msgid "Not installed"
 msgstr "未安裝"
 
 #: src/data/Game.vala:643
-#, fuzzy
 msgctxt "status_header"
 msgid "Installed"
-msgstr "安裝"
+msgstr "已安裝"
 
 #: src/data/Game.vala:644
-#, fuzzy
 msgctxt "status_header"
 msgid "Installing"
-msgstr "安裝"
+msgstr "正在安裝"
 
 #: src/data/Game.vala:646
-#, fuzzy
 msgctxt "status_header"
 msgid "Downloading"
 msgstr "正在下載"
 
 #: src/data/Game.vala:648
-#, fuzzy
 msgctxt "status_header"
 msgid "Not installed"
 msgstr "未安裝"
 
 #: src/data/GameSource.vala:31
-#, c-format, fuzzy
+#, c-format
 msgid "%s games"
-msgstr "%s 游戲"
+msgstr "%s個游戲"
 
 #: src/data/sources/steam/Steam.vala:43
-#, fuzzy
 msgid "Your SteamID will be read from Steam configuration file"
-msgstr "您的SteamID將從Steam配置文件中讀取"
+msgstr "您的SteamID將從Steam配置檔案中讀取"
 
 #: src/data/sources/steam/Steam.vala:46
-#, fuzzy
 msgid ""
 "Steam config file not found.\n"
 "Login into your account in Steam client and return to GameHub"
 msgstr ""
-"找不到Steam配置文件。\n"
-"在Steam客戶端登錄您的帳戶並返回GameHub"
+"找不到Steam配置檔案。\n"
+"在Steam登錄您的帳戶並返回GameHub"
 
 #: src/data/sources/gog/GOGGame.vala:983
 #, c-format
@@ -292,18 +262,17 @@ msgid "DLC: %s"
 msgstr "可下載內容（DLC）：%s"
 
 #: src/data/sources/humble/HumbleGame.vala:343
-#, c-format, fuzzy
+#, c-format
 msgid "%s: no available installers"
-msgstr "%s: 沒有可用的安裝程序"
+msgstr "%s：沒有可用的安裝程序"
 
 #: src/data/sources/humble/HumbleGame.vala:344
-#, fuzzy
 msgid ""
 "Cannot get Trove download URL.\n"
 "Make sure your Humble Monthly subscription is active."
 msgstr ""
-"無法獲取Trove下載URL。\n"
-"確保您的Humble Monthly訂閱處於活動狀態。"
+"無法獲取Trove下載連結。\n"
+"請確保您有有效的Humble每月訂閱。"
 
 #: src/data/sources/itch/ItchDownloader.vala:192
 #, c-format
@@ -312,7 +281,7 @@ msgid "%s left;"
 msgstr "剩餘%s﹔"
 
 #: src/data/sources/itch/ItchDownloader.vala:195
-#, c-format, fuzzy
+#, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
 msgstr "%d%%"
@@ -330,43 +299,36 @@ msgid "[%s/s]"
 msgstr "（%s每秒）"
 
 #: src/data/sources/user/User.vala:30
-#, fuzzy
 msgid "User games"
 msgstr "用戶游戲"
 
 #: src/data/db/tables/Tags.vala:225
-#, fuzzy
 msgctxt "tag"
 msgid "Favorites"
-msgstr "收藏夾"
+msgstr "我的最愛"
 
 #: src/data/db/tables/Tags.vala:226
-#, fuzzy
 msgctxt "tag"
 msgid "Not installed"
 msgstr "未安裝"
 
 #: src/data/db/tables/Tags.vala:227
-#, fuzzy
 msgctxt "tag"
 msgid "Installed"
 msgstr "安裝"
 
 #: src/data/db/tables/Tags.vala:228
-#, fuzzy
 msgctxt "tag"
 msgid "Hidden"
-msgstr "隱藏的"
+msgstr "隱藏"
 
 #: src/data/compat/CustomScript.vala:60
-#, fuzzy
 msgid "Edit script"
 msgstr "編輯腳本"
 
 #: src/data/compat/CustomScript.vala:60
-#, fuzzy
 msgid "Edit custom script"
-msgstr "編輯自定義腳本"
+msgstr "編輯自訂腳本"
 
 #: src/data/compat/Innoextract.vala:55
 #, c-format
@@ -383,84 +345,70 @@ msgstr ""
 #: src/ui/dialogs/CompatRunDialog.vala:102
 #: src/ui/views/GamesView/GameContextMenu.vala:53
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:234
-#, fuzzy
 msgid "Run"
 msgstr "運行"
 
 #: src/data/compat/WineWrap.vala:64
-#, fuzzy
 msgid "Show WineWrap menu"
-msgstr "顯示WineWrap菜單"
+msgstr "顯示WineWrap目錄"
 
 #: src/data/compat/WineWrap.vala:67 src/data/compat/Proton.vala:122
 #: src/data/compat/Wine.vala:83
-#, fuzzy
 msgid "Kill apps in prefix"
-msgstr "終止前綴中的應用程序"
+msgstr "終止資料夾路徑中的應用程序"
 
 #: src/data/compat/Proton.vala:47
-#, fuzzy
 msgid "Proton prefix"
-msgstr "Proton 前綴"
+msgstr "Proton資料夾路徑"
 
 #: src/data/compat/Proton.vala:110 src/data/compat/Wine.vala:71
-#, fuzzy
 msgid "Open prefix directory"
-msgstr "打開前綴目錄"
+msgstr "打開路徑資料夾"
 
 #: src/data/compat/Proton.vala:113 src/data/compat/Wine.vala:74
-#, fuzzy
 msgid "Run winecfg"
-msgstr "運行winecfg"
+msgstr "運行 Winecfg"
 
 #: src/data/compat/Proton.vala:116 src/data/compat/Wine.vala:77
-#, fuzzy
 msgid "Run winetricks"
-msgstr "運行winetricks"
+msgstr "運行 Winetricks"
 
 #: src/data/compat/Proton.vala:119 src/data/compat/Wine.vala:80
-#, fuzzy
 msgid "Run taskmgr"
-msgstr "運行任務管理器"
+msgstr "運行工作管理員"
 
 #: src/data/compat/Wine.vala:53
-#, fuzzy
 msgid "Wine prefix"
-msgstr "終止前綴中的應用程序"
+msgstr "Wine資料夾路徑"
 
 #: src/data/compat/Wine.vala:55
-#, fuzzy
 msgid "Environment variables"
-msgstr "環境變量"
+msgstr "環境變數"
 
 #: src/data/compat/Wine.vala:60
-#, fuzzy
 msgid "InnoSetup default options"
-msgstr "InnoSetup默認選項"
+msgstr "InnoSetup 默認選項"
 
 #: src/data/compat/RetroArch.vala:53
-#, fuzzy
 msgid "Libretro core file"
-msgstr "打開前綴目錄"
+msgstr "Libretro 核心檔案"
 
 #: src/data/compat/CustomEmulator.vala:43
 msgid "Custom emulator"
-msgstr ""
+msgstr "自訂模擬器"
 
 #: src/data/compat/CustomEmulator.vala:48
 msgid "Emulator"
-msgstr ""
+msgstr "模擬器"
 
 #: src/data/compat/CustomEmulator.vala:49
-#, fuzzy
 msgid "Launch in game directory"
-msgstr "選擇目錄"
+msgstr "在遊戲資料夾中啟動"
 
 #: src/data/adapters/GamesAdapter.vala:440
-#, fuzzy
 msgctxt "status_header"
 msgid "Favorites"
-msgstr "收藏夾"
+msgstr "我的最愛"
 
 #: src/data/adapters/GamesAdapter.vala:445
 #, c-format, fuzzy
@@ -958,7 +906,7 @@ msgstr "正在從%s加載游戲"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:33
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:45
 msgid "Emulators"
-msgstr ""
+msgstr "模擬器"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/RetroArch.vala:45
 #, fuzzy
@@ -991,13 +939,13 @@ msgstr[0] ""
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:46
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:168
 msgid "No custom emulators"
-msgstr ""
+msgstr "沒有自訂模擬器"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:164
 #, c-format
 msgid "%u custom emulator"
 msgid_plural "%u custom emulators"
-msgstr[0] ""
+msgstr[0] "%u個自訂模擬器"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:237
 #, fuzzy
@@ -1659,10 +1607,10 @@ msgid_plural "Images for %d games will be searched"
 msgstr[0] "%s: 沒有可用的安裝程序"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:168
-#, fuzzy, c-format
+#, c-format
 msgid "%d game will be uninstalled"
 msgid_plural "%d games will be uninstalled"
-msgstr[0] "%s: 沒有可用的安裝程序"
+msgstr[0] "%d個遊戲將被卸載"
 
 #: src/ui/views/GameDetailsView/MultipleGamesDetailsView.vala:174
 msgid "Refresh"
@@ -1903,7 +1851,7 @@ msgstr ""
 #: src/settings/UI.vala:158
 msgctxt "grid_size_preset"
 msgid "Custom"
-msgstr ""
+msgstr "自訂"
 
 #: src/utils/downloader/Downloader.vala:200
 msgctxt "dl_status"
