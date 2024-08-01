@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2024-07-31 08:09+0000\n"
+"PO-Revision-Date: 2024-08-02 08:09+0000\n"
 "Last-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\n"
 "Language-Team: Chinese (Traditional, Hong Kong) <https://hosted.weblate.org/"
 "projects/gamehub/translations/zh_Hant_HK/>\n"
@@ -411,58 +411,51 @@ msgid "Favorites"
 msgstr "我的最愛"
 
 #: src/data/adapters/GamesAdapter.vala:445
-#, c-format, fuzzy
+#, c-format
 msgctxt "status_header"
 msgid "%s: Favorites"
 msgstr "%s：我的最愛"
 
 #: src/data/adapters/GamesAdapter.vala:491
-#, fuzzy
 msgid "Merging games"
-msgstr "合並游戲"
+msgstr "正在合併游戲"
 
 #: src/data/adapters/GamesAdapter.vala:504
-#, c-format, fuzzy
+#, c-format
 msgid "Merging games from %s"
-msgstr "正在合並來自%s的游戲"
+msgstr "正在合併來自%s的游戲"
 
 #: src/data/adapters/GamesAdapter.vala:551
-#, c-format, fuzzy
+#, c-format
 msgid "Loading games from %s"
 msgstr "正在從%s加載游戲"
 
 #: src/data/adapters/GamesAdapter.vala:678
-#, fuzzy
 msgctxt "sort_mode"
 msgid "By name"
-msgstr "游戲名"
+msgstr "按游戲名名稱"
 
 #: src/data/adapters/GamesAdapter.vala:679
-#, fuzzy
 msgctxt "sort_mode"
 msgid "By last launch"
-msgstr "最后一次運行"
+msgstr "按最後一次運行"
 
 #: src/data/adapters/GamesAdapter.vala:680
-#, fuzzy
 msgctxt "sort_mode"
 msgid "By playtime"
-msgstr "游戲時間"
+msgstr "按游戲時間"
 
 #: src/data/adapters/GamesAdapter.vala:705
-#, fuzzy
 msgctxt "group_mode"
 msgid "Do not group"
 msgstr "不分組"
 
 #: src/data/adapters/GamesAdapter.vala:706
-#, fuzzy
 msgctxt "group_mode"
 msgid "By status"
 msgstr "按狀態"
 
 #: src/data/adapters/GamesAdapter.vala:707
-#, fuzzy
 msgctxt "group_mode"
 msgid "By source"
 msgstr "按來源"
@@ -471,98 +464,96 @@ msgstr "按來源"
 #: src/data/providers/data/IGDB.vala:431
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:217
 msgid "Default"
-msgstr ""
+msgstr "默認"
 
 #: src/data/providers/images/SteamGridDB.vala:158
 #: src/data/providers/data/IGDB.vala:438
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:225
 msgid "Restore default API key"
-msgstr ""
+msgstr "恢復預設的API金鑰"
 
 #: src/data/providers/images/SteamGridDB.vala:169
 #: src/data/providers/data/IGDB.vala:449
 #: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:108
 msgid "API key"
-msgstr ""
+msgstr "API 金鑰"
 
 #: src/data/providers/images/SteamGridDB.vala:177
 #: src/data/providers/data/IGDB.vala:457
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 #: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:53
 msgid "Generate key"
-msgstr ""
+msgstr "生成金鑰"
 
 #: src/data/providers/images/SteamGridDB.vala:208
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Style"
-msgstr ""
+msgstr "風格"
 
 #: src/data/providers/images/SteamGridDB.vala:209
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Score"
-msgstr ""
+msgstr "分數"
 
 #: src/data/providers/images/SteamGridDB.vala:213
 msgctxt "imagesource_steamgriddb_image_property"
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: src/data/providers/images/SteamGridDB.vala:225
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Alternate"
-msgstr ""
+msgstr "Alternate"
 
 #: src/data/providers/images/SteamGridDB.vala:226
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Blurred"
-msgstr ""
+msgstr "Blurred"
 
 #. TRANSLATORS: Flat / Material Design image style. Probably should not be translated
 #: src/data/providers/images/SteamGridDB.vala:228
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: src/data/providers/images/SteamGridDB.vala:229
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "No logo"
-msgstr ""
+msgstr "No logo"
 
 #: src/data/providers/images/SteamGridDB.vala:230
 msgctxt "imagesource_steamgriddb_image_style"
 msgid "White logo"
-msgstr ""
+msgstr "White logo"
 
 #: src/data/providers/data/IGDB.vala:147
 msgid ""
 "Monthly IGDB request quota has been reached. Set your own API key to use "
 "IGDB data or disable IGDB."
-msgstr "已達到每月IGDB請求上限。設定您的API金鑰匙以使用IGDB資料或停用IGDB。"
+msgstr "已達到每月IGDB請求上限。設定您的API金鑰以使用IGDB資料或停用IGDB。"
 
 #: src/data/providers/data/IGDB.vala:148
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:40
 #: src/ui/views/WelcomeView.vala:53 src/ui/views/WelcomeView.vala:78
 #: src/ui/views/GamesView/GamesView.vala:230
 #: src/ui/views/GamesView/GamesView.vala:629
-#, fuzzy
 msgid "Settings"
 msgstr "設置"
 
 #: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
 msgid "Official website"
-msgstr ""
+msgstr "官方網站"
 
 #: src/data/providers/data/IGDB.vala:469
 msgctxt "igdb_preferred_description"
 msgid "When game has description, show description"
-msgstr ""
+msgstr "當遊戲有描述時，顯示描述"
 
 #: src/data/providers/data/IGDB.vala:476
-#, fuzzy
 msgctxt "igdb_preferred_description"
 msgid "of game"
-msgstr "運行游戲"
+msgstr "游戲的"
 
 #: src/data/providers/data/IGDB.vala:477
 msgctxt "igdb_preferred_description"
@@ -570,54 +561,53 @@ msgid "from IGDB"
 msgstr "來自 IGDB"
 
 #: src/data/providers/data/IGDB.vala:478
-#, fuzzy
 msgctxt "igdb_preferred_description"
 msgid "both"
-msgstr "都"
+msgstr "兩者"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:65
 msgid "Some settings will be applied after application restart"
-msgstr ""
+msgstr "某些設定將會在應用程式重新啟動後套用"
 
 #: src/ui/dialogs/SettingsDialog/SettingsDialog.vala:71
 msgid "Games directory contains space. It may cause problems for some games"
-msgstr ""
+msgstr "遊戲資料夾包含空白空間。可能會導致某些遊戲出現問題"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:36
 msgid "Interface"
-msgstr ""
+msgstr "介面"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:37
 msgid "Appearance"
-msgstr ""
+msgstr "外觀"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:38
 msgid "General interface settings"
-msgstr ""
+msgstr "一般介面設定"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:48
 msgid "Dark theme"
-msgstr ""
+msgstr "暗色主題"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:53
 msgctxt "icon_style"
 msgid "Theme-based"
-msgstr ""
+msgstr "主題性"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:54
 msgctxt "icon_style"
 msgid "Symbolic"
-msgstr ""
+msgstr "象徵性"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:55
 msgctxt "icon_style"
 msgid "Colored"
-msgstr ""
+msgstr "彩色"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:57
 msgctxt "icon_style"
 msgid "Icon style"
-msgstr ""
+msgstr "圖示"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:84
 #, fuzzy
@@ -625,14 +615,13 @@ msgid "Game card"
 msgstr "游戲的名字"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:86
-#, fuzzy
 msgid "Show platform icons"
-msgstr "顯示文件"
+msgstr "顯示平台圖示"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:99
 msgctxt "grid_size"
 msgid "Card size"
-msgstr ""
+msgstr "卡片大小"
 
 #: src/ui/dialogs/SettingsDialog/pages/ui/Appearance.vala:117
 msgctxt "grid_size_preset"
@@ -833,7 +822,7 @@ msgstr "打開游戲屬性"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:59
 msgid "Steam API keys have limited number of uses per day"
-msgstr ""
+msgstr "Steam API 金鑰的每天使用次數有限制"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:63
 #: src/ui/dialogs/SettingsDialog/pages/sources/Itch.vala:57
@@ -884,7 +873,7 @@ msgstr "安裝"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/Steam.vala:236
 msgid "Steam API key"
-msgstr ""
+msgstr "Steam API 金鑰"
 
 #: src/ui/dialogs/SettingsDialog/pages/sources/GOG.vala:50
 #: src/ui/dialogs/SettingsDialog/pages/sources/Humble.vala:54
@@ -1463,7 +1452,8 @@ msgstr ""
 msgid ""
 "No games were loaded from Steam. Set your games list privacy to public or "
 "use your own Steam API key in settings."
-msgstr ""
+msgstr "沒有從 Steam 成功加載任何遊戲。"
+"將您的遊戲清單隱私設定為公開或在設定中使用您自己的Steam API金鑰。"
 
 #: src/ui/views/GamesView/GamesView.vala:628
 msgid "Privacy"
