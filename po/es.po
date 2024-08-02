@@ -5,13 +5,14 @@
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
 # Adrián López Galera <adrlopgal@disroot.org>, 2021.
 # badlop <badlop@process-one.net>, 2021.
+# gallegonovato <fran-carro@hotmail.es>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2021-12-29 12:50+0000\n"
-"Last-Translator: badlop <badlop@process-one.net>\n"
+"PO-Revision-Date: 2024-08-03 12:09+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gamehub/"
 "translations/es/>\n"
 "Language: es\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -540,7 +541,7 @@ msgstr ""
 #: src/ui/views/GamesView/GamesView.vala:230
 #: src/ui/views/GamesView/GamesView.vala:629
 msgid "Settings"
-msgstr "Configuración"
+msgstr "Ajustes"
 
 #: src/data/providers/data/IGDB.vala:356
 msgctxt "igdb_related_link"
