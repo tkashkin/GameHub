@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Automatically generated, 2018.
 # Anatoliy Kashkin <tkashkin@gmail.com>, 2018, 2019.
-# Allan Nordhøy <epost@anotheragency.no>, 2018, 2019, 2020.
+# Allan Nordhøy <epost@anotheragency.no>, 2018, 2019, 2020, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2020-11-16 02:29+0000\n"
+"PO-Revision-Date: 2024-09-02 20:09+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gamehub/"
 "translations/nb_NO/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -62,7 +62,7 @@ msgstr "Kjør spill"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
-msgstr "Vis valg for kompabilitetsmodus"
+msgstr "Vis valg for kompatibilitetsmodus"
 
 #: src/app.vala:108
 msgid "Open game details"
@@ -981,7 +981,7 @@ msgstr "Velg emulatormappe"
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:292
 #: src/ui/dialogs/GamePropertiesDialog.vala:219
 msgid "Force compatibility mode"
-msgstr "Tving gjennom kompabilitetsmodus"
+msgstr "Tving gjennom kompatibilitetsmodus"
 
 #: src/ui/dialogs/SettingsDialog/pages/emulators/Emulators.vala:307
 msgid "Game file patterns"
@@ -1149,7 +1149,7 @@ msgstr "Arbeidsmappe"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:214
 msgid "Compatibility"
-msgstr "Kompabilitet"
+msgstr "Kompatibilitet"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:236
 msgid "Launch from terminal"
@@ -1243,7 +1243,7 @@ msgstr "Fjern overlag"
 #: src/ui/views/GamesView/GameContextMenu.vala:46
 #: src/ui/views/GameDetailsView/GameDetailsPage.vala:235
 msgid "Run with compatibility layer"
-msgstr "Kjør med kompabilitetslag"
+msgstr "Kjør med kompatibilitetslag"
 
 #: src/ui/dialogs/CorruptedInstallerDialog.vala:71
 msgid "Corrupted installer: checksum mismatch in"
@@ -1717,7 +1717,7 @@ msgstr "Søk etter bilder:"
 
 #: src/ui/widgets/CompatToolPicker.vala:53
 msgid "Compatibility layer:"
-msgstr "Kompabilitetslag:"
+msgstr "Kompatibilitetslag:"
 
 #: src/ui/widgets/CompatToolPicker.vala:92
 msgid "Configure"
