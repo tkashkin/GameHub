@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.tkashkin.gamehub package.
 # Anonymous <starmail00@proton.me>, 2024.
+# iliekchez <ewisloveewislife@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2024-04-11 04:01+0000\n"
-"Last-Translator: Anonymous <starmail00@proton.me>\n"
+"PO-Revision-Date: 2024-11-21 02:55+0000\n"
+"Last-Translator: iliekchez <ewisloveewislife@gmail.com>\n"
 "Language-Team: Toki Pona <https://hosted.weblate.org/projects/gamehub/"
 "translations/tok/>\n"
 "Language: tok\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: src/app.vala:91
 #, fuzzy
@@ -43,7 +44,7 @@ msgstr ""
 
 #: src/app.vala:99
 msgid "Show main window"
-msgstr "o open e lipu wan"
+msgstr "o open e lipu lawa"
 
 #: src/app.vala:100
 msgid "Show application settings dialog"
@@ -59,7 +60,7 @@ msgstr ""
 
 #: src/app.vala:106
 msgid "Run game"
-msgstr ""
+msgstr "o open e musi"
 
 #: src/app.vala:107
 msgid "Show compatibility options dialog"
@@ -67,7 +68,7 @@ msgstr ""
 
 #: src/app.vala:108
 msgid "Open game details"
-msgstr ""
+msgstr "o lukin e sona musi"
 
 #: src/app.vala:109
 msgid "Open game properties"
