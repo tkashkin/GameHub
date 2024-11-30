@@ -270,7 +270,14 @@ namespace GameHub.UI.Views.GamesView.List
 
 		private void status_handler(Game.Status s)
 		{
+			// Use weak reference to avoid capturing `this` strongly
+			weak GameListRow weak_self = this;
+
 			Idle.add(() => {
+				// early return when GameCard got destructed to prevent segfault
+				if (weak_self == null)
+					return Source.REMOVE;
+
 				label.label = game.name;
 				status_label.label = s.description;
 				tooltip_markup = """<span weight="600">%s</span>""".printf(game.name.replace("&amp;", "&").replace("&", "&amp;")) + "\n" + """<span size="smaller">%s</span>""".printf(s.description.replace("&amp;", "&").replace("&", "&amp;"));

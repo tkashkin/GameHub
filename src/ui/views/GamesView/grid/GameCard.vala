@@ -386,7 +386,14 @@ namespace GameHub.UI.Views.GamesView.Grid
 
 		private void status_handler(Game.Status s)
 		{
+			// Use weak reference to avoid capturing `this` strongly
+			weak GameCard weak_self = this;
+
 			Idle.add(() => {
+				// early return when GameCard got destructed to prevent segfault
+				if (weak_self == null)
+					return Source.REMOVE;
+
 				label.label = game.name;
 				status_label.label = s.description;
 				favorite_icon.visible = game.has_tag(Tables.Tags.BUILTIN_FAVORITES);
