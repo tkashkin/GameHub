@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: 2024-12-10 10:00+0000\n"
+"PO-Revision-Date: 2024-12-17 19:25+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gamehub/"
 "translations/fi/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.9.2-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
@@ -282,7 +282,7 @@ msgstr "%s jäljellä;"
 #, c-format
 msgctxt "itch_dl_status"
 msgid "%d%%"
-msgstr "%d%%"
+msgstr "%d %%"
 
 #: src/data/sources/itch/ItchDownloader.vala:198
 #, c-format
@@ -1602,7 +1602,7 @@ msgstr "Avattu: %s"
 #: src/ui/views/GameDetailsView/blocks/Achievements.vala:90
 #, c-format
 msgid "Global percentage: %g%%"
-msgstr "Kokonaisprosentti: %g%%"
+msgstr "Kokonaisprosentti: %g %%"
 
 #: src/ui/views/GameDetailsView/blocks/GOGDetails.vala:77
 #: src/ui/views/GameDetailsView/blocks/SteamDetails.vala:103
@@ -1844,7 +1844,7 @@ msgstr "Lataus peruutettu"
 #, c-format
 msgctxt "dl_status"
 msgid "%1$d%% (%2$s / %3$s) [%4$s/s]"
-msgstr "%1$d%% (%2$s / %3$s) [%4$s/s]"
+msgstr "%1$d %% (%2$s / %3$s) [%4$s/s]"
 
 #~ msgid "Disable esync"
 #~ msgstr "Poista esync käytöstä"
