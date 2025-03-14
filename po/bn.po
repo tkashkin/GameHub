@@ -7,30 +7,32 @@ msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-03-14 22:40+0000\n"
+"Last-Translator: Kom nake <kominak310@svcache.com>\n"
+"Language-Team: Bengali <https://hosted.weblate.org/projects/gamehub/"
+"translations/bn/>\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: src/app.vala:91
 msgid "Show help"
-msgstr ""
+msgstr "সহায়তা দেখাও"
 
 #: src/app.vala:92
 msgid "Show application version and exit"
-msgstr ""
+msgstr "অ্যাপের সংস্করণ দেখাও ও প্রস্থান করো"
 
 #: src/app.vala:93
 msgid "Restart with GDB debugger attached"
-msgstr ""
+msgstr "সংযুক্ত জিডিবি(GDB) দিয়ে ডিবাগার পুনঃচালু করো"
 
 #: src/app.vala:94
 msgid "Show full GDB backtrace"
-msgstr ""
+msgstr "সম্পূর্ণ জিডিবি ব্যাকট্রেস দেখাও"
 
 #: src/app.vala:95
 msgid "Treat fatal errors as criticals and crash application"
