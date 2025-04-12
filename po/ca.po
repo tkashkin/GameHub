@@ -4,14 +4,14 @@
 # Marc Riera <marc.riera.irigoyen@gmail.com>, 2019.
 # Marc Riera <marcriera@softcatala.org>, 2019, 2020, 2025.
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
-# ian Vatega <admin@sendenai.com>, 2021.
+# ian Vatega <admin@sendenai.com>, 2021, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.tkashkin.gamehub\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-26 06:40+0300\n"
 "PO-Revision-Date: 2025-04-13 15:01+0000\n"
-"Last-Translator: Marc Riera <marcriera@softcatala.org>\n"
+"Last-Translator: ian Vatega <admin@sendenai.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/gamehub/"
 "translations/ca/>\n"
 "Language: ca\n"
@@ -1144,9 +1144,8 @@ msgid "Icon URL"
 msgstr "URL de la icona"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
-#, fuzzy
 msgid "Select working directory"
-msgstr "Seleccioneu un directori"
+msgstr "Seleccioneu el directori de treball"
 
 #: src/ui/dialogs/GamePropertiesDialog.vala:173
 msgid "Working directory"
