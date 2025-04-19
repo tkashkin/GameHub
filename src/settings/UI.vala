@@ -201,6 +201,7 @@ namespace GameHub.Settings.UI
 		public bool grid_doubleclick { get; set; }
 		public bool merge_games { get; set; }
 		public bool import_tags { get; set; }
+		public bool dialogs_resize { get; set; }
 
 		public Behavior()
 		{

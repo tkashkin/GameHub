@@ -30,7 +30,7 @@ namespace GameHub.UI.Dialogs
 
 		public GameDetailsDialog(Game? game)
 		{
-			Object(transient_for: Windows.MainWindow.instance, resizable: false, title: game.name, game: game);
+			Object(transient_for: Windows.MainWindow.instance, resizable: Settings.UI.Behavior.instance.dialogs_resize, title: game.name, game: game);
 		}
 
 		construct

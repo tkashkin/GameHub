@@ -48,6 +48,11 @@ namespace GameHub.UI.Dialogs.SettingsDialog.Pages.UI
 			add_separator();
 
 			add_switch(_("Use imported tags"), settings.import_tags, v => { settings.import_tags = v; });
+			            
+			add_separator( );
+            
+			add_switch( _( "Enable resizing of the 'Game properties' dialog and the 'Game details' dialog" ), settings.dialogs_resize, v => { settings.dialogs_resize = v; });
+
 		}
 	}
 }

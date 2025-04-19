@@ -128,6 +128,10 @@
 				<default>true</default>
 				<summary>Import tags</summary>
 			</key>
+			<key name="dialogs-resize" type="b">
+				<default>true</default>
+				<summary>Enable dialogs resizing</summary>
+			</key>
 		</schema>
 
 	<!-- Auth -->
